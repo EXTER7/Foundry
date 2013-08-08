@@ -36,7 +36,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 @SideOnly(Side.CLIENT)
-public class GuiAlloyMixer extends GuiContainer
+public class GuiAlloyMixer extends GuiFoundry
 {
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
@@ -53,7 +53,9 @@ public class GuiAlloyMixer extends GuiContainer
   private static final int TANK_OUTPUT_X = 80;
   private static final int TANK_OUTPUT_Y = 21;
 
-  
+  private static final int TANK_OVERLAY_X = 176;
+  private static final int TANK_OVERLAY_Y = 0;
+
   private TileEntityAlloyMixer te_alloymixer;
   private IInventory player_inventory;
 
@@ -84,58 +86,14 @@ public class GuiAlloyMixer extends GuiContainer
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    DisplayTank(window_x, window_y, TANK_INPUT_A_X, TANK_INPUT_A_Y, TANK_HEIGHT, te_alloymixer.GetInputATank());
-    DisplayTank(window_x, window_y, TANK_INPUT_B_X, TANK_INPUT_B_Y, TANK_HEIGHT, te_alloymixer.GetInputBTank());
-    DisplayTank(window_x, window_y, TANK_OUTPUT_X, TANK_OUTPUT_Y, TANK_HEIGHT, te_alloymixer.GetOutputTank());
+    DisplayTank(window_x, window_y, TANK_INPUT_A_X, TANK_INPUT_A_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetInputATank());
+    DisplayTank(window_x, window_y, TANK_INPUT_B_X, TANK_INPUT_B_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetInputBTank());
+    DisplayTank(window_x, window_y, TANK_OUTPUT_X, TANK_OUTPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetOutputTank());
   }
 
-  private void DisplayTank(int window_x,int window_y,int x, int y, int tank_height, FluidTank tank)
+  @Override
+  protected ResourceLocation GetGUITexture()
   {
-    FluidStack liquid = tank.getFluid();
-    if(liquid == null)
-    {
-      return;
-    }
-    int start = 0;
-
-    Icon liquid_icon = null;
-    Fluid fluid = liquid.getFluid();
-    if(fluid != null && fluid.getStillIcon() != null)
-    {
-      liquid_icon = fluid.getStillIcon();
-    }
-    mc.renderEngine.func_110577_a(BLOCK_TEXTURE);
-
-    int h = liquid.amount * tank_height / tank.getCapacity();
-    
-    
-    if(liquid_icon != null)
-    {
-      while(true)
-      {
-        int i;
-
-        if(h > 16)
-        {
-          i = 16;
-          h -= 16;
-        } else
-        {
-          i = h;
-          h = 0;
-        }
-
-        drawTexturedModelRectFromIcon(window_x + x, window_y + y + tank_height - i - start, liquid_icon, 16, i);
-        start += 16;
-
-        if(i == 0 || h == 0)
-        {
-          break;
-        }
-      }
-    }
-
-    mc.renderEngine.func_110577_a(GUI_TEXTURE);
-    drawTexturedModalRect(window_x + x, window_y + y, 176, 0, 16, 60);
+    return GUI_TEXTURE;
   }
 }

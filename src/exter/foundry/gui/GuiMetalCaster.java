@@ -42,7 +42,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
-public class GuiMetalCaster extends GuiContainer
+public class GuiMetalCaster extends GuiFoundry
 {
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/caster.png");
@@ -97,57 +97,14 @@ public class GuiMetalCaster extends GuiContainer
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, te_caster.GetTank());
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank());
 
   }
 
-  private void DisplayTank(int window_x,int window_y,int x, int y, int tank_height, FluidTank tank)
+  @Override
+  protected ResourceLocation GetGUITexture()
   {
-    FluidStack liquid = tank.getFluid();
-    if(liquid == null)
-    {
-      return;
-    }
-    int start = 0;
-
-    Icon liquid_icon = null;
-    Fluid fluid = liquid.getFluid();
-    if(fluid != null && fluid.getStillIcon() != null)
-    {
-      liquid_icon = fluid.getStillIcon();
-    }
-    mc.renderEngine.func_110577_a(BLOCK_TEXTURE);
-
-    int h = liquid.amount * tank_height / tank.getCapacity();
-    
-    
-    if(liquid_icon != null)
-    {
-      while(true)
-      {
-        int i;
-
-        if(h > 16)
-        {
-          i = 16;
-          h -= 16;
-        } else
-        {
-          i = h;
-          h = 0;
-        }
-
-        drawTexturedModelRectFromIcon(window_x + x, window_y + y + tank_height - i - start, liquid_icon, 16, i);
-        start += 16;
-
-        if(i == 0 || h == 0)
-        {
-          break;
-        }
-      }
-    }
-
-    mc.renderEngine.func_110577_a(GUI_TEXTURE);
-    drawTexturedModalRect(window_x + x, window_y + y, TANK_OVERLAY_X, TANK_OVERLAY_Y, 16, TANK_HEIGHT);
+    return GUI_TEXTURE;
   }
+
 }

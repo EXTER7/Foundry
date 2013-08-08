@@ -5,7 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,33 +19,33 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 
-public class BlockMetalSmelter extends BlockContainer
+public class BlockInductionCrucibleFurnace extends BlockContainer
 {
   private Random rand = new Random();
   
   private Icon icon_top;
 
-  public BlockMetalSmelter(int id)
+  public BlockInductionCrucibleFurnace(int id)
   {
     super(id, Material.rock);
     setHardness(1.0F);
     setResistance(8.0F);
     setStepSound(Block.soundStoneFootstep);
-    setUnlocalizedName("metalSmelter");
+    setUnlocalizedName("inductionCrucibleFurnace");
     setCreativeTab(CreativeTabs.tabMisc);
   }
 
   @Override
   public void breakBlock(World world, int x, int y, int z, int par5, int par6)
   {
-    TileEntityMetalSmelter te_aoc = (TileEntityMetalSmelter)world.getBlockTileEntity(x, y, z);
+    TileEntityInductionCrucibleFurnace te_icf = (TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z);
 
-    if(te_aoc != null && !world.isRemote)
+    if(te_icf != null && !world.isRemote)
     {
       int i;
-      for(i = 0; i < te_aoc.getSizeInventory(); ++i)
+      for(i = 0; i < te_icf.getSizeInventory(); ++i)
       {
-        ItemStack is = te_aoc.getStackInSlot(i);
+        ItemStack is = te_icf.getStackInSlot(i);
 
         if(is != null && is.stackSize > 0)
         {
@@ -106,6 +106,6 @@ public class BlockMetalSmelter extends BlockContainer
   @Override
   public TileEntity createNewTileEntity(World par1World)
   {
-    return new TileEntityMetalSmelter();
+    return new TileEntityInductionCrucibleFurnace();
   }
 }

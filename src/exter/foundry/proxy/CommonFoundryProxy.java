@@ -7,13 +7,13 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.container.ContainerMetalSmelter;
+import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.gui.GuiMetalSmelter;
+import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
@@ -28,7 +28,7 @@ public class CommonFoundryProxy implements IGuiHandler
     switch(ID)
     {
       case 0:
-        return new ContainerMetalSmelter((TileEntityMetalSmelter)world.getBlockTileEntity(x, y, z),player.inventory);
+        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z),player.inventory);
       case 1:
         return new ContainerMetalCaster((TileEntityMetalCaster)world.getBlockTileEntity(x, y, z),player.inventory);
       case 2:
@@ -44,8 +44,8 @@ public class CommonFoundryProxy implements IGuiHandler
     {
       case 0:
       {
-        TileEntityMetalSmelter te = (TileEntityMetalSmelter)world.getBlockTileEntity(x, y, z);
-        return new GuiMetalSmelter(te,player.inventory);
+        TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z);
+        return new GuiInductionCrucibleFurnace(te,player.inventory);
       }
       case 1:
       {

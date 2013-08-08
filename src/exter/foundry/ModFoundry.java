@@ -38,7 +38,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockLiquidMetal;
-import exter.foundry.block.BlockMetalSmelter;
+import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
@@ -47,10 +47,10 @@ import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.SmeltingRecipe;
+import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 
 @Mod(modid = ModFoundry.MODID, name = ModFoundry.MODNAME, version = "0.1.0")
 @NetworkMod(channels = { ModFoundry.CHANNEL }, clientSideRequired = true, serverSideRequired = true, packetHandler = FoundryPacketHandler.class)
@@ -163,32 +163,32 @@ public class ModFoundry
     CastingRecipe.RegisterMold(mold_helmet);
     CastingRecipe.RegisterMold(mold_boots);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.pickaxeIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.pickaxeGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.pickaxeIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.pickaxeGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.axeIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.axeGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.axeIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.axeGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.swordIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.swordGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.swordIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.swordGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.hoeIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.hoeGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.hoeIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.hoeGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.legsIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 7), mold_leggings, null);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.legsGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 7), mold_leggings, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.legsIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 7), mold_leggings, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.legsGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 7), mold_leggings, null);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.helmetIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 5), mold_helmet, null);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.helmetGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 5), mold_helmet, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.helmetIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 5), mold_helmet, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.helmetGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 5), mold_helmet, null);
 
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,SmeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,SmeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
 
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
 
@@ -215,7 +215,7 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
-    GameRegistry.registerTileEntity(TileEntityMetalSmelter.class, "Foundry_MetalSmelter");
+    GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
 
@@ -248,7 +248,7 @@ public class ModFoundry
         'I', iron_stack,
         'B', brickblock_stack);
     
-    GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_metalsmelter),
+    GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_induction_crucible_furnace),
         "IFI",
         "BCB",
         "HRH",
@@ -259,7 +259,7 @@ public class ModFoundry
         'R', redstone_stack,
         'H', heatingcoil_stack);
     
-    GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_caster),
+    GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_metal_caster),
         "RPR",
         "ICI",
         "III",
@@ -268,7 +268,7 @@ public class ModFoundry
         'C', crucible_stack,
         'R', redstone_stack);
     
-    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_alloymixer),
+    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_alloy_mixer),
         "RGR",
         "BCB",
         "IBI",

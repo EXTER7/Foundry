@@ -12,9 +12,9 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
-import exter.foundry.container.ContainerMetalSmelter;
+import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.network.FoundryPacketHandler;
-import exter.foundry.recipes.SmeltingRecipe;
+import exter.foundry.recipes.MeltingRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -38,7 +38,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityMetalSmelter extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
+public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
 {
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
@@ -58,7 +58,7 @@ public class TileEntityMetalSmelter extends TileEntityFoundry implements ISidedI
   private PowerHandler power_handler;
  
   
-  public TileEntityMetalSmelter()
+  public TileEntityInductionCrucibleFurnace()
   {
     input = null;
     tank = new FluidTank(5000);
@@ -165,7 +165,7 @@ public class TileEntityMetalSmelter extends TileEntityFoundry implements ISidedI
     }
   }
 
-  public void SendGUINetworkData(ContainerMetalSmelter container, ICrafting crafting)
+  public void SendGUINetworkData(ContainerInductionCrucibleFurnace container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, tank.getFluid() != null ? tank.getFluid().fluidID : 0);
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
@@ -416,7 +416,7 @@ public class TileEntityMetalSmelter extends TileEntityFoundry implements ISidedI
     int last_progress = progress;
     if(input != null && heat > HEAT_MELT)
     {      
-      SmeltingRecipe metal = SmeltingRecipe.FindByStack(input);
+      MeltingRecipe metal = MeltingRecipe.FindByStack(input);
       if(metal != null)
       {
         FluidStack fs = metal.GetFluid();

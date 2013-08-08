@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
@@ -8,11 +8,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerMetalSmelter extends Container
+public class ContainerInductionCrucibleFurnace extends Container
 {
   
 
-  private TileEntityMetalSmelter te_metalsmelter;
+  private TileEntityInductionCrucibleFurnace te_icf;
   
   // Slot numbers
   private static final int SLOTS_INPUT = 0;
@@ -28,13 +28,13 @@ public class ContainerMetalSmelter extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 142;
 
-  public ContainerMetalSmelter(TileEntityMetalSmelter metalsmelter, IInventory player_inventory)
+  public ContainerInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace metalsmelter, IInventory player_inventory)
   {
-    te_metalsmelter = metalsmelter;
-    te_metalsmelter.openChest();
+    te_icf = metalsmelter;
+    te_icf.openChest();
     int i,j;
 
-    addSlotToContainer(new Slot(te_metalsmelter, 0, SLOT_INPUT_X, SLOT_INPUT_Y));
+    addSlotToContainer(new Slot(te_icf, 0, SLOT_INPUT_X, SLOT_INPUT_Y));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)
@@ -52,7 +52,7 @@ public class ContainerMetalSmelter extends Container
 
   public boolean canInteractWith(EntityPlayer par1EntityPlayer)
   {
-    return te_metalsmelter.isUseableByPlayer(par1EntityPlayer);
+    return te_icf.isUseableByPlayer(par1EntityPlayer);
   }
 
   public ItemStack transferStackInSlot(EntityPlayer player, int slot_index)
@@ -105,7 +105,7 @@ public class ContainerMetalSmelter extends Container
   public void onContainerClosed(EntityPlayer par1EntityPlayer)
   {
     super.onContainerClosed(par1EntityPlayer);
-    te_metalsmelter.closeChest();
+    te_icf.closeChest();
   }
   
 
@@ -116,14 +116,14 @@ public class ContainerMetalSmelter extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_metalsmelter.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_icf.SendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
 
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_metalsmelter.GetGUINetworkData(i, j);
+    te_icf.GetGUINetworkData(i, j);
   }
 
 }

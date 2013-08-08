@@ -16,8 +16,8 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.container.ContainerMetalSmelter;
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonMerchant;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -42,7 +42,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
-public class GuiMetalSmelter extends GuiFoundry
+public class GuiInductionCrucibleFurnace extends GuiFoundry
 {
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/metalsmelter.png");
@@ -79,25 +79,26 @@ public class GuiMetalSmelter extends GuiFoundry
   private static final int PROGRESS_OVERLAY_Y = 78;
 
   
-  private TileEntityMetalSmelter te_metalsmelter;
+  private TileEntityInductionCrucibleFurnace te_icf;
   private IInventory player_inventory;
 
-  public GuiMetalSmelter(TileEntityMetalSmelter ms, IInventory player_inv)
+  public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, IInventory player_inv)
   {
-    super(new ContainerMetalSmelter(ms, player_inv));
+    super(new ContainerInductionCrucibleFurnace(ms, player_inv));
     player_inventory = player_inv;
     allowUserInput = false;
     ySize = 166;
-    te_metalsmelter = ms;
+    te_icf = ms;
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int par1, int par2)
   {
     super.drawGuiContainerForegroundLayer(par1, par2);
-    fontRenderer.drawString("Metal Smelter", 5, 6, 0x404040);
+    fontRenderer.drawString("Induction Crucible Furnace", 5, 6, 0x404040);
     fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
-    int heat_percent = te_metalsmelter.GetHeat() * 100 / TileEntityMetalSmelter.HEAT_MAX;
+    
+    int heat_percent = te_icf.GetHeat() * 100 / TileEntityInductionCrucibleFurnace.HEAT_MAX;
     fontRenderer.drawString("Heat: " + String.valueOf(heat_percent) +"%", HEAT_BAR_X, HEAT_BAR_Y - 10, 0x404040);
   }
 
@@ -110,9 +111,9 @@ public class GuiMetalSmelter extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    int heat = te_metalsmelter.GetHeat() * HEAT_BAR_WIDTH / TileEntityMetalSmelter.HEAT_MAX;
-    int melt_heat = TileEntityMetalSmelter.HEAT_MELT * HEAT_BAR_WIDTH / TileEntityMetalSmelter.HEAT_MAX;
-    int progress = te_metalsmelter.GetProgress() * PROGRESS_WIDTH / te_metalsmelter.SMELT_TIME;
+    int heat = te_icf.GetHeat() * HEAT_BAR_WIDTH / TileEntityInductionCrucibleFurnace.HEAT_MAX;
+    int melt_heat = TileEntityInductionCrucibleFurnace.HEAT_MELT * HEAT_BAR_WIDTH / TileEntityInductionCrucibleFurnace.HEAT_MAX;
+    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / te_icf.SMELT_TIME;
     
     
     if(heat > 0)
@@ -125,7 +126,7 @@ public class GuiMetalSmelter extends GuiFoundry
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_metalsmelter.GetTank());
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.GetTank());
   }
 
   @Override

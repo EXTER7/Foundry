@@ -12,20 +12,20 @@ import net.minecraftforge.oredict.OreDictionary;
 /**
  * Metal Smelter recipe manager
  */
-public class SmeltingRecipe
+public class MeltingRecipe
 {
   static public final int AMOUNT_BLOCK = 972;
   static public final int AMOUNT_INGOT = 108;
   static public final int AMOUNT_NUGGET = 12;
   static public final int AMOUNT_ORE = 216;
   
-  static private Map<String,SmeltingRecipe> metals = new HashMap<String,SmeltingRecipe>();
+  static private Map<String,MeltingRecipe> metals = new HashMap<String,MeltingRecipe>();
   
   private final FluidStack fluid;
   public final String solid;
   
   /**
-   * Helper method for registering basic smelting recipes for a given metal.
+   * Helper method for registering basic melting recipes for a given metal.
    * @param partial_name The partial ore dictionary name e.g. "Copper" for "ingotCopper","oreCopper", etc.
    * @param fluid The liquid created by the smelter.
    */
@@ -40,15 +40,15 @@ public class SmeltingRecipe
   
   /**
    * Register a Metal Smelter recipe
-   * @param solid_name Item to be smelted
+   * @param solid_name Item to be melted
    * @param fluid_stack Resulting fluid
    */
   static public void RegisterRecipe(String solid_name,FluidStack fluid_stack)
   {
-    metals.put(solid_name,new SmeltingRecipe(solid_name,fluid_stack));
+    metals.put(solid_name,new MeltingRecipe(solid_name,fluid_stack));
   }
   
-  private SmeltingRecipe(String solid_name,FluidStack fluid_stack)
+  private MeltingRecipe(String solid_name,FluidStack fluid_stack)
   {
     solid = solid_name;
     fluid = fluid_stack.copy();
@@ -59,7 +59,7 @@ public class SmeltingRecipe
     return fluid.copy();
   }
   
-  public static SmeltingRecipe FindByStack(ItemStack it)
+  public static MeltingRecipe FindByStack(ItemStack it)
   {
     String od_name = null;
     find_odname: for (String name : OreDictionary.getOreNames())

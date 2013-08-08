@@ -27,7 +27,7 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import exter.foundry.ModFoundry;
-import exter.foundry.tileentity.TileEntityMetalSmelter;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 
 public class FoundryPacketHandler implements IPacketHandler
 {

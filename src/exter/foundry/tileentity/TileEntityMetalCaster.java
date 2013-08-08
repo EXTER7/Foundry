@@ -15,7 +15,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.SmeltingRecipe;
+import exter.foundry.recipes.MeltingRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;

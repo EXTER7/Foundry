@@ -19,10 +19,6 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockLiquidMetal extends BlockFluidClassic
 {
-  protected float particleRed;
-  protected float particleGreen;
-  protected float particleBlue;
-  
   private String texture_name;
 
   public BlockLiquidMetal(int id, Fluid fluid, Material material,String texture)
@@ -84,18 +80,6 @@ public class BlockLiquidMetal extends BlockFluidClassic
   public void randomDisplayTick(World world, int x, int y, int z, Random rand)
   {
     super.randomDisplayTick(world, x, y, z, rand);
-    /*
-
-    if(rand.nextInt(10) == 0 && world.doesBlockHaveSolidTopSurface(x, y - 1, z) && !world.getBlockMaterial(x, y - 2, z).blocksMovement())
-    {
-      double px = (double) ((float) x + rand.nextFloat());
-      double py = (double) y - 1.05D;
-      double pz = (double) ((float) z + rand.nextFloat());
-
-      EntityFX fx = new EntityDropParticleFX(world, px, py, pz, particleRed, particleGreen, particleBlue);
-      FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
-    }
-    */
   }
 
   @Override

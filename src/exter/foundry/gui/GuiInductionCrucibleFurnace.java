@@ -92,14 +92,16 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int par1, int par2)
+  protected void drawGuiContainerForegroundLayer(int mouse_x, int mouse_y)
   {
-    super.drawGuiContainerForegroundLayer(par1, par2);
+    super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
+
     fontRenderer.drawString("Induction Crucible Furnace", 5, 6, 0x404040);
     fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
     
     int heat_percent = te_icf.GetHeat() * 100 / TileEntityInductionCrucibleFurnace.HEAT_MAX;
     fontRenderer.drawString("Heat: " + String.valueOf(heat_percent) +"%", HEAT_BAR_X, HEAT_BAR_Y - 10, 0x404040);
+
   }
 
   @Override
@@ -127,6 +129,16 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     }
     
     DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.GetTank());
+  }
+
+  @Override
+  public void drawScreen(int mouse_x, int mouse_y, float par3)
+  {
+    super.drawScreen(mouse_x, mouse_y, par3);
+    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    {
+      DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank());
+    }
   }
 
   @Override

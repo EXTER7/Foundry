@@ -38,7 +38,6 @@ import net.minecraftforge.fluids.FluidTank;
 @SideOnly(Side.CLIENT)
 public class GuiAlloyMixer extends GuiFoundry
 {
-
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
   private static final ResourceLocation BLOCK_TEXTURE = TextureMap.field_110575_b;
 
@@ -69,12 +68,33 @@ public class GuiAlloyMixer extends GuiFoundry
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int par1, int par2)
+  protected void drawGuiContainerForegroundLayer(int mouse_x, int mouse_y)
   {
-    super.drawGuiContainerForegroundLayer(par1, par2);
-    //String title = StringUtils.localize("tile.engineIron");
+    super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
+
     fontRenderer.drawString("Alloy Mixer", 5, 6, 0x404040);
     fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    
+  }
+  
+  @Override
+  public void drawScreen(int mouse_x, int mouse_y, float par3)
+  {
+    super.drawScreen(mouse_x, mouse_y, par3);
+    if(isPointInRegion(TANK_OUTPUT_X,TANK_OUTPUT_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    {
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetOutputTank());
+    }
+
+    if(isPointInRegion(TANK_INPUT_A_X,TANK_INPUT_A_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    {
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetInputATank());
+    }
+
+    if(isPointInRegion(TANK_INPUT_B_X,TANK_INPUT_B_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    {
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetInputBTank());
+    }
   }
 
   @Override

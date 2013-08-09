@@ -1,6 +1,11 @@
 package exter.foundry.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.Container;
@@ -12,7 +17,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 
@@ -45,6 +52,21 @@ public abstract class GuiFoundry extends GuiContainer
       tessellator.draw();
   }
 
+  protected void DisplayTankTooltip(int x, int y, FluidTank tank)
+  {
+    List<String> list = new ArrayList<String>();
+    FluidStack stack = tank.getFluid();
+    if(stack != null && stack.amount > 0)
+    {
+      
+      list.add(stack.getFluid().getLocalizedName());
+      list.add(String.valueOf(stack.amount) + " / " + String.valueOf(tank.getCapacity()) + " mB");
+    } else
+    {
+      list.add("0 / " + String.valueOf(tank.getCapacity()) + " mB");
+    }
+    drawHoveringText(list, x, y, fontRenderer);    
+  }
   
   protected void DisplayTank(int window_x,int window_y,int x, int y, int tank_height,int overlay_x,int overlay_y, FluidTank tank)
   {

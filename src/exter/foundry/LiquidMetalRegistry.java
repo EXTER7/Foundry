@@ -64,6 +64,7 @@ public class LiquidMetalRegistry
     FluidRegistry.registerFluid(fluid);
 
     Block block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name).setUnlocalizedName("liquid" + metal_name);
+    LanguageRegistry.addName(block, "Liquid " + metal_name);
     GameRegistry.registerBlock(block, "liquid" + metal_name);
 
     fluid.setBlockID(block);
@@ -76,7 +77,6 @@ public class LiquidMetalRegistry
     CastingRecipe.RegisterRecipe("block" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_BLOCK), mold_block, null);
     CastingRecipe.RegisterRecipe("ingot" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_INGOT), mold_ingot, null);
 
-    LanguageRegistry.addName(block, "Liquid " + metal_name);
 
     LiquidMetalRegistry metal = new LiquidMetalRegistry(block,fluid,metal_name);
     

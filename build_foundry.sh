@@ -6,9 +6,9 @@ rm -rf packed/*
 if ./recompile.sh && ./reobfuscate.sh
 then
   mkdir -p "packed/exter"
-  mkdir -p "packed/assets/"$MODNAME"/textures"
+  mkdir -p "packed/assets/"$MODNAME
   cp -r "reobf/minecraft/exter/"$MODNAME "packed/exter/"
-  cp -r "src/minecraft/assets/"$MODNAME"/textures/"* "packed/assets/$MODNAME/textures/"
+  cp -r "src/minecraft/assets/"$MODNAME"/"* "packed/assets/$MODNAME/"
   cd packed
   zip -r $MODNAME".zip" *
   mv $MODNAME".zip" "../"

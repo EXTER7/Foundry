@@ -76,9 +76,10 @@ public class GuiMetalCaster extends GuiFoundry
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int par1, int par2)
+  protected void drawGuiContainerForegroundLayer(int mouse_x, int mouse_y)
   {
-    super.drawGuiContainerForegroundLayer(par1, par2);
+    super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
+
     fontRenderer.drawString("Metal Caster", 5, 6, 0x404040);
     fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
@@ -98,7 +99,16 @@ public class GuiMetalCaster extends GuiFoundry
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank());
+  }
 
+  @Override
+  public void drawScreen(int mouse_x, int mouse_y, float par3)
+  {
+    super.drawScreen(mouse_x, mouse_y, par3);
+    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    {
+      DisplayTankTooltip(mouse_x, mouse_y, te_caster.GetTank());
+    }
   }
 
   @Override

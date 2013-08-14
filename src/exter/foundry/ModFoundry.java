@@ -61,19 +61,6 @@ public class ModFoundry
 
   public static final String CHANNEL = "EXTER_Foundry";
 
-  // Block/Item IDs
-  private int liquid_iron_id;
-  private int liquid_gold_id;
-  private int liquid_copper_id;
-  private int liquid_tin_id;
-  private int liquid_bronze_id;
-  private int liquid_electrum_id;
-  private int liquid_invar_id;
-  private int liquid_nickel_id;
-  private int liquid_zinc_id;
-  private int liquid_brass_id;
-  private int liquid_silver_id;  
-
   @Instance(MODID)
   public static ModFoundry instance;
 

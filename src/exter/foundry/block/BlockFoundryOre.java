@@ -11,13 +11,13 @@ import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockOre extends Block
+public class BlockFoundryOre extends Block
 {
-  static private final int ORE_COPPER = 0;
-  static private final int ORE_TIN = 1;
-  static private final int ORE_NICKEL = 2;
-  static private final int ORE_ZINC = 3;
-  static private final int ORE_SILVER = 4;
+  static public final int ORE_COPPER = 0;
+  static public final int ORE_TIN = 1;
+  static public final int ORE_NICKEL = 2;
+  static public final int ORE_ZINC = 3;
+  static public final int ORE_SILVER = 4;
 
 
   static private final String[] ICON_PATHS = 
@@ -50,7 +50,7 @@ public class BlockOre extends Block
   @SideOnly(Side.CLIENT)
   private Icon[] icons;
   
-  public BlockOre(int id)
+  public BlockFoundryOre(int id)
   {
     super(id, Material.rock);
     setHardness(1.0F);

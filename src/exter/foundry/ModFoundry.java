@@ -36,6 +36,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.block.BlockAlloyMixer;
+import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockInductionCrucibleFurnace;
@@ -51,6 +52,8 @@ import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.worldgen.FoundryWorldGenerator;
+import exter.foundry.worldgen.WordGenOre;
 
 @Mod(modid = ModFoundry.MODID, name = ModFoundry.MODNAME, version = "0.1.0")
 @NetworkMod(channels = { ModFoundry.CHANNEL }, clientSideRequired = true, serverSideRequired = true, packetHandler = FoundryPacketHandler.class)
@@ -69,6 +72,11 @@ public class ModFoundry
   public static CommonFoundryProxy proxy;
 
 
+  private static boolean wordgen_copper;
+  private static boolean wordgen_tin;
+  private static boolean wordgen_zinc;
+  private static boolean wordgen_nickel;
+  private static boolean wordgen_silver;
 
 
   public static Logger log = Logger.getLogger(MODNAME);
@@ -99,11 +107,17 @@ public class ModFoundry
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Zinc", 3840);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 3841);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842);
+    wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
+    wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
+    wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
+    wordgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
+    wordgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
+
     config.save();
 
     
-
-
+    
+   
 
 
     Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
@@ -177,6 +191,7 @@ public class ModFoundry
     CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
     CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
 
+    
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
 
   }
@@ -331,6 +346,31 @@ public class ModFoundry
     RegisterMoldSmelting(ItemMold.MOLD_BOOTS_CLAY,ItemMold.MOLD_BOOTS);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
+    
+
+    int ore_id = FoundryBlocks.block_ore.blockID;
+    if(wordgen_copper)
+    {
+      WordGenOre.RegisterOre(16, 96, 15, ore_id, BlockFoundryOre.ORE_COPPER);
+    }
+    if(wordgen_tin)
+    {
+      WordGenOre.RegisterOre(16, 52, 10, ore_id, BlockFoundryOre.ORE_TIN);
+    }
+    if(wordgen_zinc)
+    {
+      WordGenOre.RegisterOre(8, 48, 8, ore_id, BlockFoundryOre.ORE_ZINC);
+    }
+    if(wordgen_nickel)
+    {
+      WordGenOre.RegisterOre(8, 36, 6, ore_id, BlockFoundryOre.ORE_NICKEL);
+    }
+    if(wordgen_silver)
+    {
+      WordGenOre.RegisterOre(2, 30, 4, ore_id, BlockFoundryOre.ORE_SILVER);
+    }
+    GameRegistry.registerWorldGenerator(new FoundryWorldGenerator());
+
     
     proxy.Init();
 

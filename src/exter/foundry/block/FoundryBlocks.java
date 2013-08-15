@@ -23,7 +23,7 @@ public class FoundryBlocks
   public static BlockMetalCaster block_metal_caster;
   public static BlockAlloyMixer block_alloy_mixer;
   public static BlockMetal block_metal;
-  public static BlockOre block_ore;
+  public static BlockFoundryOre block_ore;
 
   static public void RegisterBlocks(Configuration config)
   {
@@ -40,7 +40,7 @@ public class FoundryBlocks
     block_metal_caster = new BlockMetalCaster(metal_caster_id);
     block_alloy_mixer = new BlockAlloyMixer(alloy_mixer_id);
     block_metal = new BlockMetal(metal_block_id);
-    block_ore = new BlockOre(ore_id);
+    block_ore = new BlockFoundryOre(ore_id);
 
     
     GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
@@ -61,11 +61,11 @@ public class FoundryBlocks
       LanguageRegistry.addName(is, BlockMetal.NAMES[i]);
       OreDictionary.registerOre(BlockMetal.OREDICT_NAMES[i], is);
     }
-    for(i = 0; i < BlockOre.NAMES.length; i++)
+    for(i = 0; i < BlockFoundryOre.NAMES.length; i++)
     {
       ItemStack is = new ItemStack(block_ore,  1, i);
-      LanguageRegistry.addName(is, BlockOre.NAMES[i]);
-      OreDictionary.registerOre(BlockOre.OREDICT_NAMES[i], is);
+      LanguageRegistry.addName(is, BlockFoundryOre.NAMES[i]);
+      OreDictionary.registerOre(BlockFoundryOre.OREDICT_NAMES[i], is);
     }
   }
 }

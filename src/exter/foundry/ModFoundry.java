@@ -178,7 +178,7 @@ public class ModFoundry
     CastingRecipe.RegisterRecipe(new ItemStack(Item.axeGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
 
     CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+    CastingRecipe.RegisterRecipe(new ItemStack(Item.shovelGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
 
     CastingRecipe.RegisterRecipe(new ItemStack(Item.swordIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
     CastingRecipe.RegisterRecipe(new ItemStack(Item.swordGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 2), mold_sword, extra_sticks1);

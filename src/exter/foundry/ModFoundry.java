@@ -41,6 +41,8 @@ import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.integration.ModIntegration;
+import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemMold;
@@ -148,6 +150,7 @@ public class ModFoundry
     ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_LEGGINGS);
     ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_HELMET);
     ItemStack mold_boots = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BOOTS);
+    ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
     ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
     
@@ -163,6 +166,7 @@ public class ModFoundry
     CastingRecipe.RegisterMold(mold_leggings);
     CastingRecipe.RegisterMold(mold_helmet);
     CastingRecipe.RegisterMold(mold_boots);
+    CastingRecipe.RegisterMold(mold_gear);
 
     CastingRecipe.RegisterRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
     CastingRecipe.RegisterRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
@@ -217,6 +221,10 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
+    log.setParent(FMLLog.getLogger());
+
+    ModIntegration.RegisterIntegration(new ModIntegrationBuildcraft("buildcraft"));
+    
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
@@ -280,6 +288,25 @@ public class ModFoundry
         'R', redstone_stack,
         'G', "gearStone"));
 
+    ModIntegration bc_int = ModIntegration.GetIntegration("buildcraft");
+    if(bc_int != null)
+    {
+      ItemStack gear_wood = bc_int.GetItem("woodenGearItem");
+      RegisterInOreDictionary("gearWood",gear_wood);
+      
+      ItemStack gear_stone = bc_int.GetItem("stoneGearItem");
+      RegisterInOreDictionary("gearStone",gear_stone);
+      
+      ItemStack gear_iron = bc_int.GetItem("ironGearItem");
+      RegisterInOreDictionary("gearIron",gear_iron);
+
+      ItemStack gear_gold = bc_int.GetItem("goldGearItem");
+      RegisterInOreDictionary("gearGold",gear_gold);
+
+      ItemStack gear_diamond = bc_int.GetItem("diamondGearItem");
+      RegisterInOreDictionary("gearDiamond",gear_diamond);
+    }
+    
     RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
     RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.stone,1,-1));
     RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Item.brick));
@@ -320,6 +347,16 @@ public class ModFoundry
     RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordIron));
     RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordGold));
     RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordDiamond));
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearWood");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearStone");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearIron");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearGold");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearDiamond");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearCopper");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearTin");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBronze");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBrass");
+    RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearInvar");
 
     
     for(String name:OreDictionary.getOreNames())
@@ -344,9 +381,31 @@ public class ModFoundry
     RegisterMoldSmelting(ItemMold.MOLD_LEGGINGS_CLAY,ItemMold.MOLD_LEGGINGS);
     RegisterMoldSmelting(ItemMold.MOLD_HELMET_CLAY,ItemMold.MOLD_HELMET);
     RegisterMoldSmelting(ItemMold.MOLD_BOOTS_CLAY,ItemMold.MOLD_BOOTS);
+    RegisterMoldSmelting(ItemMold.MOLD_GEAR_CLAY,ItemMold.MOLD_GEAR);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
-    
+
+    Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
+    Fluid liquid_tin = LiquidMetalRegistry.GetMetal("Tin").fluid;
+    Fluid liquid_zinc = LiquidMetalRegistry.GetMetal("Zinc").fluid;
+    Fluid liquid_silver = LiquidMetalRegistry.GetMetal("Silver").fluid;
+    Fluid liquid_gold = LiquidMetalRegistry.GetMetal("Gold").fluid;
+    Fluid liquid_nickel = LiquidMetalRegistry.GetMetal("Nickel").fluid;
+    Fluid liquid_iron = LiquidMetalRegistry.GetMetal("Iron").fluid;
+    Fluid liquid_electrum = LiquidMetalRegistry.GetMetal("Electrum").fluid;
+    Fluid liquid_invar = LiquidMetalRegistry.GetMetal("Invar").fluid;
+    Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
+    Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
+
+    ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+    CastingRecipe.RegisterRecipe("gearIron", new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearGold", new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearCopper", new FluidStack(liquid_copper,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearTin", new FluidStack(liquid_tin,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearBronze", new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearBrass", new FluidStack(liquid_brass,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearInvar", new FluidStack(liquid_invar,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+
 
     int ore_id = FoundryBlocks.block_ore.blockID;
     if(wordgen_copper)
@@ -371,16 +430,40 @@ public class ModFoundry
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator());
 
-    
     proxy.Init();
-
-    
   }
+  
+  private boolean IsItemInOreDictionary(String name,ItemStack stack)
+  {
+    List<ItemStack> ores = OreDictionary.getOres(name);
+    for(ItemStack i:ores)
+    {
+      if(i.isItemEqual(stack))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  //Register item in the ore dictionary only if its not already registered
+  private void RegisterInOreDictionary(String name,ItemStack stack)
+  {
+    if(stack == null)
+    {
+      return;
+    }
+    if(!IsItemInOreDictionary(name,stack))
+    {
+      OreDictionary.registerOre(name, stack);
+    }
+  }
+
+  
 
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
-    log.setParent(FMLLog.getLogger());
     if(OreDictionary.getOres("gearStone").size() == 0)
     {
       ItemStack cobble_stack = new ItemStack(Block.cobblestone, 1, -1);

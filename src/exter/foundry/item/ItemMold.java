@@ -35,6 +35,8 @@ public class ItemMold extends Item
   static public final int MOLD_HELMET_CLAY = 19;
   static public final int MOLD_BOOTS = 20;
   static public final int MOLD_BOOTS_CLAY = 21;
+  static public final int MOLD_GEAR = 22;
+  static public final int MOLD_GEAR_CLAY = 23;
 
 
   static private final String[] ICON_PATHS = 
@@ -61,6 +63,8 @@ public class ItemMold extends Item
     "foundry:claymold_helmet",
     "foundry:mold_boots",
     "foundry:claymold_boots",
+    "foundry:mold_gear",
+    "foundry:claymold_gear"
   };
   
   static public final String[] NAMES = 
@@ -86,7 +90,9 @@ public class ItemMold extends Item
     "Helmet Mold",
     "Clay Helmet Mold",
     "Boots Mold",
-    "Clay Boots Mold"
+    "Clay Boots Mold",
+    "Gear Mold",
+    "Clay Gear Mold"
   };
   
   

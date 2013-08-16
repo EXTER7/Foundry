@@ -351,23 +351,23 @@ public class ModFoundry
     int ore_id = FoundryBlocks.block_ore.blockID;
     if(wordgen_copper)
     {
-      WordGenOre.RegisterOre(16, 96, 15, ore_id, BlockFoundryOre.ORE_COPPER);
+      WordGenOre.RegisterOre(16, 80, 12, ore_id, BlockFoundryOre.ORE_COPPER);
     }
     if(wordgen_tin)
     {
-      WordGenOre.RegisterOre(16, 52, 10, ore_id, BlockFoundryOre.ORE_TIN);
+      WordGenOre.RegisterOre(16, 52, 8, ore_id, BlockFoundryOre.ORE_TIN);
     }
     if(wordgen_zinc)
     {
-      WordGenOre.RegisterOre(8, 48, 8, ore_id, BlockFoundryOre.ORE_ZINC);
+      WordGenOre.RegisterOre(8, 48, 6, ore_id, BlockFoundryOre.ORE_ZINC);
     }
     if(wordgen_nickel)
     {
-      WordGenOre.RegisterOre(8, 36, 6, ore_id, BlockFoundryOre.ORE_NICKEL);
+      WordGenOre.RegisterOre(8, 36, 5, ore_id, BlockFoundryOre.ORE_NICKEL);
     }
     if(wordgen_silver)
     {
-      WordGenOre.RegisterOre(2, 30, 4, ore_id, BlockFoundryOre.ORE_SILVER);
+      WordGenOre.RegisterOre(2, 30, 3, ore_id, BlockFoundryOre.ORE_SILVER);
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator());
 

@@ -53,8 +53,8 @@ public class BlockFoundryOre extends Block
   public BlockFoundryOre(int id)
   {
     super(id, Material.rock);
-    setHardness(1.0F);
-    setResistance(8.0F);
+    setHardness(3.0F);
+    setResistance(5.0F);
     setStepSound(Block.soundStoneFootstep);
     setUnlocalizedName("foundryOre");
     setCreativeTab(CreativeTabs.tabMisc);

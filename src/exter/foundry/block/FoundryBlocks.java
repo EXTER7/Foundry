@@ -7,6 +7,7 @@ import exter.foundry.item.ItemMold;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class FoundryBlocks
@@ -42,6 +43,7 @@ public class FoundryBlocks
     block_metal = new BlockMetal(metal_block_id);
     block_ore = new BlockFoundryOre(ore_id);
 
+    MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     
     GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
     GameRegistry.registerBlock(block_induction_crucible_furnace, "inductionCrucibleFurnace");

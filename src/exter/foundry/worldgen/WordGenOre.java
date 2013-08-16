@@ -41,7 +41,7 @@ public class WordGenOre
 
     BlockID = block_id;
     BlockMeta = block_meta;
-    wgm = new WorldGenMinable(BlockID, BlockMeta, 8, Block.stone.blockID);
+    wgm = new WorldGenMinable(BlockID, BlockMeta, 7, Block.stone.blockID);
   }
 
   private void GenerateOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)

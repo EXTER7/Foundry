@@ -15,38 +15,50 @@ public class ModIntegration
   
   protected boolean is_loaded;
   
-  protected Map<String,ItemStack> items;
+  protected ItemStack[] items;
   
-  protected void RegisterItem(Class clazz,String field_name)
+  protected ItemStack GetItemFromField(Class clazz,String field_name)
   {
     try
     {
       Object obj = clazz.getField(field_name).get(null);
+      if(obj == null)
+      {
+        return null;
+      }
       if(obj instanceof Item)
       {
-        items.put(field_name,new ItemStack((Item)obj));
-      } else
+        return new ItemStack((Item)obj);
+      } 
+      if(obj instanceof ItemStack)
       {
-        ModFoundry.log.info("[ModIntegration ("+ Name +")] field" + field_name + "is not Item");
-        is_loaded = false;
+        return ((ItemStack)obj).copy();
       }
+
+      ModFoundry.log.info("[ModIntegration ("+ Name +")] field" + field_name + "is not Item or ItemStack");
     } catch(IllegalAccessException e)
     {
-      is_loaded = false;
       ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find item " + field_name);
-      return;
     } catch(NoSuchFieldException e)
     {
       ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find item " + field_name);
-      is_loaded = false;
-      return;
     }
+    return null;
   }
 
+  protected void VerifyItems()
+  {
+    for(ItemStack is:items)
+    {
+      if(is == null)
+      {
+        is_loaded = false;
+      }
+    }
+  }
   
   public ModIntegration(String mod_name)
   {
-    items = new HashMap<String,ItemStack>();
     Name = mod_name;
     is_loaded = true;
   }
@@ -56,9 +68,9 @@ public class ModIntegration
     return is_loaded;
   }
   
-  public final ItemStack GetItem(String name)
+  public final ItemStack GetItem(int index)
   {
-    return items.get(name);
+    return items[index];
   }
   
   static public ModIntegration GetIntegration(String name)

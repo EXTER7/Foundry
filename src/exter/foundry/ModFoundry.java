@@ -288,24 +288,6 @@ public class ModFoundry
         'R', redstone_stack,
         'G', "gearStone"));
 
-    ModIntegration bc_int = ModIntegration.GetIntegration("buildcraft");
-    if(bc_int != null)
-    {
-      ItemStack gear_wood = bc_int.GetItem("woodenGearItem");
-      RegisterInOreDictionary("gearWood",gear_wood);
-      
-      ItemStack gear_stone = bc_int.GetItem("stoneGearItem");
-      RegisterInOreDictionary("gearStone",gear_stone);
-      
-      ItemStack gear_iron = bc_int.GetItem("ironGearItem");
-      RegisterInOreDictionary("gearIron",gear_iron);
-
-      ItemStack gear_gold = bc_int.GetItem("goldGearItem");
-      RegisterInOreDictionary("gearGold",gear_gold);
-
-      ItemStack gear_diamond = bc_int.GetItem("diamondGearItem");
-      RegisterInOreDictionary("gearDiamond",gear_diamond);
-    }
     
     RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
     RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.stone,1,-1));
@@ -433,31 +415,6 @@ public class ModFoundry
     proxy.Init();
   }
   
-  private boolean IsItemInOreDictionary(String name,ItemStack stack)
-  {
-    List<ItemStack> ores = OreDictionary.getOres(name);
-    for(ItemStack i:ores)
-    {
-      if(i.isItemEqual(stack))
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  //Register item in the ore dictionary only if its not already registered
-  private void RegisterInOreDictionary(String name,ItemStack stack)
-  {
-    if(stack == null)
-    {
-      return;
-    }
-    if(!IsItemInOreDictionary(name,stack))
-    {
-      OreDictionary.registerOre(name, stack);
-    }
-  }
 
   
 

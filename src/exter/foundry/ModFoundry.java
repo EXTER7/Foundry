@@ -43,6 +43,7 @@ import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBuildcraft;
+import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemMold;
@@ -116,9 +117,6 @@ public class ModFoundry
     wordgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
 
     config.save();
-
-    
-    
    
 
 
@@ -197,9 +195,7 @@ public class ModFoundry
 
     
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
-
   }
-
   
   private void RegisterMoldRecipe(int dv,ItemStack pattern)
   {
@@ -224,6 +220,7 @@ public class ModFoundry
     log.setParent(FMLLog.getLogger());
 
     ModIntegration.RegisterIntegration(new ModIntegrationBuildcraft("buildcraft"));
+    ModIntegration.RegisterIntegration(new ModIntegrationForestry("forestry"));
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
@@ -414,9 +411,6 @@ public class ModFoundry
 
     proxy.Init();
   }
-  
-
-  
 
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
@@ -435,7 +429,5 @@ public class ModFoundry
           'C', cobble_stack,
           'S', stick_stack);
     }
-
   }
-
 }

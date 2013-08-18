@@ -277,7 +277,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
     FluidStack drain_a = tank_a.drain(in_a, false);
     FluidStack drain_b = tank_b.drain(in_b, false);
-    if(drain_a != null && drain_a.amount == in_a && drain_b != null && drain_b.amount == in_b && tank_output.fill(out, false) == out.amount)
+    if(power_handler.getEnergyStored() > 0 && drain_a != null && drain_a.amount == in_a && drain_b != null && drain_b.amount == in_b && tank_output.fill(out, false) == out.amount)
     {
       int energy = (int) (power_handler.useEnergy(0, 4, true) * 100);
       progress += energy;
@@ -397,8 +397,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     super.writeToNBT(packet);
 
     int last_progress = progress;
-    
-    power_handler.getPowerReceiver().update();
 
     if(tank_input_a.getFluidAmount() * tank_input_b.getFluidAmount() > 0)
     {

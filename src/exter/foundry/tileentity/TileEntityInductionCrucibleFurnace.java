@@ -48,6 +48,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MELT = 25000;
   static public final int SMELT_TIME = 10000;
   
+  static public final int MAX_ENERGY_USE = 40;
+  
   private ItemStack input;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
@@ -451,8 +453,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       update_clients = true;
       WriteProgressToNBT(packet);
     }
-    
-    power_handler.getPowerReceiver().update();
 
     int last_heat = heat;
     if(heat > 0)
@@ -465,16 +465,19 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     }
 
     int energy_need = HEAT_MAX - heat;
-    if(energy_need > 32)
+    if(energy_need > MAX_ENERGY_USE)
     {
-      energy_need = 32;
+      energy_need = MAX_ENERGY_USE;
     }
     
-    int energy = (int)power_handler.useEnergy(1, energy_need, true);
-    heat += energy;
-    if(heat > HEAT_MAX)
+    if(power_handler.getMaxEnergyStored() > 0)
     {
-      heat = HEAT_MAX;
+      int energy = (int)power_handler.useEnergy(1, energy_need, true);
+      heat += energy;
+      if(heat > HEAT_MAX)
+      {
+        heat = HEAT_MAX;
+      }
     }
     if(last_heat != heat)
     {

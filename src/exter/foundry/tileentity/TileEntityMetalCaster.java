@@ -393,8 +393,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     NBTTagCompound packet = new NBTTagCompound();
     super.writeToNBT(packet);
 
-    power_handler.getPowerReceiver().update();
-
     int last_progress = progress;
     if(tank.getFluidAmount() > 0)
     {
@@ -410,30 +408,33 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
             ItemStack extra = recipe.GetExtra();
             if(extra == null || (inventory[SLOT_EXTRA] != null && extra.isItemEqual(inventory[SLOT_EXTRA]) && inventory[SLOT_EXTRA].stackSize >= extra.stackSize))
             {
-              int energy = (int) (power_handler.useEnergy(0, 2, true) * 100);
-              progress += energy;
-
-              if(progress >= CAST_TIME)
+              if(power_handler.getEnergyStored() > 0)
               {
-                progress -= CAST_TIME;
-                tank.drain(recipe.GetFluid().amount, true);
-                if(extra != null)
+                int energy = (int) (power_handler.useEnergy(0, 5, true) * 100);
+                progress += energy;
+
+                if(progress >= CAST_TIME)
                 {
-                  decrStackSize(SLOT_EXTRA, extra.stackSize);
-                  WriteInventoryItemToNBT(packet, SLOT_EXTRA);
+                  progress -= CAST_TIME;
+                  tank.drain(recipe.GetFluid().amount, true);
+                  if(extra != null)
+                  {
+                    decrStackSize(SLOT_EXTRA, extra.stackSize);
+                    WriteInventoryItemToNBT(packet, SLOT_EXTRA);
+                  }
+                  if(output == null)
+                  {
+                    inventory[SLOT_OUTPUT] = result;
+                    inventory[SLOT_OUTPUT].stackSize = 1;
+                  } else
+                  {
+                    output.stackSize++;
+                  }
+                  WriteInventoryItemToNBT(packet, SLOT_OUTPUT);
+                  WriteTankToNBT(packet);
+                  update_clients = true;
+                  onInventoryChanged();
                 }
-                if(output == null)
-                {
-                  inventory[SLOT_OUTPUT] = result;
-                  inventory[SLOT_OUTPUT].stackSize = 1;
-                } else
-                {
-                  output.stackSize++;
-                }
-                WriteInventoryItemToNBT(packet, SLOT_OUTPUT);
-                WriteTankToNBT(packet);
-                update_clients = true;
-                onInventoryChanged();
               }
             } else
             {

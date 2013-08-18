@@ -1,5 +1,6 @@
 package exter.foundry.tileentity;
 
+import buildcraft.api.power.IPowerReceptor;
 import exter.foundry.network.FoundryPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +31,11 @@ public abstract class TileEntityFoundry extends TileEntity
   @Override
   public final void updateEntity()
   {
+    if(this instanceof IPowerReceptor)
+    {
+      ((IPowerReceptor)this).getPowerReceiver(null).update();
+    }
+
     if(!worldObj.isRemote)
     {
       UpdateEntityServer();

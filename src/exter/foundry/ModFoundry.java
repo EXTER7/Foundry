@@ -47,6 +47,7 @@ import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -335,6 +336,12 @@ public class ModFoundry
       }
     }
 
+    FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_COPPER,ItemIngot.INGOT_COPPER);
+    FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_TIN,ItemIngot.INGOT_TIN);
+    FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_ZINC,ItemIngot.INGOT_ZINC);
+    FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_NICKEL,ItemIngot.INGOT_NICKEL);
+    FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_SILVER,ItemIngot.INGOT_SILVER);
+    
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_BLOCK_CLAY,ItemMold.MOLD_BLOCK);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_CHESTPLATE_CLAY,ItemMold.MOLD_CHESTPLATE);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_INGOT_CLAY,ItemMold.MOLD_INGOT);

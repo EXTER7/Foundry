@@ -3,6 +3,7 @@ package exter.foundry;
 import java.util.List;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,11 @@ public class FoundryUtils
   static public void RegisterMoldSmelting(int clay,int mold)
   {
     FurnaceRecipes.smelting().addSmelting(FoundryItems.item_mold.itemID, clay, new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
+  }
+
+  static public void RegisterOreSmelting(int ore,int ingot)
+  {
+    FurnaceRecipes.smelting().addSmelting(FoundryBlocks.block_ore.blockID, ore, new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 
   static public boolean IsItemInOreDictionary(String name,ItemStack stack)

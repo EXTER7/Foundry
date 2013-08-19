@@ -13,15 +13,15 @@ import net.minecraft.util.Icon;
 
 public class ItemIngot extends Item
 {
-  static private final int INGOT_COPPER = 0;
-  static private final int INGOT_TIN = 1;
-  static private final int INGOT_BRONZE = 2;
-  static private final int INGOT_ELECTRUM = 3;
-  static private final int INGOT_INVAR = 4;
-  static private final int INGOT_NICKEL = 5;
-  static private final int INGOT_ZINC = 6;
-  static private final int INGOT_BRASS = 7;
-  static private final int INGOT_SILVER = 8;
+  static public final int INGOT_COPPER = 0;
+  static public final int INGOT_TIN = 1;
+  static public final int INGOT_BRONZE = 2;
+  static public final int INGOT_ELECTRUM = 3;
+  static public final int INGOT_INVAR = 4;
+  static public final int INGOT_NICKEL = 5;
+  static public final int INGOT_ZINC = 6;
+  static public final int INGOT_BRASS = 7;
+  static public final int INGOT_SILVER = 8;
 
 
   static private final String[] ICON_PATHS = 

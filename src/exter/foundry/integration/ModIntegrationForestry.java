@@ -15,9 +15,9 @@ public class ModIntegrationForestry extends ModIntegration
   {
     super(mod_name);
     items = new ItemStack[3];
-    items[ITEM_COPPER_GEAR] = ItemInterface.getItem("gearCopper");
-    items[ITEM_TIN_GEAR] = ItemInterface.getItem("gearTin");
-    items[ITEM_BRONZE_GEAR] = ItemInterface.getItem("gearBronze");
+    items[ITEM_COPPER_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearCopper"));
+    items[ITEM_TIN_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearTin"));
+    items[ITEM_BRONZE_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearBronze"));
     VerifyItems();
 
     if(is_loaded)

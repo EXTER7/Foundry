@@ -32,15 +32,15 @@ public class ModIntegrationIC2 extends ModIntegration
     super(mod_name);
     items = new ItemStack[9];
 
-    items[ITEM_BRONZE_PICKAXE] = Items.getItem("bronzePickaxe").copy();
-    items[ITEM_BRONZE_AXE] = Items.getItem("bronzeAxe").copy();
-    items[ITEM_BRONZE_SHOVEL] = Items.getItem("bronzeShovel").copy();
-    items[ITEM_BRONZE_HOE] = Items.getItem("bronzeHoe").copy();
-    items[ITEM_BRONZE_SWORD] = Items.getItem("bronzeSword").copy();
-    items[ITEM_BRONZE_HELMET] = Items.getItem("bronzeHelmet").copy();
-    items[ITEM_BRONZE_CHESTPLATE] = Items.getItem("bronzeChestplate").copy();
-    items[ITEM_BRONZE_LEGGINGS] = Items.getItem("bronzeLeggings").copy();
-    items[ITEM_BRONZE_BOOTS] = Items.getItem("bronzeBoots").copy();
+    items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
+    items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));
+    items[ITEM_BRONZE_SHOVEL] = ItemStack.copyItemStack(Items.getItem("bronzeShovel"));
+    items[ITEM_BRONZE_HOE] = ItemStack.copyItemStack(Items.getItem("bronzeHoe"));
+    items[ITEM_BRONZE_SWORD] = ItemStack.copyItemStack(Items.getItem("bronzeSword"));
+    items[ITEM_BRONZE_HELMET] = ItemStack.copyItemStack(Items.getItem("bronzeHelmet"));
+    items[ITEM_BRONZE_CHESTPLATE] = ItemStack.copyItemStack(Items.getItem("bronzeChestplate"));
+    items[ITEM_BRONZE_LEGGINGS] = ItemStack.copyItemStack(Items.getItem("bronzeLeggings"));
+    items[ITEM_BRONZE_BOOTS] = ItemStack.copyItemStack(Items.getItem("bronzeBoots"));
     VerifyItems();
 
     if(is_loaded)

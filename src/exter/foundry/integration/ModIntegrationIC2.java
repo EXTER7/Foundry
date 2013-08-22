@@ -26,11 +26,15 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_BRONZE_LEGGINGS = 7;
   static public final int ITEM_BRONZE_BOOTS = 8;
 
+  static public final int ITEM_COPPER_CABLE = 9;
+  static public final int ITEM_TIN_CABLE = 10;
+  static public final int ITEM_GOLD_CABLE = 11;
+
   
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[9];
+    items = new ItemStack[12];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
     items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));
@@ -41,11 +45,19 @@ public class ModIntegrationIC2 extends ModIntegration
     items[ITEM_BRONZE_CHESTPLATE] = ItemStack.copyItemStack(Items.getItem("bronzeChestplate"));
     items[ITEM_BRONZE_LEGGINGS] = ItemStack.copyItemStack(Items.getItem("bronzeLeggings"));
     items[ITEM_BRONZE_BOOTS] = ItemStack.copyItemStack(Items.getItem("bronzeBoots"));
+
+    items[ITEM_COPPER_CABLE] = ItemStack.copyItemStack(Items.getItem("copperCableItem"));
+    items[ITEM_TIN_CABLE] = ItemStack.copyItemStack(Items.getItem("tinCableItem"));
+    items[ITEM_GOLD_CABLE] = ItemStack.copyItemStack(Items.getItem("goldCableItem"));
     VerifyItems();
 
     if(is_loaded)
     {
       Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
+      Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
+      Fluid liquid_tin = LiquidMetalRegistry.GetMetal("Tin").fluid;
+      Fluid liquid_gold = LiquidMetalRegistry.GetMetal("Gold").fluid;
+
       ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
       ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
       ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CHESTPLATE);
@@ -57,6 +69,7 @@ public class ModIntegrationIC2 extends ModIntegration
       ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_LEGGINGS);
       ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_HELMET);
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BOOTS);
+      ItemStack mold_cable = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
 
       CastingRecipe.RegisterRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipe.RegisterRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
@@ -67,6 +80,9 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipe.RegisterRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 7), mold_leggings, null);
       CastingRecipe.RegisterRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 5), mold_helmet, null);
       CastingRecipe.RegisterRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipe.RegisterRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,MeltingRecipe.AMOUNT_INGOT / 4), mold_cable, null);
+      CastingRecipe.RegisterRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin,MeltingRecipe.AMOUNT_INGOT / 3), mold_cable, null);
+      CastingRecipe.RegisterRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT / 4), mold_cable, null);
 
       FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
       FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
@@ -77,6 +93,9 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, items[ITEM_BRONZE_SHOVEL]);
       FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_BRONZE_HOE]);
       FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_BRONZE_SWORD]);
+      FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_COPPER_CABLE]);
+      FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_TIN_CABLE]);
+      FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_GOLD_CABLE]);
     }
   }
 }

@@ -151,6 +151,8 @@ public class ModFoundry
     ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_HELMET);
     ItemStack mold_boots = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BOOTS);
     ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+    ItemStack mold_cable_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
+    ItemStack mold_casing_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
     ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
     
@@ -167,6 +169,8 @@ public class ModFoundry
     CastingRecipe.RegisterMold(mold_helmet);
     CastingRecipe.RegisterMold(mold_boots);
     CastingRecipe.RegisterMold(mold_gear);
+    CastingRecipe.RegisterMold(mold_cable_ic2);
+    CastingRecipe.RegisterMold(mold_casing_ic2);
 
     CastingRecipe.RegisterRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
     CastingRecipe.RegisterRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 8), mold_chestplate, null);
@@ -195,7 +199,14 @@ public class ModFoundry
     CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
     CastingRecipe.RegisterRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_boots, null);
 
-    
+    CastingRecipe.RegisterRecipe("gearIron", new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearGold", new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearCopper", new FluidStack(liquid_copper,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearTin", new FluidStack(liquid_tin,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearBronze", new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearBrass", new FluidStack(liquid_brass,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearInvar", new FluidStack(liquid_invar,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
   }
   
@@ -354,6 +365,8 @@ public class ModFoundry
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_HELMET_CLAY,ItemMold.MOLD_HELMET);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_CLAY,ItemMold.MOLD_BOOTS);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_CLAY,ItemMold.MOLD_GEAR);
+    FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_CABLE_IC2_CLAY,ItemMold.MOLD_CABLE_IC2);
+    FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_CASING_IC2_CLAY,ItemMold.MOLD_CASING_IC2);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 
@@ -369,14 +382,6 @@ public class ModFoundry
     Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
     Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
 
-    ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
-    CastingRecipe.RegisterRecipe("gearIron", new FluidStack(liquid_iron,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearGold", new FluidStack(liquid_gold,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearCopper", new FluidStack(liquid_copper,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearTin", new FluidStack(liquid_tin,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearBronze", new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearBrass", new FluidStack(liquid_brass,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipe.RegisterRecipe("gearInvar", new FluidStack(liquid_invar,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
 
 
     int ore_id = FoundryBlocks.block_ore.blockID;

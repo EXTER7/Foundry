@@ -37,6 +37,10 @@ public class ItemMold extends Item
   static public final int MOLD_BOOTS_CLAY = 21;
   static public final int MOLD_GEAR = 22;
   static public final int MOLD_GEAR_CLAY = 23;
+  static public final int MOLD_CABLE_IC2 = 24;
+  static public final int MOLD_CABLE_IC2_CLAY = 25;
+  static public final int MOLD_CASING_IC2 = 26;
+  static public final int MOLD_CASING_IC2_CLAY = 27;
 
 
   static private final String[] ICON_PATHS = 
@@ -64,7 +68,11 @@ public class ItemMold extends Item
     "foundry:mold_boots",
     "foundry:claymold_boots",
     "foundry:mold_gear",
-    "foundry:claymold_gear"
+    "foundry:claymold_gear",
+    "foundry:mold_cable_ic2",
+    "foundry:claymold_cable_ic2",
+    "foundry:mold_casing_ic2",
+    "foundry:claymold_casing_ic2"
   };
   
   static public final String[] NAMES = 
@@ -92,7 +100,11 @@ public class ItemMold extends Item
     "Boots Mold",
     "Clay Boots Mold",
     "Gear Mold",
-    "Clay Gear Mold"
+    "Clay Gear Mold",
+    "Cable Mold",
+    "Clay Cable Mold",
+    "Machine Casing Mold",
+    "Clay Machine Casing Mold"
   };
   
   

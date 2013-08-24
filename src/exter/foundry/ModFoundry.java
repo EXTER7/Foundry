@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,10 +54,14 @@ import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.CastingRecipe;
+import exter.foundry.recipes.InfuserRecipe;
+import exter.foundry.recipes.InfuserSubstance;
+import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
 
@@ -112,6 +117,7 @@ public class ModFoundry
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Zinc", 3840);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 3841);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 3845);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
@@ -133,6 +139,7 @@ public class ModFoundry
     Fluid liquid_invar = LiquidMetalRegistry.GetMetal("Invar").fluid;
     Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
     Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
+    Fluid liquid_steel = LiquidMetalRegistry.GetMetal("Steel").fluid;
 
     AlloyRecipe.RegisterRecipe(new FluidStack(liquid_bronze,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
     AlloyRecipe.RegisterRecipe(new FluidStack(liquid_brass,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
@@ -207,6 +214,14 @@ public class ModFoundry
     CastingRecipe.RegisterRecipe("gearBrass", new FluidStack(liquid_brass,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipe.RegisterRecipe("gearInvar", new FluidStack(liquid_invar,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
 
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), new ItemStack(Item.coal,1,0), 300);
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), new ItemStack(Item.coal,1,1), 600);
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",324), new ItemStack(Block.field_111034_cE/*Coal Block*/,1), 2400);
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), "dustCoal", 200);
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), "dustCharcoal", 400);
+    
+    InfuserRecipe.RegisterRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon",2));
+    
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
   }
   
@@ -223,6 +238,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
+    GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");
 
     ItemStack brick_stack = new ItemStack(Item.brick);
     ItemStack iron_stack = new ItemStack(Item.ingotIron);
@@ -272,7 +288,17 @@ public class ModFoundry
         'P', piston_stack,
         'C', crucible_stack,
         'R', redstone_stack);
-    
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_metal_infuser),
+        "IGI",
+        "BCB",
+        "IHI",
+        'I', iron_stack, 
+        'B', brickblock_stack,
+        'C', crucible_stack,
+        'G', "gearStone",
+        'H', heatingcoil_stack));
+
     GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_alloy_mixer),
         "RGR",
         "BCB",

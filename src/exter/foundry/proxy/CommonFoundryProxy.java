@@ -8,12 +8,15 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.gui.GuiInductionCrucibleFurnace;
+import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMetalInfuser;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
@@ -33,6 +36,8 @@ public class CommonFoundryProxy implements IGuiHandler
         return new ContainerMetalCaster((TileEntityMetalCaster)world.getBlockTileEntity(x, y, z),player.inventory);
       case 2:
         return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z),player.inventory);
+      case 3:
+        return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z),player.inventory);
     }
     return null;
   }
@@ -57,8 +62,12 @@ public class CommonFoundryProxy implements IGuiHandler
         TileEntityAlloyMixer te = (TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z);
         return new GuiAlloyMixer(te,player.inventory);
       }
+      case 3:
+      {
+        TileEntityMetalInfuser te = (TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z);
+        return new GuiMetalInfuser(te,player.inventory);
+      }
     } 
     return null;
   }
-
 }

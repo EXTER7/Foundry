@@ -9,4 +9,5 @@ fluid.liquidNickel=Liquid Nickel
 fluid.liquidZinc=Liquid Zinc
 fluid.liquidBrass=Liquid Brass
 fluid.liquidSilver=Liquid Silver
-
+fluid.liquidSteel=Liquid Steel
+substance.carbon=Carbon

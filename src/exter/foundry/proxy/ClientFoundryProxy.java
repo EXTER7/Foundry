@@ -15,5 +15,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   public void Init()
   {
     InfuserRecipe.RegisterSubstanceTexture("carbon", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,0,0));
+    InfuserRecipe.RegisterSubstanceTexture("sand", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,8,0));
   }
 }

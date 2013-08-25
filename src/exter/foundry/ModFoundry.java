@@ -118,6 +118,7 @@ public class ModFoundry
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 3841);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 3845);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "RefinedIron", 3848);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
@@ -140,6 +141,7 @@ public class ModFoundry
     Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
     Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
     Fluid liquid_steel = LiquidMetalRegistry.GetMetal("Steel").fluid;
+    Fluid liquid_refined_iron = LiquidMetalRegistry.GetMetal("RefinedIron").fluid;
 
     AlloyRecipe.RegisterRecipe(new FluidStack(liquid_bronze,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
     AlloyRecipe.RegisterRecipe(new FluidStack(liquid_brass,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
@@ -219,8 +221,11 @@ public class ModFoundry
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",324), new ItemStack(Block.field_111034_cE/*Coal Block*/,1), 2400);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), "dustCoal", 200);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), "dustCharcoal", 400);
-    
+
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("sand",500), new ItemStack(Block.sand,1), 15);
+
     InfuserRecipe.RegisterRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon",2));
+    InfuserRecipe.RegisterRecipe(new FluidStack(liquid_refined_iron,12), new FluidStack(liquid_iron,12), new InfuserSubstance("sand",1));
     
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
   }

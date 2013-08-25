@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class InfuserSubstance
 {
-  static public final int MAX_AMOUNT = 500;
+  static public final int MAX_AMOUNT = 1000;
   
   public final String type;
   public int amount;
@@ -44,7 +44,7 @@ public class InfuserSubstance
     {
       return amount == 0;
     }
-    return is.type.equals(is.type);
+    return type.equals(is.type);
   }
   
   public boolean Contains(InfuserSubstance is)

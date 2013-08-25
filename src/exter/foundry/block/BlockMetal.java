@@ -29,6 +29,7 @@ public class BlockMetal extends Block
   static private final int BLOCK_ZINC = 6;
   static private final int BLOCK_BRASS = 7;
   static private final int BLOCK_SILVER = 8;
+  static private final int BLOCK_STEEL = 9;
 
 
   static private final String[] ICON_PATHS = 
@@ -41,7 +42,8 @@ public class BlockMetal extends Block
     "foundry:metalblock_nickel",
     "foundry:metalblock_zinc",
     "foundry:metalblock_brass",
-    "foundry:metalblock_silver"
+    "foundry:metalblock_silver",
+    "foundry:metalblock_steel"
   };
   
   static public final String[] NAMES = 
@@ -54,7 +56,8 @@ public class BlockMetal extends Block
     "Block of Nickel",
     "Block of Zinc",
     "Block of Brass",
-    "Block of Silver"
+    "Block of Silver",
+    "Block of Steel"
   };
 
   static public final String[] OREDICT_NAMES = 
@@ -67,7 +70,8 @@ public class BlockMetal extends Block
     "blockNickel",
     "blockZinc",
     "blockBrass",
-    "blockSilver"
+    "blockSilver",
+    "blockSteel"
   };
 
   @SideOnly(Side.CLIENT)

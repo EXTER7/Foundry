@@ -8,12 +8,15 @@ then
   exit 1
 fi
 
-rm -rf "$1/mcp/src/minecraft/exter/"$MODNAME
-rm -rf "$1/mcp/src/minecraft/assets/"$MODNAME
 
 if [ -d "$1/mcp/src/minecraft/net/minecraftforge/common" ]
 then
   mkdir -p "$1/mcp/src/minecraft/exter"
+  mkdir -p "$1/mcp/src/minecraft/assets"
+
+  rm -rf "$1/mcp/src/minecraft/exter/"$MODNAME
+  rm -rf "$1/mcp/src/minecraft/assets/"$MODNAME
+
   ln -sf $(pwd)"/src/exter/"$MODNAME "$1/mcp/src/minecraft/exter/"
   ln -sf $(pwd)"/assets/"$MODNAME "$1/mcp/src/minecraft/assets/"
   ln -sf $(pwd)"/build_"$MODNAME".sh" "$1/mcp/build_"$MODNAME".sh" 

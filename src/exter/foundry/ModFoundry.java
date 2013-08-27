@@ -65,7 +65,7 @@ import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
 
-@Mod(modid = ModFoundry.MODID, name = ModFoundry.MODNAME, version = "0.1.0")
+@Mod(modid = ModFoundry.MODID, name = ModFoundry.MODNAME, version = "0.1.0", dependencies = "required-after:Forge@[9.10.0.842,)")
 @NetworkMod(channels = { ModFoundry.CHANNEL }, clientSideRequired = true, serverSideRequired = true, packetHandler = FoundryPacketHandler.class)
 public class ModFoundry
 {

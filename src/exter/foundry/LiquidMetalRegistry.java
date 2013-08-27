@@ -60,7 +60,7 @@ public class LiquidMetalRegistry
     int i;
     int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
 
-    Fluid fluid = new Fluid("liquid" + metal_name);
+    Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(2000).setLuminosity(15).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
     Block block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name).setUnlocalizedName("liquid" + metal_name);

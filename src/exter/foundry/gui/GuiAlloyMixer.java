@@ -39,7 +39,7 @@ import net.minecraftforge.fluids.FluidTank;
 public class GuiAlloyMixer extends GuiFoundry
 {
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.field_110575_b;
+  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
 
   private static final int TANK_HEIGHT = 47;
   
@@ -101,7 +101,7 @@ public class GuiAlloyMixer extends GuiFoundry
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    mc.renderEngine.func_110577_a(GUI_TEXTURE);
+    mc.renderEngine.bindTexture(GUI_TEXTURE);
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);

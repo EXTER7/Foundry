@@ -50,7 +50,6 @@ public class GuiMetalInfuser extends GuiFoundry
 {
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser.png");
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.field_110575_b;
 
   private static final int TANK_HEIGHT = 47;
   private static final int INPUT_TANK_X = 85;
@@ -99,7 +98,7 @@ public class GuiMetalInfuser extends GuiFoundry
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    mc.renderEngine.func_110577_a(GUI_TEXTURE);
+    mc.renderEngine.bindTexture(GUI_TEXTURE);
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
@@ -116,11 +115,11 @@ public class GuiMetalInfuser extends GuiFoundry
     if(sub != null && sub.amount > 0)
     {
       SubstanceGuiTexture tex = InfuserRecipe.GetSubstanceTexture(sub.type);
-      mc.renderEngine.func_110577_a(tex.texture);
+      mc.renderEngine.bindTexture(tex.texture);
       int height = sub.amount * TANK_HEIGHT / InfuserSubstance.MAX_AMOUNT;
 
       drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.x, tex.y + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
-      mc.renderEngine.func_110577_a(GetGUITexture());
+      mc.renderEngine.bindTexture(GetGUITexture());
     }
   }
 

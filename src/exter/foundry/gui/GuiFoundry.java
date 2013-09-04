@@ -25,7 +25,7 @@ import exter.foundry.tileentity.TileEntityMetalCaster;
 
 public abstract class GuiFoundry extends GuiContainer
 {
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.field_110575_b;
+  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
 
   public GuiFoundry(Container container)
   {
@@ -83,7 +83,7 @@ public abstract class GuiFoundry extends GuiContainer
     {
       liquid_icon = fluid.getStillIcon();
     }
-    mc.renderEngine.func_110577_a(BLOCK_TEXTURE);
+    mc.renderEngine.bindTexture(BLOCK_TEXTURE);
 
     int h = liquid.amount * tank_height / tank.getCapacity();
     
@@ -117,7 +117,7 @@ public abstract class GuiFoundry extends GuiContainer
       }
     }
 
-    mc.renderEngine.func_110577_a(GetGUITexture());
+    mc.renderEngine.bindTexture(GetGUITexture());
     drawTexturedModalRect(window_x + x, window_y + y, overlay_x, overlay_y, 16, tank_height);
   }
 }

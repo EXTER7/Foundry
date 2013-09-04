@@ -46,7 +46,6 @@ public class GuiMetalCaster extends GuiFoundry
 {
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/caster.png");
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.field_110575_b;
 
   private static final int TANK_HEIGHT = 47;
   private static final int TANK_X = 25;
@@ -88,7 +87,7 @@ public class GuiMetalCaster extends GuiFoundry
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    mc.renderEngine.func_110577_a(GUI_TEXTURE);
+    mc.renderEngine.bindTexture(GUI_TEXTURE);
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);

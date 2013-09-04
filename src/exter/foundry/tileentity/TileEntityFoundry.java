@@ -49,8 +49,7 @@ public abstract class TileEntityFoundry extends TileEntity
   public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
   {
     super.onDataPacket(net, pkt);
-    readFromNBT(pkt.customParam1);
+    readFromNBT(pkt.data);
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
   }
-
 }

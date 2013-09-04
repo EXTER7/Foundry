@@ -218,7 +218,7 @@ public class ModFoundry
 
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), new ItemStack(Item.coal,1,0), 300);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), new ItemStack(Item.coal,1,1), 600);
-    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",324), new ItemStack(Block.field_111034_cE/*Coal Block*/,1), 2400);
+    InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",324), new ItemStack(Block.coalBlock,1), 2400);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), "dustCoal", 200);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), "dustCharcoal", 400);
 

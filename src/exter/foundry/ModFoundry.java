@@ -87,6 +87,7 @@ public class ModFoundry
   private static boolean wordgen_zinc;
   private static boolean wordgen_nickel;
   private static boolean wordgen_silver;
+  private static boolean wordgen_lead;
 
 
   public static Logger log = Logger.getLogger(MODNAME);
@@ -119,11 +120,13 @@ public class ModFoundry
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 3845);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "RefinedIron", 3848);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Lead", 3849);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
     wordgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
     wordgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
+    wordgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
 
     config.save();
    
@@ -435,6 +438,10 @@ public class ModFoundry
     if(wordgen_silver)
     {
       WordGenOre.RegisterOre(2, 30, 3, ore_id, BlockFoundryOre.ORE_SILVER);
+    }
+    if(wordgen_lead)
+    {
+      WordGenOre.RegisterOre(8, 48, 5, ore_id, BlockFoundryOre.ORE_LEAD);
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator());
 

@@ -18,6 +18,7 @@ public class BlockFoundryOre extends Block
   static public final int ORE_NICKEL = 2;
   static public final int ORE_ZINC = 3;
   static public final int ORE_SILVER = 4;
+  static public final int ORE_LEAD = 5;
 
 
   static private final String[] ICON_PATHS = 
@@ -26,7 +27,8 @@ public class BlockFoundryOre extends Block
     "foundry:ore_tin",
     "foundry:ore_nickel",
     "foundry:ore_zinc",
-    "foundry:ore_silver"
+    "foundry:ore_silver",
+    "foundry:ore_lead"
   };
   
   static public final String[] NAMES = 
@@ -35,7 +37,8 @@ public class BlockFoundryOre extends Block
     "Tin Ore",
     "Nickel Ore",
     "Zinc Ore",
-    "Silver Ore"
+    "Silver Ore",
+    "Lead Ore"
   };
 
   static public final String[] OREDICT_NAMES = 
@@ -44,7 +47,8 @@ public class BlockFoundryOre extends Block
     "oreTin",
     "oreNickel",
     "oreZinc",
-    "oreSilver"
+    "oreSilver",
+    "oreLead"
   };
 
   @SideOnly(Side.CLIENT)

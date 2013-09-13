@@ -3,7 +3,7 @@
 MODNAME=foundry
 
 rm -rf packed/*
-if ./recompile.sh && ./reobfuscate.sh
+if ./recompile.sh && ./reobfuscate_srg.sh
 then
   mkdir -p "packed/exter"
   mkdir -p "packed/assets/"$MODNAME

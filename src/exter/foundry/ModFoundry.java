@@ -11,8 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -46,6 +44,7 @@ import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationIC2;
+import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
@@ -218,6 +217,7 @@ public class ModFoundry
     CastingRecipe.RegisterRecipe("gearBronze", new FluidStack(liquid_bronze,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipe.RegisterRecipe("gearBrass", new FluidStack(liquid_brass,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipe.RegisterRecipe("gearInvar", new FluidStack(liquid_invar,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipe.RegisterRecipe("gearSteel", new FluidStack(liquid_steel,MeltingRecipe.AMOUNT_INGOT * 4), mold_gear, null);
 
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), new ItemStack(Item.coal,1,0), 300);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), new ItemStack(Item.coal,1,1), 600);
@@ -242,6 +242,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(new ModIntegrationIC2("ic2"));
     ModIntegration.RegisterIntegration(new ModIntegrationBuildcraft("buildcraft"));
     ModIntegration.RegisterIntegration(new ModIntegrationForestry("forestry"));
+    ModIntegration.RegisterIntegration(new ModIntegrationRailcraft("railcraft"));
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
@@ -368,6 +369,7 @@ public class ModFoundry
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBronze");
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBrass");
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearInvar");
+    FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearSteel");
 
     
     for(String name:OreDictionary.getOreNames())

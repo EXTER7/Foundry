@@ -55,12 +55,12 @@ public class LiquidMetalRegistry
    * @param metal_name Name of the metal e.g "Copper" for "oreCopper" in the Ore Dictionary.
    * @param default_block_id Default block id of the fluid block.
    */
-  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id)
+  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int temperature,int luminosity)
   {
     int i;
     int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
 
-    Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(2000).setLuminosity(15).setDensity(2000);
+    Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
     Block block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name).setUnlocalizedName("liquid" + metal_name);

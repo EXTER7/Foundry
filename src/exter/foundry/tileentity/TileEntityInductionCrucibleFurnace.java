@@ -44,9 +44,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
   
-  static public final int HEAT_MAX = 100000;
-  static public final int HEAT_MELT = 25000;
-  static public final int SMELT_TIME = 10000;
+  static public final int HEAT_MAX = 50000;
+  static public final int HEAT_MIN = 2900;
+  static public final int SMELT_TIME = 4000;
   
   static public final int MAX_ENERGY_USE = 40;
   
@@ -56,6 +56,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
 
   private int progress;
   private int heat;
+  private int melt_point;
   
   private PowerHandler power_handler;
  
@@ -68,7 +69,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = 0;
-    heat = 0;
+    heat = HEAT_MIN;
+    
+    melt_point = 0;
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     
@@ -85,10 +88,24 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     {
       progress = compund.getInteger("progress");
     }
+    
+    if(compund.hasKey("melt_point"))
+    {
+      melt_point = compund.getInteger("melt_point");
+    }
+
 
     if(compund.hasKey("heat"))
     {
       heat = compund.getInteger("heat");
+      if(heat < HEAT_MIN)
+      {
+        heat = HEAT_MIN;
+      }
+      if(heat > HEAT_MAX)
+      {
+        heat = HEAT_MAX;
+      }
     }
     
     NBTTagCompound inv_tag = (NBTTagCompound)compund.getTag("Input");
@@ -107,6 +124,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   private void WriteHeatToNBT(NBTTagCompound compound)
   {
     compound.setInteger("heat", heat);
+  }
+
+  private void WriteMeltPointToNBT(NBTTagCompound compound)
+  {
+    compound.setInteger("melt_point", melt_point);
   }
 
   private void WriteProgressToNBT(NBTTagCompound compound)
@@ -305,12 +327,17 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
 
   public int GetSmeltingSpeed()
   {
-    return (heat - HEAT_MELT) * 400 / HEAT_MAX;
+    return (heat - melt_point) * 400 / HEAT_MAX;
   }
   
   public int GetProgress()
   {
     return progress;
+  }
+  
+  public int GetMeltingPoint()
+  {
+    return melt_point;
   }
   
   @Override
@@ -416,14 +443,17 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     super.writeToNBT(packet);
     
     int last_progress = progress;
-    if(input != null && heat > HEAT_MELT)
+    int last_melt_point = melt_point;
+    if(input != null)
     {      
       MeltingRecipe metal = MeltingRecipe.FindByStack(input);
       if(metal != null)
       {
         FluidStack fs = metal.GetFluid();
         
-        if(tank.fill(fs, false) == fs.amount)
+        melt_point = fs.getFluid().getTemperature() * 10;
+        
+        if(heat > melt_point && tank.fill(fs, false) == fs.amount)
         {
           progress += GetSmeltingSpeed();
           if(progress >= SMELT_TIME)
@@ -442,16 +472,24 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       } else
       {
         progress = 0;
+        melt_point = 0;
       }
     } else
     {
       progress = 0;
+      melt_point = 0;
     }
     
     if(last_progress != progress)
     {
       update_clients = true;
       WriteProgressToNBT(packet);
+    }
+
+    if(last_melt_point != melt_point)
+    {
+      update_clients = true;
+      WriteMeltPointToNBT(packet);
     }
 
     int last_heat = heat;

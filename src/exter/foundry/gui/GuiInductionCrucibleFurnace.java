@@ -97,9 +97,6 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
 
     fontRenderer.drawString("Induction Crucible Furnace", 5, 6, 0x404040);
     fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
-    
-    int heat_percent = te_icf.GetHeat() * 100 / TileEntityInductionCrucibleFurnace.HEAT_MAX;
-    fontRenderer.drawString("Heat: " + String.valueOf(heat_percent) +"%", HEAT_BAR_X, HEAT_BAR_Y - 10, 0x404040);
 
   }
 
@@ -112,8 +109,8 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    int heat = te_icf.GetHeat() * HEAT_BAR_WIDTH / TileEntityInductionCrucibleFurnace.HEAT_MAX;
-    int melt_heat = TileEntityInductionCrucibleFurnace.HEAT_MELT * HEAT_BAR_WIDTH / TileEntityInductionCrucibleFurnace.HEAT_MAX;
+    int heat = (te_icf.GetHeat() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
+    int melt_point = (te_icf.GetMeltingPoint() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
     int progress = te_icf.GetProgress() * PROGRESS_WIDTH / te_icf.SMELT_TIME;
     
     
@@ -121,7 +118,11 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
     }
-    drawTexturedModalRect(window_x + HEAT_BAR_X + melt_heat - HEAT_BAR_MELT_WIDTH / 2, window_y + HEAT_BAR_Y, HEAT_BAR_MELT_X, HEAT_BAR_MELT_Y, HEAT_BAR_MELT_WIDTH, HEAT_BAR_HEIGHT);
+    
+    if(melt_point > 0)
+    {
+      drawTexturedModalRect(window_x + HEAT_BAR_X + melt_point - HEAT_BAR_MELT_WIDTH / 2, window_y + HEAT_BAR_Y, HEAT_BAR_MELT_X, HEAT_BAR_MELT_Y, HEAT_BAR_MELT_WIDTH, HEAT_BAR_HEIGHT);
+    }
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
@@ -138,7 +139,20 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank());
     }
-  }
+
+    if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mouse_x,mouse_y))
+    {
+      List<String> list = new ArrayList<String>();
+      float heat = (float)te_icf.GetHeat() / 10.0f;
+      float melt_point = (float)te_icf.GetMeltingPoint() / 10.0f;
+      list.add("Heat: " + String.valueOf(heat) + " K");
+      if(melt_point > 0)
+      {
+        list.add("Melt: " + String.valueOf(melt_point) + " K");
+      }
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
+    }
+}
 
   @Override
   protected ResourceLocation GetGUITexture()

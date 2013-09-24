@@ -30,18 +30,18 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_TIN_CABLE = 10;
   static public final int ITEM_GOLD_CABLE = 11;
 
-  static public final int ITEM_COPPER_CASING = 11;
-  static public final int ITEM_TIN_CASING = 12;
-  static public final int ITEM_BRONZE_CASING = 13;
-  static public final int ITEM_GOLD_CASING = 14;
-  static public final int ITEM_IRON_CASING = 15;
-  static public final int ITEM_LEAD_CASING = 16;
+  static public final int ITEM_COPPER_CASING = 12;
+  static public final int ITEM_TIN_CASING = 13;
+  static public final int ITEM_BRONZE_CASING = 14;
+  static public final int ITEM_GOLD_CASING = 15;
+  static public final int ITEM_IRON_CASING = 16;
+  static public final int ITEM_LEAD_CASING = 17;
 
   
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[17];
+    items = new ItemStack[18];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
     items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));

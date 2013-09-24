@@ -103,8 +103,8 @@ public class ItemMold extends Item
     "Clay Gear Mold",
     "Cable Mold",
     "Clay Cable Mold",
-    "Machine Casing Mold",
-    "Clay Machine Casing Mold"
+    "Casing Mold",
+    "Clay Casing Mold"
   };
   
   

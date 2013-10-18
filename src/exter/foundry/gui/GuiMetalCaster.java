@@ -17,6 +17,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMetalCaster;
+import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonMerchant;
@@ -55,6 +56,12 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int PROGRESS_Y = 51;
   private static final int PROGRESS_WIDTH = 22;
   private static final int PROGRESS_HEIGHT = 15;
+
+  private static final int POWER_X = 45;
+  private static final int POWER_Y = 21;
+  private static final int POWER_WIDTH = 3;
+  private static final int POWER_HEIGHT = 16;
+  
   
   private static final int TANK_OVERLAY_X = 176;
   private static final int TANK_OVERLAY_Y = 0;
@@ -62,6 +69,10 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int PROGRESS_OVERLAY_X = 176;
   private static final int PROGRESS_OVERLAY_Y = 53;
 
+  private static final int POWER_OVERLAY_X = 176;
+  private static final int POWER_OVERLAY_Y = 71;
+  
+  
   private TileEntityMetalCaster te_caster;
   private IInventory player_inventory;
 
@@ -92,10 +103,15 @@ public class GuiMetalCaster extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
     int progress = te_caster.GetProgress() * PROGRESS_WIDTH / te_caster.CAST_TIME;
+    int power = (int)(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
 
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
+    }
+    if(power > 0)
+    {
+      drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
     }
     DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank());
   }

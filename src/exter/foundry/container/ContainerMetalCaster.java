@@ -26,7 +26,7 @@ public class ContainerMetalCaster extends Container
   private static final int SLOT_OUTPUT_X = 80;
   private static final int SLOT_OUTPUT_Y = 51;
 
-  private static final int SLOT_MOLD_X = 51;
+  private static final int SLOT_MOLD_X = 52;
   private static final int SLOT_MOLD_Y = 21;
   
   private static final int SLOT_EXTRA_X = 73;

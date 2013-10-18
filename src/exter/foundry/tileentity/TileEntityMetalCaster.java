@@ -44,7 +44,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
-  static public final int CAST_TIME = 4000;
+  static public final int CAST_TIME = 150;
   
   private ItemStack[] inventory;
   private FluidTank tank;
@@ -71,11 +71,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
-    progress = 0;
+    progress = -1;
     inventory = new ItemStack[3];
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(0, 2, 1, 2);
+    power_handler.configure(0, 1, 1, 100);
     power_handler.configurePowerPerdition(0, 0);
   }
   
@@ -103,6 +103,10 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     if(tank_tag != null)
     {
       tank.readFromNBT(tank_tag);
+    }
+    if(compund.hasKey("Power"))
+    {
+      power_handler.readFromNBT(compund, "Power");
     }
   }
 
@@ -145,6 +149,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     this.WriteInventoryToNBT(compound);
     this.WriteTankToNBT(compound);
     this.WriteProgressToNBT(compound);
+    power_handler.writeToNBT(compound, "Power");
   }
 
   public void GetGUINetworkData(int id, int value)
@@ -183,6 +188,16 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     return tank;
   }
   
+  public float GetStoredPower()
+  {
+    return power_handler.getEnergyStored();
+  }
+
+  public float GetMaxStoredPower()
+  {
+    return power_handler.getMaxEnergyStored();
+  }
+
   @Override
   public int getSizeInventory()
   {
@@ -393,6 +408,10 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     NBTTagCompound packet = new NBTTagCompound();
     super.writeToNBT(packet);
 
+    float last_power = power_handler.getEnergyStored();
+    
+    power_handler.update();
+    
     int last_progress = progress;
     if(tank.getFluidAmount() > 0)
     {
@@ -408,14 +427,21 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
             ItemStack extra = recipe.GetExtra();
             if(extra == null || (inventory[SLOT_EXTRA] != null && extra.isItemEqual(inventory[SLOT_EXTRA]) && inventory[SLOT_EXTRA].stackSize >= extra.stackSize))
             {
-              if(power_handler.getEnergyStored() > 0)
+             
+              if(progress < 0)
               {
-                int energy = (int) (power_handler.useEnergy(0, 5, true) * 100);
-                progress += energy;
-
-                if(progress >= CAST_TIME)
+                if(last_power >= 25)
                 {
-                  progress -= CAST_TIME;
+                  power_handler.useEnergy(25, 25, true);
+                  progress = 0;
+                }
+              }
+                
+              if(progress >= 0)
+              {
+                if(++progress >= CAST_TIME)
+                {
+                  progress = -1;
                   tank.drain(recipe.GetFluid().amount, true);
                   if(extra != null)
                   {
@@ -438,24 +464,31 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
               }
             } else
             {
-              progress = 0;
+              progress = -1;
             }
           } else
           {
-            progress = 0;
+            progress = -1;
           }
         } else
         {
-          progress = 0;
+          progress = -1;
         }
       } else
       {
-        progress = 0;
+        progress = -1;
       }
     } else
     {
-      progress = 0;
+      progress = -1;
     }
+    
+    if(Math.abs(last_power - power_handler.getEnergyStored()) < 0.01)
+    {
+      update_clients = true;
+      power_handler.writeToNBT(packet,"Power");
+    }
+    
     if(last_progress != progress)
     {
       update_clients = true;

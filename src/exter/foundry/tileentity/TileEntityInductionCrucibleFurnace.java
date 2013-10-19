@@ -75,8 +75,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     
-    power_handler.configure(0, 32, 1, 64);
-    power_handler.configurePowerPerdition(0, 0);
+    power_handler.configure(1, 50, 1, 200);
+    power_handler.configurePowerPerdition(1, 50);
   }
 
   @Override
@@ -495,7 +495,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_heat = heat;
     if(heat > 0)
     {
-      heat -= heat / (HEAT_MAX / 10 ) + 1;
+      heat -= heat / (HEAT_MAX / 5 ) + 1;
       if(heat < 0)
       {
         heat = 0;

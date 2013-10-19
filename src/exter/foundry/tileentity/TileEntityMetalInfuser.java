@@ -75,8 +75,8 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     extract_time = 1;
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(0, 8, 1, 8);
-    power_handler.configurePowerPerdition(0, 0);
+    power_handler.configure(1, 8, 1, 8);
+    power_handler.configurePowerPerdition(1, 100);
     
   }
   

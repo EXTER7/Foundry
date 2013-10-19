@@ -44,7 +44,9 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
-  static public final int CAST_TIME = 150;
+  static public final int CAST_TIME = 100;
+  
+  static public final int POWER_REQUIRED = 100;
   
   private ItemStack[] inventory;
   private FluidTank tank;
@@ -75,8 +77,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     inventory = new ItemStack[3];
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(0, 1, 1, 100);
-    power_handler.configurePowerPerdition(0, 0);
+    power_handler.configure(1, 5, 1, 400);
+    power_handler.configurePowerPerdition(1, 100);
   }
   
   @Override
@@ -430,9 +432,9 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
              
               if(progress < 0)
               {
-                if(last_power >= 25)
+                if(last_power >= POWER_REQUIRED)
                 {
-                  power_handler.useEnergy(25, 25, true);
+                  power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
                   progress = 0;
                 }
               }

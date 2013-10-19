@@ -3,6 +3,7 @@ package exter.foundry.gui;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,6 +73,7 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int POWER_OVERLAY_X = 176;
   private static final int POWER_OVERLAY_Y = 71;
   
+  private static DecimalFormat formatter = new DecimalFormat("###.#");
   
   private TileEntityMetalCaster te_caster;
   private IInventory player_inventory;
@@ -103,7 +105,7 @@ public class GuiMetalCaster extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
     int progress = te_caster.GetProgress() * PROGRESS_WIDTH / te_caster.CAST_TIME;
-    int power = (int)(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
+    int power = Math.round(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
 
     if(progress > 0)
     {
@@ -123,6 +125,16 @@ public class GuiMetalCaster extends GuiFoundry
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_caster.GetTank());
+    }
+
+    
+    if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mouse_x,mouse_y))
+    {
+      List<String> list = new ArrayList<String>();
+      float power = te_caster.GetStoredPower();
+      float max_power = te_caster.GetMaxStoredPower();
+      list.add("Power: " + formatter.format(power) + "/" + formatter.format(max_power) + " MJ");
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
     }
   }
 

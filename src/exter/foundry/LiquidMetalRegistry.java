@@ -1,6 +1,8 @@
 package exter.foundry;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -10,6 +12,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockLiquidMetal;
+import exter.foundry.block.BlockMetal;
 import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.item.FoundryItems;
@@ -21,6 +24,7 @@ import exter.foundry.recipes.MeltingRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
@@ -63,11 +67,24 @@ public class LiquidMetalRegistry
     Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
-    Block block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name).setUnlocalizedName("liquid" + metal_name);
-    LanguageRegistry.addName(block, "Liquid " + metal_name);
-    GameRegistry.registerBlock(block, "liquid" + metal_name);
+    List<ItemStack> ore_list = OreDictionary.getOres("block" + metal_name);
+    int solid_block = -1;
+    int solid_meta = 0;
+    for(ItemStack ore:ore_list)
+    {
+      Item item = ore.getItem();
+      if(item instanceof ItemBlock)
+      {
+        solid_block = ((ItemBlock)item).getBlockID();
+        solid_meta = ((ItemBlock)item).getMetadata(ore.getItemDamage());
+      }
+    }
+    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid_block,solid_meta);
+    liquid_block.setUnlocalizedName("liquid" + metal_name);
+    LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
+    GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 
-    fluid.setBlockID(block);
+    fluid.setBlockID(liquid_block);
 
     MeltingRecipe.RegisterBasicRecipes(metal_name,fluid);
 
@@ -78,7 +95,7 @@ public class LiquidMetalRegistry
     CastingRecipe.RegisterRecipe("ingot" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_INGOT), mold_ingot, null);
 
 
-    LiquidMetalRegistry metal = new LiquidMetalRegistry(block,fluid,metal_name);
+    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,fluid,metal_name);
     
     MinecraftForge.EVENT_BUS.register(metal);
     

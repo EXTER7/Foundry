@@ -17,18 +17,27 @@ public class ItemFoundryComponent extends Item
 {
   static public final int COMPONENT_GEAR = 0;
   static public final int COMPONENT_HEATINGCOIL = 1;
+  static public final int COMPONENT_FOUNDRYCLAY = 2;
+  static public final int COMPONENT_FOUNDRYBRICK = 3;
+  static public final int COMPONENT_BLANKMOLD = 4;
 
 
   static private final String[] ICON_PATHS = 
   {
     "foundry:gear",
     "foundry:heatingcoil",
+    "foundry:foundry_clay",
+    "foundry:foundry_brick",
+    "foundry:claymold_blank"
   };
   
   static public final String[] NAMES = 
   {
     "Stone Gear",
     "Heating Coil",
+    "Foundry Clay",
+    "Foundry Brick",
+    "Blank Clay Mold"
   };
   
   

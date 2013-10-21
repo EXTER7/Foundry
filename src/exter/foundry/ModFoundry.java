@@ -251,13 +251,35 @@ public class ModFoundry
     ItemStack redstone_stack = new ItemStack(Item.redstone);
     ItemStack cobble_stack = new ItemStack(Block.cobblestone, 1, -1);
     ItemStack furnace_stack = new ItemStack(Block.furnaceIdle);
+    ItemStack clay_stack = new ItemStack(Item.clay);
+    ItemStack sand_stack = new ItemStack(Block.sand,1,-1);
     ItemStack clayblock_stack = new ItemStack(Block.blockClay, 1, -1);
     ItemStack brickblock_stack = new ItemStack(Block.brick, 1, -1);
     ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
     ItemStack piston_stack = new ItemStack(Block.pistonBase);
     ItemStack goldnugget_stack = new ItemStack(Item.goldNugget);
     ItemStack stick_stack = new ItemStack(Item.stick);
+    ItemStack foundryclay_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
+    ItemStack foundryclay4_stack = new ItemStack(FoundryItems.item_component,4,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
+    ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
+    ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+
+    GameRegistry.addRecipe(foundryclay4_stack,
+        " C ",
+        "CSC",
+        " C ",
+        'C', clay_stack,
+        'S', sand_stack);
+
+    GameRegistry.addShapelessRecipe(foundryclay4_stack,clayblock_stack, sand_stack);
+
+    FurnaceRecipes.smelting().addSmelting(FoundryItems.item_component.itemID, ItemFoundryComponent.COMPONENT_FOUNDRYCLAY,
+        foundrybrick_stack, 0.0f);
+
+    GameRegistry.addRecipe(blankmold_stack,
+        "CC",
+        'C', foundryclay_stack);
 
 
     GameRegistry.addRecipe(heatingcoil_stack,
@@ -273,7 +295,7 @@ public class ModFoundry
         "B B",
         "IBI",
         'I', iron_stack,
-        'B', brickblock_stack);
+        'B', foundrybrick_stack);
     
     GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_induction_crucible_furnace),
         "IFI",
@@ -281,7 +303,7 @@ public class ModFoundry
         "HRH",
         'F', furnace_stack, 
         'I', iron_stack, 
-        'B', brickblock_stack,
+        'B', foundrybrick_stack,
         'C', crucible_stack,
         'R', redstone_stack,
         'H', heatingcoil_stack);
@@ -300,7 +322,7 @@ public class ModFoundry
         "BCB",
         "IHI",
         'I', iron_stack, 
-        'B', brickblock_stack,
+        'B', foundrybrick_stack,
         'C', crucible_stack,
         'G', "gearStone",
         'H', heatingcoil_stack));
@@ -310,7 +332,7 @@ public class ModFoundry
         "BCB",
         "IBI",
         'I', iron_stack, 
-        'B', brickblock_stack,
+        'B', foundrybrick_stack,
         'C', crucible_stack,
         'R', redstone_stack,
         'G', "gearStone"));

@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ICraftingHandler;
 import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemFoundryComponent;
 
 public class MoldCraftingHandler implements ICraftingHandler
 {
@@ -15,8 +16,8 @@ public class MoldCraftingHandler implements ICraftingHandler
   {
     if(item.itemID == FoundryItems.item_mold.itemID)
     {
-      int clayblocks = 0;
       int blanks = 0;
+      int empty = 0;
       ItemStack pattern = null;
       int i;
       int size = craftMatrix.getSizeInventory();
@@ -25,16 +26,16 @@ public class MoldCraftingHandler implements ICraftingHandler
         ItemStack is = craftMatrix.getStackInSlot(i);
         if(is == null)
         {
-          blanks++;
-        } else if(is.itemID == Block.blockClay.blockID)
+          empty++;
+        } else if(is.itemID == FoundryItems.item_component.itemID && is.getItemDamage() == ItemFoundryComponent.COMPONENT_BLANKMOLD)
         {
-          clayblocks++;
+          blanks++;
         } else
         {
           pattern = is;
         }
       }
-      if(pattern != null && clayblocks == 1 && size - blanks - clayblocks == 1)
+      if(pattern != null && blanks == 1 && size - empty - blanks == 1)
       {
         pattern.stackSize++;
       }

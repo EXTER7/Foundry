@@ -5,6 +5,7 @@ import java.util.List;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemFoundryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -20,13 +21,13 @@ public class FoundryUtils
   static public void RegisterMoldRecipe(int dv,ItemStack pattern)
   {
     GameRegistry.addShapelessRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
-      new ItemStack(Block.blockClay), pattern);  
+      new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD), pattern);  
   }
 
   static public void RegisterMoldRecipe(int dv,String oredict_pattern)
   {
     GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
-      new ItemStack(Block.blockClay), oredict_pattern));  
+      new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD), oredict_pattern));  
   }
 
   static public void RegisterMoldSmelting(int clay,int mold)

@@ -119,6 +119,7 @@ public class ModFoundry
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842, 1250, 15);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 3845, 1850, 15);
     LiquidMetalRegistry.RegisterLiquidMetal(config, "Lead", 3849, 650, 1);
+    FoundryItems.RegisterContainerItems(config);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);

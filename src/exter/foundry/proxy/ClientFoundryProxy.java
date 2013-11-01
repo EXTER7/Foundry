@@ -2,6 +2,7 @@ package exter.foundry.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import exter.foundry.item.FoundryItems;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import net.minecraft.util.ResourceLocation;
@@ -14,6 +15,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void Init()
   {
+    FoundryItems.RengisterContainerItemsRenderers();
     InfuserRecipe.RegisterSubstanceTexture("carbon", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,0,0));
     InfuserRecipe.RegisterSubstanceTexture("sand", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,8,0));
   }

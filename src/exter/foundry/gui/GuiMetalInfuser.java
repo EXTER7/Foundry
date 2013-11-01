@@ -53,17 +53,17 @@ public class GuiMetalInfuser extends GuiFoundry
 
   private static final int TANK_HEIGHT = 47;
   private static final int INPUT_TANK_X = 85;
-  private static final int INPUT_TANK_Y = 22;
+  private static final int INPUT_TANK_Y = 42;
 
   private static final int OUTPUT_TANK_X = 134;
-  private static final int OUTPUT_TANK_Y = 22;
+  private static final int OUTPUT_TANK_Y = 43;
 
   private static final int SUBSTANCE_X = 71;
-  private static final int SUBSTANCE_Y = 22;
+  private static final int SUBSTANCE_Y = 43;
   private static final int SUBSTANCE_HEIGHT = 47;
 
   private static final int PROGRESS_X = 42;
-  private static final int PROGRESS_Y = 38;
+  private static final int PROGRESS_Y = 59;
   private static final int PROGRESS_WIDTH = 22;
   private static final int PROGRESS_HEIGHT = 15;
   

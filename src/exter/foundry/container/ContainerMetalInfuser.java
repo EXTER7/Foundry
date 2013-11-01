@@ -20,7 +20,7 @@ public class ContainerMetalInfuser extends Container
   private static final int SLOTS_HOTBAR = 1 + 3 * 9;
 
   private static final int SLOT_SUBSTANCE_ITEM_X = 19;
-  private static final int SLOT_SUBSTANCE_ITEM_Y = 38;
+  private static final int SLOT_SUBSTANCE_ITEM_Y = 59;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 84;

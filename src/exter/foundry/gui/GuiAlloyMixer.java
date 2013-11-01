@@ -41,16 +41,16 @@ public class GuiAlloyMixer extends GuiFoundry
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
   private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
 
-  private static final int TANK_HEIGHT = 47;
+  private static final int TANK_HEIGHT = 35;
   
   private static final int TANK_INPUT_A_X = 36;
-  private static final int TANK_INPUT_A_Y = 21;
+  private static final int TANK_INPUT_A_Y = 45;
 
   private static final int TANK_INPUT_B_X = 124;
-  private static final int TANK_INPUT_B_Y = 21;
+  private static final int TANK_INPUT_B_Y = 45;
 
   private static final int TANK_OUTPUT_X = 80;
-  private static final int TANK_OUTPUT_Y = 21;
+  private static final int TANK_OUTPUT_Y = 45;
 
   private static final int TANK_OVERLAY_X = 176;
   private static final int TANK_OVERLAY_Y = 0;
@@ -63,7 +63,7 @@ public class GuiAlloyMixer extends GuiFoundry
     super(new ContainerAlloyMixer(am, player_inv));
     player_inventory = player_inv;
     allowUserInput = false;
-    ySize = 166;
+    ySize = 209;
     te_alloymixer = am;
   }
 

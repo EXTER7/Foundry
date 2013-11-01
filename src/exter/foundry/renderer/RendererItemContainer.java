@@ -57,15 +57,7 @@ public class RendererItemContainer implements IItemRenderer
   public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data)
   {
     ItemFoundryContainer item = (ItemFoundryContainer) itemStack.getItem();
-
     Fluid fluid = item.GetFluid();
-
-    if(type == type.ENTITY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)
-    {
-      GL11.glPushMatrix();
-   //   GL11.glTranslatef(-8f, -8f, -0.5f);
-      GL11.glScalef(1/16.0f, 1/16.0f, 1/16.0f);
-    }
     
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid != null)
@@ -87,14 +79,6 @@ public class RendererItemContainer implements IItemRenderer
         }
       }
     }
-    if(type == type.ENTITY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)
-    {
-      GL11.glScalef(1, 1, 0.89f);
-    }
     renderItem.renderIcon(0, 0, item.icon_fg, 16, 16);
-    if(type == type.ENTITY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)
-    {
-      GL11.glPopMatrix();
-    }
   }
 }

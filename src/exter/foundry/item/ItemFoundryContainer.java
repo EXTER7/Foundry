@@ -1,6 +1,8 @@
 package exter.foundry.item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,6 +34,8 @@ public class ItemFoundryContainer extends Item
   private Fluid fluid;
 
   public static final int AMOUNT_MAX = 1000;
+  
+  private static Map<Integer,ItemFoundryContainer> containers = new HashMap<Integer,ItemFoundryContainer>();
 
   public ItemFoundryContainer(int id, Fluid container_fluid)
   {
@@ -41,6 +45,12 @@ public class ItemFoundryContainer extends Item
     setCreativeTab(CreativeTabs.tabMisc);
     maxStackSize = 1;
     LanguageRegistry.addName(this, "Foundry Container");
+    containers.put(fluid.getID(), this);
+  }
+  
+  public static ItemFoundryContainer GetContainerFromFluid(Fluid f)
+  {
+    return containers.get(f.getID());
   }
 
   public Fluid GetFluid()
@@ -87,26 +97,14 @@ public class ItemFoundryContainer extends Item
   {
     int i;
     ItemStack itemstack;
-    if(fluid == null)
-    {
-      itemstack = new ItemStack(id, 1, 0);
-    } else
-    {
-      itemstack = new ItemStack(id, 1, AMOUNT_MAX);
-    }
+    itemstack = new ItemStack(id, 1, AMOUNT_MAX);
     list.add(itemstack);
   }
 
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
   {
-    if(fluid == null)
-    {
-      list.add(EnumChatFormatting.BLUE + "Empty");
-    } else
-    {
-      list.add(EnumChatFormatting.BLUE + fluid.getLocalizedName());
-      list.add(EnumChatFormatting.BLUE + String.valueOf(stack.getItemDamage()) + " / 1000 mB");
-    }
+    list.add(EnumChatFormatting.BLUE + fluid.getLocalizedName());
+    list.add(EnumChatFormatting.BLUE + String.valueOf(stack.getItemDamage()) + " / 1000 mB");
   }
 }

@@ -53,7 +53,7 @@ public class GuiMetalInfuser extends GuiFoundry
 
   private static final int TANK_HEIGHT = 47;
   private static final int INPUT_TANK_X = 85;
-  private static final int INPUT_TANK_Y = 42;
+  private static final int INPUT_TANK_Y = 43;
 
   private static final int OUTPUT_TANK_X = 134;
   private static final int OUTPUT_TANK_Y = 43;
@@ -81,7 +81,7 @@ public class GuiMetalInfuser extends GuiFoundry
     super(new ContainerMetalInfuser(inf, player_inv));
     player_inventory = player_inv;
     allowUserInput = false;
-    ySize = 166;
+    ySize = 209;
     te_infuser = inf;
   }
 
@@ -108,8 +108,8 @@ public class GuiMetalInfuser extends GuiFoundry
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
-    DisplayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetInputTank());
-    DisplayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetOutputTank());
+    DisplayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
+    DisplayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
     
     InfuserSubstance sub = te_infuser.GetSubstance();
     if(sub != null && sub.amount > 0)
@@ -129,12 +129,12 @@ public class GuiMetalInfuser extends GuiFoundry
     super.drawScreen(mouse_x, mouse_y, par3);
     if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetInputTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
     }
 
     if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetOutputTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
     }
 
     if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mouse_x, mouse_y))

@@ -51,8 +51,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   
   
   private ItemStack substance_input;
-  private FluidTank input_tank;
-  private FluidTank output_tank;
+
+  static public final int TANK_INPUT = 0;
+  static public final int TANK_OUTPUT = 1;
+  private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
 
   private InfuserSubstance substance;
@@ -65,12 +67,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
  
   public TileEntityMetalInfuser()
   {
-    input_tank = new FluidTank(5000);
-    output_tank = new FluidTank(5000);
+    super();
 
+    int i;
+    tanks = new FluidTank[2];
     tank_info = new FluidTankInfo[2];
-    tank_info[0] = new FluidTankInfo(input_tank);
-    tank_info[1] = new FluidTankInfo(output_tank);
+    for(i = 0; i < 2; i++)
+    {
+      tanks[i] = new FluidTank(5000);
+      tank_info[i] = new FluidTankInfo(tanks[i]);
+    }
     progress = 0;
     extract_time = 1;
     
@@ -96,85 +102,41 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       extract_time = compund.getInteger("extract_time");
     }
     
-    NBTTagCompound input_tank_tag = (NBTTagCompound)compund.getTag("InputTank");
-    NBTTagCompound output_tank_tag = (NBTTagCompound)compund.getTag("OuputTank");
     NBTTagCompound substance_tag = (NBTTagCompound)compund.getTag("Substance");
-    
-    NBTTagCompound item_tag = (NBTTagCompound)compund.getTag("Item");
-    if(item_tag != null)
-    {
-      substance_input = ItemStack.loadItemStackFromNBT(item_tag);
-    }
-    if(input_tank_tag != null)
-    {
-      input_tank.readFromNBT(input_tank_tag);
-    }
-    if(output_tank_tag != null)
-    {
-      output_tank.readFromNBT(output_tank_tag);
-    }
     if(substance_tag != null)
     {
-      substance = InfuserSubstance.ReadFromNBT(substance_tag);
+      if(substance_tag.getBoolean("empty"))
+      {
+        substance = null;
+      } else
+      {
+        substance = InfuserSubstance.ReadFromNBT(substance_tag);
+      }
     }
-  }
-
-  private void WriteSubstanceItemToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound item_tag = new NBTTagCompound();
-
-    if(substance_input != null)
-    {
-      substance_input.writeToNBT(item_tag);
-    }
-    compound.setTag("Item", item_tag);
   }
 
   private void WriteSubstanceToNBT(NBTTagCompound compound)
   {
-    NBTTagCompound item_tag = new NBTTagCompound();
-
     if(substance != null)
     {
-      substance.WriteToNBT(item_tag);
+      compound.setBoolean("empty", false);
+      substance.WriteToNBT(compound);
+    } else
+    {
+      compound.setBoolean("empty", true);
     }
-    compound.setTag("Substance", item_tag);
   }
 
-  private void WriteProgressToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("progress", progress);
-  }
-
-  private void WriteExtractTimeToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("extract_time", extract_time);
-  }
-
-  private void WriteInputTankToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound tank_tag = new NBTTagCompound();
-    input_tank.writeToNBT(tank_tag);
-    compound.setTag("InputTank", tank_tag);
-  }
-
-  private void WriteOutputTankToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound tank_tag = new NBTTagCompound();
-    output_tank.writeToNBT(tank_tag);
-    compound.setTag("OutputTank", tank_tag);
-  }
 
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
     super.writeToNBT(compound);
-    this.WriteSubstanceItemToNBT(compound);
-    this.WriteSubstanceToNBT(compound);
-    this.WriteInputTankToNBT(compound);
-    this.WriteOutputTankToNBT(compound);
-    this.WriteProgressToNBT(compound);
-    this.WriteExtractTimeToNBT(compound);
+    NBTTagCompound substance_tag = new NBTTagCompound();
+    WriteSubstanceToNBT(substance_tag);
+    compound.setCompoundTag("Substance", substance_tag);
+    compound.setInteger("progress", progress);
+    compound.setInteger("extract_time", extract_time);
   }
 
   private void SetTankFluid(FluidTank tank,int value)
@@ -204,42 +166,32 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     switch(id)
     {
       case NETDATAID_INPUT_TANK_FLUID:
-        SetTankFluid(input_tank,value);
+        SetTankFluid(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_INPUT_TANK_AMOUNT:
-        SetTankAmount(input_tank,value);
+        SetTankAmount(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_OUTPUT_TANK_FLUID:
-        SetTankFluid(output_tank,value);
+        SetTankFluid(tanks[TANK_OUTPUT],value);
         break;
       case NETDATAID_OUTPUT_TANK_AMOUNT:
-        SetTankAmount(output_tank,value);
+        SetTankAmount(tanks[TANK_OUTPUT],value);
         break;
     }
   }
 
   public void SendGUINetworkData(ContainerMetalInfuser container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, input_tank.getFluid() != null ? input_tank.getFluid().fluidID : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_AMOUNT, input_tank.getFluid() != null ? input_tank.getFluid().amount : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_FLUID, output_tank.getFluid() != null ? output_tank.getFluid().fluidID : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_AMOUNT, output_tank.getFluid() != null ? output_tank.getFluid().amount : 0);
-  }
-
-  public FluidTank GetInputTank()
-  {
-    return input_tank;
-  }
-
-  public FluidTank GetOutputTank()
-  {
-    return output_tank;
+    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().fluidID : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_AMOUNT, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().amount : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_FLUID, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().fluidID : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_AMOUNT, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().amount : 0);
   }
   
   @Override
   public int getSizeInventory()
   {
-    return 3;
+    return 1;
   }
 
   @Override
@@ -400,15 +352,15 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
   {
-    return input_tank.fill(resource, doFill);
+    return tanks[TANK_INPUT].fill(resource, doFill);
   }
 
   @Override
   public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
   {
-    if(resource.isFluidEqual(output_tank.getFluid()))
+    if(resource.isFluidEqual(tanks[TANK_OUTPUT].getFluid()))
     {
-      return output_tank.drain(resource.amount, doDrain);
+      return tanks[TANK_OUTPUT].drain(resource.amount, doDrain);
     }
     return null;
   }
@@ -416,7 +368,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
   {
-    return output_tank.drain(maxDrain, doDrain);
+    return tanks[TANK_OUTPUT].drain(maxDrain, doDrain);
   }
 
   @Override
@@ -446,9 +398,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   protected void UpdateEntityServer()
   {
-    boolean update_clients = false;
-    NBTTagCompound packet = new NBTTagCompound();
-    super.writeToNBT(packet);
 
     int last_progress = progress;
     int last_extract_time = extract_time;
@@ -464,7 +413,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
           progress += energy;
           if(progress >= extract_time)
           {
-            update_clients = true;
             progress -= extract_time;
             if(substance == null)
             {
@@ -474,8 +422,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
               substance.amount += sub_recipe.substance.amount;
             }
             decrStackSize(0, 1);
-            WriteSubstanceItemToNBT(packet);
-            WriteSubstanceToNBT(packet);
+            NBTTagCompound tag = new NBTTagCompound();
+            WriteSubstanceToNBT(tag);
+            UpdateNBTTag("Substance",tag);
+            UpdateInventoryItem(0);
           }
         }
       } else
@@ -488,51 +438,40 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       progress = 0;
       extract_time = 1;
     }
-    
-    if(last_progress != progress)
-    {
-      update_clients = true;
-      WriteProgressToNBT(packet);
-    }
 
     if(last_extract_time != extract_time)
     {
-      update_clients = true;
-      WriteExtractTimeToNBT(packet);
+      UpdateValue("extract_time",extract_time);
     }
 
-    if(input_tank.getFluidAmount() > 0)
+    if(tanks[TANK_INPUT].getFluidAmount() > 0)
     {
-      InfuserRecipe recipe = InfuserRecipe.FindRecipe(input_tank.getFluid(), substance);
+      InfuserRecipe recipe = InfuserRecipe.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
       {
         FluidStack result = recipe.GetOutput();
-        if(output_tank.fill(result, false) == result.amount)
+        if(tanks[TANK_OUTPUT].fill(result, false) == result.amount)
         {
-          input_tank.drain(recipe.GetFluid().amount, true);
-          output_tank.fill(result,true);
+          tanks[TANK_INPUT].drain(recipe.GetFluid().amount, true);
+          tanks[TANK_OUTPUT].fill(result,true);
           substance.amount -= recipe.GetSubstance().amount;
           if(substance.amount <= 0)
           {
             substance = null;
           }
-          WriteSubstanceToNBT(packet);
-          WriteInputTankToNBT(packet);
-          WriteOutputTankToNBT(packet);
-          update_clients = true;
+          NBTTagCompound tag = new NBTTagCompound();
+          WriteSubstanceToNBT(tag);
+          UpdateNBTTag("Substance",tag);
+
+          UpdateTank(TANK_INPUT);
+          UpdateTank(TANK_OUTPUT);
         }
       }
     }
 
     if(last_progress != progress)
     {
-      update_clients = true;
-      WriteProgressToNBT(packet);
-    }
-    
-    if(update_clients)
-    {
-      SendUpdatePacket(packet);
+      UpdateValue("progress",progress);
     }
   }
 
@@ -563,5 +502,17 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   public InfuserSubstance GetSubstance()
   {
     return substance;
+  }
+
+  @Override
+  public FluidTank GetTank(int slot)
+  {
+    return tanks[slot];
+  }
+
+  @Override
+  public int GetTankCount()
+  {
+    return 2;
   }
 }

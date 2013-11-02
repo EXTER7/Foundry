@@ -63,6 +63,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   
   public TileEntityInductionCrucibleFurnace()
   {
+    super();
     input = null;
     tank = new FluidTank(5000);
     
@@ -107,60 +108,15 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
         heat = HEAT_MAX;
       }
     }
-    
-    NBTTagCompound inv_tag = (NBTTagCompound)compund.getTag("Input");
-    NBTTagCompound tank_tag = (NBTTagCompound)compund.getTag("Tank");
-    if(inv_tag != null)
-    {
-      input = ItemStack.loadItemStackFromNBT(inv_tag);
-    }
-    if(tank_tag != null)
-    {
-      tank.readFromNBT(tank_tag);
-    }
-  }
-  
-
-  private void WriteHeatToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("heat", heat);
-  }
-
-  private void WriteMeltPointToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("melt_point", melt_point);
-  }
-
-  private void WriteProgressToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("progress", progress);
-  }
-  
-  private void WriteInputToNBT(NBTTagCompound compound)
-  {
-    if(input != null)
-    {
-      NBTTagCompound inv_tag = new NBTTagCompound();
-      input.writeToNBT(inv_tag);
-      compound.setTag("Input", inv_tag);
-    }
-  }
-
-  private void WriteTankToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound tank_tag = new NBTTagCompound();
-    tank.writeToNBT(tank_tag);
-    compound.setTag("Tank", tank_tag);
   }
 
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
     super.writeToNBT(compound);
-    WriteHeatToNBT(compound);
-    WriteProgressToNBT(compound);
-    WriteInputToNBT(compound);
-    WriteTankToNBT(compound);    
+    compound.setInteger("heat", heat);
+    compound.setInteger("melt_point", melt_point);
+    compound.setInteger("progress", progress);
   }
 
 
@@ -193,11 +149,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, tank.getFluid() != null ? tank.getFluid().fluidID : 0);
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
-  }
-
-  public FluidTank GetTank()
-  {
-    return tank;
   }
   
   @Override
@@ -438,9 +389,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   protected void UpdateEntityServer()
   {
-    boolean update_clients = false;
-    NBTTagCompound packet = new NBTTagCompound();
-    super.writeToNBT(packet);
     
     int last_progress = progress;
     int last_melt_point = melt_point;
@@ -458,12 +406,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
           progress += GetSmeltingSpeed();
           if(progress >= SMELT_TIME)
           {
-            update_clients = true;
+            //update_clients = true;
             progress -= SMELT_TIME;
             tank.fill(fs, true);
             decrStackSize(0,1);
-            WriteInputToNBT(packet);
-            WriteTankToNBT(packet);
+            UpdateTank(0);
+            UpdateInventoryItem(0);
           }
         } else
         {
@@ -482,14 +430,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     if(last_progress != progress)
     {
-      update_clients = true;
-      WriteProgressToNBT(packet);
+      UpdateValue("progress",progress);
     }
 
     if(last_melt_point != melt_point)
     {
-      update_clients = true;
-      WriteMeltPointToNBT(packet);
+      UpdateValue("melt_point",melt_point);
     }
 
     int last_heat = heat;
@@ -519,13 +465,24 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     }
     if(last_heat != heat)
     {
-      update_clients = true;
-      WriteHeatToNBT(packet);
+      UpdateValue("heat",heat);
     }
-    if(update_clients)
+  }
+
+  @Override
+  public FluidTank GetTank(int slot)
+  {
+    if(slot != 0)
     {
-      SendUpdatePacket(packet);
+      return null;
     }
+    return tank;
+  }
+
+  @Override
+  public int GetTankCount()
+  {
+    return 1;
   }
 
 }

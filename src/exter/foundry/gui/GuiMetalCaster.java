@@ -115,7 +115,7 @@ public class GuiMetalCaster extends GuiFoundry
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
     }
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank());
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank(0));
   }
 
   @Override
@@ -124,7 +124,7 @@ public class GuiMetalCaster extends GuiFoundry
     super.drawScreen(mouse_x, mouse_y, par3);
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_caster.GetTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_caster.GetTank(0));
     }
 
     

@@ -48,9 +48,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   
   static private final int PROGRESS_MAX = 400;
   
-  private FluidTank tank_input_a;
-  private FluidTank tank_input_b;
-  private FluidTank tank_output;
+  static public final int TANK_INPUT_A = 0;
+  static public final int TANK_INPUT_B = 1;
+  static public final int TANK_OUTPUT = 2;
+  
+  
+  private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
 
   private PowerHandler power_handler;
@@ -61,14 +64,15 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
  
   public TileEntityAlloyMixer()
   {
-    tank_input_a = new FluidTank(2000);
-    tank_input_b = new FluidTank(2000);
-    tank_output = new FluidTank(2000);
-    
+    super();
+    int i;
+    tanks = new FluidTank[3];
     tank_info = new FluidTankInfo[3];
-    tank_info[0] = new FluidTankInfo(tank_input_a);
-    tank_info[1] = new FluidTankInfo(tank_input_b);
-    tank_info[2] = new FluidTankInfo(tank_output);
+    for(i = 0; i < 3; i++)
+    {
+      tanks[i] = new FluidTank(2000);
+      tank_info[i] = new FluidTankInfo(tanks[i]);
+    }
     progress = 0;
 
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
@@ -86,40 +90,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     {
       progress = compund.getInteger("progress");
     }
-
-    NBTTagCompound tank_input_a_tag = (NBTTagCompound)compund.getTag("TankInputA");
-    NBTTagCompound tank_input_b_tag = (NBTTagCompound)compund.getTag("TankInputB");
-    NBTTagCompound tank_output_tag = (NBTTagCompound)compund.getTag("TankOutput");
-    tank_input_a.readFromNBT(tank_input_a_tag);
-    tank_input_b.readFromNBT(tank_input_b_tag);
-    tank_output.readFromNBT(tank_output_tag);
-  }
-  
-  private void WriteTanksToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound tank_input_a_tag = new NBTTagCompound();
-    NBTTagCompound tank_input_b_tag = new NBTTagCompound();
-    NBTTagCompound tank_output_tag = new NBTTagCompound();
-
-    tank_input_a.writeToNBT(tank_input_a_tag);
-    tank_input_b.writeToNBT(tank_input_b_tag);
-    tank_output.writeToNBT(tank_output_tag);
-    compound.setTag("TankInputA", tank_input_a_tag);
-    compound.setTag("TankInputB", tank_input_b_tag);
-    compound.setTag("TankOutput", tank_output_tag);
-  }
-
-  private void WriteProgressToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("progress", progress);
   }
 
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
     super.writeToNBT(compound);
-    WriteTanksToNBT(compound);
-    WriteProgressToNBT(compound);
+    compound.setInteger("progress", progress);
   }
   
   private void SetTankFluid(FluidTank tank,int value)
@@ -150,22 +127,22 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     switch(id)
     {
       case NETDATAID_TANK_INPUT_A_FLUID:
-        SetTankFluid(tank_input_a,value);
+        SetTankFluid(tanks[TANK_INPUT_A],value);
         break;
       case NETDATAID_TANK_INPUT_A_AMOUNT:
-        SetTankAmount(tank_input_a,value);
+        SetTankAmount(tanks[TANK_INPUT_A],value);
         break;
       case NETDATAID_TANK_INPUT_B_FLUID:
-        SetTankFluid(tank_input_b,value);
+        SetTankFluid(tanks[TANK_INPUT_B],value);
         break;
       case NETDATAID_TANK_INPUT_B_AMOUNT:
-        SetTankAmount(tank_input_b,value);
+        SetTankAmount(tanks[TANK_INPUT_B],value);
         break;
       case NETDATAID_TANK_OUTPUT_FLUID:
-        SetTankFluid(tank_output,value);
+        SetTankFluid(tanks[TANK_OUTPUT],value);
         break;
       case NETDATAID_TANK_OUTPUT_AMOUNT:
-        SetTankAmount(tank_output,value);
+        SetTankAmount(tanks[TANK_OUTPUT],value);
         break;
     }
   }
@@ -182,29 +159,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   public void SendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_A_FLUID, GetTankFluid(tank_input_a));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_A_AMOUNT, GetTankAmount(tank_input_a));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_B_FLUID, GetTankFluid(tank_input_b));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_B_AMOUNT, GetTankAmount(tank_input_b));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, GetTankFluid(tank_output));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tank_output));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_A_FLUID, GetTankFluid(tanks[TANK_INPUT_A]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_A_AMOUNT, GetTankAmount(tanks[TANK_INPUT_A]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_B_FLUID, GetTankFluid(tanks[TANK_INPUT_B]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_B_AMOUNT, GetTankAmount(tanks[TANK_INPUT_B]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, GetTankFluid(tanks[TANK_OUTPUT]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tanks[TANK_OUTPUT]));
   }
-  
-  public FluidTank GetInputATank()
-  {
-    return tank_input_a;
-  }
-
-  public FluidTank GetInputBTank()
-  {
-    return tank_input_b;
-  }
-  
-  public FluidTank GetOutputTank()
-  {
-    return tank_output;
-  }
-
 
   @Override
   public int getSizeInventory()
@@ -267,17 +228,16 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   }
 
-  private boolean MixAlloy(NBTTagCompound update_packet,AlloyRecipe recipe,FluidTank tank_a,FluidTank tank_b)
+  private boolean MixAlloy(AlloyRecipe recipe,int tank_a,int tank_b)
   {
     int in_a = recipe.GetInputA().amount;
     int in_b = recipe.GetInputB().amount;
     FluidStack out = recipe.GetOutput();
 
-    boolean update_client = false;
 
-    FluidStack drain_a = tank_a.drain(in_a, false);
-    FluidStack drain_b = tank_b.drain(in_b, false);
-    if(power_handler.getEnergyStored() > 0 && drain_a != null && drain_a.amount == in_a && drain_b != null && drain_b.amount == in_b && tank_output.fill(out, false) == out.amount)
+    FluidStack drain_a = tanks[tank_a].drain(in_a, false);
+    FluidStack drain_b = tanks[tank_b].drain(in_b, false);
+    if(power_handler.getEnergyStored() > 0 && drain_a != null && drain_a.amount == in_a && drain_b != null && drain_b.amount == in_b && tanks[TANK_OUTPUT].fill(out, false) == out.amount)
     {
       int energy = (int) (power_handler.useEnergy(0, 4, true) * 100);
       progress += energy;
@@ -286,10 +246,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       {
         progress -= PROGRESS_MAX;
 
-        tank_a.drain(in_a, true);
-        tank_b.drain(in_b, true);
-        tank_output.fill(out, true);
-        WriteTanksToNBT(update_packet);
+        tanks[tank_a].drain(in_a, true);
+        tanks[tank_b].drain(in_b, true);
+        tanks[TANK_OUTPUT].fill(out, true);
+        UpdateTank(tank_a);
+        UpdateTank(tank_b);
+        UpdateTank(TANK_OUTPUT);
         return true;
       }
     }
@@ -337,12 +299,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
   {
-    if(tank_input_a.fill(resource, false) > 0 && !TankContainsFluid(tank_input_b,resource))
+    if(tanks[TANK_INPUT_A].fill(resource, false) > 0 && !TankContainsFluid(tanks[TANK_INPUT_B],resource))
     {
-      return tank_input_a.fill(resource, doFill);
-    } else if(tank_input_b.fill(resource, false) > 0 && !TankContainsFluid(tank_input_a,resource))
+      return tanks[TANK_INPUT_A].fill(resource, doFill);
+    } else if(tanks[TANK_INPUT_B].fill(resource, false) > 0 && !TankContainsFluid(tanks[TANK_INPUT_A],resource))
     {
-      return tank_input_b.fill(resource, doFill);
+      return tanks[TANK_INPUT_B].fill(resource, doFill);
     } else
     {
       return 0;
@@ -352,9 +314,9 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
   {
-    if(resource.isFluidEqual(tank_output.getFluid()))
+    if(resource.isFluidEqual(tanks[TANK_OUTPUT].getFluid()))
     {
-      return tank_output.drain(resource.amount, doDrain);
+      return tanks[TANK_OUTPUT].drain(resource.amount, doDrain);
     }
     return null;
   }
@@ -362,7 +324,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
   {
-    return tank_output.drain(maxDrain, doDrain);
+    return tanks[TANK_OUTPUT].drain(maxDrain, doDrain);
   }
 
   @Override
@@ -398,21 +360,21 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
     int last_progress = progress;
 
-    if(tank_input_a.getFluidAmount() * tank_input_b.getFluidAmount() > 0)
+    if(tanks[TANK_INPUT_A].getFluidAmount() * tanks[TANK_INPUT_B].getFluidAmount() > 0)
     {
-      AlloyRecipe r = AlloyRecipe.FindRecipe(tank_input_a.getFluid(), tank_input_b.getFluid());
+      AlloyRecipe r = AlloyRecipe.FindRecipe(tanks[TANK_INPUT_A].getFluid(), tanks[TANK_INPUT_B].getFluid());
       if(r != null)
       {
-        if(MixAlloy(packet, r, tank_input_a, tank_input_b))
+        if(MixAlloy(r, TANK_INPUT_A, TANK_INPUT_B))
         {
           update_clients = true;
         }
       } else
       {
-        r = AlloyRecipe.FindRecipe(tank_input_b.getFluid(), tank_input_a.getFluid());
+        r = AlloyRecipe.FindRecipe(tanks[TANK_INPUT_B].getFluid(), tanks[TANK_INPUT_A].getFluid());
         if(r != null)
         {
-          if(MixAlloy(packet, r, tank_input_b, tank_input_a))
+          if(MixAlloy( r, TANK_INPUT_B, TANK_INPUT_A))
           {
             update_clients = true;
           }
@@ -428,13 +390,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
     if(progress != last_progress)
     {      
-      WriteProgressToNBT(packet);
-    }
-
-    if(update_clients)
-    {
-      update_clients = true;
-      SendUpdatePacket(packet);
+      UpdateValue("progress",progress);
     }
   }
 
@@ -453,6 +409,18 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   public World getWorld()
   {
     return worldObj;
+  }
+
+  @Override
+  public FluidTank GetTank(int slot)
+  {
+    return tanks[slot];
+  }
+
+  @Override
+  public int GetTankCount()
+  {
+    return 3;
   }
 
 }

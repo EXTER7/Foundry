@@ -19,10 +19,10 @@ public class ContainerAlloyMixer extends Container
   private static final int SLOTS_HOTBAR = 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;
-  private static final int SLOT_INVENTORY_Y = 84;
+  private static final int SLOT_INVENTORY_Y = 127;
 
   private static final int SLOT_HOTBAR_X = 8;
-  private static final int SLOT_HOTBAR_Y = 142;
+  private static final int SLOT_HOTBAR_Y = 185;
 
   public ContainerAlloyMixer(TileEntityAlloyMixer mixer, IInventory player_inventory)
   {

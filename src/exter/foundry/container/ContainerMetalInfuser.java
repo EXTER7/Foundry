@@ -23,10 +23,10 @@ public class ContainerMetalInfuser extends Container
   private static final int SLOT_SUBSTANCE_ITEM_Y = 59;
 
   private static final int SLOT_INVENTORY_X = 8;
-  private static final int SLOT_INVENTORY_Y = 84;
+  private static final int SLOT_INVENTORY_Y = 127;
 
   private static final int SLOT_HOTBAR_X = 8;
-  private static final int SLOT_HOTBAR_Y = 142;
+  private static final int SLOT_HOTBAR_Y = 185;
 
   public ContainerMetalInfuser(TileEntityMetalInfuser infuser, IInventory player_inventory)
   {

@@ -17,8 +17,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void Init()
   {
-    MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container_empty.itemID, new RendererItemContainer());
-    LiquidMetalRegistry.RengisterContainerItemsRenderers();
+    MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container.itemID, new RendererItemContainer());
     InfuserRecipe.RegisterSubstanceTexture("carbon", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,0,0));
     InfuserRecipe.RegisterSubstanceTexture("sand", new SubstanceGuiTexture(SUBSTANCES_TEXTURE,8,0));
   }

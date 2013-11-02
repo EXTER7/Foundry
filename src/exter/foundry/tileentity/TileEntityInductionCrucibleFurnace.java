@@ -50,7 +50,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   
   static public final int MAX_ENERGY_USE = 40;
   
-  private ItemStack input;
+  static public final int INVENTORY_INPUT = 0;
+  static public final int INVENTORY_CONTAINER_DRAIN = 1;
+  static public final int INVENTORY_CONTAINER_FILL = 2;
+  
+  private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
 
@@ -64,7 +68,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   public TileEntityInductionCrucibleFurnace()
   {
     super();
-    input = null;
+    inventory = new ItemStack[3];
     tank = new FluidTank(5000);
     
     tank_info = new FluidTankInfo[1];
@@ -78,6 +82,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     power_handler.configure(1, 50, 1, 200);
     power_handler.configurePowerPerdition(1, 50);
+    
+    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
   }
 
   @Override
@@ -154,39 +161,35 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public int getSizeInventory()
   {
-    return 1;
+    return 3;
   }
 
   @Override
   public ItemStack getStackInSlot(int slot)
   {
-    return slot == 0?input:null;
+    return inventory[slot];
   }
 
   @Override
   public ItemStack decrStackSize(int slot, int amount)
   {
-    if(slot != 0)
-    {
-      return null;
-    }
-    if(input != null)
+    if(inventory[slot] != null)
     {
       ItemStack is;
 
-      if(input.stackSize <= amount)
+      if(inventory[slot].stackSize <= amount)
       {
-        is = input;
-        input = null;
+        is = inventory[slot];
+        inventory[slot] = null;
         onInventoryChanged();
         return is;
       } else
       {
-        is = input.splitStack(amount);
+        is = inventory[slot].splitStack(amount);
 
-        if(input.stackSize == 0)
+        if(inventory[slot].stackSize == 0)
         {
-          input = null;
+          inventory[slot] = null;
         }
 
         onInventoryChanged();
@@ -201,14 +204,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public ItemStack getStackInSlotOnClosing(int slot)
   {
-    if(slot != 0)
+    if(inventory[slot] != null)
     {
-      return null;
-    }
-    if(input != null)
-    {
-      ItemStack is = input;
-      input = null;
+      ItemStack is = inventory[slot];
+      inventory[slot] = null;
       return is;
     } else
     {
@@ -223,7 +222,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     {
       return;
     }
-    input = stack;
+    inventory[slot] = stack;
 
     if(stack != null && stack.stackSize > this.getInventoryStackLimit())
     {
@@ -392,9 +391,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     int last_progress = progress;
     int last_melt_point = melt_point;
-    if(input != null)
+    if(inventory[INVENTORY_INPUT] != null)
     {      
-      MeltingRecipe metal = MeltingRecipe.FindByStack(input);
+      MeltingRecipe metal = MeltingRecipe.FindByStack(inventory[INVENTORY_INPUT]);
       if(metal != null)
       {
         FluidStack fs = metal.GetFluid();
@@ -409,9 +408,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
             //update_clients = true;
             progress -= SMELT_TIME;
             tank.fill(fs, true);
-            decrStackSize(0,1);
+            decrStackSize(INVENTORY_INPUT,1);
             UpdateTank(0);
-            UpdateInventoryItem(0);
+            UpdateInventoryItem(INVENTORY_INPUT);
           }
         } else
         {

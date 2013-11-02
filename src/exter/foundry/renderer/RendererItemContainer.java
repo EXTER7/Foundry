@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -16,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
 @SideOnly(Side.CLIENT)
 public class RendererItemContainer implements IItemRenderer
@@ -54,18 +56,18 @@ public class RendererItemContainer implements IItemRenderer
   }
 
   @Override
-  public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data)
+  public void renderItem(ItemRenderType type, ItemStack stack, Object... data)
   {
-    ItemFoundryContainer item = (ItemFoundryContainer) itemStack.getItem();
-    Fluid fluid = item.GetFluid();
+    ItemFoundryContainer item = (ItemFoundryContainer) stack.getItem();
+    FluidStack fluid_stack = ItemFoundryContainer.GetFluidStackFromItemNBT(stack);
     
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
-    if(fluid != null)
+    if(fluid_stack != null)
     {
-      Icon fluid_icon = fluid.getStillIcon();
+      Icon fluid_icon = fluid_stack.getFluid().getStillIcon();
       if(fluid_icon != null)
       {
-        int h = itemStack.getItemDamage() * 10 / ItemFoundryContainer.AMOUNT_MAX;
+        int h = fluid_stack.amount * 10 / ItemFoundryContainer.AMOUNT_MAX;
         if(h > 0)
         {
           if(type == type.ENTITY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)

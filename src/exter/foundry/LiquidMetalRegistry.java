@@ -49,14 +49,12 @@ public class LiquidMetalRegistry
   
   public final String name;
   
-  public final ItemFoundryContainer container;
-  
-  private LiquidMetalRegistry(Block liquid_block,ItemFoundryContainer liquid_cont,Fluid liquid_fluid,String metal_name)
+  private LiquidMetalRegistry(Block liquid_block,Fluid liquid_fluid,String metal_name)
   {
     block = liquid_block;
     fluid = liquid_fluid;
     name = metal_name;
-    container = liquid_cont;
+
   }
   
   /**
@@ -66,7 +64,7 @@ public class LiquidMetalRegistry
    * @param default_block_id Default block id of the fluid block.
    * @param default_container_id Default item id of the fluid container.
    */
-  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int default_containter_id,int temperature,int luminosity)
+  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int temperature,int luminosity)
   {
     int i;
     int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
@@ -101,10 +99,9 @@ public class LiquidMetalRegistry
     CastingRecipe.RegisterRecipe("block" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_BLOCK), mold_block, null);
     CastingRecipe.RegisterRecipe("ingot" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_INGOT), mold_ingot, null);
 
-    ItemFoundryContainer container = new ItemFoundryContainer(config.getItem("container_" + metal_name, default_containter_id).getInt(),fluid);
 
 
-    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,container,fluid,metal_name);
+    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,fluid,metal_name);
     
     MinecraftForge.EVENT_BUS.register(metal);
     
@@ -155,18 +152,5 @@ public class LiquidMetalRegistry
   public boolean equals(Object obj)
   {
     return obj instanceof LiquidMetalRegistry && hashCode() == obj.hashCode();
-  }
-
-  @SideOnly(Side.CLIENT)
-  static public void RengisterContainerItemsRenderers()
-  {
-    RendererItemContainer renderer = new RendererItemContainer();
-    for(LiquidMetalRegistry reg:registry.values())
-    {
-       if(reg != null)
-       {
-         MinecraftForgeClient.registerItemRenderer(reg.container.itemID, renderer);
-       }
-    }
   }
 }

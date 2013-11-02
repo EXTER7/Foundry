@@ -6,7 +6,6 @@ import java.util.List;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemEmptyFoundryContainer;
 import exter.foundry.item.ItemFoundryContainer;
 import exter.foundry.network.FoundryPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,103 +26,58 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   public class ContainerSlot
   {
     public final boolean fill;
-    public final FluidTank tank;
+    public final int tank_slot;
     public final int slot;
     
-    public ContainerSlot(FluidTank container_tank,int container_slot,boolean container_fill)
+    public ContainerSlot(int container_tank,int container_slot,boolean container_fill)
     {
-      tank = container_tank;
+      tank_slot = container_tank;
       slot = container_slot;
       fill = container_fill;
     }
     
-    public boolean Update()
+    public void Update()
     {
       ItemStack stack = getStackInSlot(slot);
-      boolean update_slot = false;
-      if(stack == null)
+      if(stack == null || stack.getItem() != FoundryItems.item_container)
       {
-        return false;
+        return;
       }
-      Item item = stack.getItem();
-      ItemFoundryContainer container = null;
+      FluidTank tank = GetTank(tank_slot);
       if(fill)
       {
-        Fluid tank_fluid = tank.getFluid().getFluid();
-        if(tank_fluid == null || tank.getFluidAmount() == 0)
+        FluidStack drained = tank.drain(10, false);
+        if(drained == null || drained.amount == 0)
         {
-          return false;
+          return;
         }
-        if(item instanceof ItemFoundryContainer)
+        int filled = ItemFoundryContainer.FillContainer(stack, drained, false);
+        if(filled == 0)
         {
-          container = (ItemFoundryContainer)item;
-          if(container.GetFluid().getID() != tank_fluid.getID() || stack.getItemDamage() == ItemFoundryContainer.AMOUNT_MAX)
-          {
-            return false;
-          }
-        } else if(item instanceof ItemEmptyFoundryContainer)
-        {
-          container = ItemFoundryContainer.GetContainerFromFluid(tank_fluid);
-          if(container == null)
-          {
-            return false;
-          }
-          stack = new ItemStack(container,1,0);
-          update_slot = true;
+          return;
         }
-        stack.setItemDamage(stack.getItemDamage() + 1);
-        tank.drain(1, true);
+        drained = tank.drain(filled, true);
+        ItemFoundryContainer.FillContainer(stack, drained, true);
+        UpdateTank(tank_slot);
+        UpdateInventoryItem(slot);
       } else
       {
-        Fluid tank_fluid = tank.getFluid().getFluid();
-        if(tank_fluid != null && tank.getFluidAmount() > 0)
+        FluidStack drained = ItemFoundryContainer.DrainContainer(stack, 10, false);
+        if(drained == null || drained.amount == 0)
         {
-          if(item instanceof ItemFoundryContainer)
-          {
-            container = (ItemFoundryContainer)item;
-            if(container.GetFluid().getID() != tank_fluid.getID() || stack.getItemDamage() == 0)
-            {
-              return false;
-            }
-          } else if(item instanceof ItemEmptyFoundryContainer)
-          {
-            return false;
-          }
-        } else
-        {
-          if(item instanceof ItemFoundryContainer)
-          {
-            container = (ItemFoundryContainer)item;
-            if(container.GetFluid().getID() != tank_fluid.getID() || stack.getItemDamage() == 0)
-            {
-              return false;
-            }
-          }
+          return;
         }
-        if(tank.getFluidAmount() == tank.getCapacity())
+        
+        int filled = tank.fill(drained, false);
+        if(filled == 0)
         {
-          return false;
+          return;
         }
-        if(container != null)
-        {
-          tank.fill(new FluidStack(tank.getFluid(),1), true);
-          int new_amount = stack.getItemDamage() - 1;
-          if(new_amount == 0)
-          {
-            stack = new ItemStack(FoundryItems.item_container_empty,1);
-            update_slot = true;
-          } else
-          {
-            stack.setItemDamage(new_amount);
-          }
-        }
+        drained = ItemFoundryContainer.DrainContainer(stack, filled, true);
+        tank.fill(drained, true);
+        UpdateTank(tank_slot);
+        UpdateInventoryItem(slot);
       }
-
-      if(update_slot)
-      {
-        setInventorySlotContents(slot, stack);
-      }
-      return true;
     }
   }
   
@@ -197,7 +151,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       is.writeToNBT(tag);
     } else
     {
-      tag.setBoolean("true", false);
+      tag.setBoolean("empty", true);
     }
     compound.setTag("Item_" + String.valueOf(slot), tag);
   }
@@ -229,8 +183,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         if(!tag.getBoolean("empty"))
         {
           stack = ItemStack.loadItemStackFromNBT(tag);
-          setInventorySlotContents(i, stack);
         }
+        setInventorySlotContents(i, stack);
       }
     }
   }
@@ -285,6 +239,10 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       packet = new NBTTagCompound();
       super.writeToNBT(packet);
       do_update = false;
+      for(ContainerSlot cs:conatiner_slots)
+      {
+        cs.Update();
+      }
       UpdateEntityServer();
       if(do_update)
       {

@@ -1,5 +1,6 @@
 package exter.foundry.container;
 
+import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -16,11 +17,19 @@ public class ContainerInductionCrucibleFurnace extends Container
   
   // Slot numbers
   private static final int SLOTS_INPUT = 0;
-  private static final int SLOTS_INVENTORY = 1;
-  private static final int SLOTS_HOTBAR = 1 + 3 * 9;
+  private static final int SLOTS_CONTAINER_DRAIN = 1;
+  private static final int SLOTS_CONTAINER_FILL = 2;
+  private static final int SLOTS_INVENTORY = 3;
+  private static final int SLOTS_HOTBAR = 3 + 3 * 9;
   
   private static final int SLOT_INPUT_X = 55;
   private static final int SLOT_INPUT_Y = 23;
+
+  private static final int SLOT_CONTAINER_DRAIN_X = 135;
+  private static final int SLOT_CONTAINER_DRAIN_Y = 22;
+
+  private static final int SLOT_CONTAINER_FILL_X = 135;
+  private static final int SLOT_CONTAINER_FILL_Y = 53;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 84;
@@ -35,6 +44,8 @@ public class ContainerInductionCrucibleFurnace extends Container
     int i,j;
 
     addSlotToContainer(new Slot(te_icf, 0, SLOT_INPUT_X, SLOT_INPUT_Y));
+    addSlotToContainer(new SlotContainer(te_icf, 1, SLOT_CONTAINER_DRAIN_X, SLOT_CONTAINER_DRAIN_Y));
+    addSlotToContainer(new SlotContainer(te_icf, 2, SLOT_CONTAINER_FILL_X, SLOT_CONTAINER_FILL_Y));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

@@ -18,15 +18,15 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   
-  static public ItemEmptyFoundryContainer item_container_empty;
+  static public ItemFoundryContainer item_container;
 
   static public void RegisterItems(Configuration config)
   {
     int i;
 
-    item_component = new ItemFoundryComponent(config.getItem("component", 9021).getInt());
-    item_mold = new ItemMold(config.getItem("mold", 9022).getInt());
-    item_ingot = new ItemIngot(config.getItem("ingot", 9023).getInt());
+    item_component = new ItemFoundryComponent(config.getItem("component", 9021).getInt() - 256);
+    item_mold = new ItemMold(config.getItem("mold", 9022).getInt() - 256);
+    item_ingot = new ItemIngot(config.getItem("ingot", 9023).getInt() - 256);
     
     for (i = 0; i < ItemFoundryComponent.NAMES.length; i++)
     {
@@ -42,7 +42,7 @@ public class FoundryItems
       LanguageRegistry.addName(is, ItemIngot.NAMES[i]);
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
     }
-    item_container_empty = new ItemEmptyFoundryContainer(config.getItem("container_empty", 9024).getInt());
+    item_container = new ItemFoundryContainer(config.getItem("container", 9024).getInt() - 256);
 
   }
 }

@@ -83,17 +83,17 @@ public class GuiAlloyMixer extends GuiFoundry
     super.drawScreen(mouse_x, mouse_y, par3);
     if(isPointInRegion(TANK_OUTPUT_X,TANK_OUTPUT_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetOutputTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_OUTPUT));
     }
 
     if(isPointInRegion(TANK_INPUT_A_X,TANK_INPUT_A_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetInputATank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_A));
     }
 
     if(isPointInRegion(TANK_INPUT_B_X,TANK_INPUT_B_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetInputBTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_B));
     }
   }
 
@@ -106,9 +106,9 @@ public class GuiAlloyMixer extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    DisplayTank(window_x, window_y, TANK_INPUT_A_X, TANK_INPUT_A_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetInputATank());
-    DisplayTank(window_x, window_y, TANK_INPUT_B_X, TANK_INPUT_B_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetInputBTank());
-    DisplayTank(window_x, window_y, TANK_OUTPUT_X, TANK_OUTPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetOutputTank());
+    DisplayTank(window_x, window_y, TANK_INPUT_A_X, TANK_INPUT_A_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_A));
+    DisplayTank(window_x, window_y, TANK_INPUT_B_X, TANK_INPUT_B_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_B));
+    DisplayTank(window_x, window_y, TANK_OUTPUT_X, TANK_OUTPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_OUTPUT));
   }
 
   @Override

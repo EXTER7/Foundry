@@ -69,6 +69,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
  
   public TileEntityMetalCaster()
   {
+    super();
+
     tank = new FluidTank(5000);
     
     tank_info = new FluidTankInfo[1];
@@ -91,67 +93,21 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     {
       progress = compund.getInteger("progress");
     }
-    
-    NBTTagCompound tank_tag = (NBTTagCompound)compund.getTag("Tank");
-    
-    for(i = 0; i < getSizeInventory(); i++)
-    {
-      NBTTagCompound item_tag = (NBTTagCompound)compund.getTag(NBT_SLOT_NAMES[i]);
-      if(item_tag != null)
-      {
-        inventory[i] = ItemStack.loadItemStackFromNBT(item_tag);
-      }
-    }
-    if(tank_tag != null)
-    {
-      tank.readFromNBT(tank_tag);
-    }
     if(compund.hasKey("Power"))
     {
-      power_handler.readFromNBT(compund, "Power");
+      power_handler.readFromNBT(compund.getCompoundTag("Power"));
     }
+    
   }
 
-  private void WriteInventoryItemToNBT(NBTTagCompound compound,int slot)
-  {
-    NBTTagCompound item_tag = new NBTTagCompound();
-
-    if(inventory[slot] != null)
-    {
-      inventory[slot].writeToNBT(item_tag);
-    }
-    compound.setTag(NBT_SLOT_NAMES[slot], item_tag);
-  }
-  
-  private void WriteInventoryToNBT(NBTTagCompound compound)
-  {
-    int i;
-    for(i = 0; i < getSizeInventory(); i++)
-    {
-      WriteInventoryItemToNBT(compound,i);
-    }
-  }
-  
-  private void WriteProgressToNBT(NBTTagCompound compound)
-  {
-    compound.setInteger("progress", progress);
-  }
-
-  private void WriteTankToNBT(NBTTagCompound compound)
-  {
-    NBTTagCompound tank_tag = new NBTTagCompound();
-    tank.writeToNBT(tank_tag);
-    compound.setTag("Tank", tank_tag);
-  }
 
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
     super.writeToNBT(compound);
-    this.WriteInventoryToNBT(compound);
-    this.WriteTankToNBT(compound);
-    this.WriteProgressToNBT(compound);
-    power_handler.writeToNBT(compound, "Power");
+    compound.setInteger("progress", progress);
+    NBTTagCompound power = new NBTTagCompound();
+    power_handler.writeToNBT(power);
   }
 
   public void GetGUINetworkData(int id, int value)
@@ -185,10 +141,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
   }
 
-  public FluidTank GetTank()
-  {
-    return tank;
-  }
   
   public float GetStoredPower()
   {
@@ -406,13 +358,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   protected void UpdateEntityServer()
   {
-    boolean update_clients = false;
-    NBTTagCompound packet = new NBTTagCompound();
-    super.writeToNBT(packet);
 
     float last_power = power_handler.getEnergyStored();
-    
-    power_handler.update();
     
     int last_progress = progress;
     if(tank.getFluidAmount() > 0)
@@ -448,7 +395,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
                   if(extra != null)
                   {
                     decrStackSize(SLOT_EXTRA, extra.stackSize);
-                    WriteInventoryItemToNBT(packet, SLOT_EXTRA);
+                    UpdateInventoryItem(SLOT_EXTRA);
                   }
                   if(output == null)
                   {
@@ -458,9 +405,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
                   {
                     output.stackSize++;
                   }
-                  WriteInventoryItemToNBT(packet, SLOT_OUTPUT);
-                  WriteTankToNBT(packet);
-                  update_clients = true;
+                  UpdateInventoryItem(SLOT_OUTPUT);
+                  UpdateTank(0);
                   onInventoryChanged();
                 }
               }
@@ -487,19 +433,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     
     if(Math.abs(last_power - power_handler.getEnergyStored()) < 0.01)
     {
-      update_clients = true;
-      power_handler.writeToNBT(packet,"Power");
+      NBTTagCompound tag = new NBTTagCompound();
+      power_handler.writeToNBT(tag);
+      UpdateNBTTag("Power",tag);
     }
     
     if(last_progress != progress)
     {
-      update_clients = true;
-      WriteProgressToNBT(packet);
-    }
-    
-    if(update_clients)
-    {
-      SendUpdatePacket(packet);
+      UpdateValue("progress",progress);
     }
   }
 
@@ -521,5 +462,19 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     return worldObj;
   }
 
+  @Override
+  public FluidTank GetTank(int slot)
+  {
+    if(slot != 0)
+    {
+      return null;
+    }
+    return tank;
+  }
 
+  @Override
+  public int GetTankCount()
+  {
+    return 1;
+  }
 }

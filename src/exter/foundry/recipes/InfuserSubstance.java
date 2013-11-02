@@ -29,6 +29,10 @@ public class InfuserSubstance
   
   public static InfuserSubstance ReadFromNBT(NBTTagCompound tag)
   {
+    if(!(tag.hasKey("type") && tag.hasKey("amount")))
+    {
+      return null;
+    }
     String substance = tag.getString("type");
     int amt = tag.getInteger("amount");
     if(substance == null || amt == 0)

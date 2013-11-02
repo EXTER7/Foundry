@@ -17,15 +17,18 @@ import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemFoundryContainer;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.renderer.RendererItemContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,11 +49,14 @@ public class LiquidMetalRegistry
   
   public final String name;
   
-  private LiquidMetalRegistry(Block liquid_block,Fluid liquid_fluid,String metal_name)
+  public final ItemFoundryContainer container;
+  
+  private LiquidMetalRegistry(Block liquid_block,ItemFoundryContainer liquid_cont,Fluid liquid_fluid,String metal_name)
   {
     block = liquid_block;
     fluid = liquid_fluid;
     name = metal_name;
+    container = liquid_cont;
   }
   
   /**
@@ -58,8 +64,9 @@ public class LiquidMetalRegistry
    * @param config Forge Configuration file.
    * @param metal_name Name of the metal e.g "Copper" for "oreCopper" in the Ore Dictionary.
    * @param default_block_id Default block id of the fluid block.
+   * @param default_container_id Default item id of the fluid container.
    */
-  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int temperature,int luminosity)
+  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int default_containter_id,int temperature,int luminosity)
   {
     int i;
     int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
@@ -94,8 +101,10 @@ public class LiquidMetalRegistry
     CastingRecipe.RegisterRecipe("block" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_BLOCK), mold_block, null);
     CastingRecipe.RegisterRecipe("ingot" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_INGOT), mold_ingot, null);
 
+    ItemFoundryContainer container = new ItemFoundryContainer(config.getItem("container_" + metal_name, default_containter_id).getInt(),fluid);
 
-    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,fluid,metal_name);
+
+    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,container,fluid,metal_name);
     
     MinecraftForge.EVENT_BUS.register(metal);
     
@@ -110,7 +119,22 @@ public class LiquidMetalRegistry
   {
     return registry.get(name);
   }
-  
+ 
+  static public LiquidMetalRegistry GetMetal(Fluid fluid)
+  {
+    for(LiquidMetalRegistry reg:registry.values())
+    {
+       if(reg != null)
+       {
+         if(reg.fluid.getID() == fluid.getID())
+         {
+           return reg;
+         }
+       }
+    }
+    return null;
+  }
+
   @ForgeSubscribe
   @SideOnly(Side.CLIENT)
   public void textureHook(TextureStitchEvent.Post event)
@@ -133,4 +157,16 @@ public class LiquidMetalRegistry
     return obj instanceof LiquidMetalRegistry && hashCode() == obj.hashCode();
   }
 
+  @SideOnly(Side.CLIENT)
+  static public void RengisterContainerItemsRenderers()
+  {
+    RendererItemContainer renderer = new RendererItemContainer();
+    for(LiquidMetalRegistry reg:registry.values())
+    {
+       if(reg != null)
+       {
+         MinecraftForgeClient.registerItemRenderer(reg.container.itemID, renderer);
+       }
+    }
+  }
 }

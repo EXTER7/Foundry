@@ -128,7 +128,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.GetTank());
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.GetTank(0));
   }
 
   @Override
@@ -137,7 +137,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     super.drawScreen(mouse_x, mouse_y, par3);
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank());
+      DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank(0));
     }
 
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mouse_x,mouse_y))
@@ -152,7 +152,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       }
       drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
     }
-}
+  }
 
   @Override
   protected ResourceLocation GetGUITexture()

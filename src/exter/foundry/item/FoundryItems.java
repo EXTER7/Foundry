@@ -43,6 +43,7 @@ public class FoundryItems
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
     }
     item_container = new ItemFoundryContainer(config.getItem("container", 9024).getInt() - 256);
+    LanguageRegistry.addName(item_container, "Foundry Container");
 
   }
 }

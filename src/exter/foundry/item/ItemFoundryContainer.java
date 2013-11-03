@@ -42,8 +42,8 @@ public class ItemFoundryContainer extends Item
   {
     super(id);
     setCreativeTab(CreativeTabs.tabMisc);
-    maxStackSize = 1;
-    LanguageRegistry.addName(this, "Foundry Container");
+    setMaxStackSize(1);
+    setUnlocalizedName("foundryContainer");
     setHasSubtypes(true);
   }
   
@@ -113,6 +113,7 @@ public class ItemFoundryContainer extends Item
     {
       container_fluid = new FluidStack(fluid, Math.min(AMOUNT_MAX, fluid.amount));
 
+      SetContainerFluidStackNBT(stack,container_fluid);
       return container_fluid.amount;
     }
 
@@ -165,12 +166,6 @@ public class ItemFoundryContainer extends Item
 
     }
     return drain_fluid;
-  }
-
-  @Override
-  public String getUnlocalizedName()
-  {
-    return "foundryContainer";
   }
 
   @Override

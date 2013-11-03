@@ -19,7 +19,7 @@ public class ContainerMetalCaster extends Container
   // Slot numbers
   private static final int SLOTS_OUTPUT = 0;
   private static final int SLOTS_MOLD = 1;
-  private static final int SLOTS_EXTRA = 1;
+  private static final int SLOTS_EXTRA = 2;
   private static final int SLOTS_INVENTORY = 3;
   private static final int SLOTS_HOTBAR = 3 + 3 * 9;
   

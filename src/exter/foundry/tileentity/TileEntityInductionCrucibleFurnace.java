@@ -102,7 +102,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       melt_point = compund.getInteger("melt_point");
     }
 
-
     if(compund.hasKey("heat"))
     {
       heat = compund.getInteger("heat");
@@ -218,10 +217,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack)
   {
-    if(slot != 0)
-    {
-      return;
-    }
     inventory[slot] = stack;
 
     if(stack != null && stack.stackSize > this.getInventoryStackLimit())
@@ -296,12 +291,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     return false;
   }
 
-  static private final int[] INSERT_SLOTS = { 0 };
+  static private final int[] INSERT_SLOTS = { INVENTORY_INPUT };
 
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
   {
-    return i == 0;
+    return i == INVENTORY_INPUT;
   }
 
   @Override
@@ -387,8 +382,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
 
   @Override
   protected void UpdateEntityServer()
-  {
-    
+  {    
     int last_progress = progress;
     int last_melt_point = melt_point;
     if(inventory[INVENTORY_INPUT] != null)
@@ -405,7 +399,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
           progress += GetSmeltingSpeed();
           if(progress >= SMELT_TIME)
           {
-            //update_clients = true;
             progress -= SMELT_TIME;
             tank.fill(fs, true);
             decrStackSize(INVENTORY_INPUT,1);

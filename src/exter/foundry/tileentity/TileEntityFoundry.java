@@ -173,7 +173,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         tank.readFromNBT(tag);
       }
     }
-
+    
     for(i = 0; i < getSizeInventory(); i++)
     {
       NBTTagCompound tag = (NBTTagCompound)compound.getTag("Item_" + String.valueOf(i));

@@ -78,7 +78,7 @@ public class ContainerInductionCrucibleFurnace extends Container
 
       if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if (!mergeItemStack(stack, SLOTS_INPUT, SLOTS_INPUT + 9, false))
+        if (!mergeItemStack(stack, SLOTS_INPUT, SLOTS_INPUT + 3, false))
         {
           return null;
         }

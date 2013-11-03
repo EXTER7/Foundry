@@ -2,6 +2,7 @@ package exter.foundry.container;
 
 import exter.foundry.slot.SlotCasterMold;
 import exter.foundry.slot.SlotCasterOutput;
+import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -17,20 +18,10 @@ public class ContainerMetalCaster extends Container
   private TileEntityMetalCaster te_caster;
   
   // Slot numbers
-  private static final int SLOTS_OUTPUT = 0;
-  private static final int SLOTS_MOLD = 1;
-  private static final int SLOTS_EXTRA = 2;
-  private static final int SLOTS_INVENTORY = 3;
-  private static final int SLOTS_HOTBAR = 3 + 3 * 9;
-  
-  private static final int SLOT_OUTPUT_X = 94;
-  private static final int SLOT_OUTPUT_Y = 51;
-
-  private static final int SLOT_MOLD_X = 66;
-  private static final int SLOT_MOLD_Y = 21;
-  
-  private static final int SLOT_EXTRA_X = 87;
-  private static final int SLOT_EXTRA_Y = 21;
+  private static final int SLOTS_TE = 0;
+  private static final int SLOTS_TE_SIZE = 5;
+  private static final int SLOTS_INVENTORY = 5;
+  private static final int SLOTS_HOTBAR = 5 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 84;
@@ -44,9 +35,11 @@ public class ContainerMetalCaster extends Container
     te_caster.openChest();
     int i,j;
 
-    addSlotToContainer(new SlotCasterOutput(te_caster, 0, SLOT_OUTPUT_X, SLOT_OUTPUT_Y));
-    addSlotToContainer(new SlotCasterMold(te_caster, 1, SLOT_MOLD_X, SLOT_MOLD_Y));
-    addSlotToContainer(new Slot(te_caster, 2, SLOT_EXTRA_X, SLOT_EXTRA_Y));
+    addSlotToContainer(new SlotCasterOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 94, 51));
+    addSlotToContainer(new SlotCasterMold(te_caster, TileEntityMetalCaster.INVENTORY_MOLD, 66, 21));
+    addSlotToContainer(new Slot(te_caster, TileEntityMetalCaster.INVENTORY_EXTRA, 87, 21));
+    addSlotToContainer(new SlotContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_DRAIN, 11, 21));
+    addSlotToContainer(new SlotContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_FILL, 11, 51));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)
@@ -77,15 +70,9 @@ public class ContainerMetalCaster extends Container
       ItemStack stack = slot.getStack();
       slot_stack = stack.copy();
 
-      if (slot_index == SLOTS_OUTPUT)
+      if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
-        {
-          return null;
-        }
-      } else if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
-      {
-        if (!mergeItemStack(stack, SLOTS_MOLD, SLOTS_EXTRA, false))
+        if (!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + SLOTS_TE_SIZE, false))
         {
           return null;
         }

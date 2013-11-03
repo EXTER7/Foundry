@@ -1,5 +1,6 @@
 package exter.foundry.container;
 
+import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -15,12 +16,11 @@ public class ContainerMetalInfuser extends Container
   private TileEntityMetalInfuser te_infuser;
   
   // Slot numbers
-  private static final int SLOTS_SUBSTANCE_ITEM = 0;
-  private static final int SLOTS_INVENTORY = 1;
-  private static final int SLOTS_HOTBAR = 1 + 3 * 9;
+  private static final int SLOTS_TE = 0;
+  private static final int SLOTS_TE_SIZE = 5;
+  private static final int SLOTS_INVENTORY = 5;
+  private static final int SLOTS_HOTBAR = 5 + 3 * 9;
 
-  private static final int SLOT_SUBSTANCE_ITEM_X = 19;
-  private static final int SLOT_SUBSTANCE_ITEM_Y = 59;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 127;
@@ -34,7 +34,11 @@ public class ContainerMetalInfuser extends Container
     te_infuser.openChest();
     int i,j;
 
-    addSlotToContainer(new Slot(te_infuser, 0, SLOT_SUBSTANCE_ITEM_X, SLOT_SUBSTANCE_ITEM_Y));
+    addSlotToContainer(new Slot(te_infuser, TileEntityMetalInfuser.INVENTORY_SUBSTANCE_INPUT, 19, 59));
+    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_DRAIN, 85, 15));
+    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_FILL, 85, 102));
+    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_DRAIN, 134, 15));
+    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_FILL, 134, 102));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)
@@ -65,15 +69,9 @@ public class ContainerMetalInfuser extends Container
       ItemStack stack = slot.getStack();
       slot_stack = stack.copy();
 
-      if (slot_index == SLOTS_SUBSTANCE_ITEM)
+      if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
-        {
-          return null;
-        }
-      } else if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
-      {
-        if (!mergeItemStack(stack, SLOTS_SUBSTANCE_ITEM, SLOTS_SUBSTANCE_ITEM, false))
+        if (!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + SLOTS_TE_SIZE, false))
         {
           return null;
         }

@@ -16,20 +16,10 @@ public class ContainerInductionCrucibleFurnace extends Container
   private TileEntityInductionCrucibleFurnace te_icf;
   
   // Slot numbers
-  private static final int SLOTS_INPUT = 0;
-  private static final int SLOTS_CONTAINER_DRAIN = 1;
-  private static final int SLOTS_CONTAINER_FILL = 2;
+  private static final int SLOTS_TE = 0;
+  private static final int SLOTS_TE_SIZE = 3;
   private static final int SLOTS_INVENTORY = 3;
   private static final int SLOTS_HOTBAR = 3 + 3 * 9;
-  
-  private static final int SLOT_INPUT_X = 55;
-  private static final int SLOT_INPUT_Y = 23;
-
-  private static final int SLOT_CONTAINER_DRAIN_X = 135;
-  private static final int SLOT_CONTAINER_DRAIN_Y = 22;
-
-  private static final int SLOT_CONTAINER_FILL_X = 135;
-  private static final int SLOT_CONTAINER_FILL_Y = 53;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 84;
@@ -43,9 +33,9 @@ public class ContainerInductionCrucibleFurnace extends Container
     te_icf.openChest();
     int i,j;
 
-    addSlotToContainer(new Slot(te_icf, 0, SLOT_INPUT_X, SLOT_INPUT_Y));
-    addSlotToContainer(new SlotContainer(te_icf, 1, SLOT_CONTAINER_DRAIN_X, SLOT_CONTAINER_DRAIN_Y));
-    addSlotToContainer(new SlotContainer(te_icf, 2, SLOT_CONTAINER_FILL_X, SLOT_CONTAINER_FILL_Y));
+    addSlotToContainer(new Slot(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_INPUT, 55, 23));
+    addSlotToContainer(new SlotContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_DRAIN, 135, 22));
+    addSlotToContainer(new SlotContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_FILL, 135, 53));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)
@@ -78,7 +68,7 @@ public class ContainerInductionCrucibleFurnace extends Container
 
       if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if (!mergeItemStack(stack, SLOTS_INPUT, SLOTS_INPUT + 3, false))
+        if (!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + SLOTS_TE_SIZE, false))
         {
           return null;
         }

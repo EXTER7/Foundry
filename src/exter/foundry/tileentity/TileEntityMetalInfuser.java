@@ -18,6 +18,7 @@ import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.tileentity.TileEntityFoundry.ContainerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -50,7 +51,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   static private final int NETDATAID_OUTPUT_TANK_AMOUNT = 4;
   
   
-  private ItemStack substance_input;
+  static public final int INVENTORY_SUBSTANCE_INPUT = 0;
+  static public final int INVENTORY_CONTAINER_INPUT_DRAIN = 1;
+  static public final int INVENTORY_CONTAINER_INPUT_FILL = 2;
+  static public final int INVENTORY_CONTAINER_OUTPUT_DRAIN = 3;
+  static public final int INVENTORY_CONTAINER_OUTPUT_FILL = 4;
+  private ItemStack[] inventory;
 
   static public final int TANK_INPUT = 0;
   static public final int TANK_OUTPUT = 1;
@@ -80,10 +86,17 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     progress = 0;
     extract_time = 1;
     
+    inventory = new ItemStack[5];
+    
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     power_handler.configure(1, 8, 1, 8);
     power_handler.configurePowerPerdition(1, 100);
     
+    AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_FILL,true));
+    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
+
   }
   
   @Override
@@ -191,43 +204,35 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public int getSizeInventory()
   {
-    return 1;
+    return 5;
   }
 
   @Override
   public ItemStack getStackInSlot(int slot)
   {
-    if(slot != 0)
-    {
-      return null;
-    }
-    return substance_input;
+    return inventory[slot];
   }
 
   @Override
   public ItemStack decrStackSize(int slot, int amount)
   {
-    if(slot != 0)
-    {
-      return null;
-    }
-    if(substance_input != null)
+    if(inventory[slot] != null)
     {
       ItemStack is;
 
-      if(substance_input.stackSize <= amount)
+      if(inventory[slot].stackSize <= amount)
       {
-        is = substance_input;
-        substance_input = null;
+        is = inventory[slot];
+        inventory[slot] = null;
         onInventoryChanged();
         return is;
       } else
       {
-        is = substance_input.splitStack(amount);
+        is = inventory[slot].splitStack(amount);
 
-        if(substance_input.stackSize == 0)
+        if(inventory[slot].stackSize == 0)
         {
-          substance_input = null;
+          inventory[slot] = null;
         }
 
         onInventoryChanged();
@@ -242,14 +247,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public ItemStack getStackInSlotOnClosing(int slot)
   {
-    if(slot != 0)
+    if(inventory[slot] != null)
     {
-      return null;
-    }
-    if(substance_input != null)
-    {
-      ItemStack is = substance_input;
-      substance_input = null;
+      ItemStack is = inventory[slot];
+      inventory[slot] = null;
       return is;
     } else
     {
@@ -260,11 +261,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack)
   {
-    if(slot != 0)
-    {
-      return;
-    }
-    substance_input = stack;
+    inventory[slot] = stack;
 
     if(stack != null && stack.stackSize > this.getInventoryStackLimit())
     {
@@ -401,7 +398,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
     int last_progress = progress;
     int last_extract_time = extract_time;
-    InfuserSubstanceRecipe sub_recipe = InfuserSubstanceRecipe.FindRecipe(substance_input);
+    InfuserSubstanceRecipe sub_recipe = InfuserSubstanceRecipe.FindRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
     if(sub_recipe != null)
     {
       if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && InfuserSubstance.MAX_AMOUNT - sub_recipe.substance.amount >= substance.amount)

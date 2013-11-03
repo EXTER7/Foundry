@@ -16,6 +16,7 @@ import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.tileentity.TileEntityFoundry.ContainerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -48,15 +49,17 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   
   static public final int POWER_REQUIRED = 100;
   
+  static public final int INVENTORY_OUTPUT = 0;
+  static public final int INVENTORY_MOLD = 1;
+  static public final int INVENTORY_EXTRA = 2;
+  static public final int INVENTORY_CONTAINER_DRAIN = 3;
+  static public final int INVENTORY_CONTAINER_FILL = 4;
   private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
 
   private int progress;
   
-  public final int SLOT_OUTPUT = 0;
-  public final int SLOT_MOLD = 1;
-  public final int SLOT_EXTRA = 2;
   
   private PowerHandler power_handler;
 
@@ -76,11 +79,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = -1;
-    inventory = new ItemStack[3];
+    inventory = new ItemStack[5];
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     power_handler.configure(1, 5, 1, 400);
     power_handler.configurePowerPerdition(1, 100);
+    
+    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
   }
   
   @Override
@@ -155,26 +161,18 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public int getSizeInventory()
   {
-    return 3;
+    return 5;
   }
 
   @Override
   public ItemStack getStackInSlot(int slot)
   {
-    if(slot < 0 || slot >= 3)
-    {
-      return null;
-    }
     return inventory[slot];
   }
 
   @Override
   public ItemStack decrStackSize(int slot, int amount)
   {
-    if(slot < 0 || slot >= 3)
-    {
-      return null;
-    }
     if(inventory[slot] != null)
     {
       ItemStack is;
@@ -206,10 +204,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public ItemStack getStackInSlotOnClosing(int slot)
   {
-    if(slot < 0 || slot >= 3)
-    {
-      return null;
-    }
     if(inventory[slot] != null)
     {
       ItemStack is = inventory[slot];
@@ -224,10 +218,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack)
   {
-    if(slot < 0 || slot >= 3)
-    {
-      return;
-    }
     inventory[slot] = stack;
 
     if(stack != null && stack.stackSize > this.getInventoryStackLimit())
@@ -292,7 +282,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
-    return slot == SLOT_EXTRA;
+    return slot == INVENTORY_EXTRA;
   }
 
   @Override
@@ -310,7 +300,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public boolean canExtractItem(int slot, ItemStack itemstack, int side)
   {
-    return slot == SLOT_OUTPUT;
+    return slot == INVENTORY_OUTPUT;
   }
 
   @Override
@@ -370,11 +360,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
         ItemStack result = recipe.GetOutput();
         if(result != null)
         {
-          ItemStack output = inventory[SLOT_OUTPUT];
+          ItemStack output = inventory[INVENTORY_OUTPUT];
           if(output == null || output.isItemEqual(recipe.GetOutput()) && output.stackSize < output.getMaxStackSize())
           {
             ItemStack extra = recipe.GetExtra();
-            if(extra == null || (inventory[SLOT_EXTRA] != null && extra.isItemEqual(inventory[SLOT_EXTRA]) && inventory[SLOT_EXTRA].stackSize >= extra.stackSize))
+            if(extra == null || (inventory[INVENTORY_EXTRA] != null && extra.isItemEqual(inventory[INVENTORY_EXTRA]) && inventory[INVENTORY_EXTRA].stackSize >= extra.stackSize))
             {
              
               if(progress < 0)
@@ -394,18 +384,18 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
                   tank.drain(recipe.GetFluid().amount, true);
                   if(extra != null)
                   {
-                    decrStackSize(SLOT_EXTRA, extra.stackSize);
-                    UpdateInventoryItem(SLOT_EXTRA);
+                    decrStackSize(INVENTORY_EXTRA, extra.stackSize);
+                    UpdateInventoryItem(INVENTORY_EXTRA);
                   }
                   if(output == null)
                   {
-                    inventory[SLOT_OUTPUT] = result;
-                    inventory[SLOT_OUTPUT].stackSize = 1;
+                    inventory[INVENTORY_OUTPUT] = result;
+                    inventory[INVENTORY_OUTPUT].stackSize = 1;
                   } else
                   {
                     output.stackSize++;
                   }
-                  UpdateInventoryItem(SLOT_OUTPUT);
+                  UpdateInventoryItem(INVENTORY_OUTPUT);
                   UpdateTank(0);
                   onInventoryChanged();
                 }

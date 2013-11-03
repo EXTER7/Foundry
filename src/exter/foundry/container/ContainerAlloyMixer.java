@@ -1,5 +1,6 @@
 package exter.foundry.container;
 
+import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -15,8 +16,11 @@ public class ContainerAlloyMixer extends Container
   private TileEntityAlloyMixer te_alloymixer;
   
   // Slot numbers
-  private static final int SLOTS_INVENTORY = 0;
-  private static final int SLOTS_HOTBAR = 3 * 9;
+  private static final int SLOTS_TE = 0;
+  private static final int SLOTS_TE_SIZE = 6;
+  
+  private static final int SLOTS_INVENTORY = 6;
+  private static final int SLOTS_HOTBAR = 6 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 127;
@@ -30,7 +34,14 @@ public class ContainerAlloyMixer extends Container
     te_alloymixer.openChest();
     int i,j;
 
-   
+    
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_A_DRAIN,36,17));
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_A_FILL,36,92));
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_B_DRAIN,124,17));
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_B_FILL,124,92));
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_DRAIN,80,17));
+    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_FILL,80,92));
+
     //Player Inventory
     for(i = 0; i < 3; ++i)
     {
@@ -60,7 +71,13 @@ public class ContainerAlloyMixer extends Container
       ItemStack stack = slot.getStack();
       slot_stack = stack.copy();
 
-      if (slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
+      if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
+      {
+        if (!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + SLOTS_TE_SIZE, false))
+        {
+          return null;
+        }
+      } else if (slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
       {
         if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
         {

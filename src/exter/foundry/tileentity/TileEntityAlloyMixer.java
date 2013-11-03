@@ -47,12 +47,19 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   static private final int NETDATAID_TANK_OUTPUT_AMOUNT = 5;
   
   static private final int PROGRESS_MAX = 400;
+
+  static public final int INVENTORY_CONTAINER_INPUT_A_DRAIN = 0;
+  static public final int INVENTORY_CONTAINER_INPUT_A_FILL = 1;
+  static public final int INVENTORY_CONTAINER_INPUT_B_DRAIN = 2;
+  static public final int INVENTORY_CONTAINER_INPUT_B_FILL = 3;
+  static public final int INVENTORY_CONTAINER_OUTPUT_DRAIN = 4;
+  static public final int INVENTORY_CONTAINER_OUTPUT_FILL = 5;
+  private ItemStack[] inventory;
+
   
   static public final int TANK_INPUT_A = 0;
   static public final int TANK_INPUT_B = 1;
   static public final int TANK_OUTPUT = 2;
-  
-  
   private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
 
@@ -66,6 +73,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   {
     super();
     int i;
+    inventory = new ItemStack[6];
+    
     tanks = new FluidTank[3];
     tank_info = new FluidTankInfo[3];
     for(i = 0; i < 3; i++)
@@ -79,7 +88,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     power_handler.configure(0, 4, 1, 4);
     power_handler.configurePowerPerdition(0, 0);
 
-  }
+    AddContainerSlot(new ContainerSlot(TANK_INPUT_A,INVENTORY_CONTAINER_INPUT_A_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(TANK_INPUT_A,INVENTORY_CONTAINER_INPUT_A_FILL,true));
+    AddContainerSlot(new ContainerSlot(TANK_INPUT_B,INVENTORY_CONTAINER_INPUT_B_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(TANK_INPUT_B,INVENTORY_CONTAINER_INPUT_B_FILL,true));
+    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
+    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
+}
 
   @Override
   public void readFromNBT(NBTTagCompound compund)
@@ -170,30 +185,71 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public int getSizeInventory()
   {
-    return 0;
+    return 6;
   }
 
   @Override
   public ItemStack getStackInSlot(int slot)
   {
-    return null;
+    return inventory[slot];
   }
 
   @Override
   public ItemStack decrStackSize(int slot, int amount)
   {
-    return null;
+    if(inventory[slot] != null)
+    {
+      ItemStack is;
+
+      if(inventory[slot].stackSize <= amount)
+      {
+        is = inventory[slot];
+        inventory[slot] = null;
+        onInventoryChanged();
+        return is;
+      } else
+      {
+        is = inventory[slot].splitStack(amount);
+
+        if(inventory[slot].stackSize == 0)
+        {
+          inventory[slot] = null;
+        }
+
+        onInventoryChanged();
+        return is;
+      }
+    } else
+    {
+      return null;
+    }
   }
 
   @Override
   public ItemStack getStackInSlotOnClosing(int slot)
   {
-    return null;
+    if(inventory[slot] != null)
+    {
+      ItemStack is = inventory[slot];
+      inventory[slot] = null;
+      return is;
+    } else
+    {
+      return null;
+    }
   }
 
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack)
   {
+    inventory[slot] = stack;
+
+    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
+    {
+      stack.stackSize = this.getInventoryStackLimit();
+    }
+    
+    onInventoryChanged();
   }
 
   

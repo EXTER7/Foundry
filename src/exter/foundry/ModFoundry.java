@@ -47,6 +47,7 @@ import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemFoundryContainer;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryPacketHandler;
@@ -264,7 +265,9 @@ public class ModFoundry
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
-
+    ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
+    ItemStack emptycontainer_stack = ItemFoundryContainer.StackFromFluid(null);
+    
     GameRegistry.addRecipe(foundryclay4_stack,
         " C ",
         "CSC",
@@ -336,6 +339,14 @@ public class ModFoundry
         'C', crucible_stack,
         'R', redstone_stack,
         'G', "gearStone"));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer_stack,
+        " T ",
+        "BGB",
+        " T ",
+        'T', "ingotTin", 
+        'B', foundrybrick_stack,
+        'G', glasspane_stack));
 
     
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));

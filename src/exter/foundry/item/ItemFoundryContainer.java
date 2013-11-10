@@ -12,14 +12,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -27,6 +32,7 @@ import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.IFluidHandler;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -55,8 +61,17 @@ public class ItemFoundryContainer extends Item
     setUnlocalizedName("foundryContainer");
     setHasSubtypes(true);
 
-    
+    MinecraftForge.EVENT_BUS.register(this);
+  }
 
+  @ForgeSubscribe
+  public void PlayerInteract(PlayerInteractEvent event)
+  {
+    ItemStack stack = event.entityPlayer.getHeldItem();
+    if(stack != null && stack.itemID == itemID && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+    {
+      event.setCanceled(true);
+    }
   }
 
 
@@ -108,10 +123,6 @@ public class ItemFoundryContainer extends Item
     }
   }
 
-  /**
-   * Called whenever this item is equipped and the right mouse button is
-   * pressed. Args: itemStack, world, entityPlayer
-   */
   @Override
   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
   {
@@ -129,6 +140,47 @@ public class ItemFoundryContainer extends Item
       int y = obj.blockY;
       int z = obj.blockZ;
 
+      TileEntity entity = world.getBlockTileEntity(x, y, z);
+      
+      if(entity instanceof IFluidHandler)
+      {
+        IFluidHandler handler = (IFluidHandler)entity;
+        ForgeDirection side = ForgeDirection.getOrientation(obj.sideHit);
+        if(player.isSneaking())
+        {
+          FluidStack drained = FoundryContainer.Drain(stack, 100, false);
+          if(drained == null || drained.amount == 0)
+          {
+            return stack;
+          }
+          int filled = handler.fill(side, drained, false);
+          if(filled == 0)
+          {
+            return stack;
+          }
+          drained.amount = filled;
+          FoundryContainer.Drain(stack, filled, true);
+          handler.fill(side, drained, true);
+        } else
+        {
+          FluidStack drained = handler.drain(side, 100, false);
+          if(drained == null || drained.amount == 0)
+          {
+            return stack;
+          }
+          int filled = FoundryContainer.Fill(stack, drained, false);
+          if(filled == 0)
+          {
+            return stack;
+          }
+          drained.amount = filled;
+          handler.drain(side, filled, true);
+          FoundryContainer.Fill(stack, drained, true);
+        }
+        
+        return stack;
+      }
+      
       if(!world.canMineBlock(player, x, y, z))
       {
         return stack;

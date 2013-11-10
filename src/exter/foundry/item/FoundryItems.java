@@ -50,20 +50,6 @@ public class FoundryItems
     }
     item_container = new ItemFoundryContainer(config.getItem("container", 9024).getInt() - 256);
     LanguageRegistry.addName(item_container, "Foundry Container");
-    
-    
-    Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
-    ItemStack empty = FoundryContainer.FromFluidStack(null);
-
-    for(Fluid f : fluids.values())
-    {
-      if(f != null)
-      {
-        FluidStack fluid = new FluidStack(f,FluidContainerRegistry.BUCKET_VOLUME);
-        ItemStack stack = FoundryContainer.FromFluidStack(fluid);
-        FluidContainerRegistry.registerFluidContainer(fluid, stack, empty);
-      }
-    }
 
   }
 }

@@ -1,6 +1,6 @@
 package exter.foundry.integration;
 
-import exter.foundry.FoundryUtils;
+import exter.foundry.util.FoundryUtils;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

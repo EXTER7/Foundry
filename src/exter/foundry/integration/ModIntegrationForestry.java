@@ -1,7 +1,7 @@
 package exter.foundry.integration;
 
 import net.minecraft.item.ItemStack;
-import exter.foundry.FoundryUtils;
+import exter.foundry.util.FoundryUtils;
 import exter.foundry.ModFoundry;
 import forestry.api.core.ItemInterface;
 

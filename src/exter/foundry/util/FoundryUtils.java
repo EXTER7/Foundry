@@ -1,4 +1,4 @@
-package exter.foundry;
+package exter.foundry.util;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import exter.foundry.item.ItemFoundryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -64,6 +66,18 @@ public class FoundryUtils
     {
       OreDictionary.registerOre(name, stack);
     }
+  }
+  
+  static public Fluid GetBlockFluid(int block_id)
+  {
+    for(Fluid f:FluidRegistry.getRegisteredFluids().values())
+    {
+      if(f != null && f.getBlockID() == block_id)
+      {
+        return f;
+      }
+    }
+    return null;
   }
 
 }

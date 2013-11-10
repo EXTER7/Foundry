@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryContainer;
+import exter.foundry.util.FoundryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 @SideOnly(Side.CLIENT)
@@ -59,7 +61,7 @@ public class RendererItemContainer implements IItemRenderer
   public void renderItem(ItemRenderType type, ItemStack stack, Object... data)
   {
     ItemFoundryContainer item = (ItemFoundryContainer) stack.getItem();
-    FluidStack fluid_stack = ItemFoundryContainer.GetFluidStackFromItemNBT(stack);
+    FluidStack fluid_stack = FoundryContainer.GetFluidStack(stack);
     
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid_stack != null)
@@ -67,7 +69,7 @@ public class RendererItemContainer implements IItemRenderer
       Icon fluid_icon = fluid_stack.getFluid().getStillIcon();
       if(fluid_icon != null)
       {
-        int h = fluid_stack.amount * 10 / ItemFoundryContainer.AMOUNT_MAX;
+        int h = fluid_stack.amount * 10 / FluidContainerRegistry.BUCKET_VOLUME;
         if(h > 0)
         {
           if(type == type.ENTITY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)

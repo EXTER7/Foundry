@@ -62,6 +62,9 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
+import exter.foundry.util.FoundryContainer;
+import exter.foundry.util.FoundryUtils;
+import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
 
@@ -266,7 +269,7 @@ public class ModFoundry
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
-    ItemStack emptycontainer_stack = ItemFoundryContainer.StackFromFluid(null);
+    ItemStack emptycontainer_stack = FoundryContainer.FromFluidStack(null);
     
     GameRegistry.addRecipe(foundryclay4_stack,
         " C ",

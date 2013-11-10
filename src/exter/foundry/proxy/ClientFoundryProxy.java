@@ -2,7 +2,7 @@ package exter.foundry.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import exter.foundry.LiquidMetalRegistry;
+import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;

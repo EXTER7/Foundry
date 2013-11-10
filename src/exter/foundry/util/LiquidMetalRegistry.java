@@ -1,4 +1,4 @@
-package exter.foundry;
+package exter.foundry.util;
 
 import java.util.Arrays;
 import java.util.HashMap;

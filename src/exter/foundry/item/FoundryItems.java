@@ -18,6 +18,13 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class FoundryItems
 {
+  //Default item id.
+  static private int next_id = 9021;
+
+  static public int GetNextID()
+  {
+    return next_id++;
+  }
 
   
   static public ItemFoundryComponent item_component;
@@ -30,9 +37,9 @@ public class FoundryItems
   {
     int i;
 
-    item_component = new ItemFoundryComponent(config.getItem("component", 9021).getInt() - 256);
-    item_mold = new ItemMold(config.getItem("mold", 9022).getInt() - 256);
-    item_ingot = new ItemIngot(config.getItem("ingot", 9023).getInt() - 256);
+    item_component = new ItemFoundryComponent(config.getItem("component", GetNextID()).getInt() - 256);
+    item_mold = new ItemMold(config.getItem("mold", GetNextID()).getInt() - 256);
+    item_ingot = new ItemIngot(config.getItem("ingot", GetNextID()).getInt() - 256);
     
     for (i = 0; i < ItemFoundryComponent.NAMES.length; i++)
     {
@@ -48,7 +55,7 @@ public class FoundryItems
       LanguageRegistry.addName(is, ItemIngot.NAMES[i]);
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
     }
-    item_container = new ItemFoundryContainer(config.getItem("container", 9024).getInt() - 256);
+    item_container = new ItemFoundryContainer(config.getItem("container", GetNextID()).getInt() - 256);
     LanguageRegistry.addName(item_container, "Foundry Container");
 
   }

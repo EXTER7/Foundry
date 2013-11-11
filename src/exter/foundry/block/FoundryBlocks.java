@@ -12,14 +12,15 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class FoundryBlocks
 {
-  static private int foundry_crucible_id;
-  static private int metal_smelter_id;
-  static private int metal_caster_id;
-  static private int alloy_mixer_id;
-  static private int metal_block_id;
-  static private int ore_id;
-  static private int metal_infuser_id;
 
+  //Default block id.
+  static private int next_id = 3843;
+
+  static public int GetNextID()
+  {
+    return next_id++;
+  }
+  
 
   public static BlockFoundryCrucible block_foundry_crucible;
   public static BlockInductionCrucibleFurnace block_induction_crucible_furnace;
@@ -32,21 +33,14 @@ public class FoundryBlocks
   static public void RegisterBlocks(Configuration config)
   {
     int i;
-    foundry_crucible_id = config.getBlock( "foundry_crucible", 3843).getInt();
-    metal_smelter_id = config.getBlock("induction_crucible_furnace", 3829).getInt();
-    metal_caster_id = config.getBlock( "metal_caster", 3832).getInt();
-    alloy_mixer_id = config.getBlock( "alloy_mixer", 3836).getInt();
-    metal_block_id = config.getBlock( "metal_block", 3846).getInt();
-    ore_id = config.getBlock( "ore", 3844).getInt();
-    metal_infuser_id = config.getBlock( "metal_infuser", 3847).getInt();
     
-    block_foundry_crucible = new BlockFoundryCrucible(foundry_crucible_id);
-    block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(metal_smelter_id);
-    block_metal_caster = new BlockMetalCaster(metal_caster_id);
-    block_alloy_mixer = new BlockAlloyMixer(alloy_mixer_id);
-    block_metal = new BlockMetal(metal_block_id);
-    block_ore = new BlockFoundryOre(ore_id);
-    block_metal_infuser = new BlockMetalInfuser(metal_infuser_id);
+    block_foundry_crucible = new BlockFoundryCrucible(config.getBlock( "foundry_crucible", GetNextID()).getInt());
+    block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(config.getBlock("induction_crucible_furnace", GetNextID()).getInt());
+    block_metal_caster = new BlockMetalCaster(config.getBlock( "metal_caster", GetNextID()).getInt());
+    block_alloy_mixer = new BlockAlloyMixer(config.getBlock( "alloy_mixer", GetNextID()).getInt());
+    block_metal = new BlockMetal(config.getBlock( "metal_block", GetNextID()).getInt());
+    block_ore = new BlockFoundryOre(config.getBlock( "ore", GetNextID()).getInt());
+    block_metal_infuser = new BlockMetalInfuser(config.getBlock( "metal_infuser", GetNextID()).getInt());
 
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     

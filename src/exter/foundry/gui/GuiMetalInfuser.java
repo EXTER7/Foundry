@@ -102,15 +102,18 @@ public class GuiMetalInfuser extends GuiFoundry
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
-    int progress = te_infuser.GetProgress() * PROGRESS_WIDTH / te_infuser.GetExtractTime();
 
+    //Draw progress bar.
+    int progress = te_infuser.GetProgress() * PROGRESS_WIDTH / te_infuser.GetExtractTime();
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
+    
     DisplayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
     DisplayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
     
+    //Draw substance bar.
     InfuserSubstance sub = te_infuser.GetSubstance();
     if(sub != null && sub.amount > 0)
     {
@@ -127,6 +130,9 @@ public class GuiMetalInfuser extends GuiFoundry
   public void drawScreen(int mouse_x, int mouse_y, float par3)
   {
     super.drawScreen(mouse_x, mouse_y, par3);
+    
+    //Draw tool tips.
+    
     if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));

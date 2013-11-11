@@ -15,6 +15,7 @@ import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockMetal;
 import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockInductionCrucibleFurnace;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemFoundryContainer;
@@ -73,14 +74,13 @@ public class LiquidMetalRegistry
    * Helper method to register a metal's fluid, block, melting, and casting.
    * @param config Forge Configuration file.
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
-   * @param default_block_id Default block id of the fluid block.
    * @param default_container_id Default item id of the fluid container.
    */
-  static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int temperature,int luminosity)
+  static public void RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
   {
     int i;
     
-    int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
+    int block_id = config.getBlock("liquid" + metal_name, FoundryBlocks.GetNextID()).getInt();
 
     Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);

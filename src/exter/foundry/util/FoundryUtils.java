@@ -42,6 +42,12 @@ public class FoundryUtils
     FurnaceRecipes.smelting().addSmelting(FoundryBlocks.block_ore.blockID, ore, new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 
+  /**
+   * Check if an item is registered in the Ore Dictionary.
+   * @param name Ore name to check.
+   * @param stack Item to check.
+   * @return true if the item is registered, false otherwise.
+   */
   static public boolean IsItemInOreDictionary(String name,ItemStack stack)
   {
     List<ItemStack> ores = OreDictionary.getOres(name);
@@ -55,7 +61,11 @@ public class FoundryUtils
     return false;
   }
 
-  //Register item in the ore dictionary only if its not already registered
+  /**
+   * Register item in the ore dictionary only if it's not already registered.
+   * @param name Ore Dictionary name.
+   * @param stack Item to register.
+   */
   static public void RegisterInOreDictionary(String name,ItemStack stack)
   {
     if(stack == null)
@@ -67,17 +77,4 @@ public class FoundryUtils
       OreDictionary.registerOre(name, stack);
     }
   }
-  
-  static public Fluid GetBlockFluid(int block_id)
-  {
-    for(Fluid f:FluidRegistry.getRegisteredFluids().values())
-    {
-      if(f != null && f.getBlockID() == block_id)
-      {
-        return f;
-      }
-    }
-    return null;
-  }
-
 }

@@ -35,6 +35,8 @@ public class MoldCraftingHandler implements ICraftingHandler
           pattern = is;
         }
       }
+      
+      // Don't consume the item used as a shape.
       if(pattern != null && blanks == 1 && size - empty - blanks == 1)
       {
         pattern.stackSize++;

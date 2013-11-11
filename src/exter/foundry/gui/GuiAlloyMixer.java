@@ -81,6 +81,9 @@ public class GuiAlloyMixer extends GuiFoundry
   public void drawScreen(int mouse_x, int mouse_y, float par3)
   {
     super.drawScreen(mouse_x, mouse_y, par3);
+    
+    //Draw tool tips.
+    
     if(isPointInRegion(TANK_OUTPUT_X,TANK_OUTPUT_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_OUTPUT));

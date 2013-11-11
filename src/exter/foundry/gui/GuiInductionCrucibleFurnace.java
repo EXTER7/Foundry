@@ -109,20 +109,21 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
+    
+    //Draw heat bar.
     int heat = (te_icf.GetHeat() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
     int melt_point = (te_icf.GetMeltingPoint() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
-    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / te_icf.SMELT_TIME;
-    
-    
     if(heat > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
     }
-    
     if(melt_point > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X + melt_point - HEAT_BAR_MELT_WIDTH / 2, window_y + HEAT_BAR_Y, HEAT_BAR_MELT_X, HEAT_BAR_MELT_Y, HEAT_BAR_MELT_WIDTH, HEAT_BAR_HEIGHT);
     }
+
+    //Draw progress bar.
+    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / te_icf.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
@@ -135,6 +136,9 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   public void drawScreen(int mouse_x, int mouse_y, float par3)
   {
     super.drawScreen(mouse_x, mouse_y, par3);
+
+    //Draw tool tips.
+
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank(0));

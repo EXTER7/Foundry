@@ -110,19 +110,19 @@ public class ModFoundry
     config.load();
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Iron", 3830, 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Gold", 3831, 1350, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Copper", 3833, 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Tin", 3834, 550, 7);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Bronze", 3835, 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Electrum", 3837, 1350, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Invar", 3838, 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Nickel", 3839, 1750, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Zinc", 3840, 700, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 3841, 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 3842, 1250, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 3845, 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Lead", 3849, 650, 1);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Iron", 1850, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Gold", 1350, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Copper", 1400, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Tin", 550, 7);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Bronze", 1400, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Electrum", 1350, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Invar", 1850, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Nickel", 1750, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Zinc", 700, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 1400, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 1250, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 1850, 15);
+    LiquidMetalRegistry.RegisterLiquidMetal(config, "Lead", 650, 1);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
@@ -226,8 +226,6 @@ public class ModFoundry
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",324), new ItemStack(Block.coalBlock,1), 2400);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",36), "dustCoal", 200);
     InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("carbon",6), "dustCharcoal", 400);
-
-    //InfuserSubstanceRecipe.RegisterRecipe(new InfuserSubstance("sand",500), new ItemStack(Block.sand,1), 15);
 
     InfuserRecipe.RegisterRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon",2));
     
@@ -351,7 +349,7 @@ public class ModFoundry
         'B', foundrybrick_stack,
         'G', glasspane_stack));
 
-    
+    //Mold crafting with vanilla items
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.stone,1,-1));
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Item.brick));
@@ -392,6 +390,8 @@ public class ModFoundry
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordIron));
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordGold));
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordDiamond));
+    
+    //Gear Mold crafting recipes.
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearWood");
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearStone");
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearIron");
@@ -404,7 +404,7 @@ public class ModFoundry
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearInvar");
     FoundryUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearSteel");
 
-    
+    //Ingot and block mold crafting recipes
     for(String name:OreDictionary.getOreNames())
     {
       if(name.startsWith("ingot"))
@@ -416,12 +416,14 @@ public class ModFoundry
       }
     }
 
+    //Ore -> ingot furnace recipes
     FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_COPPER,ItemIngot.INGOT_COPPER);
     FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_TIN,ItemIngot.INGOT_TIN);
     FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_ZINC,ItemIngot.INGOT_ZINC);
     FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_NICKEL,ItemIngot.INGOT_NICKEL);
     FoundryUtils.RegisterOreSmelting(BlockFoundryOre.ORE_SILVER,ItemIngot.INGOT_SILVER);
     
+    //Clay mold furnace recipes
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_BLOCK_CLAY,ItemMold.MOLD_BLOCK);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_CHESTPLATE_CLAY,ItemMold.MOLD_CHESTPLATE);
     FoundryUtils.RegisterMoldSmelting(ItemMold.MOLD_INGOT_CLAY,ItemMold.MOLD_INGOT);
@@ -486,6 +488,7 @@ public class ModFoundry
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
+    //Check for the existence of a stone gear, add it's own if it doesn't.
     if(OreDictionary.getOres("gearStone").size() == 0)
     {
       ItemStack cobble_stack = new ItemStack(Block.cobblestone, 1, -1);

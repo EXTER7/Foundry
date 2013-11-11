@@ -35,6 +35,17 @@ public abstract class GuiFoundry extends GuiContainer
   
   protected abstract ResourceLocation GetGUITexture();
 
+  
+  /**
+   * Draw part of an icon
+   * @param x X coordinate to draw to.
+   * @param y Y coordinate to draw to.
+   * @param icon Icon to draw
+   * @param width Width to draw.
+   * @param height Height to draw.
+   * @param icon_x X coordinate offset in the icon.
+   * @param icon_y Y coordinate offset in the icon.
+   */
   private void drawTexturedModelRectFromIconPartial(int x, int y, Icon icon, int width, int height,int icon_x,int icon_y)
   {
       Tessellator tessellator = Tessellator.instance;
@@ -68,6 +79,17 @@ public abstract class GuiFoundry extends GuiContainer
     drawHoveringText(list, x, y, fontRenderer);    
   }
   
+  /**
+   * Draw a tank in the GUI.
+   * @param window_x X coordinate of the GUI window.
+   * @param window_y Y coordinate of the GUI window.
+   * @param x X coordinate of the tank in the GUI window.
+   * @param y Y coordinate of the tank in the GUI window.
+   * @param tank_height Height of the tank in the GUI.
+   * @param overlay_x X coordinate of overlay of the tank drawn in front of the fluid.
+   * @param overlay_y Y coordinate of overlay of the tank drawn in front of the fluid.
+   * @param tank Tank to draw.
+   */
   protected void DisplayTank(int window_x,int window_y,int x, int y, int tank_height,int overlay_x,int overlay_y, FluidTank tank)
   {
     FluidStack liquid = tank.getFluid();

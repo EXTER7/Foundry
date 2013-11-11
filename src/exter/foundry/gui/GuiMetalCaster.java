@@ -104,13 +104,16 @@ public class GuiMetalCaster extends GuiFoundry
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
-    int progress = te_caster.GetProgress() * PROGRESS_WIDTH / te_caster.CAST_TIME;
-    int power = Math.round(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
 
+    //Draw progress bar.
+    int progress = te_caster.GetProgress() * PROGRESS_WIDTH / te_caster.CAST_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
+
+    //Draw stored power bar.
+    int power = Math.round(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
@@ -122,6 +125,9 @@ public class GuiMetalCaster extends GuiFoundry
   public void drawScreen(int mouse_x, int mouse_y, float par3)
   {
     super.drawScreen(mouse_x, mouse_y, par3);
+    
+    //Draw tool tips.
+    
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
     {
       DisplayTankTooltip(mouse_x, mouse_y, te_caster.GetTank(0));

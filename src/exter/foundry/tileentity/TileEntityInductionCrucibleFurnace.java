@@ -387,7 +387,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_melt_point = melt_point;
     if(inventory[INVENTORY_INPUT] != null)
     {      
-      MeltingRecipe metal = MeltingRecipe.FindByStack(inventory[INVENTORY_INPUT]);
+      MeltingRecipe metal = MeltingRecipe.FindRecipe(inventory[INVENTORY_INPUT]);
       if(metal != null)
       {
         FluidStack fs = metal.GetFluid();

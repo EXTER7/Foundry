@@ -22,8 +22,14 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
+/**
+ * Base class for all machines.
+ */
 public abstract class TileEntityFoundry extends TileEntity implements IInventory
 {
+  /**
+   * Links an item slot to a tank for filling/draining containers.
+   */
   public class ContainerSlot
   {
     public final boolean fill;

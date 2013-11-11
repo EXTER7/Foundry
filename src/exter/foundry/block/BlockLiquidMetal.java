@@ -139,10 +139,12 @@ public class BlockLiquidMetal extends BlockFluidClassic
 
   private boolean CheckHarden(World world, int x, int y, int z, int tileX, int tileY, int tileZ)
   {
+    //Check if block is in contact with water.
     int neighbor = world.getBlockId(tileX, tileY, tileZ);
     if(neighbor == Block.waterStill.blockID || neighbor == Block.waterMoving.blockID)
     {
       int i;
+      //Turn the block solid.
       world.setBlock(x, y, z, solid, solid_meta, 3);
       world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
       for (i = 0; i < 8; i++)

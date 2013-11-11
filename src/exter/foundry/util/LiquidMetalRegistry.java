@@ -38,15 +38,27 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+/**
+ * Utility class for registering a metal's corresponding block, items, fluid, and recipes.
+ */
 public class LiquidMetalRegistry
 {
   static private Map<String,LiquidMetalRegistry> registry = new HashMap<String,LiquidMetalRegistry>();
   
   
+  /**
+   * Block for the liquid places in the world 
+   */
   public final Block block;
 
+  /**
+   * Fluid for the liquid metal
+   */
   public final Fluid fluid;
   
+  /**
+   * Name of the metal. e.g: "Copper"
+   */
   public final String name;
   
   private LiquidMetalRegistry(Block liquid_block,Fluid liquid_fluid,String metal_name)
@@ -58,15 +70,16 @@ public class LiquidMetalRegistry
   }
   
   /**
-   * Helper method to register a metal's fluid, block, smelting, and casting.
+   * Helper method to register a metal's fluid, block, melting, and casting.
    * @param config Forge Configuration file.
-   * @param metal_name Name of the metal e.g "Copper" for "oreCopper" in the Ore Dictionary.
+   * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
    * @param default_block_id Default block id of the fluid block.
    * @param default_container_id Default item id of the fluid container.
    */
   static public void RegisterLiquidMetal(Configuration config,String metal_name,int default_block_id,int temperature,int luminosity)
   {
     int i;
+    
     int block_id = config.getBlock("liquid" + metal_name, default_block_id).getInt();
 
     Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
@@ -109,6 +122,7 @@ public class LiquidMetalRegistry
   }
   
   /**
+   * Get the registered metal from it's name.
    * @param name Name the liquid metal was registered in, e.g. "Copper".
    * @return The liquid metal registry containing the fluid, and fluid block
    */
@@ -117,6 +131,11 @@ public class LiquidMetalRegistry
     return registry.get(name);
   }
  
+  /**
+   * Get the registered metal from it's fluid.
+   * @param fluid The fluid to look for.
+   * @return The liquid metal registry containing the fluid, and fluid block
+   */
   static public LiquidMetalRegistry GetMetal(Fluid fluid)
   {
     for(LiquidMetalRegistry reg:registry.values())

@@ -67,6 +67,7 @@ public class ItemFoundryContainer extends Item
   @ForgeSubscribe
   public void PlayerInteract(PlayerInteractEvent event)
   {
+    //Prevent Blocks from activating when right clicking with a container in hand.
     ItemStack stack = event.entityPlayer.getHeldItem();
     if(stack != null && stack.itemID == itemID && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
     {
@@ -148,6 +149,8 @@ public class ItemFoundryContainer extends Item
         ForgeDirection side = ForgeDirection.getOrientation(obj.sideHit);
         if(player.isSneaking())
         {
+          //Drain from container to the Tile Entity.
+          
           FluidStack drained = FoundryContainer.Drain(stack, 100, false);
           if(drained == null || drained.amount == 0)
           {
@@ -163,6 +166,8 @@ public class ItemFoundryContainer extends Item
           handler.fill(side, drained, true);
         } else
         {
+          //Fill container from the Tile Entity.
+
           FluidStack drained = handler.drain(side, 100, false);
           if(drained == null || drained.amount == 0)
           {
@@ -219,6 +224,8 @@ public class ItemFoundryContainer extends Item
         
         if(world.isAirBlock(x, y, z) || !material.isSolid())
         {
+          //Place fluid in the world.
+          
           FluidStack drained = FoundryContainer.Drain(stack, FluidContainerRegistry.BUCKET_VOLUME, false);
           if(drained != null && drained.getFluid().canBePlacedInWorld() && drained.amount == FluidContainerRegistry.BUCKET_VOLUME)
           {
@@ -243,6 +250,8 @@ public class ItemFoundryContainer extends Item
 
       } else
       {
+        //Drain fluid from the world.
+
         if(!player.canPlayerEdit(x, y, z, obj.sideHit, stack))
         {
           return stack;

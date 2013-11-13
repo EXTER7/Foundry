@@ -79,7 +79,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = "0.1.0",
-  dependencies = "required-after:Forge@[9.10.0.842,)"
+  dependencies = "required-after:Forge@[9.11.1.951,)"
 )
 @NetworkMod(
   channels = { ModFoundry.CHANNEL },

@@ -3,6 +3,7 @@ package exter.foundry.recipes;
 import java.util.ArrayList;
 import java.util.List;
 
+import exter.foundry.api.recipe.ICastingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -10,52 +11,50 @@ import net.minecraftforge.oredict.OreDictionary;
 /**
  * Metal Caster recipe manager
  */
-public class CastingRecipe
+public class CastingRecipe implements ICastingRecipe
 {
   public final FluidStack fluid;
   public final ItemStack mold;
   public final ItemStack extra;
   
-  private ItemStack output;
-  private String output_oredict;
+  private final ItemStack output;
+  private final String output_oredict;
   
-  /**
-   * Get fluid required for casting.
-   * @return FluidStack containing the required fluid.
-   */
-  public FluidStack GetFluid()
+  @Override
+  public FluidStack GetInputFluid()
   {
     return fluid.copy();
   }
 
-  /**
-   * Get mold required for casting.
-   * @return ItemStack containing the required mold.
-   */
-  public ItemStack GetMold()
+  @Override
+  public ItemStack GetInputMold()
   {
     return mold.copy();
   }
 
-  /**
-   * Get extra item required for casting.
-   * @return ItemStack containing the required extra item, or null if no extra item is required.
-   */
-  public ItemStack GetExtra()
+  @Override
+  public ItemStack GetInputExtra()
   {
-    if(extra == null)
-    {
-      return null;
-    }
-    return extra.copy();
+    return ItemStack.copyItemStack(extra);
   }
 
+  @Override
+  public Object GetOutput()
+  {
+    if(output_oredict != null)
+    {
+      return output_oredict;
+    } else
+    {
+      return output.copy();
+    }
+  }
 
   /**
    * Get item produced by casting.
    * @return ItemStack containing the item produced.
    */
-  public ItemStack GetOutput()
+  public ItemStack GetOutputItem()
   {
     if(output_oredict != null)
     {
@@ -81,13 +80,7 @@ public class CastingRecipe
     output_oredict = null;
     fluid = in_fluid.copy();
     mold = in_mold.copy();
-    if(in_extra != null)
-    {
-      extra = in_extra.copy();
-    } else
-    {
-      extra = null;
-    }
+    extra = ItemStack.copyItemStack(in_extra);
   }
 
   public CastingRecipe(String result_name,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
@@ -96,12 +89,6 @@ public class CastingRecipe
     output = null;
     fluid = in_fluid.copy();
     mold = in_mold.copy();
-    if(in_extra != null)
-    {
-      extra = in_extra.copy();
-    } else
-    {
-      extra = null;
-    }
+    extra = ItemStack.copyItemStack(in_extra);
   }
 }

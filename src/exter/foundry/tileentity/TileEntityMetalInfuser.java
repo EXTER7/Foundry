@@ -405,7 +405,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     {
       if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - sub_recipe.substance.amount >= substance.amount)
       {
-        extract_time = sub_recipe.extract_time * 100;
+        extract_time = sub_recipe.extract_energy * 100;
         if(power_handler.getEnergyStored() > 0)
         {
           int energy = (int) (power_handler.useEnergy(0, 8, true) * 100 / 8);

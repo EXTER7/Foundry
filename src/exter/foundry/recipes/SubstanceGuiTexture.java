@@ -3,12 +3,13 @@ package exter.foundry.recipes;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.api.recipe.ISubstanceGuiTexture;
 
 /**
  * Contains the Substance's texture to use in the Metal Infuser's GUI.
  */
 @SideOnly(Side.CLIENT)
-public class SubstanceGuiTexture
+public class SubstanceGuiTexture implements ISubstanceGuiTexture
 {
   static public final int TEXTURE_WIDTH = 8;
   
@@ -28,6 +29,23 @@ public class SubstanceGuiTexture
    */
   public final int y;
   
+  @Override
+  public ResourceLocation GetLocation()
+  {
+    return texture;
+  }
+  
+  @Override
+  public int GetX()
+  {
+    return x;
+  }
+  
+  @Override
+  public int GetY()
+  {
+    return y;
+  }
   
   /**
    * @param texture_path Location of the texture

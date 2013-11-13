@@ -1,6 +1,7 @@
 package exter.foundry.recipes.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.api.recipe.ISubstanceGuiTexture;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
@@ -131,5 +135,27 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
       }
     }
     return null;
+  }
+
+
+  @Override
+  public List<? extends IInfuserRecipe> GetRecipes()
+  {
+    return Collections.unmodifiableList(recipes);
+  }
+
+
+  @Override
+  public List<? extends IInfuserSubstanceRecipe> GetSubstanceRecipes()
+  {
+    return Collections.unmodifiableList(substance_recipes);
+  }
+
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public Map<String, ? extends ISubstanceGuiTexture> GetSubstanceGuiTextures()
+  {
+    return Collections.unmodifiableMap(substance_textures);
   }
 }

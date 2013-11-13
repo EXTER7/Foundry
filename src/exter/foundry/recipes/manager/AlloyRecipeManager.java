@@ -1,9 +1,11 @@
 package exter.foundry.recipes.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraftforge.fluids.FluidStack;
+import exter.foundry.api.recipe.IAlloyRecipe;
 import exter.foundry.api.recipe.manager.IAlloyRecipeManager;
 import exter.foundry.recipes.AlloyRecipe;
 
@@ -42,5 +44,11 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
       }
     }
     return null;
+  }
+
+  @Override
+  public List<? extends IAlloyRecipe> GetRecipes()
+  {
+    return Collections.unmodifiableList(recipes);
   }
 }

@@ -1,5 +1,8 @@
 package exter.foundry.api.recipe.manager;
 
+import java.util.List;
+
+import exter.foundry.api.recipe.ICastingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -31,4 +34,10 @@ public interface ICastingRecipeManager
    * @param mold Item to be registered.
    */
   public void AddMold(ItemStack mold);
+  
+  /**
+   * Get a list of all the recipes
+   * @return List of all the recipes
+   */
+  public List<? extends ICastingRecipe> GetRecipes();
 }

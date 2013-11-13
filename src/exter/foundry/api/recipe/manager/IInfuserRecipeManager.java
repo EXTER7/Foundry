@@ -1,7 +1,13 @@
 package exter.foundry.api.recipe.manager;
 
+import java.util.List;
+import java.util.Map;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.api.recipe.ISubstanceGuiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -16,6 +22,11 @@ public interface IInfuserRecipeManager
    */
   public void AddRecipe(FluidStack result,FluidStack fluid,String substance_type,int substance_amount);
 
+  /**
+   * Get a list of all the recipes
+   * @return List of all the recipes
+   */
+  public List<? extends IInfuserRecipe> GetRecipes();
   
   /**
    * Register a Metal Infuser substance recipe.
@@ -36,6 +47,12 @@ public interface IInfuserRecipeManager
   public void AddSubstanceRecipe(String substance_type,int substance_amount,String item, int energy);
 
   /**
+   * Get a list of all the substance recipes
+   * @return List of all the substance recipes
+   */
+  public List<? extends IInfuserSubstanceRecipe> GetSubstanceRecipes();
+
+  /**
    * Register a texture for a substance
    * @param substance_type Substance name. e.g: "Carbon"
    * @param texture_path Location of the texture
@@ -45,4 +62,10 @@ public interface IInfuserRecipeManager
   @SideOnly(Side.CLIENT)
   public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y);
 
+  /**
+   * Get the substance GUI textures mapped by the type.
+   * @return Substance type -> texture map.
+   */
+  @SideOnly(Side.CLIENT)
+  public Map<String,? extends ISubstanceGuiTexture> GetSubstanceGuiTextures();
 }

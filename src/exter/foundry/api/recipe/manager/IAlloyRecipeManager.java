@@ -1,6 +1,9 @@
 package exter.foundry.api.recipe.manager;
 
+import java.util.List;
+
 import net.minecraftforge.fluids.FluidStack;
+import exter.foundry.api.recipe.IAlloyRecipe;
 import exter.foundry.recipes.AlloyRecipe;
 
 public interface IAlloyRecipeManager
@@ -12,4 +15,11 @@ public interface IAlloyRecipeManager
    * @param in_b Second input (fluid type and amount required).
    */
   public void AddRecipe(FluidStack out,FluidStack in_a,FluidStack in_b);
+  
+  
+  /**
+   * Get a list of all the recipes
+   * @return List of all the recipes
+   */
+  public List<? extends IAlloyRecipe> GetRecipes();
 }

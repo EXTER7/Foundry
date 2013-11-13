@@ -358,13 +358,13 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       CastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[1]);
       if(recipe != null)
       {
-        ItemStack result = recipe.GetOutput();
+        ItemStack result = recipe.GetOutputItem();
         if(result != null)
         {
           ItemStack output = inventory[INVENTORY_OUTPUT];
-          if(output == null || output.isItemEqual(recipe.GetOutput()) && output.stackSize < output.getMaxStackSize())
+          if(output == null || output.isItemEqual(recipe.GetOutputItem()) && output.stackSize < output.getMaxStackSize())
           {
-            ItemStack extra = recipe.GetExtra();
+            ItemStack extra = recipe.extra;
             if(extra == null || (inventory[INVENTORY_EXTRA] != null && extra.isItemEqual(inventory[INVENTORY_EXTRA]) && inventory[INVENTORY_EXTRA].stackSize >= extra.stackSize))
             {
              
@@ -382,7 +382,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
                 if(++progress >= CAST_TIME)
                 {
                   progress = -1;
-                  tank.drain(recipe.GetFluid().amount, true);
+                  tank.drain(recipe.fluid.amount, true);
                   if(extra != null)
                   {
                     decrStackSize(INVENTORY_EXTRA, extra.stackSize);

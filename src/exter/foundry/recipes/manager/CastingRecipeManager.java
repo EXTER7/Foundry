@@ -1,10 +1,12 @@
 package exter.foundry.recipes.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
 import exter.foundry.recipes.CastingRecipe;
 
@@ -21,27 +23,13 @@ public class CastingRecipeManager implements ICastingRecipeManager
     molds = new ArrayList<ItemStack>();
   }
 
-  /**
-   * Register a Metal Caster recipe.
-   * Note: the mold must be registered with {@link RegisterMold}.
-   * @param result Item produced (Ore dictionary name).
-   * @param in_fluid Fluid required (fluid type and amount).
-   * @param in_mold Mold required.
-   * @param in_extra Extra item required (null, if no extra item is required).
-   */
+  @Override
   public void AddRecipe(String result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
   {
     recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra));
   }
 
-  /**
-   * Register a Metal Caster recipe.
-   * Note: the mold must be registered with {@link RegisterMold}.
-   * @param result Item produced.
-   * @param in_fluid Fluid required (fluid type and amount).
-   * @param in_mold Mold required.
-   * @param in_extra Extra item required (null, if no extra item is required).
-   */
+  @Override
   public void AddRecipe(ItemStack result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
   {
     recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra));
@@ -69,10 +57,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
     return null;
   }
   
-  /**
-   * Register an item as a mold. Only registered items are accepted in the Metal Caster's mold slot.
-   * @param mold Item to be registered.
-   */
+  @Override
   public void AddMold(ItemStack mold)
   {
     molds.add(mold.copy());
@@ -97,5 +82,11 @@ public class CastingRecipeManager implements ICastingRecipeManager
       }
     }
     return false;
+  }
+
+  @Override
+  public List<? extends ICastingRecipe> GetRecipes()
+  {
+    return Collections.unmodifiableList(recipes);
   }
 }

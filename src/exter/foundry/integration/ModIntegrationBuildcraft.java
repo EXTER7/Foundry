@@ -1,6 +1,6 @@
 package exter.foundry.integration;
 
-import exter.foundry.util.FoundryUtils;
+import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,11 +35,11 @@ public class ModIntegrationBuildcraft extends ModIntegration
 
     if(is_loaded)
     {
-      FoundryUtils.RegisterInOreDictionary("gearWood",items[ITEM_WOOD_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearStone",items[ITEM_STONE_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearGold",items[ITEM_GOLD_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearDiamond",items[ITEM_DIAMOND_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearWood",items[ITEM_WOOD_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearStone",items[ITEM_STONE_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearGold",items[ITEM_GOLD_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearDiamond",items[ITEM_DIAMOND_GEAR]);
     }
   }
 }

@@ -8,7 +8,7 @@ import buildcraft.api.power.PowerHandler;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryContainer;
 import exter.foundry.network.FoundryPacketHandler;
-import exter.foundry.util.FoundryContainer;
+import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -58,18 +58,18 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         {
           return;
         }
-        int filled = FoundryContainer.Fill(stack, drained, false);
+        int filled = FoundryContainerHandler.instance.Fill(stack, drained, false);
         if(filled == 0)
         {
           return;
         }
         drained = tank.drain(filled, true);
-        FoundryContainer.Fill(stack, drained, true);
+        FoundryContainerHandler.instance.Fill(stack, drained, true);
         UpdateTank(tank_slot);
         UpdateInventoryItem(slot);
       } else
       {
-        FluidStack drained = FoundryContainer.Drain(stack, 10, false);
+        FluidStack drained = FoundryContainerHandler.instance.Drain(stack, 10, false);
         if(drained == null || drained.amount == 0)
         {
           return;
@@ -80,7 +80,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         {
           return;
         }
-        drained = FoundryContainer.Drain(stack, filled, true);
+        drained = FoundryContainerHandler.instance.Drain(stack, filled, true);
         tank.fill(drained, true);
         UpdateTank(tank_slot);
         UpdateInventoryItem(slot);

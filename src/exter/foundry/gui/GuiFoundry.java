@@ -36,6 +36,7 @@ public abstract class GuiFoundry extends GuiContainer
   protected abstract ResourceLocation GetGUITexture();
 
   
+  
   /**
    * Draw part of an icon
    * @param x X coordinate to draw to.

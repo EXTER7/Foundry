@@ -16,6 +16,7 @@ import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.tileentity.TileEntityFoundry.ContainerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -354,7 +355,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     int last_progress = progress;
     if(tank.getFluidAmount() > 0)
     {
-      CastingRecipe recipe = CastingRecipe.FindRecipe(tank.getFluid(), inventory[1]);
+      CastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[1]);
       if(recipe != null)
       {
         ItemStack result = recipe.GetOutput();

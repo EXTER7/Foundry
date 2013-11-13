@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerInductionCrucibleFurnace extends Container
 {
-  
 
   private TileEntityInductionCrucibleFurnace te_icf;
   

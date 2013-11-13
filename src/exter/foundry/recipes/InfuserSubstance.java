@@ -7,10 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class InfuserSubstance
 {
-  /**
-   * Maximum amount of substance a metal infuser can store.
-   */
-  static public final int MAX_AMOUNT = 1000;
   
   /**
    * Type of substance. e.g: "Carbon".

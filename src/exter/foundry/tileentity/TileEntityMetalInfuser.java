@@ -12,12 +12,14 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityFoundry.ContainerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -398,10 +400,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
     int last_progress = progress;
     int last_extract_time = extract_time;
-    InfuserSubstanceRecipe sub_recipe = InfuserSubstanceRecipe.FindRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
+    InfuserSubstanceRecipe sub_recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
     if(sub_recipe != null)
     {
-      if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && InfuserSubstance.MAX_AMOUNT - sub_recipe.substance.amount >= substance.amount)
+      if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - sub_recipe.substance.amount >= substance.amount)
       {
         extract_time = sub_recipe.extract_time * 100;
         if(power_handler.getEnergyStored() > 0)
@@ -443,15 +445,15 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
     if(tanks[TANK_INPUT].getFluidAmount() > 0)
     {
-      InfuserRecipe recipe = InfuserRecipe.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
+      InfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
       {
-        FluidStack result = recipe.GetOutput();
+        FluidStack result = recipe.output;
         if(tanks[TANK_OUTPUT].fill(result, false) == result.amount)
         {
-          tanks[TANK_INPUT].drain(recipe.GetFluid().amount, true);
+          tanks[TANK_INPUT].drain(recipe.fluid.amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
-          substance.amount -= recipe.GetSubstance().amount;
+          substance.amount -= recipe.substance.amount;
           if(substance.amount <= 0)
           {
             substance = null;

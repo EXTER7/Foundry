@@ -6,7 +6,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.renderer.RendererItemContainer;
-import exter.foundry.util.FoundryContainer;
+import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.Configuration;

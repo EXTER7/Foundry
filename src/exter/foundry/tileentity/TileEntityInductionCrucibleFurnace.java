@@ -15,6 +15,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -387,10 +388,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_melt_point = melt_point;
     if(inventory[INVENTORY_INPUT] != null)
     {      
-      MeltingRecipe metal = MeltingRecipe.FindRecipe(inventory[INVENTORY_INPUT]);
+      MeltingRecipe metal = MeltingRecipeManager.instance.FindRecipe(inventory[INVENTORY_INPUT]);
       if(metal != null)
       {
-        FluidStack fs = metal.GetFluid();
+        FluidStack fs = metal.fluid;
         
         melt_point = fs.getFluid().getTemperature() * 10;
         

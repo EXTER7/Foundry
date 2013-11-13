@@ -17,10 +17,12 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
+import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonMerchant;
@@ -117,9 +119,9 @@ public class GuiMetalInfuser extends GuiFoundry
     InfuserSubstance sub = te_infuser.GetSubstance();
     if(sub != null && sub.amount > 0)
     {
-      SubstanceGuiTexture tex = InfuserRecipe.GetSubstanceTexture(sub.type);
+      SubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
       mc.renderEngine.bindTexture(tex.texture);
-      int height = sub.amount * TANK_HEIGHT / InfuserSubstance.MAX_AMOUNT;
+      int height = sub.amount * TANK_HEIGHT / FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
       drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.x, tex.y + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
       mc.renderEngine.bindTexture(GetGUITexture());
@@ -150,10 +152,10 @@ public class GuiMetalInfuser extends GuiFoundry
       if(sub != null && sub.amount > 0)
       {
         list.add(StatCollector.translateToLocal("substance." + sub.type));
-        list.add(String.valueOf(sub.amount) + " / " + String.valueOf(InfuserSubstance.MAX_AMOUNT) + " mL");
+        list.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       } else
       {
-        list.add("0 / " + String.valueOf(InfuserSubstance.MAX_AMOUNT) + " mL");
+        list.add("0 / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       }
       drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
     }

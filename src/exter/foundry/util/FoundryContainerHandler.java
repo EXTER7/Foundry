@@ -4,29 +4,34 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import exter.foundry.api.container.IFoundryContainerHandler;
 import exter.foundry.item.FoundryItems;
 
 
 /**
  * Utilities to manipulate foundry container item.
  */
-public class FoundryContainer
+public class FoundryContainerHandler implements IFoundryContainerHandler
 {
-  /**
-   * Get the fluid stack in the container.
-   * @param stack Container item.
-   * @return FluidStack representing the container's content.
-   */
-  public static FluidStack GetFluidStack(ItemStack stack)
+  
+  static public FoundryContainerHandler instance = new FoundryContainerHandler();
+
+  private FoundryContainerHandler()
   {
-    if(stack.itemID != FoundryItems.item_container.itemID || stack.stackTagCompound == null)
+    
+  }
+
+  @Override
+  public FluidStack GetFluidStack(ItemStack stack)
+  {
+    if(!IsItemContainer(stack) || stack.stackTagCompound == null)
     {
       return null;
     }
     return FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
   }
 
-  private static void SetFluidNBT(ItemStack is, FluidStack fluid)
+  private void SetFluidNBT(ItemStack is, FluidStack fluid)
   {
     is.stackTagCompound = new NBTTagCompound();
     if(fluid != null)
@@ -35,13 +40,8 @@ public class FoundryContainer
     }
   }
 
-  /**
-   * Create a Container from a fluid stack.
-   * Note: if the fluid amount is greater than 1000mB, the returned container will contain 1000mB of fluid.
-   * @param fluid FluidStack to use.
-   * @return ItemStack representing the container.
-   */
-  public static ItemStack FromFluidStack(FluidStack fluid)
+  @Override
+  public ItemStack FromFluidStack(FluidStack fluid)
   {
     ItemStack stack = new ItemStack(FoundryItems.item_container.itemID, 1, 0);
     if(fluid == null)
@@ -56,16 +56,10 @@ public class FoundryContainer
     return stack;
   }
 
-  /**
-   * Fill a container.
-   * @param stack Container item.
-   * @param fluid fluid to fill.
-   * @param do_fill true to actually fill the container, false to simulate.
-   * @return Amount of fluid filled.
-   */
-  public static int Fill(ItemStack stack, FluidStack fluid, boolean do_fill)
+  @Override
+  public int Fill(ItemStack stack, FluidStack fluid, boolean do_fill)
   {
-    if(stack.itemID != FoundryItems.item_container.itemID || fluid == null)
+    if(!IsItemContainer(stack))
     {
       return 0;
     }
@@ -113,16 +107,10 @@ public class FoundryContainer
     return filled;
   }
 
-  /**
-   * Drain a container.
-   * @param stack Container item.
-   * @param amount amount to drain
-   * @param do_drain true to actually drain the container, false to simulate.
-   * @return Drained fluid.
-   */
-  public static FluidStack Drain(ItemStack stack, int amount, boolean do_drain)
+  @Override
+  public FluidStack Drain(ItemStack stack, int amount, boolean do_drain)
   {
-    if(stack.itemID != FoundryItems.item_container.itemID)
+    if(!IsItemContainer(stack))
     {
       return null;
     }
@@ -151,5 +139,11 @@ public class FoundryContainer
 
     }
     return drain_fluid;
+  }
+
+  @Override
+  public boolean IsItemContainer(ItemStack stack)
+  {
+    return stack.itemID == FoundryItems.item_container.itemID;
   }
 }

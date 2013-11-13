@@ -1,7 +1,7 @@
 package exter.foundry.integration;
 
 import net.minecraft.item.ItemStack;
-import exter.foundry.util.FoundryUtils;
+import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.ModFoundry;
 import forestry.api.core.ItemInterface;
 
@@ -22,9 +22,9 @@ public class ModIntegrationForestry extends ModIntegration
 
     if(is_loaded)
     {
-      FoundryUtils.RegisterInOreDictionary("gearCopper",items[ITEM_COPPER_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearTin",items[ITEM_TIN_GEAR]);
-      FoundryUtils.RegisterInOreDictionary("gearBronze",items[ITEM_BRONZE_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearCopper",items[ITEM_COPPER_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearTin",items[ITEM_TIN_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearBronze",items[ITEM_BRONZE_GEAR]);
     }
   }
 }

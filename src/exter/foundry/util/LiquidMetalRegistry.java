@@ -10,6 +10,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockMetal;
@@ -23,6 +24,7 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.renderer.RendererItemContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -104,13 +106,13 @@ public class LiquidMetalRegistry
 
     fluid.setBlockID(liquid_block);
 
-    MeltingRecipe.RegisterBasicRecipes(metal_name,fluid);
+    FoundryUtils.RegisterBasicMeltingRecipes(metal_name,fluid);
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack mold_block = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);    
     
-    CastingRecipe.RegisterRecipe("block" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_BLOCK), mold_block, null);
-    CastingRecipe.RegisterRecipe("ingot" + metal_name, new FluidStack(fluid,MeltingRecipe.AMOUNT_INGOT), mold_ingot, null);
+    CastingRecipeManager.instance.AddRecipe("block" + metal_name, new FluidStack(fluid,FoundryUtils.FLUID_AMOUNT_BLOCK), mold_block, null);
+    CastingRecipeManager.instance.AddRecipe("ingot" + metal_name, new FluidStack(fluid,FoundryUtils.FLUID_AMOUNT_INGOT), mold_ingot, null);
 
 
 

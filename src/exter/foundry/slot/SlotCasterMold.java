@@ -1,6 +1,7 @@
 package exter.foundry.slot;
 
 import exter.foundry.recipes.CastingRecipe;
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,6 @@ public class SlotCasterMold extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return CastingRecipe.IsItemMold(stack);
+    return CastingRecipeManager.instance.IsItemMold(stack);
   }
 }

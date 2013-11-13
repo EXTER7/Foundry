@@ -12,8 +12,6 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class InfuserSubstanceRecipe
 {
-  static private List<InfuserSubstanceRecipe> recipes = new ArrayList<InfuserSubstanceRecipe>();
-  
   /**
    * Substance produced.
    */
@@ -34,75 +32,19 @@ public class InfuserSubstanceRecipe
    */
   public int extract_time;
   
-  private InfuserSubstanceRecipe(InfuserSubstance subs,ItemStack itm, int time)
+  public InfuserSubstanceRecipe(InfuserSubstance subs,ItemStack itm, int time)
   {
-    substance = subs;
+    substance = new InfuserSubstance(subs);
     item = itm.copy();
     oredict_item = null;
     extract_time = time;
   }
 
-  private InfuserSubstanceRecipe(InfuserSubstance subs,String itm, int time)
+  public InfuserSubstanceRecipe(InfuserSubstance subs,String itm, int time)
   {
-    substance = subs;
+    substance = new InfuserSubstance(subs);
     item = null;
     oredict_item = itm;
     extract_time = time;
-  }
-
-  /**
-   * Register a Metal Infuser substance recipe.
-   * @param subs Substance produced.
-   * @param itm Item required.
-   * @param time Energy required.
-   */
-  static public void RegisterRecipe(InfuserSubstance subs,ItemStack itm, int time)
-  {
-    recipes.add(new InfuserSubstanceRecipe(subs,itm,time));
-  }
-
-  /**
-   * Register a Metal Infuser substance recipe.
-   * @param subs Substance produced.
-   * @param itm Item required (Ore Dictionary name).
-   * @param time Energy required.
-   */
-  static public void RegisterRecipe(InfuserSubstance subs,String itm, int time)
-  {
-    recipes.add(new InfuserSubstanceRecipe(subs,itm,time));
-  }
-
-  /**
-   * Find a substance recipe given a Item.
-   * @param item The item required in the recipe
-   * @return The substance recipe, or null if no matching recipe.
-   */
-  static public InfuserSubstanceRecipe FindRecipe(ItemStack item)
-  {
-    if(item == null)
-    {
-      return null;
-    }
-    for(InfuserSubstanceRecipe isr:recipes)
-    {
-      if(isr.oredict_item != null)
-      {
-        List<ItemStack> ores = OreDictionary.getOres(isr.oredict_item);
-        if(ores != null)
-        {
-          for(ItemStack ore:ores)
-          {
-            if(ore.isItemEqual(item))
-            {
-              return isr;
-            }
-          }
-        }
-      } else if(isr.item.isItemEqual(item))
-      {
-        return isr;
-      }
-    }
-    return null;
   }
 }

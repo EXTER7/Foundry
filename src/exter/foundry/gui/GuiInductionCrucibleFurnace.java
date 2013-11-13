@@ -45,37 +45,37 @@ import net.minecraftforge.oredict.OreDictionary;
 public class GuiInductionCrucibleFurnace extends GuiFoundry
 {
 
-  private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/metalsmelter.png");
+  public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/metalsmelter.png");
 
-  private static final int TANK_WIDTH = 16;
-  private static final int TANK_HEIGHT = 47;
-  private static final int TANK_X = 107;
-  private static final int TANK_Y = 22;
+  public static final int TANK_WIDTH = 16;
+  public static final int TANK_HEIGHT = 47;
+  public static final int TANK_X = 107;
+  public static final int TANK_Y = 22;
 
-  private static final int HEAT_BAR_X = 41;
-  private static final int HEAT_BAR_Y = 57;
-  private static final int HEAT_BAR_WIDTH = 54;
-  private static final int HEAT_BAR_HEIGHT = 12;
+  public static final int HEAT_BAR_X = 41;
+  public static final int HEAT_BAR_Y = 57;
+  public static final int HEAT_BAR_WIDTH = 54;
+  public static final int HEAT_BAR_HEIGHT = 12;
 
 
-  private static final int PROGRESS_X = 79;
-  private static final int PROGRESS_Y = 23;
-  private static final int PROGRESS_WIDTH = 22;
-  private static final int PROGRESS_HEIGHT = 15;
+  public static final int PROGRESS_X = 79;
+  public static final int PROGRESS_Y = 23;
+  public static final int PROGRESS_WIDTH = 22;
+  public static final int PROGRESS_HEIGHT = 15;
 
   
-  private static final int TANK_OVERLAY_X = 176;
-  private static final int TANK_OVERLAY_Y = 0;
+  public static final int TANK_OVERLAY_X = 176;
+  public static final int TANK_OVERLAY_Y = 0;
   
-  private static final int HEAT_BAR_OVERLAY_X = 176;
-  private static final int HEAT_BAR_OVERLAY_Y = 53;
+  public static final int HEAT_BAR_OVERLAY_X = 176;
+  public static final int HEAT_BAR_OVERLAY_Y = 53;
 
-  private static final int HEAT_BAR_MELT_X = 176;
-  private static final int HEAT_BAR_MELT_Y = 65;
-  private static final int HEAT_BAR_MELT_WIDTH = 3;
+  public static final int HEAT_BAR_MELT_X = 176;
+  public static final int HEAT_BAR_MELT_Y = 65;
+  public static final int HEAT_BAR_MELT_WIDTH = 3;
 
-  private static final int PROGRESS_OVERLAY_X = 176;
-  private static final int PROGRESS_OVERLAY_Y = 78;
+  public static final int PROGRESS_OVERLAY_X = 176;
+  public static final int PROGRESS_OVERLAY_Y = 78;
 
   
   private TileEntityInductionCrucibleFurnace te_icf;

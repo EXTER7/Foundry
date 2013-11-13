@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 /**
  * Miscellaneous utility methods
  */
-public class FoundryUtils
+public class FoundryMiscUtils
 {
   static public void RegisterMoldRecipe(int dv,ItemStack pattern)
   {

@@ -36,7 +36,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.util.FoundryContainer;
+import exter.foundry.util.FoundryContainerHandler;
 
 public class ItemFoundryContainer extends Item
 {
@@ -99,13 +99,13 @@ public class ItemFoundryContainer extends Item
   public void getSubItems(int id, CreativeTabs tabs, List list)
   {
     int i;
-    list.add(FoundryContainer.FromFluidStack( null));
+    list.add(FoundryContainerHandler.instance.FromFluidStack( null));
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
     for(Fluid f : fluids.values())
     {
       if(f != null)
       {
-        list.add(FoundryContainer.FromFluidStack(new FluidStack(f, FluidContainerRegistry.BUCKET_VOLUME)));
+        list.add(FoundryContainerHandler.instance.FromFluidStack(new FluidStack(f, FluidContainerRegistry.BUCKET_VOLUME)));
       }
     }
   }
@@ -113,7 +113,7 @@ public class ItemFoundryContainer extends Item
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
   {
-    FluidStack fluid = FoundryContainer.GetFluidStack(stack);
+    FluidStack fluid = FoundryContainerHandler.instance.GetFluidStack(stack);
     if(fluid == null)
     {
       list.add(EnumChatFormatting.BLUE + "Empty");
@@ -127,7 +127,7 @@ public class ItemFoundryContainer extends Item
   @Override
   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
   {
-    FluidStack fluid = FoundryContainer.GetFluidStack(stack);
+    FluidStack fluid = FoundryContainerHandler.instance.GetFluidStack(stack);
     MovingObjectPosition obj = getMovingObjectPositionFromPlayer(world, player, fluid == null || fluid.amount == 0);
 
     
@@ -151,7 +151,7 @@ public class ItemFoundryContainer extends Item
         {
           //Drain from container to the Tile Entity.
           
-          FluidStack drained = FoundryContainer.Drain(stack, 100, false);
+          FluidStack drained = FoundryContainerHandler.instance.Drain(stack, 100, false);
           if(drained == null || drained.amount == 0)
           {
             return stack;
@@ -162,7 +162,7 @@ public class ItemFoundryContainer extends Item
             return stack;
           }
           drained.amount = filled;
-          FoundryContainer.Drain(stack, filled, true);
+          FoundryContainerHandler.instance.Drain(stack, filled, true);
           handler.fill(side, drained, true);
         } else
         {
@@ -173,14 +173,14 @@ public class ItemFoundryContainer extends Item
           {
             return stack;
           }
-          int filled = FoundryContainer.Fill(stack, drained, false);
+          int filled = FoundryContainerHandler.instance.Fill(stack, drained, false);
           if(filled == 0)
           {
             return stack;
           }
           drained.amount = filled;
           handler.drain(side, filled, true);
-          FoundryContainer.Fill(stack, drained, true);
+          FoundryContainerHandler.instance.Fill(stack, drained, true);
         }
         
         return stack;
@@ -226,10 +226,10 @@ public class ItemFoundryContainer extends Item
         {
           //Place fluid in the world.
           
-          FluidStack drained = FoundryContainer.Drain(stack, FluidContainerRegistry.BUCKET_VOLUME, false);
+          FluidStack drained = FoundryContainerHandler.instance.Drain(stack, FluidContainerRegistry.BUCKET_VOLUME, false);
           if(drained != null && drained.getFluid().canBePlacedInWorld() && drained.amount == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            FoundryContainer.Drain(stack, FluidContainerRegistry.BUCKET_VOLUME, true);
+            FoundryContainerHandler.instance.Drain(stack, FluidContainerRegistry.BUCKET_VOLUME, true);
             if(!world.isRemote && !material.isLiquid())
             {
               world.destroyBlock(x, y, z, true);
@@ -271,13 +271,13 @@ public class ItemFoundryContainer extends Item
           {
             return stack;
           }
-          int filled = FoundryContainer.Fill(stack, drained, false);
+          int filled = FoundryContainerHandler.instance.Fill(stack, drained, false);
           if(filled != drained.amount)
           {
             return stack;
           }
           fluid_block.drain(world, x, y, z, true);
-          FoundryContainer.Fill(stack, drained, true);
+          FoundryContainerHandler.instance.Fill(stack, drained, true);
           
           return stack;
         }
@@ -291,9 +291,9 @@ public class ItemFoundryContainer extends Item
           }
 
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
-          if(FoundryContainer.Fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
+          if(FoundryContainerHandler.instance.Fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            FoundryContainer.Fill(stack, fill, true);
+            FoundryContainerHandler.instance.Fill(stack, fill, true);
             world.setBlockToAir(x, y, z);
           }
 
@@ -309,9 +309,9 @@ public class ItemFoundryContainer extends Item
           }
 
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
-          if(FoundryContainer.Fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
+          if(FoundryContainerHandler.instance.Fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            FoundryContainer.Fill(stack, fill, true);
+            FoundryContainerHandler.instance.Fill(stack, fill, true);
             world.setBlockToAir(x, y, z);
           }
 

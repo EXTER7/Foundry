@@ -15,6 +15,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.AlloyRecipe;
+import exter.foundry.recipes.manager.AlloyRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -418,7 +419,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
     if(tanks[TANK_INPUT_A].getFluidAmount() * tanks[TANK_INPUT_B].getFluidAmount() > 0)
     {
-      AlloyRecipe r = AlloyRecipe.FindRecipe(tanks[TANK_INPUT_A].getFluid(), tanks[TANK_INPUT_B].getFluid());
+      AlloyRecipe r = AlloyRecipeManager.instance.FindRecipe(tanks[TANK_INPUT_A].getFluid(), tanks[TANK_INPUT_B].getFluid());
       if(r != null)
       {
         if(MixAlloy(r, TANK_INPUT_A, TANK_INPUT_B))
@@ -427,7 +428,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
         }
       } else
       {
-        r = AlloyRecipe.FindRecipe(tanks[TANK_INPUT_B].getFluid(), tanks[TANK_INPUT_A].getFluid());
+        r = AlloyRecipeManager.instance.FindRecipe(tanks[TANK_INPUT_B].getFluid(), tanks[TANK_INPUT_A].getFluid());
         if(r != null)
         {
           if(MixAlloy( r, TANK_INPUT_B, TANK_INPUT_A))

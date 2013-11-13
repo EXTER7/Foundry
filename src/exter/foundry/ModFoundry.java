@@ -35,6 +35,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.container.FoundryContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockFoundryOre;
@@ -122,6 +123,7 @@ public class ModFoundry
     FoundryRecipes.casting = CastingRecipeManager.instance;
     FoundryRecipes.alloy = AlloyRecipeManager.instance;
     FoundryRecipes.infuser = InfuserRecipeManager.instance;
+    FoundryContainerManager.handler = FoundryContainerHandler.instance;
 
 
     OreDictionary.registerOre("ingotIron", Item.ingotIron);

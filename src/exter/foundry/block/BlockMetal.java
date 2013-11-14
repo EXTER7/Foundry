@@ -20,17 +20,17 @@ import net.minecraft.world.World;
 
 public class BlockMetal extends Block
 {
-  static private final int BLOCK_COPPER = 0;
-  static private final int BLOCK_TIN = 1;
-  static private final int BLOCK_BRONZE = 2;
-  static private final int BLOCK_ELECTRUM = 3;
-  static private final int BLOCK_INVAR = 4;
-  static private final int BLOCK_NICKEL = 5;
-  static private final int BLOCK_ZINC = 6;
-  static private final int BLOCK_BRASS = 7;
-  static private final int BLOCK_SILVER = 8;
-  static private final int BLOCK_STEEL = 9;
-  static private final int BLOCK_LEAD = 10;
+  static public final int BLOCK_COPPER = 0;
+  static public final int BLOCK_TIN = 1;
+  static public final int BLOCK_BRONZE = 2;
+  static public final int BLOCK_ELECTRUM = 3;
+  static public final int BLOCK_INVAR = 4;
+  static public final int BLOCK_NICKEL = 5;
+  static public final int BLOCK_ZINC = 6;
+  static public final int BLOCK_BRASS = 7;
+  static public final int BLOCK_SILVER = 8;
+  static public final int BLOCK_STEEL = 9;
+  static public final int BLOCK_LEAD = 10;
 
 
   static private final String[] ICON_PATHS = 

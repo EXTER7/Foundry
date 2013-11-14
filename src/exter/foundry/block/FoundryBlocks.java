@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.item.ItemBlockMulti;
 import exter.foundry.item.ItemMold;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +31,7 @@ public class FoundryBlocks
     "Bronze",
     "Electrum",
     "Invar",
-    "Nickel",
+    "Nickel"
   };
   
   public static final String[] SLAB2_METALS = 
@@ -84,6 +85,45 @@ public class FoundryBlocks
     "foundry:metalblock_lead"
   };
 
+  public static class MetalStair
+  {
+    public final String metal;
+    public final String name;
+    public final int block_meta;
+    private final Block block;
+    
+    public MetalStair(String me,String na,Block bl,int bm)
+    {
+      metal = me;
+      name = na;
+      block = bl;
+      block_meta = bm;
+    }
+    
+    public Block GetBlock()
+    {
+      return block == null?block_metal:block;
+    }
+  }
+  
+  //Metal stair block data
+  public static final MetalStair[] STAIRS_BLOCKS = 
+  {
+    new MetalStair("Iron","Iron Stairs",Block.blockIron,0),
+    new MetalStair("Gold","Gold Stairs",Block.blockGold,0),
+    new MetalStair("Copper","Copper Stairs",null,BlockMetal.BLOCK_COPPER),
+    new MetalStair("Tin","Tin Stairs",null,BlockMetal.BLOCK_TIN),
+    new MetalStair("Bronze","Bronze Stairs",null,BlockMetal.BLOCK_BRONZE),
+    new MetalStair("Electrum","Electrum Stairs",null,BlockMetal.BLOCK_ELECTRUM),
+    new MetalStair("Invar","Invar Stairs",null,BlockMetal.BLOCK_INVAR),
+    new MetalStair("Nickel","Nickel Stairs",null,BlockMetal.BLOCK_NICKEL),
+    new MetalStair("Zinc","Zinc Stairs",null,BlockMetal.BLOCK_ZINC),
+    new MetalStair("Brass","Brass Stairs",null,BlockMetal.BLOCK_BRASS),
+    new MetalStair("Silver","Silver Stairs",null,BlockMetal.BLOCK_SILVER),
+    new MetalStair("Steel","Steel Stairs",null,BlockMetal.BLOCK_STEEL),
+    new MetalStair("Lead","Lead Stairs",null,BlockMetal.BLOCK_LEAD)
+  };
+  
   public static BlockFoundryCrucible block_foundry_crucible;
   public static BlockInductionCrucibleFurnace block_induction_crucible_furnace;
   public static BlockMetalCaster block_metal_caster;
@@ -97,6 +137,8 @@ public class FoundryBlocks
 
   public static BlockMetalSlab block_slabdouble1;
   public static BlockMetalSlab block_slabdouble2;
+  
+  public static BlockStairs[] block_metal_stairs;
 
   static public void RegisterBlocks(Configuration config)
   {
@@ -117,6 +159,16 @@ public class FoundryBlocks
 
     block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
     block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
+    
+    block_metal_stairs = new BlockStairs[STAIRS_BLOCKS.length];
+    for(i = 0; i < STAIRS_BLOCKS.length; i++)
+    {
+      MetalStair ms = STAIRS_BLOCKS[i];
+      block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(config.getBlock( "stair_" +  ms.metal, GetNextID()).getInt(),ms.GetBlock(),ms.block_meta).setUnlocalizedName("stairs" + ms.metal);
+      GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
+      LanguageRegistry.addName(block_metal_stairs[i], ms.name);
+    }
+
     
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     

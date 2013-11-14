@@ -46,7 +46,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
-  static public final int CAST_TIME = 100;
+  static public final int CAST_TIME = 70;
   
   static public final int POWER_REQUIRED = 100;
   
@@ -359,51 +359,46 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       if(recipe != null)
       {
         ItemStack result = recipe.GetOutputItem();
-        if(result != null)
+
+        ItemStack output = inventory[INVENTORY_OUTPUT];
+        if(output == null || output.isItemEqual(recipe.GetOutputItem()) && output.stackSize < output.getMaxStackSize())
         {
-          ItemStack output = inventory[INVENTORY_OUTPUT];
-          if(output == null || output.isItemEqual(recipe.GetOutputItem()) && output.stackSize < output.getMaxStackSize())
+          ItemStack extra = recipe.extra;
+          if(extra == null || (inventory[INVENTORY_EXTRA] != null && extra.isItemEqual(inventory[INVENTORY_EXTRA]) && inventory[INVENTORY_EXTRA].stackSize >= extra.stackSize))
           {
-            ItemStack extra = recipe.extra;
-            if(extra == null || (inventory[INVENTORY_EXTRA] != null && extra.isItemEqual(inventory[INVENTORY_EXTRA]) && inventory[INVENTORY_EXTRA].stackSize >= extra.stackSize))
+
+            if(progress < 0)
             {
-             
-              if(progress < 0)
+              if(last_power >= POWER_REQUIRED)
               {
-                if(last_power >= POWER_REQUIRED)
-                {
-                  power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
-                  progress = 0;
-                }
+                power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
+                progress = 0;
               }
-                
-              if(progress >= 0)
-              {
-                if(++progress >= CAST_TIME)
-                {
-                  progress = -1;
-                  tank.drain(recipe.fluid.amount, true);
-                  if(extra != null)
-                  {
-                    decrStackSize(INVENTORY_EXTRA, extra.stackSize);
-                    UpdateInventoryItem(INVENTORY_EXTRA);
-                  }
-                  if(output == null)
-                  {
-                    inventory[INVENTORY_OUTPUT] = result;
-                    inventory[INVENTORY_OUTPUT].stackSize = 1;
-                  } else
-                  {
-                    output.stackSize++;
-                  }
-                  UpdateInventoryItem(INVENTORY_OUTPUT);
-                  UpdateTank(0);
-                  onInventoryChanged();
-                }
-              }
-            } else
+            }
+
+            if(progress >= 0)
             {
-              progress = -1;
+              if(++progress >= CAST_TIME)
+              {
+                progress = -1;
+                tank.drain(recipe.fluid.amount, true);
+                if(extra != null)
+                {
+                  decrStackSize(INVENTORY_EXTRA, extra.stackSize);
+                  UpdateInventoryItem(INVENTORY_EXTRA);
+                }
+                if(output == null)
+                {
+                  inventory[INVENTORY_OUTPUT] = result;
+                  inventory[INVENTORY_OUTPUT].stackSize = 1;
+                } else
+                {
+                  output.stackSize++;
+                }
+                UpdateInventoryItem(INVENTORY_OUTPUT);
+                UpdateTank(0);
+                onInventoryChanged();
+              }
             }
           } else
           {

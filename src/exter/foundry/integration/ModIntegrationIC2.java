@@ -31,19 +31,20 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_COPPER_CABLE = 9;
   static public final int ITEM_TIN_CABLE = 10;
   static public final int ITEM_GOLD_CABLE = 11;
+  static public final int ITEM_IRON_CABLE = 12;
 
-  static public final int ITEM_COPPER_CASING = 12;
-  static public final int ITEM_TIN_CASING = 13;
-  static public final int ITEM_BRONZE_CASING = 14;
-  static public final int ITEM_GOLD_CASING = 15;
-  static public final int ITEM_IRON_CASING = 16;
-  static public final int ITEM_LEAD_CASING = 17;
+  static public final int ITEM_COPPER_CASING = 13;
+  static public final int ITEM_TIN_CASING = 14;
+  static public final int ITEM_BRONZE_CASING = 15;
+  static public final int ITEM_GOLD_CASING = 16;
+  static public final int ITEM_IRON_CASING = 17;
+  static public final int ITEM_LEAD_CASING = 18;
 
   
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[18];
+    items = new ItemStack[19];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
     items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));
@@ -58,6 +59,7 @@ public class ModIntegrationIC2 extends ModIntegration
     items[ITEM_COPPER_CABLE] = ItemStack.copyItemStack(Items.getItem("copperCableItem"));
     items[ITEM_TIN_CABLE] = ItemStack.copyItemStack(Items.getItem("tinCableItem"));
     items[ITEM_GOLD_CABLE] = ItemStack.copyItemStack(Items.getItem("goldCableItem"));
+    items[ITEM_IRON_CABLE] = ItemStack.copyItemStack(Items.getItem("ironCableItem"));
 
     items[ITEM_COPPER_CASING] = ItemStack.copyItemStack(Items.getItem("casingcopper"));
     items[ITEM_TIN_CASING] = ItemStack.copyItemStack(Items.getItem("casingtin"));
@@ -100,9 +102,10 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze,FoundryUtils.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze,FoundryUtils.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,FoundryUtils.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,FoundryUtils.FLUID_AMOUNT_INGOT / 2), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin,FoundryUtils.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
 
       CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper,FoundryUtils.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin,FoundryUtils.FLUID_AMOUNT_INGOT / 2), mold_casing, null);

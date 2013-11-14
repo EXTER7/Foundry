@@ -42,11 +42,18 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   }
   
   @Override
-  public void AddRecipe(String solid_name,FluidStack fluid_stack)
+  public void AddRecipe(String solid,FluidStack fluid_stack)
   {
-    recipes.add(new MeltingRecipe(solid_name,fluid_stack));
+    recipes.add(new MeltingRecipe(solid,fluid_stack));
   }
+
   
+  @Override
+  public void AddRecipe(ItemStack solid,FluidStack fluid_stack)
+  {
+    recipes.add(new MeltingRecipe(solid,fluid_stack));
+  }
+
   @Override
   public List<? extends IMeltingRecipe> GetRecipes()
   {

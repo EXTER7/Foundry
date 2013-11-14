@@ -41,6 +41,10 @@ public class ItemMold extends Item
   static public final int MOLD_CABLE_IC2_CLAY = 25;
   static public final int MOLD_CASING_IC2 = 26;
   static public final int MOLD_CASING_IC2_CLAY = 27;
+  static public final int MOLD_SLAB = 28;
+  static public final int MOLD_SLAB_CLAY = 29;
+  static public final int MOLD_STAIRS = 30;
+  static public final int MOLD_STAIRS_CLAY = 31;
 
 
   static private final String[] ICON_PATHS = 
@@ -72,7 +76,11 @@ public class ItemMold extends Item
     "foundry:mold_cable_ic2",
     "foundry:claymold_cable_ic2",
     "foundry:mold_casing_ic2",
-    "foundry:claymold_casing_ic2"
+    "foundry:claymold_casing_ic2",
+    "foundry:mold_slab",
+    "foundry:claymold_slab",
+    "foundry:mold_stairs",
+    "foundry:claymold_stairs"
   };
   
   static public final String[] NAMES = 
@@ -104,7 +112,11 @@ public class ItemMold extends Item
     "Cable Mold",
     "Clay Cable Mold",
     "Casing Mold",
-    "Clay Casing Mold"
+    "Clay Casing Mold",
+    "Slab Mold",
+    "Clay Slab Mold",
+    "Stairs Mold",
+    "Clay Stairs Mold"
   };
   
   

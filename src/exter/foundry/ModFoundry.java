@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHalfSlab;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -192,6 +194,8 @@ public class ModFoundry
     ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
     ItemStack mold_cable_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
     ItemStack mold_casing_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
+    ItemStack mold_slab = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_SLAB);
+    ItemStack mold_stairs = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_STAIRS);
     ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
     
@@ -210,6 +214,8 @@ public class ModFoundry
     CastingRecipeManager.instance.AddMold(mold_gear);
     CastingRecipeManager.instance.AddMold(mold_cable_ic2);
     CastingRecipeManager.instance.AddMold(mold_casing_ic2);
+    CastingRecipeManager.instance.AddMold(mold_slab);
+    CastingRecipeManager.instance.AddMold(mold_stairs);
 
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
@@ -247,6 +253,40 @@ public class ModFoundry
     CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
 
+    for(i = 0; i < FoundryBlocks.SLAB1_METALS.length; i++)
+    {
+      ItemStack stack = new ItemStack(FoundryBlocks.block_slab1,1,i);
+      FluidStack fluid = new FluidStack(
+          LiquidMetalRegistry.GetMetal(FoundryBlocks.SLAB1_METALS[i]).fluid,
+          FoundryUtils.FLUID_AMOUNT_BLOCK / 2);
+
+      CastingRecipeManager.instance.AddRecipe(stack,fluid, mold_slab, null);
+      MeltingRecipeManager.instance.AddRecipe(stack, fluid);
+    }
+
+    for(i = 0; i < FoundryBlocks.SLAB2_METALS.length; i++)
+    {
+      ItemStack stack = new ItemStack(FoundryBlocks.block_slab2,1,i);
+      FluidStack fluid = new FluidStack(
+          LiquidMetalRegistry.GetMetal(FoundryBlocks.SLAB2_METALS[i]).fluid,
+          FoundryUtils.FLUID_AMOUNT_BLOCK / 2);
+
+      CastingRecipeManager.instance.AddRecipe(stack,fluid, mold_slab, null);
+      MeltingRecipeManager.instance.AddRecipe(stack, fluid);
+    }
+
+    for(i = 0; i < FoundryBlocks.block_metal_stairs.length; i++)
+    {
+      FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
+      ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
+      FluidStack fluid = new FluidStack(
+          LiquidMetalRegistry.GetMetal(mr.metal).fluid,
+          FoundryUtils.FLUID_AMOUNT_BLOCK * 3 / 4);
+      
+      CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_stairs, null);
+      MeltingRecipeManager.instance.AddRecipe(stack, fluid);
+    }
+    
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 300);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",6, new ItemStack(Item.coal,1,1), 600);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 2400);
@@ -262,6 +302,7 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
+    int i;
     log.setParent(FMLLog.getLogger());
 
     ModIntegration.RegisterIntegration(new ModIntegrationIC2("ic2"));
@@ -416,6 +457,17 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordIron));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordGold));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordDiamond));
+    for(i = 0; i < Block.blocksList.length; i++)
+    {
+      Block block = Block.blocksList[i];
+      if(block instanceof BlockStairs)
+      {
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_CLAY, new ItemStack(block,1,-1));
+      } else if(block instanceof BlockHalfSlab && !block.isOpaqueCube())
+      {
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_CLAY, new ItemStack(block,1,-1));
+      }
+    }
     
     //Gear Mold crafting recipes.
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearWood");
@@ -464,6 +516,8 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_CLAY,ItemMold.MOLD_GEAR);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CABLE_IC2_CLAY,ItemMold.MOLD_CABLE_IC2);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CASING_IC2_CLAY,ItemMold.MOLD_CASING_IC2);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SLAB_CLAY,ItemMold.MOLD_SLAB);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_STAIRS_CLAY,ItemMold.MOLD_STAIRS);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 

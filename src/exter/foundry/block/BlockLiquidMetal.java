@@ -11,6 +11,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityDropParticleFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -69,18 +72,6 @@ public class BlockLiquidMetal extends BlockFluidClassic
   }
 
   @Override
-  public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
-  {
-    return false;
-  }
-
-  @Override
-  public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side)
-  {
-    return true;
-  }
-
-  @Override
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(World world, int x, int y, int z, Random rand)
   {
@@ -103,45 +94,56 @@ public class BlockLiquidMetal extends BlockFluidClassic
     return super.displaceIfPossible(world, x, y, z);
   }
 
+  @Override
+  public void onBlockAdded(World world, int x, int y, int z)
+  {
+    super.onBlockAdded(world, x, y, z);
+    CheckForHarden(world, x, y, z);
+  }
 
   @Override
-  public void updateTick(World world, int x, int y, int z, Random rand)
+  public void onNeighborBlockChange(World world, int x, int y, int z, int neighbor_id)
   {
-    super.updateTick(world, x, y, z, rand);
+    super.onNeighborBlockChange(world, x, y, z, neighbor_id);
+    CheckForHarden(world, x, y, z);
+  }
+ 
+
+  public void CheckForHarden(World world, int x, int y, int z)
+  {
     if (isSourceBlock(world, x, y, z))
     {
-      if(CheckHarden(world, x, y, z, x - 1, y, z))
+      if(TryToHarden(world, x, y, z, x - 1, y, z))
       {
         return;
       }
-      if(CheckHarden(world, x, y, z, x + 1, y, z))
+      if(TryToHarden(world, x, y, z, x + 1, y, z))
       {
         return;
       }
-      if(CheckHarden(world, x, y, z, x, y - 1, z))
+      if(TryToHarden(world, x, y, z, x, y - 1, z))
       {
         return;
       }
-      if(CheckHarden(world, x, y, z, x, y + 1, z))
+      if(TryToHarden(world, x, y, z, x, y + 1, z))
       {
         return;
       }
-      if(CheckHarden(world, x, y, z, x, y, z - 1))
+      if(TryToHarden(world, x, y, z, x, y, z - 1))
       {
         return;
       }
-      if(CheckHarden(world, x, y, z, x, y, z + 1))
+      if(TryToHarden(world, x, y, z, x, y, z + 1))
       {
         return;
       }
     }
   }
 
-  private boolean CheckHarden(World world, int x, int y, int z, int tileX, int tileY, int tileZ)
+  private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz)
   {
     //Check if block is in contact with water.
-    int neighbor = world.getBlockId(tileX, tileY, tileZ);
-    if(neighbor == Block.waterStill.blockID || neighbor == Block.waterMoving.blockID)
+    if(world.getBlockMaterial(nx, ny, nz) == Material.water)
     {
       int i;
       //Turn the block solid.
@@ -154,5 +156,20 @@ public class BlockLiquidMetal extends BlockFluidClassic
       return true;
     }
     return false;
+  }
+  
+  @Override
+  public void onEntityCollidedWithBlock(World wWorld, int x, int y, int z, Entity entity)
+  {
+    if(entity instanceof EntityLivingBase)
+    {
+      entity.motionX *= 0.5;
+      entity.motionZ *= 0.5;
+    }
+    if(!entity.isImmuneToFire())
+    {
+      entity.attackEntityFrom(DamageSource.lava, 4);
+      entity.setFire(15);
+    }
   }
 }

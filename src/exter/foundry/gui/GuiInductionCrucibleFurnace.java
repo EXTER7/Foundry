@@ -147,8 +147,8 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mouse_x,mouse_y))
     {
       List<String> list = new ArrayList<String>();
-      float heat = (float)te_icf.GetHeat() / 10.0f;
-      float melt_point = (float)te_icf.GetMeltingPoint() / 10.0f;
+      int heat = te_icf.GetHeat() / 10;
+      int melt_point = te_icf.GetMeltingPoint() / 10;
       list.add("Heat: " + String.valueOf(heat) + " K");
       if(melt_point > 0)
       {

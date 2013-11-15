@@ -456,7 +456,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
         heat = HEAT_MAX;
       }
     }
-    if(last_heat != heat)
+    if(last_heat / 10 != heat / 10)
     {
       UpdateValue("heat",heat);
     }

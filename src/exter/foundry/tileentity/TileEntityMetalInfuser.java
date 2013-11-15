@@ -408,7 +408,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
         extract_time = sub_recipe.extract_energy * 100;
         if(power_handler.getEnergyStored() > 0)
         {
-          int energy = (int) (power_handler.useEnergy(0, 8, true) * 100 / 8);
+          int energy = (int) (power_handler.useEnergy(0, 8, true) * 100);
           progress += energy;
           if(progress >= extract_time)
           {

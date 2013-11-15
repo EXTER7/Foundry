@@ -24,7 +24,7 @@ public interface IInfuserSubstanceRecipe
   
   /**
    * Get the amount of energy needed.
-   * @return The amount of energy needed.
+   * @return The amount of energy needed in 1/100th MJ.
    */
   public int GetEneryNeeded();
 }

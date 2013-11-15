@@ -41,8 +41,8 @@ public interface IInfuserRecipeManager
    * Register a Metal Infuser substance recipe.
    * @param subs Substance produced.
    * @param subs Substance produced.
-   * @param itm Item required (Ore Dictionary name).
-   * @param time Energy required.
+   * @param item Item required (Ore Dictionary name).
+   * @param energy Energy required in 1/100th MJ.
    */
   public void AddSubstanceRecipe(String substance_type,int substance_amount,String item, int energy);
 

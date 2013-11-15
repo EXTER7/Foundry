@@ -49,7 +49,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
     }
     for(CastingRecipe cr:recipes)
     {
-      if(fluid.containsFluid(cr.fluid) && cr.mold.isItemEqual(mold))
+      if(fluid.containsFluid(cr.fluid) && cr.mold.isItemEqual(mold) && ItemStack.areItemStackTagsEqual(cr.mold, mold))
       {
         return cr;
       }

@@ -48,6 +48,21 @@ public class BlockMetal extends Block
     "foundry:metalblock_lead"
   };
   
+  static public final String[] METAL_NAMES = 
+  {
+    "Copper",
+    "Tin",
+    "Bronze",
+    "Electrum",
+    "Invar",
+    "Nickel",
+    "Zinc",
+    "Brass",
+    "Silver",
+    "Steel",
+    "Lead"
+  };
+
   static public final String[] NAMES = 
   {
     "Block of Copper",

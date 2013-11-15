@@ -13,6 +13,7 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -168,7 +169,10 @@ public class BlockLiquidMetal extends BlockFluidClassic
     }
     if(!entity.isImmuneToFire())
     {
-      entity.attackEntityFrom(DamageSource.lava, 4);
+      if(!(entity instanceof EntityItem))
+      {
+        entity.attackEntityFrom(DamageSource.lava, 4);
+      }
       entity.setFire(15);
     }
   }

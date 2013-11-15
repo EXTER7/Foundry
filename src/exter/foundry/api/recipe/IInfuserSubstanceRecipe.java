@@ -10,9 +10,21 @@ public interface IInfuserSubstanceRecipe
    */
   public Object GetInputItem();
   
+  /**
+   * Get the substance type produced.
+   * @return The substance type.
+   */
   public String GetOutputSubstanceType();
   
+  /**
+   * Get the substance amount produced.
+   * @return The substance amount.
+   */
   public int GetOutputSubstanceAmount();
   
+  /**
+   * Get the amount of energy needed.
+   * @return The amount of energy needed.
+   */
   public int GetEneryNeeded();
 }

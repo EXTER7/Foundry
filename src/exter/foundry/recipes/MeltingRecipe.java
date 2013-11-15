@@ -65,14 +65,17 @@ public class MeltingRecipe implements IMeltingRecipe
   
   public boolean IsItemMatch(ItemStack item)
   {
-    String od_name = null;
+    if(item == null)
+    {
+      return false;
+    }
     if(solid_oredict != null)
     {
       if(FoundryMiscUtils.IsItemInOreDictionary(solid_oredict, item))
       {
         return true;
       }
-    } else if(ItemStack.areItemStacksEqual(item, solid))
+    } else if(item.isItemEqual(solid) && ItemStack.areItemStackTagsEqual(item, solid))
     {
       return true;
     }

@@ -6,10 +6,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class FoundryUtils
 {
-  static public final int FLUID_AMOUNT_BLOCK = 972;
-  static public final int FLUID_AMOUNT_INGOT = 108;
-  static public final int FLUID_AMOUNT_NUGGET = 12;
-  static public final int FLUID_AMOUNT_ORE = 216;
 
   /**
    * Maximum amount of substance a metal infuser can store.
@@ -25,11 +21,11 @@ public class FoundryUtils
   {
     if(FoundryRecipes.melting != null)
     {
-      FoundryRecipes.melting.AddRecipe("ingot" + partial_name, new FluidStack(fluid, FLUID_AMOUNT_INGOT));
-      FoundryRecipes.melting.AddRecipe("block" + partial_name, new FluidStack(fluid, FLUID_AMOUNT_BLOCK));
-      FoundryRecipes.melting.AddRecipe("nugget" + partial_name, new FluidStack(fluid, FLUID_AMOUNT_NUGGET));
-      FoundryRecipes.melting.AddRecipe("dust" + partial_name, new FluidStack(fluid, FLUID_AMOUNT_INGOT));
-      FoundryRecipes.melting.AddRecipe("ore" + partial_name, new FluidStack(fluid, FLUID_AMOUNT_ORE));
+      FoundryRecipes.melting.AddRecipe("ingot" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_INGOT));
+      FoundryRecipes.melting.AddRecipe("block" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_BLOCK));
+      FoundryRecipes.melting.AddRecipe("nugget" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_NUGGET));
+      FoundryRecipes.melting.AddRecipe("dust" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_INGOT));
+      FoundryRecipes.melting.AddRecipe("ore" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_ORE));
     }
   }
 

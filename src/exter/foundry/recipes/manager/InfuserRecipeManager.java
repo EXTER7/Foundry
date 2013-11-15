@@ -21,6 +21,7 @@ import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;
+import exter.foundry.util.FoundryMiscUtils;
 
 public class InfuserRecipeManager implements IInfuserRecipeManager
 {
@@ -118,18 +119,11 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     {
       if(isr.oredict_item != null)
       {
-        List<ItemStack> ores = OreDictionary.getOres(isr.oredict_item);
-        if(ores != null)
+        if(FoundryMiscUtils.IsItemInOreDictionary(isr.oredict_item, item))
         {
-          for(ItemStack ore:ores)
-          {
-            if(ore.isItemEqual(item))
-            {
-              return isr;
-            }
-          }
+          return isr;
         }
-      } else if(isr.item.isItemEqual(item))
+      } else if(isr.item.isItemEqual(item) && ItemStack.areItemStackTagsEqual(isr.item,item))
       {
         return isr;
       }

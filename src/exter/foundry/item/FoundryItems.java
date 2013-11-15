@@ -1,5 +1,6 @@
 package exter.foundry.item;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -7,6 +8,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.renderer.RendererItemContainer;
 import exter.foundry.util.FoundryContainerHandler;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.Configuration;
@@ -32,6 +34,8 @@ public class FoundryItems
   static public ItemIngot item_ingot;
   
   static public ItemFoundryContainer item_container;
+  
+  static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
 
   static public void RegisterItems(Configuration config)
   {
@@ -54,7 +58,11 @@ public class FoundryItems
       ItemStack is = new ItemStack(item_ingot,  1, i);
       LanguageRegistry.addName(is, ItemIngot.NAMES[i]);
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
+      ingot_stacks.put(ItemIngot.METAL_NAMES[i], is);
     }
+    ingot_stacks.put("Iron", new ItemStack(Item.ingotIron));
+    ingot_stacks.put("Gold", new ItemStack(Item.ingotGold));
+    
     item_container = new ItemFoundryContainer(config.getItem("container", GetNextID()).getInt() - 256);
     LanguageRegistry.addName(item_container, "Foundry Container");
 

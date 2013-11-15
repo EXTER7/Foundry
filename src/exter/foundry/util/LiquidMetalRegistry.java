@@ -11,6 +11,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockMetal;
@@ -111,8 +112,6 @@ public class LiquidMetalRegistry
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack mold_block = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);    
     
-    CastingRecipeManager.instance.AddRecipe("block" + metal_name, new FluidStack(fluid,FoundryUtils.FLUID_AMOUNT_BLOCK), mold_block, null);
-    CastingRecipeManager.instance.AddRecipe("ingot" + metal_name, new FluidStack(fluid,FoundryUtils.FLUID_AMOUNT_INGOT), mold_ingot, null);
 
 
 

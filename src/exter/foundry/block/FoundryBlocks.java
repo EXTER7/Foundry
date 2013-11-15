@@ -1,11 +1,15 @@
 package exter.foundry.block;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.item.ItemBlockMulti;
 import exter.foundry.item.ItemMold;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +26,7 @@ public class FoundryBlocks
     return next_id++;
   }
   
-  public static final String[] SLAB1_METALS = 
+  private static final String[] SLAB1_METALS = 
   {
     "Iron",
     "Gold",
@@ -34,7 +38,7 @@ public class FoundryBlocks
     "Nickel"
   };
   
-  public static final String[] SLAB2_METALS = 
+  private static final String[] SLAB2_METALS = 
   {
     "Zinc",
     "Brass",
@@ -43,7 +47,7 @@ public class FoundryBlocks
     "Lead"
   };
 
-  public static final String[] SLAB1_NAMES = 
+  private static final String[] SLAB1_NAMES = 
   {
     "Iron Slab",
     "Gold Slab",
@@ -55,7 +59,7 @@ public class FoundryBlocks
     "Nickel Slab"
   };
 
-  public static final String[] SLAB2_NAMES = 
+  private static final String[] SLAB2_NAMES = 
   {
     "Zinc Slab",
     "Brass Slab",
@@ -64,7 +68,7 @@ public class FoundryBlocks
     "Lead Slab"
   };
 
-  public static final String[] SLAB1_ICONS = 
+  private static final String[] SLAB1_ICONS = 
   {
     "iron_block",
     "gold_block",
@@ -76,7 +80,7 @@ public class FoundryBlocks
     "foundry:metalblock_nickel"
   };
 
-  public static final String[] SLAB2_ICONS = 
+  private static final String[] SLAB2_ICONS = 
   {
     "foundry:metalblock_zinc",
     "foundry:metalblock_brass",
@@ -140,6 +144,12 @@ public class FoundryBlocks
   
   public static BlockStairs[] block_metal_stairs;
 
+  //All blocks mapped by the metal name.
+  public static Map<String,ItemStack> block_stacks = new HashMap<String,ItemStack>();
+  
+  //All slabs mapped by the metal name.
+  public static Map<String,ItemStack> slab_stacks = new HashMap<String,ItemStack>();
+  
   static public void RegisterBlocks(Configuration config)
   {
     int i;
@@ -160,6 +170,7 @@ public class FoundryBlocks
     block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
     block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
     
+    
     block_metal_stairs = new BlockStairs[STAIRS_BLOCKS.length];
     for(i = 0; i < STAIRS_BLOCKS.length; i++)
     {
@@ -168,6 +179,13 @@ public class FoundryBlocks
       GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
       LanguageRegistry.addName(block_metal_stairs[i], ms.name);
     }
+
+    for(i = 0; i < BlockMetal.METAL_NAMES.length; i++)
+    {
+      block_stacks.put(BlockMetal.METAL_NAMES[i], new ItemStack(block_metal,1,i));
+    }
+    block_stacks.put("Iron", new ItemStack(Block.blockIron));
+    block_stacks.put("Gold", new ItemStack(Block.blockGold));
 
     
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
@@ -208,12 +226,14 @@ public class FoundryBlocks
     {
       ItemStack is = new ItemStack(block_slab1,  1, i);
       LanguageRegistry.addName(is, SLAB1_NAMES[i]);
+      slab_stacks.put(SLAB1_METALS[i], is);
     }
 
     for(i = 0; i < SLAB2_NAMES.length; i++)
     {
       ItemStack is = new ItemStack(block_slab2,  1, i);
       LanguageRegistry.addName(is, SLAB2_NAMES[i]);
+      slab_stacks.put(SLAB2_METALS[i], is);
     }
   }
 }

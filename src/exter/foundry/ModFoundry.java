@@ -2,6 +2,7 @@ package exter.foundry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
@@ -159,7 +160,7 @@ public class ModFoundry
     wordgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
 
     config.save();
-   
+
 
 
     Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
@@ -175,6 +176,7 @@ public class ModFoundry
     Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
     Fluid liquid_steel = LiquidMetalRegistry.GetMetal("Steel").fluid;
 
+    
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar,12), new FluidStack(liquid_iron,8), new FluidStack(liquid_nickel,4));
@@ -217,75 +219,89 @@ public class ModFoundry
     CastingRecipeManager.instance.AddMold(mold_slab);
     CastingRecipeManager.instance.AddMold(mold_stairs);
 
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-
-    CastingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryUtils.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-
-    for(i = 0; i < FoundryBlocks.SLAB1_METALS.length; i++)
+    //Ingot casting recipes.
+    for(Entry<String,ItemStack> entry:FoundryItems.ingot_stacks.entrySet())
     {
-      ItemStack stack = new ItemStack(FoundryBlocks.block_slab1,1,i);
+      CastingRecipeManager.instance.AddRecipe(
+          entry.getValue(),
+          new FluidStack(
+              LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+              FoundryRecipes.FLUID_AMOUNT_INGOT),
+          mold_ingot, null);
+    }
+    
+    //Metal block casting recipes.
+    for(Entry<String,ItemStack> entry:FoundryBlocks.block_stacks.entrySet())
+    {
+      CastingRecipeManager.instance.AddRecipe(
+          entry.getValue(),
+          new FluidStack(
+              LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+              FoundryRecipes.FLUID_AMOUNT_BLOCK),
+          mold_ingot, null);
+    }
+    
+    //Metal slab casting recipes
+    for(Entry<String,ItemStack> entry:FoundryBlocks.slab_stacks.entrySet())
+    {
+      ItemStack stack = entry.getValue();
       FluidStack fluid = new FluidStack(
-          LiquidMetalRegistry.GetMetal(FoundryBlocks.SLAB1_METALS[i]).fluid,
-          FoundryUtils.FLUID_AMOUNT_BLOCK / 2);
+          LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+          FoundryRecipes.FLUID_AMOUNT_BLOCK / 2);
 
-      CastingRecipeManager.instance.AddRecipe(stack,fluid, mold_slab, null);
+      CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_slab, null);
       MeltingRecipeManager.instance.AddRecipe(stack, fluid);
     }
 
-    for(i = 0; i < FoundryBlocks.SLAB2_METALS.length; i++)
-    {
-      ItemStack stack = new ItemStack(FoundryBlocks.block_slab2,1,i);
-      FluidStack fluid = new FluidStack(
-          LiquidMetalRegistry.GetMetal(FoundryBlocks.SLAB2_METALS[i]).fluid,
-          FoundryUtils.FLUID_AMOUNT_BLOCK / 2);
-
-      CastingRecipeManager.instance.AddRecipe(stack,fluid, mold_slab, null);
-      MeltingRecipeManager.instance.AddRecipe(stack, fluid);
-    }
-
+    //Metal stairs casting recipes
     for(i = 0; i < FoundryBlocks.block_metal_stairs.length; i++)
     {
       FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
       ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
       FluidStack fluid = new FluidStack(
           LiquidMetalRegistry.GetMetal(mr.metal).fluid,
-          FoundryUtils.FLUID_AMOUNT_BLOCK * 3 / 4);
+          FoundryRecipes.FLUID_AMOUNT_BLOCK * 3 / 4);
       
       CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_stairs, null);
       MeltingRecipeManager.instance.AddRecipe(stack, fluid);
     }
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+
+    CastingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+
     
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 300);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",6, new ItemStack(Item.coal,1,1), 600);

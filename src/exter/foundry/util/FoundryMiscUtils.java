@@ -53,7 +53,7 @@ public class FoundryMiscUtils
     List<ItemStack> ores = OreDictionary.getOres(name);
     for(ItemStack i:ores)
     {
-      if(i.isItemEqual(stack))
+      if(i.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(i, stack))
       {
         return true;
       }

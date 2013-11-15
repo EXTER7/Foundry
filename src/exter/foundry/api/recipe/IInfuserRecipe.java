@@ -10,8 +10,16 @@ public interface IInfuserRecipe
    */
   public FluidStack GetInputFluid();
   
+  /**
+   * Get the substance type required.
+   * @return The substance type.
+   */
   public String GetInputSubstanceType();
   
+  /**
+   * Get the substance amount required.
+   * @return The substance amount.
+   */
   public int GetInputSubstanceAmount();
 
   /**

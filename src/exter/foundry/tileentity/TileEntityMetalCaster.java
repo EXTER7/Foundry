@@ -313,13 +313,17 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
   {
+    if(resource.isFluidEqual(tank.getFluid()))
+    {
+      return tank.drain(resource.amount, doDrain);
+    }
     return null;
   }
 
   @Override
   public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
   {
-    return null;
+    return tank.drain(maxDrain, doDrain);
   }
 
   @Override
@@ -331,7 +335,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public boolean canDrain(ForgeDirection from, Fluid fluid)
   {
-    return false;
+    return true;
   }
 
   @Override

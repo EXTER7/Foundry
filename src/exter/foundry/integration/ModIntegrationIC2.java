@@ -14,6 +14,7 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
 
 public class ModIntegrationIC2 extends ModIntegration
 {
@@ -93,6 +94,18 @@ public class ModIntegrationIC2 extends ModIntegration
       ItemStack mold_cable = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
 
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
+
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CASING], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
@@ -102,6 +115,7 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+
       CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT / 4), mold_cable, null);

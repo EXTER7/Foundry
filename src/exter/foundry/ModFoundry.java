@@ -198,6 +198,7 @@ public class ModFoundry
     ItemStack mold_casing_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
     ItemStack mold_slab = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_SLAB);
     ItemStack mold_stairs = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_STAIRS);
+    ItemStack mold_plate_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
     ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
     
@@ -218,6 +219,7 @@ public class ModFoundry
     CastingRecipeManager.instance.AddMold(mold_casing_ic2);
     CastingRecipeManager.instance.AddMold(mold_slab);
     CastingRecipeManager.instance.AddMold(mold_stairs);
+    CastingRecipeManager.instance.AddMold(mold_plate_ic2);
 
     //Ingot casting recipes.
     for(Entry<String,ItemStack> entry:FoundryItems.ingot_stacks.entrySet())
@@ -534,6 +536,7 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CASING_IC2_CLAY,ItemMold.MOLD_CASING_IC2);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SLAB_CLAY,ItemMold.MOLD_SLAB);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_STAIRS_CLAY,ItemMold.MOLD_STAIRS);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_CLAY,ItemMold.MOLD_PLATE_IC2);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 

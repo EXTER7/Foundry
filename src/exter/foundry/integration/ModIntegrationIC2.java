@@ -41,11 +41,17 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_IRON_CASING = 17;
   static public final int ITEM_LEAD_CASING = 18;
 
+  static public final int ITEM_COPPER_PLATE = 19;
+  static public final int ITEM_TIN_PLATE = 20;
+  static public final int ITEM_BRONZE_PLATE = 21;
+  static public final int ITEM_GOLD_PLATE = 22;
+  static public final int ITEM_IRON_PLATE = 23;
+  static public final int ITEM_LEAD_PLATE = 24;
   
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[19];
+    items = new ItemStack[25];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
     items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));
@@ -68,6 +74,13 @@ public class ModIntegrationIC2 extends ModIntegration
     items[ITEM_GOLD_CASING] = ItemStack.copyItemStack(Items.getItem("casinggold"));
     items[ITEM_IRON_CASING] = ItemStack.copyItemStack(Items.getItem("casingiron"));
     items[ITEM_LEAD_CASING] = ItemStack.copyItemStack(Items.getItem("casinglead"));
+
+    items[ITEM_COPPER_PLATE] = ItemStack.copyItemStack(Items.getItem("platecopper"));
+    items[ITEM_TIN_PLATE] = ItemStack.copyItemStack(Items.getItem("platetin"));
+    items[ITEM_BRONZE_PLATE] = ItemStack.copyItemStack(Items.getItem("platebronze"));
+    items[ITEM_GOLD_PLATE] = ItemStack.copyItemStack(Items.getItem("plategold"));
+    items[ITEM_IRON_PLATE] = ItemStack.copyItemStack(Items.getItem("plateiron"));
+    items[ITEM_LEAD_PLATE] = ItemStack.copyItemStack(Items.getItem("platelead"));
 
     VerifyItems();
 
@@ -93,6 +106,7 @@ public class ModIntegrationIC2 extends ModIntegration
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BOOTS);
       ItemStack mold_cable = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
+      ItemStack mold_plate = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
 
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
@@ -106,6 +120,13 @@ public class ModIntegrationIC2 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead,FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
       
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead,FoundryRecipes.FLUID_AMOUNT_INGOT));
+
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
@@ -128,6 +149,13 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead,FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
 
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead,FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, items[ITEM_BRONZE_HELMET]);
@@ -147,6 +175,13 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_GOLD_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
-    }
+
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_COPPER_PLATE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_TIN_PLATE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_BRONZE_PLATE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_GOLD_PLATE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_IRON_PLATE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_LEAD_PLATE]);
+   }
   }
 }

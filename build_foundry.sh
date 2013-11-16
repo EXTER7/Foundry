@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MODNAME=foundry
+MODVERSION=0.1.0.0
 
 rm -rf packed/*
 if ./recompile.sh && ./reobfuscate_srg.sh
@@ -18,8 +19,9 @@ then
   cp -r "reobf/minecraft/ic2" "packed/ic2/"
 
   cd packed
-  zip -r $MODNAME".zip" *
-  mv $MODNAME".zip" "../"
+  ZIPFILE=$MODNAME"-"$MODVERSION".zip"
+  zip -r $ZIPFILE *
+  mv $ZIPFILE "../"
   cd .. 
 
   rm -rf packed/*
@@ -28,12 +30,13 @@ then
   cp -r "src/minecraft/exter/"$MODNAME"/api" "packed/exter/$MODNAME"
 
   cd packed
-  zip -r $MODNAME"-api.zip" *
-  mv $MODNAME"-api.zip" "../"
+  APIZIPFILE=$MODNAME"-api-"$MODVERSION".zip"
+  zip -r $APIZIPFILE *
+  mv $APIZIPFILE "../"
   cd .. 
 
   rm -rf packed/*
-  echo "$0: Build complete, '"$MODNAME".zip' and '"$MODNAME"-api.zip generated."
+  echo "$0: Build complete, '"$ZIPFILE"' and '"$APIZIPFILE"' generated."
 else
   echo "$0: Compile failed, aborting build."
   exit 1

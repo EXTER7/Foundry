@@ -240,7 +240,7 @@ public class ModFoundry
           new FluidStack(
               LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
               FoundryRecipes.FLUID_AMOUNT_BLOCK),
-          mold_ingot, null);
+          mold_block, null);
     }
     
     //Metal slab casting recipes

@@ -126,4 +126,10 @@ public class CastingRecipe implements ICastingRecipe
       extra_amount = 0;
     }
   }
+
+  @Override
+  public int GetInputExtraAmount()
+  {
+    return extra_amount;
+  }
 }

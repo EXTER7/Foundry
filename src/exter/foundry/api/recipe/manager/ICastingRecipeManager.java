@@ -26,7 +26,7 @@ public interface ICastingRecipeManager
    * @param fluid Fluid required (fluid type and amount).
    * @param mold Mold required.
    * @param extra Ore Dictionary name of extra item required (null, if no extra item is required).
-   * @param extra Amount of extra item required.
+   * @param extra_amount Amount of extra item required.
    */
   public void AddRecipe(Object result,FluidStack fluid,ItemStack mold,String extra,int extra_amount);
 

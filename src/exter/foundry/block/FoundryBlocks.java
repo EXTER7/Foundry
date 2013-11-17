@@ -163,12 +163,8 @@ public class FoundryBlocks
     
     block_foundry_crucible = new BlockFoundryCrucible(config.getBlock( "foundry_crucible", GetNextID()).getInt());
     block_machine = new BlockFoundryMachine(config.getBlock( "foundry_machine", GetNextID()).getInt());
-    block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(config.getBlock("induction_crucible_furnace", GetNextID()).getInt());
-    block_metal_caster = new BlockMetalCaster(config.getBlock( "metal_caster", GetNextID()).getInt());
-    block_alloy_mixer = new BlockAlloyMixer(config.getBlock( "alloy_mixer", GetNextID()).getInt());
     block_metal = new BlockMetal(config.getBlock( "metal_block", GetNextID()).getInt());
     block_ore = new BlockFoundryOre(config.getBlock( "ore", GetNextID()).getInt());
-    block_metal_infuser = new BlockMetalInfuser(config.getBlock( "metal_infuser", GetNextID()).getInt());
     block_slab1 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slab1", GetNextID()).getInt(),false,-1, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlab1");
     block_slab2 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slab2", GetNextID()).getInt(),false,-1, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlab2");
 
@@ -177,6 +173,34 @@ public class FoundryBlocks
 
     block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
     block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
+    
+    int id = config.getBlock("induction_crucible_furnace", GetNextID()).getInt();
+    if(id > 0)
+    {
+      block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(id);
+      GameRegistry.registerBlock(block_induction_crucible_furnace, "inductionCrucibleFurnace");
+    }
+    
+    id = config.getBlock( "metal_caster", GetNextID()).getInt();
+    if(id > 0)
+    {
+      block_metal_caster = new BlockMetalCaster(id);
+      GameRegistry.registerBlock(block_metal_caster, "caster");
+    }
+    
+    id = config.getBlock( "alloy_mixer", GetNextID()).getInt();
+    if(id > 0)
+    {
+      block_alloy_mixer = new BlockAlloyMixer(id);
+      GameRegistry.registerBlock(block_alloy_mixer, "alloyMixer");
+    }
+    
+    id = config.getBlock( "metal_infuser", GetNextID()).getInt();
+    if(id > 0)
+    {
+      block_metal_infuser = new BlockMetalInfuser(id);
+      GameRegistry.registerBlock(block_metal_infuser, "infuser");
+    }
     
     
     block_metal_stairs = new BlockStairs[STAIRS_BLOCKS.length];
@@ -200,12 +224,8 @@ public class FoundryBlocks
     
     GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
-    GameRegistry.registerBlock(block_induction_crucible_furnace, "inductionCrucibleFurnace");
-    GameRegistry.registerBlock(block_metal_caster, "caster");
-    GameRegistry.registerBlock(block_alloy_mixer, "alloyMixer");
     GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
-    GameRegistry.registerBlock(block_metal_infuser, "infuser");
 
     GameRegistry.registerBlock(block_slab1, ItemBlockMulti.class, "slab1");
     GameRegistry.registerBlock(block_slab2, ItemBlockMulti.class, "slab2");

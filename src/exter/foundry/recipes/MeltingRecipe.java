@@ -8,6 +8,8 @@ import java.util.Map;
 
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.util.FoundryMiscUtils;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -24,61 +26,50 @@ public class MeltingRecipe implements IMeltingRecipe
   public final FluidStack fluid;
 
   /**
-   * Item required. Not used if solid_oredict is not null.
+   * Item required.
+   * It can be an {@link ItemStack} of the item or a @{link String} of it's Ore Dictionary name.
    */
-  public final ItemStack solid;
+  public final Object solid;
   
   /**
-   * Ore dictionary name of the required item.
+   * Melting point of the item in K.
    */
-  public final String solid_oredict;
+  public final int melting_point;
   
-  public MeltingRecipe(ItemStack item,FluidStack fluid_stack)
+  public MeltingRecipe(Object item,FluidStack fluid_stack, int melt)
   {
-    solid = item;
-    solid_oredict = null;
+    if(!(item instanceof ItemStack) && !(item instanceof String) && !(item instanceof Item) && !(item instanceof Block))
+    {
+      throw new IllegalArgumentException("Melting recipe item is not of a valid class.");
+    }
+    if(item instanceof ItemStack)
+    {
+      solid = ((ItemStack)item).copy();
+    } else
+    {
+      solid = item;
+    }
     fluid = fluid_stack.copy();
-  }
-
-  public MeltingRecipe(String item,FluidStack fluid_stack)
-  {
-    solid = null;
-    solid_oredict = item;
-    fluid = fluid_stack.copy();
+    melting_point = melt;
   }
   
   public Object GetInput()
   {
-    if(solid_oredict != null)
+    if(solid instanceof ItemStack)
     {
-      return solid_oredict;
-    } else
-    {
-      return solid.copy();
+      return ((ItemStack)solid).copy();
     }
+    return solid;
   }
   
   public FluidStack GetOutput()
   {
     return fluid.copy();
   }
-  
-  public boolean IsItemMatch(ItemStack item)
+
+  @Override
+  public int GetMeltingPoint()
   {
-    if(item == null)
-    {
-      return false;
-    }
-    if(solid_oredict != null)
-    {
-      if(FoundryMiscUtils.IsItemInOreDictionary(solid_oredict, item))
-      {
-        return true;
-      }
-    } else if(item.isItemEqual(solid) && ItemStack.areItemStackTagsEqual(item, solid))
-    {
-      return true;
-    }
-    return false;
+    return melting_point;
   }
 }

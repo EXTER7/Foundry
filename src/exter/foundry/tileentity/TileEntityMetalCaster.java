@@ -104,8 +104,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     if(compund.hasKey("Power"))
     {
       power_handler.readFromNBT(compund.getCompoundTag("Power"));
-    }
-    
+    }    
   }
 
 
@@ -368,8 +367,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
         ItemStack output = inventory[INVENTORY_OUTPUT];
         if(output == null || output.isItemEqual(recipe.GetOutputItem()) && output.stackSize < output.getMaxStackSize())
         {
-          ItemStack extra = recipe.extra;
-          if(extra == null || (inventory[INVENTORY_EXTRA] != null && extra.isItemEqual(inventory[INVENTORY_EXTRA]) && inventory[INVENTORY_EXTRA].stackSize >= extra.stackSize))
+          if(!recipe.RequiresExtra() || recipe.ContainsExtra(inventory[INVENTORY_EXTRA]))
           {
 
             if(progress < 0)
@@ -387,9 +385,9 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
               {
                 progress = -1;
                 tank.drain(recipe.fluid.amount, true);
-                if(extra != null)
+                if(recipe.RequiresExtra())
                 {
-                  decrStackSize(INVENTORY_EXTRA, extra.stackSize);
+                  decrStackSize(INVENTORY_EXTRA, recipe.extra_amount);
                   UpdateInventoryItem(INVENTORY_EXTRA);
                 }
                 if(output == null)

@@ -24,15 +24,15 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void AddRecipe(String result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
+  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
   {
     recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra));
   }
 
   @Override
-  public void AddRecipe(ItemStack result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
+  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,String in_extra,int extra_amount)
   {
-    recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra));
+    recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra,extra_amount));
   }
   
   /**

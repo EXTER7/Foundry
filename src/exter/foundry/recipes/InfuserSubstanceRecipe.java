@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,14 +21,9 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   public final InfuserSubstance substance;
 
   /**
-   * Item required. Not used if oredict_item is not null.
+   * Item required.
    */
-  public final ItemStack item;
-
-  /**
-   * Ore dictionary name of the item. If not null this is used instead of item.
-   */
-  public final String oredict_item;
+  public final Object item;
 
   /**
    * Amount of energy needed to extract.
@@ -36,7 +33,11 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   @Override
   public Object GetInputItem()
   {
-    return item.copy();
+    if(item instanceof ItemStack)
+    {
+      return ((ItemStack)item).copy();
+    }
+    return item;
   }
   
   @Override
@@ -57,19 +58,20 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
     return extract_energy;
   }
   
-  public InfuserSubstanceRecipe(InfuserSubstance subs,ItemStack itm, int energy)
+  public InfuserSubstanceRecipe(InfuserSubstance subs,Object itm, int energy)
   {
+    if(!(itm instanceof ItemStack) && !(itm instanceof String) && !(itm instanceof Item) && !(itm instanceof Block))
+    {
+      throw new IllegalArgumentException("Infuser substance recipe item is not of a valid class.");
+    }
     substance = new InfuserSubstance(subs);
-    item = itm.copy();
-    oredict_item = null;
-    extract_energy = energy;
-  }
-
-  public InfuserSubstanceRecipe(InfuserSubstance subs,String itm, int energy)
-  {
-    substance = new InfuserSubstance(subs);
-    item = null;
-    oredict_item = itm;
+    if(itm instanceof ItemStack)
+    {
+      item = ((ItemStack)itm).copy();
+    } else
+    {
+      item = itm;
+    }
     extract_energy = energy;
   }
 }

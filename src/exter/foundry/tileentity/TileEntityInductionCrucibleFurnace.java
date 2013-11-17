@@ -389,12 +389,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_melt_point = melt_point;
     if(inventory[INVENTORY_INPUT] != null)
     {      
-      MeltingRecipe metal = MeltingRecipeManager.instance.FindRecipe(inventory[INVENTORY_INPUT]);
-      if(metal != null)
+      MeltingRecipe recipe = MeltingRecipeManager.instance.FindRecipe(inventory[INVENTORY_INPUT]);
+      if(recipe != null)
       {
-        FluidStack fs = metal.fluid;
+        FluidStack fs = recipe.fluid;
         
-        melt_point = fs.getFluid().getTemperature() * 10;
+        melt_point = recipe.melting_point * 10;
         
         if(heat > melt_point && tank.fill(fs, false) == fs.amount)
         {

@@ -33,25 +33,24 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
     String od_name = null;
     for (MeltingRecipe r : recipes)
     {
-      if(r.IsItemMatch(item))
+      if(FoundryMiscUtils.IsItemMatch(item, r.solid))
       {
-        return (MeltingRecipe)r;
+        return r;
       }
     }
     return null;
   }
   
   @Override
-  public void AddRecipe(String solid,FluidStack fluid_stack)
+  public void AddRecipe(Object solid,FluidStack fluid_stack)
   {
-    recipes.add(new MeltingRecipe(solid,fluid_stack));
+    recipes.add(new MeltingRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature()));
   }
-
   
   @Override
-  public void AddRecipe(ItemStack solid,FluidStack fluid_stack)
+  public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point)
   {
-    recipes.add(new MeltingRecipe(solid,fluid_stack));
+    recipes.add(new MeltingRecipe(solid,fluid_stack,melting_point));
   }
 
   @Override

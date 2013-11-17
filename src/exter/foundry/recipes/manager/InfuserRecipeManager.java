@@ -93,13 +93,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,ItemStack itm, int time)
-  {
-    substance_recipes.add(new InfuserSubstanceRecipe(new InfuserSubstance(substance_type,substance_amount),itm,time));
-  }
-
-  @Override
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,String itm, int time)
+  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object itm, int time)
   {
     substance_recipes.add(new InfuserSubstanceRecipe(new InfuserSubstance(substance_type,substance_amount),itm,time));
   }
@@ -117,13 +111,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     }
     for(InfuserSubstanceRecipe isr:substance_recipes)
     {
-      if(isr.oredict_item != null)
-      {
-        if(FoundryMiscUtils.IsItemInOreDictionary(isr.oredict_item, item))
-        {
-          return isr;
-        }
-      } else if(isr.item.isItemEqual(item) && ItemStack.areItemStackTagsEqual(isr.item,item))
+      if(FoundryMiscUtils.IsItemMatch(item, isr.item))
       {
         return isr;
       }

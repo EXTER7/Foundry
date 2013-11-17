@@ -7,6 +7,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
@@ -76,5 +77,41 @@ public class FoundryMiscUtils
     {
       OreDictionary.registerOre(name, stack);
     }
+  }
+  
+  /**
+   * Compares ItemStack to various types of objects.
+   * @param item Stack of item to compare
+   * @param match object to compare. Can be of the following types: {@link String} (Ore Dictionary name), {@link ItemStack}, {@link Item}, {@link Block}.
+   * @return true if the item matches, false otherwise.
+   */
+  static public boolean IsItemMatch(ItemStack item,Object match)
+  {
+    if(item == null)
+    {
+      return match == null;
+    }
+    if(match == null)
+    {
+      return false;
+    }
+    if(match instanceof String )
+    {
+      return IsItemInOreDictionary((String)match, item);
+    }
+    if(match instanceof ItemStack)
+    {
+      ItemStack match_stack = (ItemStack)match;
+      return item.isItemEqual(match_stack) && ItemStack.areItemStackTagsEqual(item, match_stack);
+    }
+    if(match instanceof Item)
+    {
+      return item.itemID == ((Item)match).itemID;
+    }
+    if(match instanceof Block)
+    {
+      return item.itemID == ((Block)match).blockID;
+    }
+    return false;
   }
 }

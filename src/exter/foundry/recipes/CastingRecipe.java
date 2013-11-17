@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exter.foundry.api.recipe.ICastingRecipe;
+import exter.foundry.util.FoundryMiscUtils;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -15,10 +18,10 @@ public class CastingRecipe implements ICastingRecipe
 {
   public final FluidStack fluid;
   public final ItemStack mold;
-  public final ItemStack extra;
+  public final Object extra;
+  public final int extra_amount;
   
-  private final ItemStack output;
-  private final String output_oredict;
+  private final Object output;
   
   @Override
   public FluidStack GetInputFluid()
@@ -31,23 +34,39 @@ public class CastingRecipe implements ICastingRecipe
   {
     return mold.copy();
   }
+  
+  public boolean ContainsExtra(ItemStack stack)
+  {
+    if(stack == null)
+    {
+      return extra == null;
+    }
+    return (FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize > extra_amount);
+  }
+  
+  public boolean RequiresExtra()
+  {
+    return extra != null;
+  }
 
   @Override
-  public ItemStack GetInputExtra()
+  public Object GetInputExtra()
   {
-    return ItemStack.copyItemStack(extra);
+    if(extra instanceof ItemStack)
+    {
+      return ((ItemStack)extra).copy();
+    }
+    return extra;
   }
 
   @Override
   public Object GetOutput()
   {
-    if(output_oredict != null)
+    if(output instanceof ItemStack)
     {
-      return output_oredict;
-    } else
-    {
-      return output.copy();
+      return ((ItemStack)output).copy();
     }
+    return output;
   }
 
   /**
@@ -56,9 +75,9 @@ public class CastingRecipe implements ICastingRecipe
    */
   public ItemStack GetOutputItem()
   {
-    if(output_oredict != null)
+    if(output instanceof String)
     {
-      List<ItemStack> ores = OreDictionary.getOres(output_oredict);
+      List<ItemStack> ores = OreDictionary.getOres((String)output);
       if(ores != null && ores.size() > 0)
       {
         ItemStack out = ores.get(0).copy();
@@ -68,27 +87,43 @@ public class CastingRecipe implements ICastingRecipe
       {
         return null;
       }
-    } else
+    } else // output instance of ItemStack
     {
-      return output.copy();
+      return ((ItemStack)output).copy();
     }
   }
 
-  public CastingRecipe(ItemStack result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
+  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,String in_extra,int in_extra_amount)
   {
-    output = result.copy();
-    output_oredict = null;
+    if(result instanceof ItemStack)
+    {
+      output = ((ItemStack)result).copy();
+    } else if(result instanceof String)
+    {
+      output = result;
+    } else
+    {
+      throw new IllegalArgumentException("Casting recipe result is not of a valid class.");
+    }
     fluid = in_fluid.copy();
     mold = in_mold.copy();
-    extra = ItemStack.copyItemStack(in_extra);
+    extra = in_extra;
+    extra_amount = in_extra_amount;
   }
 
-  public CastingRecipe(String result_name,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
+  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
   {
-    output_oredict = result_name;
-    output = null;
+    output = result;
     fluid = in_fluid.copy();
     mold = in_mold.copy();
-    extra = ItemStack.copyItemStack(in_extra);
+    if(in_extra != null)
+    {
+      extra = in_extra.copy();
+      extra_amount = in_extra.stackSize;
+    } else
+    {
+      extra = null;
+      extra_amount = 0;
+    }
   }
 }

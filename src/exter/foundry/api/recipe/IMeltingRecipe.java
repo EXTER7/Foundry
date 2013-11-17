@@ -16,4 +16,10 @@ public interface IMeltingRecipe
    * @return The fluid that the recipe produces.
    */
   public FluidStack GetOutput();
+  
+  /**
+   * Get the melting temperature of the item.
+   * @return Melting temperature in K.
+   */
+  public int GetMeltingPoint();
 }

@@ -28,23 +28,15 @@ public interface IInfuserRecipeManager
    */
   public List<? extends IInfuserRecipe> GetRecipes();
   
-  /**
-   * Register a Metal Infuser substance recipe.
-   * @param substance_type Type of substance produced. e.g: "Carbon".
-   * @param substance_amount Amount substance produced.
-   * @param itm Item required.
-   * @param time Energy required.
-   */
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,ItemStack item, int energy);
 
   /**
    * Register a Metal Infuser substance recipe.
    * @param subs Substance produced.
    * @param subs Substance produced.
-   * @param item Item required (Ore Dictionary name).
+   * @param item Item required.
    * @param energy Energy required in 1/100th MJ.
    */
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,String item, int energy);
+  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object item, int energy);
 
   /**
    * Get a list of all the substance recipes

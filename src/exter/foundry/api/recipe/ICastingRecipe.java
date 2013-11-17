@@ -26,7 +26,7 @@ public interface ICastingRecipe
    * @return ItemStack containing the required extra item, or null if no extra item is required.
    */
 
-  public ItemStack GetInputExtra();
+  public Object GetInputExtra();
 
   public Object GetOutput();
 

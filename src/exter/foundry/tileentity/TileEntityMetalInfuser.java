@@ -13,6 +13,7 @@ import com.google.common.io.ByteArrayDataInput;
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.InfuserRecipe;
@@ -513,5 +514,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   public int GetTankCount()
   {
     return 2;
+  }
+
+  @Override
+  @Deprecated
+  protected int GetNewBlockMeta()
+  {
+    return BlockFoundryMachine.MACHINE_INFUSER;
   }
 }

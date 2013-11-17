@@ -19,7 +19,7 @@ public class FoundryBlocks
 {
 
   //Default block id.
-  static private int next_id = 3843;
+  static private int next_id = 3883;
 
   static public int GetNextID()
   {
@@ -129,11 +129,17 @@ public class FoundryBlocks
   };
   
   public static BlockFoundryCrucible block_foundry_crucible;
+  public static BlockFoundryMachine block_machine;
+
+  @Deprecated
   public static BlockInductionCrucibleFurnace block_induction_crucible_furnace;
+  @Deprecated
   public static BlockMetalCaster block_metal_caster;
+  @Deprecated
   public static BlockAlloyMixer block_alloy_mixer;
   public static BlockMetal block_metal;
   public static BlockFoundryOre block_ore;
+  @Deprecated
   public static BlockMetalInfuser block_metal_infuser;
   
   public static BlockMetalSlab block_slab1;
@@ -150,11 +156,13 @@ public class FoundryBlocks
   //All slabs mapped by the metal name.
   public static Map<String,ItemStack> slab_stacks = new HashMap<String,ItemStack>();
   
+  
   static public void RegisterBlocks(Configuration config)
   {
     int i;
     
     block_foundry_crucible = new BlockFoundryCrucible(config.getBlock( "foundry_crucible", GetNextID()).getInt());
+    block_machine = new BlockFoundryMachine(config.getBlock( "foundry_machine", GetNextID()).getInt());
     block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(config.getBlock("induction_crucible_furnace", GetNextID()).getInt());
     block_metal_caster = new BlockMetalCaster(config.getBlock( "metal_caster", GetNextID()).getInt());
     block_alloy_mixer = new BlockAlloyMixer(config.getBlock( "alloy_mixer", GetNextID()).getInt());
@@ -191,6 +199,7 @@ public class FoundryBlocks
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     
     GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
+    GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
     GameRegistry.registerBlock(block_induction_crucible_furnace, "inductionCrucibleFurnace");
     GameRegistry.registerBlock(block_metal_caster, "caster");
     GameRegistry.registerBlock(block_alloy_mixer, "alloyMixer");
@@ -205,10 +214,12 @@ public class FoundryBlocks
     
     
     LanguageRegistry.addName(block_foundry_crucible, "Foundry Crucible");
-    LanguageRegistry.addName(block_induction_crucible_furnace, "Induction Crucible Furnace");
-    LanguageRegistry.addName(block_metal_caster, "Metal Caster");
-    LanguageRegistry.addName(block_alloy_mixer, "Alloy Mixer");
-    LanguageRegistry.addName(block_metal_infuser, "Metal Infuser");
+    
+    LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF), "Induction Crucible Furnace");
+    LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER), "Metal Caster");
+    LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER), "Alloy Mixer");
+    LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER), "Metal Infuser");
+
     for(i = 0; i < BlockMetal.NAMES.length; i++)
     {
       ItemStack is = new ItemStack(block_metal,  1, i);

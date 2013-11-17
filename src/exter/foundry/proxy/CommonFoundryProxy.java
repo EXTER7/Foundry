@@ -20,6 +20,11 @@ import exter.foundry.tileentity.TileEntityMetalInfuser;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
+  static public final int GUI_ICF = 0;
+  static public final int GUI_CASTER = 1;
+  static public final int GUI_ALLOYMIXER = 2;
+  static public final int GUI_INFUSER = 3;
+  
   public void Init()
   {
 
@@ -30,13 +35,13 @@ public class CommonFoundryProxy implements IGuiHandler
   {
     switch(ID)
     {
-      case 0:
+      case GUI_ICF:
         return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z),player.inventory);
-      case 1:
+      case GUI_CASTER:
         return new ContainerMetalCaster((TileEntityMetalCaster)world.getBlockTileEntity(x, y, z),player.inventory);
-      case 2:
+      case GUI_ALLOYMIXER:
         return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z),player.inventory);
-      case 3:
+      case GUI_INFUSER:
         return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z),player.inventory);
     }
     return null;
@@ -47,22 +52,22 @@ public class CommonFoundryProxy implements IGuiHandler
   {
     switch(ID)
     {
-      case 0:
+      case GUI_ICF:
       {
         TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z);
         return new GuiInductionCrucibleFurnace(te,player.inventory);
       }
-      case 1:
+      case GUI_CASTER:
       {
         TileEntityMetalCaster te = (TileEntityMetalCaster)world.getBlockTileEntity(x, y, z);
         return new GuiMetalCaster(te,player.inventory);
       }
-      case 2:
+      case GUI_ALLOYMIXER:
       {
         TileEntityAlloyMixer te = (TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z);
         return new GuiAlloyMixer(te,player.inventory);
       }
-      case 3:
+      case GUI_INFUSER:
       {
         TileEntityMetalInfuser te = (TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z);
         return new GuiMetalInfuser(te,player.inventory);

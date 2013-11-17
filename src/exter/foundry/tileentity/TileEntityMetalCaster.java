@@ -12,6 +12,7 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
@@ -467,4 +468,12 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     return 1;
   }
+
+  @Override
+  @Deprecated
+  protected int GetNewBlockMeta()
+  {
+    return BlockFoundryMachine.MACHINE_CASTER;
+  }
+
 }

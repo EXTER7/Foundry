@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-
+@Deprecated
 public class BlockMetalCaster extends BlockContainer
 {
   private Random rand = new Random();
@@ -109,4 +109,16 @@ public class BlockMetalCaster extends BlockContainer
   {
     return new TileEntityMetalCaster();
   }
+  
+  @Override
+  public void updateTick(World world, int x, int y, int z, Random random)
+  {
+    world.setBlock(x, y, z, FoundryBlocks.block_machine.blockID, BlockFoundryMachine.MACHINE_CASTER, 3);
+    TileEntity te = world.getBlockTileEntity(x, y, z);
+    if(te != null)
+    {
+      te.updateContainingBlockInfo();
+    }
+  }
+
 }

@@ -41,6 +41,7 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.container.FoundryContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.block.BlockAlloyMixer;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockLiquidMetal;
@@ -106,7 +107,6 @@ public class ModFoundry
     serverSide = "exter.foundry.proxy.CommonFoundryProxy"
   )
   public static CommonFoundryProxy proxy;
-
 
   private static boolean wordgen_copper;
   private static boolean wordgen_tin;
@@ -387,7 +387,8 @@ public class ModFoundry
         'I', iron_stack,
         'B', foundrybrick_stack);
     
-    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_induction_crucible_furnace),
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF),
         "IFI",
         "HCH",
         "HRH",
@@ -397,7 +398,8 @@ public class ModFoundry
         'R', redstone_stack,
         'H', heatingcoil_stack));
     
-    GameRegistry.addRecipe(new ItemStack(FoundryBlocks.block_metal_caster),
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
         " R ",
         "ICI",
         "IPI",
@@ -406,7 +408,8 @@ public class ModFoundry
         'C', crucible_stack,
         'R', redstone_stack);
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_metal_infuser),
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
         "IRI",
         "GCG",
         "HRH",
@@ -417,7 +420,8 @@ public class ModFoundry
         'G', "gearStone",
         'H', heatingcoil_stack));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FoundryBlocks.block_alloy_mixer),
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER),
         "GIG",
         "GCG",
         "IRI",

@@ -19,6 +19,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 
+@Deprecated
 public class BlockInductionCrucibleFurnace extends BlockContainer
 {
   private Random rand = new Random();
@@ -108,4 +109,5 @@ public class BlockInductionCrucibleFurnace extends BlockContainer
   {
     return new TileEntityInductionCrucibleFurnace();
   }
+  
 }

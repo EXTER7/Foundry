@@ -12,6 +12,7 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.MeltingRecipe;
@@ -476,6 +477,13 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   public int GetTankCount()
   {
     return 1;
+  }
+
+  @Override
+  @Deprecated
+  protected int GetNewBlockMeta()
+  {
+    return BlockFoundryMachine.MACHINE_ICF;
   }
 
 }

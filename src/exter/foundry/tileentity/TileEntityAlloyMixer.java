@@ -12,6 +12,7 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLLog;
 import exter.foundry.ModFoundry;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.AlloyRecipe;
@@ -478,6 +479,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   public int GetTankCount()
   {
     return 3;
+  }
+
+  @Override
+  @Deprecated
+  protected int GetNewBlockMeta()
+  {
+    return BlockFoundryMachine.MACHINE_ALLOYMIXER;
   }
 
 }

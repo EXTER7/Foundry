@@ -41,7 +41,7 @@ public class CastingRecipe implements ICastingRecipe
     {
       return extra == null;
     }
-    return (FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize > extra_amount);
+    return (FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize >= extra_amount);
   }
   
   public boolean RequiresExtra()

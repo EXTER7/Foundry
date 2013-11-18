@@ -125,6 +125,44 @@ public class ItemMold extends Item
     "Clay Plate Mold"
   };
   
+  static public final String[] REGISTRY_NAMES = 
+  {
+    "itemIngotMold",
+    "itemClayIngotMold",
+    "itemChestplateMold",
+    "itemClayChestplateMold",
+    "itemPickaxeMold",
+    "itemClayPickaxeMold",
+    "itemBlockMold",
+    "itemClayBlockMold",    
+    "itemAxeMold",
+    "itemClayAxeMold",
+    "itemSwordMold",
+    "itemClaySwordMold",
+    "itemShovelMold",
+    "itemClayShovelMold",
+    "itemHoeMold",
+    "itemClayHoeMold",
+    "itemLeggingsMold",
+    "itemClayLeggingsMold",
+    "itemHelmetMold",
+    "itemClayHelmetMold",
+    "itemBootsMold",
+    "itemClayBootsMold",
+    "itemGearMold",
+    "itemClayGearMold",
+    "itemCableMold",
+    "itemClayCableMold",
+    "itemCasingMold",
+    "itemClayCasingMold",
+    "itemSlabMold",
+    "itemClaySlabMold",
+    "itemStairsMold",
+    "itemClayStairsMold",
+    "itemPlateMold",
+    "itemClayPlateMold"
+  };
+
   
   @SideOnly(Side.CLIENT)
   private Icon[] icons;

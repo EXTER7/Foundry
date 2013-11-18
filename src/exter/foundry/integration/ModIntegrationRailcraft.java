@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
-import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationRailcraft extends ModIntegration
 {
@@ -53,7 +53,7 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(is_loaded)
     {
-      Fluid liquid_steel = LiquidMetalRegistry.GetMetal("Steel").fluid;
+      Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
       ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);

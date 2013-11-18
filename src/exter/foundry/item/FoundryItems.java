@@ -6,6 +6,7 @@ import java.util.Map;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.registry.ItemRegistry;
 import exter.foundry.renderer.RendererItemContainer;
 import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.item.Item;
@@ -47,11 +48,15 @@ public class FoundryItems
     
     for (i = 0; i < ItemFoundryComponent.NAMES.length; i++)
     {
-      LanguageRegistry.addName(new ItemStack(item_component,  1, i), ItemFoundryComponent.NAMES[i]);
+      ItemStack stack = new ItemStack(item_component,  1, i);
+      LanguageRegistry.addName(stack, ItemFoundryComponent.NAMES[i]);
+      ItemRegistry.instance.RegisterItem(ItemFoundryComponent.REGISTRY_NAMES[i], stack);
     }
     for (i = 0; i < ItemMold.NAMES.length; i++)
     {
-      LanguageRegistry.addName(new ItemStack(item_mold,  1, i), ItemMold.NAMES[i]);
+      ItemStack stack = new ItemStack(item_mold,  1, i);
+      LanguageRegistry.addName(stack, ItemMold.NAMES[i]);
+      ItemRegistry.instance.RegisterItem(ItemMold.REGISTRY_NAMES[i], stack);
     }
     for (i = 0; i < ItemIngot.NAMES.length; i++)
     {

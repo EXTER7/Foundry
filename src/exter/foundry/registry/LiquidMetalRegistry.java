@@ -1,4 +1,4 @@
-package exter.foundry.util;
+package exter.foundry.registry;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.api.registry.IFluidRegistry;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.BlockMetal;
@@ -45,41 +46,25 @@ import net.minecraftforge.oredict.OreDictionary;
 /**
  * Utility class for registering a metal's corresponding block, items, fluid, and recipes.
  */
-public class LiquidMetalRegistry
+public class LiquidMetalRegistry implements IFluidRegistry
 {
-  static private Map<String,LiquidMetalRegistry> registry = new HashMap<String,LiquidMetalRegistry>();
+  private Map<String,Fluid> registry;
   
+  static public LiquidMetalRegistry instance = new LiquidMetalRegistry();
   
-  /**
-   * Block for the liquid places in the world 
-   */
-  public final Block block;
-
-  /**
-   * Fluid for the liquid metal
-   */
-  public final Fluid fluid;
-  
-  /**
-   * Name of the metal. e.g: "Copper"
-   */
-  public final String name;
-  
-  private LiquidMetalRegistry(Block liquid_block,Fluid liquid_fluid,String metal_name)
+  private LiquidMetalRegistry()
   {
-    block = liquid_block;
-    fluid = liquid_fluid;
-    name = metal_name;
-
+    registry = new HashMap<String,Fluid>();
+    MinecraftForge.EVENT_BUS.register(this);
   }
-  
+
   /**
    * Helper method to register a metal's fluid, block, melting, and casting.
    * @param config Forge Configuration file.
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
    * @param default_container_id Default item id of the fluid container.
    */
-  static public void RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
+  public void RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
   {
     int i;
     
@@ -98,71 +83,26 @@ public class LiquidMetalRegistry
     fluid.setBlockID(liquid_block);
 
     FoundryUtils.RegisterBasicMeltingRecipes(metal_name,fluid);
-
-    ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
-    ItemStack mold_block = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);    
     
-
-
-
-    LiquidMetalRegistry metal = new LiquidMetalRegistry(liquid_block,fluid,metal_name);
-    
-    MinecraftForge.EVENT_BUS.register(metal);
-    
-    registry.put(metal_name, metal);
+    registry.put(metal_name, fluid);
   }
   
-  /**
-   * Get the registered metal from it's name.
-   * @param name Name the liquid metal was registered in, e.g. "Copper".
-   * @return The liquid metal registry containing the fluid, and fluid block
-   */
-  static public LiquidMetalRegistry GetMetal(String name)
-  {
-    return registry.get(name);
-  }
- 
-  /**
-   * Get the registered metal from it's fluid.
-   * @param fluid The fluid to look for.
-   * @return The liquid metal registry containing the fluid, and fluid block
-   */
-  static public LiquidMetalRegistry GetMetal(Fluid fluid)
-  {
-    for(LiquidMetalRegistry reg:registry.values())
-    {
-       if(reg != null)
-       {
-         if(reg.fluid.getID() == fluid.getID())
-         {
-           return reg;
-         }
-       }
-    }
-    return null;
-  }
-
   @ForgeSubscribe
   @SideOnly(Side.CLIENT)
   public void textureHook(TextureStitchEvent.Post event)
   {
     if(event.map.textureType == 0)
     {
-      fluid.setIcons(block.getBlockTextureFromSide(1));
+      for(Fluid fluid:registry.values())
+      {
+        fluid.setIcons(Block.blocksList[fluid.getBlockID()].getBlockTextureFromSide(1));
+      }
     }
   }
-  
+ 
   @Override
-  public int hashCode()
+  public Fluid GetFluid(String name)
   {
-    return ("LiquidMetal_"+name).hashCode();
+    return registry.get(name);
   }
-  
-  @Override
-  public boolean equals(Object obj)
-  {
-    return obj instanceof LiquidMetalRegistry && hashCode() == obj.hashCode();
-  }
-  
-  
 }

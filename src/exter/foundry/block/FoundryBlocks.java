@@ -7,6 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.item.ItemBlockMulti;
 import exter.foundry.item.ItemMold;
+import exter.foundry.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.Item;
@@ -210,11 +211,14 @@ public class FoundryBlocks
       block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(config.getBlock( "stair_" +  ms.metal, GetNextID()).getInt(),ms.GetBlock(),ms.block_meta).setUnlocalizedName("stairs" + ms.metal);
       GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
       LanguageRegistry.addName(block_metal_stairs[i], ms.name);
+      ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
     }
 
     for(i = 0; i < BlockMetal.METAL_NAMES.length; i++)
     {
-      block_stacks.put(BlockMetal.METAL_NAMES[i], new ItemStack(block_metal,1,i));
+      ItemStack stack = new ItemStack(block_metal,1,i);
+      block_stacks.put(BlockMetal.METAL_NAMES[i], stack);
+      ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal.METAL_NAMES[i], stack);
     }
     block_stacks.put("Iron", new ItemStack(Block.blockIron));
     block_stacks.put("Gold", new ItemStack(Block.blockGold));
@@ -234,37 +238,46 @@ public class FoundryBlocks
     
     
     LanguageRegistry.addName(block_foundry_crucible, "Foundry Crucible");
+    ItemRegistry.instance.RegisterItem("blockFoundryCrucible", new ItemStack(block_foundry_crucible));
     
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF), "Induction Crucible Furnace");
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER), "Metal Caster");
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER), "Alloy Mixer");
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER), "Metal Infuser");
 
+    ItemRegistry.instance.RegisterItem("blockMachineICF", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF));
+    ItemRegistry.instance.RegisterItem("blockMachineCaster", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER));
+    ItemRegistry.instance.RegisterItem("blockMachineAlloyMixer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER));
+    ItemRegistry.instance.RegisterItem("blockMachineInfuser", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER));
+
+    
     for(i = 0; i < BlockMetal.NAMES.length; i++)
     {
-      ItemStack is = new ItemStack(block_metal,  1, i);
-      LanguageRegistry.addName(is, BlockMetal.NAMES[i]);
-      OreDictionary.registerOre(BlockMetal.OREDICT_NAMES[i], is);
+      ItemStack stack = new ItemStack(block_metal,  1, i);
+      LanguageRegistry.addName(stack, BlockMetal.NAMES[i]);
+      OreDictionary.registerOre(BlockMetal.OREDICT_NAMES[i], stack);
     }
     for(i = 0; i < BlockFoundryOre.NAMES.length; i++)
     {
-      ItemStack is = new ItemStack(block_ore,  1, i);
-      LanguageRegistry.addName(is, BlockFoundryOre.NAMES[i]);
-      OreDictionary.registerOre(BlockFoundryOre.OREDICT_NAMES[i], is);
+      ItemStack stack = new ItemStack(block_ore,  1, i);
+      LanguageRegistry.addName(stack, BlockFoundryOre.NAMES[i]);
+      OreDictionary.registerOre(BlockFoundryOre.OREDICT_NAMES[i], stack);
     }
 
     for(i = 0; i < SLAB1_NAMES.length; i++)
     {
-      ItemStack is = new ItemStack(block_slab1,  1, i);
-      LanguageRegistry.addName(is, SLAB1_NAMES[i]);
-      slab_stacks.put(SLAB1_METALS[i], is);
+      ItemStack stack = new ItemStack(block_slab1,  1, i);
+      LanguageRegistry.addName(stack, SLAB1_NAMES[i]);
+      slab_stacks.put(SLAB1_METALS[i], stack);
+      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB1_METALS[i], stack);
     }
 
     for(i = 0; i < SLAB2_NAMES.length; i++)
     {
-      ItemStack is = new ItemStack(block_slab2,  1, i);
-      LanguageRegistry.addName(is, SLAB2_NAMES[i]);
-      slab_stacks.put(SLAB2_METALS[i], is);
+      ItemStack stack = new ItemStack(block_slab2,  1, i);
+      LanguageRegistry.addName(stack, SLAB2_NAMES[i]);
+      slab_stacks.put(SLAB2_METALS[i], stack);
+      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB2_METALS[i], stack);
     }
   }
 }

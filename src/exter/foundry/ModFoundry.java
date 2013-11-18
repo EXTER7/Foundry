@@ -40,6 +40,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.container.FoundryContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.api.registry.FoundryRegistry;
 import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
@@ -69,13 +70,14 @@ import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.ItemRegistry;
+import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.util.FoundryContainerHandler;
 import exter.foundry.util.FoundryMiscUtils;
-import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
 
@@ -122,6 +124,9 @@ public class ModFoundry
   public void preInit(FMLPreInitializationEvent event)
   {
     int i;
+    FoundryRegistry.items = ItemRegistry.instance;
+    FoundryRegistry.fluids = LiquidMetalRegistry.instance;
+    
     FoundryRecipes.melting = MeltingRecipeManager.instance;
     FoundryRecipes.casting = CastingRecipeManager.instance;
     FoundryRecipes.alloy = AlloyRecipeManager.instance;
@@ -139,19 +144,19 @@ public class ModFoundry
     config.load();
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Iron", 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Gold", 1350, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Copper", 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Tin", 550, 7);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Bronze", 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Electrum", 1350, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Invar", 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Nickel", 1750, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Zinc", 700, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Brass", 1400, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Silver", 1250, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Steel", 1850, 15);
-    LiquidMetalRegistry.RegisterLiquidMetal(config, "Lead", 650, 1);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Iron", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Gold", 1350, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Copper", 1400, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Tin", 550, 7);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Bronze", 1400, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Electrum", 1350, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Invar", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nickel", 1750, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Zinc", 700, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Brass", 1400, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
@@ -163,18 +168,18 @@ public class ModFoundry
 
 
 
-    Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
-    Fluid liquid_tin = LiquidMetalRegistry.GetMetal("Tin").fluid;
-    Fluid liquid_zinc = LiquidMetalRegistry.GetMetal("Zinc").fluid;
-    Fluid liquid_silver = LiquidMetalRegistry.GetMetal("Silver").fluid;
-    Fluid liquid_gold = LiquidMetalRegistry.GetMetal("Gold").fluid;
-    Fluid liquid_nickel = LiquidMetalRegistry.GetMetal("Nickel").fluid;
-    Fluid liquid_iron = LiquidMetalRegistry.GetMetal("Iron").fluid;
-    Fluid liquid_electrum = LiquidMetalRegistry.GetMetal("Electrum").fluid;
-    Fluid liquid_invar = LiquidMetalRegistry.GetMetal("Invar").fluid;
-    Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
-    Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
-    Fluid liquid_steel = LiquidMetalRegistry.GetMetal("Steel").fluid;
+    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
+    Fluid liquid_zinc = LiquidMetalRegistry.instance.GetFluid("Zinc");
+    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
+    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
+    Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
+    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+    Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
+    Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
+    Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
+    Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
+    Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
     
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
@@ -227,7 +232,7 @@ public class ModFoundry
       CastingRecipeManager.instance.AddRecipe(
           entry.getValue(),
           new FluidStack(
-              LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+              LiquidMetalRegistry.instance.GetFluid(entry.getKey()),
               FoundryRecipes.FLUID_AMOUNT_INGOT),
           mold_ingot, null);
     }
@@ -238,7 +243,7 @@ public class ModFoundry
       CastingRecipeManager.instance.AddRecipe(
           entry.getValue(),
           new FluidStack(
-              LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+              LiquidMetalRegistry.instance.GetFluid(entry.getKey()),
               FoundryRecipes.FLUID_AMOUNT_BLOCK),
           mold_block, null);
     }
@@ -248,7 +253,7 @@ public class ModFoundry
     {
       ItemStack stack = entry.getValue();
       FluidStack fluid = new FluidStack(
-          LiquidMetalRegistry.GetMetal(entry.getKey()).fluid,
+          LiquidMetalRegistry.instance.GetFluid(entry.getKey()),
           FoundryRecipes.FLUID_AMOUNT_BLOCK / 2);
 
       CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_slab, null);
@@ -261,7 +266,7 @@ public class ModFoundry
       FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
       ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
       FluidStack fluid = new FluidStack(
-          LiquidMetalRegistry.GetMetal(mr.metal).fluid,
+          LiquidMetalRegistry.instance.GetFluid(mr.metal),
           FoundryRecipes.FLUID_AMOUNT_BLOCK * 3 / 4);
       
       CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_stairs, null);
@@ -544,17 +549,17 @@ public class ModFoundry
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 
-    Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
-    Fluid liquid_tin = LiquidMetalRegistry.GetMetal("Tin").fluid;
-    Fluid liquid_zinc = LiquidMetalRegistry.GetMetal("Zinc").fluid;
-    Fluid liquid_silver = LiquidMetalRegistry.GetMetal("Silver").fluid;
-    Fluid liquid_gold = LiquidMetalRegistry.GetMetal("Gold").fluid;
-    Fluid liquid_nickel = LiquidMetalRegistry.GetMetal("Nickel").fluid;
-    Fluid liquid_iron = LiquidMetalRegistry.GetMetal("Iron").fluid;
-    Fluid liquid_electrum = LiquidMetalRegistry.GetMetal("Electrum").fluid;
-    Fluid liquid_invar = LiquidMetalRegistry.GetMetal("Invar").fluid;
-    Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
-    Fluid liquid_brass = LiquidMetalRegistry.GetMetal("Brass").fluid;
+    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
+    Fluid liquid_zinc = LiquidMetalRegistry.instance.GetFluid("Zinc");
+    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
+    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
+    Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
+    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+    Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
+    Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
+    Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
+    Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
 
 
 

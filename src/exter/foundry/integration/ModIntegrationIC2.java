@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
-import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -15,6 +14,7 @@ import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationIC2 extends ModIntegration
 {
@@ -86,12 +86,12 @@ public class ModIntegrationIC2 extends ModIntegration
 
     if(is_loaded)
     {
-      Fluid liquid_bronze = LiquidMetalRegistry.GetMetal("Bronze").fluid;
-      Fluid liquid_copper = LiquidMetalRegistry.GetMetal("Copper").fluid;
-      Fluid liquid_tin = LiquidMetalRegistry.GetMetal("Tin").fluid;
-      Fluid liquid_gold = LiquidMetalRegistry.GetMetal("Gold").fluid;
-      Fluid liquid_iron = LiquidMetalRegistry.GetMetal("Iron").fluid;
-      Fluid liquid_lead = LiquidMetalRegistry.GetMetal("Lead").fluid;
+      Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
+      Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+      Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
+      Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
+      Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+      Fluid liquid_lead = LiquidMetalRegistry.instance.GetFluid("Lead");
 
       ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
       ItemStack extra_sticks2 = new ItemStack(Item.stick,2);

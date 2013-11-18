@@ -40,6 +40,15 @@ public class ItemFoundryComponent extends Item
     "Blank Clay Mold"
   };
   
+  static public final String[] REGISTRY_NAMES = 
+  {
+    "itemStoneGear",
+    "itemHeatingCoil",
+    "itemFoundryClay",
+    "itemFoundryBrick",
+    "itemBlankClayMold"
+  };
+
   
   @SideOnly(Side.CLIENT)
   private Icon[] icons;

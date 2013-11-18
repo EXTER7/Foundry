@@ -2,11 +2,11 @@ package exter.foundry.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import exter.foundry.util.LiquidMetalRegistry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.renderer.RendererItemContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;

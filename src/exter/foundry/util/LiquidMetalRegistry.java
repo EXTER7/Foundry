@@ -89,18 +89,8 @@ public class LiquidMetalRegistry
     FluidRegistry.registerFluid(fluid);
 
     List<ItemStack> ore_list = OreDictionary.getOres("block" + metal_name);
-    int solid_block = -1;
-    int solid_meta = 0;
-    for(ItemStack ore:ore_list)
-    {
-      Item item = ore.getItem();
-      if(item instanceof ItemBlock)
-      {
-        solid_block = ((ItemBlock)item).getBlockID();
-        solid_meta = ((ItemBlock)item).getMetadata(ore.getItemDamage());
-      }
-    }
-    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid_block,solid_meta);
+    ItemStack solid = FoundryBlocks.block_stacks.get(metal_name);
+    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid.itemID,solid.getItemDamage());
     liquid_block.setUnlocalizedName("liquid" + metal_name);
     LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
@@ -173,4 +163,6 @@ public class LiquidMetalRegistry
   {
     return obj instanceof LiquidMetalRegistry && hashCode() == obj.hashCode();
   }
+  
+  
 }

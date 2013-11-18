@@ -4,14 +4,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import exter.foundry.api.container.IFoundryContainerHandler;
+import exter.foundry.api.container.IRefractoryFluidContainerHandler;
 import exter.foundry.item.FoundryItems;
 
 
 /**
  * Utilities to manipulate foundry container item.
  */
-public class FoundryContainerHandler implements IFoundryContainerHandler
+public class FoundryContainerHandler implements IRefractoryFluidContainerHandler
 {
   
   static public FoundryContainerHandler instance = new FoundryContainerHandler();

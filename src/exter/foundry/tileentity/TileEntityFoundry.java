@@ -8,7 +8,7 @@ import buildcraft.api.power.PowerHandler;
 import exter.foundry.ModFoundry;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryContainer;
+import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.entity.player.EntityPlayer;

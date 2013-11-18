@@ -34,7 +34,7 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   
-  static public ItemFoundryContainer item_container;
+  static public ItemRefractoryFluidContainer item_container;
   
   static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
 
@@ -68,8 +68,8 @@ public class FoundryItems
     ingot_stacks.put("Iron", new ItemStack(Item.ingotIron));
     ingot_stacks.put("Gold", new ItemStack(Item.ingotGold));
     
-    item_container = new ItemFoundryContainer(config.getItem("container", GetNextID()).getInt() - 256);
-    LanguageRegistry.addName(item_container, "Foundry Container");
+    item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256);
+    LanguageRegistry.addName(item_container, "Refractory Fluid Container");
 
   }
 }

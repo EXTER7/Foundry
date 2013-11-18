@@ -35,8 +35,8 @@ public class ItemFoundryComponent extends Item
   {
     "Stone Gear",
     "Heating Coil",
-    "Foundry Clay",
-    "Foundry Brick",
+    "Refractory Clay",
+    "Refractory Brick",
     "Blank Clay Mold"
   };
   
@@ -44,8 +44,8 @@ public class ItemFoundryComponent extends Item
   {
     "itemStoneGear",
     "itemHeatingCoil",
-    "itemFoundryClay",
-    "itemFoundryBrick",
+    "itemRefractoryClay",
+    "itemRefractoryBrick",
     "itemBlankClayMold"
   };
 

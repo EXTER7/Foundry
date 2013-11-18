@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryContainer;
+import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -60,7 +60,7 @@ public class RendererItemContainer implements IItemRenderer
   @Override
   public void renderItem(ItemRenderType type, ItemStack stack, Object... data)
   {
-    ItemFoundryContainer item = (ItemFoundryContainer) stack.getItem();
+    ItemRefractoryFluidContainer item = (ItemRefractoryFluidContainer) stack.getItem();
     FluidStack fluid_stack = FoundryContainerHandler.instance.GetFluidStack(stack);
     
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);

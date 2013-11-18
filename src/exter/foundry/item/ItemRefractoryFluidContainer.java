@@ -38,7 +38,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.util.FoundryContainerHandler;
 
-public class ItemFoundryContainer extends Item
+public class ItemRefractoryFluidContainer extends Item
 {
 
   @SideOnly(Side.CLIENT)
@@ -53,7 +53,7 @@ public class ItemFoundryContainer extends Item
   @SideOnly(Side.CLIENT)
   public Icon icon_def_full;
 
-  public ItemFoundryContainer(int id)
+  public ItemRefractoryFluidContainer(int id)
   {
     super(id);
     setCreativeTab(CreativeTabs.tabMisc);

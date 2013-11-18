@@ -69,11 +69,11 @@ public interface IItemRegistry
    * "blockStairsLead"
    * 
    * Components:
-   * "blockFoundryCrucible"
+   * "blockRefractoryCasing"
    * "itemStoneGear"
    * "itemHeatingCoil"
-   * "itemFoundryClay,
-   * "itemFoundryBrick"
+   * "itemRefractoryClay,
+   * "itemRefractoryBrick"
    * "itemBlankClayMold"
    * 
    * Molds:

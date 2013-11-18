@@ -38,7 +38,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.container.FoundryContainerManager;
+import exter.foundry.api.container.RefractoryFluidContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
 import exter.foundry.block.BlockFoundryMachine;
@@ -52,7 +52,7 @@ import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
-import exter.foundry.item.ItemFoundryContainer;
+import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryPacketHandler;
@@ -129,7 +129,7 @@ public class ModFoundry
     FoundryRecipes.casting = CastingRecipeManager.instance;
     FoundryRecipes.alloy = AlloyRecipeManager.instance;
     FoundryRecipes.infuser = InfuserRecipeManager.instance;
-    FoundryContainerManager.handler = FoundryContainerHandler.instance;
+    RefractoryFluidContainerManager.handler = FoundryContainerHandler.instance;
 
 
     OreDictionary.registerOre("ingotIron", Item.ingotIron);

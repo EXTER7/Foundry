@@ -6,9 +6,9 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
- * API for Manipulating Foundry Containers
+ * API for Manipulating Refractory Fluid Containers
  */
-public interface IFoundryContainerHandler
+public interface IRefractoryFluidContainerHandler
 {
   /**
    * Get the contents of a container

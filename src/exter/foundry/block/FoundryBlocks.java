@@ -237,8 +237,8 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
     
     
-    LanguageRegistry.addName(block_foundry_crucible, "Foundry Crucible");
-    ItemRegistry.instance.RegisterItem("blockFoundryCrucible", new ItemStack(block_foundry_crucible));
+    LanguageRegistry.addName(block_foundry_crucible, "Refractory Casing");
+    ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_foundry_crucible));
     
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF), "Induction Crucible Furnace");
     LanguageRegistry.addName(new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER), "Metal Caster");

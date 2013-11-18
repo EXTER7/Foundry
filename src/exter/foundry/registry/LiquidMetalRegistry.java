@@ -21,7 +21,7 @@ import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
-import exter.foundry.item.ItemFoundryContainer;
+import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.CastingRecipe;

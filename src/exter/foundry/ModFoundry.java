@@ -41,12 +41,9 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.container.FoundryContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
-import exter.foundry.block.BlockAlloyMixer;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
-import exter.foundry.block.BlockMetalCaster;
 import exter.foundry.block.BlockLiquidMetal;
-import exter.foundry.block.BlockInductionCrucibleFurnace;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBuildcraft;
@@ -84,7 +81,7 @@ import exter.foundry.worldgen.WordGenOre;
 @Mod(
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
-  version = "0.1.0",
+  version = ModFoundry.MODVERSION,
   dependencies = "required-after:Forge@[9.11.1.951,)"
 )
 @NetworkMod(
@@ -97,6 +94,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
+  public static final String MODVERSION = "0.1.0";
 
   public static final String CHANNEL = "EXTER_Foundry";
 

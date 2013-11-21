@@ -299,6 +299,7 @@ public class ModFoundry
     CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
     CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    CastingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
 
     
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 2400);

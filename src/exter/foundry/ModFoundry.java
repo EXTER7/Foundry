@@ -169,6 +169,16 @@ public class ModFoundry
     Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
+    MeltingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    MeltingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+
     
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,3 * FoundryConfig.recipe_bronze_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass,3 * FoundryConfig.recipe_brass_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));

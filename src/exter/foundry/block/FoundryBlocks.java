@@ -158,6 +158,47 @@ public class FoundryBlocks
   public static Map<String,ItemStack> slab_stacks = new HashMap<String,ItemStack>();
   
   
+  static private void RegisterHalfSlabs(Configuration config)
+  {
+    int i;
+    int id_single1 = config.getBlock( "metal_slab1", GetNextID()).getInt();
+    int id_single2 = config.getBlock( "metal_slab2", GetNextID()).getInt();
+    int id_double1 = config.getBlock( "metal_slabdouble1", GetNextID()).getInt();
+    int id_double2 = config.getBlock( "metal_slabdouble2", GetNextID()).getInt();
+    
+    if(id_single1 < 1 || id_single2 < 1 || id_double1 < 1 || id_double2 < 1)
+    {
+      return;
+    }
+    block_slab1 = (BlockMetalSlab)new BlockMetalSlab(id_single1,false,-1, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlab1");
+    block_slab2 = (BlockMetalSlab)new BlockMetalSlab(id_single2,false,-1, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlab2");
+    block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(id_double1,true,block_slab1.blockID, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlabDouble1");
+    block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(id_double2,true,block_slab2.blockID, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlabDouble2");
+    block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
+    block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
+
+    GameRegistry.registerBlock(block_slab1, ItemBlockMulti.class, "slab1");
+    GameRegistry.registerBlock(block_slab2, ItemBlockMulti.class, "slab2");
+    GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
+    GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
+
+    for(i = 0; i < SLAB1_NAMES.length; i++)
+    {
+      ItemStack stack = new ItemStack(block_slab1,  1, i);
+      LanguageRegistry.addName(stack, SLAB1_NAMES[i]);
+      slab_stacks.put(SLAB1_METALS[i], stack);
+      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB1_METALS[i], stack);
+    }
+
+    for(i = 0; i < SLAB2_NAMES.length; i++)
+    {
+      ItemStack stack = new ItemStack(block_slab2,  1, i);
+      LanguageRegistry.addName(stack, SLAB2_NAMES[i]);
+      slab_stacks.put(SLAB2_METALS[i], stack);
+      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB2_METALS[i], stack);
+    }
+  }
+  
   static public void RegisterBlocks(Configuration config)
   {
     int i;
@@ -166,14 +207,8 @@ public class FoundryBlocks
     block_machine = new BlockFoundryMachine(config.getBlock( "foundry_machine", GetNextID()).getInt());
     block_metal = new BlockMetal(config.getBlock( "metal_block", GetNextID()).getInt());
     block_ore = new BlockFoundryOre(config.getBlock( "ore", GetNextID()).getInt());
-    block_slab1 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slab1", GetNextID()).getInt(),false,-1, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlab1");
-    block_slab2 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slab2", GetNextID()).getInt(),false,-1, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlab2");
 
-    block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slabdouble1", GetNextID()).getInt(),true,block_slab1.blockID, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlabDouble1");
-    block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(config.getBlock( "metal_slabdouble2", GetNextID()).getInt(),true,block_slab2.blockID, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlabDouble2");
-
-    block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
-    block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
+    RegisterHalfSlabs(config);
     
     int id = config.getBlock("induction_crucible_furnace", GetNextID()).getInt();
     if(id > 0)
@@ -208,10 +243,14 @@ public class FoundryBlocks
     for(i = 0; i < STAIRS_BLOCKS.length; i++)
     {
       MetalStair ms = STAIRS_BLOCKS[i];
-      block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(config.getBlock( "stair_" +  ms.metal, GetNextID()).getInt(),ms.GetBlock(),ms.block_meta).setUnlocalizedName("stairs" + ms.metal);
-      GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
-      LanguageRegistry.addName(block_metal_stairs[i], ms.name);
-      ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
+      id = config.getBlock( "stair_" +  ms.metal, GetNextID()).getInt();
+      if(id > 0)
+      {
+        block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(id,ms.GetBlock(),ms.block_meta).setUnlocalizedName("stairs" + ms.metal);
+        GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
+        LanguageRegistry.addName(block_metal_stairs[i], ms.name);
+        ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
+      }
     }
 
     for(i = 0; i < BlockMetal.METAL_NAMES.length; i++)
@@ -231,10 +270,6 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
 
-    GameRegistry.registerBlock(block_slab1, ItemBlockMulti.class, "slab1");
-    GameRegistry.registerBlock(block_slab2, ItemBlockMulti.class, "slab2");
-    GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
-    GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
     
     
     LanguageRegistry.addName(block_foundry_crucible, "Refractory Casing");
@@ -264,20 +299,5 @@ public class FoundryBlocks
       OreDictionary.registerOre(BlockFoundryOre.OREDICT_NAMES[i], stack);
     }
 
-    for(i = 0; i < SLAB1_NAMES.length; i++)
-    {
-      ItemStack stack = new ItemStack(block_slab1,  1, i);
-      LanguageRegistry.addName(stack, SLAB1_NAMES[i]);
-      slab_stacks.put(SLAB1_METALS[i], stack);
-      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB1_METALS[i], stack);
-    }
-
-    for(i = 0; i < SLAB2_NAMES.length; i++)
-    {
-      ItemStack stack = new ItemStack(block_slab2,  1, i);
-      LanguageRegistry.addName(stack, SLAB2_NAMES[i]);
-      slab_stacks.put(SLAB2_METALS[i], stack);
-      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB2_METALS[i], stack);
-    }
   }
 }

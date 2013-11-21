@@ -251,14 +251,17 @@ public class ModFoundry
     //Metal stairs casting recipes
     for(i = 0; i < FoundryBlocks.block_metal_stairs.length; i++)
     {
-      FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
-      ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
-      FluidStack fluid = new FluidStack(
-          LiquidMetalRegistry.instance.GetFluid(mr.metal),
-          FoundryRecipes.FLUID_AMOUNT_BLOCK * 3 / 4);
-      
-      CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_stairs, null);
-      MeltingRecipeManager.instance.AddRecipe(stack, fluid);
+      if(FoundryBlocks.block_metal_stairs[i] != null)
+      {
+        FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
+        ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
+        FluidStack fluid = new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid(mr.metal),
+            FoundryRecipes.FLUID_AMOUNT_BLOCK * 3 / 4);
+        
+        CastingRecipeManager.instance.AddRecipe(stack, fluid, mold_stairs, null);
+        MeltingRecipeManager.instance.AddRecipe(stack, fluid);
+      }
     }
 
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);

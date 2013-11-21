@@ -45,6 +45,7 @@ import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
@@ -108,12 +109,6 @@ public class ModFoundry
   )
   public static CommonFoundryProxy proxy;
 
-  private static boolean wordgen_copper;
-  private static boolean wordgen_tin;
-  private static boolean wordgen_zinc;
-  private static boolean wordgen_nickel;
-  private static boolean wordgen_silver;
-  private static boolean wordgen_lead;
 
 
   public static Logger log = Logger.getLogger(MODNAME);
@@ -140,6 +135,7 @@ public class ModFoundry
 
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
+    FoundryConfig.Load(config);
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Iron", 1850, 15);
@@ -155,12 +151,6 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
-    wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
-    wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
-    wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
-    wordgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
-    wordgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
-    wordgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
 
     config.save();
 
@@ -180,10 +170,10 @@ public class ModFoundry
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
     
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass,12), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar,12), new FluidStack(liquid_iron,8), new FluidStack(liquid_nickel,4));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrum,12), new FluidStack(liquid_gold,6), new FluidStack(liquid_silver,6));
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,3 * FoundryConfig.recipe_bronze_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass,3 * FoundryConfig.recipe_brass_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar,4 * FoundryConfig.recipe_invar_yield), new FluidStack(liquid_iron,8), new FluidStack(liquid_nickel,4));
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrum,6 * FoundryConfig.recipe_electrum_yield), new FluidStack(liquid_gold,6), new FluidStack(liquid_silver,6));
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CHESTPLATE);
@@ -562,27 +552,27 @@ public class ModFoundry
 
 
     int ore_id = FoundryBlocks.block_ore.blockID;
-    if(wordgen_copper)
+    if(FoundryConfig.wordgen_copper)
     {
       WordGenOre.RegisterOre(16, 80, 12, ore_id, BlockFoundryOre.ORE_COPPER);
     }
-    if(wordgen_tin)
+    if(FoundryConfig.wordgen_tin)
     {
       WordGenOre.RegisterOre(16, 52, 8, ore_id, BlockFoundryOre.ORE_TIN);
     }
-    if(wordgen_zinc)
+    if(FoundryConfig.wordgen_zinc)
     {
       WordGenOre.RegisterOre(8, 48, 6, ore_id, BlockFoundryOre.ORE_ZINC);
     }
-    if(wordgen_nickel)
+    if(FoundryConfig.wordgen_nickel)
     {
       WordGenOre.RegisterOre(8, 36, 5, ore_id, BlockFoundryOre.ORE_NICKEL);
     }
-    if(wordgen_silver)
+    if(FoundryConfig.wordgen_silver)
     {
       WordGenOre.RegisterOre(2, 30, 3, ore_id, BlockFoundryOre.ORE_SILVER);
     }
-    if(wordgen_lead)
+    if(FoundryConfig.wordgen_lead)
     {
       WordGenOre.RegisterOre(8, 48, 5, ore_id, BlockFoundryOre.ORE_LEAD);
     }

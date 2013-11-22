@@ -1,6 +1,7 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -53,7 +54,9 @@ public class ModIntegrationTE3 extends ModIntegration
       Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
       Fluid liquid_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_ender = FluidRegistry.getFluid("ender");
-
+      Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
+      Fluid liquid_coal = FluidRegistry.getFluid("coal");
+      
       ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
       ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
@@ -66,8 +69,15 @@ public class ModIntegrationTE3 extends ModIntegration
       ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
 
+      MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal,100),1000);
+
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.redstone), new FluidStack(liquid_redstone,100),1000);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.blockRedstone), new FluidStack(liquid_redstone,900),1000);
+
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.enderPearl), new FluidStack(liquid_ender,250),1500);
+
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.glowstone), new FluidStack(liquid_glowstone,250),2500);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glowStone), new FluidStack(liquid_glowstone,1000),2500);
       
       CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_CHESTPLATE], new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_PICKAXE], new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);

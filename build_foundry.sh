@@ -2,6 +2,7 @@
 
 MODNAME=foundry
 MODVERSION=0.2.0.0
+MODVERSION_API=0.2.0.0
 
 rm -rf packed/*
 if ./recompile.sh && ./reobfuscate_srg.sh
@@ -30,7 +31,7 @@ then
   cp -r "src/minecraft/exter/"$MODNAME"/api" "packed/exter/$MODNAME"
 
   cd packed
-  APIZIPFILE=$MODNAME"-api-"$MODVERSION".zip"
+  APIZIPFILE=$MODNAME"-api-"$MODVERSION_API".zip"
   zip -r $APIZIPFILE *
   mv $APIZIPFILE "../"
   cd .. 

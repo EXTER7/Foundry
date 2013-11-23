@@ -96,7 +96,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "0.2.1.0";
+  public static final String MODVERSION = "0.2.1.1";
 
   public static final String CHANNEL = "EXTER_Foundry";
 

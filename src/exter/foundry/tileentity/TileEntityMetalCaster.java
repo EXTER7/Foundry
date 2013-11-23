@@ -466,12 +466,4 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     return 1;
   }
-
-  @Override
-  @Deprecated
-  protected int GetNewBlockMeta()
-  {
-    return BlockFoundryMachine.MACHINE_CASTER;
-  }
-
 }

@@ -480,12 +480,4 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   {
     return 3;
   }
-
-  @Override
-  @Deprecated
-  protected int GetNewBlockMeta()
-  {
-    return BlockFoundryMachine.MACHINE_ALLOYMIXER;
-  }
-
 }

@@ -132,16 +132,8 @@ public class FoundryBlocks
   public static BlockFoundryCrucible block_foundry_crucible;
   public static BlockFoundryMachine block_machine;
 
-  @Deprecated
-  public static BlockInductionCrucibleFurnace block_induction_crucible_furnace;
-  @Deprecated
-  public static BlockMetalCaster block_metal_caster;
-  @Deprecated
-  public static BlockAlloyMixer block_alloy_mixer;
   public static BlockMetal block_metal;
   public static BlockFoundryOre block_ore;
-  @Deprecated
-  public static BlockMetalInfuser block_metal_infuser;
   
   public static BlockMetalSlab block_slab1;
   public static BlockMetalSlab block_slab2;
@@ -209,35 +201,8 @@ public class FoundryBlocks
     block_ore = new BlockFoundryOre(config.getBlock( "ore", GetNextID()).getInt());
 
     RegisterHalfSlabs(config);
-    
-    int id = config.getBlock("induction_crucible_furnace", GetNextID()).getInt();
-    if(id > 0)
-    {
-      block_induction_crucible_furnace = new BlockInductionCrucibleFurnace(id);
-      GameRegistry.registerBlock(block_induction_crucible_furnace, "inductionCrucibleFurnace");
-    }
-    
-    id = config.getBlock( "metal_caster", GetNextID()).getInt();
-    if(id > 0)
-    {
-      block_metal_caster = new BlockMetalCaster(id);
-      GameRegistry.registerBlock(block_metal_caster, "caster");
-    }
-    
-    id = config.getBlock( "alloy_mixer", GetNextID()).getInt();
-    if(id > 0)
-    {
-      block_alloy_mixer = new BlockAlloyMixer(id);
-      GameRegistry.registerBlock(block_alloy_mixer, "alloyMixer");
-    }
-    
-    id = config.getBlock( "metal_infuser", GetNextID()).getInt();
-    if(id > 0)
-    {
-      block_metal_infuser = new BlockMetalInfuser(id);
-      GameRegistry.registerBlock(block_metal_infuser, "infuser");
-    }
-    
+
+    int id;
     
     block_metal_stairs = new BlockStairs[STAIRS_BLOCKS.length];
     for(i = 0; i < STAIRS_BLOCKS.length; i++)

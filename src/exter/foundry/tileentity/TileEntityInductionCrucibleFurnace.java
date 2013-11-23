@@ -478,12 +478,4 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   {
     return 1;
   }
-
-  @Override
-  @Deprecated
-  protected int GetNewBlockMeta()
-  {
-    return BlockFoundryMachine.MACHINE_ICF;
-  }
-
 }

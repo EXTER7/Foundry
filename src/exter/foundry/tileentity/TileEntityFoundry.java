@@ -95,11 +95,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private NBTTagCompound packet;
   private boolean do_update;
   
-  @Deprecated
-  private boolean is_converted;
   
-  @Deprecated
-  protected abstract int GetNewBlockMeta();
   
   protected final void AddContainerSlot(ContainerSlot cs)
   {
@@ -114,27 +110,9 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   
   public abstract int GetTankCount();
 
-  @Deprecated
-  private void ConvertBlock()
-  {
-    if(is_converted)
-    {
-      return;
-    }
-    if(worldObj.getBlockId(xCoord, yCoord, zCoord) != FoundryBlocks.block_machine.blockID)
-    {
-      worldObj.setBlock(xCoord, yCoord, zCoord, FoundryBlocks.block_machine.blockID);
-      worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, GetNewBlockMeta(), 3);
-      updateContainingBlockInfo();
-      validate();
-      worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, this);
-    }
-    is_converted = true;
-  }
   
   public TileEntityFoundry()
   {
-    is_converted = false;
     conatiner_slots = new ArrayList<ContainerSlot>();
   }
   
@@ -287,7 +265,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     {
       UpdateEntityClient();
     }
-    ConvertBlock();
   }
 
   @Override

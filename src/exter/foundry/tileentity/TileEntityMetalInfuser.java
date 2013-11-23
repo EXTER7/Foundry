@@ -515,11 +515,4 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   {
     return 2;
   }
-
-  @Override
-  @Deprecated
-  protected int GetNewBlockMeta()
-  {
-    return BlockFoundryMachine.MACHINE_INFUSER;
-  }
 }

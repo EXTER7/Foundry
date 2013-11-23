@@ -170,21 +170,37 @@ public class ModFoundry
     Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
-    MeltingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    MeltingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-
+    if(FoundryConfig.recipe_gear_useoredict)
+    {
+      MeltingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+    }
+    if(FoundryConfig.recipe_alloy_bronze_yield > 0)
+    {
+      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze, 3 * FoundryConfig.recipe_alloy_bronze_yield), new FluidStack(liquid_copper, 9), new FluidStack(liquid_tin, 3));
+    }
     
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze,3 * FoundryConfig.recipe_bronze_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_tin,3));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass,3 * FoundryConfig.recipe_brass_yield), new FluidStack(liquid_copper,9), new FluidStack(liquid_zinc,3));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar,4 * FoundryConfig.recipe_invar_yield), new FluidStack(liquid_iron,8), new FluidStack(liquid_nickel,4));
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrum,6 * FoundryConfig.recipe_electrum_yield), new FluidStack(liquid_gold,6), new FluidStack(liquid_silver,6));
+    if(FoundryConfig.recipe_alloy_brass_yield > 0)
+    {
+      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass, 3 * FoundryConfig.recipe_alloy_brass_yield), new FluidStack(liquid_copper, 9), new FluidStack(liquid_zinc, 3));
+    }
+    
+    if(FoundryConfig.recipe_alloy_invar_yield > 0)
+    {
+      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar, 4 * FoundryConfig.recipe_alloy_invar_yield), new FluidStack(liquid_iron, 8), new FluidStack(liquid_nickel, 4));
+    }
+
+    if(FoundryConfig.recipe_alloy_electrum_yield > 0)
+    {
+      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrum, 6 * FoundryConfig.recipe_alloy_electrum_yield), new FluidStack(liquid_gold, 6), new FluidStack(liquid_silver, 6));
+    }
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CHESTPLATE);
@@ -302,16 +318,18 @@ public class ModFoundry
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-    CastingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    CastingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-
+    if(FoundryConfig.recipe_gear_useoredict)
+    {
+      CastingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+    }
     
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 2400);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",6, new ItemStack(Item.coal,1,1), 4800);

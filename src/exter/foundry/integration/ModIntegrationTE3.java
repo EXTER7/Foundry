@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
@@ -30,11 +31,14 @@ public class ModIntegrationTE3 extends ModIntegration
   static public final int ITEM_INVAR_LEGGINGS = 7;
   static public final int ITEM_INVAR_BOOTS = 8;
 
+  static public final int ITEM_INVAR_GEAR = 9;
+  static public final int ITEM_ELECTRUM_GEAR = 10;
+
 
   public ModIntegrationTE3(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[9];
+    items = new ItemStack[11];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
     items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
@@ -46,6 +50,9 @@ public class ModIntegrationTE3 extends ModIntegration
     items[ITEM_INVAR_CHESTPLATE] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarPlate", 1);
     items[ITEM_INVAR_LEGGINGS] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarLegs", 1);
     items[ITEM_INVAR_BOOTS] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarBoots", 1);
+
+    items[ITEM_INVAR_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearInvar", 1);
+    items[ITEM_ELECTRUM_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearElectrum", 1);
 
     VerifyItems();
 
@@ -99,6 +106,16 @@ public class ModIntegrationTE3 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_INVAR_HOE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_INVAR_SWORD]);
       
+      if(!FoundryConfig.recipe_gear_useoredict)
+      {
+        Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
+        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+      }
     }
   }
 }

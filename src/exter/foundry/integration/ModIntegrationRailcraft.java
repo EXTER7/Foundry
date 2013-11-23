@@ -7,11 +7,13 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationRailcraft extends ModIntegration
@@ -89,6 +91,17 @@ public class ModIntegrationRailcraft extends ModIntegration
       
       FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearSteel",items[ITEM_STEEL_GEAR]);
+      
+      if(!FoundryConfig.recipe_gear_useoredict)
+      {
+        Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_GEAR], new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_GEAR], new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+      }
     }
   }
 }

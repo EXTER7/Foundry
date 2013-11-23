@@ -1,9 +1,18 @@
 package exter.foundry.integration;
 
+import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.config.FoundryConfig;
+import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationBuildcraft extends ModIntegration
 {
@@ -35,6 +44,17 @@ public class ModIntegrationBuildcraft extends ModIntegration
 
     if(is_loaded)
     {
+      if(!FoundryConfig.recipe_gear_useoredict)
+      {
+        Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+        Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
+        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_GEAR], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_GEAR], new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+      }
       FoundryMiscUtils.RegisterInOreDictionary("gearWood",items[ITEM_WOOD_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearStone",items[ITEM_STONE_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);

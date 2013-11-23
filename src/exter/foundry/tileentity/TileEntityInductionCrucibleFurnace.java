@@ -435,10 +435,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_heat = heat;
     if(heat > 0)
     {
-      heat -= heat / (HEAT_MAX / 5 ) + 1;
-      if(heat < 0)
+      heat -= heat * 5 / HEAT_MAX;
+      if(heat < HEAT_MIN)
       {
-        heat = 0;
+        heat = HEAT_MIN;
       }
     }
 

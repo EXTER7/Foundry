@@ -34,11 +34,14 @@ public class ModIntegrationTE3 extends ModIntegration
   static public final int ITEM_INVAR_GEAR = 9;
   static public final int ITEM_ELECTRUM_GEAR = 10;
 
+  static public final int ITEM_COPPER_GEAR = 11;
+  static public final int ITEM_TIN_GEAR = 12;
+
 
   public ModIntegrationTE3(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[11];
+    items = new ItemStack[13];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
     items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
@@ -53,6 +56,9 @@ public class ModIntegrationTE3 extends ModIntegration
 
     items[ITEM_INVAR_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearInvar", 1);
     items[ITEM_ELECTRUM_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearElectrum", 1);
+
+    items[ITEM_COPPER_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearCopper", 1);
+    items[ITEM_TIN_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearTin", 1);
 
     VerifyItems();
 
@@ -108,11 +114,17 @@ public class ModIntegrationTE3 extends ModIntegration
       
       if(!FoundryConfig.recipe_gear_useoredict)
       {
+        Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+        Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
         Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
         ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
 
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }

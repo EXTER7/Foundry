@@ -48,6 +48,17 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_IRON_PLATE = 23;
   static public final int ITEM_LEAD_PLATE = 24;
 
+  private void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
+  {
+    if(FoundryMiscUtils.IsItemInOreDictionary(oredict_name, item))
+    {
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, oredict_name);
+    } else
+    {
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, item);
+    }
+  }
+  
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
@@ -176,26 +187,13 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_COPPER_PLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_TIN_PLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_BRONZE_PLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_GOLD_PLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_IRON_PLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, items[ITEM_LEAD_PLATE]);
       
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateIron");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateGold");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateCopper");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateTin");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateBronze");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateElectrum");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateInvar");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateNickel");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateZinc");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateBrass");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateSilver");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateSteel");
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plateLead");
+      RegisterPlateMoldRecipe(items[ITEM_COPPER_PLATE],"plateCopper");
+      RegisterPlateMoldRecipe(items[ITEM_TIN_PLATE],"plateTin");
+      RegisterPlateMoldRecipe(items[ITEM_BRONZE_PLATE],"plateBronze");
+      RegisterPlateMoldRecipe(items[ITEM_GOLD_PLATE],"plateGold");
+      RegisterPlateMoldRecipe(items[ITEM_IRON_PLATE],"plateIron");
+      RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE],"plateLead");      
     }
   }
 }

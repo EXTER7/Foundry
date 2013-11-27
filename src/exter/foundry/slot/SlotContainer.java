@@ -5,6 +5,7 @@ import exter.foundry.recipes.CastingRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
 
 public class SlotContainer extends Slot
 {
@@ -16,6 +17,6 @@ public class SlotContainer extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return stack.itemID == FoundryItems.item_container.itemID;
+    return stack.getItem() instanceof IFluidContainerItem;
   }
 }

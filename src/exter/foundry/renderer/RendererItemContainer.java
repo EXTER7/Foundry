@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemRefractoryFluidContainer;
-import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -61,7 +60,7 @@ public class RendererItemContainer implements IItemRenderer
   public void renderItem(ItemRenderType type, ItemStack stack, Object... data)
   {
     ItemRefractoryFluidContainer item = (ItemRefractoryFluidContainer) stack.getItem();
-    FluidStack fluid_stack = FoundryContainerHandler.instance.GetFluidStack(stack);
+    FluidStack fluid_stack = item.getFluid(stack);
     
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid_stack != null)

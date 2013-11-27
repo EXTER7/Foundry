@@ -10,7 +10,6 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.network.FoundryPacketHandler;
-import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -23,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidContainerItem;
 
 /**
  * Base class for all machines.
@@ -49,30 +49,32 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     public void Update()
     {
       ItemStack stack = getStackInSlot(slot);
-      if(stack == null || stack.getItem() != FoundryItems.item_container)
+      if(stack == null || !(stack.getItem() instanceof IFluidContainerItem))
       {
         return;
       }
+      IFluidContainerItem fluid_cont = (IFluidContainerItem)stack.getItem();
+      
       FluidTank tank = GetTank(tank_slot);
       if(fill)
       {
-        FluidStack drained = tank.drain(10, false);
+        FluidStack drained = tank.drain(25, false);
         if(drained == null || drained.amount == 0)
         {
           return;
         }
-        int filled = FoundryContainerHandler.instance.Fill(stack, drained, false);
+        int filled = fluid_cont.fill(stack, drained, false);
         if(filled == 0)
         {
           return;
         }
         drained = tank.drain(filled, true);
-        FoundryContainerHandler.instance.Fill(stack, drained, true);
+        fluid_cont.fill(stack, drained, true);
         UpdateTank(tank_slot);
         UpdateInventoryItem(slot);
       } else
       {
-        FluidStack drained = FoundryContainerHandler.instance.Drain(stack, 10, false);
+        FluidStack drained = fluid_cont.drain(stack, 25, false);
         if(drained == null || drained.amount == 0)
         {
           return;
@@ -83,7 +85,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         {
           return;
         }
-        drained = FoundryContainerHandler.instance.Drain(stack, filled, true);
+        drained = fluid_cont.drain(stack, filled, true);
         tank.fill(drained, true);
         UpdateTank(tank_slot);
         UpdateInventoryItem(slot);

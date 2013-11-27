@@ -113,6 +113,8 @@ public interface IItemRegistry
    * "itemClaySlabMold"
    * "itemClayStairsMold"
    * "itemClayPlateMold"
-
+   * 
+   * Refractory Fluid Container
+   * "itemRefractoryFluidContainer"
    */
 }

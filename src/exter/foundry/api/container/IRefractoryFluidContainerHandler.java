@@ -7,7 +7,9 @@ import net.minecraftforge.fluids.FluidStack;
 
 /**
  * API for Manipulating Refractory Fluid Containers
+ * Deprecated, use {@link net.minecraftforge.fluids.IFluidContainerItem} to interface with refractory fluid containers
  */
+@Deprecated
 public interface IRefractoryFluidContainerHandler
 {
   /**

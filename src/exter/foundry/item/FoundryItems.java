@@ -8,7 +8,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.registry.ItemRegistry;
 import exter.foundry.renderer.RendererItemContainer;
-import exter.foundry.util.FoundryContainerHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -68,8 +67,9 @@ public class FoundryItems
     ingot_stacks.put("Iron", new ItemStack(Item.ingotIron));
     ingot_stacks.put("Gold", new ItemStack(Item.ingotGold));
     
-    item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256);
+    item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256,FluidContainerRegistry.BUCKET_VOLUME);
     LanguageRegistry.addName(item_container, "Refractory Fluid Container");
+    ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", new ItemStack(FoundryItems.item_container,1,0));
 
   }
 }

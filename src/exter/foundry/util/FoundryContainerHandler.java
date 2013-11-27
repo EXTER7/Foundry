@@ -6,11 +6,12 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.container.IRefractoryFluidContainerHandler;
 import exter.foundry.item.FoundryItems;
-
+import exter.foundry.item.ItemRefractoryFluidContainer;
 
 /**
  * Utilities to manipulate foundry container item.
  */
+@Deprecated
 public class FoundryContainerHandler implements IRefractoryFluidContainerHandler
 {
   
@@ -24,35 +25,28 @@ public class FoundryContainerHandler implements IRefractoryFluidContainerHandler
   @Override
   public FluidStack GetFluidStack(ItemStack stack)
   {
-    if(!IsItemContainer(stack) || stack.stackTagCompound == null)
+    if(!IsItemContainer(stack))
     {
       return null;
     }
-    return FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
-  }
-
-  private void SetFluidNBT(ItemStack is, FluidStack fluid)
-  {
-    is.stackTagCompound = new NBTTagCompound();
-    if(fluid != null)
-    {
-      fluid.writeToNBT(is.stackTagCompound);
-    }
+    return ((ItemRefractoryFluidContainer)stack.getItem()).getFluid(stack);
   }
 
   @Override
   public ItemStack FromFluidStack(FluidStack fluid)
   {
     ItemStack stack = new ItemStack(FoundryItems.item_container.itemID, 1, 0);
+    
     if(fluid == null)
     {
       return stack;
     }
+    
     if(fluid.amount > FluidContainerRegistry.BUCKET_VOLUME)
     {
       fluid = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
     }
-    SetFluidNBT(stack, fluid);
+    ((ItemRefractoryFluidContainer)stack.getItem()).fill(stack, fluid, true);
     return stack;
   }
 
@@ -63,48 +57,7 @@ public class FoundryContainerHandler implements IRefractoryFluidContainerHandler
     {
       return 0;
     }
-
-    FluidStack container_fluid = GetFluidStack(stack);
-
-    if(!do_fill)
-    {
-      if(container_fluid == null)
-      {
-        return Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount);
-      }
-
-      if(!container_fluid.isFluidEqual(fluid))
-      {
-        return 0;
-      }
-
-      return Math.min(FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount, fluid.amount);
-    }
-
-    if(container_fluid == null)
-    {
-      container_fluid = new FluidStack(fluid, Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount));
-
-      SetFluidNBT(stack, container_fluid);
-      return container_fluid.amount;
-    }
-
-    if(!container_fluid.isFluidEqual(fluid))
-    {
-      return 0;
-    }
-    int filled = FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount;
-
-    if(fluid.amount < filled)
-    {
-      container_fluid.amount += fluid.amount;
-      filled = fluid.amount;
-    } else
-    {
-      container_fluid.amount = FluidContainerRegistry.BUCKET_VOLUME;
-    }
-    SetFluidNBT(stack, container_fluid);
-    return filled;
+    return ((ItemRefractoryFluidContainer)stack.getItem()).fill(stack, fluid, do_fill);
   }
 
   @Override
@@ -114,31 +67,7 @@ public class FoundryContainerHandler implements IRefractoryFluidContainerHandler
     {
       return null;
     }
-    FluidStack fluid = GetFluidStack(stack);
-
-    if(fluid == null)
-    {
-      return null;
-    }
-
-    int drained = amount;
-    if(fluid.amount < drained)
-    {
-      drained = fluid.amount;
-    }
-
-    FluidStack drain_fluid = new FluidStack(fluid, drained);
-    if(do_drain)
-    {
-      fluid.amount -= drained;
-      if(fluid.amount <= 0)
-      {
-        fluid = null;
-      }
-      SetFluidNBT(stack, fluid);
-
-    }
-    return drain_fluid;
+    return ((ItemRefractoryFluidContainer)stack.getItem()).drain(stack, amount, do_drain);
   }
 
   @Override

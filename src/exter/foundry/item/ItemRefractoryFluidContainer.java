@@ -139,6 +139,22 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
     }
   }
 
+  private boolean SplitStack(ItemStack stack,EntityPlayer player)
+  {
+    if(stack.stackSize == 1)
+    {
+      return true;
+    }
+    ItemStack rest_stack = stack.copy();
+    rest_stack.stackSize--;
+    if(player.inventory.addItemStackToInventory(rest_stack))
+    {
+      stack.stackSize = 1;
+      return true;
+    }
+    return false;
+  }
+  
   @Override
   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
   {
@@ -177,6 +193,7 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
             return stack;
           }
           drained.amount = filled;
+          
           drain(stack, filled, true);
           handler.fill(side, drained, true);
         } else
@@ -188,14 +205,18 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
           {
             return stack;
           }
-          int filled = fill(stack, drained, false);
+          int filled = fill(stack, drained, false, true);
           if(filled == 0)
+          {
+            return stack;
+          }
+          if(!SplitStack(stack,player))
           {
             return stack;
           }
           drained.amount = filled;
           handler.drain(side, filled, true);
-          fill(stack, drained, true);
+          fill(stack, drained, true, false);
         }
         
         return stack;
@@ -286,29 +307,31 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
           {
             return stack;
           }
-          int filled = fill(stack, drained, false);
+          int filled = fill(stack, drained, false, true);
           if(filled != drained.amount)
           {
             return stack;
           }
+          if(!SplitStack(stack,player))
+          {
+            return stack;
+          }
           fluid_block.drain(world, x, y, z, true);
-          fill(stack, drained, true);
+          fill(stack, drained, true, false);
           
           return stack;
         }
 
         if(world.getBlockMaterial(x, y, z) == Material.water && world.getBlockMetadata(x, y, z) == 0)
         {
-          if(player.capabilities.isCreativeMode)
-          {
-            world.setBlockToAir(x, y, z);
-            return stack;
-          }
-
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
-          if(fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
+          if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            fill(stack, fill, true);
+            if(!SplitStack(stack,player))
+            {
+              return stack;
+            }
+            fill(stack, fill, true, false);
             world.setBlockToAir(x, y, z);
           }
 
@@ -317,16 +340,14 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
 
         if(world.getBlockMaterial(x, y, z) == Material.lava && world.getBlockMetadata(x, y, z) == 0)
         {
-          if(player.capabilities.isCreativeMode)
-          {
-            world.setBlockToAir(x, y, z);
-            return stack;
-          }
-
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
-          if(fill(stack, fill, false) == FluidContainerRegistry.BUCKET_VOLUME)
+          if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            fill(stack, fill, true);
+            if(!SplitStack(stack,player))
+            {
+              return stack;
+            }
+            fill(stack, fill, true, false);
             world.setBlockToAir(x, y, z);
           }
 
@@ -337,14 +358,19 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
     return stack;
   }
   
-  @Override
-  public int fill(ItemStack container, FluidStack resource, boolean doFill)
+  private int fill(ItemStack container, FluidStack resource, boolean doFill,boolean ignore_stacksize)
   {
-    if(container.stackSize > 1)
+    if(!ignore_stacksize && container.stackSize > 1)
     {
       return 0;
     }
     return super.fill(container, resource, doFill);
+  }
+
+  @Override
+  public int fill(ItemStack container, FluidStack resource, boolean doFill)
+  {
+    return fill(container, resource, doFill, false);
   }
 
   @Override
@@ -364,5 +390,16 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
       }
     }
     return result;
+  }
+  
+  @Override
+  public int getItemStackLimit(ItemStack stack)
+  {
+    FluidStack fluid = getFluid(stack);
+    if(fluid == null || fluid.amount == 0)
+    {
+      return 16;
+    }
+    return 1;
   }
 }

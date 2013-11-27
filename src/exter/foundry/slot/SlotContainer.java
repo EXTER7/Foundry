@@ -17,6 +17,13 @@ public class SlotContainer extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return stack.getItem() instanceof IFluidContainerItem;
+    ItemStack slot_stack = getStack();
+    return (stack.getItem() instanceof IFluidContainerItem) && (slot_stack == null || slot_stack.stackSize == 0);
+  }
+
+  @Override
+  public int getSlotStackLimit()
+  {
+    return 1;
   }
 }

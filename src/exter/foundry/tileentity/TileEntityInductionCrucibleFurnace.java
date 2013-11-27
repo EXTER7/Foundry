@@ -435,7 +435,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_heat = heat;
     if(heat > HEAT_MIN)
     {
-      heat -= heat * 50 / HEAT_MAX + 1;
+      heat -= heat * 60 / HEAT_MAX + 1;
       if(heat < HEAT_MIN)
       {
         heat = HEAT_MIN;
@@ -451,7 +451,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     if(power_handler.getMaxEnergyStored() > 0)
     {
       float energy = power_handler.useEnergy(1, energy_need, true);
-      heat += (int)(energy * 10);
+      heat += (int)(energy * 3);
       if(heat > HEAT_MAX)
       {
         heat = HEAT_MAX;

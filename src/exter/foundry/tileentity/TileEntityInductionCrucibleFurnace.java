@@ -50,7 +50,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 4000;
   
-  static public final int MAX_ENERGY_USE = 40;
+  static public final int MAX_ENERGY_USE = 30;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -451,7 +451,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     if(power_handler.getMaxEnergyStored() > 0)
     {
       float energy = power_handler.useEnergy(1, energy_need, true);
-      heat += (int)(energy * 3);
+      heat += (int)(energy * 5);
       if(heat > HEAT_MAX)
       {
         heat = HEAT_MAX;

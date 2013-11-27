@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
@@ -68,7 +69,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     setResistance(8.0F);
     setStepSound(Block.soundStoneFootstep);
     setUnlocalizedName("alloyMixer");
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabMachines.tab);
   }
 
   @Override

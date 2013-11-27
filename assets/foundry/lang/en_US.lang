@@ -14,4 +14,9 @@ fluid.liquidRefinedIron=Refined Liquid Iron
 fluid.liquidLead=Liquid Lead
 substance.carbon=Carbon
 substance.sand=Sand
+itemGroup.foundryMaterials=Foundry - Materials
+itemGroup.foundryBlocks=Foundry - Blocks
+itemGroup.foundryFluids=Foundry - Fluids
+itemGroup.foundryMachines=Foundry - Machines
+itemGroup.foundryMolds=Foundry - Molds
 

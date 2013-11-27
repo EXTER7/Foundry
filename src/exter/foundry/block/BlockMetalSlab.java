@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabBlocks;
 
 public class BlockMetalSlab extends BlockHalfSlab
 {
@@ -30,7 +31,7 @@ public class BlockMetalSlab extends BlockHalfSlab
   {
     super(id, is_double, Material.iron);
     other = other_id;
-    setCreativeTab(CreativeTabs.tabBlock);
+    setCreativeTab(FoundryTabBlocks.tab);
     metals = metal_names;
     icons = icon_names;
     setHardness(5.0F);

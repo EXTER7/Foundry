@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabMaterials;
 
 public class BlockFoundryOre extends Block
 {
@@ -61,7 +62,7 @@ public class BlockFoundryOre extends Block
     setResistance(5.0F);
     setStepSound(Block.soundStoneFootstep);
     setUnlocalizedName("foundryOre");
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabMaterials.tab);
   }
 
   @Override

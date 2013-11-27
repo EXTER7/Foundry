@@ -6,6 +6,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityDropParticleFX;
@@ -36,6 +37,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
     texture_name = texture;
     solid = solid_block;
     solid_meta = solid_block_meta;
+    setCreativeTab(FoundryTabBlocks.tab);
   }
 
   @SideOnly(Side.CLIENT)

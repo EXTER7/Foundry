@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -128,6 +129,7 @@ public class ModFoundry
     RefractoryFluidContainerManager.handler = FoundryContainerHandler.instance;
 
 
+    
     OreDictionary.registerOre("ingotIron", Item.ingotIron);
     OreDictionary.registerOre("blockIron", Block.blockIron);
     OreDictionary.registerOre("ingotGold", Item.ingotGold);

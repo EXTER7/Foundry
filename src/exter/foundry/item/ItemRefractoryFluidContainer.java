@@ -39,6 +39,7 @@ import net.minecraftforge.fluids.ItemFluidContainer;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabFluids;
 
 public class ItemRefractoryFluidContainer extends Item implements IFluidContainerItem
 {
@@ -61,7 +62,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   {
     super(id);
     capacity = container_capacity;
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabFluids.tab);
     setMaxStackSize(1);
     setUnlocalizedName("foundryContainer");
     setHasSubtypes(true);

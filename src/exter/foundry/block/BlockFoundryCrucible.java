@@ -5,6 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.creativetab.FoundryTabMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -27,7 +28,7 @@ public class BlockFoundryCrucible extends Block
     setResistance(8.0F);
     setStepSound(Block.soundStoneFootstep);
     setUnlocalizedName("foundryCrucible");
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabMaterials.tab);
   }
 
   @Override

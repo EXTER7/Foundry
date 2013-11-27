@@ -4,6 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabMaterials;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -92,7 +93,7 @@ public class ItemIngot extends Item
 
   public ItemIngot(int id) {
     super(id);
-    setCreativeTab(CreativeTabs.tabMaterials);
+    setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
   }
   

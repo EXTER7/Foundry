@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabMaterials;
 
 public class ItemFoundryComponent extends Item
 {
@@ -55,7 +56,7 @@ public class ItemFoundryComponent extends Item
 
   public ItemFoundryComponent(int id) {
     super(id);
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
   }
   

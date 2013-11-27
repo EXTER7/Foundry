@@ -4,6 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.creativetab.FoundryTabMolds;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -170,7 +171,7 @@ public class ItemMold extends Item
   public ItemMold(int id) {
     super(id);
     maxStackSize = 1;
-    setCreativeTab(CreativeTabs.tabMisc);
+    setCreativeTab(FoundryTabMolds.tab);
     setHasSubtypes(true);
   }
   

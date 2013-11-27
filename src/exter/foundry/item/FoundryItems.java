@@ -69,7 +69,7 @@ public class FoundryItems
     
     item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256,FluidContainerRegistry.BUCKET_VOLUME);
     LanguageRegistry.addName(item_container, "Refractory Fluid Container");
-    ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer());
+    ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));
 
   }
 }

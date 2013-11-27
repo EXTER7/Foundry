@@ -22,6 +22,6 @@ public class FoundryTabFluids extends CreativeTabs
   @Override
   public ItemStack getIconItemStack()
   {
-    return FoundryItems.item_container.EmptyContainer();
+    return FoundryItems.item_container.EmptyContainer(1);
   }
 }

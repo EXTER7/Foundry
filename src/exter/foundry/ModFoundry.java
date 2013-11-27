@@ -381,7 +381,7 @@ public class ModFoundry
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
-    ItemStack emptycontainer_stack = FoundryItems.item_container.EmptyContainer();
+    ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
     
     GameRegistry.addRecipe(foundryclay8_stack,
         "CCC",
@@ -459,7 +459,7 @@ public class ModFoundry
         'R', redstone_stack,
         'G', "gearStone"));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer_stack,
+    GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer2_stack,
         " T ",
         "BGB",
         " T ",

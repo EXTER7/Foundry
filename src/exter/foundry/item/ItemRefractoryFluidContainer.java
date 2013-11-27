@@ -505,9 +505,9 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return 1;
   }
   
-  public ItemStack EmptyContainer()
+  public ItemStack EmptyContainer(int stack_size)
   {
-    ItemStack stack = new ItemStack(itemID,1,0);
+    ItemStack stack = new ItemStack(itemID,stack_size,0);
     SetFluidNBT(stack, null);
     return stack;
   }

@@ -46,8 +46,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
   
-  static public final int HEAT_MAX = 50000;
-  static public final int HEAT_MIN = 2900;
+  static public final int HEAT_MAX = 500000;
+  static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 4000;
   
   static public final int MAX_ENERGY_USE = 40;
@@ -394,7 +394,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       {
         FluidStack fs = recipe.fluid;
         
-        melt_point = recipe.melting_point * 10;
+        melt_point = recipe.melting_point * 100;
         
         if(heat > melt_point && tank.fill(fs, false) == fs.amount)
         {
@@ -435,7 +435,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     int last_heat = heat;
     if(heat > HEAT_MIN)
     {
-      heat -= heat * 5 / HEAT_MAX + 1;
+      heat -= heat * 50 / HEAT_MAX + 1;
       if(heat < HEAT_MIN)
       {
         heat = HEAT_MIN;
@@ -450,14 +450,14 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     if(power_handler.getMaxEnergyStored() > 0)
     {
-      int energy = (int)power_handler.useEnergy(1, energy_need, true);
-      heat += energy;
+      float energy = power_handler.useEnergy(1, energy_need, true);
+      heat += (int)(energy * 10);
       if(heat > HEAT_MAX)
       {
         heat = HEAT_MAX;
       }
     }
-    if(last_heat / 10 != heat / 10)
+    if(last_heat / 100 != heat / 100)
     {
       UpdateValue("heat",heat);
     }

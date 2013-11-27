@@ -379,7 +379,7 @@ public class ModFoundry
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
-    ItemStack emptycontainer_stack = new ItemStack(FoundryItems.item_container,1,0);
+    ItemStack emptycontainer_stack = FoundryItems.item_container.EmptyContainer();
     
     GameRegistry.addRecipe(foundryclay8_stack,
         "CCC",

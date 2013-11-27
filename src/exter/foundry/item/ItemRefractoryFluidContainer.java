@@ -1,5 +1,6 @@
 package exter.foundry.item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,14 @@ import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.ItemFluidContainer;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemRefractoryFluidContainer extends ItemFluidContainer
+public class ItemRefractoryFluidContainer extends Item implements IFluidContainerItem
 {
 
   @SideOnly(Side.CLIENT)
@@ -52,10 +54,13 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
   public Icon icon_def_partial;
   @SideOnly(Side.CLIENT)
   public Icon icon_def_full;
+  
+  public final int capacity;
 
   public ItemRefractoryFluidContainer(int id,int container_capacity)
   {
-    super(id,container_capacity);
+    super(id);
+    capacity = container_capacity;
     setCreativeTab(CreativeTabs.tabMisc);
     setMaxStackSize(1);
     setUnlocalizedName("foundryContainer");
@@ -86,6 +91,22 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
     icon_def_partial = register.registerIcon("foundry:container_def_partial");
     icon_def_full = register.registerIcon("foundry:container_def_full");
   }
+  
+  private void SetFluidNBT(ItemStack is, FluidStack fluid)
+  {
+    if(fluid != null)
+    {
+      if(is.stackTagCompound == null)
+      {
+        is.stackTagCompound = new NBTTagCompound();
+      }
+      fluid.writeToNBT(is.stackTagCompound);
+    } else
+    {
+      is.stackTagCompound = null;
+    }
+  }
+
 
   @Override
   @SideOnly(Side.CLIENT)
@@ -126,6 +147,7 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
   }
 
   @Override
+  @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
   {
     FluidStack fluid = getFluid(stack);
@@ -145,10 +167,18 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
     {
       return true;
     }
+    if(player.capabilities.isCreativeMode)
+    {
+      return false;
+    }
+    
     ItemStack rest_stack = stack.copy();
     rest_stack.stackSize--;
-    if(player.inventory.addItemStackToInventory(rest_stack))
+    int slot = player.inventory.getFirstEmptyStack();
+    if(slot >= 0)
     {
+      player.inventory.setInventorySlotContents(slot, rest_stack);
+      player.inventory.onInventoryChanged();
       stack.stackSize = 1;
       return true;
     }
@@ -358,13 +388,69 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
     return stack;
   }
   
-  private int fill(ItemStack container, FluidStack resource, boolean doFill,boolean ignore_stacksize)
+  @Override
+  public FluidStack getFluid(ItemStack stack)
   {
-    if(!ignore_stacksize && container.stackSize > 1)
+    if(stack.stackTagCompound == null)
+    {
+      return null;
+    }
+    return FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
+  }
+
+  @Override
+  public int getCapacity(ItemStack container)
+  {
+    return capacity;
+  }
+
+  private int fill(ItemStack stack, FluidStack fluid, boolean do_fill,boolean ignore_stacksize)
+  {
+    if(!ignore_stacksize && stack.stackSize > 1)
     {
       return 0;
     }
-    return super.fill(container, resource, doFill);
+    FluidStack container_fluid = getFluid(stack);
+
+    if(!do_fill)
+    {
+      if(container_fluid == null)
+      {
+        return Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount);
+      }
+
+      if(!container_fluid.isFluidEqual(fluid))
+      {
+        return 0;
+      }
+
+      return Math.min(FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount, fluid.amount);
+    }
+
+    if(container_fluid == null)
+    {
+      container_fluid = new FluidStack(fluid, Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount));
+
+      SetFluidNBT(stack, container_fluid);
+      return container_fluid.amount;
+    }
+
+    if(!container_fluid.isFluidEqual(fluid))
+    {
+      return 0;
+    }
+    int filled = FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount;
+
+    if(fluid.amount < filled)
+    {
+      container_fluid.amount += fluid.amount;
+      filled = fluid.amount;
+    } else
+    {
+      container_fluid.amount = FluidContainerRegistry.BUCKET_VOLUME;
+    }
+    SetFluidNBT(stack, container_fluid);
+    return filled;
   }
 
   @Override
@@ -372,34 +458,56 @@ public class ItemRefractoryFluidContainer extends ItemFluidContainer
   {
     return fill(container, resource, doFill, false);
   }
-
+  
   @Override
-  public FluidStack drain(ItemStack container, int maxDrain, boolean doDrain)
+  public FluidStack drain(ItemStack stack, int amount, boolean do_drain)
   {
-    if(container.stackSize > 1)
+    if(stack.stackSize > 1)
     {
       return null;
     }
-    FluidStack result = super.drain(container, maxDrain, doDrain);
-    if(doDrain)
+    FluidStack fluid = getFluid(stack);
+
+    if(fluid == null)
     {
-      FluidStack stack = getFluid(container);
-      if(stack == null || stack.amount == 0)
-      {
-        container.stackTagCompound = null;
-      }
+      return null;
     }
-    return result;
+
+    int drained = amount;
+    if(fluid.amount < drained)
+    {
+      drained = fluid.amount;
+    }
+
+    FluidStack drain_fluid = new FluidStack(fluid, drained);
+    if(do_drain)
+    {
+      fluid.amount -= drained;
+      if(fluid.amount <= 0)
+      {
+        fluid = null;
+      }
+      SetFluidNBT(stack, fluid);
+
+    }
+    return drain_fluid;
   }
   
   @Override
   public int getItemStackLimit(ItemStack stack)
   {
     FluidStack fluid = getFluid(stack);
-    if(fluid == null || fluid.amount == 0)
+    if(fluid == null)
     {
       return 16;
     }
     return 1;
+  }
+  
+  public ItemStack EmptyContainer()
+  {
+    ItemStack stack = new ItemStack(itemID,1,0);
+    SetFluidNBT(stack, null);
+    return stack;
   }
 }

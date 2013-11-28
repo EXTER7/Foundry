@@ -451,7 +451,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     if(power_handler.getMaxEnergyStored() > 0)
     {
       float energy = power_handler.useEnergy(1, energy_need, true);
-      heat += (int)(energy * 5);
+      heat += (int)(energy * 6);
       if(heat > HEAT_MAX)
       {
         heat = HEAT_MAX;

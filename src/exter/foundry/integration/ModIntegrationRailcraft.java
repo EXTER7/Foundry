@@ -1,6 +1,7 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -13,6 +14,7 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 
@@ -31,11 +33,14 @@ public class ModIntegrationRailcraft extends ModIntegration
 
   static public final int ITEM_IRON_GEAR = 9;
   static public final int ITEM_STEEL_GEAR = 10;
+  static public final int ITEM_COAL_COKE = 11;
+  static public final int ITEM_COAL_COKE_BLOCK = 12;
+  
 
   public ModIntegrationRailcraft(String mod_name)
   {
     super(mod_name);
-    items = new ItemStack[11];
+    items = new ItemStack[13];
 
     items[ITEM_STEEL_PICKAXE] = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
     items[ITEM_STEEL_AXE] = GameRegistry.findItemStack("Railcraft", "tool.steel.axe", 1);
@@ -50,7 +55,8 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     items[ITEM_IRON_GEAR] = GameRegistry.findItemStack("Railcraft", "part.gear.iron", 1);
     items[ITEM_STEEL_GEAR] = GameRegistry.findItemStack("Railcraft", "part.gear.steel", 1);
-
+    items[ITEM_COAL_COKE] = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
+    items[ITEM_COAL_COKE_BLOCK] = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
     VerifyItems();
 
     if(is_loaded)
@@ -91,6 +97,10 @@ public class ModIntegrationRailcraft extends ModIntegration
       
       FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearSteel",items[ITEM_STEEL_GEAR]);
+      
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, items[ITEM_COAL_COKE], 1000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, items[ITEM_COAL_COKE_BLOCK], 8000);
+
       
       if(!FoundryConfig.recipe_gear_useoredict)
       {

@@ -57,7 +57,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   public Icon icon_def_full;
   
   public final int capacity;
-
+  
   public ItemRefractoryFluidContainer(int id,int container_capacity)
   {
     super(id);
@@ -93,7 +93,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     icon_def_full = register.registerIcon("foundry:container_def_full");
   }
   
-  private void SetFluidNBT(ItemStack is, FluidStack fluid)
+  private void SetFluid(ItemStack is, FluidStack fluid)
   {
     if(fluid != null)
     {
@@ -432,7 +432,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       container_fluid = new FluidStack(fluid, Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount));
 
-      SetFluidNBT(stack, container_fluid);
+      SetFluid(stack, container_fluid);
       return container_fluid.amount;
     }
 
@@ -450,7 +450,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       container_fluid.amount = FluidContainerRegistry.BUCKET_VOLUME;
     }
-    SetFluidNBT(stack, container_fluid);
+    SetFluid(stack, container_fluid);
     return filled;
   }
 
@@ -488,7 +488,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
       {
         fluid = null;
       }
-      SetFluidNBT(stack, fluid);
+      SetFluid(stack, fluid);
 
     }
     return drain_fluid;
@@ -508,7 +508,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   public ItemStack EmptyContainer(int stack_size)
   {
     ItemStack stack = new ItemStack(itemID,stack_size,0);
-    SetFluidNBT(stack, null);
+    SetFluid(stack, null);
     return stack;
   }
 }

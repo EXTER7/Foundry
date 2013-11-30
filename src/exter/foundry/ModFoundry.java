@@ -18,6 +18,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -404,6 +405,15 @@ public class ModFoundry
         "RCR",
         "NGN",
         "RCR",
+        'C', "ingotCopper",
+        'N', "ingotNickel",
+        'G', goldnugget_stack,
+        'R', redstone_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(heatingcoil_stack,
+        "RNR",
+        "CGC",
+        "RNR",
         'C', "ingotCopper",
         'N', "ingotNickel",
         'G', goldnugget_stack,

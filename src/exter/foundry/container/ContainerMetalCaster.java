@@ -1,5 +1,6 @@
 package exter.foundry.container;
 
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.slot.SlotCasterMold;
 import exter.foundry.slot.SlotCasterOutput;
 import exter.foundry.slot.SlotContainer;
@@ -72,7 +73,15 @@ public class ContainerMetalCaster extends Container
 
       if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if (!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + SLOTS_TE_SIZE, false))
+        int merge_slot;
+        if(CastingRecipeManager.instance.IsItemMold(stack))
+        {
+          merge_slot = SLOTS_TE + TileEntityMetalCaster.INVENTORY_MOLD; 
+        } else
+        {
+          merge_slot = SLOTS_TE + TileEntityMetalCaster.INVENTORY_EXTRA; 
+        }
+        if (!mergeItemStack(stack, merge_slot, merge_slot + 1, false))
         {
           return null;
         }

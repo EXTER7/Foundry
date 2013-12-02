@@ -43,13 +43,13 @@ public class CastingRecipeManager implements ICastingRecipeManager
    */
   public CastingRecipe FindRecipe(FluidStack fluid,ItemStack mold)
   {
-    if(mold == null || fluid == null)
+    if(mold == null || fluid == null || fluid.amount == 0)
     {
       return null;
     }
     for(CastingRecipe cr:recipes)
     {
-      if(fluid.containsFluid(cr.fluid) && cr.mold.isItemEqual(mold) && ItemStack.areItemStackTagsEqual(cr.mold, mold))
+      if(cr.MatchesRecipe(mold, fluid))
       {
         return cr;
       }

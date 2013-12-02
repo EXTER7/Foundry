@@ -21,24 +21,17 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import exter.foundry.ModFoundry;
+import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMetalCaster;
 
 public class FoundryPacketHandler implements IPacketHandler
 {
-  public static void SendPacketToPlayer(EntityPlayer player, Packet packet)
-  {
-    if(packet != null)
-    {
-      EntityPlayerMP pmp = (EntityPlayerMP) player;
-      pmp.playerNetServerHandler.sendPacketToPlayer(packet);
-    }
-  }
   static final int MAX_DISTANCE = 192;
   
   public static void SendTileEntityPacketToPlayers(Packet packet, TileEntity tile)
@@ -58,9 +51,85 @@ public class FoundryPacketHandler implements IPacketHandler
     }
   }
 
+  static public void SendCasterModeToServer(TileEntityMetalCaster sender)
+  {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    DataOutputStream data = new DataOutputStream(bytes);
+    try
+    {
+      //Position
+      data.writeInt(sender.xCoord);
+      data.writeInt(sender.yCoord);
+      data.writeInt(sender.zCoord);
+      
+      data.writeByte(sender.GetMode().number);
+    } catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    Packet250CustomPayload packet = new Packet250CustomPayload();
+    packet.channel = ModFoundry.CHANNEL;
+    packet.data = bytes.toByteArray();
+    packet.length = packet.data.length;
+    packet.isChunkDataPacket = true;
+    PacketDispatcher.sendPacketToServer(packet);
+  }
+
+  public static void SendCasterModeToClients(TileEntityMetalCaster sender)
+  {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    DataOutputStream data = new DataOutputStream(bytes);
+
+    try
+    {
+      
+      //Position
+      data.writeInt(sender.xCoord);
+      data.writeInt(sender.yCoord);
+      data.writeInt(sender.zCoord);
+      
+      data.writeByte(sender.GetMode().number);
+    } catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    Packet250CustomPayload packet = new Packet250CustomPayload();
+    packet.channel = ModFoundry.CHANNEL;
+    packet.data = bytes.toByteArray();
+    packet.length = packet.data.length;
+    packet.isChunkDataPacket = true;
+    FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendPacketToAllPlayers(packet);
+  }
+  
+  
   @Override
   public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
   {
+    try
+    {
+      ByteArrayDataInput data = ByteStreams.newDataInput(packet.data);
+      int x = data.readInt();
+      int y = data.readInt();
+      int z = data.readInt();
+      World world = ((EntityPlayer)player).worldObj;
 
+      if(world != null)
+      {
+        TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+
+        if(tileEntity != null)
+        {
+          if(tileEntity instanceof TileEntityFoundry)
+          {
+            ((TileEntityFoundry)tileEntity).ReceivePacketData(manager, packet, ((EntityPlayer)player), data);
+          }
+        }
+      }
+    } catch(Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 }

@@ -132,4 +132,9 @@ public class CastingRecipe implements ICastingRecipe
   {
     return extra_amount;
   }
+  
+  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack)
+  {
+    return fluid_stack.containsFluid(fluid) && mold_stack != null && mold.isItemEqual(mold_stack) && ItemStack.areItemStackTagsEqual(mold, mold_stack);
+  }
 }

@@ -138,5 +138,4 @@ public class ContainerMetalCaster extends Container
   {
     te_caster.GetGUINetworkData(i, j);
   }
-
 }

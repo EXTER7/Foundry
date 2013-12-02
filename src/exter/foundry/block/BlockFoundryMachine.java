@@ -213,4 +213,17 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   {
     return null;
   }
+  
+  @Override
+  public void onNeighborBlockChange(World world, int x, int y, int z, int id)
+  {
+    TileEntityFoundry te = (TileEntityFoundry) world.getBlockTileEntity(x, y, z);
+
+    if(te != null)
+    {
+      te.UpdateRedstone();
+    }
+  }
+
+
 }

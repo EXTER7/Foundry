@@ -17,8 +17,9 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.recipes.SubstanceGuiTexture;
+import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonMerchant;
@@ -36,12 +37,9 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
 public class GuiMetalCaster extends GuiFoundry
@@ -73,10 +71,14 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int POWER_OVERLAY_X = 176;
   private static final int POWER_OVERLAY_Y = 71;
   
+  private static final int RSMODE_X = 176 - GuiButtonRedstoneMode.TEXTURE_WIDTH - 4;
+  private static final int RSMODE_Y = 4;
+  
   private static DecimalFormat formatter = new DecimalFormat("###.#");
   
   private TileEntityMetalCaster te_caster;
   private IInventory player_inventory;
+  private GuiButtonRedstoneMode button_mode;
 
   public GuiMetalCaster(TileEntityMetalCaster cs, IInventory player_inv)
   {
@@ -140,7 +142,27 @@ public class GuiMetalCaster extends GuiFoundry
       float power = te_caster.GetStoredPower();
       float max_power = te_caster.GetMaxStoredPower();
       list.add("Power: " + formatter.format(power) + "/" + formatter.format(max_power) + " MJ");
-      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
+    }
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mouse_x,mouse_y))
+    {
+      List<String> list = new ArrayList<String>();
+      switch(te_caster.GetMode())
+      {
+        case RSMODE_IGNORE:
+          list.add("Mode: Ignore");
+          break;
+        case RSMODE_OFF:
+          list.add("Mode: Redstone signal ON");
+          break;
+        case RSMODE_ON:
+          list.add("Mode: Redstone signal OFF");
+          break;
+        case RSMODE_PULSE:
+          list.add("Mode: Redstone pulse");
+          break;
+      }
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
     }
   }
 
@@ -150,4 +172,22 @@ public class GuiMetalCaster extends GuiFoundry
     return GUI_TEXTURE;
   }
 
+  @Override 
+  public void initGui()
+  {
+    super.initGui();
+    int window_x = (width - xSize) / 2;
+    int window_y = (height - ySize) / 2;
+    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE);
+    buttonList.add(button_mode);
+  }
+
+  @Override
+  protected void actionPerformed(GuiButton button)
+  {
+    if(button.id == button_mode.id)
+    {
+      te_caster.SetMode(te_caster.GetMode().Next());
+    }
+  }
 }

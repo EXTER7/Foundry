@@ -3,6 +3,8 @@ package exter.foundry.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.io.ByteArrayDataInput;
+
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import exter.foundry.ModFoundry;
@@ -10,6 +12,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.network.FoundryPacketHandler;
+import exter.foundry.tileentity.TileEntityMetalCaster.RedstoneMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -18,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -96,7 +100,9 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private List<ContainerSlot> conatiner_slots;
   private NBTTagCompound packet;
   private boolean do_update;
-  
+  protected boolean last_redstone_signal;
+  protected boolean redstone_signal;
+
   
   
   protected final void AddContainerSlot(ContainerSlot cs)
@@ -116,6 +122,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   public TileEntityFoundry()
   {
     conatiner_slots = new ArrayList<ContainerSlot>();
+    last_redstone_signal = false;
+    redstone_signal = false;
   }
   
   @Override
@@ -203,6 +211,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     }
   }
   
+  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  {
+
+  }
+
 
   @Override
   public void writeToNBT(NBTTagCompound compound)
@@ -267,6 +280,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     {
       UpdateEntityClient();
     }
+    last_redstone_signal = redstone_signal;
   }
 
   @Override
@@ -275,5 +289,10 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     super.onDataPacket(net, pkt);
     readFromNBT(pkt.data);
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+  }
+  
+  public void UpdateRedstone()
+  {
+    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
 }

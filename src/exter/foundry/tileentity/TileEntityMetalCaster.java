@@ -59,19 +59,46 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
-
-  private int progress;
+  CastingRecipe current_recipe;
   
+  
+  public enum RedstoneMode
+  {
+    RSMODE_IGNORE(0),
+    RSMODE_ON(1),
+    RSMODE_OFF(2),
+    RSMODE_PULSE(3);
+    
+    public final int number;
+    
+    private RedstoneMode(int num)
+    {
+      number = num;
+    }
+    
+    public RedstoneMode Next()
+    {
+      return FromNumber((number + 1) % 4);
+    }
+    
+    static public RedstoneMode FromNumber(int num)
+    {
+      for(RedstoneMode m:RedstoneMode.values())
+      {
+        if(m.number == num)
+        {
+          return m;
+        }
+      }
+      return RSMODE_IGNORE;
+    }
+  }
+  
+  private RedstoneMode mode;
+  private int progress;
   
   private PowerHandler power_handler;
 
-  private static final String[] NBT_SLOT_NAMES = 
-  {
-    "Output",
-    "Mold",
-    "Extra"
-  };
- 
   public TileEntityMetalCaster()
   {
     super();
@@ -86,10 +113,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     power_handler.configure(1, 5, 1, 400);
     power_handler.configurePowerPerdition(1, 100);
+    mode = RedstoneMode.RSMODE_IGNORE;
+    current_recipe = null;
     
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
+   
   }
+  
   
   @Override
   public void readFromNBT(NBTTagCompound compund)
@@ -104,7 +135,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     if(compund.hasKey("Power"))
     {
       power_handler.readFromNBT(compund.getCompoundTag("Power"));
-    }    
+    }
+    if(compund.hasKey("mode"))
+    {
+      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
+    }
   }
 
 
@@ -113,6 +148,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
+    compound.setInteger("mode", mode.number);
     NBTTagCompound power = new NBTTagCompound();
     power_handler.writeToNBT(power);
   }
@@ -148,6 +184,17 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
   }
 
+  @Override
+  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  {
+    SetMode(RedstoneMode.FromNumber(data.readByte()));
+  }
+
+  
+  public RedstoneMode GetMode()
+  {
+    return mode;
+  }
   
   public float GetStoredPower()
   {
@@ -257,13 +304,19 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public void openChest()
   {
-
-  }  
+    if(!worldObj.isRemote)
+    {
+      FoundryPacketHandler.SendCasterModeToClients(this);
+    }
+  }
 
   @Override
   public void closeChest()
   {
-
+    if(!worldObj.isRemote)
+    {
+      FoundryPacketHandler.SendCasterModeToClients(this);
+    }
   }
 
   public int GetProgress()
@@ -349,6 +402,51 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     
   }
+  
+  private void CheckCurrentRecipe()
+  {
+    if(current_recipe == null)
+    {
+      progress = -1;
+      return;
+    }
+
+    if(!current_recipe.MatchesRecipe(inventory[INVENTORY_MOLD], tank.getFluid()))
+    {
+      progress = -1;
+      current_recipe = null;
+      return;
+    }
+  }
+  
+  private void BeginCasting(float power)
+  {
+    if(current_recipe != null && CanCastCurrentRecipe() && power >= POWER_REQUIRED)
+    {
+      power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
+      progress = 0;
+    }
+  }
+  
+  private boolean CanCastCurrentRecipe()
+  {
+    if(current_recipe.RequiresExtra())
+    {
+      if(!current_recipe.ContainsExtra(inventory[INVENTORY_EXTRA]))
+      {
+        return false;
+      }
+    }
+    
+    ItemStack recipe_output = current_recipe.GetOutputItem();
+
+    ItemStack inv_output = inventory[INVENTORY_OUTPUT];
+    if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize >= inv_output.getMaxStackSize()))
+    {
+      return false;
+    }
+    return true;
+  }
 
   @Override
   protected void UpdateEntityServer()
@@ -357,67 +455,71 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     float last_power = power_handler.getEnergyStored();
     
     int last_progress = progress;
-    if(tank.getFluidAmount() > 0)
+    
+    CheckCurrentRecipe();
+    
+    if(current_recipe == null)
     {
-      CastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[1]);
-      if(recipe != null)
+      current_recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[INVENTORY_MOLD]);
+      progress = -1;
+    }
+    
+    
+    if(progress < 0)
+    {
+      switch(mode)
       {
-        ItemStack result = recipe.GetOutputItem();
-
-        ItemStack output = inventory[INVENTORY_OUTPUT];
-        if(output == null || output.isItemEqual(recipe.GetOutputItem()) && output.stackSize < output.getMaxStackSize())
-        {
-          if(!recipe.RequiresExtra() || recipe.ContainsExtra(inventory[INVENTORY_EXTRA]))
+        case RSMODE_IGNORE:
+          BeginCasting(last_power);
+          break;
+        case RSMODE_OFF:
+          if(!redstone_signal)
           {
-
-            if(progress < 0)
-            {
-              if(last_power >= POWER_REQUIRED)
-              {
-                power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
-                progress = 0;
-              }
-            }
-
-            if(progress >= 0)
-            {
-              if(++progress >= CAST_TIME)
-              {
-                progress = -1;
-                tank.drain(recipe.fluid.amount, true);
-                if(recipe.RequiresExtra())
-                {
-                  decrStackSize(INVENTORY_EXTRA, recipe.extra_amount);
-                  UpdateInventoryItem(INVENTORY_EXTRA);
-                }
-                if(output == null)
-                {
-                  inventory[INVENTORY_OUTPUT] = result;
-                  inventory[INVENTORY_OUTPUT].stackSize = 1;
-                } else
-                {
-                  output.stackSize++;
-                }
-                UpdateInventoryItem(INVENTORY_OUTPUT);
-                UpdateTank(0);
-                onInventoryChanged();
-              }
-            }
-          } else
-          {
-            progress = -1;
+            BeginCasting(last_power);
           }
-        } else
+          break;
+        case RSMODE_ON:
+          if(redstone_signal)
+          {
+            BeginCasting(last_power);
+          }
+          break;
+        case RSMODE_PULSE:
+          if(redstone_signal && !last_redstone_signal)
+          {
+            BeginCasting(last_power);
+          }
+          break;
+      }
+    } else
+    {
+      if(CanCastCurrentRecipe())
+      {
+        if(++progress >= CAST_TIME)
         {
           progress = -1;
+          tank.drain(current_recipe.fluid.amount, true);
+          if(current_recipe.RequiresExtra())
+          {
+            decrStackSize(INVENTORY_EXTRA, current_recipe.extra_amount);
+            UpdateInventoryItem(INVENTORY_EXTRA);
+          }
+          if(inventory[INVENTORY_OUTPUT] == null)
+          {
+            inventory[INVENTORY_OUTPUT] = current_recipe.GetOutputItem();
+            inventory[INVENTORY_OUTPUT].stackSize = 1;
+          } else
+          {
+            inventory[INVENTORY_OUTPUT].stackSize++;
+          }
+          UpdateInventoryItem(INVENTORY_OUTPUT);
+          UpdateTank(0);
+          onInventoryChanged();
         }
       } else
       {
         progress = -1;
       }
-    } else
-    {
-      progress = -1;
     }
     
     if(Math.abs(last_power - power_handler.getEnergyStored()) < 0.01)
@@ -465,5 +567,18 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   public int GetTankCount()
   {
     return 1;
+  }
+  
+
+  public void SetMode(RedstoneMode new_mode)
+  {
+    if(mode != new_mode)
+    {
+      mode = new_mode;
+      if(worldObj.isRemote)
+      {
+        FoundryPacketHandler.SendCasterModeToServer(this);
+      }
+    }
   }
 }

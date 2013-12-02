@@ -30,10 +30,14 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
    */
   public MeltingRecipe FindRecipe(ItemStack item)
   {
+    if(item == null)
+    {
+      return null;
+    }
     String od_name = null;
     for (MeltingRecipe r : recipes)
     {
-      if(FoundryMiscUtils.IsItemMatch(item, r.solid))
+      if(r.MatchesRecipe(item))
       {
         return r;
       }

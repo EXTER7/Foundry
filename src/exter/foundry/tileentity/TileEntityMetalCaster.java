@@ -44,24 +44,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
 {
-  static private final int NETDATAID_TANK_FLUID = 1;
-  static private final int NETDATAID_TANK_AMOUNT = 2;
-
-  static public final int CAST_TIME = 70;
-  
-  static public final int POWER_REQUIRED = 100;
-  
-  static public final int INVENTORY_OUTPUT = 0;
-  static public final int INVENTORY_MOLD = 1;
-  static public final int INVENTORY_EXTRA = 2;
-  static public final int INVENTORY_CONTAINER_DRAIN = 3;
-  static public final int INVENTORY_CONTAINER_FILL = 4;
-  private ItemStack[] inventory;
-  private FluidTank tank;
-  private FluidTankInfo[] tank_info;
-  CastingRecipe current_recipe;
-  
-  
   public enum RedstoneMode
   {
     RSMODE_IGNORE(0),
@@ -93,6 +75,24 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       return RSMODE_IGNORE;
     }
   }
+  
+  static private final int NETDATAID_TANK_FLUID = 1;
+  static private final int NETDATAID_TANK_AMOUNT = 2;
+
+  static public final int CAST_TIME = 70;
+  
+  static public final int POWER_REQUIRED = 100;
+  
+  static public final int INVENTORY_OUTPUT = 0;
+  static public final int INVENTORY_MOLD = 1;
+  static public final int INVENTORY_EXTRA = 2;
+  static public final int INVENTORY_CONTAINER_DRAIN = 3;
+  static public final int INVENTORY_CONTAINER_FILL = 4;
+  private ItemStack[] inventory;
+  private FluidTank tank;
+  private FluidTankInfo[] tank_info;
+  CastingRecipe current_recipe;
+  
   
   private RedstoneMode mode;
   private int progress;
@@ -195,7 +195,19 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     return mode;
   }
-  
+
+  public void SetMode(RedstoneMode new_mode)
+  {
+    if(mode != new_mode)
+    {
+      mode = new_mode;
+      if(worldObj.isRemote)
+      {
+        FoundryPacketHandler.SendCasterModeToServer(this);
+      }
+    }
+  }
+
   public float GetStoredPower()
   {
     return power_handler.getEnergyStored();
@@ -567,18 +579,5 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   public int GetTankCount()
   {
     return 1;
-  }
-  
-
-  public void SetMode(RedstoneMode new_mode)
-  {
-    if(mode != new_mode)
-    {
-      mode = new_mode;
-      if(worldObj.isRemote)
-      {
-        FoundryPacketHandler.SendCasterModeToServer(this);
-      }
-    }
   }
 }

@@ -51,7 +51,17 @@ public class FoundryPacketHandler implements IPacketHandler
     }
   }
 
-  static public void SendCasterModeToServer(TileEntityMetalCaster sender)
+  static private Packet250CustomPayload MakePacket(ByteArrayOutputStream bytes)
+  {
+    Packet250CustomPayload packet = new Packet250CustomPayload();
+    packet.channel = ModFoundry.CHANNEL;
+    packet.data = bytes.toByteArray();
+    packet.length = packet.data.length;
+    packet.isChunkDataPacket = true;
+    return packet;
+  }
+  
+  static private Packet250CustomPayload MakeICFModePacket(TileEntityInductionCrucibleFurnace sender)
   {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     DataOutputStream data = new DataOutputStream(bytes);
@@ -67,42 +77,48 @@ public class FoundryPacketHandler implements IPacketHandler
     {
       e.printStackTrace();
     }
+    return MakePacket(bytes);
+  }
 
-    Packet250CustomPayload packet = new Packet250CustomPayload();
-    packet.channel = ModFoundry.CHANNEL;
-    packet.data = bytes.toByteArray();
-    packet.length = packet.data.length;
-    packet.isChunkDataPacket = true;
-    PacketDispatcher.sendPacketToServer(packet);
+  static private Packet250CustomPayload MakeCasterModePacket(TileEntityMetalCaster sender)
+  {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    DataOutputStream data = new DataOutputStream(bytes);
+    try
+    {
+      //Position
+      data.writeInt(sender.xCoord);
+      data.writeInt(sender.yCoord);
+      data.writeInt(sender.zCoord);
+      
+      data.writeByte(sender.GetMode().number);
+    } catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+    return MakePacket(bytes);
+  }
+  
+  static public void SendCasterModeToServer(TileEntityMetalCaster sender)
+  {
+    PacketDispatcher.sendPacketToServer(MakeCasterModePacket(sender));
   }
 
   public static void SendCasterModeToClients(TileEntityMetalCaster sender)
   {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    DataOutputStream data = new DataOutputStream(bytes);
-
-    try
-    {
-      
-      //Position
-      data.writeInt(sender.xCoord);
-      data.writeInt(sender.yCoord);
-      data.writeInt(sender.zCoord);
-      
-      data.writeByte(sender.GetMode().number);
-    } catch(IOException e)
-    {
-      e.printStackTrace();
-    }
-
-    Packet250CustomPayload packet = new Packet250CustomPayload();
-    packet.channel = ModFoundry.CHANNEL;
-    packet.data = bytes.toByteArray();
-    packet.length = packet.data.length;
-    packet.isChunkDataPacket = true;
-    FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendPacketToAllPlayers(packet);
+    SendTileEntityPacketToPlayers(MakeCasterModePacket(sender), sender);
   }
-  
+
+  static public void SendICFModeToServer(TileEntityInductionCrucibleFurnace sender)
+  {
+    PacketDispatcher.sendPacketToServer(MakeICFModePacket(sender));
+  }
+
+  public static void SendICFModeToClients(TileEntityInductionCrucibleFurnace sender)
+  {
+    SendTileEntityPacketToPlayers(MakeICFModePacket(sender), sender);
+  }
+
   
   @Override
   public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)

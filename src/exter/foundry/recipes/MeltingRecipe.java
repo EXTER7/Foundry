@@ -72,4 +72,9 @@ public class MeltingRecipe implements IMeltingRecipe
   {
     return melting_point;
   }
+  
+  public boolean MatchesRecipe(ItemStack item)
+  {
+    return FoundryMiscUtils.IsItemMatch(item, solid);
+  }
 }

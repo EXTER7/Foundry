@@ -14,26 +14,17 @@ import java.util.TreeSet;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiButtonMerchant;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -73,6 +64,9 @@ public class GuiMetalCaster extends GuiFoundry
   
   private static final int RSMODE_X = 176 - GuiButtonRedstoneMode.TEXTURE_WIDTH - 4;
   private static final int RSMODE_Y = 4;
+  private static final int RSMODE_TEXTURE_X = 176;
+  private static final int RSMODE_TEXTURE_Y = 90;
+
   
   private static DecimalFormat formatter = new DecimalFormat("###.#");
   
@@ -150,13 +144,13 @@ public class GuiMetalCaster extends GuiFoundry
       switch(te_caster.GetMode())
       {
         case RSMODE_IGNORE:
-          list.add("Mode: Ignore");
+          list.add("Mode: Ignore Restone");
           break;
         case RSMODE_OFF:
-          list.add("Mode: Redstone signal ON");
+          list.add("Mode: Redstone signal OFF");
           break;
         case RSMODE_ON:
-          list.add("Mode: Redstone signal OFF");
+          list.add("Mode: Redstone signal ON");
           break;
         case RSMODE_PULSE:
           list.add("Mode: Redstone pulse");
@@ -178,7 +172,7 @@ public class GuiMetalCaster extends GuiFoundry
     super.initGui();
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
-    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE);
+    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE,RSMODE_TEXTURE_X,RSMODE_TEXTURE_Y);
     buttonList.add(button_mode);
   }
 

@@ -13,33 +13,23 @@ import java.util.TreeSet;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiButtonMerchant;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
 public class GuiInductionCrucibleFurnace extends GuiFoundry
@@ -77,9 +67,14 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   public static final int PROGRESS_OVERLAY_X = 176;
   public static final int PROGRESS_OVERLAY_Y = 78;
 
-  
+  private static final int RSMODE_X = 176 - GuiButtonRedstoneMode.TEXTURE_WIDTH - 4;
+  private static final int RSMODE_Y = 4;
+  private static final int RSMODE_TEXTURE_X = 176;
+  private static final int RSMODE_TEXTURE_Y = 100;
+
   private TileEntityInductionCrucibleFurnace te_icf;
   private IInventory player_inventory;
+  private GuiButtonRedstoneMode button_mode;
 
   public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, IInventory player_inv)
   {
@@ -156,6 +151,24 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       }
       drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
     }
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mouse_x,mouse_y))
+    {
+      List<String> list = new ArrayList<String>();
+      switch(te_icf.GetMode())
+      {
+        case RSMODE_IGNORE:
+          list.add("Mode: Ignore Restone");
+          break;
+        case RSMODE_OFF:
+          list.add("Mode: Redstone signal OFF");
+          break;
+        case RSMODE_ON:
+          list.add("Mode: Redstone signal ON");
+          break;
+      }
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
+    }
+
   }
 
   @Override
@@ -163,4 +176,24 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   {
     return GUI_TEXTURE;
   }
+  
+  @Override 
+  public void initGui()
+  {
+    super.initGui();
+    int window_x = (width - xSize) / 2;
+    int window_y = (height - ySize) / 2;
+    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE,RSMODE_TEXTURE_X,RSMODE_TEXTURE_Y);
+    buttonList.add(button_mode);
+  }
+
+  @Override
+  protected void actionPerformed(GuiButton button)
+  {
+    if(button.id == button_mode.id)
+    {
+      te_icf.SetMode(te_icf.GetMode().Next());
+    }
+  }
+
 }

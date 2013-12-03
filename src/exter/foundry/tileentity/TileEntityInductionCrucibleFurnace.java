@@ -80,9 +80,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   
   static public final int HEAT_MAX = 500000;
   static public final int HEAT_MIN = 29000;
-  static public final int SMELT_TIME = 4000;
+  static public final int SMELT_TIME = 50000;
   
-  static public final int MAX_ENERGY_USE = 30;
+  static public final int ENERGY_USE = 30;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -117,8 +117,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     
-    power_handler.configure(1, 50, 1, 200);
-    power_handler.configurePowerPerdition(1, 50);
+    power_handler.configure(1, 32, 1, 32);
+    power_handler.configurePowerPerdition(0, 0);
     current_recipe = null;
     mode = RedstoneMode.RSMODE_IGNORE;
     
@@ -343,11 +343,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   {
     return heat;
   }
-
-  public int GetSmeltingSpeed()
-  {
-    return (heat - melt_point) * 400 / HEAT_MAX;
-  }
   
   public int GetProgress()
   {
@@ -484,11 +479,17 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     if(heat <= melt_point || tank.fill(fs, false) < fs.amount)
     {
       progress = 0;
+      return;
     }
-    progress += GetSmeltingSpeed();
+    int increment = (heat - melt_point) / fs.amount + 1;
+    if(increment > SMELT_TIME / 30)
+    {
+      increment = SMELT_TIME / 30;
+    }
+    progress += increment;
     if(progress >= SMELT_TIME)
     {
-      progress -= SMELT_TIME;
+      progress = 0;
       tank.fill(fs, true);
       decrStackSize(INVENTORY_INPUT,1);
       UpdateTank(0);
@@ -536,29 +537,34 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
         break;
       case RSMODE_OFF:
         use_energy = !redstone_signal;
+        if(last_redstone_signal)
+        {
+          power_handler.setEnergy(0);
+        }
         break;
       case RSMODE_ON:
         use_energy = redstone_signal;
+        if(!last_redstone_signal)
+        {
+          power_handler.setEnergy(0);
+        }
         break;
       
     }
     if(use_energy)
     {
-      float energy_need = (HEAT_MAX - heat) / 6;
-      if(energy_need > MAX_ENERGY_USE)
-      {
-        energy_need = MAX_ENERGY_USE;
-      }
-
       if(power_handler.getMaxEnergyStored() > 0)
       {
-        float energy = power_handler.useEnergy(1, energy_need, true);
+        float energy = power_handler.useEnergy(1, ENERGY_USE, true);
         heat += (int) (energy * 6);
         if(heat > HEAT_MAX)
         {
           heat = HEAT_MAX;
         }
       }
+    } else
+    {
+      power_handler.setEnergy(power_handler.getMaxEnergyStored());
     }
     
     DoMeltingProgress();

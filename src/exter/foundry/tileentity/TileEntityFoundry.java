@@ -100,6 +100,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private List<ContainerSlot> conatiner_slots;
   private NBTTagCompound packet;
   private boolean do_update;
+  private boolean initialized;
+  
   protected boolean last_redstone_signal;
   protected boolean redstone_signal;
 
@@ -124,8 +126,17 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     conatiner_slots = new ArrayList<ContainerSlot>();
     last_redstone_signal = false;
     redstone_signal = false;
+    initialized = false;
   }
   
+  @Override
+  public void invalidate()
+  {
+    initialized = false;
+    super.invalidate();
+  }
+
+
   @Override
   public final Packet getDescriptionPacket()
   {
@@ -133,7 +144,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     writeToNBT(nbt);    
     return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, nbt);
   }
-  
   
   
   protected final void UpdateTank(int slot)
@@ -256,6 +266,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   @Override
   public final void updateEntity()
   {
+    if(!(initialized || isInvalid()))
+    {
+      UpdateRedstone();
+    }
+    
     if(this instanceof IPowerReceptor)
     {
       ((IPowerReceptor)this).getPowerReceiver(null).update();

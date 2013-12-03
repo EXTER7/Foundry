@@ -79,7 +79,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
-  static public final int CAST_TIME = 70;
+  static public final int CAST_TIME = 4000;
   
   static public final int POWER_REQUIRED = 100;
   
@@ -507,7 +507,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     {
       if(CanCastCurrentRecipe())
       {
-        if(++progress >= CAST_TIME)
+        int increment = 15000 / current_recipe.fluid.amount + 1;
+        if(increment > CAST_TIME / 20)
+        {
+          increment = CAST_TIME / 20;
+        }
+        progress += increment;
+        
+        if(progress >= CAST_TIME)
         {
           progress = -1;
           tank.drain(current_recipe.fluid.amount, true);

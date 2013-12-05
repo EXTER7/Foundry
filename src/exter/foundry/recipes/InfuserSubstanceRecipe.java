@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -73,5 +74,11 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
       item = itm;
     }
     extract_energy = energy;
+  }
+  
+  @Override
+  public boolean MatchesRecipe(ItemStack item_stack)
+  {
+    return FoundryMiscUtils.IsItemMatch(item_stack, item);
   }
 }

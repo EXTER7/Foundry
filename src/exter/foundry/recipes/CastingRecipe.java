@@ -133,6 +133,7 @@ public class CastingRecipe implements ICastingRecipe
     return extra_amount;
   }
   
+  @Override
   public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack)
   {
     if(GetOutputItem() == null)

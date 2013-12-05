@@ -22,4 +22,11 @@ public interface IAlloyRecipe
    */
   public FluidStack GetOutput();
 
+  /**
+   * Check if two fluid stacks matches this recipe (in_a contains InputA, and in_b contains InputB).
+   * @param in_a fluid stack to compare to Input A.
+   * @param in_b fluid stack to compare to Input B.
+   * @return true if the fluids matches, false otherwise.
+   */
+  public boolean MatchesRecipe(FluidStack in_a,FluidStack in_b);
 }

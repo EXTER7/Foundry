@@ -27,4 +27,11 @@ public interface IInfuserSubstanceRecipe
    * @return The amount of energy needed in 1/100th MJ.
    */
   public int GetEneryNeeded();
+  
+  /**
+   * Check if an item matches a substance recipe.
+   * @param item_stack The item to check.
+   * @return true if the item matches, false otherwise.
+   */
+  public boolean MatchesRecipe(ItemStack item_stack);
 }

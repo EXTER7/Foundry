@@ -22,4 +22,11 @@ public interface IMeltingRecipe
    * @return Melting temperature in K.
    */
   public int GetMeltingPoint();
+  
+  /**
+   * Check if an item matches this recipe.
+   * @param item The item to check.
+   * @return true, if the item matches, false otherwise.
+   */
+  public boolean MatchesRecipe(ItemStack item);
 }

@@ -28,7 +28,7 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
   }
   
   /**
-   * Find a valid recipe that contains the given inputs
+   * Find a valid recipe that contains the given inputs.
    * A recipe is found if the recipe's inputs contains the fluid in the parameters.
    * @param in_a FluidStack for the first input.
    * @param in_b FluidStack for the second input.
@@ -38,7 +38,7 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
   {
     for(AlloyRecipe r:recipes)
     {
-      if(in_a.containsFluid(r.input_a) && in_b.containsFluid(r.input_b))
+      if(r.MatchesRecipe(in_a, in_b))
       {
         return r;
       }

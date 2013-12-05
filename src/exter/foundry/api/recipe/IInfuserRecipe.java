@@ -27,4 +27,13 @@ public interface IInfuserRecipe
    * @return The fluid that the recipe produces.
    */
   public FluidStack GetOutput();
+  
+  /**
+   * Check if a fluid stack and substance stack matches this recipe
+   * @param in_fluid Fluid to check.
+   * @param substance_type Substance type to check.
+   * @param substance_amount Substance amount to check.
+   * @return true if the fluid and substance matches, false otherwise.
+   */
+  public boolean MatchesRecipe(FluidStack in_fluid,String substance_type,int substance_amount);
 }

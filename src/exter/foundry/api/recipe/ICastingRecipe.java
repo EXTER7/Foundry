@@ -40,5 +40,11 @@ public interface ICastingRecipe
    */
   public Object GetOutput();
 
-
+  /**
+   * Check if a fluid stack and mold matches this recipe.
+   * @param mold_stack mold to check.
+   * @param fluid_stack fluid to check (must contain the fluid in the recipe).
+   * @return true if the stack and mold matches, false otherwise.
+   */
+  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack);
 }

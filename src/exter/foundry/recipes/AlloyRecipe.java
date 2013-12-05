@@ -39,5 +39,11 @@ public class AlloyRecipe implements IAlloyRecipe
     output = out;
     input_a = in_a;
     input_b = in_b;
-  }  
+  }
+  
+  @Override
+  public boolean MatchesRecipe(FluidStack in_a,FluidStack in_b)
+  {
+    return in_a.containsFluid(input_a) && in_b.containsFluid(input_b);    
+  }
 }

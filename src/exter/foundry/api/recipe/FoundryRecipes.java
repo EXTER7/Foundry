@@ -15,11 +15,10 @@ public class FoundryRecipes
   static public final int FLUID_AMOUNT_NUGGET = 12;
   static public final int FLUID_AMOUNT_ORE = 216;
 
+  //These fields are set by Foundry during it's preInit phase.
+  //If foundry is not installed they become null.
   static public IMeltingRecipeManager melting;
-
   static public ICastingRecipeManager casting;
-  
   static public IAlloyRecipeManager alloy;
-  
   static public IInfuserRecipeManager infuser;
 }

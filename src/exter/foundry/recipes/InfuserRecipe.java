@@ -65,4 +65,14 @@ public class InfuserRecipe implements IInfuserRecipe
     substance = new InfuserSubstance(in_substance);
     output = result.copy();
   }
+  
+  @Override
+  public boolean MatchesRecipe(FluidStack in_fluid,String substance_type,int substance_amount)
+  {
+    if(substance_type == null || substance_amount <= 0)
+    {
+      return false;
+    }
+    return in_fluid.containsFluid(fluid) && substance_type.equals(substance.type) && substance_amount >= substance.amount;
+  }
 }

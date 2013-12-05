@@ -335,10 +335,10 @@ public class ModFoundry
     }
     
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 2400);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",6, new ItemStack(Item.coal,1,1), 4800);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Item.coal,1,1), 4800);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 19200);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, "dustCoal", 1600);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",6, "dustCharcoal", 3200);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 3200);
 
     InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "carbon", 2);
     

@@ -26,6 +26,8 @@ public class ItemIngot extends Item
   static public final int INGOT_STEEL = 9;
   static public final int INGOT_LEAD = 10;
   static public final int INGOT_ALUMINUM = 11;
+  static public final int INGOT_CHROMIUM = 12;
+  static public final int INGOT_PLATINUM = 13;
 
 
   static private final String[] ICON_PATHS = 
@@ -41,7 +43,9 @@ public class ItemIngot extends Item
     "foundry:ingot_silver",
     "foundry:ingot_steel",
     "foundry:ingot_lead",
-    "foundry:ingot_aluminum"
+    "foundry:ingot_aluminum",
+    "foundry:ingot_chromium",
+    "foundry:ingot_platinum"
   };
   
   static public final String[] METAL_NAMES = 
@@ -57,7 +61,9 @@ public class ItemIngot extends Item
     "Silver",
     "Steel",
     "Lead",
-    "Aluminum"
+    "Aluminum",
+    "Chromium",
+    "Platinum"
   };
 
   static public final String[] NAMES = 
@@ -73,7 +79,9 @@ public class ItemIngot extends Item
     "Silver Ingot",
     "Steel Ingot",
     "Lead Ingot",
-    "Aluminum Ingot"
+    "Aluminum Ingot",
+    "Chromium Ingot",
+    "Platinum Ingot"
   };
   
   
@@ -90,7 +98,9 @@ public class ItemIngot extends Item
     "ingotSilver",
     "ingotSteel",
     "ingotLead",
-    "ingotAluminum"
+    "ingotAluminum",
+    "ingotChromium",
+    "ingotPlatinum"
   };
   
   @SideOnly(Side.CLIENT)

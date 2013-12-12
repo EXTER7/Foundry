@@ -102,21 +102,25 @@ public class ModIntegrationGregtech extends ModIntegration
         'B', foundrybrick_stack,
         'G', glasspane_stack));
   }
-
+  
   @Override
   public void OnPostInit()
   {
-    ItemStack plate_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plate" + name);
-      
       Fluid fluid = LiquidMetalRegistry.instance.GetFluid(name);
-      MeltingRecipeManager.instance.AddRecipe("plate" + name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe("dustSmall" + name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
-      MeltingRecipeManager.instance.AddRecipe("dustTiny" + name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT / 9));
-      
-      CastingRecipeManager.instance.AddRecipe("plate" + name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT), plate_mold, null);
+      RegisterMetalRecipes(name, fluid);
     }
+    RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
+  }
+
+  private void RegisterMetalRecipes(String partial_name, Fluid fluid)
+  {
+    ItemStack plate_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plate" + partial_name);
+    MeltingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.AddRecipe("dustSmall" + partial_name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
+    MeltingRecipeManager.instance.AddRecipe("dustTiny" + partial_name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT / 9));
+    CastingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT), plate_mold, null);
   }
 }

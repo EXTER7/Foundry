@@ -166,7 +166,9 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Chromium", 2200, 8);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Platinum", 2050, 15);
+    FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     config.save();
 
 

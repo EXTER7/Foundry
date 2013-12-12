@@ -1,9 +1,12 @@
 package exter.foundry.registry;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -101,5 +104,10 @@ public class LiquidMetalRegistry implements IFluidRegistry
   public Fluid GetFluid(String name)
   {
     return registry.get(name);
+  }
+  
+  public Set<String> GetFluidNames()
+  {
+    return Collections.unmodifiableSet(registry.keySet());
   }
 }

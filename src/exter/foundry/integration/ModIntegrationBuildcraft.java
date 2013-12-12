@@ -11,6 +11,7 @@ import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -25,6 +26,17 @@ public class ModIntegrationBuildcraft extends ModIntegration
   public ModIntegrationBuildcraft(String mod_name)
   {
     super(mod_name);
+  }
+
+  @Override
+  public void OnPreInit(Configuration config)
+  {
+
+  }
+
+  @Override
+  public void OnInit()
+  {
     try
     {
       items = new ItemStack[5];
@@ -37,7 +49,7 @@ public class ModIntegrationBuildcraft extends ModIntegration
       VerifyItems();
     } catch(ClassNotFoundException e)
     {
-      ModFoundry.log.info("[ModIntegration ("+ mod_name +")] Cannot find buildcraft.BuildCraftCore class");
+      ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find buildcraft.BuildCraftCore class");
       is_loaded = false;
       return;
     }
@@ -61,5 +73,11 @@ public class ModIntegrationBuildcraft extends ModIntegration
       FoundryMiscUtils.RegisterInOreDictionary("gearGold",items[ITEM_GOLD_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearDiamond",items[ITEM_DIAMOND_GEAR]);
     }
+  }
+
+  @Override
+  public void OnPostInit()
+  {
+    
   }
 }

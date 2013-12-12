@@ -1,6 +1,7 @@
 package exter.foundry.integration;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.FoundryRecipes;
@@ -23,6 +24,17 @@ public class ModIntegrationForestry extends ModIntegration
   public ModIntegrationForestry(String mod_name)
   {
     super(mod_name);
+  }
+
+  @Override
+  public void OnPreInit(Configuration config)
+  {
+    
+  }
+
+  @Override
+  public void OnInit()
+  {
     items = new ItemStack[3];
     items[ITEM_COPPER_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearCopper"));
     items[ITEM_TIN_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearTin"));
@@ -50,5 +62,11 @@ public class ModIntegrationForestry extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
+  }
+
+  @Override
+  public void OnPostInit()
+  {
+
   }
 }

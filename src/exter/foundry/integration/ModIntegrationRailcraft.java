@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
@@ -40,6 +41,19 @@ public class ModIntegrationRailcraft extends ModIntegration
   public ModIntegrationRailcraft(String mod_name)
   {
     super(mod_name);
+  }
+
+
+  @Override
+  public void OnPreInit(Configuration config)
+  {
+
+  }
+
+
+  @Override
+  public void OnInit()
+  {
     items = new ItemStack[13];
 
     items[ITEM_STEEL_PICKAXE] = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
@@ -113,5 +127,12 @@ public class ModIntegrationRailcraft extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_GEAR], new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
+  }
+
+
+  @Override
+  public void OnPostInit()
+  {
+
   }
 }

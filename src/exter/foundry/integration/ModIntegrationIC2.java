@@ -4,6 +4,7 @@ import ic2.api.item.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
@@ -62,6 +63,16 @@ public class ModIntegrationIC2 extends ModIntegration
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
+  }
+
+  @Override
+  public void OnPreInit(Configuration config)
+  {
+  }
+
+  @Override
+  public void OnInit()
+  {
     items = new ItemStack[25];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
@@ -187,13 +198,23 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
 
-      
-      RegisterPlateMoldRecipe(items[ITEM_COPPER_PLATE],"plateCopper");
-      RegisterPlateMoldRecipe(items[ITEM_TIN_PLATE],"plateTin");
-      RegisterPlateMoldRecipe(items[ITEM_BRONZE_PLATE],"plateBronze");
-      RegisterPlateMoldRecipe(items[ITEM_GOLD_PLATE],"plateGold");
-      RegisterPlateMoldRecipe(items[ITEM_IRON_PLATE],"plateIron");
-      RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE],"plateLead");      
+      ModIntegration gti = this.GetIntegration("gregtech");
+      if(gti == null || !gti.is_loaded)
+      {
+        RegisterPlateMoldRecipe(items[ITEM_COPPER_PLATE], "plateCopper");
+        RegisterPlateMoldRecipe(items[ITEM_TIN_PLATE], "plateTin");
+        RegisterPlateMoldRecipe(items[ITEM_BRONZE_PLATE], "plateBronze");
+        RegisterPlateMoldRecipe(items[ITEM_GOLD_PLATE], "plateGold");
+        RegisterPlateMoldRecipe(items[ITEM_IRON_PLATE], "plateIron");
+        RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE], "plateLead");
+      }
     }
+  }
+
+  @Override
+  public void OnPostInit()
+  {
+    // TODO Auto-generated method stub
+    
   }
 }

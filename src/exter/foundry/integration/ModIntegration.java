@@ -6,8 +6,9 @@ import java.util.Map;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 
-public class ModIntegration
+public abstract class ModIntegration
 {
   static private Map<String,ModIntegration> integrations = new HashMap<String,ModIntegration>();
   
@@ -63,6 +64,10 @@ public class ModIntegration
     is_loaded = true;
   }
   
+  public abstract void OnPreInit(Configuration config);
+  public abstract void OnInit();
+  public abstract void OnPostInit();
+  
   public final boolean IsLoaded()
   {
     return is_loaded;
@@ -73,21 +78,49 @@ public class ModIntegration
     return items[index];
   }
   
-  static public ModIntegration GetIntegration(String name)
+  static final public ModIntegration GetIntegration(String name)
   {
     return integrations.get(name);
   }
   
-  static public void RegisterIntegration(ModIntegration mod)
+  static final public void RegisterIntegration(Configuration config,ModIntegration mod)
   {
-    if(mod.IsLoaded())
+    if(config.get("integration", "enable."+mod.Name, true).getBoolean(true))
     {
-      ModFoundry.log.info("Mod Integration ("+ mod.Name +") loaded successfully");
       integrations.put(mod.Name, mod);
-    } else
-    {
-      ModFoundry.log.info("Mod Integration ("+ mod.Name +") failed");
     }
   }
   
+  static final public void PreInit(Configuration config)
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnPreInit(config);
+      }
+    }
+  }
+
+  static final public void Init()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnInit();
+      }
+    }
+  }
+
+  static final public void PostInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnPostInit();
+      }
+    }
+  }
 }

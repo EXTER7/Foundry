@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,6 +42,19 @@ public class ModIntegrationTE3 extends ModIntegration
   public ModIntegrationTE3(String mod_name)
   {
     super(mod_name);
+  }
+
+
+  @Override
+  public void OnPreInit(Configuration config)
+  {
+
+  }
+
+
+  @Override
+  public void OnInit()
+  {
     items = new ItemStack[13];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
@@ -129,5 +143,12 @@ public class ModIntegrationTE3 extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
+  }
+
+
+  @Override
+  public void OnPostInit()
+  {
+
   }
 }

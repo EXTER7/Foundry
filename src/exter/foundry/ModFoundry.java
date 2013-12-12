@@ -51,6 +51,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
+import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationTE3;
@@ -120,6 +121,17 @@ public class ModFoundry
   public void preInit(FMLPreInitializationEvent event)
   {
     int i;
+    Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+    config.load();
+    ModIntegration.RegisterIntegration(config,new ModIntegrationIC2("ic2"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationBuildcraft("buildcraft"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
+    
+    ModIntegration.PreInit(config);
+
     FoundryRegistry.items = ItemRegistry.instance;
     FoundryRegistry.fluids = LiquidMetalRegistry.instance;
     
@@ -137,8 +149,6 @@ public class ModFoundry
     OreDictionary.registerOre("blockGold", Block.blockGold);
     OreDictionary.registerOre("nuggetGold", Item.goldNugget);
 
-    Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-    config.load();
     FoundryConfig.Load(config);
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
@@ -351,12 +361,7 @@ public class ModFoundry
   {
     int i;
     log.setParent(FMLLog.getLogger());
-
-    ModIntegration.RegisterIntegration(new ModIntegrationIC2("ic2"));
-    ModIntegration.RegisterIntegration(new ModIntegrationBuildcraft("buildcraft"));
-    ModIntegration.RegisterIntegration(new ModIntegrationForestry("forestry"));
-    ModIntegration.RegisterIntegration(new ModIntegrationRailcraft("railcraft"));
-    ModIntegration.RegisterIntegration(new ModIntegrationTE3("te3"));
+    ModIntegration.Init();
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
@@ -401,42 +406,57 @@ public class ModFoundry
         'C', foundryclay_stack);
 
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(heatingcoil_stack,
-        "RCR",
-        "NGN",
-        "RCR",
-        'C', "ingotCopper",
-        'N', "ingotNickel",
-        'G', goldnugget_stack,
-        'R', redstone_stack));
+    ModIntegration gti = ModIntegration.GetIntegration("gregtech");
+    if(gti == null || !gti.IsLoaded())
+    {
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          emptycontainer2_stack,
+          " T ",
+          "BGB",
+          " T ",
+          'T', "ingotTin",
+          'B', foundrybrick_stack,
+          'G', glasspane_stack));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(heatingcoil_stack,
-        "RNR",
-        "CGC",
-        "RNR",
-        'C', "ingotCopper",
-        'N', "ingotNickel",
-        'G', goldnugget_stack,
-        'R', redstone_stack));
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          heatingcoil_stack,
+          "RCR",
+          "NGN",
+          "RCR",
+          'C', "ingotCopper",
+          'N', "ingotNickel",
+          'G', goldnugget_stack,
+          'R', redstone_stack));
 
-    GameRegistry.addRecipe(crucible_stack, 
-        "IBI",
-        "B B",
-        "IBI",
-        'I', iron_stack,
-        'B', foundrybrick_stack);
-    
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF),
-        "IFI",
-        "HCH",
-        "HRH",
-        'F', furnace_stack, 
-        'I', "ingotCopper", 
-        'C', crucible_stack,
-        'R', redstone_stack,
-        'H', heatingcoil_stack));
-    
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          heatingcoil_stack,
+          "RNR",
+          "CGC",
+          "RNR",
+          'C', "ingotCopper",
+          'N', "ingotNickel",
+          'G', goldnugget_stack,
+          'R', redstone_stack));
+
+      GameRegistry.addRecipe(
+          crucible_stack,
+          "IBI",
+          "B B",
+          "IBI",
+          'I', iron_stack, 'B',
+          foundrybrick_stack);
+
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          new ItemStack(FoundryBlocks.block_machine, 1, BlockFoundryMachine.MACHINE_ICF),
+          "IFI",
+          "HCH",
+          "HRH",
+          'F', furnace_stack,
+          'I', "ingotCopper",
+          'C', crucible_stack,
+          'R', redstone_stack,
+          'H', heatingcoil_stack));
+    }
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
         " R ",
@@ -468,14 +488,6 @@ public class ModFoundry
         'C', crucible_stack,
         'R', redstone_stack,
         'G', "gearStone"));
-
-    GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer2_stack,
-        " T ",
-        "BGB",
-        " T ",
-        'T', "ingotTin", 
-        'B', foundrybrick_stack,
-        'G', glasspane_stack));
 
     //Mold crafting with vanilla items
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
@@ -630,6 +642,7 @@ public class ModFoundry
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
+    ModIntegration.PostInit();
     //Check for the existence of a stone gear, add it's own if it doesn't.
     if(OreDictionary.getOres("gearStone").size() == 0)
     {

@@ -165,6 +165,7 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
 
     config.save();
 
@@ -264,6 +265,7 @@ public class ModFoundry
               FoundryRecipes.FLUID_AMOUNT_INGOT),
           mold_ingot, null);
     }
+    
     
     //Metal block casting recipes.
     for(Entry<String,ItemStack> entry:FoundryBlocks.block_stacks.entrySet())

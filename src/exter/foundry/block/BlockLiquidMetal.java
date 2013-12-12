@@ -145,6 +145,10 @@ public class BlockLiquidMetal extends BlockFluidClassic
 
   private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz)
   {
+    if(solid < 0)
+    {
+      return false;
+    }
     //Check if block is in contact with water.
     if(world.getBlockMaterial(nx, ny, nz) == Material.water)
     {

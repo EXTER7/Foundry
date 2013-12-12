@@ -45,7 +45,8 @@ public class FoundryBlocks
     "Brass",
     "Silver",
     "Steel",
-    "Lead"
+    "Lead",
+    "Aluminum"
   };
 
   private static final String[] SLAB1_NAMES = 
@@ -66,7 +67,8 @@ public class FoundryBlocks
     "Brass Slab",
     "Silver Slab",
     "Steel Slab",
-    "Lead Slab"
+    "Lead Slab",
+    "Aluminum Slab"
   };
 
   private static final String[] SLAB1_ICONS = 
@@ -87,7 +89,8 @@ public class FoundryBlocks
     "foundry:metalblock_brass",
     "foundry:metalblock_silver",
     "foundry:metalblock_steel",
-    "foundry:metalblock_lead"
+    "foundry:metalblock_lead",
+    "foundry:metalblock_aluminum"
   };
 
   public static class MetalStair
@@ -126,7 +129,8 @@ public class FoundryBlocks
     new MetalStair("Brass","Brass Stairs",null,BlockMetal.BLOCK_BRASS),
     new MetalStair("Silver","Silver Stairs",null,BlockMetal.BLOCK_SILVER),
     new MetalStair("Steel","Steel Stairs",null,BlockMetal.BLOCK_STEEL),
-    new MetalStair("Lead","Lead Stairs",null,BlockMetal.BLOCK_LEAD)
+    new MetalStair("Lead","Lead Stairs",null,BlockMetal.BLOCK_LEAD),
+    new MetalStair("Aluminum","Aluminum Stairs",null,BlockMetal.BLOCK_ALUMINUM)
   };
   
   public static BlockFoundryCrucible block_foundry_crucible;

@@ -14,8 +14,11 @@ public interface IAlloyRecipeManager
    * @param in_a First input (fluid type and amount required).
    * @param in_b Second input (fluid type and amount required).
    */
+  @Deprecated
   public void AddRecipe(FluidStack out,FluidStack in_a,FluidStack in_b);
   
+  
+  public void AddRecipe(FluidStack out,FluidStack[] in);
   
   /**
    * Get a list of all the recipes

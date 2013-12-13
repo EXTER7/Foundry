@@ -38,14 +38,8 @@ public class GuiAlloyMixer extends GuiFoundry
 
   private static final int TANK_HEIGHT = 35;
   
-  private static final int TANK_INPUT_A_X = 36;
-  private static final int TANK_INPUT_A_Y = 45;
-
-  private static final int TANK_INPUT_B_X = 124;
-  private static final int TANK_INPUT_B_Y = 45;
-
-  private static final int TANK_OUTPUT_X = 80;
-  private static final int TANK_OUTPUT_Y = 45;
+  private static final int[] TANK_X = new int[] {26, 47, 68, 89, 133};
+  private static final int TANK_Y = 45;
 
   private static final int TANK_OVERLAY_X = 176;
   private static final int TANK_OVERLAY_Y = 0;
@@ -78,35 +72,31 @@ public class GuiAlloyMixer extends GuiFoundry
     super.drawScreen(mouse_x, mouse_y, par3);
     
     //Draw tool tips.
-    
-    if(isPointInRegion(TANK_OUTPUT_X,TANK_OUTPUT_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
-    {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_OUTPUT));
-    }
 
-    if(isPointInRegion(TANK_INPUT_A_X,TANK_INPUT_A_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    int i;
+    for(i = 0; i < 5; i++)
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_A));
-    }
-
-    if(isPointInRegion(TANK_INPUT_B_X,TANK_INPUT_B_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
-    {
-      DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_B));
+      if(isPointInRegion(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+      {
+        DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(i));
+      }
     }
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {
+    int i;
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     mc.renderEngine.bindTexture(GUI_TEXTURE);
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    DisplayTank(window_x, window_y, TANK_INPUT_A_X, TANK_INPUT_A_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_A));
-    DisplayTank(window_x, window_y, TANK_INPUT_B_X, TANK_INPUT_B_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_INPUT_B));
-    DisplayTank(window_x, window_y, TANK_OUTPUT_X, TANK_OUTPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(TileEntityAlloyMixer.TANK_OUTPUT));
+    for(i = 0; i < 5; i++)
+    {
+      DisplayTank(window_x, window_y, TANK_X[i], TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(i));
+    }
   }
 
   @Override

@@ -22,11 +22,18 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
   }
   
   @Override
+  @Deprecated
   public void AddRecipe(FluidStack out,FluidStack in_a,FluidStack in_b)
   {
-    recipes.add(new AlloyRecipe(out,in_a,in_b));
+    AddRecipe(out,new FluidStack[] {in_a,in_b});
   }
   
+  @Override
+  public void AddRecipe(FluidStack out, FluidStack[] in)
+  {
+    recipes.add(new AlloyRecipe(out,in));
+  }
+
   /**
    * Find a valid recipe that contains the given inputs.
    * A recipe is found if the recipe's inputs contains the fluid in the parameters.
@@ -34,11 +41,11 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
    * @param in_b FluidStack for the second input.
    * @return
    */
-  public AlloyRecipe FindRecipe(FluidStack in_a,FluidStack in_b)
+  public AlloyRecipe FindRecipe(FluidStack[] in,int[] order)
   {
     for(AlloyRecipe r:recipes)
     {
-      if(r.MatchesRecipe(in_a, in_b))
+      if(r.MatchesRecipe(in,order))
       {
         return r;
       }
@@ -51,4 +58,5 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
   {
     return Collections.unmodifiableList(recipes);
   }
+
 }

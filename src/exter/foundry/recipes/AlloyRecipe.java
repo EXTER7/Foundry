@@ -12,21 +12,35 @@ import net.minecraftforge.fluids.FluidStack;
 public class AlloyRecipe implements IAlloyRecipe
 {
   
-  public FluidStack input_a;
-  public FluidStack input_b;
+  public FluidStack[] inputs;
   public FluidStack output;
 
   @Override
+  @Deprecated
   public FluidStack GetInputA()
   {
-    return input_a.copy();
+    return inputs[0].copy();
   }
   
   @Override
+  @Deprecated
   public FluidStack GetInputB()
   {
-    return input_b.copy();
+    return inputs[1].copy();
   }
+
+  @Override
+  public FluidStack GetInput(int in)
+  {
+    return inputs[in].copy();
+  }
+  
+  @Override
+  public int GetInputCount()
+  {
+    return inputs.length;
+  }
+
 
   @Override
   public FluidStack GetOutput()
@@ -34,16 +48,61 @@ public class AlloyRecipe implements IAlloyRecipe
     return output.copy();
   }
   
-  public AlloyRecipe(FluidStack out,FluidStack in_a,FluidStack in_b)
+  public AlloyRecipe(FluidStack out,FluidStack[] in)
   {
-    output = out;
-    input_a = in_a;
-    input_b = in_b;
+    output = out.copy();
+    int i;
+    if(in.length > 4)
+    {
+      throw new IllegalArgumentException("Alloy recipe cannot have more the 4 inputs");
+    }
+    inputs = new FluidStack[in.length];
+    for(i = 0; i < in.length; i++)
+    {
+      inputs[i] = in[i].copy();
+    }
   }
-  
+
   @Override
-  public boolean MatchesRecipe(FluidStack in_a,FluidStack in_b)
+  public boolean MatchesRecipe(FluidStack[] in,int[] order)
   {
-    return in_a.containsFluid(input_a) && in_b.containsFluid(input_b);    
+    int matches = 0;
+    int i;
+    if(order != null && order.length < inputs.length)
+    {
+      order = null;
+    }
+    
+    if(in.length < inputs.length)
+    {
+      return false;
+    }
+    for(i = 0; i < in.length; i++)
+    {
+      if(in[i] != null)
+      {
+        int j;
+        for(j = 0; j < inputs.length; j++)
+        {
+          if(in[i].containsFluid(inputs[j]))
+          {
+            matches++;
+            if(order != null)
+            {
+              order[j] = i;
+            }
+            break;
+          }
+        }
+      }
+    }
+    return matches == inputs.length;
+  }
+
+  @Override
+  @Deprecated
+  public boolean MatchesRecipe(FluidStack in_a, FluidStack in_b)
+  {
+    return MatchesRecipe(new FluidStack[] {in_a, in_b},null);
   }
 }

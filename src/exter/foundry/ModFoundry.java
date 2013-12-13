@@ -200,22 +200,42 @@ public class ModFoundry
     }
     if(FoundryConfig.recipe_alloy_bronze_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_bronze, 3 * FoundryConfig.recipe_alloy_bronze_yield), new FluidStack(liquid_copper, 9), new FluidStack(liquid_tin, 3));
+      AlloyRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_bronze, 3 * FoundryConfig.recipe_alloy_bronze_yield),
+          new FluidStack[] {
+            new FluidStack(liquid_copper, 9),
+            new FluidStack(liquid_tin, 3)
+            });
     }
     
     if(FoundryConfig.recipe_alloy_brass_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_brass, 3 * FoundryConfig.recipe_alloy_brass_yield), new FluidStack(liquid_copper, 9), new FluidStack(liquid_zinc, 3));
+      AlloyRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_brass, 3 * FoundryConfig.recipe_alloy_brass_yield),
+          new FluidStack[] {
+            new FluidStack(liquid_copper, 9),
+            new FluidStack(liquid_zinc, 3)
+          });
     }
     
     if(FoundryConfig.recipe_alloy_invar_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_invar, 4 * FoundryConfig.recipe_alloy_invar_yield), new FluidStack(liquid_iron, 8), new FluidStack(liquid_nickel, 4));
+      AlloyRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_invar, 4 * FoundryConfig.recipe_alloy_invar_yield),
+          new FluidStack[] {
+            new FluidStack(liquid_iron, 8),
+            new FluidStack(liquid_nickel, 4)
+          });
     }
 
     if(FoundryConfig.recipe_alloy_electrum_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrum, 6 * FoundryConfig.recipe_alloy_electrum_yield), new FluidStack(liquid_gold, 6), new FluidStack(liquid_silver, 6));
+      AlloyRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_electrum, 6 * FoundryConfig.recipe_alloy_electrum_yield),
+          new FluidStack[] {
+            new FluidStack(liquid_gold, 6),
+            new FluidStack(liquid_silver, 6)
+          });
     }
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);

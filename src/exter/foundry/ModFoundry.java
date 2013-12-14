@@ -130,7 +130,6 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     
-    ModIntegration.PreInit(config);
 
     FoundryRegistry.items = ItemRegistry.instance;
     FoundryRegistry.fluids = LiquidMetalRegistry.instance;
@@ -148,6 +147,7 @@ public class ModFoundry
     OreDictionary.registerOre("ingotGold", Item.ingotGold);
     OreDictionary.registerOre("blockGold", Block.blockGold);
     OreDictionary.registerOre("nuggetGold", Item.goldNugget);
+
 
     FoundryConfig.Load(config);
     FoundryItems.RegisterItems(config);
@@ -168,7 +168,12 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Chromium", 2200, 8);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Platinum", 2050, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Manganese", 1550, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Titanium", 2000, 15);
     FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
+    
+    ModIntegration.PreInit(config);
+
     config.save();
 
 
@@ -186,6 +191,7 @@ public class ModFoundry
     Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
+    
     if(FoundryConfig.recipe_gear_useoredict)
     {
       MeltingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));

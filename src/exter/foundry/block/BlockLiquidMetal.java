@@ -1,5 +1,6 @@
 package exter.foundry.block;
 
+import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -15,6 +16,8 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -22,21 +25,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockLiquidMetal extends BlockFluidClassic
 {
   private String texture_name;
-  private int solid_meta;
-  private int solid;
+  private Object solid;
 
-  public BlockLiquidMetal(int id, Fluid fluid, Material material,String texture,int solid_block,int solid_block_meta)
+  public BlockLiquidMetal(int id, Fluid fluid, Material material,String texture,Object solid_block)
   {
     super(id, fluid, material);
     setLightOpacity(0);
     setLightValue(1.0f);
     texture_name = texture;
     solid = solid_block;
-    solid_meta = solid_block_meta;
     setCreativeTab(FoundryTabBlocks.tab);
   }
 
@@ -116,45 +118,65 @@ public class BlockLiquidMetal extends BlockFluidClassic
   {
     if (isSourceBlock(world, x, y, z))
     {
-      if(TryToHarden(world, x, y, z, x - 1, y, z))
+      ItemStack item = null;
+      if(solid instanceof ItemStack)
+      {
+        item = (ItemStack)solid;
+      } else if(solid instanceof String)
+      {
+        for(ItemStack i:OreDictionary.getOres((String)solid))
+        {
+          if(i.getItem() instanceof ItemBlock && (item == null || i.itemID < item.itemID))
+          {
+            item = i;
+          }
+        }
+      } else
       {
         return;
       }
-      if(TryToHarden(world, x, y, z, x + 1, y, z))
+        
+      if(item == null)
       {
         return;
       }
-      if(TryToHarden(world, x, y, z, x, y - 1, z))
+      int id = item.itemID;
+      int meta = item.getItemDamage();
+      if(TryToHarden(world, x, y, z, x - 1, y, z, id, meta))
       {
         return;
       }
-      if(TryToHarden(world, x, y, z, x, y + 1, z))
+      if(TryToHarden(world, x, y, z, x + 1, y, z, id, meta))
       {
         return;
       }
-      if(TryToHarden(world, x, y, z, x, y, z - 1))
+      if(TryToHarden(world, x, y, z, x, y - 1, z, id, meta))
       {
         return;
       }
-      if(TryToHarden(world, x, y, z, x, y, z + 1))
+      if(TryToHarden(world, x, y, z, x, y + 1, z, id, meta))
+      {
+        return;
+      }
+      if(TryToHarden(world, x, y, z, x, y, z - 1, id, meta))
+      {
+        return;
+      }
+      if(TryToHarden(world, x, y, z, x, y, z + 1, id, meta))
       {
         return;
       }
     }
   }
 
-  private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz)
+  private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz,int id,int meta)
   {
-    if(solid < 0)
-    {
-      return false;
-    }
     //Check if block is in contact with water.
     if(world.getBlockMaterial(nx, ny, nz) == Material.water)
     {
       int i;
       //Turn the block solid.
-      world.setBlock(x, y, z, solid, solid_meta, 3);
+      world.setBlock(x, y, z, id, meta, 3);
       world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
       for (i = 0; i < 8; i++)
       {

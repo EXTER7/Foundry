@@ -27,6 +27,8 @@ public class FoundryBlocks
     return next_id++;
   }
   
+  
+  
   private static final String[] SLAB1_METALS = 
   {
     "Iron",
@@ -49,6 +51,12 @@ public class FoundryBlocks
     "Aluminum",
     "Chromium",
     "Platinum"
+  };
+
+  private static final String[] SLAB3_METALS = 
+  {
+    "Manganese",
+    "Titanium"
   };
 
   private static final String[] SLAB1_NAMES = 
@@ -75,6 +83,12 @@ public class FoundryBlocks
     "Platinum Slab"
   };
 
+  private static final String[] SLAB3_NAMES = 
+  {
+    "Manganese Slab",
+    "Titanium Slab",
+  };
+
   private static final String[] SLAB1_ICONS = 
   {
     "iron_block",
@@ -99,6 +113,12 @@ public class FoundryBlocks
     "foundry:metalblock_platinum"
   };
 
+  private static final String[] SLAB3_ICONS = 
+  {
+    "foundry:metalblock_manganese",
+    "foundry:metalblock_titanium"
+  };
+  
   public static class MetalStair
   {
     public final String metal;
@@ -138,7 +158,9 @@ public class FoundryBlocks
     new MetalStair("Lead","Lead Stairs",null,BlockMetal.BLOCK_LEAD),
     new MetalStair("Aluminum","Aluminum Stairs",null,BlockMetal.BLOCK_ALUMINUM),
     new MetalStair("Chromium","Chromium Stairs",null,BlockMetal.BLOCK_CHROMIUM),
-    new MetalStair("Platinum","Platinum Stairs",null,BlockMetal.BLOCK_PLATINUM)
+    new MetalStair("Platinum","Platinum Stairs",null,BlockMetal.BLOCK_PLATINUM),
+    new MetalStair("Manganese","Manganese Stairs",null,BlockMetal.BLOCK_MANGANESE),
+    new MetalStair("Titanium","Titanium Stairs",null,BlockMetal.BLOCK_TITANIUM)
   };
   
   public static BlockFoundryCrucible block_foundry_crucible;
@@ -149,9 +171,11 @@ public class FoundryBlocks
   
   public static BlockMetalSlab block_slab1;
   public static BlockMetalSlab block_slab2;
+  public static BlockMetalSlab block_slab3;
 
   public static BlockMetalSlab block_slabdouble1;
   public static BlockMetalSlab block_slabdouble2;
+  public static BlockMetalSlab block_slabdouble3;
   
   public static BlockStairs[] block_metal_stairs;
 
@@ -167,24 +191,31 @@ public class FoundryBlocks
     int i;
     int id_single1 = config.getBlock( "metal_slab1", GetNextID()).getInt();
     int id_single2 = config.getBlock( "metal_slab2", GetNextID()).getInt();
+    int id_single3 = config.getBlock( "metal_slab3", GetNextID()).getInt();
     int id_double1 = config.getBlock( "metal_slabdouble1", GetNextID()).getInt();
     int id_double2 = config.getBlock( "metal_slabdouble2", GetNextID()).getInt();
+    int id_double3 = config.getBlock( "metal_slabdouble3", GetNextID()).getInt();
     
-    if(id_single1 < 1 || id_single2 < 1 || id_double1 < 1 || id_double2 < 1)
+    if(id_single1 < 1 || id_single2 < 1 || id_single3 < 1 || id_double1 < 1 || id_double2 < 1 || id_double2 < 3)
     {
       return;
     }
     block_slab1 = (BlockMetalSlab)new BlockMetalSlab(id_single1,false,-1, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlab1");
     block_slab2 = (BlockMetalSlab)new BlockMetalSlab(id_single2,false,-1, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlab2");
+    block_slab3 = (BlockMetalSlab)new BlockMetalSlab(id_single3,false,-1, SLAB3_METALS,SLAB3_ICONS).setUnlocalizedName("metalSlab3");
     block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(id_double1,true,block_slab1.blockID, SLAB1_METALS,SLAB1_ICONS).setUnlocalizedName("metalSlabDouble1");
     block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(id_double2,true,block_slab2.blockID, SLAB2_METALS,SLAB2_ICONS).setUnlocalizedName("metalSlabDouble2");
+    block_slabdouble3 = (BlockMetalSlab)new BlockMetalSlab(id_double3,true,block_slab3.blockID, SLAB3_METALS,SLAB3_ICONS).setUnlocalizedName("metalSlabDouble3");
     block_slab1.SetOtherBlockID(block_slabdouble1.blockID);
     block_slab2.SetOtherBlockID(block_slabdouble2.blockID);
+    block_slab3.SetOtherBlockID(block_slabdouble3.blockID);
 
     GameRegistry.registerBlock(block_slab1, ItemBlockMulti.class, "slab1");
     GameRegistry.registerBlock(block_slab2, ItemBlockMulti.class, "slab2");
+    GameRegistry.registerBlock(block_slab3, ItemBlockMulti.class, "slab3");
     GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
     GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
+    GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
 
     for(i = 0; i < SLAB1_NAMES.length; i++)
     {
@@ -200,6 +231,14 @@ public class FoundryBlocks
       LanguageRegistry.addName(stack, SLAB2_NAMES[i]);
       slab_stacks.put(SLAB2_METALS[i], stack);
       ItemRegistry.instance.RegisterItem("blockSlab" + SLAB2_METALS[i], stack);
+    }
+
+    for(i = 0; i < SLAB3_NAMES.length; i++)
+    {
+      ItemStack stack = new ItemStack(block_slab3,  1, i);
+      LanguageRegistry.addName(stack, SLAB3_NAMES[i]);
+      slab_stacks.put(SLAB3_METALS[i], stack);
+      ItemRegistry.instance.RegisterItem("blockSlab" + SLAB3_METALS[i], stack);
     }
   }
   

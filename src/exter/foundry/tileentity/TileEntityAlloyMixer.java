@@ -80,10 +80,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   
   private int progress;
   
-  private AlloyRecipe current_recipe;
-  private int[] current_recipe_order;
   
-  private FluidStack[] input_tank_fluids; //Used to match the current recipe
   
  
   public TileEntityAlloyMixer()
@@ -104,9 +101,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     power_handler.configure(0, 4, 1, 4);
     power_handler.configurePowerPerdition(0, 0);
-    current_recipe = null;
-    current_recipe_order = new int[4];
-    input_tank_fluids = new FluidStack[4];
 
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
@@ -416,31 +410,28 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   }
   
-  private void CheckCurrentRecipe()
-  {
-    if(current_recipe == null)
-    {
-      return;
-    }
-    if(!current_recipe.MatchesRecipe(input_tank_fluids,current_recipe_order))
-    {
-      current_recipe = null;
-      progress = 0;
-    }
-  }
-
+  private int[] recipe_order = new int[4];
+  private FluidStack[] input_tank_fluids = new FluidStack[4];
   private void MixAlloy()
   {
-    if(current_recipe == null)
-    {
-      progress = 0;
-      return;
-    }
-    FluidStack output = current_recipe.output;
     if(power_handler.getEnergyStored() == 0)
     {
       return;
     }
+
+    int i;
+    for(i = 0; i < 4; i++)
+    {
+      input_tank_fluids[i] = tanks[i].getFluid();
+    }    
+
+    AlloyRecipe recipe = AlloyRecipeManager.instance.FindRecipe(input_tank_fluids, recipe_order);
+    if(recipe == null)
+    {
+      progress = 0;
+      return;
+    }
+    FluidStack output = recipe.output;
 
     if(tanks[TANK_OUTPUT].fill(output, false) < output.amount)
     {
@@ -454,13 +445,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     if(progress >= PROGRESS_MAX)
     {
       progress -= PROGRESS_MAX;
-      tanks[TANK_OUTPUT].fill(current_recipe.GetOutput(), true);
+      tanks[TANK_OUTPUT].fill(recipe.GetOutput(), true);
       UpdateTank(TANK_OUTPUT);
-      int i;
-      for(i = 0; i < current_recipe.GetInputCount(); i++)
+      for(i = 0; i < recipe.GetInputCount(); i++)
       {
-        tanks[current_recipe_order[i]].drain(current_recipe.inputs[i].amount, true);
-        UpdateTank(current_recipe_order[i]);
+        tanks[recipe_order[i]].drain(recipe.inputs[i].amount, true);
+        UpdateTank(recipe_order[i]);
       }
     }
   }
@@ -475,25 +465,17 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
     int last_progress = progress;
     
-    //Update input tank fluids
-    for(i = 0; i < 4; i++)
-    {
-      input_tank_fluids[i] = tanks[i].getFluid();
-    }    
 
-    CheckCurrentRecipe();
     
-    if(current_recipe == null
+    if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_1].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_2].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_3].getFluidAmount() > 0))
     {
-      current_recipe = AlloyRecipeManager.instance.FindRecipe(input_tank_fluids, current_recipe_order);
-      progress = 0;
+      MixAlloy();
     }
     
-    MixAlloy();
 
     if(progress != last_progress)
     {      

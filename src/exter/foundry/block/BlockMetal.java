@@ -35,6 +35,8 @@ public class BlockMetal extends Block
   static public final int BLOCK_ALUMINUM = 11;
   static public final int BLOCK_CHROMIUM = 12;
   static public final int BLOCK_PLATINUM = 13;
+  static public final int BLOCK_MANGANESE = 14;
+  static public final int BLOCK_TITANIUM = 15;
 
 
   static private final String[] ICON_PATHS = 
@@ -52,7 +54,9 @@ public class BlockMetal extends Block
     "foundry:metalblock_lead",
     "foundry:metalblock_aluminum",
     "foundry:metalblock_chromium",
-    "foundry:metalblock_platinum"
+    "foundry:metalblock_platinum",
+    "foundry:metalblock_manganese",
+    "foundry:metalblock_titanium"
   };
   
   static public final String[] METAL_NAMES = 
@@ -70,7 +74,9 @@ public class BlockMetal extends Block
     "Lead",
     "Aluminum",
     "Chromium",
-    "Platinum"
+    "Platinum",
+    "Manganese",
+    "Titanium"
   };
 
   static public final String[] NAMES = 
@@ -88,7 +94,9 @@ public class BlockMetal extends Block
     "Block of Lead",
     "Block of Aluminum",
     "Block of Chromium",
-    "Block of Platinum"
+    "Block of Platinum",
+    "Block of Manganese",
+    "Block of Titanium"
   };
 
   static public final String[] OREDICT_NAMES = 
@@ -106,7 +114,9 @@ public class BlockMetal extends Block
     "blockLead",
     "blockAluminum",
     "blockChromium",
-    "blockPlatinum"
+    "blockPlatinum",
+    "blockManganese",
+    "blockTitanium"
   };
 
   @SideOnly(Side.CLIENT)

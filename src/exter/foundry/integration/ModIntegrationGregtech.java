@@ -16,6 +16,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -33,7 +34,10 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "StainlessSteel", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Kanthal", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nichrome", 1950, 15);
   }
 
   @Override
@@ -101,6 +105,58 @@ public class ModIntegrationGregtech extends ModIntegration
         'T', "plateTin", 
         'B', foundrybrick_stack,
         'G', glasspane_stack));
+    
+    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+    Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
+    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+    Fluid liquid_manganese = LiquidMetalRegistry.instance.GetFluid("Manganese");
+    Fluid liquid_chromium = LiquidMetalRegistry.instance.GetFluid("Chromium");
+    Fluid liquid_aluminum = LiquidMetalRegistry.instance.GetFluid("Aluminum");
+    
+    Fluid liquid_stainless_steel = LiquidMetalRegistry.instance.GetFluid("StainlessSteel");
+    Fluid liquid_cupronickel = LiquidMetalRegistry.instance.GetFluid("Cupronickel");
+    Fluid liquid_kanthal = LiquidMetalRegistry.instance.GetFluid("Kanthal");
+    Fluid liquid_nichrome = LiquidMetalRegistry.instance.GetFluid("Nichrome");
+
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_stainless_steel,18),
+        new FluidStack[] {
+          new FluidStack(liquid_iron,12),
+          new FluidStack(liquid_nickel,2),
+          new FluidStack(liquid_manganese,2),
+          new FluidStack(liquid_chromium,2)
+    });
+
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_cupronickel,12),
+        new FluidStack[] {
+          new FluidStack(liquid_copper,6),
+          new FluidStack(liquid_nickel,6)
+    });
+
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_kanthal,12),
+        new FluidStack[] {
+          new FluidStack(liquid_iron,4),
+          new FluidStack(liquid_aluminum,4),
+          new FluidStack(liquid_chromium,4)
+    });
+
+    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_nichrome,15),
+        new FluidStack[] {
+          new FluidStack(liquid_nickel,12),
+          new FluidStack(liquid_chromium,3)
+    });
+    
+    ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
+    ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
+    
+    CastingRecipeManager.instance.AddRecipe("ingotStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotCupronickel", new FluidStack(liquid_cupronickel,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotKanthal", new FluidStack(liquid_kanthal,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotNichrome", new FluidStack(liquid_nichrome,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
+
+    CastingRecipeManager.instance.AddRecipe("blockStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockCupronickel", new FluidStack(liquid_cupronickel,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockKanthal", new FluidStack(liquid_kanthal,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockNichrome", new FluidStack(liquid_nichrome,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
   }
   
   @Override

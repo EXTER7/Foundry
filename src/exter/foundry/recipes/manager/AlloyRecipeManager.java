@@ -15,10 +15,13 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
 
   public static final AlloyRecipeManager instance = new AlloyRecipeManager();
 
+  private int[] recipe_order;
+
   
   private AlloyRecipeManager()
   {
     recipes = new ArrayList<AlloyRecipe>();
+    recipe_order = new int[4];
   }
   
   @Override
@@ -43,14 +46,25 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
    */
   public AlloyRecipe FindRecipe(FluidStack[] in,int[] order)
   {
+    int inputs = 0;
+    AlloyRecipe result = null;
+    if(order.length < 4)
+    {
+      order = null;
+    }
     for(AlloyRecipe r:recipes)
     {
-      if(r.MatchesRecipe(in,order))
+      if(r.MatchesRecipe(in,recipe_order) && r.inputs.length > inputs)
       {
-        return r;
+        if(order != null)
+        {
+          System.arraycopy(recipe_order, 0, order, 0, recipe_order.length);
+        }
+        inputs = r.inputs.length;
+        result = r;
       }
     }
-    return null;
+    return result;
   }
 
   @Override

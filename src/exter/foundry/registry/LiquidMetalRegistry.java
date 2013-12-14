@@ -73,9 +73,13 @@ public class LiquidMetalRegistry implements IFluidRegistry
     Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
-    List<ItemStack> ore_list = OreDictionary.getOres("block" + metal_name);
-    ItemStack solid = FoundryBlocks.block_stacks.get(metal_name);
-    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid!=null?solid.itemID:-1,solid!=null?solid.getItemDamage():-1);
+    String block_name = "block" + metal_name;
+    Object solid = FoundryBlocks.block_stacks.get(metal_name);
+    if(solid == null)
+    {
+      solid = block_name;
+    }
+    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid);
     liquid_block.setUnlocalizedName("liquid" + metal_name);
     LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);

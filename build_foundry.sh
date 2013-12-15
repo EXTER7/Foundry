@@ -18,6 +18,7 @@ then
   cp -r "reobf/minecraft/buildcraft/api" "packed/buildcraft/"
   cp -r "reobf/minecraft/forestry" "packed/forestry/"
   cp -r "reobf/minecraft/ic2" "packed/ic2/"
+  cp -r "reobf/minecraft/tconstruct" "packed/tconstruct/"
 
   cd packed
   ZIPFILE=$MODNAME"-"$MODVERSION".zip"

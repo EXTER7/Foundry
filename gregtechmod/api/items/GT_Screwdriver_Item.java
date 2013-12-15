@@ -50,14 +50,14 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
     	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Block.redstoneRepeaterIdle || aBlock == Block.redstoneRepeaterActive) {
-			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 200, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 			}
     		return true;
     	}
     	if (aBlock == Block.redstoneComparatorIdle || aBlock == Block.redstoneComparatorActive) {
-			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 200, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 			}

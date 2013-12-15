@@ -7,6 +7,8 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IBasicEnergyContainer;
 import gregtechmod.api.interfaces.IHasWorldObjectAndCoords;
 import ic2.api.item.IBoxable;
+import ic2.api.recipe.IRecipeInput;
+import ic2.api.recipe.RecipeOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -191,6 +193,7 @@ public class GT_ModHandler {
 	 */
 	public static ItemStack getIC2Item(String aItem, long aAmount, ItemStack aReplacement) {
 		if (aItem == null || aItem.equals("") || !GregTech_API.sPreloadStarted) return null;
+		//if (GregTech_API.DEBUG_MODE) GT_Log.out.println("Requested the Item '" + aItem + "' from the IC2-API");
 		if (!sIC2ItemMap.containsKey(aItem)) try {sIC2ItemMap.put(aItem, ic2.api.item.Items.getItem(aItem));} catch (Throwable e) {}
 		return GT_Utility.copyAmount(aAmount, sIC2ItemMap.get(aItem), aReplacement);
 	}
@@ -258,7 +261,15 @@ public class GT_ModHandler {
 	 * Gets an Item from ThermoCraft, and returns a Replacement Item if not possible
 	 */
 	public static ItemStack getTEItem(String aItem, long aAmount, ItemStack aReplacement) {
-    return null;
+	  /*
+		if (aItem == null || aItem.equals("")) return null;
+		ItemStack rStack = null;
+		try {
+			rStack = thermalexpansion.api.item.ItemRegistry.getItem(aItem, (int)aAmount);
+		} catch (Throwable e) {}
+		return GT_Utility.copyAmount(aAmount, rStack, aReplacement);
+		*/
+	  return null;
 	}
 	
 	/**
@@ -421,20 +432,46 @@ public class GT_ModHandler {
 	 * Adds a Recipe to Forestrys Squeezer
 	 */
 	public static boolean addSqueezerRecipe(ItemStack aInput, FluidStack aOutput, int aTime) {
-    return false;
+		if (aInput == null || aOutput == null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.squeezer, aInput, true)) return false;
+		try {
+			forestry.api.recipes.RecipeManagers.squeezerManager.addRecipe(aTime>0?aTime:100, new ItemStack[] {GT_Utility.copy(aInput)}, aOutput);
+		} catch(Throwable e) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
 	 * LiquidTransposer Recipe for both directions
 	 */
 	public static boolean addLiquidTransposerRecipe(ItemStack aEmptyContainer, FluidStack aLiquid, ItemStack aFullContainer, int aMJ) {
-    return false;
+		aFullContainer = GT_OreDictUnificator.get(true, aFullContainer);
+		/*
+		if (aEmptyContainer == null || aFullContainer == null || aLiquid == null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.liquidtransposer, aFullContainer, true)) return false;
+		try {
+			thermalexpansion.api.crafting.CraftingManagers.transposerManager.addFillRecipe(aMJ, aEmptyContainer, aFullContainer, aLiquid, true, false);
+		} catch(Throwable e) {}
+		
+		return true;
+		*/
+		return false;
 	}
 	
 	/**
 	 * LiquidTransposer Recipe for filling Containers
 	 */
 	public static boolean addLiquidTransposerFillRecipe(ItemStack aEmptyContainer, FluidStack aLiquid, ItemStack aFullContainer, int aMJ) {
+		aFullContainer = GT_OreDictUnificator.get(true, aFullContainer);
+		/*
+		if (aEmptyContainer == null || aFullContainer == null || aLiquid == null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.liquidtransposerfilling, aFullContainer, true)) return false;
+		try {
+			thermalexpansion.api.crafting.CraftingManagers.transposerManager.addFillRecipe(aMJ, aEmptyContainer, aFullContainer, aLiquid, false, false);
+		} catch(Throwable e) {}
+		return true;
+		*/
     return false;
 	}
 	
@@ -442,6 +479,15 @@ public class GT_ModHandler {
 	 * LiquidTransposer Recipe for emptying Containers
 	 */
 	public static boolean addLiquidTransposerEmptyRecipe(ItemStack aFullContainer, FluidStack aLiquid, ItemStack aEmptyContainer, int aMJ) {
+		aEmptyContainer = GT_OreDictUnificator.get(true, aEmptyContainer);
+		/*
+		if (aFullContainer == null || aEmptyContainer == null || aLiquid == null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.liquidtransposeremptying, aFullContainer, true)) return false;
+		try {
+			thermalexpansion.api.crafting.CraftingManagers.transposerManager.addExtractionRecipe(aMJ, aFullContainer, aEmptyContainer, aLiquid, 100, false, false);
+		} catch(Throwable e) {}
+		return true;
+		*/
     return false;
 	}
 	
@@ -449,7 +495,12 @@ public class GT_ModHandler {
 	 * IC2-Extractor Recipe. Overloads old Recipes automatically
 	 */
 	public static boolean addExtractionRecipe(ItemStack aInput, ItemStack aOutput) {
-    return false;
+		aOutput = GT_OreDictUnificator.get(true, aOutput);
+		if (aInput == null || aOutput == null) return false;
+		GT_Utility.removeSimpleIC2MachineRecipe(aInput, getExtractorRecipeList(), null);
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.extractor, aInput, true)) return false;
+		GT_Utility.addSimpleIC2MachineRecipe(aInput, getExtractorRecipeList(), aOutput);
+		return true;
 	}
 	
 	/**
@@ -475,6 +526,28 @@ public class GT_ModHandler {
 	 * @return Object that can either be cast into IPulverizerRecipe or into GT_PulverizerRecipe
 	 */
 	public static Object getPulverizerRecipe(ItemStack aInput) {
+	  /*
+		if (aInput == null) return null;
+		Object tObject = sPulverizerRecipes.get(GT_Utility.stackToInt(aInput));
+		if (tObject != null) {
+			return tObject;
+		}
+		
+		ItemStack tInput = GT_Utility.copy(aInput);
+		tInput.setItemDamage(GregTech_API.ITEM_WILDCARD_DAMAGE);
+		tObject = sPulverizerRecipes.get(GT_Utility.stackToInt(tInput));
+		if (tObject != null) {
+			return tObject;
+		}
+		
+		try {
+    		for (thermalexpansion.api.crafting.IPulverizerRecipe tRecipe : thermalexpansion.api.crafting.CraftingManagers.pulverizerManager.getRecipeList()) {
+    			if (GT_Utility.areStacksEqual(tRecipe.getInput(), aInput)) {
+		    		return tRecipe;
+    			}
+    		}
+		} catch(Throwable e) {}
+		*/
 		return null;
 	}
 	
@@ -502,14 +575,74 @@ public class GT_ModHandler {
 	 * Adds Several Pulverizer-Type Recipes.
 	 */
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
-		return false;
+	  /*
+		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
+		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
+		if (aInput == null || aOutput1 == null) return false;
+		GT_Utility.removeSimpleIC2MachineRecipe(aInput, getMaceratorRecipeList(), null);
+		
+		if (GT_Utility.getContainerItem(aInput) == null) {
+			if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.maceration, aInput, true)) {
+				GT_Utility.addSimpleIC2MachineRecipe(aInput, getMaceratorRecipeList(), aOutput1);
+			}
+			
+			if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
+				sPulverizerRecipes.put(GT_Utility.stackToInt(aInput), new GT_PulverizerRecipe(aInput, aOutput1, aOutput2, aChance<=0?10:aChance));
+			}
+			
+			if (Materials.Wood.contains(aOutput1)) {
+				if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
+					try {
+						if (GT_Utility.getContainerItem(aInput) == null) {
+							if (aOutput2 == null)
+								thermalexpansion.api.crafting.CraftingManagers.sawmillManager.addRecipe(80, GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), aOverwrite);
+							else
+								thermalexpansion.api.crafting.CraftingManagers.sawmillManager.addRecipe(80, GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, aOverwrite);
+						}
+					} catch(Throwable e) {}
+				}
+			} else {
+				if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.rockcrushing, aInput, true)) {
+					try {
+						if (aInput.itemID != Block.obsidian.blockID) {
+							mods.railcraft.api.crafting.IRockCrusherRecipe tRecipe = mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.createNewRecipe(GT_Utility.copyAmount(1, aInput), aInput.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE, false);
+							tRecipe.addOutput(GT_Utility.copy(aOutput1), 1.0F/aInput.stackSize);
+							tRecipe.addOutput(GT_Utility.copy(aOutput2), (0.01F*(aChance<=0?10:aChance))/aInput.stackSize);
+						}
+					} catch(Throwable e) {}
+				}
+				if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
+					try {
+						if (aOutput2 == null) {
+							thermalexpansion.api.crafting.CraftingManagers.pulverizerManager.addRecipe(400, GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), aOverwrite);
+						} else {
+							thermalexpansion.api.crafting.CraftingManagers.pulverizerManager.addRecipe(400, GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, aOverwrite);
+						}
+					} catch(Throwable e) {}
+				}
+			}
+		}
+		return true;
+		*/
+	  return false;
 	}
 	
 	/**
 	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft
 	 */
 	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2) {
-    return false;
+    /*
+		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
+		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
+		if (aInput1 == null || aOutput1 == null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.sawmill, aInput1, true)) return false;
+	    try {
+	    	thermalexpansion.api.crafting.CraftingManagers.sawmillManager.addRecipe(160, aInput1, aOutput1, aOutput2, 100, false);
+		} catch(Throwable e) {}
+	    GregTech_API.sRecipeAdder.addSawmillRecipe(aInput1, getWaterCell(1), aOutput1, aOutput2, getEmptyCell(1));
+		return true;
+		*/
+	  return false;
 	}
 	
 	/**
@@ -528,46 +661,73 @@ public class GT_ModHandler {
 	 * Induction Smelter Recipes for TE
 	 */
 	public static boolean addInductionSmelterRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, int aEnergy, int aChance) {
-    return false;
+	  /*
+		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
+		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
+		if (aInput1 == null || aOutput1 == null || GT_Utility.getContainerItem(aInput1) != null) return false;
+		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.Machines.inductionsmelter, aInput2==null?aInput1:aOutput1, true)) return false;
+	    try {
+	    	thermalexpansion.api.crafting.CraftingManagers.smelterManager.addRecipe(aEnergy, GT_Utility.copy(aInput1), aInput2==null?new ItemStack(Block.sand, 1, 0):aInput2, aOutput1, aOutput2, aChance, false);
+		} catch(Throwable e) {}
+		return true;
+    */
+	  return false;
 	}
 	
 	/**
 	 * Smelts dusts to Ingots
 	 */
 	public static boolean addDustToIngotSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
-    return false;
+		aOutput = GT_OreDictUnificator.get(true, aOutput);
+		/*
+		if (aInput == null || aOutput == null) return false;
+		try {
+	        return thermalexpansion.api.crafting.CraftingManagers.smelterManager.addRecipe(80, GT_Utility.mul(2, aInput), new ItemStack(Block.sand, aInput.stackSize), GT_Utility.mul(2, aOutput), getTEItem("slag", 1), 25 * aInput.stackSize, true);
+		} catch(Throwable e) {}
+		return true;
+		*/
+		return false;
 	}
 	
 	/**
 	 * Smelts Ores to Ingots
 	 */
 	public static boolean addOreToIngotSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
-    return false;
+		aOutput = GT_OreDictUnificator.get(true, aOutput);
+		/*
+		if (aInput == null || aOutput == null) return false;
+		try {
+			new thermalexpansion.api.crafting.CraftingHelpers().addSmelterOreToIngotsRecipe(aInput, aOutput);
+		} catch(Throwable e) {}
+		FurnaceRecipes.smelting().addSmelting(aInput.itemID, aInput.getItemDamage(), GT_Utility.copy(aOutput), 0.0F);
+		return true;
+		*/
+		return false;
 	}
 	
-	private static Map<Object	, Object>	sExtractorRecipes	= new HashMap<Object, Object>();
-	private static Map<Object	, Object>	sMaceratorRecipes	= new HashMap<Object, Object>();
-	private static Map<Object	, Object>	sCompressorRecipes	= new HashMap<Object, Object>();
-	private static Map<ItemStack, Integer>	sMassfabRecipes		= new HashMap<ItemStack, Integer>();
-	private static Map<ItemStack, Float>	sScrapboxRecipes	= new HashMap<ItemStack, Float>();
+	private static Map<IRecipeInput, RecipeOutput>	sExtractorRecipes	= new HashMap<IRecipeInput, RecipeOutput>();
+	private static Map<IRecipeInput, RecipeOutput>	sMaceratorRecipes	= new HashMap<IRecipeInput, RecipeOutput>();
+	private static Map<IRecipeInput, RecipeOutput>	sCompressorRecipes	= new HashMap<IRecipeInput, RecipeOutput>();
+	private static Map<ItemStack, Integer>			sMassfabRecipes		= new HashMap<ItemStack, Integer>();
+	private static Map<ItemStack, Float>			sScrapboxRecipes	= new HashMap<ItemStack, Float>();
 	
-	public static Map<Object, Object> getExtractorRecipeList() {
+	public static Map<IRecipeInput, RecipeOutput> getExtractorRecipeList() {
 		try {
-			return (Map<Object, Object>)GT_Utility.getField(ic2.api.recipe.Recipes.extractor.getClass(), "recipes").get(ic2.api.recipe.Recipes.extractor);
+			return (Map<IRecipeInput, RecipeOutput>)GT_Utility.getField(ic2.api.recipe.Recipes.extractor.getClass(), "recipes").get(ic2.api.recipe.Recipes.extractor);
 		} catch(Throwable e) {}
 		return sExtractorRecipes;
 	}
 	
-	public static Map<Object, Object> getCompressorRecipeList() {
+	public static Map<IRecipeInput, RecipeOutput> getCompressorRecipeList() {
 		try {
-			return (Map<Object, Object>)GT_Utility.getField(ic2.api.recipe.Recipes.compressor.getClass(), "recipes").get(ic2.api.recipe.Recipes.compressor);
+			return (Map<IRecipeInput, RecipeOutput>)GT_Utility.getField(ic2.api.recipe.Recipes.compressor.getClass(), "recipes").get(ic2.api.recipe.Recipes.compressor);
 		} catch(Throwable e) {}
 		return sCompressorRecipes;
 	}
 	
-	public static Map<Object, Object> getMaceratorRecipeList() {
+	public static Map<IRecipeInput, RecipeOutput> getMaceratorRecipeList() {
 		try {
-			return (Map<Object, Object>)GT_Utility.getField(ic2.api.recipe.Recipes.macerator.getClass(), "recipes").get(ic2.api.recipe.Recipes.macerator);
+			return (Map<IRecipeInput, RecipeOutput>)GT_Utility.getField(ic2.api.recipe.Recipes.macerator.getClass(), "recipes").get(ic2.api.recipe.Recipes.macerator);
 		} catch(Throwable e) {}
 		return sMaceratorRecipes;
 	}
@@ -1050,66 +1210,31 @@ public class GT_ModHandler {
      * 
      * Checks also if there is enough Space in the Output Slots.
      */
-    public static ItemStack[] getMachineOutput(ItemStack aInput, Map<Object, Object> aRecipeList, boolean aRemoveInput, ItemStack... aOutputSlots) {
-    	if (aOutputSlots == null) return new ItemStack[0];
+    public static ItemStack[] getMachineOutput(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, boolean aRemoveInput, ItemStack... aOutputSlots) {
+    	if (aOutputSlots == null || aOutputSlots.length <= 0) return new ItemStack[0];
     	if (aInput == null) return new ItemStack[aOutputSlots.length];
     	try {
-			for (Entry<Object, Object> tEntry : aRecipeList.entrySet()) {
-				if (tEntry.getValue() != null) {
-					if (tEntry.getKey() instanceof ItemStack) {
-						if (GT_Utility.areStacksEqual((ItemStack)tEntry.getKey(), aInput) && aInput.stackSize >= ((ItemStack)tEntry.getKey()).stackSize) {
-							if (aInput.stackSize >= ((ItemStack)tEntry.getKey()).stackSize) {
-								if (tEntry.getValue() instanceof ItemStack) {
-									if (aOutputSlots[0] == null || (GT_Utility.areStacksEqual(((ItemStack)tEntry.getKey()), aOutputSlots[0]) && ((ItemStack)tEntry.getKey()).stackSize + aOutputSlots[0].stackSize <= aOutputSlots[0].getMaxStackSize())) {
-										if (aRemoveInput) aInput.stackSize-=((ItemStack)tEntry.getKey()).stackSize;
-										return new ItemStack[] {GT_Utility.copy((ItemStack)tEntry.getValue())};
-									}
-									break;
+			for (Entry<IRecipeInput, RecipeOutput> tEntry : aRecipeList.entrySet()) {
+				if (tEntry.getKey().matches(aInput)) {
+					if (tEntry.getKey().getAmount() <= aInput.stackSize) {
+						ItemStack[] tList = (ItemStack[])tEntry.getValue().items.toArray();
+						if (tList.length == 0) break;
+						ItemStack[] rList = new ItemStack[aOutputSlots.length];
+						
+						for (byte i = 0; i < aOutputSlots.length; i++) {
+							if (tList[i] != null) {
+								if (aOutputSlots[i] == null || (GT_Utility.areStacksEqual(tList[i], aOutputSlots[i]) && tList[i].stackSize + aOutputSlots[i].stackSize <= aOutputSlots[i].getMaxStackSize())) {
+									rList[i] = GT_Utility.copy(tList[i]);
+								} else {
+							    	return new ItemStack[aOutputSlots.length];
 								}
-								
-								ItemStack[] tList = (ItemStack[])((List<ItemStack>)GT_Utility.getFieldContent(tEntry.getValue(), "items", false, false)).toArray();
-								if (tList.length == 0) break;
-								ItemStack[] rList = new ItemStack[aOutputSlots.length];
-								
-								for (byte i = 0; i < aOutputSlots.length; i++) {
-									if (tList[i] != null) {
-										if (aOutputSlots[i] == null || (GT_Utility.areStacksEqual(tList[i], aOutputSlots[i]) && tList[i].stackSize + aOutputSlots[i].stackSize <= aOutputSlots[i].getMaxStackSize())) {
-											rList[i] = GT_Utility.copy(tList[i]);
-										} else {
-									    	return new ItemStack[aOutputSlots.length];
-										}
-									}
-								}
-								
-								if (aRemoveInput) aInput.stackSize-=((ItemStack)tEntry.getKey()).stackSize;
-								return rList;
 							}
-							break;
 						}
+						
+						if (aRemoveInput) aInput.stackSize-=tEntry.getKey().getAmount();
+						return rList;
 					} else {
-						Object temp = GT_Utility.callMethod(tEntry.getKey(), "matches", false, false, false, aInput);
-						if (temp instanceof Boolean && (Boolean)temp) {
-							temp = GT_Utility.callMethod(tEntry.getKey(), "getAmount", false, false, false);
-							if (temp instanceof Integer && (Integer)temp <= aInput.stackSize) {
-								ItemStack[] tList = (ItemStack[])((List<ItemStack>)GT_Utility.getFieldContent(tEntry.getValue(), "items", false, false)).toArray();
-								if (tList.length == 0) break;
-								ItemStack[] rList = new ItemStack[aOutputSlots.length];
-								
-								for (byte i = 0; i < aOutputSlots.length; i++) {
-									if (tList[i] != null) {
-										if (aOutputSlots[i] == null || (GT_Utility.areStacksEqual(tList[i], aOutputSlots[i]) && tList[i].stackSize + aOutputSlots[i].stackSize <= aOutputSlots[i].getMaxStackSize())) {
-											rList[i] = GT_Utility.copy(tList[i]);
-										} else {
-									    	return new ItemStack[aOutputSlots.length];
-										}
-									}
-								}
-								
-								if (aRemoveInput) aInput.stackSize-=(Integer)temp;
-								return rList;
-							}
-							break;
-						}
+						break;
 					}
 				}
 			}
@@ -1412,9 +1537,7 @@ public class GT_ModHandler {
 		Item tItem = aStack.getItem();
 		if (tItem == null) return 0;
 		if (GT_Utility.areStacksEqual(GT_Utility.getContainerForFilledItem(aStack), getEmptyCell(1)) || OrePrefixes.cell.contains(aStack) || OrePrefixes.cellPlasma.contains(aStack)) return 1;
-		if (GT_Utility.areStacksEqual(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), getIC2Item("hydratedCoalCell"			, 1))) return 1;
-		if (GT_Utility.areStacksEqual(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), getIC2Item("bioCell"					, 1))) return 1;
-		if (GT_Utility.areStacksEqual(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), getIC2Item("electrolyzedWaterCell"	, 1))) return 1;
+		if (GT_Utility.areStacksEqual(aStack, getIC2Item("hydratedCoalCell", 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return 1;
 		return 0;
 	}
 }

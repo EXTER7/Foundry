@@ -31,10 +31,10 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
     
     @SideOnly(Side.CLIENT)
     public void getSubItems(int var1, CreativeTabs var2, List var3) {
-        ItemStack tCharged = GregTech_API.getGregTechItem(mFullID, 1, 0), tUncharged = GregTech_API.getGregTechItem(mEmptyID, 1, getMaxDamage());
+        ItemStack tCharged = new ItemStack(GregTech_API.sItemList[mFullID], 1, 0), tUncharged = new ItemStack(GregTech_API.sItemList[mEmptyID], 1, getMaxDamage() - 1);
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-        if (this == GregTech_API.getGregTechItem(mFullID, 1, 0).getItem()) var3.add(tCharged);
-        if (this == GregTech_API.getGregTechItem(mEmptyID, 1, 0).getItem()) var3.add(tUncharged);
+        if (this == GregTech_API.sItemList[mFullID]) var3.add(tCharged);
+        if (this == GregTech_API.sItemList[mEmptyID]) var3.add(tUncharged);
     }
     
 	@Override
@@ -57,11 +57,11 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
 	}
 	
 	public int getChargedItemId(ItemStack aStack) {
-		return GregTech_API.getGregTechItem(mFullID, 1, 0).itemID;
+		return GregTech_API.sItemList[mFullID].itemID;
 	}
 	
 	public int getEmptyItemId(ItemStack aStack) {
-		return GregTech_API.getGregTechItem(mEmptyID, 1, 0).itemID;
+		return GregTech_API.sItemList[mEmptyID].itemID;
 	}
 	
 	public int getMaxCharge(ItemStack aStack) {

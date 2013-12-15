@@ -1,6 +1,7 @@
 package gregtechmod.api.metatileentity.implementations;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;
@@ -74,7 +75,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 			
 			if (displaysItemStack()) {
 				if (getDrainableStack() != null) {
-					mInventory[getStackDisplaySlot()] = GregTech_API.getGregTechItem(15, displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().fluidID);
+					mInventory[getStackDisplaySlot()] = GT_Items.Display_Fluid.getWithDamage(displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().fluidID);
 				} else {
 					mInventory[getStackDisplaySlot()] = null;
 				}

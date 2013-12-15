@@ -794,7 +794,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			}
 			
 			if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sScrewdriverList)) {
-				if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
+				if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 200, aPlayer)) {
 					if (getCoverIDAtSide(aSide) == -2 && mMetaTileEntity.allowCoverOnSide(aSide, -1)) setCoverIDAtSide(aSide, -1); else
 					if (getCoverIDAtSide(aSide) == -1 && mMetaTileEntity.allowCoverOnSide(aSide, -2)) setCoverIDAtSide(aSide, -2); else
 					if (getCoverIDAtSide(aSide) ==  0 && mMetaTileEntity.allowCoverOnSide(aSide, -1)) setCoverIDAtSide(aSide, -1); else
@@ -857,21 +857,21 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			if (!getCoverBehaviorAtSide(aSide).isGUIClickable(aSide, getCoverIDAtSide(aSide), getCoverDataAtSide(aSide), this)) return false;
 			
 			if (isUpgradable() && aPlayer.inventory.getCurrentItem() != null) {
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 25))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(25, 1))) {
 					if (addMJConverterUpgrade()) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 80))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(80, 1))) {
 					if (addSteamEngineUpgrade()) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 88))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(88, 1))) {
 					if (isUpgradable() && !mLockUpgrade) {
 						mLockUpgrade = true;
 						setOwnerName(aPlayer.username);
@@ -896,7 +896,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 						return true;
 					}
 				} else {
-					if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 27))) {
+					if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(27, 1))) {
 						if (addTransformerUpgrade()) {
 							GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 							if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
@@ -911,42 +911,42 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 26))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(26, 1))) {
 					if (addBatteryUpgrade(100000, (byte)1)) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 12))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(12, 1))) {
 					if (addBatteryUpgrade(1000000, (byte)3)) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 13))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(13, 1))) {
 					if (addBatteryUpgrade(10000000, (byte)4)) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 14))) {
+				if (GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(14, 1))) {
 					if (addBatteryUpgrade(100000000, (byte)5)) {
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 						if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					}
 					return true;
 				}
-				if (hasMJConverterUpgrade() && GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 28))) {
+				if (hasMJConverterUpgrade() && GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(28, 1))) {
 					mRSEnergyCells++;
 					mNeedsBatteryUpgrade = false;
 					GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
 					if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
 					return true;
 				}
-				if (hasSteamEngineUpgrade() && GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechItem(3, 1, 81))) {
+				if (hasSteamEngineUpgrade() && GT_Utility.areStacksEqual(aPlayer.inventory.getCurrentItem(), GregTech_API.getGregTechComponent(81, 1))) {
 					mSteamTanks++;
 					mNeedsBatteryUpgrade = false;
 					GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(3), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());

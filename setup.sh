@@ -23,7 +23,7 @@ then
 
   if [ ! -d "$1/mcp/src/minecraft/gregtechmod" ]
   then
-    cp -r "gregtechmod" "$1/mcp/src/minecraft/"
+    ln -sf $(pwd)"/gregtechmod" "$1/mcp/src/minecraft/"
   fi
 
   echo "$0: Setup complete."

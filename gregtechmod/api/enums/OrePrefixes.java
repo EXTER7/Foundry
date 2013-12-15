@@ -53,6 +53,7 @@ public enum OrePrefixes {
 	bottle				( true,  true,  true,  true, 									-1), // Glas Bottle containing a Fluid.
 	capsule				(false,  true,  true,  true, GregTech_API.MATERIAL_UNIT *		 1),
 	crystal				(false,  true, false, false, GregTech_API.MATERIAL_UNIT *		 1),
+	craftingTool		(false, false, false, false,									-1), // Special Prefix used mainly for the Crafting Handler.
 	crafting			(false, false, false, false,									-1), // Special Prefix used mainly for the Crafting Handler.
 	log					(false, false, false, false,									-1), // Prefix used for Logs. Usually as "logWood". Introduced by Eloraam
 	slab				(false, false, false, false,									-1), // Prefix used for Slabs. Usually as "slabWood" or "slabStone". Introduced by SirSengir
@@ -161,7 +162,7 @@ public enum OrePrefixes {
 	public boolean add(ItemStack aStack) {
 		if (aStack == null) return false;
 		if (!contains(aStack)) mPrefixedItems.add(aStack);
-		mPrefixedItems.removeAll(null);
+		while (mPrefixedItems.contains(null)) mPrefixedItems.remove(null);
 		return true;
 	}
 	

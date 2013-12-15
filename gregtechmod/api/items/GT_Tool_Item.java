@@ -418,11 +418,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public final int getChargedItemId(ItemStack aStack) {
-		return mChargedGTID<0?itemID:GregTech_API.getGregTechItem(mChargedGTID, 1, 0).itemID;
+		return mChargedGTID<0?itemID:GregTech_API.sItemList[mChargedGTID].itemID;
 	}
 	
 	public final int getEmptyItemId(ItemStack aStack) {
-		return mDisChargedGTID<0?itemID:GregTech_API.getGregTechItem(mDisChargedGTID, 1, 0).itemID;
+		return mDisChargedGTID<0?itemID:GregTech_API.sItemList[mDisChargedGTID].itemID;
 	}
 	
 	public final int getMaxCharge(ItemStack aStack) {

@@ -1,6 +1,7 @@
 package gregtechmod.api.util;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.events.GT_ScannerEvent;
 import gregtechmod.api.interfaces.ICoverable;
@@ -9,6 +10,11 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMachineProgress;
 import gregtechmod.api.interfaces.IUpgradableMachine;
 import gregtechmod.api.items.GT_EnergyArmor_Item;
+
+import ic2.api.recipe.IRecipeInput;
+import ic2.api.recipe.RecipeInputItemStack;
+import ic2.api.recipe.RecipeInputOreDict;
+import ic2.api.recipe.RecipeOutput;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -583,32 +589,18 @@ public class GT_Utility {
 		return null;
 	}
 	
-	public static boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map aRecipeList, ItemStack aOutput) {
+	public static boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, ItemStack aOutput) {
 		if ((isStackInvalid(aInput) && isStackInvalid(aOutput)) || aRecipeList == null) return false;
 		try {
-			for (Map.Entry<Object, Object> tEntry : ((Map<Object, Object>)aRecipeList).entrySet()) {
-				Object temp = callMethod(tEntry.getKey(), "matches", false, false, false, aInput);
-				if (aInput == null || (tEntry.getKey() instanceof ItemStack && areStacksEqual((ItemStack)tEntry.getKey(), aInput)) || (temp instanceof Boolean && (Boolean)temp)) {
-					if (tEntry.getValue() == null) {
-						aRecipeList.remove(tEntry.getKey());
-						return removeSimpleIC2MachineRecipe(aInput, aRecipeList, aOutput);
-					} else {
-						if (tEntry.getValue() instanceof ItemStack) {
-							if (aOutput == null || areStacksEqual((ItemStack)tEntry.getValue(), aOutput)) {
+			for (Map.Entry<IRecipeInput, RecipeOutput> tEntry : aRecipeList.entrySet()) {
+				if (aInput == null || tEntry.getKey().matches(aInput)) {
+					List<ItemStack> tList = tEntry.getValue().items;
+					if (tList != null) {
+						for (ItemStack tOutput : tList) {
+							if (aOutput == null || areStacksEqual(tOutput, aOutput)) {
 								aRecipeList.remove(tEntry.getKey());
 								removeSimpleIC2MachineRecipe(aInput, aRecipeList, aOutput);
 								return true;
-							}
-						} else {
-							List<ItemStack> tList = (List<ItemStack>)GT_Utility.getFieldContent(tEntry.getValue(), "items", false, false);
-							if (tList != null) {
-								for (ItemStack tOutput : tList) {
-									if (aOutput == null || areStacksEqual(tOutput, aOutput)) {
-										aRecipeList.remove(tEntry.getKey());
-										removeSimpleIC2MachineRecipe(aInput, aRecipeList, aOutput);
-										return true;
-									}
-								}
 							}
 						}
 					}
@@ -618,13 +610,13 @@ public class GT_Utility {
 		return false;
 	}
 	
-	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map aRecipeList, ItemStack aOutput) {
+	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, ItemStack aOutput) {
 		if (isStackInvalid(aInput) || isStackInvalid(aOutput) || aRecipeList == null) return false;
 		String tOreName = GT_OreDictUnificator.getAssociation(aInput);
-		if (tOreName == null) {
-			aRecipeList.put(callConstructor("ic2.api.recipe.RecipeInputItemStack"	, -1, copy(aInput), false, copy(aInput))				, callConstructor("ic2.api.recipe.RecipeOutput", -1, copy(aOutput), false, null, new ItemStack[] {copy(aOutput)}));
+		if (isStringValid(tOreName)) {
+			aRecipeList.put(new RecipeInputOreDict(tOreName, aInput.stackSize), new RecipeOutput(null, new ItemStack[] {copy(aOutput)}));
 		} else {
-			aRecipeList.put(callConstructor("ic2.api.recipe.RecipeInputOreDict"		, -1, copy(aInput), false, tOreName, aInput.stackSize)	, callConstructor("ic2.api.recipe.RecipeOutput", -1, copy(aOutput), false, null, new ItemStack[] {copy(aOutput)}));
+			aRecipeList.put(new RecipeInputItemStack(copy(aInput), aInput.stackSize), new RecipeOutput(null, new ItemStack[] {copy(aOutput)}));
 		}
 		return true;
 	}
@@ -793,7 +785,7 @@ public class GT_Utility {
 	
 	public static boolean isDebugItem(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return false;
-		return areStacksEqual(aStack, new ItemStack(GregTech_API.sItemList[18], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		return aStack.getItem() == GT_Items.Armor_Cheat.get();
 	}
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<Integer> aList) {
@@ -896,12 +888,14 @@ public class GT_Utility {
 	 * Used for my Teleporter.
 	 */
 	public static boolean isRealDimension(int aDimensionID) {
+	  /*
 		try {
-			//if (DimensionManager.getProvider(aDimensionID) instanceof com.xcompwiz.mystcraft.world.WorldProviderMyst) return true;
+			if (DimensionManager.getProvider(aDimensionID) instanceof com.xcompwiz.mystcraft.world.WorldProviderMyst) return true;
 		} catch (Throwable e) {}
 		try {
-			//if (DimensionManager.getProvider(aDimensionID) instanceof twilightforest.world.WorldProviderTwilightForest) return true;
+			if (DimensionManager.getProvider(aDimensionID) instanceof twilightforest.world.WorldProviderTwilightForest) return true;
 		} catch (Throwable e) {}
+		*/
 		return GregTech_API.sDimensionalList.contains(aDimensionID);
 	}
 	
@@ -980,6 +974,7 @@ public class GT_Utility {
 		    	tList.add("Name: " + tBlock.getUnlocalizedName() + "  ID: " + tBlock.blockID + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
 		    
 		    tList.add("Hardness: " + tBlock.getBlockHardness(aWorld, aX, aY, aZ) + "  Blast Resistance: " + tBlock.getExplosionResistance(aPlayer, aWorld, aX, aY, aZ, aPlayer.posX, aPlayer.posY, aPlayer.posZ));
+		    if (tBlock.isBeaconBase(aWorld, aX, aY, aZ, aX, aY+1, aZ)) tList.add("Is valid Beacon Pyramid Material");
 		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
 	    if (tTileEntity != null) {
 			try {if (tTileEntity instanceof IFluidHandler) {

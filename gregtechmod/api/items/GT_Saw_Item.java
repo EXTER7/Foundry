@@ -14,7 +14,6 @@ public class GT_Saw_Item extends GT_Tool_Item {
 		super(aID, aName, "For sawing Logs into Planks", aMaxDamage, aEntityDamage, true, -1, aDisChargedGTID, aToolQuality, aToolStrength);
 		//GregTech_API.registerSaw(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSaw, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		addToBlockList(GT_ModHandler.getIC2Item("rubberLeaves", 1));
 		addToMaterialList(Material.leaves);
 		addToMaterialList(Material.plants);
 		addToMaterialList(Material.wood);

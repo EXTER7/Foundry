@@ -538,7 +538,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 			
 			if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sScrewdriverList)) {
 				if (getCoverIDAtSide(aSide) == 0 && getCoverIDAtSide(tSide) != 0) {
-					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
+					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 200, aPlayer)) {
 						setCoverDataAtSide(tSide, getCoverBehaviorAtSide(tSide).onCoverScrewdriverclick(tSide, getCoverIDAtSide(tSide), getCoverDataAtSide(tSide), this, aPlayer, 0.5F, 0.5F, 0.5F));
 						mMetaTileEntity.onScrewdriverRightClick(tSide, aPlayer, aX, aY, aZ);
 						GT_Utility.sendSoundToPlayers(getWorld(), GregTech_API.sSoundList.get(100), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());

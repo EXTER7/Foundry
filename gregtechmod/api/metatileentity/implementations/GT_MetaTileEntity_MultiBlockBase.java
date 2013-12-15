@@ -312,6 +312,12 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
 					if (mInventory[1].getItemDamage() >= mInventory[1].getMaxDamage()) {
 						if (explodesOnComponentBreak(mInventory[1])) {
 							mInventory[1] = null;
+							for (MetaTileEntity tTileEntity : mInputHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
+							for (MetaTileEntity tTileEntity : mOutputHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
+							for (MetaTileEntity tTileEntity : mDynamoHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
+							for (MetaTileEntity tTileEntity : mMufflerHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
+							for (MetaTileEntity tTileEntity : mEnergyHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
+							for (MetaTileEntity tTileEntity : mMaintenanceHatches) tTileEntity.getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
 							getBaseMetaTileEntity().doExplosion(GregTech_API.VOLTAGE_ULTIMATE);
 						} else {
 							mInventory[1] = null;
@@ -385,7 +391,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
 		if (aLiquid == null) {
 			for (GT_MetaTileEntity_Hatch_Output tHatch : mOutputHatches) {
 				if (isValidMetaTileEntity(tHatch) && tHatch.outputsItems()) {
-					if (getBaseMetaTileEntity().addStackToSlot(1, aStack)) return true;
+					if (tHatch.getBaseMetaTileEntity().addStackToSlot(1, aStack)) return true;
 				}
 			}
 		} else {

@@ -215,16 +215,13 @@ public class GregTech_API {
 	 * Gets an Item from my Addon.
 	 * @param aIndex Index of the Item.
 	 * ID's of MetaItems:
-	 * 0 = GT_MetaItem_Material
-	 * 1 = GT_MetaItem_Dust
-	 * 2 = GT_MetaItem_Cell
-	 * 3 = GT_MetaItem_Component
-	 * 4 = GT_MetaItem_SmallDust
-	 * 5 = GT_MetaItem_Nugget
-	 * 
+	 * 0 = GT_MetaItem_Material use "getGregTechMaterial" instead!
+	 * 3 = GT_MetaItem_Component use "getGregTechComponent" instead!
+	 * @Deprecated Please use gregtechmod.enums.GT_Items instead of calling this Function.
 	 * @param aAmount Amount of the Item in the returned Stack
 	 * @return The ItemStack you ordered, if not then look at the Log.
 	 */
+	@Deprecated
 	public static ItemStack getGregTechItem(int aIndex, int aAmount, int aMeta) {
     	if (aIndex < GregTech_API.sItemList.length && aIndex >= 0) {
 	    	if (GregTech_API.sItemList[aIndex] != null) {
@@ -399,7 +396,17 @@ public class GregTech_API {
 		} catch(Throwable e) {}
 		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage, false);
 	}
-
+	
+	/**
+	 * Creates a new electric Screwdriver Item
+	 */
+	public static GT_Tool_Item constructElectricScrewdriverItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
+		try {
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_ScrewdriverIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+		} catch(Throwable e) {}
+		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage, false);
+	}
+	
 	/**
 	 * Creates a new electric Wrench Item
 	 */

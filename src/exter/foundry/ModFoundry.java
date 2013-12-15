@@ -55,6 +55,7 @@ import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationTE3;
+import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemRefractoryFluidContainer;
@@ -128,6 +129,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     
 

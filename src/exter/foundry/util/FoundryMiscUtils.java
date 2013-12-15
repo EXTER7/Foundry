@@ -43,6 +43,22 @@ public class FoundryMiscUtils
     FurnaceRecipes.smelting().addSmelting(FoundryBlocks.block_ore.blockID, ore, new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 
+  static public String GetItemOreDictionaryName(ItemStack stack)
+  {
+    for(String name:OreDictionary.getOreNames())
+    {
+      List<ItemStack> ores = OreDictionary.getOres(name);
+      for(ItemStack i : ores)
+      {
+        if(i.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(i, stack))
+        {
+          return name;
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Check if an item is registered in the Ore Dictionary.
    * @param name Ore name to check.

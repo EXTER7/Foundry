@@ -1,5 +1,6 @@
 package exter.foundry.integration;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,6 +16,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.MeltingRecipe;
+import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -38,6 +40,9 @@ public class ModIntegrationTE3 extends ModIntegration
   static public final int ITEM_COPPER_GEAR = 11;
   static public final int ITEM_TIN_GEAR = 12;
 
+  static public final int ITEM_ENDERIUM_INGOT = 13;
+  static public final int ITEM_ENDERIUM_BLOCK = 14;
+  
 
   public ModIntegrationTE3(String mod_name)
   {
@@ -48,14 +53,20 @@ public class ModIntegrationTE3 extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Enderium", 1900, 12);
   }
 
 
   @Override
   public void OnInit()
   {
-    items = new ItemStack[13];
+    if(!Loader.isModLoaded("ThermalExpansion"))
+    {
+      is_loaded = false;
+      return;
+    }
+
+    items = new ItemStack[15];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
     items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
@@ -74,11 +85,17 @@ public class ModIntegrationTE3 extends ModIntegration
     items[ITEM_COPPER_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearCopper", 1);
     items[ITEM_TIN_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearTin", 1);
 
+    items[ITEM_ENDERIUM_INGOT] = GameRegistry.findItemStack("ThermalExpansion", "ingotEnderium", 1);
+    items[ITEM_ENDERIUM_BLOCK] = GameRegistry.findItemStack("ThermalExpansion", "blockEnderium", 1);
+
     VerifyItems();
 
     if(is_loaded)
     {
+      Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
+      Fluid liquid_platinum = LiquidMetalRegistry.instance.GetFluid("Platinum");
       Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
+      Fluid liquid_enderium = LiquidMetalRegistry.instance.GetFluid("Enderium");
       Fluid liquid_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_ender = FluidRegistry.getFluid("ender");
       Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
@@ -95,6 +112,8 @@ public class ModIntegrationTE3 extends ModIntegration
       ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
       ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
+      ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
+      ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal,100),1000);
 
@@ -106,6 +125,16 @@ public class ModIntegrationTE3 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.glowstone), new FluidStack(liquid_glowstone,250),2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glowStone), new FluidStack(liquid_glowstone,1000),2500);
       
+      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_enderium,108),
+          new FluidStack[] {
+            new FluidStack(liquid_tin,81),
+            new FluidStack(liquid_platinum,27),
+            new FluidStack(liquid_ender,250)
+      });
+      
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_INGOT], new FluidStack(liquid_enderium, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_BLOCK], new FluidStack(liquid_enderium, FoundryRecipes.FLUID_AMOUNT_BLOCK), mold_block, null);
+
       CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_CHESTPLATE], new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_PICKAXE], new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_AXE], new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
@@ -129,7 +158,6 @@ public class ModIntegrationTE3 extends ModIntegration
       if(!FoundryConfig.recipe_gear_useoredict)
       {
         Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-        Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
         Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
         ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));

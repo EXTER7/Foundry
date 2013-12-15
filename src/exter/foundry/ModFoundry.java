@@ -54,6 +54,7 @@ import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
+import exter.foundry.integration.ModIntegrationRedstoneArsenal;
 import exter.foundry.integration.ModIntegrationTE3;
 import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
@@ -129,6 +130,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     
@@ -488,7 +490,20 @@ public class ModFoundry
           'C', crucible_stack,
           'R', redstone_stack,
           'H', heatingcoil_stack));
+
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
+          "IRI",
+          "GCG",
+          "HRH",
+          'I', iron_stack, 
+          'R', redstone_stack, 
+          'B', foundrybrick_stack,
+          'C', crucible_stack,
+          'G', "gearStone",
+          'H', heatingcoil_stack));
     }
+    
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
         " R ",
@@ -498,18 +513,6 @@ public class ModFoundry
         'P', piston_stack,
         'C', crucible_stack,
         'R', redstone_stack);
-
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
-        "IRI",
-        "GCG",
-        "HRH",
-        'I', iron_stack, 
-        'R', redstone_stack, 
-        'B', foundrybrick_stack,
-        'C', crucible_stack,
-        'G', "gearStone",
-        'H', heatingcoil_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER),

@@ -12,8 +12,9 @@ public class NEIFoundryConfig implements IConfigureNEI
   @Override
   public void loadConfig()
   {
-    API.hideItem(FoundryBlocks.block_slabdouble2.blockID);
     API.hideItem(FoundryBlocks.block_slabdouble1.blockID);
+    API.hideItem(FoundryBlocks.block_slabdouble2.blockID);
+    API.hideItem(FoundryBlocks.block_slabdouble3.blockID);
   }
 
   @Override

@@ -5,13 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cpw.mods.fml.common.Loader;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import tconstruct.TConstruct;
+import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.AlloyMix;
+import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -21,6 +27,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTiCon extends ModIntegration
 {
+  static public final int ITEM_INGOT_CAST = 0;
+  
   private Map<String,String> liquid_map;
   private static final int GCD(int a, int b)
   {
@@ -49,6 +57,15 @@ public class ModIntegrationTiCon extends ModIntegration
   @Override
   public void OnInit()
   {
+    if(!Loader.isModLoaded("TConstruct"))
+    {
+      is_loaded = false;
+      return;
+    }
+    items = new ItemStack[1];
+
+    items[ITEM_INGOT_CAST] = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
+    
     liquid_map = new HashMap<String,String>();
     liquid_map.put("iron.molten","Iron");
     liquid_map.put("gold.molten","Gold");
@@ -115,6 +132,7 @@ public class ModIntegrationTiCon extends ModIntegration
     CreateAlloyRecipe(mix,0,new ArrayList<FluidStack>());
   }
 
+  
   @Override
   public void OnPostInit()
   {
@@ -137,5 +155,41 @@ public class ModIntegrationTiCon extends ModIntegration
         CreateAlloyRecipe(mix);
       }
     }
+    
+    //Convert TiCon table casting recipes to Foundry Metal Caster recipes.
+    ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
+    for(tconstruct.library.crafting.CastingRecipe casting:TConstructRegistry.getTableCasting().getCastingRecipes())
+    {
+      if(casting.cast != null)
+      {
+        if(!CastingRecipeManager.instance.IsItemMold(casting.cast))
+        {
+          //Register the cast as a mold
+          CastingRecipeManager.instance.AddMold(casting.cast);
+        }
+        
+        String mapped = liquid_map.get(casting.castingMetal.getFluid().getName());
+        FluidStack mapped_liquid = null;
+        if(mapped != null)
+        {
+          mapped_liquid = new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid(mapped),
+              casting.castingMetal.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+        }
+        if(casting.cast.isItemEqual(items[ITEM_INGOT_CAST]))
+        {
+          ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
+          CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, ingot_mold, null);
+        } else if(mapped_liquid != null)
+        {
+          CastingRecipeManager.instance.AddRecipe(casting.output, mapped_liquid, casting.cast, null);
+        }
+        CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, casting.cast, null);
+      }
+    }
+    for(tconstruct.library.crafting.CastingRecipe casting:TConstructRegistry.getBasinCasting().getCastingRecipes())
+    {
+      CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
+    }    
   }
 }

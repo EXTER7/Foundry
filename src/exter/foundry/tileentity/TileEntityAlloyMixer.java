@@ -17,6 +17,7 @@ import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace.RedstoneMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -41,6 +42,37 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
 {
+  public enum RedstoneMode
+  {
+    RSMODE_IGNORE(0),
+    RSMODE_ON(1),
+    RSMODE_OFF(2);
+    
+    public final int number;
+    
+    private RedstoneMode(int num)
+    {
+      number = num;
+    }
+    
+    public RedstoneMode Next()
+    {
+      return FromNumber((number + 1) % 3);
+    }
+    
+    static public RedstoneMode FromNumber(int num)
+    {
+      for(RedstoneMode m:RedstoneMode.values())
+      {
+        if(m.number == num)
+        {
+          return m;
+        }
+      }
+      return RSMODE_IGNORE;
+    }
+  }
+
   static private final int NETDATAID_TANK_INPUT_0_FLUID = 0;
   static private final int NETDATAID_TANK_INPUT_0_AMOUNT = 1;
   static private final int NETDATAID_TANK_INPUT_1_FLUID = 2;
@@ -79,7 +111,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   
   private int progress;
-  
+  private RedstoneMode mode;
+
   
   
  
@@ -97,6 +130,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     progress = 0;
+    mode = RedstoneMode.RSMODE_IGNORE;
 
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     power_handler.configure(0, 4, 1, 4);
@@ -123,6 +157,10 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     {
       progress = compund.getInteger("progress");
     }
+    if(compund.hasKey("mode"))
+    {
+      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
+    }
   }
 
   @Override
@@ -130,6 +168,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   {
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
+    compound.setInteger("mode", mode.number);
   }
   
   private void SetTankFluid(FluidTank tank,int value)
@@ -214,6 +253,29 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_AMOUNT, GetTankAmount(tanks[TANK_INPUT_3]));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, GetTankFluid(tanks[TANK_OUTPUT]));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tanks[TANK_OUTPUT]));
+  }
+  
+  @Override
+  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  {
+    SetMode(RedstoneMode.FromNumber(data.readByte()));
+  }
+
+  public RedstoneMode GetMode()
+  {
+    return mode;
+  }
+
+  public void SetMode(RedstoneMode new_mode)
+  {
+    if(mode != new_mode)
+    {
+      mode = new_mode;
+      if(worldObj.isRemote)
+      {
+        FoundryPacketHandler.SendAlloyMixerModeToServer(this);
+      }
+    }
   }
 
   @Override
@@ -309,13 +371,19 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public void openChest()
   {
-
-  }  
+    if(!worldObj.isRemote)
+    {
+      FoundryPacketHandler.SendAlloyMixerModeToClients(this);
+    }
+  }
 
   @Override
   public void closeChest()
   {
-
+    if(!worldObj.isRemote)
+    {
+      FoundryPacketHandler.SendAlloyMixerModeToClients(this);
+    }
   }
 
   @Override
@@ -419,6 +487,31 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       return;
     }
 
+    boolean do_mix = false;
+    switch(mode)
+    {
+      case RSMODE_IGNORE:
+        do_mix = true;
+        break;
+      case RSMODE_OFF:
+        if(!redstone_signal && !last_redstone_signal)
+        {
+          do_mix = true;
+        }
+        break;
+      case RSMODE_ON:
+        if(redstone_signal && last_redstone_signal)
+        {
+          do_mix = true;
+        }
+        break;
+    }
+    if(!do_mix)
+    {
+      progress = 0;
+      return;
+    }
+
     int i;
     for(i = 0; i < 4; i++)
     {
@@ -466,7 +559,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     int last_progress = progress;
     
 
-    
     if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_1].getFluidAmount() > 0
@@ -475,7 +567,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     {
       MixAlloy();
     }
-    
 
     if(progress != last_progress)
     {      

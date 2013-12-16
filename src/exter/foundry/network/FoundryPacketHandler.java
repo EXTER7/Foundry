@@ -26,6 +26,7 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import exter.foundry.ModFoundry;
+import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -99,6 +100,25 @@ public class FoundryPacketHandler implements IPacketHandler
     return MakePacket(bytes);
   }
   
+  static private Packet250CustomPayload MakeAlloyMixerModePacket(TileEntityAlloyMixer sender)
+  {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    DataOutputStream data = new DataOutputStream(bytes);
+    try
+    {
+      //Position
+      data.writeInt(sender.xCoord);
+      data.writeInt(sender.yCoord);
+      data.writeInt(sender.zCoord);
+      
+      data.writeByte(sender.GetMode().number);
+    } catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+    return MakePacket(bytes);
+  }
+
   static public void SendCasterModeToServer(TileEntityMetalCaster sender)
   {
     PacketDispatcher.sendPacketToServer(MakeCasterModePacket(sender));
@@ -119,7 +139,16 @@ public class FoundryPacketHandler implements IPacketHandler
     SendTileEntityPacketToPlayers(MakeICFModePacket(sender), sender);
   }
 
-  
+  static public void SendAlloyMixerModeToServer(TileEntityAlloyMixer sender)
+  {
+    PacketDispatcher.sendPacketToServer(MakeAlloyMixerModePacket(sender));
+  }
+
+  public static void SendAlloyMixerModeToClients(TileEntityAlloyMixer sender)
+  {
+    SendTileEntityPacketToPlayers(MakeAlloyMixerModePacket(sender), sender);
+  }
+
   @Override
   public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
   {

@@ -17,6 +17,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerAlloyMixer;
+import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -44,8 +45,14 @@ public class GuiAlloyMixer extends GuiFoundry
   private static final int TANK_OVERLAY_X = 176;
   private static final int TANK_OVERLAY_Y = 0;
 
+  private static final int RSMODE_X = 176 - GuiButtonRedstoneMode.TEXTURE_WIDTH - 4;
+  private static final int RSMODE_Y = 4;
+  private static final int RSMODE_TEXTURE_X = 176;
+  private static final int RSMODE_TEXTURE_Y = 50;
+
   private TileEntityAlloyMixer te_alloymixer;
   private IInventory player_inventory;
+  private GuiButtonRedstoneMode button_mode;
 
   public GuiAlloyMixer(TileEntityAlloyMixer am, IInventory player_inv)
   {
@@ -81,6 +88,25 @@ public class GuiAlloyMixer extends GuiFoundry
         DisplayTankTooltip(mouse_x, mouse_y, te_alloymixer.GetTank(i));
       }
     }
+    
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mouse_x,mouse_y))
+    {
+      List<String> list = new ArrayList<String>();
+      switch(te_alloymixer.GetMode())
+      {
+        case RSMODE_IGNORE:
+          list.add("Mode: Ignore Restone");
+          break;
+        case RSMODE_OFF:
+          list.add("Mode: Redstone signal OFF");
+          break;
+        case RSMODE_ON:
+          list.add("Mode: Redstone signal ON");
+          break;
+      }
+      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
+    }
+
   }
 
   @Override
@@ -99,9 +125,28 @@ public class GuiAlloyMixer extends GuiFoundry
     }
   }
 
+  @Override 
+  public void initGui()
+  {
+    super.initGui();
+    int window_x = (width - xSize) / 2;
+    int window_y = (height - ySize) / 2;
+    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE,RSMODE_TEXTURE_X,RSMODE_TEXTURE_Y);
+    buttonList.add(button_mode);
+  }
+
   @Override
   protected ResourceLocation GetGUITexture()
   {
     return GUI_TEXTURE;
+  }
+  
+  @Override
+  protected void actionPerformed(GuiButton button)
+  {
+    if(button.id == button_mode.id)
+    {
+      te_alloymixer.SetMode(te_alloymixer.GetMode().Next());
+    }
   }
 }

@@ -403,7 +403,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
         extract_time = sub_recipe.extract_energy;
         if(energy_manager.GetStoredEnergy() > 0)
         {
-          int energy = (int) (energy_manager.UseEnergy(800, true));
+          int energy = (int) (energy_manager.UseEnergy(600, true));
           progress += energy;
           if(progress >= extract_time)
           {

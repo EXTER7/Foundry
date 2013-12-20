@@ -307,9 +307,10 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     {
       int last_energy = energy_manager.GetStoredEnergy();
 
-      float mj = power_handler.useEnergy(0, 50, true);
-
-      energy_manager.ReceiveMJ(mj,true);
+      float received = energy_manager.ReceiveMJ(power_handler.useEnergy(0, 100, false),false);
+      
+      power_handler.useEnergy(0, received, true);
+      energy_manager.ReceiveMJ(received, true);
 
       packet = new NBTTagCompound();
       super.writeToNBT(packet);

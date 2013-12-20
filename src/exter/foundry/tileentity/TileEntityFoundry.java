@@ -1,5 +1,10 @@
 package exter.foundry.tileentity;
 
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
+import ic2.api.energy.tile.IEnergySink;
+import ic2.api.info.Info;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +12,7 @@ import cofh.api.energy.IEnergyHandler;
 
 import com.google.common.io.ByteArrayDataInput;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
@@ -29,6 +35,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -37,7 +44,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor,IEnergyHandler
+public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor,IEnergyHandler,IEnergySink
 {
   
   /**
@@ -107,7 +114,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private NBTTagCompound packet;
   private boolean do_update;
   private boolean initialized;
-  
+  private boolean added_enet;
+
   private PowerHandler power_handler;
   
   protected EnergyManager energy_manager;
@@ -151,13 +159,15 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     
     update_energy = false;
     update_energy_tick = true;
+    added_enet = false;
   }
   
   @Override
   public void invalidate()
   {
-    initialized = false;
     super.invalidate();
+    initialized = false;
+    onChunkUnload();
   }
 
 
@@ -298,7 +308,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       UpdateRedstone();
       update_energy_tick = true;
     }
-    
+    if (!added_enet) LoadEnet();
     
     power_handler.update();
     
@@ -395,11 +405,55 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   @Override
   public int getEnergyStored(ForgeDirection from)
   {
-    return 0;
+    return energy_manager.GetStoredEnergy() / EnergyManager.RATIO_RF;
   }
 
+  @Override
   public int getMaxEnergyStored(ForgeDirection from)
   {
-    return 0;
+    return GetMaxStoredEnergy() / EnergyManager.RATIO_RF;
+  }
+
+  @Override
+  public void onChunkUnload()
+  {
+    if(added_enet && Info.isIc2Available())
+    {
+      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+      added_enet = false;
+    }
+  }
+
+  public void LoadEnet()
+  {
+    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient() && Info.isIc2Available())
+    {
+      MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+      added_enet = true;
+    }
+  }
+  
+  @Override
+  public double demandedEnergyUnits()
+  {
+    return (double)(GetMaxStoredEnergy() - energy_manager.GetStoredEnergy()) / EnergyManager.RATIO_EU;
+  }
+
+  @Override
+  public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
+  {
+    return amount - energy_manager.ReceiveEU(amount, true);
+  }
+
+  @Override
+  public int getMaxSafeInput()
+  {
+    return Integer.MAX_VALUE;
+  }
+  
+  @Override
+  public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
+  {
+    return true;
   }
 }

@@ -7,6 +7,7 @@ public class EnergyManager
 {
   static public int RATIO_MJ = 100;
   static public int RATIO_RF = 1000;
+  static public int RATIO_EU = 40;
   
   private int stored;
   private int max;
@@ -30,7 +31,7 @@ public class EnergyManager
     }
     return en;
   }
-  
+
   public float ReceiveMJ(float mj,boolean do_receive)
   {
     return (float)ReceiveEnergy((int)(mj * RATIO_MJ),do_receive) / RATIO_MJ;
@@ -39,6 +40,11 @@ public class EnergyManager
   public int ReceiveRF(int rf,boolean do_receive)
   {
     return ReceiveEnergy(rf * RATIO_RF,do_receive) / RATIO_RF;
+  }
+  
+  public double ReceiveEU(double eu,boolean do_receive)
+  {
+    return (double)ReceiveEnergy((int)(eu * RATIO_EU),do_receive) / RATIO_EU;
   }
   
   public int UseEnergy(int amount,boolean do_use)

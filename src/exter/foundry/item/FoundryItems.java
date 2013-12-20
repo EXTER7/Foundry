@@ -3,6 +3,7 @@ package exter.foundry.item;
 import java.util.HashMap;
 import java.util.Map;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -45,12 +46,17 @@ public class FoundryItems
     item_mold = new ItemMold(config.getItem("mold", GetNextID()).getInt() - 256);
     item_ingot = new ItemIngot(config.getItem("ingot", GetNextID()).getInt() - 256);
     
+    GameRegistry.registerItem(item_component, "foundryComponent");
+    GameRegistry.registerItem(item_mold, "foundryMold");
+    GameRegistry.registerItem(item_ingot, "foundryIngot");
+    
     for (i = 0; i < ItemFoundryComponent.NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_component,  1, i);
       LanguageRegistry.addName(stack, ItemFoundryComponent.NAMES[i]);
       ItemRegistry.instance.RegisterItem(ItemFoundryComponent.REGISTRY_NAMES[i], stack);
     }
+    
     for (i = 0; i < ItemMold.NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_mold,  1, i);

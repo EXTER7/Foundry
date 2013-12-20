@@ -24,7 +24,7 @@ public interface IInfuserSubstanceRecipe
   
   /**
    * Get the amount of energy needed.
-   * @return The amount of energy needed in (100 Energy = 1 MJ, or 10 Energy = 1 RF).
+   * @return The amount of energy needed in (100 Energy = 1 MJ, 10 Energy = 1 RF, 40 Energy = 1 EU).
    */
   public int GetEnergyNeeded();
   

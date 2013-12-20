@@ -25,13 +25,6 @@ public class AlloyRecipeManager implements IAlloyRecipeManager
   }
   
   @Override
-  @Deprecated
-  public void AddRecipe(FluidStack out,FluidStack in_a,FluidStack in_b)
-  {
-    AddRecipe(out,new FluidStack[] {in_a,in_b});
-  }
-  
-  @Override
   public void AddRecipe(FluidStack out, FluidStack[] in)
   {
     recipes.add(new AlloyRecipe(out,in));

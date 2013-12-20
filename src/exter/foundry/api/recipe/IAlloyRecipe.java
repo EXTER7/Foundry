@@ -5,21 +5,16 @@ import net.minecraftforge.fluids.FluidStack;
 public interface IAlloyRecipe
 {
   /**
-   * Get the recipe's first input.
-   * @return FluidStack containing Recipe's first input fluid and amount required.
+   * Get the one of the recipe's inputs by index.
+   * @param in index of the input.
+   * @return Amount of recipe's inputs ranging from 1 to 4.
    */
-  @Deprecated
-  public FluidStack GetInputA();
-  
-  /**
-   * Get the recipe's second input.
-   * @return FluidStack containing Recipe's second input fluid and amount required.
-   */
-  @Deprecated
-  public FluidStack GetInputB();
-  
   public FluidStack GetInput(int in);
   
+  /**
+   * Get the amount of recipe's inputs.
+   * @return Amount of recipe's inputs ranging from 1 to 4.
+   */
   public int GetInputCount();
 
   /**
@@ -29,13 +24,10 @@ public interface IAlloyRecipe
   public FluidStack GetOutput();
 
   /**
-   * Check if two fluid stacks matches this recipe (in_a contains InputA, and in_b contains InputB).
-   * @param in_a fluid stack to compare to Input A.
-   * @param in_b fluid stack to compare to Input B.
+   * Check if a list of fluid stacks matches this recipe.
+   * @param in list of fluid stack to compare.
+   * @param [Output] order in which the input fluids are matched.
    * @return true if the fluids matches, false otherwise.
    */
-  @Deprecated
-  public boolean MatchesRecipe(FluidStack in_a,FluidStack in_b);
-
   public boolean MatchesRecipe(FluidStack[] inputs,int[] order);
 }

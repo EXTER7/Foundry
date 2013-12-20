@@ -11,13 +11,8 @@ public interface IAlloyRecipeManager
   /**
    * Register an Alloy Mixer recipe.
    * @param out Output (fluid type and amount).
-   * @param in_a First input (fluid type and amount required).
-   * @param in_b Second input (fluid type and amount required).
+   * @param in Inputs (fluid type and amount required), length must be less or equal 4.
    */
-  @Deprecated
-  public void AddRecipe(FluidStack out,FluidStack in_a,FluidStack in_b);
-  
-  
   public void AddRecipe(FluidStack out,FluidStack[] in);
   
   /**

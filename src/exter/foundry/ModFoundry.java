@@ -40,7 +40,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.container.RefractoryFluidContainerManager;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
 import exter.foundry.block.BlockFoundryMachine;
@@ -80,7 +79,6 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
-import exter.foundry.util.FoundryContainerHandler;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
@@ -142,7 +140,6 @@ public class ModFoundry
     FoundryRecipes.casting = CastingRecipeManager.instance;
     FoundryRecipes.alloy = AlloyRecipeManager.instance;
     FoundryRecipes.infuser = InfuserRecipeManager.instance;
-    RefractoryFluidContainerManager.handler = FoundryContainerHandler.instance;
 
 
     

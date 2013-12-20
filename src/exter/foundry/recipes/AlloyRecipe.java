@@ -16,20 +16,6 @@ public class AlloyRecipe implements IAlloyRecipe
   public FluidStack output;
 
   @Override
-  @Deprecated
-  public FluidStack GetInputA()
-  {
-    return inputs[0].copy();
-  }
-  
-  @Override
-  @Deprecated
-  public FluidStack GetInputB()
-  {
-    return inputs[1].copy();
-  }
-
-  @Override
   public FluidStack GetInput(int in)
   {
     return inputs[in].copy();
@@ -97,12 +83,5 @@ public class AlloyRecipe implements IAlloyRecipe
       }
     }
     return matches == inputs.length;
-  }
-
-  @Override
-  @Deprecated
-  public boolean MatchesRecipe(FluidStack in_a, FluidStack in_b)
-  {
-    return MatchesRecipe(new FluidStack[] {in_a, in_b},null);
   }
 }

@@ -41,7 +41,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
+public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -82,7 +82,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 50000;
   
-  static public final int ENERGY_USE = 30;
+  static public final int ENERGY_USE = 3000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -99,8 +99,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   private RedstoneMode mode;
   private MeltingRecipe current_recipe;
   
-  private PowerHandler power_handler;
- 
   
   public TileEntityInductionCrucibleFurnace()
   {
@@ -115,10 +113,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     
     melt_point = 0;
     
-    power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    
-    power_handler.configure(1, 32, 1, 32);
-    power_handler.configurePowerPerdition(0, 0);
     current_recipe = null;
     mode = RedstoneMode.RSMODE_IGNORE;
     
@@ -427,23 +421,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   }
 
   @Override
-  public PowerReceiver getPowerReceiver(ForgeDirection side)
-  {
-    return power_handler.getPowerReceiver();
-  }
-
-  @Override
-  public void doWork(PowerHandler workProvider)
-  {
-  }
-
-  @Override
-  public World getWorld()
-  {
-    return worldObj;
-  }
-
-  @Override
   protected void UpdateEntityClient()
   {
 
@@ -537,34 +514,23 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
         break;
       case RSMODE_OFF:
         use_energy = !redstone_signal;
-        if(last_redstone_signal)
-        {
-          power_handler.setEnergy(0);
-        }
         break;
       case RSMODE_ON:
         use_energy = redstone_signal;
-        if(!last_redstone_signal)
-        {
-          power_handler.setEnergy(0);
-        }
         break;
       
     }
     if(use_energy)
     {
-      if(power_handler.getMaxEnergyStored() > 0)
+      if(energy_manager.GetStoredEnergy() > 0)
       {
-        float energy = power_handler.useEnergy(1, ENERGY_USE, true);
-        heat += (int) (energy * 6);
+        int energy = energy_manager.UseEnergy(ENERGY_USE, true);
+        heat += energy * 6 / 100;
         if(heat > HEAT_MAX)
         {
           heat = HEAT_MAX;
         }
       }
-    } else
-    {
-      power_handler.setEnergy(power_handler.getMaxEnergyStored());
     }
     
     DoMeltingProgress();
@@ -599,5 +565,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   public int GetTankCount()
   {
     return 1;
+  }
+
+  @Override
+  public int GetMaxStoredEnergy()
+  {
+    return 3200;
   }  
 }

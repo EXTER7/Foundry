@@ -3,16 +3,20 @@ package exter.foundry.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 
+import cofh.api.energy.IEnergyHandler;
+
 import com.google.common.io.ByteArrayDataInput;
 
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
 import exter.foundry.ModFoundry;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.tileentity.TileEntityMetalCaster.RedstoneMode;
+import exter.foundry.tileentity.energy.EnergyManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -23,6 +27,8 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -31,7 +37,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IInventory
+public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor,IEnergyHandler
 {
   
   /**
@@ -102,9 +108,16 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private boolean do_update;
   private boolean initialized;
   
+  private PowerHandler power_handler;
+  
+  protected EnergyManager energy_manager;
+  
   protected boolean last_redstone_signal;
   protected boolean redstone_signal;
 
+  protected boolean update_energy;
+
+  protected boolean update_energy_tick;
   
   
   protected final void AddContainerSlot(ContainerSlot cs)
@@ -120,6 +133,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   
   public abstract int GetTankCount();
 
+  public abstract int GetMaxStoredEnergy();
+
   
   public TileEntityFoundry()
   {
@@ -127,6 +142,15 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     last_redstone_signal = false;
     redstone_signal = false;
     initialized = false;
+    power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
+    
+    power_handler.configure(1, 32, 1, 64);
+    power_handler.configurePowerPerdition(0, 0);
+
+    energy_manager = new EnergyManager(GetMaxStoredEnergy());
+    
+    update_energy = false;
+    update_energy_tick = true;
   }
   
   @Override
@@ -219,6 +243,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         setInventorySlotContents(i, stack);
       }
     }
+    
+    energy_manager.ReadFromNBT(compound);
   }
   
   public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
@@ -240,6 +266,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     {
       WriteInventoryItemToNBT(compound,i);
     }
+    energy_manager.WriteToNBT(compound);
   }
 
   protected final void UpdateValue(String name,int value)
@@ -269,15 +296,21 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     if(!(initialized || isInvalid()))
     {
       UpdateRedstone();
+      update_energy_tick = true;
     }
     
-    if(this instanceof IPowerReceptor)
-    {
-      ((IPowerReceptor)this).getPowerReceiver(null).update();
-    }
-
+    
+    power_handler.update();
+    
+    
     if(!worldObj.isRemote)
     {
+      int last_energy = energy_manager.GetStoredEnergy();
+
+      float mj = power_handler.useEnergy(0, 50, true);
+
+      energy_manager.ReceiveMJ(mj,true);
+
       packet = new NBTTagCompound();
       super.writeToNBT(packet);
       do_update = false;
@@ -286,11 +319,18 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
         cs.Update();
       }
       UpdateEntityServer();
+      if(update_energy && (update_energy_tick || energy_manager.GetStoredEnergy() != last_energy))
+      {
+        energy_manager.WriteToNBT(packet);
+        do_update = true;
+      }
+      
       if(do_update)
       {
         FoundryPacketHandler.SendTileEntityPacketToPlayers(new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, packet), this);
       }
       packet = null;
+      update_energy_tick = false;
     } else
     {
       UpdateEntityClient();
@@ -306,8 +346,59 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
   }
   
+  @Override
+  public PowerReceiver getPowerReceiver(ForgeDirection side)
+  {
+    return power_handler.getPowerReceiver();
+  }
+
+  @Override
+  public void doWork(PowerHandler workProvider)
+  {
+  }
+
+  @Override
+  public World getWorld()
+  {
+    return worldObj;
+  }
+
+  
   public void UpdateRedstone()
   {
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+  }
+  
+  @Override
+  public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
+  {
+    if(!simulate && update_energy && !worldObj.isRemote)
+    {
+      update_energy_tick = true;
+    }
+    return energy_manager.ReceiveRF(maxReceive, !simulate);
+  }
+
+  @Override
+  public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
+  {
+    return 0;
+  }
+
+  @Override
+  public boolean canInterface(ForgeDirection from)
+  {
+    return true;
+  }
+
+  @Override
+  public int getEnergyStored(ForgeDirection from)
+  {
+    return 0;
+  }
+
+  public int getMaxEnergyStored(ForgeDirection from)
+  {
+    return 0;
   }
 }

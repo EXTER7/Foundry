@@ -93,9 +93,9 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object itm, int time)
+  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object itm, int energy)
   {
-    substance_recipes.add(new InfuserSubstanceRecipe(new InfuserSubstance(substance_type,substance_amount),itm,time));
+    substance_recipes.add(new InfuserSubstanceRecipe(new InfuserSubstance(substance_type,substance_amount),itm,energy));
   }
 
   /**

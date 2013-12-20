@@ -378,11 +378,11 @@ public class ModFoundry
       CastingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
     }
     
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 2400);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Item.coal,1,1), 4800);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 19200);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, "dustCoal", 1600);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 3200);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 240000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Item.coal,1,1), 480000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 1920000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, "dustCoal", 160000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 320000);
 
     InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "carbon", 2);
     

@@ -68,7 +68,6 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int RSMODE_TEXTURE_Y = 90;
 
   
-  private static DecimalFormat formatter = new DecimalFormat("###.#");
   
   private TileEntityMetalCaster te_caster;
   private IInventory player_inventory;
@@ -109,7 +108,7 @@ public class GuiMetalCaster extends GuiFoundry
     }
 
     //Draw stored power bar.
-    int power = Math.round(te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredPower());
+    int power = te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredEnergy();
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
@@ -133,9 +132,9 @@ public class GuiMetalCaster extends GuiFoundry
     if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mouse_x,mouse_y))
     {
       List<String> list = new ArrayList<String>();
-      float power = te_caster.GetStoredPower();
-      float max_power = te_caster.GetMaxStoredPower();
-      list.add("Power: " + formatter.format(power) + "/" + formatter.format(max_power) + " MJ");
+      int power = te_caster.GetStoredPower();
+      int  max_power = te_caster.GetMaxStoredEnergy();
+      list.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
       drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
     }
     if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mouse_x,mouse_y))

@@ -112,8 +112,8 @@ public class ModIntegrationRailcraft extends ModIntegration
       FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearSteel",items[ITEM_STEEL_GEAR]);
       
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, items[ITEM_COAL_COKE], 1100);
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, items[ITEM_COAL_COKE_BLOCK], 8800);
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, items[ITEM_COAL_COKE], 110000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, items[ITEM_COAL_COKE_BLOCK], 880000);
 
       
       if(!FoundryConfig.recipe_gear_useoredict)

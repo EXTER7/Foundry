@@ -42,7 +42,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
+public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -81,7 +81,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
 
   static public final int CAST_TIME = 4000;
   
-  static public final int POWER_REQUIRED = 100;
+  static public final int ENERGY_REQUIRED = 10000;
   
   static public final int INVENTORY_OUTPUT = 0;
   static public final int INVENTORY_MOLD = 1;
@@ -96,8 +96,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   
   private RedstoneMode mode;
   private int progress;
-  
-  private PowerHandler power_handler;
 
   public TileEntityMetalCaster()
   {
@@ -110,15 +108,13 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     progress = -1;
     inventory = new ItemStack[5];
     
-    power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(1, 5, 1, 400);
-    power_handler.configurePowerPerdition(1, 100);
     mode = RedstoneMode.RSMODE_IGNORE;
     current_recipe = null;
     
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
    
+    update_energy = true;
   }
   
   
@@ -131,10 +127,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     if(compund.hasKey("progress"))
     {
       progress = compund.getInteger("progress");
-    }
-    if(compund.hasKey("Power"))
-    {
-      power_handler.readFromNBT(compund.getCompoundTag("Power"));
     }
     if(compund.hasKey("mode"))
     {
@@ -150,7 +142,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     compound.setInteger("progress", progress);
     compound.setInteger("mode", mode.number);
     NBTTagCompound power = new NBTTagCompound();
-    power_handler.writeToNBT(power);
   }
 
   public void GetGUINetworkData(int id, int value)
@@ -208,14 +199,9 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     }
   }
 
-  public float GetStoredPower()
+  public int GetStoredPower()
   {
-    return power_handler.getEnergyStored();
-  }
-
-  public float GetMaxStoredPower()
-  {
-    return power_handler.getMaxEnergyStored();
+    return energy_manager.GetStoredEnergy();
   }
 
   @Override
@@ -431,11 +417,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     }
   }
   
-  private void BeginCasting(float power)
+  private void BeginCasting()
   {
-    if(current_recipe != null && CanCastCurrentRecipe() && power >= POWER_REQUIRED)
+    if(current_recipe != null && CanCastCurrentRecipe() && energy_manager.GetStoredEnergy() >= ENERGY_REQUIRED)
     {
-      power_handler.useEnergy(POWER_REQUIRED, POWER_REQUIRED, true);
+      energy_manager.UseEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }
@@ -463,8 +449,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   protected void UpdateEntityServer()
   {
-
-    float last_power = power_handler.getEnergyStored();
     
     int last_progress = progress;
     
@@ -482,24 +466,24 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       switch(mode)
       {
         case RSMODE_IGNORE:
-          BeginCasting(last_power);
+          BeginCasting();
           break;
         case RSMODE_OFF:
           if(!redstone_signal)
           {
-            BeginCasting(last_power);
+            BeginCasting();
           }
           break;
         case RSMODE_ON:
           if(redstone_signal)
           {
-            BeginCasting(last_power);
+            BeginCasting();
           }
           break;
         case RSMODE_PULSE:
           if(redstone_signal && !last_redstone_signal)
           {
-            BeginCasting(last_power);
+            BeginCasting();
           }
           break;
       }
@@ -541,35 +525,10 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       }
     }
     
-    if(Math.abs(last_power - power_handler.getEnergyStored()) < 0.01)
-    {
-      NBTTagCompound tag = new NBTTagCompound();
-      power_handler.writeToNBT(tag);
-      UpdateNBTTag("Power",tag);
-    }
-    
     if(last_progress != progress)
     {
       UpdateValue("progress",progress);
     }
-  }
-
-
-  @Override
-  public PowerReceiver getPowerReceiver(ForgeDirection side)
-  {
-    return power_handler.getPowerReceiver();
-  }
-
-  @Override
-  public void doWork(PowerHandler workProvider)
-  {
-  }
-
-  @Override
-  public World getWorld()
-  {
-    return worldObj;
   }
 
   @Override
@@ -586,5 +545,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   public int GetTankCount()
   {
     return 1;
+  }
+
+  @Override
+  public int GetMaxStoredEnergy()
+  {
+    return 40000;
   }
 }

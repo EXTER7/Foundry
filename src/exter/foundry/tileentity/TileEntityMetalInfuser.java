@@ -45,7 +45,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
+public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
   static private final int NETDATAID_INPUT_TANK_FLUID = 1;
   static private final int NETDATAID_INPUT_TANK_AMOUNT = 2;
@@ -70,9 +70,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   
   private int progress;
   private int extract_time;
-  
-  
-  private PowerHandler power_handler;
  
   public TileEntityMetalInfuser()
   {
@@ -91,9 +88,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     
     inventory = new ItemStack[5];
     
-    power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(1, 8, 1, 8);
-    power_handler.configurePowerPerdition(1, 100);
     
     AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_FILL,true));
@@ -406,10 +400,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     {
       if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - sub_recipe.substance.amount >= substance.amount)
       {
-        extract_time = sub_recipe.extract_energy * 100;
-        if(power_handler.getEnergyStored() > 0)
+        extract_time = sub_recipe.extract_energy;
+        if(energy_manager.GetStoredEnergy() > 0)
         {
-          int energy = (int) (power_handler.useEnergy(0, 8, true) * 100);
+          int energy = (int) (energy_manager.UseEnergy(800, true));
           progress += energy;
           if(progress >= extract_time)
           {
@@ -475,25 +469,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     }
   }
 
-
-  @Override
-  public PowerReceiver getPowerReceiver(ForgeDirection side)
-  {
-    return power_handler.getPowerReceiver();
-  }
-
-  @Override
-  public void doWork(PowerHandler workProvider)
-  {
-    
-  }
-
-  @Override
-  public World getWorld()
-  {
-    return worldObj;
-  }
-
   public int GetExtractTime()
   {
     return extract_time;
@@ -514,5 +489,11 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   public int GetTankCount()
   {
     return 2;
+  }
+
+  @Override
+  public int GetMaxStoredEnergy()
+  {
+    return 800;
   }
 }

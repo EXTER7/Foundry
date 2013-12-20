@@ -40,7 +40,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IPowerReceptor
+public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -84,7 +84,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   static private final int NETDATAID_TANK_OUTPUT_FLUID = 8;
   static private final int NETDATAID_TANK_OUTPUT_AMOUNT = 9;
   
-  static private final int PROGRESS_MAX = 400;
+  static private final int PROGRESS_MAX = 4000;
 
   static public final int INVENTORY_CONTAINER_INPUT_0_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_INPUT_0_FILL = 1;
@@ -106,8 +106,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   static public final int TANK_OUTPUT = 4;
   private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
-
-  private PowerHandler power_handler;
 
   
   private int progress;
@@ -131,10 +129,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     }
     progress = 0;
     mode = RedstoneMode.RSMODE_IGNORE;
-
-    power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
-    power_handler.configure(0, 4, 1, 4);
-    power_handler.configurePowerPerdition(0, 0);
 
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
@@ -482,7 +476,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   private FluidStack[] input_tank_fluids = new FluidStack[4];
   private void MixAlloy()
   {
-    if(power_handler.getEnergyStored() == 0)
+    if(energy_manager.GetStoredEnergy() == 0)
     {
       return;
     }
@@ -532,7 +526,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       return;
     }
 
-    int energy = (int) (power_handler.useEnergy(0, 4, true) * 100);
+    int energy = energy_manager.UseEnergy(400, true);
     progress += energy;
 
     if(progress >= PROGRESS_MAX)
@@ -575,23 +569,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   }
 
   @Override
-  public PowerReceiver getPowerReceiver(ForgeDirection side)
-  {
-    return power_handler.getPowerReceiver();
-  }
-
-  @Override
-  public void doWork(PowerHandler workProvider)
-  {
-  }
-
-  @Override
-  public World getWorld()
-  {
-    return worldObj;
-  }
-
-  @Override
   public FluidTank GetTank(int slot)
   {
     return tanks[slot];
@@ -601,5 +578,11 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   public int GetTankCount()
   {
     return 5;
+  }
+
+  @Override
+  public int GetMaxStoredEnergy()
+  {
+    return 400;
   }
 }

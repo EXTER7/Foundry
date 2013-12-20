@@ -54,7 +54,7 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   }
   
   @Override
-  public int GetEneryNeeded()
+  public int GetEnergyNeeded()
   {
     return extract_energy;
   }

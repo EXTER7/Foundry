@@ -16,6 +16,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.client.FluidRenderProperties;
 import tconstruct.library.crafting.AlloyMix;
 import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
@@ -156,9 +157,12 @@ public class ModIntegrationTiCon extends ModIntegration
       }
     }
     
+    LiquidCasting table_casting = TConstructRegistry.getTableCasting();
+    LiquidCasting basin_casting = TConstructRegistry.getBasinCasting();
+    
     //Convert TiCon table casting recipes to Foundry Metal Caster recipes.
     ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
-    for(tconstruct.library.crafting.CastingRecipe casting:TConstructRegistry.getTableCasting().getCastingRecipes())
+    for(tconstruct.library.crafting.CastingRecipe casting:table_casting.getCastingRecipes())
     {
       if(casting.cast != null)
       {
@@ -187,9 +191,9 @@ public class ModIntegrationTiCon extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, casting.cast, null);
       }
     }
-    for(tconstruct.library.crafting.CastingRecipe casting:TConstructRegistry.getBasinCasting().getCastingRecipes())
+    for(tconstruct.library.crafting.CastingRecipe casting:basin_casting.getCastingRecipes())
     {
       CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
-    }    
+    }
   }
 }

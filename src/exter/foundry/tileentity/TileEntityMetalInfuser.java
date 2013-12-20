@@ -68,8 +68,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
   private InfuserSubstance substance;
   
+  static private final int INFUSE_ENERGY_NEEDED = 100;
+  
   private int progress;
-  private int extract_time;
+  private int extract_energy;
+  
+  private InfuserSubstanceRecipe current_substance_recipe;
  
   public TileEntityMetalInfuser()
   {
@@ -84,10 +88,11 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     progress = 0;
-    extract_time = 1;
+    extract_energy = 1;
     
     inventory = new ItemStack[5];
     
+    current_substance_recipe = null;
     
     AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_FILL,true));
@@ -109,7 +114,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
     if(compund.hasKey("extract_time"))
     {
-      extract_time = compund.getInteger("extract_time");
+      extract_energy = compund.getInteger("extract_time");
     }
     
     NBTTagCompound substance_tag = (NBTTagCompound)compund.getTag("Substance");
@@ -146,7 +151,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     WriteSubstanceToNBT(substance_tag);
     compound.setCompoundTag("Substance", substance_tag);
     compound.setInteger("progress", progress);
-    compound.setInteger("extract_time", extract_time);
+    compound.setInteger("extract_time", extract_energy);
   }
 
   private void SetTankFluid(FluidTank tank,int value)
@@ -389,56 +394,73 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     
   }
 
+  
+  private void CheckCurrentSubstanceRecipe()
+  {
+    if(current_substance_recipe == null)
+    {
+      progress = 0;
+      extract_energy = 1;
+      return;
+    }
+
+    if(!current_substance_recipe.MatchesRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]))
+    {
+      progress = 0;
+      extract_energy = 1;
+      current_substance_recipe = null;
+      return;
+    }
+  }
+  
+  private void DoSubstanceExtraction()
+  {
+    if(current_substance_recipe == null)
+    {
+      progress = 0;
+      extract_energy = 1;
+      return;
+    }
+      
+    if(!current_substance_recipe.substance.IsSubstanceEqual(substance)
+    || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - current_substance_recipe.substance.amount < substance.amount)
+    {
+      progress = 0;
+      extract_energy = 1;
+      return;
+    }
+    extract_energy = current_substance_recipe.extract_energy;
+    if(energy_manager.GetStoredEnergy() > 0)
+    {
+      int energy = (int) (energy_manager.UseEnergy(600, true));
+      progress += energy;
+      if(progress >= extract_energy)
+      {
+        progress -= extract_energy;
+        if(substance == null)
+        {
+          substance = new InfuserSubstance(current_substance_recipe.substance);
+        } else
+        {
+          substance.amount += current_substance_recipe.substance.amount;
+        }
+        decrStackSize(0, 1);
+        NBTTagCompound tag = new NBTTagCompound();
+        WriteSubstanceToNBT(tag);
+        UpdateNBTTag("Substance",tag);
+        UpdateInventoryItem(0);
+      }
+    }
+  }
+
   @Override
   protected void UpdateEntityServer()
   {
 
     int last_progress = progress;
-    int last_extract_time = extract_time;
-    InfuserSubstanceRecipe sub_recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
-    if(sub_recipe != null)
-    {
-      if(substance == null || sub_recipe.substance.IsSubstanceEqual(substance) && FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - sub_recipe.substance.amount >= substance.amount)
-      {
-        extract_time = sub_recipe.extract_energy;
-        if(energy_manager.GetStoredEnergy() > 0)
-        {
-          int energy = (int) (energy_manager.UseEnergy(600, true));
-          progress += energy;
-          if(progress >= extract_time)
-          {
-            progress -= extract_time;
-            if(substance == null)
-            {
-              substance = new InfuserSubstance(sub_recipe.substance);
-            } else
-            {
-              substance.amount += sub_recipe.substance.amount;
-            }
-            decrStackSize(0, 1);
-            NBTTagCompound tag = new NBTTagCompound();
-            WriteSubstanceToNBT(tag);
-            UpdateNBTTag("Substance",tag);
-            UpdateInventoryItem(0);
-          }
-        }
-      } else
-      {
-        progress = 0;
-        extract_time = 1;
-      }
-    } else
-    {
-      progress = 0;
-      extract_time = 1;
-    }
-
-    if(last_extract_time != extract_time)
-    {
-      UpdateValue("extract_time",extract_time);
-    }
-
-    if(tanks[TANK_INPUT].getFluidAmount() > 0)
+    int last_extract_time = extract_energy;
+    
+    if(tanks[TANK_INPUT].getFluidAmount() > 0 && energy_manager.GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
     {
       InfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
@@ -448,6 +470,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
         {
           tanks[TANK_INPUT].drain(recipe.fluid.amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
+          energy_manager.UseEnergy(INFUSE_ENERGY_NEEDED, true);
           substance.amount -= recipe.substance.amount;
           if(substance.amount <= 0)
           {
@@ -463,6 +486,23 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       }
     }
 
+    
+    CheckCurrentSubstanceRecipe();
+    
+    if(current_substance_recipe == null)
+    {
+      current_substance_recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
+      progress = 0;
+    }
+    
+    DoSubstanceExtraction();
+
+    if(last_extract_time != extract_energy)
+    {
+      UpdateValue("extract_time",extract_energy);
+    }
+
+
     if(last_progress != progress)
     {
       UpdateValue("progress",progress);
@@ -471,7 +511,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
   public int GetExtractTime()
   {
-    return extract_time;
+    return extract_energy;
   }
   
   public InfuserSubstance GetSubstance()

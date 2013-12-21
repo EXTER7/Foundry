@@ -52,7 +52,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
 
   static private final String[] PATHS_ICON_BOTTOM =
   {
-    "foundry:metalsmelter_bottom",
+    "foundry:metalsmelter_top",
     "foundry:caster_bottom",
     "foundry:alloymixer_bottom",
     "foundry:infuser_bottom"

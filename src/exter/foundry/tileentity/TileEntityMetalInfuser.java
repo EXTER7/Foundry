@@ -422,8 +422,9 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       return;
     }
       
-    if(!current_substance_recipe.substance.IsSubstanceEqual(substance)
-    || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - current_substance_recipe.substance.amount < substance.amount)
+    if(substance != null
+        && (!current_substance_recipe.substance.IsSubstanceEqual(substance)
+        || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < current_substance_recipe.substance.amount))
     {
       progress = 0;
       extract_energy = 1;
@@ -432,7 +433,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     extract_energy = current_substance_recipe.extract_energy;
     if(energy_manager.GetStoredEnergy() > 0)
     {
-      int energy = (int) (energy_manager.UseEnergy(600, true));
+      int energy = energy_manager.UseEnergy(600, true);
       progress += energy;
       if(progress >= extract_energy)
       {

@@ -82,7 +82,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 50000;
   
-  static public final int ENERGY_USE = 3000;
+  static public final int ENERGY_USE = 6000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -570,6 +570,13 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 3200;
+    return 12000;
   }  
+  
+  @Override
+  public int getMaxSafeInput()
+  {
+    return 128;
+  }
+
 }

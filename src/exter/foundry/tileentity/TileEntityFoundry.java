@@ -442,13 +442,19 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   @Override
   public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
   {
+    amount = Math.max(amount, 0);
+    if(update_energy && !worldObj.isRemote)
+    {
+      update_energy_tick = true;
+    }
+
     return amount - energy_manager.ReceiveEU(amount, true);
   }
 
   @Override
   public int getMaxSafeInput()
   {
-    return Integer.MAX_VALUE;
+    return 32;
   }
   
   @Override

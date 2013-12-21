@@ -535,6 +535,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 800;
+    return 1600;
   }
 }

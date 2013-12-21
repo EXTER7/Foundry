@@ -87,7 +87,15 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[9.11.1.951,)"
+  dependencies = "required-after:Forge@[9.11.1.951,);"
+      + "after:TConstruct;"
+      + "after:BuildCraft|Core;"
+      + "after:Railcraft;"
+      + "after:ThermalExpansion;"
+      + "after:Redstone Arsenal;"
+      + "after:IC2;"
+      + "after:Forestry;"
+      + "after:gregtech_addon"
 )
 @NetworkMod(
   channels = { ModFoundry.CHANNEL },

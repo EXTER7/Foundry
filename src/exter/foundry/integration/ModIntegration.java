@@ -49,10 +49,12 @@ public abstract class ModIntegration
 
   protected void VerifyItems()
   {
-    for(ItemStack is:items)
+    int i;
+    for(i = 0; i < items.length; i++)
     {
-      if(is == null)
+      if(items[i] == null)
       {
+        ModFoundry.log.warning("Integration " + Name + ": item " + i + " is null.");
         is_loaded = false;
       }
     }

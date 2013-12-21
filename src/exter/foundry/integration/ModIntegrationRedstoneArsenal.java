@@ -40,6 +40,12 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void OnInit()
   {
+  }
+
+
+  @Override
+  public void OnPostInit()
+  {
     ModIntegration te3 = GetIntegration("te3");
     if(!Loader.isModLoaded("Redstone Arsenal") || te3 == null || !te3.is_loaded)
     {
@@ -74,12 +80,5 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_BLOCK], new FluidStack(liquid_electrumflux, FoundryRecipes.FLUID_AMOUNT_BLOCK), mold_block, null);
 
     }
-  }
-
-
-  @Override
-  public void OnPostInit()
-  {
-
   }
 }

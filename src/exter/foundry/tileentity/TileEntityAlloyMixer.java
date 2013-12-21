@@ -517,7 +517,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     }
 
     energy_manager.UseEnergy(REQUIRED_ENERGY, true);
-    tanks[TANK_OUTPUT].fill(recipe.GetOutput(), true);
+    tanks[TANK_OUTPUT].fill(output, true);
     UpdateTank(TANK_OUTPUT);
     for(i = 0; i < recipe.GetInputCount(); i++)
     {

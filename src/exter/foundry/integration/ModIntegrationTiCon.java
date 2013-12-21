@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.Loader;
+import exter.foundry.ModFoundry;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -150,7 +151,7 @@ public class ModIntegrationTiCon extends ModIntegration
     //Convert TiCon Alloy recipes Foundry Alloy Mixer recipes.
     for(AlloyMix mix:Smeltery.getAlloyList())
     {
-      String mapped_result = liquid_map.get(mix.result.getFluid());
+      String mapped_result = liquid_map.get(mix.result.getFluid().getName());
       if(mapped_result == null)
       {
         CreateAlloyRecipe(mix);

@@ -141,7 +141,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
       return true;
     } else
     {
-      switch(world.getBlockMetadata(x, y, z))
+      int meta = world.getBlockMetadata(x, y, z);
+      ModFoundry.log.info("Block metadata = " + meta);
+      switch(meta)
       {
         case MACHINE_ICF:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ICF, world, x, y, z);

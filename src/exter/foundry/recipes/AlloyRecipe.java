@@ -3,6 +3,7 @@ package exter.foundry.recipes;
 import java.util.ArrayList;
 import java.util.List;
 
+import exter.foundry.ModFoundry;
 import exter.foundry.api.recipe.IAlloyRecipe;
 import net.minecraftforge.fluids.FluidStack;
 

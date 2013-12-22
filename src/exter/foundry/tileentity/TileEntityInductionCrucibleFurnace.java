@@ -82,7 +82,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 50000;
   
-  static public final int ENERGY_USE = 6000;
+  static public final int ENERGY_USE = 4000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;

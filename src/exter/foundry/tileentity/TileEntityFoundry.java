@@ -307,8 +307,13 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     {
       UpdateRedstone();
       update_energy_tick = true;
+      initialized = true;
     }
-    if (!added_enet) LoadEnet();
+
+    if(!added_enet)
+    {
+      LoadEnet();
+    }
     
     power_handler.update();
     
@@ -442,13 +447,13 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   @Override
   public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
   {
-    amount = Math.max(amount, 0);
+    double use_amount = Math.max(Math.min(amount, getMaxSafeInput()), 0);
     if(update_energy && !worldObj.isRemote)
     {
       update_energy_tick = true;
     }
 
-    return amount - energy_manager.ReceiveEU(amount, true);
+    return amount - energy_manager.ReceiveEU(use_amount, true);
   }
 
   @Override

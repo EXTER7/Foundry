@@ -10,20 +10,23 @@ public class EnergyManager
   static public int RATIO_EU = 40;
   
   private int stored;
-  private int max;
+  private int capacity;
   
-  public EnergyManager(int max_energy)
+  public EnergyManager(int max_capacity)
   {
-    max = max_energy;
+    capacity = max_capacity;
     stored = 0;
   }
   
-  private int ReceiveEnergy(int en,boolean do_receive)
+  private int ReceiveEnergy(int en,boolean do_receive, boolean allow_overflow)
   {
-    int needed = max - stored;
-    if(en > needed)
+    if(!allow_overflow)
     {
-      en = needed;
+      int needed = capacity - stored;
+      if(en > needed)
+      {
+        en = needed;
+      }
     }
     if(do_receive)
     {
@@ -34,17 +37,17 @@ public class EnergyManager
 
   public float ReceiveMJ(float mj,boolean do_receive)
   {
-    return (float)ReceiveEnergy((int)(mj * RATIO_MJ),do_receive) / RATIO_MJ;
+    return (float)ReceiveEnergy((int)(mj * RATIO_MJ),do_receive,false) / RATIO_MJ;
   }
   
   public int ReceiveRF(int rf,boolean do_receive)
   {
-    return ReceiveEnergy(rf * RATIO_RF,do_receive) / RATIO_RF;
+    return ReceiveEnergy(rf * RATIO_RF,do_receive,false) / RATIO_RF;
   }
   
   public double ReceiveEU(double eu,boolean do_receive)
   {
-    return (double)ReceiveEnergy((int)(eu * RATIO_EU),do_receive) / RATIO_EU;
+    return (double)ReceiveEnergy((int)(eu * RATIO_EU),do_receive,true) / RATIO_EU;
   }
   
   public int UseEnergy(int amount,boolean do_use)
@@ -62,9 +65,26 @@ public class EnergyManager
   
   public int GetStoredEnergy()
   {
-    return stored;
+    if(stored > capacity)
+    {
+      return capacity;
+    } else
+    {
+      return stored;
+    }
   }
   
+  public int GetCapacity()
+  {
+    if(stored > capacity)
+    {
+      return capacity;
+    } else
+    {
+      return stored;
+    }
+  }
+
   public void WriteToNBT(NBTTagCompound tag)
   {
     tag.setInteger("energy", stored);

@@ -74,6 +74,7 @@ public class FoundryItems
     ingot_stacks.put("Gold", new ItemStack(Item.ingotGold));
     
     item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256,FluidContainerRegistry.BUCKET_VOLUME);
+    GameRegistry.registerItem(item_container, "foundryContainer");
     LanguageRegistry.addName(item_container, "Refractory Fluid Container");
     ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));
 

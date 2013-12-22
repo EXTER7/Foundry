@@ -75,16 +75,6 @@ public class ModIntegrationGregtech extends ModIntegration
         "IBI",
         'I', "plateSteel",
         'B', foundrybrick_stack));
-    
-    GameRegistry.addRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
-        " R ",
-        "ICI",
-        "IPI",
-        'I', iron_stack, 
-        'P', piston_stack,
-        'C', crucible_stack,
-        'R', redstone_stack);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),

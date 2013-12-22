@@ -152,7 +152,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     initialized = false;
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     
-    power_handler.configure(1, 32, 1, 64);
+    power_handler.configure(1, 100, 1, 200);
     power_handler.configurePowerPerdition(0, 0);
 
     energy_manager = new EnergyManager(GetMaxStoredEnergy());

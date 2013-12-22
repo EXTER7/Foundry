@@ -420,6 +420,7 @@ public class ModFoundry
     ItemStack piston_stack = new ItemStack(Block.pistonBase);
     ItemStack goldnugget_stack = new ItemStack(Item.goldNugget);
     ItemStack stick_stack = new ItemStack(Item.stick);
+    ItemStack chest_stack = new ItemStack(Block.chest);
     ItemStack foundryclay_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundryclay8_stack = new ItemStack(FoundryItems.item_component,8,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
@@ -511,9 +512,10 @@ public class ModFoundry
     
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
-        " R ",
-        "ICI",
+        " H ",
+        "RCR",
         "IPI",
+        'H', chest_stack, 
         'I', iron_stack, 
         'P', piston_stack,
         'C', crucible_stack,

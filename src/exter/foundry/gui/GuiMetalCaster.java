@@ -42,7 +42,7 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int TANK_X = 39;
   private static final int TANK_Y = 21;
   
-  private static final int PROGRESS_X = 63;
+  private static final int PROGRESS_X = 60;
   private static final int PROGRESS_Y = 51;
   private static final int PROGRESS_WIDTH = 22;
   private static final int PROGRESS_HEIGHT = 15;

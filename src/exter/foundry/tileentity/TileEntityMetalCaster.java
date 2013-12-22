@@ -88,6 +88,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   static public final int INVENTORY_EXTRA = 2;
   static public final int INVENTORY_CONTAINER_DRAIN = 3;
   static public final int INVENTORY_CONTAINER_FILL = 4;
+  static public final int INVENTORY_MOLD_STORAGE = 5;
+  static public final int INVENTORY_MOLD_STORAGE_SIZE = 9;
   private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
@@ -106,7 +108,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = -1;
-    inventory = new ItemStack[5];
+    inventory = new ItemStack[14];
     
     mode = RedstoneMode.RSMODE_IGNORE;
     current_recipe = null;
@@ -207,7 +209,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public int getSizeInventory()
   {
-    return 5;
+    return 14;
   }
 
   @Override

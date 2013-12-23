@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MODNAME=foundry
-MODVERSION=0.5.0.0
-MODVERSION_API=0.5.0.0
+MODVERSION=0.6.0.0
+MODVERSION_API=0.6.0.0
 
 rm -rf packed/*
 if ./recompile.sh && ./reobfuscate_srg.sh

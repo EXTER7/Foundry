@@ -330,8 +330,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     return false;
   }
 
-  static private final int[] INSERT_SLOTS = { 2 };
-  static private final int[] EXTRACT_SLOTS = { 0 };
+  static private final int[] INSERT_SLOTS = { INVENTORY_EXTRA };
+  static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
 
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)

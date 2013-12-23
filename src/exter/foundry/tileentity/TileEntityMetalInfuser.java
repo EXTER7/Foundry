@@ -537,4 +537,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   {
     return 3000;
   }
+
+  @Override
+  public int GetEnergyUse()
+  {
+    return INFUSE_ENERGY_NEEDED + 600;
+  }
 }

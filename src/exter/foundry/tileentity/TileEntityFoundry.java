@@ -143,6 +143,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
 
   public abstract int GetMaxStoredEnergy();
 
+  public abstract int GetEnergyUse();
   
   public TileEntityFoundry()
   {
@@ -152,7 +153,9 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     initialized = false;
     power_handler = new PowerHandler(this,PowerHandler.Type.MACHINE);
     
-    power_handler.configure(1, 100, 1, 200);
+    float mj_tick = (float)GetEnergyUse() / EnergyManager.RATIO_MJ + 1;
+    
+    power_handler.configure(1, mj_tick, 1, mj_tick * 2);
     power_handler.configurePowerPerdition(0, 0);
 
     energy_manager = new EnergyManager(GetMaxStoredEnergy());

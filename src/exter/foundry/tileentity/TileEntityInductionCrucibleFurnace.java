@@ -579,4 +579,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     return 128;
   }
 
+  @Override
+  public int GetEnergyUse()
+  {
+    return 4000;
+  }
+
 }

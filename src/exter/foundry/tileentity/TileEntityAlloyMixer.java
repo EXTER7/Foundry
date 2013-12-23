@@ -561,6 +561,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 600;
+    return 1500;
+  }
+
+  @Override
+  public int GetEnergyUse()
+  {
+    return REQUIRED_ENERGY;
   }
 }

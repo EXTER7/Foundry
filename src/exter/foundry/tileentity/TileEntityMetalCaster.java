@@ -554,4 +554,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     return 40000;
   }
+
+
+  @Override
+  public int GetEnergyUse()
+  {
+    return ENERGY_REQUIRED;
+  }
 }

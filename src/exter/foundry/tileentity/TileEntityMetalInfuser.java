@@ -68,7 +68,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
 
   private InfuserSubstance substance;
   
-  static private final int INFUSE_ENERGY_NEEDED = 100;
+  static private final int INFUSE_ENERGY_NEEDED = 1000;
   
   private int progress;
   private int extract_energy;
@@ -433,7 +433,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     extract_energy = current_substance_recipe.extract_energy;
     if(energy_manager.GetStoredEnergy() > 0)
     {
-      int energy = energy_manager.UseEnergy(600, true);
+      int energy = energy_manager.UseEnergy(6000, true);
       progress += energy;
       if(progress >= extract_energy)
       {
@@ -535,12 +535,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 3000;
+    return 30000;
   }
 
   @Override
   public int GetEnergyUse()
   {
-    return INFUSE_ENERGY_NEEDED + 600;
+    return INFUSE_ENERGY_NEEDED + 6000;
   }
 }

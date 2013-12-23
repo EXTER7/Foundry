@@ -82,7 +82,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 50000;
   
-  static public final int ENERGY_USE = 4000;
+  static public final int ENERGY_USE = 40000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -525,7 +525,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       if(energy_manager.GetStoredEnergy() > 0)
       {
         int energy = energy_manager.UseEnergy(ENERGY_USE, true);
-        heat += energy * 6 / 100;
+        heat += energy * 6 / 1000;
         if(heat > HEAT_MAX)
         {
           heat = HEAT_MAX;
@@ -570,7 +570,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 12000;
+    return 80000;
   }  
   
   @Override
@@ -582,7 +582,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public int GetEnergyUse()
   {
-    return 4000;
+    return 40000;
   }
 
 }

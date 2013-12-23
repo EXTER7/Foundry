@@ -34,7 +34,7 @@ public interface IInfuserRecipeManager
    * @param subs Substance produced.
    * @param subs Substance produced.
    * @param item Item required.
-   * @param energy Energy required (1000 Energy = 1 MJ, 100 Energy = 1 RF, 400 Energy = 1 EU).
+   * @param energy Energy required (100 Energy = 1 MJ, 10 Energy = 1 RF, 40 Energy = 1 EU).
    */
   public void AddSubstanceRecipe(String substance_type,int substance_amount,Object item, int energy);
 

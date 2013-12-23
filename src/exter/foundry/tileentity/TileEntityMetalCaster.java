@@ -81,7 +81,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
 
   static public final int CAST_TIME = 4000;
   
-  static public final int ENERGY_REQUIRED = 100000;
+  static public final int ENERGY_REQUIRED = 10000;
   
   static public final int INVENTORY_OUTPUT = 0;
   static public final int INVENTORY_MOLD = 1;
@@ -552,7 +552,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 400000;
+    return 40000;
   }
 
 

@@ -174,12 +174,12 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(items[ITEM_COAL_COKE] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 36, items[ITEM_COAL_COKE], 1100000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 36, items[ITEM_COAL_COKE], 110000);
     }
     
     if(items[ITEM_COAL_COKE_BLOCK] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 324, items[ITEM_COAL_COKE_BLOCK], 8800000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 324, items[ITEM_COAL_COKE_BLOCK], 880000);
     }
   }
 }

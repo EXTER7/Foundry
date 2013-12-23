@@ -73,7 +73,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     }
   }
 
-  static private final int REQUIRED_ENERGY = 2000;
+  static private final int REQUIRED_ENERGY = 400;
   
   static private final int NETDATAID_TANK_INPUT_0_FLUID = 0;
   static private final int NETDATAID_TANK_INPUT_0_AMOUNT = 1;
@@ -561,7 +561,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 20000;
+    return 1500;
   }
 
   @Override

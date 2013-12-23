@@ -5,9 +5,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class EnergyManager
 {
-  static public int RATIO_MJ = 1000;
-  static public int RATIO_RF = 100;
-  static public int RATIO_EU = 400;
+  static public int RATIO_MJ = 100;
+  static public int RATIO_RF = 1000;
+  static public int RATIO_EU = 40;
   
   private int stored;
   private int capacity;

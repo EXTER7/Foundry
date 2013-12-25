@@ -13,6 +13,7 @@ import cofh.api.energy.IEnergyHandler;
 import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
@@ -425,7 +426,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   @Override
   public void onChunkUnload()
   {
-    if(added_enet && Info.isIc2Available())
+    if(added_enet && Loader.isModLoaded("IC2"))
     {
       MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
       added_enet = false;
@@ -434,7 +435,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
 
   public void LoadEnet()
   {
-    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient() && Info.isIc2Available())
+    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient() && Loader.isModLoaded("IC2"))
     {
       MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
       added_enet = true;

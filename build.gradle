@@ -41,3 +41,16 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+task apiZip(type: Zip) {
+    classifier = 'api'
+    from sourceSets*.allSource
+    include 'exter/foundry/api/**'
+    destinationDir = file 'output'
+}
+
+jar {
+    apiZip.execute()
+    destinationDir = file 'output'
+}
+

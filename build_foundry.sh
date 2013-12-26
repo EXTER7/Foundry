@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MODNAME=foundry
-MODVERSION=0.6.0.1
+MODVERSION=0.6.0.2
 MODVERSION_API=0.6.0.0
 
 rm -rf packed/*

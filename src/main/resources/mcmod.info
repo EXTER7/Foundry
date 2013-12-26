@@ -1,0 +1,18 @@
+[
+{
+  "modid" : "foundry",
+  "name" : "Foundry",
+  "version" : "0.6.0.2",
+  "credits" : "",
+  "authors": [
+    "EXTER"
+  ],
+  "description": "Liquid Metals",
+  "url" : "https://github.com/EXTER7/Foundry",
+  "updateUrl" : "",
+  "logoFile" : "",
+  "parent" : "",
+  "screenshots": [
+  ]
+}
+]

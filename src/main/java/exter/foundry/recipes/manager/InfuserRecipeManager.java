@@ -9,10 +9,8 @@ import java.util.Map;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.ModFoundry;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.recipe.ISubstanceGuiTexture;
@@ -21,7 +19,6 @@ import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;
-import exter.foundry.util.FoundryMiscUtils;
 
 public class InfuserRecipeManager implements IInfuserRecipeManager
 {

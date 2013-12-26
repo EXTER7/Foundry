@@ -1,7 +1,5 @@
 package exter.foundry.api.registry;
 
-import exter.foundry.block.BlockFoundryMachine;
-import exter.foundry.registry.ItemRegistry;
 import net.minecraft.item.ItemStack;
 
 public interface IItemRegistry

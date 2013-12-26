@@ -3,7 +3,6 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
 

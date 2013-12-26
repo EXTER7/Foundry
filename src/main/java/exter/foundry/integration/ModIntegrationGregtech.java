@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
-import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemMold;
@@ -21,7 +20,6 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
-import forestry.api.core.ItemInterface;
 
 public class ModIntegrationGregtech extends ModIntegration
 {
@@ -52,7 +50,6 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack redstone_stack = new ItemStack(Item.redstone);
     ItemStack furnace_stack = new ItemStack(Block.furnaceIdle);
     ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
-    ItemStack piston_stack = new ItemStack(Block.pistonBase);
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
     ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);

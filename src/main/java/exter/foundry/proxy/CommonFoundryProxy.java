@@ -1,10 +1,8 @@
 package exter.foundry.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;

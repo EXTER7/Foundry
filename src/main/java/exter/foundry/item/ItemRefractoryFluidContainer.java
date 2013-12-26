@@ -1,7 +1,5 @@
 package exter.foundry.item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,24 +17,17 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
 import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.ItemFluidContainer;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabFluids;
@@ -131,11 +122,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return stack;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(int id, CreativeTabs tabs, List list)
+  public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
-    int i;
     list.add(FromFluidStack(id, null));
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
     for(Fluid f : fluids.values())
@@ -147,9 +138,10 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
+  public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
   {
     FluidStack fluid = getFluid(stack);
     if(fluid == null)

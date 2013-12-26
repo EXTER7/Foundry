@@ -8,7 +8,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.recipe.ISubstanceGuiTexture;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 

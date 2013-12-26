@@ -1,7 +1,6 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -12,8 +11,6 @@ import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;

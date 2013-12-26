@@ -1,17 +1,11 @@
 package exter.foundry.block;
 
-import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.particle.EntityDropParticleFX;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -59,7 +53,6 @@ public class BlockLiquidMetal extends BlockFluidClassic
   public void registerIcons(IconRegister iconRegister)
   {
     icons = new Icon[2];
-    ModFoundry.instance.log.info(fluidName);
     icons[ICON_STILL] = iconRegister.registerIcon("foundry:" + texture_name + "_still");
     icons[ICON_FLOWING] = iconRegister.registerIcon("foundry:" + texture_name + "_flow");
   }

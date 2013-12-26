@@ -1,15 +1,11 @@
 package exter.foundry.container;
 
-import java.util.Iterator;
-
-import exter.foundry.ModFoundry;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.slot.SlotCasterMold;
 import exter.foundry.slot.SlotCasterOutput;
 import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -24,7 +20,7 @@ public class ContainerMetalCaster extends Container
   
   // Slot numbers
   private static final int SLOTS_TE = 0;
-  private static final int SLOTS_TE_SIZE = 14;
+  //private static final int SLOTS_TE_SIZE = 14;
   private static final int SLOTS_TE_MOLD_STORAGE = 5;
   private static final int SLOTS_TE_MOLD_STORAGE_SIZE = 9;
   private static final int SLOTS_INVENTORY = 14;

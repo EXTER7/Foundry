@@ -14,8 +14,6 @@ import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;

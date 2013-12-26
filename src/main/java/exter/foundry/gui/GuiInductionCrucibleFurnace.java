@@ -1,17 +1,9 @@
 package exter.foundry.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,17 +11,8 @@ import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 
 @SideOnly(Side.CLIENT)
 public class GuiInductionCrucibleFurnace extends GuiFoundry
@@ -73,13 +56,11 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   private static final int RSMODE_TEXTURE_Y = 100;
 
   private TileEntityInductionCrucibleFurnace te_icf;
-  private IInventory player_inventory;
   private GuiButtonRedstoneMode button_mode;
 
   public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, IInventory player_inv)
   {
     super(new ContainerInductionCrucibleFurnace(ms, player_inv));
-    player_inventory = player_inv;
     allowUserInput = false;
     ySize = 166;
     te_icf = ms;
@@ -118,7 +99,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     }
 
     //Draw progress bar.
-    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / te_icf.SMELT_TIME;
+    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / TileEntityInductionCrucibleFurnace.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
@@ -177,6 +158,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     return GUI_TEXTURE;
   }
   
+  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {

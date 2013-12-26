@@ -18,7 +18,7 @@ public abstract class ModIntegration
   
   protected ItemStack[] items;
   
-  protected ItemStack GetItemFromField(Class clazz,String field_name)
+  protected ItemStack GetItemFromField(Class<?> clazz,String field_name)
   {
     try
     {

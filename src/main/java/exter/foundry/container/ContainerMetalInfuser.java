@@ -17,7 +17,7 @@ public class ContainerMetalInfuser extends Container
   
   // Slot numbers
   private static final int SLOTS_TE = 0;
-  private static final int SLOTS_TE_SIZE = 5;
+  //private static final int SLOTS_TE_SIZE = 5;
   private static final int SLOTS_INVENTORY = 5;
   private static final int SLOTS_HOTBAR = 5 + 3 * 9;
 

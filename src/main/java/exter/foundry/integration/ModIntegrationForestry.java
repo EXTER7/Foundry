@@ -12,7 +12,6 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
-import exter.foundry.ModFoundry;
 import forestry.api.core.ItemInterface;
 
 public class ModIntegrationForestry extends ModIntegration

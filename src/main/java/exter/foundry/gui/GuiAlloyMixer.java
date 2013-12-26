@@ -1,41 +1,23 @@
 package exter.foundry.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.gui.button.GuiButtonRedstoneMode;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 
 @SideOnly(Side.CLIENT)
 public class GuiAlloyMixer extends GuiFoundry
 {
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
 
   private static final int TANK_HEIGHT = 35;
   
@@ -51,13 +33,11 @@ public class GuiAlloyMixer extends GuiFoundry
   private static final int RSMODE_TEXTURE_Y = 50;
 
   private TileEntityAlloyMixer te_alloymixer;
-  private IInventory player_inventory;
   private GuiButtonRedstoneMode button_mode;
 
   public GuiAlloyMixer(TileEntityAlloyMixer am, IInventory player_inv)
   {
     super(new ContainerAlloyMixer(am, player_inv));
-    player_inventory = player_inv;
     allowUserInput = false;
     ySize = 209;
     te_alloymixer = am;
@@ -125,6 +105,7 @@ public class GuiAlloyMixer extends GuiFoundry
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {

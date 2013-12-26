@@ -1,17 +1,14 @@
 package exter.foundry.recipes.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
 import exter.foundry.recipes.MeltingRecipe;
-import exter.foundry.util.FoundryMiscUtils;
 
 public class MeltingRecipeManager implements IMeltingRecipeManager
 {
@@ -34,7 +31,6 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
     {
       return null;
     }
-    String od_name = null;
     for (MeltingRecipe r : recipes)
     {
       if(r.MatchesRecipe(item))

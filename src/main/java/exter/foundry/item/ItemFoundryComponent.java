@@ -4,12 +4,9 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
@@ -85,9 +82,10 @@ public class ItemFoundryComponent extends Item
     return icons[dmg];
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(int id, CreativeTabs tabs, List list)
+  public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for (i = 0; i < ICON_PATHS.length; i++)

@@ -5,7 +5,6 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
-import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -147,9 +146,10 @@ public class ItemIngot extends Item
     return icons[dmg];
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(int id, CreativeTabs tabs, List list)
+  public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for (i = 0; i < ICON_PATHS.length; i++)

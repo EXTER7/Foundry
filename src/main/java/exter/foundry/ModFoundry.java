@@ -1,30 +1,19 @@
 package exter.foundry;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHalfSlab;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockWorkbench;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -36,15 +25,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
-import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.integration.ModIntegration;
@@ -58,17 +43,10 @@ import exter.foundry.integration.ModIntegrationTE3;
 import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
-import exter.foundry.item.ItemRefractoryFluidContainer;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.proxy.CommonFoundryProxy;
-import exter.foundry.recipes.AlloyRecipe;
-import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.InfuserRecipe;
-import exter.foundry.recipes.InfuserSubstance;
-import exter.foundry.recipes.InfuserSubstanceRecipe;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -406,19 +384,15 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
     GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");
 
-    ItemStack brick_stack = new ItemStack(Item.brick);
     ItemStack iron_stack = new ItemStack(Item.ingotIron);
     ItemStack redstone_stack = new ItemStack(Item.redstone);
-    ItemStack cobble_stack = new ItemStack(Block.cobblestone, 1, -1);
     ItemStack furnace_stack = new ItemStack(Block.furnaceIdle);
     ItemStack clay_stack = new ItemStack(Item.clay);
     ItemStack sand_stack = new ItemStack(Block.sand,1,-1);
     ItemStack clayblock_stack = new ItemStack(Block.blockClay, 1, -1);
-    ItemStack brickblock_stack = new ItemStack(Block.brick, 1, -1);
     ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
     ItemStack piston_stack = new ItemStack(Block.pistonBase);
     ItemStack goldnugget_stack = new ItemStack(Item.goldNugget);
-    ItemStack stick_stack = new ItemStack(Item.stick);
     ItemStack chest_stack = new ItemStack(Block.chest);
     ItemStack foundryclay_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundryclay8_stack = new ItemStack(FoundryItems.item_component,8,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
@@ -635,20 +609,6 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_CLAY,ItemMold.MOLD_PLATE_IC2);
 
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
-
-    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
-    Fluid liquid_zinc = LiquidMetalRegistry.instance.GetFluid("Zinc");
-    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-    Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
-    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
-    Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
-    Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
-    Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
-    Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
-
-
 
     int ore_id = FoundryBlocks.block_ore.blockID;
     if(FoundryConfig.wordgen_copper)

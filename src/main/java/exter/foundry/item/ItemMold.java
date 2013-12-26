@@ -200,9 +200,10 @@ public class ItemMold extends Item
     return icons[dmg];
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(int id, CreativeTabs tabs, List list)
+  public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for (i = 0; i < ICON_PATHS.length; i++)

@@ -1,44 +1,24 @@
 package exter.foundry.tileentity;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-
 import com.google.common.io.ByteArrayDataInput;
 
-import cpw.mods.fml.common.FMLLog;
-import exter.foundry.ModFoundry;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace.RedstoneMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
@@ -404,12 +384,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     return false;
   }
   
-  private boolean TankContainsFluid(FluidTank tank,FluidStack fluid)
-  {
-    FluidStack tf = tank.getFluid();
-    return (tf != null && tf.amount > 0 && tf.isFluidEqual(fluid));
-  }
-
   @Override
   public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
   {
@@ -529,12 +503,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   protected void UpdateEntityServer()
   {
-    int i;
-    boolean update_clients = false;
     NBTTagCompound packet = new NBTTagCompound();
     super.writeToNBT(packet);
-
-    
 
     if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0

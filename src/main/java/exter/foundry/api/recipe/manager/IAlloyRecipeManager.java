@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.IAlloyRecipe;
-import exter.foundry.recipes.AlloyRecipe;
 
 public interface IAlloyRecipeManager
 {

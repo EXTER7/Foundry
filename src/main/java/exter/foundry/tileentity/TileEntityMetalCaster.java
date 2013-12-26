@@ -1,46 +1,25 @@
 package exter.foundry.tileentity;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
 
-import cpw.mods.fml.common.FMLLog;
-import exter.foundry.ModFoundry;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.tileentity.TileEntityFoundry.ContainerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
@@ -125,7 +104,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     super.readFromNBT(compund);
     
-    int i;
     if(compund.hasKey("progress"))
     {
       progress = compund.getInteger("progress");
@@ -143,7 +121,6 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
     compound.setInteger("mode", mode.number);
-    NBTTagCompound power = new NBTTagCompound();
   }
 
   public void GetGUINetworkData(int id, int value)

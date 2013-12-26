@@ -197,9 +197,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     return meta;
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(int id, CreativeTabs tab, List list)
+  public void getSubBlocks(int id, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for(i = 0; i < 4; i++)

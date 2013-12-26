@@ -16,7 +16,7 @@ public class ContainerInductionCrucibleFurnace extends Container
   
   // Slot numbers
   private static final int SLOTS_TE = 0;
-  private static final int SLOTS_TE_SIZE = 3;
+  //private static final int SLOTS_TE_SIZE = 3;
   private static final int SLOTS_INVENTORY = 3;
   private static final int SLOTS_HOTBAR = 3 + 3 * 9;
 

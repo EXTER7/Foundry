@@ -91,9 +91,10 @@ public class BlockFoundryOre extends Block
     return meta;
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(int id, CreativeTabs tab, List list)
+  public void getSubBlocks(int id, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for(i = 0; i < ICON_PATHS.length; i++)

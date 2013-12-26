@@ -9,7 +9,6 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.ModFoundry;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -40,7 +39,7 @@ public class ModIntegrationBuildcraft extends ModIntegration
     try
     {
       items = new ItemStack[5];
-      Class BuildCraftCore = Class.forName("buildcraft.BuildCraftCore");
+      Class<?> BuildCraftCore = Class.forName("buildcraft.BuildCraftCore");
       items[ITEM_WOOD_GEAR] = GetItemFromField(BuildCraftCore,"woodenGearItem");
       items[ITEM_STONE_GEAR] = GetItemFromField(BuildCraftCore,"stoneGearItem");
       items[ITEM_IRON_GEAR] = GetItemFromField(BuildCraftCore,"ironGearItem");

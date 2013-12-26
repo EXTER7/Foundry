@@ -3,7 +3,6 @@ package exter.foundry.config;
 import java.util.Map;
 
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 
 public class FoundryConfig
 {

@@ -1,6 +1,5 @@
 package exter.foundry.slot;
 
-import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

@@ -1,7 +1,6 @@
 package exter.foundry.integration;
 
 import ic2.api.item.Items;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -11,8 +10,6 @@ import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.CastingRecipe;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -198,7 +195,7 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
 
-      ModIntegration gti = this.GetIntegration("gregtech");
+      ModIntegration gti = GetIntegration("gregtech");
       if(gti == null || !gti.is_loaded)
       {
         RegisterPlateMoldRecipe(items[ITEM_COPPER_PLATE], "plateCopper");
@@ -214,7 +211,6 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnPostInit()
   {
-    // TODO Auto-generated method stub
-    
+
   }
 }

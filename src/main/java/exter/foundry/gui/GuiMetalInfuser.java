@@ -1,43 +1,21 @@
 package exter.foundry.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.container.ContainerMetalInfuser;
-import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
 public class GuiMetalInfuser extends GuiFoundry
@@ -68,12 +46,10 @@ public class GuiMetalInfuser extends GuiFoundry
   private static final int PROGRESS_OVERLAY_Y = 53;
 
   private TileEntityMetalInfuser te_infuser;
-  private IInventory player_inventory;
 
   public GuiMetalInfuser(TileEntityMetalInfuser inf, IInventory player_inv)
   {
     super(new ContainerMetalInfuser(inf, player_inv));
-    player_inventory = player_inv;
     allowUserInput = false;
     ySize = 209;
     te_infuser = inf;

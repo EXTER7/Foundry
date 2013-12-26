@@ -67,9 +67,10 @@ public class BlockMetalSlab extends BlockHalfSlab
     return super.getUnlocalizedName() + "." + metals[meta];
   }
 
+  @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
   @Override
-  public void getSubBlocks(int id, CreativeTabs tabs, List items)
+  public void getSubBlocks(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
   {
     if(!isDoubleSlab)
     {

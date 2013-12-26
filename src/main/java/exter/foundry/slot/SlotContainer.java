@@ -1,7 +1,5 @@
 package exter.foundry.slot;
 
-import exter.foundry.item.FoundryItems;
-import exter.foundry.recipes.CastingRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

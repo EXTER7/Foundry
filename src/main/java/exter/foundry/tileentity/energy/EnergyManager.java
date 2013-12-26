@@ -1,6 +1,5 @@
 package exter.foundry.tileentity.energy;
 
-import exter.foundry.ModFoundry;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class EnergyManager

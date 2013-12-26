@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.Loader;
-import exter.foundry.ModFoundry;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -14,17 +13,13 @@ import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
-import exter.foundry.util.FoundryMiscUtils;
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.client.FluidRenderProperties;
 import tconstruct.library.crafting.AlloyMix;
 import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTiCon extends ModIntegration
@@ -83,18 +78,6 @@ public class ModIntegrationTiCon extends ModIntegration
     liquid_map.put("invar.molten","Invar");
     liquid_map.put("electrum.molten","Electrum");
   }
-
-  private AlloyMix FindTiConAlloyByResult(Fluid result)
-  {
-    for(AlloyMix mix:Smeltery.getAlloyList())
-    {
-      if(mix.result.getFluid().getName().equals(result.getName()))
-      {
-        return mix;
-      }
-    }
-    return null;
-  }
   
   private void CreateAlloyRecipe(AlloyMix mix,int index,List<FluidStack> inputs)
   {
@@ -106,7 +89,7 @@ public class ModIntegrationTiCon extends ModIntegration
       AlloyRecipeManager.instance.AddRecipe(result, in);
       return;
     }
-    List<String> mapped_ingredients = new ArrayList<String>();
+
     for(FluidStack ing:mix.mixers)
     {
       String mapped = liquid_map.get(ing.getFluid().getName());

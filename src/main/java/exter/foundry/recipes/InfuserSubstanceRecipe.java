@@ -1,15 +1,10 @@
 package exter.foundry.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Metal Infuser substance recipe manager

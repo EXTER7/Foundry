@@ -21,7 +21,11 @@ public class NEIFoundryConfig implements IConfigureNEI
     API.hideItem(FoundryBlocks.block_slabdouble2.blockID);
     API.hideItem(FoundryBlocks.block_slabdouble3.blockID);
 
-    List<TemplateRecipeHandler> handlers = ImmutableList.<TemplateRecipeHandler> of(new InductionCrucibleFurnaceRecipeHandler(), new AlloyRecipeHandler(), new MetalCasterRecipeHandler());
+    List<TemplateRecipeHandler> handlers = ImmutableList.<TemplateRecipeHandler>of(
+        new InductionCrucibleFurnaceRecipeHandler(),
+        new AlloyRecipeHandler(),
+        new MetalCasterRecipeHandler(),
+        new InfuserRecipeHandler());
     for(TemplateRecipeHandler handler : handlers)
     {
       API.registerRecipeHandler(handler);

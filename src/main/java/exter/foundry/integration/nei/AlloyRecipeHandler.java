@@ -92,7 +92,9 @@ public class AlloyRecipeHandler extends FoundryRecipeHandler
     {
       FluidStack fluid = getFluidStackFor(results[0]);
       if(fluid == null)
+      {
         return;
+      }
       for(IAlloyRecipe recipe : AlloyRecipeManager.instance.GetRecipes())
       {
         for(int idx = 0; idx < recipe.GetInputCount(); idx++)
@@ -141,19 +143,19 @@ public class AlloyRecipeHandler extends FoundryRecipeHandler
   {
     return ImmutableList.<Class<? extends GuiContainer>> of(GuiAlloyMixer.class);
   }
-  
+
   @Override
   public int recipiesPerPage()
   {
-      return 1;
+    return 1;
   }
-  
+
   @Override
   public void drawBackground(int recipe)
   {
-      GL11.glColor4f(1, 1, 1, 1);
-      changeTexture(getGuiTexture());
-      drawTexturedModalRect(0, 0, 5, 11, 166, 108);
+    GL11.glColor4f(1, 1, 1, 1);
+    changeTexture(getGuiTexture());
+    drawTexturedModalRect(0, 0, 5, 11, 166, 108);
   }
 
 }

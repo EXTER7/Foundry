@@ -18,117 +18,155 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.energy.EnergyManager;
 
-public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler {
+public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
+{
 
-	public static int GUI_SMELT_TIME = 40;
-	
-	public static final float FIXED_POWER = 16.66f;
-	public static final float TEMP_POWER = 0.002f;
-	
-	public static ProgressBar PROGRESS = new ProgressBar(74, 12, 176, 78, 27, 15, 0, GUI_SMELT_TIME);
-	public static ProgressBar HEAT = new ProgressBar(36, 46, 176, 53, 54, 12, TileEntityInductionCrucibleFurnace.HEAT_MIN, TileEntityInductionCrucibleFurnace.HEAT_MAX);
-	public static Point TANK_OVERLAY = new Point(176, 0);
-	
-	public class CachedMeltingRecipe extends CachedFoundryRecipe {
+  public static int GUI_SMELT_TIME = 40;
 
-		PositionedStack input;
-		FluidTank tank;
-		int meltingPoint;
-		
-		public CachedMeltingRecipe(IMeltingRecipe recipe) {
-			input = new PositionedStack(asItemStackOrList(recipe.GetInput()), 50, 12, true);
-			tank = new FluidTank(recipe.GetOutput(), 4000, new Rectangle(102, 11, 16, 47));
-			meltingPoint = recipe.GetMeltingPoint();
-		}
-		
-		@Override
-		public PositionedStack getIngredient() {
-			randomRenderPermutation(input, cycleticks / 20);
-			return input;
-		}
-		
-		@Override
-		public FluidTank getTank() {
-			return tank;
-		}
-	}
-	
-	@Override
-	public String getRecipeName() {
-		return "Ind. Crucible Furnace";
-	}
+  public static final float FIXED_POWER = 16.66f;
+  public static final float TEMP_POWER = 0.002f;
 
-	@Override
-	public String getGuiTexture() {
-		return "foundry:textures/gui/metalsmelter.png";
-	}
-	
-	@Override
-	public void drawExtras(int recipe) {
-		CachedMeltingRecipe meltingRecipe = (CachedMeltingRecipe)arecipes.get(recipe);
-		int currentProgress = meltingRecipe.getAgeTicks() % GUI_SMELT_TIME;
-		if(currentProgress > 0) drawProgressBar(PROGRESS, currentProgress);
-		drawProgressBar(HEAT, meltingRecipe.meltingPoint * 100);
-		drawTanks(meltingRecipe.getTanks(), meltingRecipe.getAgeTicks() / GUI_SMELT_TIME, TANK_OVERLAY);
-	}
+  public static ProgressBar PROGRESS = new ProgressBar(74, 12, 176, 78, 27, 15, 0, GUI_SMELT_TIME);
+  public static ProgressBar HEAT = new ProgressBar(36, 46, 176, 53, 54, 12, TileEntityInductionCrucibleFurnace.HEAT_MIN, TileEntityInductionCrucibleFurnace.HEAT_MAX);
+  public static Point TANK_OVERLAY = new Point(176, 0);
 
-	
-	@Override
-	public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int recipe) {
-		CachedMeltingRecipe meltingRecipe = (CachedMeltingRecipe)arecipes.get(recipe);
-		if (isMouseOver(HEAT.asRectangle(), gui, recipe)) {
-			currenttip.add("§7Melting point: §e" + meltingRecipe.meltingPoint + " K");
-			float internalPower = FIXED_POWER + TEMP_POWER * (float) meltingRecipe.meltingPoint * 100.0f;
-			currenttip.add("§7Mininum power: §b" + String.format("%.2f MJ/t", internalPower / EnergyManager.RATIO_MJ));
-			currenttip.add("§7Mininum power: §b" + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
-			currenttip.add("§7Mininum power: §b" + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
-		}
-		return super.handleTooltip(gui, currenttip, recipe);
-	}
+  public class CachedMeltingRecipe extends CachedFoundryRecipe
+  {
 
-	public void loadAllRecipes() {
-		for (IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes()) addRecipe(recipe);
-	}
-	
-	@Override
-	public void loadUsageRecipes(String outputId, Object... results) {
-		if(outputId.equals("foundry.melting"))
-			loadAllRecipes();
-		if(outputId.equals("item") && results[0] instanceof ItemStack) {
-			for (IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes()) {
-				if (recipe.MatchesRecipe((ItemStack)results[0]))
-					addRecipe(recipe);
-			}
-			
-		}
-	}
+    PositionedStack input;
+    FluidTank tank;
+    int meltingPoint;
 
-	@Override
-	public void loadCraftingRecipes(String outputId, Object... results) {
-		if(outputId.equals("foundry.melting"))
-			loadAllRecipes();
-		if(outputId.equals("liquid") || outputId.equals("item")) {
-			FluidStack fluid = getFluidStackFor(results[0]);
-			if (fluid == null) return;
-			for (IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes()) {
-				if (recipe.GetOutput().isFluidEqual(fluid))
-					addRecipe(recipe);
-			}
-		}
-	}
+    public CachedMeltingRecipe(IMeltingRecipe recipe)
+    {
+      input = new PositionedStack(asItemStackOrList(recipe.GetInput()), 50, 12, true);
+      tank = new FluidTank(recipe.GetOutput(), 4000, new Rectangle(102, 11, 16, 47));
+      meltingPoint = recipe.GetMeltingPoint();
+    }
 
-	public void addRecipe(IMeltingRecipe recipe) {
-		if (!isEmptyOre(recipe.GetInput())) arecipes.add(new CachedMeltingRecipe(recipe));
-	}
-	
-	@Override
-	public void loadTransferRects() {
-		transferRects.add(new RecipeTransferRect(new Rectangle(74, 12, 22, 15), "foundry.melting", new Object[0]));
-	}
+    @Override
+    public PositionedStack getIngredient()
+    {
+      randomRenderPermutation(input, cycleticks / 20);
+      return input;
+    }
 
-	@Override
-	public List<Class<? extends GuiContainer>> getRecipeTransferRectGuis() {
-		return ImmutableList.<Class<? extends GuiContainer>>of(GuiInductionCrucibleFurnace.class);
-	}
+    @Override
+    public FluidTank getTank()
+    {
+      return tank;
+    }
+  }
+
+  @Override
+  public String getRecipeName()
+  {
+    return "Ind. Crucible Furnace";
+  }
+
+  @Override
+  public String getGuiTexture()
+  {
+    return "foundry:textures/gui/metalsmelter.png";
+  }
+
+  @Override
+  public void drawExtras(int recipe)
+  {
+    CachedMeltingRecipe meltingRecipe = (CachedMeltingRecipe) arecipes.get(recipe);
+    int currentProgress = meltingRecipe.getAgeTicks() % GUI_SMELT_TIME;
+    if(currentProgress > 0)
+    {
+      drawProgressBar(PROGRESS, currentProgress);
+    }
+    drawProgressBar(HEAT, meltingRecipe.meltingPoint * 100);
+    drawTanks(meltingRecipe.getTanks(), meltingRecipe.getAgeTicks() / GUI_SMELT_TIME, TANK_OVERLAY);
+  }
+
+  @Override
+  public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int recipe)
+  {
+    CachedMeltingRecipe meltingRecipe = (CachedMeltingRecipe) arecipes.get(recipe);
+    if(isMouseOver(HEAT.asRectangle(), gui, recipe))
+    {
+      currenttip.add("ï¿½7Melting point: ï¿½e" + meltingRecipe.meltingPoint + " K");
+      float internalPower = FIXED_POWER + TEMP_POWER * (float) meltingRecipe.meltingPoint * 100.0f;
+      currenttip.add("ï¿½7Mininum power: ï¿½b" + String.format("%.2f MJ/t", internalPower / EnergyManager.RATIO_MJ));
+      currenttip.add("ï¿½7Mininum power: ï¿½b" + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
+      currenttip.add("ï¿½7Mininum power: ï¿½b" + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
+    }
+    return super.handleTooltip(gui, currenttip, recipe);
+  }
+
+  public void loadAllRecipes()
+  {
+    for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+    {
+      addRecipe(recipe);
+    }
+  }
+
+  @Override
+  public void loadUsageRecipes(String outputId, Object... results)
+  {
+    if(outputId.equals("foundry.melting"))
+    {
+      loadAllRecipes();
+    }
+    if(outputId.equals("item") && results[0] instanceof ItemStack)
+    {
+      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+      {
+        if(recipe.MatchesRecipe((ItemStack) results[0]))
+        {
+          addRecipe(recipe);
+        }
+      }
+    }
+  }
+
+  @Override
+  public void loadCraftingRecipes(String outputId, Object... results)
+  {
+    if(outputId.equals("foundry.melting"))
+    {
+      loadAllRecipes();
+    }
+    if(outputId.equals("liquid") || outputId.equals("item"))
+    {
+      FluidStack fluid = getFluidStackFor(results[0]);
+      if(fluid == null)
+      {
+        return;
+      }
+      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+      {
+        if(recipe.GetOutput().isFluidEqual(fluid))
+        {
+          addRecipe(recipe);
+        }
+      }
+    }
+  }
+
+  public void addRecipe(IMeltingRecipe recipe)
+  {
+    if(!isEmptyOre(recipe.GetInput()))
+    {
+      arecipes.add(new CachedMeltingRecipe(recipe));
+    }
+  }
+
+  @Override
+  public void loadTransferRects()
+  {
+    transferRects.add(new RecipeTransferRect(new Rectangle(74, 12, 22, 15), "foundry.melting", new Object[0]));
+  }
+
+  @Override
+  public List<Class<? extends GuiContainer>> getRecipeTransferRectGuis()
+  {
+    return ImmutableList.<Class<? extends GuiContainer>> of(GuiInductionCrucibleFurnace.class);
+  }
 
 }

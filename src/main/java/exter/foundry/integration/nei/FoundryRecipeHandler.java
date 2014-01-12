@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -144,7 +145,7 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
       if(isMouseOver(tank.position, gui, recipe))
       {
         currenttip.add(tank.fluid.getFluid().getLocalizedName());
-        currenttip.add("�7" + tank.fluid.amount + " mB");
+        currenttip.add(String.valueOf(EnumChatFormatting.GRAY) + tank.fluid.amount + " mB");
       }
     }
     return super.handleTooltip(gui, currenttip, recipe);

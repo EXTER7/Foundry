@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
@@ -89,11 +90,11 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     CachedMeltingRecipe meltingRecipe = (CachedMeltingRecipe) arecipes.get(recipe);
     if(isMouseOver(HEAT.asRectangle(), gui, recipe))
     {
-      currenttip.add("�7Melting point: �e" + meltingRecipe.meltingPoint + " K");
+      currenttip.add(EnumChatFormatting.GRAY + "Melting point: " + EnumChatFormatting.YELLOW + meltingRecipe.meltingPoint + " K");
       float internalPower = FIXED_POWER + TEMP_POWER * (float) meltingRecipe.meltingPoint * 100.0f;
-      currenttip.add("�7Mininum power: �b" + String.format("%.2f MJ/t", internalPower / EnergyManager.RATIO_MJ));
-      currenttip.add("�7Mininum power: �b" + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
-      currenttip.add("�7Mininum power: �b" + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
+      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f MJ/t", internalPower / EnergyManager.RATIO_MJ));
+      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
+      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
     }
     return super.handleTooltip(gui, currenttip, recipe);
   }

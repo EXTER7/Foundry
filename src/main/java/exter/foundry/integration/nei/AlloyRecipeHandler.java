@@ -1,7 +1,12 @@
 package exter.foundry.integration.nei;
 
+import static codechicken.core.gui.GuiDraw.changeTexture;
+import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
+
 import java.awt.Rectangle;
 import java.util.List;
+
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.fluids.FluidStack;
@@ -24,15 +29,16 @@ public class AlloyRecipeHandler extends FoundryRecipeHandler
     public CachedAlloyRecipe(IAlloyRecipe recipe)
     {
       int maxSize = 0;
-      for(int idx = 0; idx < recipe.GetInputCount(); idx++)
+      int i;
+      for(i = 0; i < recipe.GetInputCount(); i++)
       {
-        if(recipe.GetInput(idx) != null)
+        if(recipe.GetInput(i) != null)
         {
-          allTanks.add(new FluidTank(recipe.GetInput(idx), 2000, new Rectangle(21 + idx * 21, 34, 16, 31)));
-          maxSize = Math.max(maxSize, recipe.GetInput(idx).amount);
+          allTanks.add(new FluidTank(recipe.GetInput(i), 2000, new Rectangle(21 + i * 21, 34, 16, 35)));
+          maxSize = Math.max(maxSize, recipe.GetInput(i).amount);
         }
       }
-      output = new FluidTank(recipe.GetOutput(), 2000, new Rectangle(128, 34, 16, 31));
+      output = new FluidTank(recipe.GetOutput(), 2000, new Rectangle(128, 34, 16, 35));
       maxSize = Math.max(maxSize, recipe.GetOutput().amount);
       allTanks.add(output);
       for(FluidTank tank : allTanks)
@@ -135,4 +141,19 @@ public class AlloyRecipeHandler extends FoundryRecipeHandler
   {
     return ImmutableList.<Class<? extends GuiContainer>> of(GuiAlloyMixer.class);
   }
+  
+  @Override
+  public int recipiesPerPage()
+  {
+      return 1;
+  }
+  
+  @Override
+  public void drawBackground(int recipe)
+  {
+      GL11.glColor4f(1, 1, 1, 1);
+      changeTexture(getGuiTexture());
+      drawTexturedModalRect(0, 0, 5, 11, 166, 108);
+  }
+
 }

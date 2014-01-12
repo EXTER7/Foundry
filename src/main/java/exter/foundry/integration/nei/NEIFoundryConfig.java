@@ -25,7 +25,8 @@ public class NEIFoundryConfig implements IConfigureNEI
         new InductionCrucibleFurnaceRecipeHandler(),
         new AlloyRecipeHandler(),
         new MetalCasterRecipeHandler(),
-        new InfuserRecipeHandler());
+        new InfuserRecipeHandler(),
+        new InfuserSubstanceRecipeHandler());
     for(TemplateRecipeHandler handler : handlers)
     {
       API.registerRecipeHandler(handler);

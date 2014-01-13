@@ -127,7 +127,7 @@ public class ModIntegrationIC2 extends ModIntegration
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CASING_IC2);
       ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE_IC2);
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
@@ -156,7 +156,7 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 4), mold_cable, null);

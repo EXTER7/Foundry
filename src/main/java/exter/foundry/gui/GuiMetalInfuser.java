@@ -1,6 +1,5 @@
 package exter.foundry.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -97,36 +96,31 @@ public class GuiMetalInfuser extends GuiFoundry
   }
 
   @Override
-  public void drawScreen(int mouse_x, int mouse_y, float par3)
+  public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
   {
-    super.drawScreen(mouse_x, mouse_y, par3);
-    
-    //Draw tool tips.
-    
-    if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
+      AddTankTooltip(currenttip, mousex, mousey, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
     }
 
-    if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
+      AddTankTooltip(currenttip, mousex, mousey, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
     }
 
-    if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mouse_x, mouse_y))
+    if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mousex, mousey))
     {
-      List<String> list = new ArrayList<String>();
       InfuserSubstance sub = te_infuser.GetSubstance();
       if(sub != null && sub.amount > 0)
       {
-        list.add(StatCollector.translateToLocal("substance." + sub.type));
-        list.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
+        currenttip.add(StatCollector.translateToLocal("substance." + sub.type));
+        currenttip.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       } else
       {
-        list.add("0 / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
+        currenttip.add("0 / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       }
-      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
     }
+    return super.handleTooltip(mousex, mousey, currenttip);
   }
 
   @Override

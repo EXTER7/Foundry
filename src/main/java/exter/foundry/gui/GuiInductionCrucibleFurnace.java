@@ -1,6 +1,5 @@
 package exter.foundry.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -109,47 +108,42 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   }
 
   @Override
-  public void drawScreen(int mouse_x, int mouse_y, float par3)
+  public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
   {
-    super.drawScreen(mouse_x, mouse_y, par3);
 
     //Draw tool tips.
 
-    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mouse_x,mouse_y))
+    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
-      DisplayTankTooltip(mouse_x, mouse_y, te_icf.GetTank(0));
+      AddTankTooltip(currenttip, mousex, mousey, te_icf.GetTank(0));
     }
 
-    if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mouse_x,mouse_y))
+    if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
     {
-      List<String> list = new ArrayList<String>();
       int heat = te_icf.GetHeat() / 100;
       int melt_point = te_icf.GetMeltingPoint() / 100;
-      list.add("Heat: " + String.valueOf(heat) + " K");
+      currenttip.add("Heat: " + String.valueOf(heat) + " K");
       if(melt_point > 0)
       {
-        list.add("Melt: " + String.valueOf(melt_point) + " K");
+        currenttip.add("Melt: " + String.valueOf(melt_point) + " K");
       }
-      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);    
     }
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mouse_x,mouse_y))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
     {
-      List<String> list = new ArrayList<String>();
       switch(te_icf.GetMode())
       {
         case RSMODE_IGNORE:
-          list.add("Mode: Ignore Restone");
+          currenttip.add("Mode: Ignore Restone");
           break;
         case RSMODE_OFF:
-          list.add("Mode: Redstone signal OFF");
+          currenttip.add("Mode: Redstone signal OFF");
           break;
         case RSMODE_ON:
-          list.add("Mode: Redstone signal ON");
+          currenttip.add("Mode: Redstone signal ON");
           break;
       }
-      drawHoveringText(list, mouse_x, mouse_y, fontRenderer);
     }
-
+    return super.handleTooltip(mousex, mousey, currenttip);
   }
 
   @Override

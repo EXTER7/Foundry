@@ -1,6 +1,5 @@
 package exter.foundry.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -54,20 +53,18 @@ public abstract class GuiFoundry extends GuiContainer
       tessellator.draw();
   }
 
-  protected void DisplayTankTooltip(int x, int y, FluidTank tank)
+  protected void AddTankTooltip(List<String> tooltip, int x, int y, FluidTank tank)
   {
-    List<String> list = new ArrayList<String>();
     FluidStack stack = tank.getFluid();
     if(stack != null && stack.amount > 0)
     {
       
-      list.add(stack.getFluid().getLocalizedName());
-      list.add(String.valueOf(stack.amount) + " / " + String.valueOf(tank.getCapacity()) + " mB");
+      tooltip.add(stack.getFluid().getLocalizedName());
+      tooltip.add(String.valueOf(stack.amount) + " / " + String.valueOf(tank.getCapacity()) + " mB");
     } else
     {
-      list.add("0 / " + String.valueOf(tank.getCapacity()) + " mB");
+      tooltip.add("0 / " + String.valueOf(tank.getCapacity()) + " mB");
     }
-    drawHoveringText(list, x, y, fontRenderer);    
   }
   
   /**

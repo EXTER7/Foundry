@@ -35,9 +35,8 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
     public CachedInfuserRecipe(IInfuserRecipe recipe)
     {
       substance = new InfuserSubstance(recipe.GetInputSubstanceType(),recipe.GetInputSubstanceAmount());
-      allTanks.add(new FluidTank(new FluidStack(recipe.GetInputFluid(),2000), 2000, new Rectangle(80, 32, 16, 47)));
-      output = new FluidTank(new FluidStack(recipe.GetOutput(),2000), 2000, new Rectangle(129, 32, 16, 47));
-      // maxSize = Math.max(maxSize, recipe.GetOutput().amount);
+      allTanks.add(new FluidTank(recipe.GetInputFluid(), recipe.GetInputFluid().amount, new Rectangle(80, 32, 16, 47)));
+      output = new FluidTank(recipe.GetOutput(), recipe.GetOutput().amount, new Rectangle(129, 32, 16, 47));
       allTanks.add(output);
     }
 

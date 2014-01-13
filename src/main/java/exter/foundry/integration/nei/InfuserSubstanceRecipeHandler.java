@@ -83,13 +83,13 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
   {
     CachedInfuserSubstanceRecipe foundryRecipe = (CachedInfuserSubstanceRecipe) arecipes.get(recipe);
     int energy_needed = foundryRecipe.GetEnergyNeeded();
-    int time = (foundryRecipe.getAgeTicks() * 3000) % energy_needed;
+    int time = (foundryRecipe.getAgeTicks() * 4000) % energy_needed;
     int currentProgress = time * 100 / energy_needed;
     if(currentProgress > 0)
     {
       drawProgressBar(PROGRESS, currentProgress);
     }
-    DrawSubstance(foundryRecipe.GetSubstance(), foundryRecipe.getAgeTicks() * 3000 / energy_needed);
+    DrawSubstance(foundryRecipe.GetSubstance(), foundryRecipe.getAgeTicks() * 4000 / energy_needed);
   }
   
   private void DrawSubstance(InfuserSubstance substance,int multiplier)

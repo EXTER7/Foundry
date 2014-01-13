@@ -65,7 +65,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[9.11.1.951,);"
+  dependencies = "required-after:Forge@[9.11.1.964,);"
       + "after:TConstruct;"
       + "after:BuildCraft|Core;"
       + "after:Railcraft;"
@@ -85,7 +85,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "0.6.0.2";
+  public static final String MODVERSION = "0.6.1.0";
 
   public static final String CHANNEL = "EXTER_Foundry";
 

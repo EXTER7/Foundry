@@ -18,6 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  *  			\ .apiculture       - Bees.
  *  			\ .arboriculture    - Trees.
  *  			\ .lepidopterology  - Butterflies.
+ *  
+ *  Note that if Forestry is not present, all these references will be null.
  */
 public class ForestryAPI {
 
@@ -36,5 +38,10 @@ public class ForestryAPI {
 	 * The currently active {@link IGameMode}.
 	 */
 	public static IGameMode activeMode;
+
+	/**
+	 * Provides information on certain Forestry constants (Villager IDs, Chest gen keys, etc)
+	 */
+	public static IForestryConstants forestryConstants;
 	
 }

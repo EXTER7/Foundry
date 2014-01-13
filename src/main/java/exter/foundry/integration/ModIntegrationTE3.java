@@ -40,6 +40,8 @@ public class ModIntegrationTE3 extends ModIntegration
 
   static public final int ITEM_ENDERIUM_INGOT = 13;
   static public final int ITEM_ENDERIUM_BLOCK = 14;
+  static public final int ITEM_PYROTHEUM_BLOCK = 15;
+  static public final int ITEM_BRONZE_GEAR = 16;
   
 
   public ModIntegrationTE3(String mod_name)
@@ -64,7 +66,7 @@ public class ModIntegrationTE3 extends ModIntegration
       return;
     }
 
-    items = new ItemStack[15];
+    items = new ItemStack[17];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
     items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
@@ -86,6 +88,10 @@ public class ModIntegrationTE3 extends ModIntegration
     items[ITEM_ENDERIUM_INGOT] = GameRegistry.findItemStack("ThermalExpansion", "ingotEnderium", 1);
     items[ITEM_ENDERIUM_BLOCK] = GameRegistry.findItemStack("ThermalExpansion", "blockEnderium", 1);
 
+    items[ITEM_PYROTHEUM_BLOCK] = GameRegistry.findItemStack("ThermalExpansion", "dustPyrotheum", 1);
+
+    items[ITEM_BRONZE_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearBronze", 1);
+
     VerifyItems();
 
     if(is_loaded)
@@ -98,6 +104,7 @@ public class ModIntegrationTE3 extends ModIntegration
       Fluid liquid_ender = FluidRegistry.getFluid("ender");
       Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
       Fluid liquid_coal = FluidRegistry.getFluid("coal");
+      Fluid liquid_pyrotheum = FluidRegistry.getFluid("pyrotheum");
       
       ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
@@ -122,7 +129,9 @@ public class ModIntegrationTE3 extends ModIntegration
 
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.glowstone), new FluidStack(liquid_glowstone,250),2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glowStone), new FluidStack(liquid_glowstone,1000),2500);
-      
+
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM_BLOCK], new FluidStack(liquid_pyrotheum,250),2500);
+
       AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_enderium,108),
           new FluidStack[] {
             new FluidStack(liquid_tin,81),
@@ -157,16 +166,19 @@ public class ModIntegrationTE3 extends ModIntegration
       {
         Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
         Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
+        Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
         ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
 
         CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

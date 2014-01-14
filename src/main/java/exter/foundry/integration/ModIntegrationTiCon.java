@@ -90,22 +90,20 @@ public class ModIntegrationTiCon extends ModIntegration
       return;
     }
 
-    for(FluidStack ing:mix.mixers)
+    FluidStack ing = mix.mixers.get(index);
+    String mapped = liquid_map.get(ing.getFluid().getName());
+    if(mapped != null)
     {
-      String mapped = liquid_map.get(ing.getFluid().getName());
-      if(mapped != null)
-      {
-        List<FluidStack> in = new ArrayList<FluidStack>(inputs);
-        in.add(new FluidStack( // Convert TiCon Fluid Stack to Foundry Fluid Stack
-            LiquidMetalRegistry.instance.GetFluid(mapped),
-            mix.mixers.get(index).amount * FoundryRecipes.FLUID_AMOUNT_INGOT / (TConstruct.ingotLiquidValue * INGOT_GCD)));
-        CreateAlloyRecipe(mix,index + 1,in);
-      }
       List<FluidStack> in = new ArrayList<FluidStack>(inputs);
-      FluidStack fl = mix.mixers.get(index);
-      in.add(new FluidStack(fl.getFluid(),fl.amount / INGOT_GCD));
+      in.add(new FluidStack( // Convert TiCon Fluid Stack to Foundry Fluid Stack
+          LiquidMetalRegistry.instance.GetFluid(mapped),
+          ing.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / (TConstruct.ingotLiquidValue * INGOT_GCD)));
       CreateAlloyRecipe(mix,index + 1,in);
     }
+    List<FluidStack> in = new ArrayList<FluidStack>(inputs);
+    FluidStack fl = ing;
+    in.add(new FluidStack(fl.getFluid(),fl.amount / INGOT_GCD));
+    CreateAlloyRecipe(mix,index + 1,in);
   }
   
   private void CreateAlloyRecipe(AlloyMix mix)

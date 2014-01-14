@@ -30,7 +30,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
   private static final Rectangle SUBSTANCE_RECT = new Rectangle(71 - 5, 43 - 11, 8, 47);
 
 
-  public static final ProgressBar PROGRESS = new ProgressBar(42 - 5, 59 - 11, 176, 53, 27, 15, 0, 100);
+  public static final ProgressBar PROGRESS = new ProgressBar(42 - 5, 59 - 11, 176, 53, 27, 15, 0, 30);
 
   public class CachedInfuserSubstanceRecipe extends CachedFoundryRecipeSubstance
   {
@@ -82,14 +82,13 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
   public void drawExtras(int recipe)
   {
     CachedInfuserSubstanceRecipe foundryRecipe = (CachedInfuserSubstanceRecipe) arecipes.get(recipe);
-    int energy_needed = foundryRecipe.GetEnergyNeeded();
-    int time = (foundryRecipe.getAgeTicks() * 4000) % energy_needed;
-    int currentProgress = time * 100 / energy_needed;
+    int currentProgress = foundryRecipe.getAgeTicks() % 30;
     if(currentProgress > 0)
     {
       drawProgressBar(PROGRESS, currentProgress);
     }
-    DrawSubstance(foundryRecipe.GetSubstance(), foundryRecipe.getAgeTicks() * 4000 / energy_needed);
+    int times = FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX / foundryRecipe.GetSubstance().amount;
+    DrawSubstance(foundryRecipe.GetSubstance(), (foundryRecipe.getAgeTicks() / 30) % (times));
   }
   
   private void DrawSubstance(InfuserSubstance substance,int multiplier)
@@ -209,9 +208,9 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       float energy = foundryRecipe.GetEnergyNeeded();
       currenttip.add(EnumChatFormatting.GRAY + "Required power: ");
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.2f MJ/t", energy / EnergyManager.RATIO_MJ));
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.2f RF/t", energy / EnergyManager.RATIO_RF));
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.2f EU/t", energy / EnergyManager.RATIO_EU));
+      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f MJ/t", energy / EnergyManager.RATIO_MJ));
+      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f RF/t", energy / EnergyManager.RATIO_RF));
+      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f EU/t", energy / EnergyManager.RATIO_EU));
     }
     return super.handleTooltip(gui, currenttip, recipe);
   }

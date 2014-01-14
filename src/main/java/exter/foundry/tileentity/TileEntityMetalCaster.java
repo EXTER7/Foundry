@@ -82,7 +82,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   {
     super();
 
-    tank = new FluidTank(5000);
+    tank = new FluidTank(6000);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);

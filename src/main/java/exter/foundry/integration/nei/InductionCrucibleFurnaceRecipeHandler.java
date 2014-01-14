@@ -41,7 +41,7 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     public CachedMeltingRecipe(IMeltingRecipe recipe)
     {
       input = new PositionedStack(asItemStackOrList(recipe.GetInput()), 50, 12, true);
-      tank = new FluidTank(recipe.GetOutput(), 4000, new Rectangle(102, 11, 16, 47));
+      tank = new FluidTank(recipe.GetOutput(), 6000, new Rectangle(102, 11, 16, 47));
       meltingPoint = recipe.GetMeltingPoint();
     }
 

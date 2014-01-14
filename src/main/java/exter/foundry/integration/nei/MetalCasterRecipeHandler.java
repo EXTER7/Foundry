@@ -35,7 +35,7 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 
     public CachedCasterRecipe(ICastingRecipe recipe)
     {
-      tank = new FluidTank(recipe.GetInputFluid(), 5000, new Rectangle(34, 10, 16, 47));
+      tank = new FluidTank(recipe.GetInputFluid(), 6000, new Rectangle(34, 10, 16, 47));
       mold = new PositionedStack(recipe.GetInputMold(), 61, 10, true);
       output = new PositionedStack(recipe.GetOutput(), 81, 40, true);
       List<ItemStack> extras = getExtraItems(recipe);

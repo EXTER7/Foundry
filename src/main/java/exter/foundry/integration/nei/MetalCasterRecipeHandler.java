@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
@@ -17,6 +18,7 @@ import com.google.common.collect.Lists;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.util.FoundryMiscUtils;
 
 public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 {
@@ -37,7 +39,8 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     {
       tank = new FluidTank(recipe.GetInputFluid(), 6000, new Rectangle(34, 10, 16, 47));
       mold = new PositionedStack(recipe.GetInputMold(), 61, 10, true);
-      output = new PositionedStack(recipe.GetOutput(), 81, 40, true);
+      output = new PositionedStack(asItemStackOrList(recipe.GetOutput()), 81, 40, true);
+      output.setPermutationToRender(0);
       List<ItemStack> extras = getExtraItems(recipe);
       if(!extras.isEmpty())
       {
@@ -193,7 +196,8 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     {
       for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
       {
-        if(recipe.GetOutput() != null && recipe.GetOutput() instanceof ItemStack && ((ItemStack) recipe.GetOutput()).isItemEqual((ItemStack) results[0]))
+        Object output = recipe.GetOutput();
+        if(output != null && FoundryMiscUtils.IsItemMatch((ItemStack) results[0], output))
         {
           arecipes.add(new CachedCasterRecipe(recipe));
         }
@@ -203,8 +207,15 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(ICastingRecipe recipe)
   {
-    if(recipe.GetOutput() != null && !(recipe.GetOutput() instanceof String) && recipe.GetInputFluid() != null)
+    if(recipe.GetOutput() != null && recipe.GetInputFluid() != null)
     {
+      if(recipe.GetOutput() instanceof String)
+      {
+        if(OreDictionary.getOres((String)recipe.GetOutput()).size() == 0)
+        {
+          return;
+        }
+      }
       arecipes.add(new CachedCasterRecipe(recipe));
     }
   }

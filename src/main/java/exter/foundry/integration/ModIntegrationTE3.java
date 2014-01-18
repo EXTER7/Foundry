@@ -40,7 +40,7 @@ public class ModIntegrationTE3 extends ModIntegration
 
   static public final int ITEM_ENDERIUM_INGOT = 13;
   static public final int ITEM_ENDERIUM_BLOCK = 14;
-  static public final int ITEM_PYROTHEUM_BLOCK = 15;
+  static public final int ITEM_PYROTHEUM = 15;
   static public final int ITEM_BRONZE_GEAR = 16;
   
 
@@ -88,7 +88,7 @@ public class ModIntegrationTE3 extends ModIntegration
     items[ITEM_ENDERIUM_INGOT] = GameRegistry.findItemStack("ThermalExpansion", "ingotEnderium", 1);
     items[ITEM_ENDERIUM_BLOCK] = GameRegistry.findItemStack("ThermalExpansion", "blockEnderium", 1);
 
-    items[ITEM_PYROTHEUM_BLOCK] = GameRegistry.findItemStack("ThermalExpansion", "dustPyrotheum", 1);
+    items[ITEM_PYROTHEUM] = GameRegistry.findItemStack("ThermalExpansion", "dustPyrotheum", 1);
 
     items[ITEM_BRONZE_GEAR] = GameRegistry.findItemStack("ThermalExpansion", "gearBronze", 1);
 
@@ -130,7 +130,7 @@ public class ModIntegrationTE3 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.glowstone), new FluidStack(liquid_glowstone,250),2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glowStone), new FluidStack(liquid_glowstone,1000),2500);
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM_BLOCK], new FluidStack(liquid_pyrotheum,250),2500);
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM], new FluidStack(liquid_pyrotheum,250),2500);
 
       AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_enderium,108),
           new FluidStack[] {

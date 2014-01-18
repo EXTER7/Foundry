@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -158,7 +160,14 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
     {
       int times = drawMultiplier % (tank.capacity / tank.fluid.amount) + 1;
       int drawHeight = times * tank.fluid.amount * tank.position.height / tank.capacity;
+      
+      int color = tank.fluid.getFluid().getColor(tank.fluid);
+      float red = (float) (color >> 16 & 255) / 255.0F;
+      float green = (float) (color >> 8 & 255) / 255.0F;
+      float blue = (float) (color & 255) / 255.0F;
+      GL11.glColor4f(red, green, blue, 1.0f);
       drawFluidVertical(tank.position.x, tank.position.y + tank.position.height, tank.position.width, drawHeight, tank.fluid.getFluid());
+      GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
       GuiDraw.changeTexture(getGuiTexture());
       GuiDraw.drawTexturedModalRect(tank.position.x, tank.position.y, overlayLocation.x, overlayLocation.y, tank.position.width, tank.position.height);
     }

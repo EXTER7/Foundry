@@ -2,6 +2,8 @@ package exter.foundry.gui;
 
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -36,7 +38,7 @@ public abstract class GuiFoundry extends GuiContainer
    * @param icon_x X coordinate offset in the icon.
    * @param icon_y Y coordinate offset in the icon.
    */
-  private void drawTexturedModelRectFromIconPartial(int x, int y, Icon icon, int width, int height,int icon_x,int icon_y)
+  private void drawTexturedModelRectFromIconPartial(int x, int y, Icon icon, int width, int height,int icon_x,int icon_y, int color)
   {
       Tessellator tessellator = Tessellator.instance;
       
@@ -46,6 +48,7 @@ public abstract class GuiFoundry extends GuiContainer
       double max_v = icon.getInterpolatedV(icon_y + height);
       
       tessellator.startDrawingQuads();
+      tessellator.setColorOpaque_I(color);
       tessellator.addVertexWithUV(x, y + height, zLevel, min_u, max_v);
       tessellator.addVertexWithUV(x + width, y + height, zLevel, max_u, max_v);
       tessellator.addVertexWithUV(x + width, y, zLevel, max_u, min_v);
@@ -93,13 +96,17 @@ public abstract class GuiFoundry extends GuiContainer
     {
       liquid_icon = fluid.getStillIcon();
     }
-    mc.renderEngine.bindTexture(BLOCK_TEXTURE);
 
     int h = liquid.amount * tank_height / tank.getCapacity();
     
-    
     if(liquid_icon != null)
     {
+      mc.renderEngine.bindTexture(BLOCK_TEXTURE);
+      int color = fluid.getColor(liquid);
+      float red = (float) (color >> 16 & 255) / 255.0F;
+      float green = (float) (color >> 8 & 255) / 255.0F;
+      float blue = (float) (color & 255) / 255.0F;
+      GL11.glColor4f(red, green, blue, 1.0f);
       while(true)
       {
         int i;
@@ -116,7 +123,12 @@ public abstract class GuiFoundry extends GuiContainer
 
         if(i > 0)
         {
-          drawTexturedModelRectFromIconPartial(window_x + x, window_y + y + tank_height - i - start, liquid_icon, 16, i,0,16 - i);
+          drawTexturedModelRectFromIconPartial(
+              window_x + x, window_y + y + tank_height - i - start,
+              liquid_icon,
+              16, i,
+              0, 16 - i,
+              color);
         }
         start += 16;
 
@@ -125,9 +137,10 @@ public abstract class GuiFoundry extends GuiContainer
           break;
         }
       }
+      GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+      mc.renderEngine.bindTexture(GetGUITexture());
     }
 
-    mc.renderEngine.bindTexture(GetGUITexture());
     drawTexturedModalRect(window_x + x, window_y + y, overlay_x, overlay_y, 16, tank_height);
   }
 }

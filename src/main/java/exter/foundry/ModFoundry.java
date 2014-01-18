@@ -158,6 +158,7 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Manganese", 1550, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Titanium", 2000, 15);
     FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
+    FoundryUtils.RegisterBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
     
     ModIntegration.PreInit(config);
 

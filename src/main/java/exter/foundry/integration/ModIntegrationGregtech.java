@@ -155,6 +155,7 @@ public class ModIntegrationGregtech extends ModIntegration
       RegisterMetalRecipes(name, fluid);
     }
     RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
+    RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
   }
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)

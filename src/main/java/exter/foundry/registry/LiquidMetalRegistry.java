@@ -9,7 +9,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.registry.IFluidRegistry;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.FoundryBlocks;

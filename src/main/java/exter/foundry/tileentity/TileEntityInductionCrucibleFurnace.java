@@ -438,7 +438,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
       progress = 0;
       return;
     }
-    int increment = (heat - melt_point) / fs.amount + 1;
+    int increment = (heat - melt_point) * 5 / (fs.amount * 4) + 1;
     if(increment > SMELT_TIME / 15)
     {
       increment = SMELT_TIME / 15;

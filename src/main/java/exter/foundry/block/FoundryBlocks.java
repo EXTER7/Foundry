@@ -275,7 +275,7 @@ public class FoundryBlocks
     }
     block_stacks.put("Iron", new ItemStack(Block.blockIron));
     block_stacks.put("Gold", new ItemStack(Block.blockGold));
-
+    block_stacks.put("Glass", new ItemStack(Block.glass));
     
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     

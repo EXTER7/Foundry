@@ -43,7 +43,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
    * @param default_container_id Default item id of the fluid container.
    */
-  public void RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
+  public Fluid RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
   {
     int block_id = config.getBlock("liquid" + metal_name, FoundryBlocks.GetNextID()).getInt();
 
@@ -63,9 +63,9 @@ public class LiquidMetalRegistry implements IFluidRegistry
 
     fluid.setBlockID(liquid_block);
 
-    FoundryUtils.RegisterBasicMeltingRecipes(metal_name,fluid);
     
     registry.put(metal_name, fluid);
+    return fluid;
   }
   
   @ForgeSubscribe

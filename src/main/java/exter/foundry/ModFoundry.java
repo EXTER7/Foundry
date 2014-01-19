@@ -139,59 +139,40 @@ public class ModFoundry
     FoundryConfig.Load(config);
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Iron", 1850, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Gold", 1350, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Copper", 1400, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Tin", 550, 7);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Bronze", 1400, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Electrum", 1350, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Invar", 1850, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nickel", 1750, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Zinc", 700, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Brass", 1400, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
+    Fluid liquid_iron = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Iron", 1850, 15);
+    Fluid liquid_gold = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Gold", 1350, 15);
+    Fluid liquid_copper = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Copper", 1400, 15);
+    Fluid liquid_tin = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Tin", 550, 7);
+    Fluid liquid_bronze = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Bronze", 1400, 15);
+    Fluid liquid_electrum = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Electrum", 1350, 15);
+    Fluid liquid_invar = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Invar", 1850, 15);
+    Fluid liquid_nickel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nickel", 1750, 15);
+    Fluid liquid_zinc = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Zinc", 700, 15);
+    Fluid liquid_brass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Brass", 1400, 15);
+    Fluid liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
+    Fluid liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Chromium", 2200, 8);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Platinum", 2050, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Manganese", 1550, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Titanium", 2000, 15);
+    
+    for(String name:LiquidMetalRegistry.instance.GetFluidNames())
+    {
+      FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));
+    }
     FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     FoundryUtils.RegisterBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
+
+    Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Glass", 1550, 12);
+    
     
     ModIntegration.PreInit(config);
 
     config.save();
 
-
-
-    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
-    Fluid liquid_zinc = LiquidMetalRegistry.instance.GetFluid("Zinc");
-    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-    Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
-    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
-    Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
-    Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
-    Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
-    Fluid liquid_brass = LiquidMetalRegistry.instance.GetFluid("Brass");
-    Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
-
     
-    if(FoundryConfig.recipe_gear_useoredict)
-    {
-      MeltingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-      MeltingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
-    }
     if(FoundryConfig.recipe_alloy_bronze_yield > 0)
     {
       AlloyRecipeManager.instance.AddRecipe(
@@ -349,18 +330,6 @@ public class ModFoundry
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsIron,1,0), new FluidStack(liquid_iron,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
     CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsGold,1,0), new FluidStack(liquid_gold,FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-    if(FoundryConfig.recipe_gear_useoredict)
-    {
-      CastingRecipeManager.instance.AddRecipe("gearIron", new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearGold", new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearCopper", new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearTin", new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearBronze", new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearBrass", new FluidStack(liquid_brass, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearInvar", new FluidStack(liquid_invar, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearSteel", new FluidStack(liquid_steel, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      CastingRecipeManager.instance.AddRecipe("gearElectrum", new FluidStack(liquid_electrum, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-    }
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 240000);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Item.coal,1,1), 480000);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 1920000);
@@ -368,7 +337,24 @@ public class ModFoundry
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 320000);
 
     InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "carbon", 2);
+
     
+    MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.sand), new FluidStack(liquid_glass,1000));
+    MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000));
+    MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.thinGlass), new FluidStack(liquid_glass,375));
+    CastingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000),mold_block,null);
+
+    
+    if(FoundryConfig.recipe_gear_useoredict)
+    {
+      for(String name:LiquidMetalRegistry.instance.GetFluidNames())
+      {
+        Fluid fluid = LiquidMetalRegistry.instance.GetFluid(name);
+        MeltingRecipeManager.instance.AddRecipe("gear" + name, new FluidStack(fluid,FoundryRecipes.FLUID_AMOUNT_INGOT * 4));
+        CastingRecipeManager.instance.AddRecipe("gear" + name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      }
+    }
+           
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
   }
   
@@ -558,18 +544,13 @@ public class ModFoundry
       }
     }
     
-    //Gear Mold crafting recipes.
+    for(String name:LiquidMetalRegistry.instance.GetFluidNames())
+    {
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gear" + name);
+    }
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearWood");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearStone");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearIron");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearGold");
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearDiamond");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearCopper");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearTin");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBronze");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearBrass");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearInvar");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearSteel");
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearStone");
 
     //Ingot and block mold crafting recipes
     for(String name:OreDictionary.getOreNames())

@@ -470,10 +470,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     {
       if(CanCastCurrentRecipe())
       {
-        int increment = 18000 / current_recipe.fluid.amount + 1;
+        int increment = 18000 / current_recipe.fluid.amount;
         if(increment > CAST_TIME / 15)
         {
           increment = CAST_TIME / 15;
+        }
+        if(increment < 30)
+        {
+          increment = 30;
         }
         progress += increment;
         

@@ -22,6 +22,7 @@ fluid.liquidKanthal=Liquid Kanthal
 fluid.liquidNichrome=Liquid Nichrome
 fluid.liquidEnderium=Liquid Enderium
 fluid.liquidElectrumFlux=Fluxed Liquid Electrum
+fluid.liquidGlass=Liquid Glass
 substance.carbon=Carbon
 substance.sand=Sand
 itemGroup.foundryMaterials=Foundry - Materials

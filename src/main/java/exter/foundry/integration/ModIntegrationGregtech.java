@@ -1,5 +1,8 @@
 package exter.foundry.integration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -9,6 +12,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
@@ -32,10 +36,15 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "StainlessSteel", 1900, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Kanthal", 1900, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nichrome", 1950, 15);
+    Map<String,Fluid> fluids = new HashMap<String,Fluid>();
+    fluids.put("Cupronickel",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15));
+    fluids.put("StainlessSteel",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "StainlessSteel", 1900, 15));
+    fluids.put("Kanthal",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Kanthal", 1900, 15));
+    fluids.put("Nichrome",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nichrome", 1950, 15));
+    for(Map.Entry<String, Fluid> entry:fluids.entrySet())
+    {
+      FoundryUtils.RegisterBasicMeltingRecipes(entry.getKey(), entry.getValue());
+    }
   }
 
   @Override

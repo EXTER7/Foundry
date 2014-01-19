@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -53,7 +54,8 @@ public class ModIntegrationTE3 extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Enderium", 1900, 12);
+    Fluid liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Enderium", 1900, 12);
+    FoundryUtils.RegisterBasicMeltingRecipes("Enderium",liquid_enderium);
   }
 
 

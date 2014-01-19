@@ -110,7 +110,16 @@ public class CastingRecipe implements ICastingRecipe
 
   public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
   {
-    output = result;
+    if(result instanceof ItemStack)
+    {
+      output = ((ItemStack)result).copy();
+    } else if(result instanceof String)
+    {
+      output = result;
+    } else
+    {
+      throw new IllegalArgumentException("Casting recipe result is not of a valid class.");
+    }
     fluid = in_fluid.copy();
     mold = in_mold.copy();
     if(in_extra != null)

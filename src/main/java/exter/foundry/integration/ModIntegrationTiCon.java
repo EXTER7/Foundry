@@ -146,7 +146,7 @@ public class ModIntegrationTiCon extends ModIntegration
     ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
     for(tconstruct.library.crafting.CastingRecipe casting:table_casting.getCastingRecipes())
     {
-      if(casting.cast != null)
+      if(casting.cast != null && !casting.consumeCast)
       {
         if(!CastingRecipeManager.instance.IsItemMold(casting.cast))
         {

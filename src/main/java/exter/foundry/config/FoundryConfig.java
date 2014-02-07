@@ -23,8 +23,14 @@ public class FoundryConfig
   public static Map<String,Integer> recipe_melting_gears;
   public static Map<String,Integer> recipe_casting_gears;
   
+  public static boolean recipe_tools_armor;
+  public static boolean recipe_glass;
+  
   static public void Load(Configuration config)
   {
+	  
+	recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);
+	recipe_glass = config.get("recipe", "recipe.glass.use", true).getBoolean(true);
     wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);

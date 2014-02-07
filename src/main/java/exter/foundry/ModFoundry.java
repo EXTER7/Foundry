@@ -602,27 +602,27 @@ public class ModFoundry
     GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 
     int ore_id = FoundryBlocks.block_ore.blockID;
-    if(FoundryConfig.wordgen_copper)
+    if(FoundryConfig.worldgen_copper)
     {
       WordGenOre.RegisterOre(16, 80, 12, ore_id, BlockFoundryOre.ORE_COPPER);
     }
-    if(FoundryConfig.wordgen_tin)
+    if(FoundryConfig.worldgen_tin)
     {
       WordGenOre.RegisterOre(16, 52, 8, ore_id, BlockFoundryOre.ORE_TIN);
     }
-    if(FoundryConfig.wordgen_zinc)
+    if(FoundryConfig.worldgen_zinc)
     {
       WordGenOre.RegisterOre(8, 48, 6, ore_id, BlockFoundryOre.ORE_ZINC);
     }
-    if(FoundryConfig.wordgen_nickel)
+    if(FoundryConfig.worldgen_nickel)
     {
       WordGenOre.RegisterOre(8, 36, 5, ore_id, BlockFoundryOre.ORE_NICKEL);
     }
-    if(FoundryConfig.wordgen_silver)
+    if(FoundryConfig.worldgen_silver)
     {
       WordGenOre.RegisterOre(2, 30, 3, ore_id, BlockFoundryOre.ORE_SILVER);
     }
-    if(FoundryConfig.wordgen_lead)
+    if(FoundryConfig.worldgen_lead)
     {
       WordGenOre.RegisterOre(8, 48, 5, ore_id, BlockFoundryOre.ORE_LEAD);
     }

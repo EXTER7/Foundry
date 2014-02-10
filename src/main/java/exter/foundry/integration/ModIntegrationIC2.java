@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -112,17 +113,40 @@ public class ModIntegrationIC2 extends ModIntegration
       Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
       Fluid liquid_lead = LiquidMetalRegistry.instance.GetFluid("Lead");
 
-      ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
-      ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
-      ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
-      ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
-      ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
-      ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
-      ItemStack mold_hoe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HOE);
-      ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
-      ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
-      ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
-      ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
+      if(FoundryConfig.recipe_tools_armor)
+      {
+        ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
+        ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
+        ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
+        ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
+        ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
+        ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
+        ItemStack mold_hoe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HOE);
+        ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
+        ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
+        ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
+        ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
+        
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SHOVEL], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SWORD], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HOE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, items[ITEM_BRONZE_HELMET]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, items[ITEM_BRONZE_BOOTS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, items[ITEM_BRONZE_PICKAXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, items[ITEM_BRONZE_AXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, items[ITEM_BRONZE_SHOVEL]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_BRONZE_HOE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_BRONZE_SWORD]);
+      }
       ItemStack mold_cable = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CABLE_IC2);
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CASING_IC2);
       ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE_IC2);
@@ -146,15 +170,6 @@ public class ModIntegrationIC2 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT));
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SHOVEL], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SWORD], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HOE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
       CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
@@ -175,15 +190,6 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, items[ITEM_BRONZE_HELMET]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, items[ITEM_BRONZE_BOOTS]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, items[ITEM_BRONZE_PICKAXE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, items[ITEM_BRONZE_AXE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, items[ITEM_BRONZE_SHOVEL]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_BRONZE_HOE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_BRONZE_SWORD]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_COPPER_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_TIN_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_GOLD_CABLE]);

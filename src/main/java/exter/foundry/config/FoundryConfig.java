@@ -29,8 +29,8 @@ public class FoundryConfig
   static public void Load(Configuration config)
   {
 	  
-	recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);
-	recipe_glass = config.get("recipe", "recipe.glass.use", true).getBoolean(true);
+    recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);
+    recipe_glass = config.get("recipe", "recipe.glass.use", true).getBoolean(true);
     worldgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
     worldgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
     worldgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);

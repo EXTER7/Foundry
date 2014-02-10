@@ -6,12 +6,12 @@ import net.minecraftforge.common.Configuration;
 
 public class FoundryConfig
 {
-  public static boolean wordgen_copper;
-  public static boolean wordgen_tin;
-  public static boolean wordgen_zinc;
-  public static boolean wordgen_nickel;
-  public static boolean wordgen_silver;
-  public static boolean wordgen_lead;
+  public static boolean worldgen_copper;
+  public static boolean worldgen_tin;
+  public static boolean worldgen_zinc;
+  public static boolean worldgen_nickel;
+  public static boolean worldgen_silver;
+  public static boolean worldgen_lead;
 
   public static int recipe_alloy_bronze_yield;
   public static int recipe_alloy_brass_yield;
@@ -23,14 +23,20 @@ public class FoundryConfig
   public static Map<String,Integer> recipe_melting_gears;
   public static Map<String,Integer> recipe_casting_gears;
   
+  public static boolean recipe_tools_armor;
+  public static boolean recipe_glass;
+  
   static public void Load(Configuration config)
   {
-    wordgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
-    wordgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
-    wordgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
-    wordgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
-    wordgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
-    wordgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
+	  
+	recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);
+	recipe_glass = config.get("recipe", "recipe.glass.use", true).getBoolean(true);
+    worldgen_copper = config.get("worldgen", "copper", true).getBoolean(true);
+    worldgen_tin = config.get("worldgen", "tin", true).getBoolean(true);
+    worldgen_zinc = config.get("worldgen", "zinc", true).getBoolean(true);
+    worldgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
+    worldgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
+    worldgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
 
     recipe_alloy_bronze_yield = config.get("recipe", "alloy.bronze_yield", 4).getInt(4);
     recipe_alloy_brass_yield = config.get("recipe", "alloy.brass_yield", 4).getInt(4);

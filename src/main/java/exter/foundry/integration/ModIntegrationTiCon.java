@@ -125,7 +125,11 @@ public class ModIntegrationTiCon extends ModIntegration
       ItemStack stack = new ItemStack(item.get(0), 1, item.get(1));
       if(MeltingRecipeManager.instance.FindRecipe(stack) == null)
       {
-        MeltingRecipeManager.instance.AddRecipe(stack, Smeltery.getSmelteryResult(stack));
+        FluidStack result = Smeltery.getSmelteryResult(stack);
+        if(result.amount <= 6000)
+        {
+          MeltingRecipeManager.instance.AddRecipe(stack, result);
+        }
       }
     }
     
@@ -165,17 +169,29 @@ public class ModIntegrationTiCon extends ModIntegration
         if(casting.cast.isItemEqual(items[ITEM_INGOT_CAST]))
         {
           ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
-          CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, ingot_mold, null);
+          if(casting.castingMetal.amount <= 6000)
+          {
+            CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, ingot_mold, null);
+          }
         } else if(mapped_liquid != null)
         {
-          CastingRecipeManager.instance.AddRecipe(casting.output, mapped_liquid, casting.cast, null);
+          if(mapped_liquid.amount <= 6000)
+          {
+            CastingRecipeManager.instance.AddRecipe(casting.output, mapped_liquid, casting.cast, null);
+          }
         }
-        CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, casting.cast, null);
+        if(casting.castingMetal.amount <= 6000)
+        {
+          CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, casting.cast, null);
+        }
       }
     }
     for(tconstruct.library.crafting.CastingRecipe casting:basin_casting.getCastingRecipes())
     {
-      CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
+      if(casting.castingMetal.amount <= 6000)
+      {
+        CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
+      }
     }
   }
 }

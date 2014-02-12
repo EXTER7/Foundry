@@ -128,7 +128,7 @@ public class ModIntegrationTiCon extends ModIntegration
         FluidStack result = Smeltery.getSmelteryResult(stack);
         if(result.amount <= 6000)
         {
-          MeltingRecipeManager.instance.AddRecipe(stack, result);
+          MeltingRecipeManager.instance.AddRecipe(stack, result, Smeltery.getLiquifyTemperature(stack) + 274);
         }
       }
     }

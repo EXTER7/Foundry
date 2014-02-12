@@ -416,8 +416,8 @@ public class ModFoundry
         'C', foundryclay_stack);
 
 
-    ModIntegration gti = ModIntegration.GetIntegration("gregtech");
-    if(gti == null || !gti.IsLoaded())
+    ModIntegrationGregtech gti = (ModIntegrationGregtech)ModIntegration.GetIntegration("gregtech");
+    if(gti == null || !gti.IsLoaded() || !gti.change_recipes)
     {
       GameRegistry.addRecipe(new ShapedOreRecipe(
           emptycontainer2_stack,

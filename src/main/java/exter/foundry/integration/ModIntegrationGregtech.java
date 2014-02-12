@@ -27,6 +27,7 @@ import exter.foundry.util.FoundryMiscUtils;
 
 public class ModIntegrationGregtech extends ModIntegration
 {
+  public boolean change_recipes;
   
   public ModIntegrationGregtech(String mod_name)
   {
@@ -45,6 +46,7 @@ public class ModIntegrationGregtech extends ModIntegration
     {
       FoundryUtils.RegisterBasicMeltingRecipes(entry.getKey(), entry.getValue());
     }
+    change_recipes = config.get("integration", "gregtech.change_recipes", true).getBoolean(true);
   }
 
   @Override
@@ -63,45 +65,47 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF),
-        "IFI",
-        "HCH",
-        "HRH",
-        'F', furnace_stack, 
-        'I', "ingotCopper", 
-        'C', crucible_stack,
-        'R', redstone_stack,
-        'H', "craftingHeatingCoilTier00"));
+    if(change_recipes)
+    {
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF),
+          "IFI",
+          "HCH",
+          "HRH",
+          'F', furnace_stack, 
+          'I', "ingotCopper", 
+          'C', crucible_stack,
+          'R', redstone_stack,
+          'H', "craftingHeatingCoilTier00"));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        crucible_stack, 
-        "IBI",
-        "B B",
-        "IBI",
-        'I', "plateSteel",
-        'B', foundrybrick_stack));
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          crucible_stack, 
+          "IBI",
+          "B B",
+          "IBI",
+          'I', "plateSteel",
+          'B', foundrybrick_stack));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
-        "IRI",
-        "GCG",
-        "HRH",
-        'I', iron_stack, 
-        'R', redstone_stack, 
-        'B', foundrybrick_stack,
-        'C', crucible_stack,
-        'G', "gearStone",
-        'H', "craftingHeatingCoilTier00"));
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
+          "IRI",
+          "GCG",
+          "HRH",
+          'I', iron_stack, 
+          'R', redstone_stack, 
+          'B', foundrybrick_stack,
+          'C', crucible_stack,
+          'G', "gearStone",
+          'H', "craftingHeatingCoilTier00"));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer2_stack,
-        " T ",
-        "BGB",
-        " T ",
-        'T', "plateTin", 
-        'B', foundrybrick_stack,
-        'G', glasspane_stack));
-    
+      GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer2_stack,
+          " T ",
+          "BGB",
+          " T ",
+          'T', "plateTin", 
+          'B', foundrybrick_stack,
+          'G', glasspane_stack));
+    }
     Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
     Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");

@@ -131,9 +131,19 @@ public class ModIntegrationTiCon extends ModIntegration
       if(MeltingRecipeManager.instance.FindRecipe(stack) == null)
       {
         FluidStack result = Smeltery.getSmelteryResult(stack);
-        if(result.amount <= 6000)
+        String mapped = liquid_map.get(result.getFluid().getName());
+        if(mapped != null)
         {
-          MeltingRecipeManager.instance.AddRecipe(stack, result, Smeltery.getLiquifyTemperature(stack) + 274);
+          FluidStack mapped_liquid = new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid(mapped),
+              result.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+          MeltingRecipeManager.instance.AddRecipe(stack, mapped_liquid);
+        } else
+        {
+          if(result.amount <= 6000)
+          {
+            MeltingRecipeManager.instance.AddRecipe(stack, result, Smeltery.getLiquifyTemperature(stack) + 274);
+          }
         }
       }
     }

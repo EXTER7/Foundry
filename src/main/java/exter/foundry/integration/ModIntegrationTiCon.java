@@ -137,7 +137,10 @@ public class ModIntegrationTiCon extends ModIntegration
           FluidStack mapped_liquid = new FluidStack(
               LiquidMetalRegistry.instance.GetFluid(mapped),
               result.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
-          MeltingRecipeManager.instance.AddRecipe(stack, mapped_liquid);
+          if(mapped_liquid.amount <= 6000)
+          {
+            MeltingRecipeManager.instance.AddRecipe(stack, mapped_liquid);
+          }
         } else
         {
           if(result.amount <= 6000)

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cpw.mods.fml.common.Loader;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
@@ -77,6 +78,10 @@ public class ModIntegrationTiCon extends ModIntegration
     liquid_map.put("silver.molten","Silver");
     liquid_map.put("invar.molten","Invar");
     liquid_map.put("electrum.molten","Electrum");
+    if(FoundryConfig.recipe_glass)
+    {
+      liquid_map.put("glass.molten", "Glass");
+    }
   }
   
   private void CreateAlloyRecipe(AlloyMix mix,int index,List<FluidStack> inputs)
@@ -188,7 +193,8 @@ public class ModIntegrationTiCon extends ModIntegration
     }
     for(tconstruct.library.crafting.CastingRecipe casting:basin_casting.getCastingRecipes())
     {
-      if(casting.castingMetal.amount <= 6000)
+      String mapped = liquid_map.get(casting.castingMetal.getFluid().getName());
+      if(mapped == null && casting.castingMetal.amount <= 6000)
       {
         CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
       }

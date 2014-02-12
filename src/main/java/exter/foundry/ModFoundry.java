@@ -157,6 +157,8 @@ public class ModFoundry
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Manganese", 1550, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Titanium", 2000, 15);
     
+    ModIntegration.PreInit(config);
+
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));
@@ -164,12 +166,6 @@ public class ModFoundry
     FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     FoundryUtils.RegisterBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
 
-    Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Glass", 1550, 12);
-    
-    
-    ModIntegration.PreInit(config);
-
-    config.save();
 
     
     if(FoundryConfig.recipe_alloy_bronze_yield > 0)
@@ -298,12 +294,16 @@ public class ModFoundry
     //Metal block casting recipes.
     for(Entry<String,ItemStack> entry:FoundryBlocks.block_stacks.entrySet())
     {
-      CastingRecipeManager.instance.AddRecipe(
-          entry.getValue(),
-          new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid(entry.getKey()),
-              FoundryRecipes.FLUID_AMOUNT_BLOCK),
-          mold_block, null);
+      Fluid fluid = LiquidMetalRegistry.instance.GetFluid(entry.getKey());
+      if(fluid != null)
+      {
+        CastingRecipeManager.instance.AddRecipe(
+            entry.getValue(),
+            new FluidStack(
+                fluid,
+                FoundryRecipes.FLUID_AMOUNT_BLOCK),
+            mold_block, null);
+      }
     }
     
     //Metal slab casting recipes
@@ -342,13 +342,6 @@ public class ModFoundry
 
     InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "carbon", 2);
 
-    if(FoundryConfig.recipe_glass)
-    {
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.sand), new FluidStack(liquid_glass,1000));
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000));
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.thinGlass), new FluidStack(liquid_glass,375));
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000),mold_block,null);
-    }
     
     if(FoundryConfig.recipe_gear_useoredict)
     {
@@ -360,6 +353,18 @@ public class ModFoundry
       }
     }
            
+    if(FoundryConfig.recipe_glass)
+    {
+      Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Glass", 1550, 12);
+
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.sand), new FluidStack(liquid_glass,1000));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.thinGlass), new FluidStack(liquid_glass,375));
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000),mold_block,null);
+    }
+
+    config.save();
+
     NetworkRegistry.instance().registerGuiHandler(this, proxy);
   }
   
@@ -500,7 +505,8 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.stone,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Item.brick));
-    if(FoundryConfig.recipe_tools_armor) {
+    if(FoundryConfig.recipe_tools_armor)
+    {
 	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateIron,1,-1));
 	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateGold,1,-1));
 	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateDiamond,1,-1));
@@ -588,7 +594,8 @@ public class ModFoundry
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_CLAY,ItemMold.MOLD_PLATE_IC2);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_CLAY,ItemMold.MOLD_GEAR);
 
-    if(FoundryConfig.recipe_tools_armor) {
+    if(FoundryConfig.recipe_tools_armor)
+    {
 	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CHESTPLATE_CLAY,ItemMold.MOLD_CHESTPLATE);
 	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PICKAXE_CLAY,ItemMold.MOLD_PICKAXE);
 	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_AXE_CLAY,ItemMold.MOLD_AXE);

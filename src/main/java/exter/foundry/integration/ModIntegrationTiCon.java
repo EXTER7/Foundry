@@ -134,9 +134,19 @@ public class ModIntegrationTiCon extends ModIntegration
         String mapped = liquid_map.get(result.getFluid().getName());
         if(mapped != null)
         {
-          FluidStack mapped_liquid = new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid(mapped),
-              result.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+          FluidStack mapped_liquid;
+          
+          if(mapped.equals("Glass"))
+          {
+            mapped_liquid = new FluidStack(
+                LiquidMetalRegistry.instance.GetFluid(mapped),
+                result.amount);
+          } else
+          {
+            mapped_liquid = new FluidStack(
+                LiquidMetalRegistry.instance.GetFluid(mapped),
+                result.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+          }
           if(mapped_liquid.amount <= 6000)
           {
             MeltingRecipeManager.instance.AddRecipe(stack, mapped_liquid);

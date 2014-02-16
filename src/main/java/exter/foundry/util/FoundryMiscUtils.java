@@ -8,6 +8,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.OreDictionary;
@@ -33,12 +34,16 @@ public class FoundryMiscUtils
 
   static public void RegisterMoldSmelting(int clay,int mold)
   {
-    FurnaceRecipes.smelting().addSmelting(FoundryItems.item_mold.itemID, clay, new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
+    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+        new ItemStack(FoundryItems.item_mold, 1, clay),
+        new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
   }
 
   static public void RegisterOreSmelting(int ore,int ingot)
   {
-    FurnaceRecipes.smelting().addSmelting(FoundryBlocks.block_ore.blockID, ore, new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
+    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+        new ItemStack(FoundryBlocks.block_ore, 1, ore),
+        new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 
   static public String GetItemOreDictionaryName(ItemStack stack)
@@ -120,11 +125,11 @@ public class FoundryMiscUtils
     }
     if(match instanceof Item)
     {
-      return item.itemID == ((Item)match).itemID;
+      return item.getItem() == (Item)match;
     }
     if(match instanceof Block)
     {
-      return item.itemID == ((Block)match).blockID;
+      return item.getItem() instanceof ItemBlock && ((ItemBlock)item.getItem()).field_150939_a == (Block)match;
     }
     return false;
   }

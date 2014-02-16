@@ -38,7 +38,7 @@ public class ContainerMetalCaster extends Container
   public ContainerMetalCaster(TileEntityMetalCaster caster, IInventory player_inventory)
   {
     te_caster = caster;
-    te_caster.openChest();
+    te_caster.openInventory();
     int i,j;
 
     addSlotToContainer(new SlotCasterOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 86, 51));
@@ -165,7 +165,7 @@ public class ContainerMetalCaster extends Container
   public void onContainerClosed(EntityPlayer par1EntityPlayer)
   {
     super.onContainerClosed(par1EntityPlayer);
-    te_caster.closeChest();
+    te_caster.closeInventory();
   }
 
   @Override

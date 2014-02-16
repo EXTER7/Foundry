@@ -31,7 +31,7 @@ public class ContainerMetalInfuser extends Container
   public ContainerMetalInfuser(TileEntityMetalInfuser infuser, IInventory player_inventory)
   {
     te_infuser = infuser;
-    te_infuser.openChest();
+    te_infuser.openInventory();
     int i,j;
 
     addSlotToContainer(new Slot(te_infuser, TileEntityMetalInfuser.INVENTORY_SUBSTANCE_INPUT, 19, 59));
@@ -109,7 +109,7 @@ public class ContainerMetalInfuser extends Container
   public void onContainerClosed(EntityPlayer par1EntityPlayer)
   {
     super.onContainerClosed(par1EntityPlayer);
-    te_infuser.closeChest();
+    te_infuser.closeInventory();
   }
 
   @Override

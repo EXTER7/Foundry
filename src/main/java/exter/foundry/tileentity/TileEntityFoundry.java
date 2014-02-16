@@ -4,16 +4,13 @@ package exter.foundry.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.tileentity.energy.EnergyManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +19,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -101,7 +97,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private NBTTagCompound packet;
   private boolean do_update;
   private boolean initialized;
-  private boolean added_enet;
+  //private boolean added_enet;
 
   private PowerHandler power_handler;
   
@@ -149,7 +145,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     
     update_energy = false;
     update_energy_tick = true;
-    added_enet = false;
+    //added_enet = false;
   }
   
   @Override

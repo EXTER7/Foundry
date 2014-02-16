@@ -31,7 +31,7 @@ public class ContainerAlloyMixer extends Container
   public ContainerAlloyMixer(TileEntityAlloyMixer mixer, IInventory player_inventory)
   {
     te_alloymixer = mixer;
-    te_alloymixer.openChest();
+    te_alloymixer.openInventory();
     int i,j;
 
     
@@ -115,7 +115,7 @@ public class ContainerAlloyMixer extends Container
   public void onContainerClosed(EntityPlayer par1EntityPlayer)
   {
     super.onContainerClosed(par1EntityPlayer);
-    te_alloymixer.closeChest();
+    te_alloymixer.closeInventory();
   }
   
   @Override

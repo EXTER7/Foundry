@@ -1,9 +1,7 @@
 package exter.foundry.tileentity;
 
-import com.google.common.io.ByteArrayDataInput;
 
 import exter.foundry.container.ContainerAlloyMixer;
-import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +9,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -221,11 +217,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tanks[TANK_OUTPUT]));
   }
   
+  /*
   @Override
   public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }
+  */
 
   public RedstoneMode GetMode()
   {
@@ -234,6 +232,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   public void SetMode(RedstoneMode new_mode)
   {
+    /*
     if(mode != new_mode)
     {
       mode = new_mode;
@@ -242,6 +241,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
         FoundryPacketHandler.SendAlloyMixerModeToServer(this);
       }
     }
+    */
   }
 
   @Override
@@ -267,7 +267,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       {
         is = inventory[slot];
         inventory[slot] = null;
-        onInventoryChanged();
+        markDirty();
         return is;
       } else
       {
@@ -278,7 +278,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
           inventory[slot] = null;
         }
 
-        onInventoryChanged();
+        markDirty();
         return is;
       }
     } else
@@ -311,12 +311,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
       stack.stackSize = this.getInventoryStackLimit();
     }
     
-    onInventoryChanged();
+    markDirty();
   }
 
   
   @Override
-  public String getInvName()
+  public String getInventoryName()
   {
     return "Alloy Mixer";
   }
@@ -330,30 +330,34 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public boolean isUseableByPlayer(EntityPlayer player)
   {
-    return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
+    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
   }
 
 
   @Override
-  public void openChest()
+  public void openInventory()
   {
+    /*
     if(!worldObj.isRemote)
     {
       FoundryPacketHandler.SendAlloyMixerModeToClients(this);
     }
+    */
   }
 
   @Override
-  public void closeChest()
+  public void closeInventory()
   {
+    /*
     if(!worldObj.isRemote)
     {
       FoundryPacketHandler.SendAlloyMixerModeToClients(this);
     }
+    */
   }
 
   @Override
-  public boolean isInvNameLocalized()
+  public boolean hasCustomInventoryName()
   {
     return false;
   }

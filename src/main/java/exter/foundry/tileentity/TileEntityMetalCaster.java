@@ -1,10 +1,7 @@
 package exter.foundry.tileentity;
 
 
-import com.google.common.io.ByteArrayDataInput;
-
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +9,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -154,12 +149,13 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
   }
 
+  /*
   @Override
   public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }
-
+  */
   
   public RedstoneMode GetMode()
   {
@@ -168,6 +164,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
 
   public void SetMode(RedstoneMode new_mode)
   {
+    /*
     if(mode != new_mode)
     {
       mode = new_mode;
@@ -176,6 +173,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
         FoundryPacketHandler.SendCasterModeToServer(this);
       }
     }
+    */
   }
 
   public int GetStoredPower()
@@ -206,7 +204,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       {
         is = inventory[slot];
         inventory[slot] = null;
-        onInventoryChanged();
+        markDirty();
         return is;
       } else
       {
@@ -217,7 +215,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
           inventory[slot] = null;
         }
 
-        onInventoryChanged();
+        markDirty();
         return is;
       }
     } else
@@ -250,17 +248,12 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
       stack.stackSize = this.getInventoryStackLimit();
     }
 
-    onInventoryChanged();
+    markDirty();
   }
 
-  @Override
-  public void onInventoryChanged()
-  {
-    super.onInventoryChanged();
-  }
   
   @Override
-  public String getInvName()
+  public String getInventoryName()
   {
     return "Caster";
   }
@@ -274,26 +267,30 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public boolean isUseableByPlayer(EntityPlayer player)
   {
-    return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
+    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
   }
 
 
   @Override
-  public void openChest()
+  public void openInventory()
   {
+    /*
     if(!worldObj.isRemote)
     {
       FoundryPacketHandler.SendCasterModeToClients(this);
     }
+    */
   }
 
   @Override
-  public void closeChest()
+  public void closeInventory()
   {
+    /*
     if(!worldObj.isRemote)
     {
       FoundryPacketHandler.SendCasterModeToClients(this);
     }
+    */
   }
 
   public int GetProgress()
@@ -302,7 +299,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   }
   
   @Override
-  public boolean isInvNameLocalized()
+  public boolean hasCustomInventoryName()
   {
     return false;
   }
@@ -500,7 +497,7 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
           }
           UpdateInventoryItem(INVENTORY_OUTPUT);
           UpdateTank(0);
-          onInventoryChanged();
+          markDirty();
         }
       } else
       {

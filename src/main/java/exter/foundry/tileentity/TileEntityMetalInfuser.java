@@ -11,7 +11,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -121,7 +121,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
     super.writeToNBT(compound);
     NBTTagCompound substance_tag = new NBTTagCompound();
     WriteSubstanceToNBT(substance_tag);
-    compound.setCompoundTag("Substance", substance_tag);
+    compound.setTag("Substance", substance_tag);
     compound.setInteger("progress", progress);
     compound.setInteger("extract_time", extract_energy);
   }
@@ -198,7 +198,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       {
         is = inventory[slot];
         inventory[slot] = null;
-        onInventoryChanged();
+        markDirty();
         return is;
       } else
       {
@@ -209,7 +209,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
           inventory[slot] = null;
         }
 
-        onInventoryChanged();
+        markDirty();
         return is;
       }
     } else
@@ -242,17 +242,11 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
       stack.stackSize = this.getInventoryStackLimit();
     }
 
-    onInventoryChanged();
+    markDirty();
   }
 
   @Override
-  public void onInventoryChanged()
-  {
-    super.onInventoryChanged();
-  }
-  
-  @Override
-  public String getInvName()
+  public String getInventoryName()
   {
     return "Infuser";
   }
@@ -266,18 +260,18 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   public boolean isUseableByPlayer(EntityPlayer player)
   {
-    return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
+    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
   }
 
 
   @Override
-  public void openChest()
+  public void openInventory()
   {
 
   }  
 
   @Override
-  public void closeChest()
+  public void closeInventory()
   {
 
   }
@@ -288,7 +282,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   }
   
   @Override
-  public boolean isInvNameLocalized()
+  public boolean hasCustomInventoryName()
   {
     return false;
   }

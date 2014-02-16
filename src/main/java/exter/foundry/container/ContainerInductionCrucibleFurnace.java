@@ -29,7 +29,7 @@ public class ContainerInductionCrucibleFurnace extends Container
   public ContainerInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace metalsmelter, IInventory player_inventory)
   {
     te_icf = metalsmelter;
-    te_icf.openChest();
+    te_icf.openInventory();
     int i,j;
 
     addSlotToContainer(new Slot(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_INPUT, 55, 23));
@@ -105,7 +105,7 @@ public class ContainerInductionCrucibleFurnace extends Container
   public void onContainerClosed(EntityPlayer par1EntityPlayer)
   {
     super.onContainerClosed(par1EntityPlayer);
-    te_icf.closeChest();
+    te_icf.closeInventory();
   }
   
 

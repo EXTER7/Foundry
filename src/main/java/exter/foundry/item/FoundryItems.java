@@ -6,23 +6,14 @@ import java.util.Map;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.registry.ItemRegistry;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class FoundryItems
 {
-  //Default item id.
-  static private int next_id = 9021;
-
-  static public int GetNextID()
-  {
-    return next_id++;
-  }
-
-  
   static public ItemFoundryComponent item_component;
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
@@ -35,9 +26,9 @@ public class FoundryItems
   {
     int i;
 
-    item_component = new ItemFoundryComponent(config.getItem("component", GetNextID()).getInt() - 256);
-    item_mold = new ItemMold(config.getItem("mold", GetNextID()).getInt() - 256);
-    item_ingot = new ItemIngot(config.getItem("ingot", GetNextID()).getInt() - 256);
+    item_component = new ItemFoundryComponent();
+    item_mold = new ItemMold();
+    item_ingot = new ItemIngot();
     
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
@@ -63,10 +54,10 @@ public class FoundryItems
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
       ingot_stacks.put(ItemIngot.METAL_NAMES[i], is);
     }
-    ingot_stacks.put("Iron", new ItemStack(Item.ingotIron));
-    ingot_stacks.put("Gold", new ItemStack(Item.ingotGold));
+    ingot_stacks.put("Iron", new ItemStack(Items.iron_ingot));
+    ingot_stacks.put("Gold", new ItemStack(Items.gold_ingot));
     
-    item_container = new ItemRefractoryFluidContainer(config.getItem("container", GetNextID()).getInt() - 256,FluidContainerRegistry.BUCKET_VOLUME);
+    item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
     GameRegistry.registerItem(item_container, "foundryContainer");
     LanguageRegistry.addName(item_container, "Refractory Fluid Container");
     ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));

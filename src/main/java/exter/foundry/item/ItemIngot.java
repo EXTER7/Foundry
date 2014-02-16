@@ -5,11 +5,11 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public class ItemIngot extends Item
 {
@@ -113,10 +113,10 @@ public class ItemIngot extends Item
   };
   
   @SideOnly(Side.CLIENT)
-  private Icon[] icons;
+  private IIcon[] icons;
 
-  public ItemIngot(int id) {
-    super(id);
+  public ItemIngot() {
+    super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
   }
@@ -128,9 +128,9 @@ public class ItemIngot extends Item
   
   @Override
   @SideOnly(Side.CLIENT)
-  public void registerIcons(IconRegister register)
+  public void registerIcons(IIconRegister register)
   {
-    icons = new Icon[ICON_PATHS.length];
+    icons = new IIcon[ICON_PATHS.length];
 
     int i;
     for(i = 0; i < icons.length; i++)
@@ -141,7 +141,7 @@ public class ItemIngot extends Item
   
   @Override
   @SideOnly(Side.CLIENT)
-  public Icon getIconFromDamage(int dmg)
+  public IIcon getIconFromDamage(int dmg)
   {
     return icons[dmg];
   }
@@ -149,12 +149,12 @@ public class ItemIngot extends Item
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
+  public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for (i = 0; i < ICON_PATHS.length; i++)
     {
-      ItemStack itemstack = new ItemStack(id, 1, i);
+      ItemStack itemstack = new ItemStack(this, 1, i);
       list.add(itemstack);
     }
   }

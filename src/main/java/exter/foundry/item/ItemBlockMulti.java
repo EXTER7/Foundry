@@ -1,13 +1,14 @@
 package exter.foundry.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlockMulti extends ItemBlock
 {
-  public ItemBlockMulti(int id)
+  public ItemBlockMulti(Block block)
   {
-    super(id);
+    super(block);
     setHasSubtypes(true);
   }
 

@@ -1,5 +1,6 @@
 package exter.foundry.integration.nei;
 
+/*
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -10,8 +11,9 @@ import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import exter.foundry.recipes.InfuserSubstance;
+*/
 
-public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
+public abstract class FoundryRecipeHandlerSubstance {} /* extends FoundryRecipeHandler
 {
 
   public abstract class CachedFoundryRecipeSubstance extends CachedFoundryRecipe
@@ -54,3 +56,4 @@ public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
     return super.mouseClicked(gui, button, recipe);
   }
 }
+*/

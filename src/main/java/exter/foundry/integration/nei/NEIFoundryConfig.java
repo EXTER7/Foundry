@@ -1,5 +1,6 @@
 package exter.foundry.integration.nei;
 
+/*
 import java.util.List;
 
 import codechicken.nei.api.API;
@@ -10,8 +11,9 @@ import com.google.common.collect.ImmutableList;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.block.FoundryBlocks;
+*/
 
-public class NEIFoundryConfig implements IConfigureNEI
+public class NEIFoundryConfig {}/* implements IConfigureNEI
 {
 
   @Override
@@ -46,3 +48,4 @@ public class NEIFoundryConfig implements IConfigureNEI
     return ModFoundry.MODVERSION;
   }
 }
+*/

@@ -1,9 +1,9 @@
 package exter.foundry.integration;
 
-import ic2.api.item.Items;
+//import ic2.api.item.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
@@ -71,6 +71,7 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnInit()
   {
+    /* TODO: Re-enable once mod's API is updated
     items = new ItemStack[25];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
@@ -212,6 +213,7 @@ public class ModIntegrationIC2 extends ModIntegration
         RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE], "plateLead");
       }
     }
+    */
   }
 
   @Override

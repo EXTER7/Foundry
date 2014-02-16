@@ -1,5 +1,6 @@
 package exter.foundry.integration.nei;
 
+/* TODO: Re-enable once mod's API is updated
 import static codechicken.core.gui.GuiDraw.changeTexture;
 import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
@@ -17,8 +18,8 @@ import com.google.common.collect.Lists;
 import exter.foundry.api.recipe.IAlloyRecipe;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
-
-public class AlloyRecipeHandler extends FoundryRecipeHandler
+*/
+public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
 {
 
   public class CachedAlloyRecipe extends CachedFoundryRecipe
@@ -157,5 +158,5 @@ public class AlloyRecipeHandler extends FoundryRecipeHandler
     changeTexture(getGuiTexture());
     drawTexturedModalRect(0, 0, 5, 11, 166, 108);
   }
-
 }
+*/

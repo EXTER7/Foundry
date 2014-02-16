@@ -1,5 +1,6 @@
 package exter.foundry.integration.nei;
 
+/*
 import static codechicken.core.gui.GuiDraw.changeTexture;
 import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
@@ -24,8 +25,8 @@ import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.energy.EnergyManager;
-
-public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
+*/
+public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
 {
   private static final Rectangle SUBSTANCE_RECT = new Rectangle(71 - 5, 43 - 11, 8, 47);
 
@@ -214,5 +215,5 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     }
     return super.handleTooltip(gui, currenttip, recipe);
   }
-
 }
+*/

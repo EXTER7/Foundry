@@ -1,5 +1,6 @@
 package exter.foundry.integration.nei;
 
+/*
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -19,8 +20,8 @@ import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.util.FoundryMiscUtils;
-
-public class MetalCasterRecipeHandler extends FoundryRecipeHandler
+*/
+public class MetalCasterRecipeHandler {} /* extends FoundryRecipeHandler
 {
 
   public static int GUI_SMELT_TIME = 40;
@@ -232,3 +233,4 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     return ImmutableList.<Class<? extends GuiContainer>> of(GuiMetalCaster.class);
   }
 }
+*/

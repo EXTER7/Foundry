@@ -6,7 +6,7 @@ import java.util.Map;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 public abstract class ModIntegration
 {

@@ -1,9 +1,10 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
@@ -73,8 +74,8 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(FoundryConfig.recipe_tools_armor)
     {
-      ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
-      ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
+      ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+      ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
       ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
       ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
       ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);

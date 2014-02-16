@@ -14,13 +14,15 @@ import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
+/*
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.AlloyMix;
 import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
+*/
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTiCon extends ModIntegration
@@ -39,7 +41,9 @@ public class ModIntegrationTiCon extends ModIntegration
     return a;
   }
 
+  /* TODO: Re-enable once mod's API is updated
   static private final int INGOT_GCD = GCD(TConstruct.ingotLiquidValue,FoundryRecipes.FLUID_AMOUNT_INGOT);
+  */
   
   public ModIntegrationTiCon(String mod_name)
   {
@@ -55,6 +59,7 @@ public class ModIntegrationTiCon extends ModIntegration
   @Override
   public void OnInit()
   {
+    /* TODO: Re-enable once mod's API is updated
     if(!Loader.isModLoaded("TConstruct"))
     {
       is_loaded = false;
@@ -82,8 +87,10 @@ public class ModIntegrationTiCon extends ModIntegration
     {
       liquid_map.put("glass.molten", "Glass");
     }
+    */
   }
   
+  /* TODO: Re-enable once mod's API is updated
   private void CreateAlloyRecipe(AlloyMix mix,int index,List<FluidStack> inputs)
   {
     if(index == mix.mixers.size())
@@ -119,11 +126,12 @@ public class ModIntegrationTiCon extends ModIntegration
     }
     CreateAlloyRecipe(mix,0,new ArrayList<FluidStack>());
   }
-
+  */
   
   @Override
   public void OnPostInit()
   {
+    /* TODO: Re-enable once mod's API is updated
     //Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
     for(List<Integer> item : Smeltery.getSmeltingList().keySet())
     {
@@ -222,5 +230,6 @@ public class ModIntegrationTiCon extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
       }
     }
+    */
   }
 }

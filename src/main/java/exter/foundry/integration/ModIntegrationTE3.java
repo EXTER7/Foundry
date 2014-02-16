@@ -3,9 +3,11 @@ package exter.foundry.integration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -108,8 +110,8 @@ public class ModIntegrationTE3 extends ModIntegration
       if(FoundryConfig.recipe_tools_armor)
       {
 
-        ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
-        ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
+        ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+        ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
         ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
         ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
         ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
@@ -146,13 +148,13 @@ public class ModIntegrationTE3 extends ModIntegration
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.redstone), new FluidStack(liquid_redstone, 100), 1000);
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.blockRedstone), new FluidStack(liquid_redstone, 900), 1000);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(liquid_redstone, 100), 1000);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(liquid_redstone, 900), 1000);
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.enderPearl), new FluidStack(liquid_ender, 250), 1500);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_ender, 250), 1500);
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Item.glowstone), new FluidStack(liquid_glowstone, 250), 2500);
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glowStone), new FluidStack(liquid_glowstone, 1000), 2500);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM], new FluidStack(liquid_pyrotheum, 250), 2500);
 

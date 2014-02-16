@@ -9,7 +9,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -22,7 +22,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryUtils;
@@ -75,12 +74,6 @@ import exter.foundry.worldgen.WordGenOre;
       + "after:Forestry;"
       + "after:gregtech_addon"
 )
-@NetworkMod(
-  channels = { ModFoundry.CHANNEL },
-  clientSideRequired = true,
-  serverSideRequired = true,
-  packetHandler = FoundryPacketHandler.class
-)
 public class ModFoundry
 {
   public static final String MODID = "foundry";
@@ -108,14 +101,14 @@ public class ModFoundry
     int i;
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegration.RegisterIntegration(config,new ModIntegrationIC2("ic2"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationBuildcraft("buildcraft"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationIC2("ic2"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationBuildcraft("buildcraft"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
+    //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     
 
     FoundryRegistry.items = ItemRegistry.instance;

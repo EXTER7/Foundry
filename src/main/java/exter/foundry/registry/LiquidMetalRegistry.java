@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -15,9 +16,8 @@ import exter.foundry.block.FoundryBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
@@ -56,26 +56,26 @@ public class LiquidMetalRegistry implements IFluidRegistry
       solid = block_name;
     }
     Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid);
-    liquid_block.setUnlocalizedName("liquid" + metal_name);
+    liquid_block.setBlockName("liquid" + metal_name);
     LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 
-    fluid.setBlockID(liquid_block);
+    fluid.setBlock(liquid_block);
 
     
     registry.put(metal_name, fluid);
     return fluid;
   }
   
-  @ForgeSubscribe
+  @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void textureHook(TextureStitchEvent.Post event)
   {
-    if(event.map.textureType == 0)
+    if(event.map.getTextureType() == 0)
     {
       for(Fluid fluid:registry.values())
       {
-        fluid.setIcons(Block.blocksList[fluid.getBlockID()].getBlockTextureFromSide(1));
+        fluid.setIcons(fluid.getBlock().getBlockTextureFromSide(1));
       }
     }
   }

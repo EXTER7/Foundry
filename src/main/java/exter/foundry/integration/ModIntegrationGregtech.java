@@ -8,7 +8,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -52,6 +52,7 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnInit()
   {
+    /* TODO: Re-enable once mod's API is updated
     if(!Loader.isModLoaded("gregtech_addon"))
     {
       is_loaded = false;
@@ -157,11 +158,13 @@ public class ModIntegrationGregtech extends ModIntegration
     CastingRecipeManager.instance.AddRecipe("blockCupronickel", new FluidStack(liquid_cupronickel,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockKanthal", new FluidStack(liquid_kanthal,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockNichrome", new FluidStack(liquid_nichrome,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
+    */
   }
   
   @Override
   public void OnPostInit()
   {
+    /* TODO: Re-enable once mod's API is updated
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       Fluid fluid = LiquidMetalRegistry.instance.GetFluid(name);
@@ -169,6 +172,7 @@ public class ModIntegrationGregtech extends ModIntegration
     }
     RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
+    */
   }
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)

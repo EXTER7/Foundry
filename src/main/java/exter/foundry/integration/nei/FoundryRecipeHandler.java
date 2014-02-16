@@ -1,5 +1,5 @@
 package exter.foundry.integration.nei;
-
+/*
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
@@ -29,10 +29,9 @@ import com.google.common.collect.Lists;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import exter.foundry.item.ItemRefractoryFluidContainer;
-
-public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
+*/
+public abstract class FoundryRecipeHandler {}/* extends TemplateRecipeHandler
 {
-
   public static Point TANK_OVERLAY = new Point(176, 0);
 
   public abstract class CachedFoundryRecipe extends TemplateRecipeHandler.CachedRecipe
@@ -277,5 +276,5 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
       drawRectWithIconAligned(new Rectangle(left, bottom - toDraw, width, toDraw), fluid.getIcon(), true, false);
     }
   }
-
 }
+*/

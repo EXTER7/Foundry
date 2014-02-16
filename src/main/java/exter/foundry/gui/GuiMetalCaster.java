@@ -66,8 +66,8 @@ public class GuiMetalCaster extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRenderer.drawString("Metal Caster", 5, 6, 0x404040);
-    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRendererObj.drawString("Metal Caster", 5, 6, 0x404040);
+    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
 
   @Override
@@ -95,6 +95,7 @@ public class GuiMetalCaster extends GuiFoundry
     DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank(0));
   }
 
+  /*
   @Override
   public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
   {
@@ -130,7 +131,8 @@ public class GuiMetalCaster extends GuiFoundry
     }
     return super.handleTooltip(mousex, mousey, currenttip);
   }
-
+  */
+  
   @Override
   protected ResourceLocation GetGUITexture()
   {

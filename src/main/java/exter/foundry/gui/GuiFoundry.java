@@ -8,7 +8,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -38,7 +38,7 @@ public abstract class GuiFoundry extends GuiContainer
    * @param icon_x X coordinate offset in the icon.
    * @param icon_y Y coordinate offset in the icon.
    */
-  private void drawTexturedModelRectFromIconPartial(int x, int y, Icon icon, int width, int height,int icon_x,int icon_y, int color)
+  private void drawTexturedModelRectFromIconPartial(int x, int y, IIcon icon, int width, int height,int icon_x,int icon_y, int color)
   {
       Tessellator tessellator = Tessellator.instance;
       
@@ -90,7 +90,7 @@ public abstract class GuiFoundry extends GuiContainer
     }
     int start = 0;
 
-    Icon liquid_icon = null;
+    IIcon liquid_icon = null;
     Fluid fluid = liquid.getFluid();
     if(fluid != null && fluid.getStillIcon() != null)
     {

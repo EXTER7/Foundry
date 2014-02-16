@@ -47,11 +47,13 @@ public class GuiAlloyMixer extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRenderer.drawString("Alloy Mixer", 5, 6, 0x404040);
-    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    
+    fontRendererObj.drawString("Alloy Mixer", 5, 6, 0x404040);
+    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
     
   }
   
+  /*
   @Override
   public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
   {
@@ -83,7 +85,7 @@ public class GuiAlloyMixer extends GuiFoundry
     }
     return super.handleTooltip(mousex, mousey, currenttip);
   }
-
+  */
   @Override
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {

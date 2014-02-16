@@ -25,7 +25,7 @@ public class GuiButtonRedstoneMode extends GuiButton
 
   public void drawButton(Minecraft mc, int x, int y)
   {
-    if(drawButton)
+    if(this.visible)
     {
       mc.getTextureManager().bindTexture(gui_texture);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

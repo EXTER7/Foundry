@@ -59,8 +59,8 @@ public class GuiMetalInfuser extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRenderer.drawString("Metal Infuser", 5, 6, 0x404040);
-    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRendererObj.drawString("Metal Infuser", 5, 6, 0x404040);
+    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
 
   @Override
@@ -95,6 +95,7 @@ public class GuiMetalInfuser extends GuiFoundry
     }
   }
 
+  /*
   @Override
   public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
   {
@@ -122,7 +123,7 @@ public class GuiMetalInfuser extends GuiFoundry
     }
     return super.handleTooltip(mousex, mousey, currenttip);
   }
-
+  */
   @Override
   protected ResourceLocation GetGUITexture()
   {

@@ -6,13 +6,14 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -58,24 +59,24 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     "foundry:infuser_bottom"
   };
 
-  private Icon[] icon_top;
-  private Icon[] icon_sides;
-  private Icon[] icon_bottom;
+  private IIcon[] icon_top;
+  private IIcon[] icon_sides;
+  private IIcon[] icon_bottom;
 
-  public BlockFoundryMachine(int id)
+  public BlockFoundryMachine()
   {
-    super(id, Material.rock);
+    super(Material.rock);
     setHardness(1.0F);
     setResistance(8.0F);
-    setStepSound(Block.soundStoneFootstep);
-    setUnlocalizedName("alloyMixer");
+    setStepSound(Block.soundTypeStone);
+    setBlockName("alloyMixer");
     setCreativeTab(FoundryTabMachines.tab);
   }
 
   @Override
-  public void breakBlock(World world, int x, int y, int z, int par5, int par6)
+  public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
   {
-    TileEntity te = world.getBlockTileEntity(x, y, z);
+    TileEntity te = world.getTileEntity(x, y, z);
 
     if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
     {
@@ -97,19 +98,19 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
         }
       }
     }
-    world.removeBlockTileEntity(x, y, z);
+    world.removeTileEntity(x, y, z);
     super.breakBlock(world, x, y, z, par5, par6);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void registerIcons(IconRegister register)
+  public void registerBlockIcons(IIconRegister register)
   {
     int i;
     
-    icon_sides = new Icon[4];
-    icon_top = new Icon[4];
-    icon_bottom = new Icon[4];
+    icon_sides = new IIcon[4];
+    icon_top = new IIcon[4];
+    icon_bottom = new IIcon[4];
     
     for(i = 0; i < 4; i++)
     {
@@ -120,7 +121,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   }
 
   @Override
-  public Icon getIcon(int side, int meta)
+  public IIcon getIcon(int side, int meta)
   {
     switch(side)
     {
@@ -187,7 +188,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6)
   {
     super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
-    TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+    TileEntity tileentity = par1World.getTileEntity(par2, par3, par4);
     return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
   }
 
@@ -200,31 +201,40 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(int id, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for(i = 0; i < 4; i++)
     {
-      list.add(new ItemStack(id, 1, i));
+      list.add(new ItemStack(item, 1, i));
     }
   }
 
   @Override
-  public TileEntity createNewTileEntity(World world)
+  public TileEntity createNewTileEntity(World world,int meta)
   {
+    switch(meta)
+    {
+      case MACHINE_ICF:
+        return new TileEntityInductionCrucibleFurnace();
+      case MACHINE_CASTER:
+        return new TileEntityMetalCaster();
+      case MACHINE_ALLOYMIXER:
+        return new TileEntityAlloyMixer();
+      case MACHINE_INFUSER:
+        return new TileEntityMetalInfuser();
+    }
     return null;
   }
   
   @Override
-  public void onNeighborBlockChange(World world, int x, int y, int z, int id)
+  public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
   {
-    TileEntityFoundry te = (TileEntityFoundry) world.getBlockTileEntity(x, y, z);
+    TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(x, y, z);
 
     if(te != null)
     {
       te.UpdateRedstone();
     }
   }
-
-
 }

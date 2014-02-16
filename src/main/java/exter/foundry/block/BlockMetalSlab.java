@@ -4,90 +4,87 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHalfSlab;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 
-public class BlockMetalSlab extends BlockHalfSlab
+public class BlockMetalSlab extends BlockSlab
 {
   private final String[] metals;
   private final String[] icons;
 
   @SideOnly(Side.CLIENT)
-  private Icon[] texture_icons;
-  private int other;
+  private IIcon[] texture_icons;
+  private Block other;
   
-  public BlockMetalSlab(int id, boolean is_double, int other_id, String[] metal_names,String[] icon_names)
+  public BlockMetalSlab(boolean is_double, Block other_block, String[] metal_names,String[] icon_names)
   {
-    super(id, is_double, Material.iron);
-    other = other_id;
+    super(is_double, Material.iron);
+    other = other_block;
     setCreativeTab(FoundryTabBlocks.tab);
     metals = metal_names;
     icons = icon_names;
     setHardness(5.0F);
     setResistance(10.0F);
-    setStepSound(soundMetalFootstep);
+    setStepSound(Block.soundTypeMetal);
     if(!is_double)
     {
-      useNeighborBrightness[id] = true;
+      useNeighborBrightness = true;
     }
   }
 
-  public void SetOtherBlockID(int id)
+  public void SetOtherBlock(Block block)
   {
-    other = id;
+    other = block;
   }
   
   @SideOnly(Side.CLIENT)
   @Override
-  public Icon getIcon(int side, int meta)
+  public IIcon getIcon(int side, int meta)
   {
     return texture_icons[meta & 7];
   }
 
   @Override
-  public int idDropped(int id, Random random, int meta)
+  public Item getItemDropped(int par1, Random random, int meta)
   {
-    return isDoubleSlab ? other : blockID;
+    return field_150004_a ? Item.getItemFromBlock(other) : Item.getItemFromBlock(this);
   }
 
-  @Override
-  public String getFullSlabName(int meta)
-  {
-    return super.getUnlocalizedName() + "." + metals[meta];
-  }
 
   @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
   @Override
-  public void getSubBlocks(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
+  public void getSubBlocks(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
   {
-    if(!isDoubleSlab)
+    if(!field_150004_a)
     {
       int i;
       for(i = 0; i < metals.length; i++)
       {
-        items.add(new ItemStack(id, 1, i));
+        items.add(new ItemStack(item, 1, i));
       }
     }
   }
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void registerIcons(IconRegister icon_register)
+  public void registerBlockIcons(IIconRegister icon_register)
   {
     int i;
-    texture_icons = new Icon[icons.length];
+    texture_icons = new IIcon[icons.length];
     for(i = 0; i < icons.length; i++)
     {
       texture_icons[i] = icon_register.registerIcon(icons[i]);
@@ -98,7 +95,7 @@ public class BlockMetalSlab extends BlockHalfSlab
   @Override
   public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float px, float py, float pz)
   {
-    if(isDoubleSlab)
+    if(field_150004_a)
     {
       return false;
     }
@@ -106,7 +103,7 @@ public class BlockMetalSlab extends BlockHalfSlab
     int meta = world.getBlockMetadata(x, y, z);
     int material = meta & 7;
     boolean top = (meta & 8) == 0;
-    if( (side == 1 && top || side == 0 && !top) && item != null && item.itemID == blockID && item.getItemDamage() == material)
+    if( (side == 1 && top || side == 0 && !top) && item != null && (item.getItem() instanceof ItemBlock && ((ItemBlock)(item.getItem())).field_150939_a == this) && item.getItemDamage() == material)
     {
       //Turn single slab into double slab
       world.setBlock(x, y, z, other,meta,3);
@@ -114,7 +111,7 @@ public class BlockMetalSlab extends BlockHalfSlab
       {
         item.stackSize--;
       }
-      world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), stepSound.getPlaceSound(), (stepSound.getVolume() + 1.0F) / 2.0F, stepSound.getPitch() * 0.8F);
+      world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), stepSound.getBreakSound(), (stepSound.getVolume() + 1.0F) / 2.0F, stepSound.getPitch() * 0.8F);
       return true;
     }
     return false;
@@ -126,12 +123,11 @@ public class BlockMetalSlab extends BlockHalfSlab
     return false;
   }
   
-  private static boolean isBlockSingleSlab(int id)
+  private static boolean isBlockSingleSlab(Block b)
   {
-    Block block = Block.blocksList[id];
-    if(block instanceof BlockHalfSlab)
+    if(b instanceof BlockSlab)
     {
-      return !block.isOpaqueCube();
+      return !b.isOpaqueCube();
     }
     return false;
   }
@@ -141,7 +137,7 @@ public class BlockMetalSlab extends BlockHalfSlab
   @Override
   public boolean shouldSideBeRendered(IBlockAccess access, int x, int y, int z, int side)
   {
-    if(this.isDoubleSlab)
+    if(field_150004_a)
     {
       return super.shouldSideBeRendered(access, x, y, z, side);
     }
@@ -154,8 +150,14 @@ public class BlockMetalSlab extends BlockHalfSlab
       int yy = y + Facing.offsetsYForSide[Facing.oppositeSide[side]];
       int zz = z + Facing.offsetsZForSide[Facing.oppositeSide[side]];
       boolean bottom = (access.getBlockMetadata(xx, yy, zz) & 8) != 0;
-      return bottom ? (side == 0 ? true : (side == 1 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlockId(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) == 0)) : (side == 1 ? true : (side == 0 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlockId(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) != 0));
+      return bottom ? (side == 0 ? true : (side == 1 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlock(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) == 0)) : (side == 1 ? true : (side == 0 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlock(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) != 0));
     }
+  }
+
+  @Override
+  public String func_150002_b(int meta)
+  {
+    return super.getUnlocalizedName() + "." + metals[meta];
   }
 
 }

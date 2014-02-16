@@ -6,25 +6,25 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 
 
-public class BlockFoundryCrucible extends Block
+public class BlockRefractoryCasing extends Block
 {
 
-  public BlockFoundryCrucible(int id)
+  public BlockRefractoryCasing()
   {
-    super(id, Material.rock);
+    super(Material.rock);
     setHardness(1.0F);
     setResistance(8.0F);
-    setStepSound(Block.soundStoneFootstep);
-    setUnlocalizedName("foundryCrucible");
+    setStepSound(Block.soundTypeStone);
+    setBlockName("refractoryCasing");
     setCreativeTab(FoundryTabMaterials.tab);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void registerIcons(IconRegister register)
+  public void registerBlockIcons(IIconRegister register)
   {
       blockIcon = register.registerIcon("foundry:casing");
   }

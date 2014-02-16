@@ -4,10 +4,11 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
@@ -53,23 +54,24 @@ public class BlockFoundryOre extends Block
   };
 
   @SideOnly(Side.CLIENT)
-  private Icon[] icons;
+  private IIcon[] icons;
   
-  public BlockFoundryOre(int id)
+  public BlockFoundryOre()
   {
-    super(id, Material.rock);
+    super(Material.rock);
     setHardness(3.0F);
     setResistance(5.0F);
-    setStepSound(Block.soundStoneFootstep);
-    setUnlocalizedName("foundryOre");
+    setStepSound(Block.soundTypeStone);
+    setBlockName("ore");
     setCreativeTab(FoundryTabMaterials.tab);
+    setHarvestLevel("pickaxe", 1);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void registerIcons(IconRegister register)
+  public void registerBlockIcons(IIconRegister register)
   {
-    icons = new Icon[ICON_PATHS.length];
+    icons = new IIcon[ICON_PATHS.length];
 
     int i;
     for(i = 0; i < icons.length; i++)
@@ -80,7 +82,7 @@ public class BlockFoundryOre extends Block
   
   @Override
   @SideOnly(Side.CLIENT)
-  public Icon getIcon(int side, int meta)
+  public IIcon getIcon(int side, int meta)
   {
     return icons[meta];
   }
@@ -94,12 +96,12 @@ public class BlockFoundryOre extends Block
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(int id, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for(i = 0; i < ICON_PATHS.length; i++)
     {
-      list.add(new ItemStack(id, 1, i));
+      list.add(new ItemStack(item, 1, i));
     }
   }
 }

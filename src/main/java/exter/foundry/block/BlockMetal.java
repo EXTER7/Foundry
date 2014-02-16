@@ -7,10 +7,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 
 public class BlockMetal extends Block
@@ -114,23 +115,23 @@ public class BlockMetal extends Block
   };
 
   @SideOnly(Side.CLIENT)
-  private Icon[] icons;
+  private IIcon[] icons;
   
-  public BlockMetal(int id)
+  public BlockMetal()
   {
-    super(id, Material.iron);
+    super( Material.iron);
     setHardness(1.0F);
     setResistance(8.0F);
-    setUnlocalizedName("foundryMetalBlock");
-    setStepSound(Block.soundMetalFootstep);
+    setBlockName("metalBlock");
+    setStepSound(Block.soundTypeMetal);
     setCreativeTab(FoundryTabBlocks.tab);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void registerIcons(IconRegister register)
+  public void registerBlockIcons(IIconRegister register)
   {
-    icons = new Icon[ICON_PATHS.length];
+    icons = new IIcon[ICON_PATHS.length];
 
     int i;
     for(i = 0; i < icons.length; i++)
@@ -141,7 +142,7 @@ public class BlockMetal extends Block
   
   @Override
   @SideOnly(Side.CLIENT)
-  public Icon getIcon(int side, int meta)
+  public IIcon getIcon(int side, int meta)
   {
     return icons[meta];
   }
@@ -155,12 +156,12 @@ public class BlockMetal extends Block
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(int id, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
     for(i = 0; i < ICON_PATHS.length; i++)
     {
-      list.add(new ItemStack(id, 1, i));
+      list.add(new ItemStack(item, 1, i));
     }
   }
 }

@@ -44,7 +44,6 @@ public class LiquidMetalRegistry implements IFluidRegistry
    */
   public Fluid RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
   {
-    int block_id = config.getBlock("liquid" + metal_name, FoundryBlocks.GetNextID()).getInt();
 
     Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
@@ -55,7 +54,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     {
       solid = block_name;
     }
-    Block liquid_block = new BlockLiquidMetal(block_id, fluid, Material.lava,"liquid" + metal_name,solid);
+    Block liquid_block = new BlockLiquidMetal(fluid, Material.lava,"liquid" + metal_name,solid);
     liquid_block.setBlockName("liquid" + metal_name);
     LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);

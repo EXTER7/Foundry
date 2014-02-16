@@ -34,6 +34,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
     setLightLevel(1.0f);
     texture_name = texture;
     solid = solid_block;
+    setBlockName(fluid.getUnlocalizedName()+"Block");
     setCreativeTab(FoundryTabBlocks.tab);
   }
 

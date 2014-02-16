@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderGenerate;
@@ -19,13 +20,13 @@ public class WordGenOre
 
   public final int Frequency;
 
-  public final int BlockID;
+  public final Block BlockObj;
   public final int BlockMeta;
   
   
   private WorldGenMinable wgm;
   
-  private WordGenOre(int min_y,int max_y,int freq,int block_id,int block_meta)
+  private WordGenOre(int min_y,int max_y,int freq,Block block,int block_meta)
   {
     if(min_y < max_y)
     {
@@ -39,9 +40,9 @@ public class WordGenOre
 
     Frequency = freq;
 
-    BlockID = block_id;
+    BlockObj = block;
     BlockMeta = block_meta;
-    wgm = new WorldGenMinable(BlockID, BlockMeta, 7, Block.stone.blockID);
+    wgm = new WorldGenMinable(BlockObj, BlockMeta, 7, Blocks.stone);
   }
 
   private void GenerateOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
@@ -68,8 +69,8 @@ public class WordGenOre
     }
   }
     
-  static public void RegisterOre(int min_y,int max_y,int freq,int block_id,int block_meta)
+  static public void RegisterOre(int min_y,int max_y,int freq,Block block,int block_meta)
   {
-    ores.add(new WordGenOre(min_y,max_y,freq,block_id,block_meta));
+    ores.add(new WordGenOre(min_y,max_y,freq,block,block_meta));
   }
 }

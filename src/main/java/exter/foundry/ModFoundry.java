@@ -1,12 +1,14 @@
 package exter.foundry;
 
+import java.lang.reflect.Field;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHalfSlab;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.config.Configuration;
@@ -14,7 +16,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -32,19 +33,11 @@ import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.integration.ModIntegration;
-import exter.foundry.integration.ModIntegrationBuildcraft;
-import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
-import exter.foundry.integration.ModIntegrationIC2;
-import exter.foundry.integration.ModIntegrationRailcraft;
-import exter.foundry.integration.ModIntegrationRedstoneArsenal;
-import exter.foundry.integration.ModIntegrationTE3;
-import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
-import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -95,6 +88,8 @@ public class ModFoundry
   
   public static Logger log = Logger.getLogger(MODNAME);
 
+  public CraftingEvents crafting_events;
+  
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
@@ -121,11 +116,11 @@ public class ModFoundry
 
 
     
-    OreDictionary.registerOre("ingotIron", Item.ingotIron);
-    OreDictionary.registerOre("blockIron", Block.blockIron);
-    OreDictionary.registerOre("ingotGold", Item.ingotGold);
-    OreDictionary.registerOre("blockGold", Block.blockGold);
-    OreDictionary.registerOre("nuggetGold", Item.goldNugget);
+    OreDictionary.registerOre("ingotIron", Items.iron_ingot);
+    OreDictionary.registerOre("blockIron", Blocks.iron_block);
+    OreDictionary.registerOre("ingotGold", Items.gold_ingot);
+    OreDictionary.registerOre("blockGold", Blocks.gold_block);
+    OreDictionary.registerOre("nuggetGold", Items.gold_nugget);
 
 
     FoundryConfig.Load(config);
@@ -209,8 +204,8 @@ public class ModFoundry
     ItemStack mold_plate_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
     ItemStack mold_block = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
     ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
-    ItemStack extra_sticks1 = new ItemStack(Item.stick,1);
-    ItemStack extra_sticks2 = new ItemStack(Item.stick,2);
+    ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
+    ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
     
     CastingRecipeManager.instance.AddMold(mold_ingot);
     CastingRecipeManager.instance.AddMold(mold_cable_ic2);
@@ -243,32 +238,32 @@ public class ModFoundry
       CastingRecipeManager.instance.AddMold(mold_helmet);
       CastingRecipeManager.instance.AddMold(mold_boots);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.plateGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_chestplate, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_chestplate, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.pickaxeGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_pickaxe, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_pickaxe, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.axeGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_axe, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_axe, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.shovelGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_shovel, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_shovel, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.swordGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_sword, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_sword, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.hoeGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_hoe, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_hoe, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.legsGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_leggings, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_leggings, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.helmetGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_helmet, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_helmet, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsIron, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Item.bootsGold, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_boots, 1, 0), new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_boots, 1, 0), new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
     }
     
@@ -327,9 +322,9 @@ public class ModFoundry
       }
     }
     
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Item.coal,1,0), 240000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Item.coal,1,1), 480000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Block.coalBlock,1), 1920000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Items.coal,1,0), 240000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Items.coal,1,1), 480000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Blocks.coal_block,1), 1920000);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, "dustCoal", 160000);
     InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 320000);
 
@@ -350,23 +345,24 @@ public class ModFoundry
     {
       Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Glass", 1550, 12);
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.sand), new FluidStack(liquid_glass,1000));
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000));
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Block.thinGlass), new FluidStack(liquid_glass,375));
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Block.glass), new FluidStack(liquid_glass,1000),mold_block,null);
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375));
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),mold_block,null);
     }
 
     config.save();
 
-    NetworkRegistry.instance().registerGuiHandler(this, proxy);
+    crafting_events = new CraftingEvents();
+    
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
   }
   
  
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
-    int i;
-    log.setParent(FMLLog.getLogger());
+    //log.setParent(FMLLog.getLogger());
     ModIntegration.Init();
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
@@ -374,22 +370,22 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
     GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");
 
-    ItemStack iron_stack = new ItemStack(Item.ingotIron);
-    ItemStack redstone_stack = new ItemStack(Item.redstone);
-    ItemStack furnace_stack = new ItemStack(Block.furnaceIdle);
-    ItemStack clay_stack = new ItemStack(Item.clay);
-    ItemStack sand_stack = new ItemStack(Block.sand,1,-1);
-    ItemStack clayblock_stack = new ItemStack(Block.blockClay, 1, -1);
+    ItemStack iron_stack = new ItemStack(Items.iron_ingot);
+    ItemStack redstone_stack = new ItemStack(Items.redstone);
+    ItemStack furnace_stack = new ItemStack(Blocks.furnace);
+    ItemStack clay_stack = new ItemStack(Items.clay_ball);
+    ItemStack sand_stack = new ItemStack(Blocks.sand,1,-1);
+    ItemStack clayblock_stack = new ItemStack(Blocks.clay, 1, -1);
     ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
-    ItemStack piston_stack = new ItemStack(Block.pistonBase);
-    ItemStack goldnugget_stack = new ItemStack(Item.goldNugget);
-    ItemStack chest_stack = new ItemStack(Block.chest);
+    ItemStack piston_stack = new ItemStack(Blocks.piston);
+    ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
+    ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack foundryclay_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundryclay8_stack = new ItemStack(FoundryItems.item_component,8,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
-    ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
+    ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
     
     GameRegistry.addRecipe(foundryclay8_stack,
@@ -401,7 +397,8 @@ public class ModFoundry
 
     GameRegistry.addShapelessRecipe(foundryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
-    FurnaceRecipes.smelting().addSmelting(FoundryItems.item_component.itemID, ItemFoundryComponent.COMPONENT_FOUNDRYCLAY,
+    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+        new ItemStack(FoundryItems.item_component, 1, ItemFoundryComponent.COMPONENT_FOUNDRYCLAY),
         foundrybrick_stack, 0.0f);
 
     GameRegistry.addRecipe(blankmold_stack,
@@ -495,58 +492,74 @@ public class ModFoundry
         'G', "gearStone"));
 
     //Mold crafting with vanilla items
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.planks,1,-1));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Block.stone,1,-1));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Item.brick));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Blocks.planks,1,-1));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Blocks.stone,1,-1));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Items.brick));
     if(FoundryConfig.recipe_tools_armor)
     {
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateGold,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Item.plateDiamond,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Item.legsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Item.legsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Item.legsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Item.helmetIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Item.helmetGold,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Item.helmetDiamond,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Item.bootsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Item.bootsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Item.bootsIron,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Item.pickaxeWood));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Item.pickaxeStone));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Item.pickaxeIron));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Item.pickaxeGold));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Item.pickaxeDiamond));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Item.axeWood));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Item.axeStone));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Item.axeIron));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Item.axeGold));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Item.axeDiamond));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Item.shovelWood));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Item.shovelStone));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Item.shovelIron));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Item.shovelGold));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Item.shovelDiamond));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Item.hoeWood));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Item.hoeStone));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Item.hoeIron));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Item.hoeGold));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Item.hoeDiamond));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordWood));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordStone));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordIron));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordGold));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Item.swordDiamond));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.iron_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.golden_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.diamond_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.iron_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.golden_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.diamond_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.iron_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.golden_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.diamond_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.iron_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.golden_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.diamond_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.wooden_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.stone_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.iron_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.golden_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.diamond_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.wooden_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.stone_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.iron_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.golden_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.diamond_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.wooden_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.stone_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.iron_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.golden_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.diamond_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.wooden_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.stone_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.iron_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.golden_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.diamond_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.wooden_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.stone_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.iron_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.golden_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.diamond_sword));
     }
-    for(i = 0; i < Block.blocksList.length; i++)
+
+    for(Field f:Blocks.class.getFields())
     {
-      Block block = Block.blocksList[i];
-      if(block instanceof BlockStairs)
+      Object obj;
+      try
       {
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_CLAY, new ItemStack(block,1,-1));
-      } else if(block instanceof BlockHalfSlab && !block.isOpaqueCube())
+        obj = f.get(Blocks.class);
+      } catch(IllegalArgumentException e)
       {
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_CLAY, new ItemStack(block,1,-1));
+        continue;
+      } catch(IllegalAccessException e)
+      {
+        continue;
+      }
+      if(obj instanceof Block)
+      {
+        Block block = (Block) obj;
+        if(obj instanceof BlockStairs)
+        {
+
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_CLAY, new ItemStack(block, 1, -1));
+        } else if(block instanceof BlockSlab && !block.isOpaqueCube())
+        {
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_CLAY, new ItemStack(block, 1, -1));
+        }
       }
     }
     
@@ -600,34 +613,32 @@ public class ModFoundry
 	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_CLAY,ItemMold.MOLD_BOOTS);
     }
     
-    GameRegistry.registerCraftingHandler(new MoldCraftingHandler());
 
-    int ore_id = FoundryBlocks.block_ore.blockID;
     if(FoundryConfig.worldgen_copper)
     {
-      WordGenOre.RegisterOre(16, 80, 12, ore_id, BlockFoundryOre.ORE_COPPER);
+      WordGenOre.RegisterOre(16, 80, 12, FoundryBlocks.block_ore, BlockFoundryOre.ORE_COPPER);
     }
     if(FoundryConfig.worldgen_tin)
     {
-      WordGenOre.RegisterOre(16, 52, 8, ore_id, BlockFoundryOre.ORE_TIN);
+      WordGenOre.RegisterOre(16, 52, 8, FoundryBlocks.block_ore, BlockFoundryOre.ORE_TIN);
     }
     if(FoundryConfig.worldgen_zinc)
     {
-      WordGenOre.RegisterOre(8, 48, 6, ore_id, BlockFoundryOre.ORE_ZINC);
+      WordGenOre.RegisterOre(8, 48, 6, FoundryBlocks.block_ore, BlockFoundryOre.ORE_ZINC);
     }
     if(FoundryConfig.worldgen_nickel)
     {
-      WordGenOre.RegisterOre(8, 36, 5, ore_id, BlockFoundryOre.ORE_NICKEL);
+      WordGenOre.RegisterOre(8, 36, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_NICKEL);
     }
     if(FoundryConfig.worldgen_silver)
     {
-      WordGenOre.RegisterOre(2, 30, 3, ore_id, BlockFoundryOre.ORE_SILVER);
+      WordGenOre.RegisterOre(2, 30, 3, FoundryBlocks.block_ore, BlockFoundryOre.ORE_SILVER);
     }
     if(FoundryConfig.worldgen_lead)
     {
-      WordGenOre.RegisterOre(8, 48, 5, ore_id, BlockFoundryOre.ORE_LEAD);
+      WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_LEAD);
     }
-    GameRegistry.registerWorldGenerator(new FoundryWorldGenerator());
+    GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
 
     proxy.Init();
   }
@@ -639,8 +650,8 @@ public class ModFoundry
     //Check for the existence of a stone gear, add it's own if it doesn't.
     if(OreDictionary.getOres("gearStone").size() == 0)
     {
-      ItemStack cobble_stack = new ItemStack(Block.cobblestone, 1, -1);
-      ItemStack stick_stack = new ItemStack(Item.stick);
+      ItemStack cobble_stack = new ItemStack(Blocks.cobblestone, 1, -1);
+      ItemStack stick_stack = new ItemStack(Items.stick);
 
       ItemStack gear_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_GEAR);
       OreDictionary.registerOre("gearStone", gear_stack);

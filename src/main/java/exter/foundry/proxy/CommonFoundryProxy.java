@@ -34,13 +34,13 @@ public class CommonFoundryProxy implements IGuiHandler
     switch(ID)
     {
       case GUI_ICF:
-        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z),player.inventory);
+        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getTileEntity(x, y, z),player.inventory);
       case GUI_CASTER:
-        return new ContainerMetalCaster((TileEntityMetalCaster)world.getBlockTileEntity(x, y, z),player.inventory);
+        return new ContainerMetalCaster((TileEntityMetalCaster)world.getTileEntity(x, y, z),player.inventory);
       case GUI_ALLOYMIXER:
-        return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z),player.inventory);
+        return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getTileEntity(x, y, z),player.inventory);
       case GUI_INFUSER:
-        return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z),player.inventory);
+        return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getTileEntity(x, y, z),player.inventory);
     }
     return null;
   }
@@ -52,22 +52,22 @@ public class CommonFoundryProxy implements IGuiHandler
     {
       case GUI_ICF:
       {
-        TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getBlockTileEntity(x, y, z);
+        TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getTileEntity(x, y, z);
         return new GuiInductionCrucibleFurnace(te,player.inventory);
       }
       case GUI_CASTER:
       {
-        TileEntityMetalCaster te = (TileEntityMetalCaster)world.getBlockTileEntity(x, y, z);
+        TileEntityMetalCaster te = (TileEntityMetalCaster)world.getTileEntity(x, y, z);
         return new GuiMetalCaster(te,player.inventory);
       }
       case GUI_ALLOYMIXER:
       {
-        TileEntityAlloyMixer te = (TileEntityAlloyMixer)world.getBlockTileEntity(x, y, z);
+        TileEntityAlloyMixer te = (TileEntityAlloyMixer)world.getTileEntity(x, y, z);
         return new GuiAlloyMixer(te,player.inventory);
       }
       case GUI_INFUSER:
       {
-        TileEntityMetalInfuser te = (TileEntityMetalInfuser)world.getBlockTileEntity(x, y, z);
+        TileEntityMetalInfuser te = (TileEntityMetalInfuser)world.getTileEntity(x, y, z);
         return new GuiMetalInfuser(te,player.inventory);
       }
     } 

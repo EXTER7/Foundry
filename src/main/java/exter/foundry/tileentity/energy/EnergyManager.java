@@ -34,7 +34,7 @@ public class EnergyManager
     return en;
   }
 
-  public float ReceiveMJ(float mj,boolean do_receive)
+  public float ReceiveMJ(double mj,boolean do_receive)
   {
     return (float)ReceiveEnergy((int)(mj * RATIO_MJ),do_receive,false) / RATIO_MJ;
   }

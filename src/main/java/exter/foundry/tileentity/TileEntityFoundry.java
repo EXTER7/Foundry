@@ -1,13 +1,8 @@
 package exter.foundry.tileentity;
 
-import ic2.api.energy.event.EnergyTileLoadEvent;
-import ic2.api.energy.event.EnergyTileUnloadEvent;
-import ic2.api.energy.tile.IEnergySink;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cofh.api.energy.IEnergyHandler;
 
 import com.google.common.io.ByteArrayDataInput;
 
@@ -22,14 +17,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
@@ -37,7 +31,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor,IEnergyHandler,IEnergySink
+public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor /*,IEnergyHandler,IEnergySink*/
 {
   
   /**
@@ -172,7 +166,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     NBTTagCompound nbt = new NBTTagCompound();
     writeToNBT(nbt);    
-    return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, nbt);
+    return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbt);
   }
   
   
@@ -253,12 +247,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     energy_manager.ReadFromNBT(compound);
   }
   
-  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
-  {
-
-  }
-
-
+  
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
@@ -306,10 +295,12 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       initialized = true;
     }
 
+    /* TODO: Re-enable once IC2 is updated.
     if(!added_enet)
     {
       LoadEnet();
     }
+    */
     
     power_handler.update();
     
@@ -339,7 +330,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       
       if(do_update)
       {
-        FoundryPacketHandler.SendTileEntityPacketToPlayers(new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, packet), this);
+        FoundryPacketHandler.SendTileEntityPacketToPlayers(new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, packet), this);
       }
       packet = null;
       update_energy_tick = false;
@@ -351,10 +342,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   }
 
   @Override
-  public final void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
+  public final void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
   {
     super.onDataPacket(net, pkt);
-    readFromNBT(pkt.data);
+    if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+    readFromNBT(pkt.func_148857_g());
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
   }
   
@@ -381,6 +373,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
   
+  /* TODO Re-enable once COFH lib is updated
+
   @Override
   public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
   {
@@ -414,7 +408,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     return GetMaxStoredEnergy() / EnergyManager.RATIO_RF;
   }
-
+  */
+  
+  
+  
+  /* TODO Re-enable once IC2 is updated
   @Override
   public void onChunkUnload()
   {
@@ -457,10 +455,10 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     return 32;
   }
-  
   @Override
   public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
   {
     return true;
   }
+  */
 }

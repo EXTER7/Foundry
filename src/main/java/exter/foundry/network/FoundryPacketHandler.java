@@ -1,35 +1,17 @@
 package exter.foundry.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
-
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-import exter.foundry.ModFoundry;
-import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityFoundry;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
-import exter.foundry.tileentity.TileEntityMetalCaster;
 
-public class FoundryPacketHandler implements IPacketHandler
+public class FoundryPacketHandler
 {
   static final int MAX_DISTANCE = 192;
   
   public static void SendTileEntityPacketToPlayers(Packet packet, TileEntity tile)
   {
-    World world = tile.worldObj; 
+    World world = tile.getWorldObj(); 
     if(!world.isRemote && packet != null)
     {
       for(int j = 0; j < world.playerEntities.size(); j++)
@@ -38,12 +20,13 @@ public class FoundryPacketHandler implements IPacketHandler
 
         if(Math.abs(player.posX - tile.xCoord) <= MAX_DISTANCE && Math.abs(player.posY - tile.yCoord) <= MAX_DISTANCE && Math.abs(player.posZ - tile.zCoord) <= MAX_DISTANCE)
         {
-          player.playerNetServerHandler.sendPacketToPlayer(packet);
+          player.playerNetServerHandler.sendPacket(packet);
         }
       }
     }
   }
 
+  /* TODO: Re-implement this with the new packet system.
   static private Packet250CustomPayload MakePacket(ByteArrayOutputStream bytes)
   {
     Packet250CustomPayload packet = new Packet250CustomPayload();
@@ -169,4 +152,5 @@ public class FoundryPacketHandler implements IPacketHandler
       e.printStackTrace();
     }
   }
+  */
 }

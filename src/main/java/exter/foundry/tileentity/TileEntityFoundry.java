@@ -148,7 +148,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     
     float mj_tick = (float)GetEnergyUse() / EnergyManager.RATIO_MJ + 1;
     
-    power_handler.configure(1, mj_tick, 1, mj_tick * 2);
+    power_handler.configure(2, mj_tick * 5, mj_tick / 2, mj_tick * 30);
     power_handler.configurePowerPerdition(0, 0);
 
     energy_manager = new EnergyManager(GetMaxStoredEnergy());
@@ -317,10 +317,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     if(!worldObj.isRemote)
     {
       int last_energy = energy_manager.GetStoredEnergy();
-
-      float received = energy_manager.ReceiveMJ(power_handler.useEnergy(0, 100, false),false);
+      float mj_tick = (float)GetEnergyUse() / EnergyManager.RATIO_MJ + 1;
       
-      power_handler.useEnergy(0, received, true);
+      float received = energy_manager.ReceiveMJ(power_handler.useEnergy(0, mj_tick, false),false);
+      
+      received = power_handler.useEnergy(0, received, true);
       energy_manager.ReceiveMJ(received, true);
 
       packet = new NBTTagCompound();

@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -35,7 +35,7 @@ public class RendererItemContainer implements IItemRenderer
     return false;
   }
 
-  private void renderIconPartial(int x, int y, Icon icon, int width, int height, int icon_x, int icon_y, int color, int alpha)
+  private void renderIconPartial(int x, int y, IIcon icon, int width, int height, int icon_x, int icon_y, int color, int alpha)
   {
     Tessellator tessellator = Tessellator.instance;
 
@@ -82,7 +82,7 @@ public class RendererItemContainer implements IItemRenderer
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid_stack != null)
     {
-      Icon fluid_icon = fluid_stack.getFluid().getStillIcon();
+      IIcon fluid_icon = fluid_stack.getFluid().getStillIcon();
       if(fluid_icon != null)
       {
         int alpha;

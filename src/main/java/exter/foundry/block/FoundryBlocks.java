@@ -227,6 +227,10 @@ public class FoundryBlocks
     block_machine = new BlockFoundryMachine();
     block_metal = new BlockMetal();
     block_ore = new BlockFoundryOre();
+    GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
+    GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
+    GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
+    GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
 
     RegisterHalfSlabs(config);
 
@@ -252,10 +256,6 @@ public class FoundryBlocks
     block_stacks.put("Gold", new ItemStack(Blocks.gold_block));
     block_stacks.put("Glass", new ItemStack(Blocks.glass));
     
-    GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
-    GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
-    GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
-    GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
 
     
     

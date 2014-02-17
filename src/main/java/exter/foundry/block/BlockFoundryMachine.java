@@ -69,7 +69,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     setHardness(1.0F);
     setResistance(8.0F);
     setStepSound(Block.soundTypeStone);
-    setBlockName("alloyMixer");
+    setBlockName("machine");
     setCreativeTab(FoundryTabMachines.tab);
   }
 

@@ -131,7 +131,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
     for(Fluid f : fluids.values())
     {
-      if(f != null)
+      if(f != null && f.getName() != null)
       {
         list.add(FromFluidStack(id, new FluidStack(f, capacity)));
       }

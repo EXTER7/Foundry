@@ -1,6 +1,11 @@
 package exter.foundry.tileentity;
 
 
+import io.netty.buffer.ByteBufInputStream;
+
+import java.io.IOException;
+
+import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.recipes.AlloyRecipe;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
@@ -217,13 +222,11 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tanks[TANK_OUTPUT]));
   }
   
-  /*
   @Override
-  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  public void ReceivePacketData(ByteBufInputStream data) throws IOException
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }
-  */
 
   public RedstoneMode GetMode()
   {
@@ -232,16 +235,14 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
 
   public void SetMode(RedstoneMode new_mode)
   {
-    /*
     if(mode != new_mode)
     {
       mode = new_mode;
       if(worldObj.isRemote)
       {
-        FoundryPacketHandler.SendAlloyMixerModeToServer(this);
+        ModFoundry.network_channel.SendAlloyMixerModeToServer(this);
       }
     }
-    */
   }
 
   @Override
@@ -337,23 +338,19 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   public void openInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendAlloyMixerModeToClients(this);
+      ModFoundry.network_channel.SendAlloyMixerModeToClients(this);
     }
-    */
   }
 
   @Override
   public void closeInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendAlloyMixerModeToClients(this);
+      ModFoundry.network_channel.SendAlloyMixerModeToClients(this);
     }
-    */
   }
 
   @Override

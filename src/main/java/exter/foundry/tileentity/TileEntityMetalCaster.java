@@ -1,6 +1,11 @@
 package exter.foundry.tileentity;
 
 
+import io.netty.buffer.ByteBufInputStream;
+
+import java.io.IOException;
+
+import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -149,13 +154,11 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
   }
 
-  /*
   @Override
-  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  public void ReceivePacketData(ByteBufInputStream data) throws IOException
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }
-  */
   
   public RedstoneMode GetMode()
   {
@@ -164,16 +167,14 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
 
   public void SetMode(RedstoneMode new_mode)
   {
-    /*
     if(mode != new_mode)
     {
       mode = new_mode;
       if(worldObj.isRemote)
       {
-        FoundryPacketHandler.SendCasterModeToServer(this);
+        ModFoundry.network_channel.SendCasterModeToServer(this);
       }
     }
-    */
   }
 
   public int GetStoredPower()
@@ -274,23 +275,19 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   public void openInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendCasterModeToClients(this);
+      ModFoundry.network_channel.SendCasterModeToClients(this);
     }
-    */
   }
 
   @Override
   public void closeInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendCasterModeToClients(this);
+      ModFoundry.network_channel.SendCasterModeToClients(this);
     }
-    */
   }
 
   public int GetProgress()

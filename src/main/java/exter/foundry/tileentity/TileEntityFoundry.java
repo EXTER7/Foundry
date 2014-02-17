@@ -1,16 +1,18 @@
 package exter.foundry.tileentity;
 
 
+import io.netty.buffer.ByteBufInputStream;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
-import exter.foundry.network.FoundryPacketHandler;
 import exter.foundry.tileentity.energy.EnergyManager;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -281,6 +283,24 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     do_update = true;
   }
 
+  private void SendPacketToPlayers(Packet packet)
+  {
+    final int MAX_DISTANCE = 192;
+    if(!worldObj.isRemote && packet != null)
+    {
+      for(int j = 0; j < worldObj.playerEntities.size(); j++)
+      {
+        EntityPlayerMP player = (EntityPlayerMP) worldObj.playerEntities.get(j);
+
+        if(Math.abs(player.posX - xCoord) <= MAX_DISTANCE && Math.abs(player.posY - yCoord) <= MAX_DISTANCE && Math.abs(player.posZ - zCoord) <= MAX_DISTANCE && player.dimension == worldObj.provider.dimensionId)
+        {
+          player.playerNetServerHandler.sendPacket(packet);
+        }
+      }
+    }
+  }
+
+  
   @Override
   public final void updateEntity()
   {
@@ -327,7 +347,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       
       if(do_update)
       {
-        FoundryPacketHandler.SendTileEntityPacketToPlayers(new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, packet), this);
+        SendPacketToPlayers(new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, packet));
       }
       packet = null;
       update_energy_tick = false;
@@ -458,4 +478,9 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     return true;
   }
   */
+  
+  public void ReceivePacketData(ByteBufInputStream data) throws IOException
+  {
+    
+  }
 }

@@ -38,6 +38,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
+import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.manager.AlloyRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -73,8 +74,6 @@ public class ModFoundry
   public static final String MODNAME = "Foundry";
   public static final String MODVERSION = "0.6.2.1";
 
-  public static final String CHANNEL = "EXTER_Foundry";
-
   @Instance(MODID)
   public static ModFoundry instance;
 
@@ -89,6 +88,8 @@ public class ModFoundry
   public static Logger log = Logger.getLogger(MODNAME);
 
   public CraftingEvents crafting_events;
+  
+  public static FoundryNetworkChannel network_channel;
   
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
@@ -355,6 +356,7 @@ public class ModFoundry
 
     crafting_events = new CraftingEvents();
     
+    network_channel = new FoundryNetworkChannel();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
   }
   

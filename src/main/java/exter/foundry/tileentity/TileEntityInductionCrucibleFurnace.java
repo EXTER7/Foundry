@@ -1,5 +1,9 @@
 package exter.foundry.tileentity;
 
+import java.io.IOException;
+
+import io.netty.buffer.ByteBufInputStream;
+import exter.foundry.ModFoundry;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -170,13 +174,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
   }
 
-  /*
   @Override
-  public void ReceivePacketData(INetworkManager manager, Packet250CustomPayload packet, EntityPlayer entityPlayer, ByteArrayDataInput data)
+  public void ReceivePacketData(ByteBufInputStream data) throws IOException
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }
-  */
+
   public RedstoneMode GetMode()
   {
     return mode;
@@ -184,16 +187,14 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
 
   public void SetMode(RedstoneMode new_mode)
   {
-    /*
     if(mode != new_mode)
     {
       mode = new_mode;
       if(worldObj.isRemote)
       {
-        FoundryPacketHandler.SendICFModeToServer(this);
+        ModFoundry.network_channel.SendICFModeToServer(this);
       }
     }
-    */
   }
 
   @Override
@@ -289,23 +290,19 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   public void openInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendICFModeToClients(this);
+      ModFoundry.network_channel.SendICFModeToClients(this);
     }
-    */
   }
 
   @Override
   public void closeInventory()
   {
-    /*
     if(!worldObj.isRemote)
     {
-      FoundryPacketHandler.SendICFModeToClients(this);
+      ModFoundry.network_channel.SendICFModeToClients(this);
     }
-    */
   }
   
   public int GetHeat()

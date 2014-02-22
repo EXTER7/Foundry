@@ -144,6 +144,10 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
     CachedFoundryRecipe foundryRecipe = (CachedFoundryRecipe) arecipes.get(recipe);
     for(FluidTank tank : foundryRecipe.getTanks())
     {
+      if(tank.fluid.amount == 0 || tank.fluid.getFluid() == null)
+      {
+        continue;
+      }
       if(isMouseOver(tank.position, gui, recipe))
       {
         currenttip.add(tank.fluid.getFluid().getLocalizedName());
@@ -158,6 +162,10 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
     FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
     for(FluidTank tank : tanks)
     {
+      if(tank.fluid.amount == 0 || tank.fluid.getFluid() == null)
+      {
+        continue;
+      }
       int times = drawMultiplier % (tank.capacity / tank.fluid.amount) + 1;
       int drawHeight = times * tank.fluid.amount * tank.position.height / tank.capacity;
       

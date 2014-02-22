@@ -123,6 +123,10 @@ public abstract class FoundryRecipeHandler extends TemplateRecipeHandler
     CachedFoundryRecipe foundryRecipe = (CachedFoundryRecipe) arecipes.get(recipe);
     for(FluidTank tank : foundryRecipe.getTanks())
     {
+      if(tank.fluid.amount == 0 || tank.fluid.getFluid() == null)
+      {
+        continue;
+      }
       if(isMouseOver(tank.position, gui, recipe))
       {
         if(button == 0)

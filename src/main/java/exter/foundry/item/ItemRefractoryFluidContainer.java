@@ -30,6 +30,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabFluids;
 
 public class ItemRefractoryFluidContainer extends Item implements IFluidContainerItem
@@ -128,6 +129,22 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   public void getSubItems(int id, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     list.add(FromFluidStack(id, null));
+    
+    //Workaround for FluidRegistry.fluidIDs not being initialized
+    try
+    {
+      Map<String, Integer> fids = FluidRegistry.getRegisteredFluidIDs();
+      if(fids == null)
+      {
+        ModFoundry.log.severe("FluidRegistry.fluidIDs appears to be null.");
+        return;
+      }
+    } catch(NullPointerException e)
+    {
+      ModFoundry.log.severe("FluidRegistry.fluidIDs appears to be null.");
+      return;
+    }
+    
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
     for(Fluid f : fluids.values())
     {

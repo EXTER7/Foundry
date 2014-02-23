@@ -29,15 +29,6 @@ public class ItemFoundryComponent extends Item
     "foundry:claymold_blank"
   };
   
-  static public final String[] NAMES = 
-  {
-    "Stone Gear",
-    "Heating Coil",
-    "Refractory Clay",
-    "Refractory Brick",
-    "Blank Clay Mold"
-  };
-  
   static public final String[] REGISTRY_NAMES = 
   {
     "itemStoneGear",
@@ -55,11 +46,12 @@ public class ItemFoundryComponent extends Item
     super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
+    setUnlocalizedName("component");
   }
   
   @Override
   public String getUnlocalizedName(ItemStack itemstack) {
-    return "foundryComponent" + itemstack.getItemDamage();
+    return getUnlocalizedName() + itemstack.getItemDamage();
   }
   
   @Override

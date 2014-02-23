@@ -74,26 +74,6 @@ public class BlockMetal extends Block
     "Titanium"
   };
 
-  static public final String[] NAMES = 
-  {
-    "Block of Copper",
-    "Block of Tin",
-    "Block of Bronze",
-    "Block of Electrum",
-    "Block of Invar",
-    "Block of Nickel",
-    "Block of Zinc",
-    "Block of Brass",
-    "Block of Silver",
-    "Block of Steel",
-    "Block of Lead",
-    "Block of Aluminum",
-    "Block of Chromium",
-    "Block of Platinum",
-    "Block of Manganese",
-    "Block of Titanium"
-  };
-
   static public final String[] OREDICT_NAMES = 
   {
     "blockCopper",

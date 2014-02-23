@@ -88,44 +88,6 @@ public class ItemMold extends Item
     "foundry:claymold_plate_ic2"
   };
   
-  static public final String[] NAMES = 
-  {
-    "Ingot Mold",
-    "Clay Ingot Mold",
-    "Chestplate Mold",
-    "Clay Chestplate Mold",
-    "Pickaxe Mold",
-    "Clay Pickaxe Mold",
-    "Block Mold",
-    "Clay Block Mold",    
-    "Axe Mold",
-    "Clay Axe Mold",
-    "Sword Mold",
-    "Clay Sword Mold",
-    "Shovel Mold",
-    "Clay Shovel Mold",
-    "Hoe Mold",
-    "Clay Hoe Mold",
-    "Leggings Mold",
-    "Clay Leggings Mold",
-    "Helmet Mold",
-    "Clay Helmet Mold",
-    "Boots Mold",
-    "Clay Boots Mold",
-    "Gear Mold",
-    "Clay Gear Mold",
-    "Cable Mold",
-    "Clay Cable Mold",
-    "Casing Mold",
-    "Clay Casing Mold",
-    "Slab Mold",
-    "Clay Slab Mold",
-    "Stairs Mold",
-    "Clay Stairs Mold",
-    "Plate Mold",
-    "Clay Plate Mold"
-  };
-  
   static public final String[] REGISTRY_NAMES = 
   {
     "itemIngotMold",
@@ -173,11 +135,12 @@ public class ItemMold extends Item
     maxStackSize = 1;
     setCreativeTab(FoundryTabMolds.tab);
     setHasSubtypes(true);
+    setUnlocalizedName("mold");
   }
   
   @Override
   public String getUnlocalizedName(ItemStack itemstack) {
-    return "mold" + itemstack.getItemDamage();
+    return getUnlocalizedName() + itemstack.getItemDamage();
   }
   
   @Override

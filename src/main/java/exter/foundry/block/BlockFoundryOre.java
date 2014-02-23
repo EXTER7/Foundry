@@ -33,16 +33,6 @@ public class BlockFoundryOre extends Block
     "foundry:ore_lead"
   };
   
-  static public final String[] NAMES = 
-  {
-    "Copper Ore",
-    "Tin Ore",
-    "Nickel Ore",
-    "Zinc Ore",
-    "Silver Ore",
-    "Lead Ore"
-  };
-
   static public final String[] OREDICT_NAMES = 
   {
     "oreCopper",

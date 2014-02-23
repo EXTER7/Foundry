@@ -119,11 +119,12 @@ public class ItemIngot extends Item
     super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
+    setUnlocalizedName("ingot");
   }
   
   @Override
   public String getUnlocalizedName(ItemStack itemstack) {
-    return "ingot" + itemstack.getItemDamage();
+    return getUnlocalizedName() + itemstack.getItemDamage();
   }
   
   @Override

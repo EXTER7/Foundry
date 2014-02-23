@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import exter.foundry.registry.ItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -34,23 +33,20 @@ public class FoundryItems
     GameRegistry.registerItem(item_mold, "foundryMold");
     GameRegistry.registerItem(item_ingot, "foundryIngot");
     
-    for (i = 0; i < ItemFoundryComponent.NAMES.length; i++)
+    for (i = 0; i < ItemFoundryComponent.REGISTRY_NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_component,  1, i);
-      LanguageRegistry.addName(stack, ItemFoundryComponent.NAMES[i]);
       ItemRegistry.instance.RegisterItem(ItemFoundryComponent.REGISTRY_NAMES[i], stack);
     }
     
-    for (i = 0; i < ItemMold.NAMES.length; i++)
+    for (i = 0; i < ItemMold.REGISTRY_NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_mold,  1, i);
-      LanguageRegistry.addName(stack, ItemMold.NAMES[i]);
       ItemRegistry.instance.RegisterItem(ItemMold.REGISTRY_NAMES[i], stack);
     }
-    for (i = 0; i < ItemIngot.NAMES.length; i++)
+    for (i = 0; i < ItemIngot.METAL_NAMES.length; i++)
     {
       ItemStack is = new ItemStack(item_ingot,  1, i);
-      LanguageRegistry.addName(is, ItemIngot.NAMES[i]);
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
       ingot_stacks.put(ItemIngot.METAL_NAMES[i], is);
     }
@@ -59,7 +55,6 @@ public class FoundryItems
     
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
     GameRegistry.registerItem(item_container, "foundryContainer");
-    LanguageRegistry.addName(item_container, "Refractory Fluid Container");
     ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));
 
   }

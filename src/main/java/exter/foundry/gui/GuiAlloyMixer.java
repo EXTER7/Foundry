@@ -1,5 +1,6 @@
 package exter.foundry.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -53,23 +54,26 @@ public class GuiAlloyMixer extends GuiFoundry
     
   }
   
-  /*
   @Override
-  public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
+  public void drawScreen(int mousex, int mousey, float par3)
   {
+    super.drawScreen(mousex, mousey, par3);
     //Draw tool tips.
 
     int i;
     for(i = 0; i < 5; i++)
     {
-      if(isPointInRegion(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+      if(func_146978_c/*isPointInRegion*/(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
+        List<String> currenttip = new ArrayList<String>();
         AddTankTooltip(currenttip,mousex, mousey, te_alloymixer.GetTank(i));
+        drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
       }
     }
     
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
+    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
     {
+      List<String> currenttip = new ArrayList<String>();
       switch(te_alloymixer.GetMode())
       {
         case RSMODE_IGNORE:
@@ -82,10 +86,9 @@ public class GuiAlloyMixer extends GuiFoundry
           currenttip.add("Mode: Redstone signal ON");
           break;
       }
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
-    return super.handleTooltip(mousex, mousey, currenttip);
   }
-  */
   @Override
   protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
   {

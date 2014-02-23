@@ -1,5 +1,6 @@
 package exter.foundry.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -95,24 +96,30 @@ public class GuiMetalCaster extends GuiFoundry
     DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank(0));
   }
 
-  /*
   @Override
-  public List<String> handleTooltip(int mousex, int mousey, List<String> currenttip)
+  public void drawScreen(int mousex, int mousey, float par3)
   {
-    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+    super.drawScreen(mousex, mousey, par3);
+
+    if(func_146978_c/*isPointInRegion*/(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
+      List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_caster.GetTank(0));
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
     
-    if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
+    if(func_146978_c/*isPointInRegion*/(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
     {
+      List<String> currenttip = new ArrayList<String>();
       int power = te_caster.GetStoredPower();
       int  max_power = te_caster.GetMaxStoredEnergy();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
+    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
     {
+      List<String> currenttip = new ArrayList<String>();
       switch(te_caster.GetMode())
       {
         case RSMODE_IGNORE:
@@ -128,10 +135,9 @@ public class GuiMetalCaster extends GuiFoundry
           currenttip.add("Mode: Redstone pulse");
           break;
       }
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
-    return super.handleTooltip(mousex, mousey, currenttip);
   }
-  */
   
   @Override
   protected ResourceLocation GetGUITexture()

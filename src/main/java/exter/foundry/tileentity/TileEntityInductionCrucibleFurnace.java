@@ -545,13 +545,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
     return 12000;
   }  
   
-  /* TODO Re-enable once IC2 gets updated.
   @Override
   public int getMaxSafeInput()
   {
     return 128;
   }
-  */
 
   @Override
   public int GetEnergyUse()

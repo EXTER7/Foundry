@@ -1,6 +1,9 @@
 package exter.foundry.tileentity;
 
 
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
+import ic2.api.energy.tile.IEnergySink;
 import io.netty.buffer.ByteBufInputStream;
 
 import java.io.IOException;
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
@@ -21,6 +25,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -29,7 +34,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor /*,IEnergyHandler,IEnergySink*/
+public abstract class TileEntityFoundry extends TileEntity implements IInventory,IPowerReceptor /*,IEnergyHandler*/,IEnergySink
 {
   
   /**
@@ -99,7 +104,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   private NBTTagCompound packet;
   private boolean do_update;
   private boolean initialized;
-  //private boolean added_enet;
+  private boolean added_enet;
 
   private PowerHandler power_handler;
   
@@ -311,12 +316,10 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       initialized = true;
     }
 
-    /* TODO: Re-enable once IC2 is updated.
     if(!added_enet)
     {
       LoadEnet();
     }
-    */
     
     power_handler.update();
     
@@ -429,7 +432,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   
   
   
-  /* TODO Re-enable once IC2 is updated
   @Override
   public void onChunkUnload()
   {
@@ -477,7 +479,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     return true;
   }
-  */
   
   public void ReceivePacketData(ByteBufInputStream data) throws IOException
   {

@@ -1,7 +1,8 @@
 package exter.foundry.integration;
 
 //import ic2.api.item.Items;
-import net.minecraft.item.Item;
+import ic2.api.item.IC2Items;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -71,37 +72,36 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnInit()
   {
-    /* TODO: Re-enable once mod's API is updated
     items = new ItemStack[25];
 
-    items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(Items.getItem("bronzePickaxe"));
-    items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(Items.getItem("bronzeAxe"));
-    items[ITEM_BRONZE_SHOVEL] = ItemStack.copyItemStack(Items.getItem("bronzeShovel"));
-    items[ITEM_BRONZE_HOE] = ItemStack.copyItemStack(Items.getItem("bronzeHoe"));
-    items[ITEM_BRONZE_SWORD] = ItemStack.copyItemStack(Items.getItem("bronzeSword"));
-    items[ITEM_BRONZE_HELMET] = ItemStack.copyItemStack(Items.getItem("bronzeHelmet"));
-    items[ITEM_BRONZE_CHESTPLATE] = ItemStack.copyItemStack(Items.getItem("bronzeChestplate"));
-    items[ITEM_BRONZE_LEGGINGS] = ItemStack.copyItemStack(Items.getItem("bronzeLeggings"));
-    items[ITEM_BRONZE_BOOTS] = ItemStack.copyItemStack(Items.getItem("bronzeBoots"));
+    items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(IC2Items.getItem("bronzePickaxe"));
+    items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(IC2Items.getItem("bronzeAxe"));
+    items[ITEM_BRONZE_SHOVEL] = ItemStack.copyItemStack(IC2Items.getItem("bronzeShovel"));
+    items[ITEM_BRONZE_HOE] = ItemStack.copyItemStack(IC2Items.getItem("bronzeHoe"));
+    items[ITEM_BRONZE_SWORD] = ItemStack.copyItemStack(IC2Items.getItem("bronzeSword"));
+    items[ITEM_BRONZE_HELMET] = ItemStack.copyItemStack(IC2Items.getItem("bronzeHelmet"));
+    items[ITEM_BRONZE_CHESTPLATE] = ItemStack.copyItemStack(IC2Items.getItem("bronzeChestplate"));
+    items[ITEM_BRONZE_LEGGINGS] = ItemStack.copyItemStack(IC2Items.getItem("bronzeLeggings"));
+    items[ITEM_BRONZE_BOOTS] = ItemStack.copyItemStack(IC2Items.getItem("bronzeBoots"));
 
-    items[ITEM_COPPER_CABLE] = ItemStack.copyItemStack(Items.getItem("copperCableItem"));
-    items[ITEM_TIN_CABLE] = ItemStack.copyItemStack(Items.getItem("tinCableItem"));
-    items[ITEM_GOLD_CABLE] = ItemStack.copyItemStack(Items.getItem("goldCableItem"));
-    items[ITEM_IRON_CABLE] = ItemStack.copyItemStack(Items.getItem("ironCableItem"));
+    items[ITEM_COPPER_CABLE] = ItemStack.copyItemStack(IC2Items.getItem("copperCableItem"));
+    items[ITEM_TIN_CABLE] = ItemStack.copyItemStack(IC2Items.getItem("tinCableItem"));
+    items[ITEM_GOLD_CABLE] = ItemStack.copyItemStack(IC2Items.getItem("goldCableItem"));
+    items[ITEM_IRON_CABLE] = ItemStack.copyItemStack(IC2Items.getItem("ironCableItem"));
 
-    items[ITEM_COPPER_CASING] = ItemStack.copyItemStack(Items.getItem("casingcopper"));
-    items[ITEM_TIN_CASING] = ItemStack.copyItemStack(Items.getItem("casingtin"));
-    items[ITEM_BRONZE_CASING] = ItemStack.copyItemStack(Items.getItem("casingbronze"));
-    items[ITEM_GOLD_CASING] = ItemStack.copyItemStack(Items.getItem("casinggold"));
-    items[ITEM_IRON_CASING] = ItemStack.copyItemStack(Items.getItem("casingiron"));
-    items[ITEM_LEAD_CASING] = ItemStack.copyItemStack(Items.getItem("casinglead"));
+    items[ITEM_COPPER_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingcopper"));
+    items[ITEM_TIN_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingtin"));
+    items[ITEM_BRONZE_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingbronze"));
+    items[ITEM_GOLD_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casinggold"));
+    items[ITEM_IRON_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingiron"));
+    items[ITEM_LEAD_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casinglead"));
 
-    items[ITEM_COPPER_PLATE] = ItemStack.copyItemStack(Items.getItem("platecopper"));
-    items[ITEM_TIN_PLATE] = ItemStack.copyItemStack(Items.getItem("platetin"));
-    items[ITEM_BRONZE_PLATE] = ItemStack.copyItemStack(Items.getItem("platebronze"));
-    items[ITEM_GOLD_PLATE] = ItemStack.copyItemStack(Items.getItem("plategold"));
-    items[ITEM_IRON_PLATE] = ItemStack.copyItemStack(Items.getItem("plateiron"));
-    items[ITEM_LEAD_PLATE] = ItemStack.copyItemStack(Items.getItem("platelead"));
+    items[ITEM_COPPER_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platecopper"));
+    items[ITEM_TIN_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platetin"));
+    items[ITEM_BRONZE_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platebronze"));
+    items[ITEM_GOLD_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("plategold"));
+    items[ITEM_IRON_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("plateiron"));
+    items[ITEM_LEAD_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platelead"));
 
     VerifyItems();
 
@@ -116,8 +116,8 @@ public class ModIntegrationIC2 extends ModIntegration
 
       if(FoundryConfig.recipe_tools_armor)
       {
-        ItemStack extra_sticks1 = new ItemStack(Item.stick, 1);
-        ItemStack extra_sticks2 = new ItemStack(Item.stick, 2);
+        ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+        ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
         ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
         ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
         ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
@@ -213,7 +213,6 @@ public class ModIntegrationIC2 extends ModIntegration
         RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE], "plateLead");
       }
     }
-    */
   }
 
   @Override

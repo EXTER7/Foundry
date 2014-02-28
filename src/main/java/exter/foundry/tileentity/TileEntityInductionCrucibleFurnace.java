@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -450,6 +450,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundry implem
   @Override
   protected void UpdateEntityServer()
   {    
+    super.UpdateEntityServer();
+    
     int last_progress = progress;
     int last_melt_point = melt_point;
     CheckCurrentRecipe();

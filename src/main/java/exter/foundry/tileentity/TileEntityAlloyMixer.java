@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -504,8 +504,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundry implements ISidedInv
   @Override
   protected void UpdateEntityServer()
   {
-    NBTTagCompound packet = new NBTTagCompound();
-    super.writeToNBT(packet);
+    super.UpdateEntityServer();
 
     if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0

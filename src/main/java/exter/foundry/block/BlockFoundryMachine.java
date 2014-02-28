@@ -21,7 +21,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityFoundry;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
@@ -78,9 +78,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   {
     TileEntity te = world.getTileEntity(x, y, z);
 
-    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
+    if(te != null && (te instanceof TileEntityFoundryPowered) && !world.isRemote)
     {
-      TileEntityFoundry tef = (TileEntityFoundry) te;
+      TileEntityFoundryPowered tef = (TileEntityFoundryPowered) te;
       int i;
       for(i = 0; i < tef.getSizeInventory(); i++)
       {
@@ -230,7 +230,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   @Override
   public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
   {
-    TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(x, y, z);
+    TileEntityFoundryPowered te = (TileEntityFoundryPowered) world.getTileEntity(x, y, z);
 
     if(te != null)
     {

@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
   public enum RedstoneMode
   {
@@ -422,7 +422,8 @@ public class TileEntityMetalCaster extends TileEntityFoundry implements ISidedIn
   @Override
   protected void UpdateEntityServer()
   {
-    
+    super.UpdateEntityServer();
+
     int last_progress = progress;
     
     CheckCurrentRecipe();

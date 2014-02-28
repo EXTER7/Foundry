@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
   static private final int NETDATAID_INPUT_TANK_FLUID = 1;
   static private final int NETDATAID_INPUT_TANK_AMOUNT = 2;
@@ -423,6 +423,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundry implements ISidedI
   @Override
   protected void UpdateEntityServer()
   {
+    super.UpdateEntityServer();
 
     int last_progress = progress;
     int last_extract_time = extract_energy;

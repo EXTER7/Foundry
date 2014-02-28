@@ -15,7 +15,7 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityFoundry;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.Minecraft;
@@ -137,9 +137,9 @@ public class FoundryNetworkChannel
 
       if(tileEntity != null)
       {
-        if(tileEntity instanceof TileEntityFoundry)
+        if(tileEntity instanceof TileEntityFoundryPowered)
         {
-          ((TileEntityFoundry) tileEntity).ReceivePacketData(data);
+          ((TileEntityFoundryPowered) tileEntity).ReceivePacketData(data);
         }
       }
     }

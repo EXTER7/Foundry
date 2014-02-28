@@ -19,7 +19,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;

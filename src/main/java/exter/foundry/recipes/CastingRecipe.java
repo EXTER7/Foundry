@@ -32,6 +32,7 @@ public class CastingRecipe implements ICastingRecipe
     return mold.copy();
   }
   
+  @Override
   public boolean ContainsExtra(ItemStack stack)
   {
     if(stack == null)
@@ -41,6 +42,7 @@ public class CastingRecipe implements ICastingRecipe
     return (FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize >= extra_amount);
   }
   
+  @Override
   public boolean RequiresExtra()
   {
     return extra != null;
@@ -66,10 +68,7 @@ public class CastingRecipe implements ICastingRecipe
     return output;
   }
 
-  /**
-   * Get item produced by casting.
-   * @return ItemStack containing the item produced.
-   */
+  @Override
   public ItemStack GetOutputItem()
   {
     if(output instanceof String)

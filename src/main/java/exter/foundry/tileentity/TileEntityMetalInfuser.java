@@ -1,10 +1,10 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.container.ContainerMetalInfuser;
-import exter.foundry.recipes.InfuserRecipe;
-import exter.foundry.recipes.InfuserSubstance;
-import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -46,7 +46,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   private int progress;
   private int extract_energy;
   
-  private InfuserSubstanceRecipe current_substance_recipe;
+  private IInfuserSubstanceRecipe current_substance_recipe;
  
   public TileEntityMetalInfuser()
   {
@@ -57,7 +57,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     tank_info = new FluidTankInfo[2];
     for(i = 0; i < 2; i++)
     {
-      tanks[i] = new FluidTank(5000);
+      tanks[i] = new FluidTank(FoundryUtils.INFUSER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     progress = 0;
@@ -388,15 +388,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
       
+    InfuserSubstance recipe_sub = current_substance_recipe.GetOutputSubstance();
     if(substance != null
-        && (!current_substance_recipe.substance.IsSubstanceEqual(substance)
-        || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < current_substance_recipe.substance.amount))
+        && (!recipe_sub.IsSubstanceEqual(substance)
+        || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < recipe_sub.amount))
     {
       progress = 0;
       extract_energy = 1;
       return;
     }
-    extract_energy = current_substance_recipe.extract_energy;
+    extract_energy = current_substance_recipe.GetEnergyNeeded();
     if(energy_manager.GetStoredEnergy() > 0)
     {
       int energy = energy_manager.UseEnergy(600, true);
@@ -406,10 +407,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         progress -= extract_energy;
         if(substance == null)
         {
-          substance = new InfuserSubstance(current_substance_recipe.substance);
+          substance = new InfuserSubstance(recipe_sub);
         } else
         {
-          substance.amount += current_substance_recipe.substance.amount;
+          substance.amount += recipe_sub.amount;
         }
         decrStackSize(0, 1);
         NBTTagCompound tag = new NBTTagCompound();
@@ -430,16 +431,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     
     if(tanks[TANK_INPUT].getFluidAmount() > 0 && energy_manager.GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
     {
-      InfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
+      IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
       {
-        FluidStack result = recipe.output;
+        FluidStack result = recipe.GetOutput();
         if(tanks[TANK_OUTPUT].fill(result, false) == result.amount)
         {
-          tanks[TANK_INPUT].drain(recipe.fluid.amount, true);
+          tanks[TANK_INPUT].drain(recipe.GetInputFluid().amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
           energy_manager.UseEnergy(INFUSE_ENERGY_NEEDED, true);
-          substance.amount -= recipe.substance.amount;
+          substance.amount -= recipe.GetInputSubstance().amount;
           if(substance.amount <= 0)
           {
             substance = null;

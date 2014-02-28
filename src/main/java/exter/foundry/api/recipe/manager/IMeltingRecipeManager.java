@@ -29,5 +29,13 @@ public interface IMeltingRecipeManager
    * Get a list of all the recipes
    * @return List of all the recipes
    */
-  public List<? extends IMeltingRecipe> GetRecipes();
+  public List<IMeltingRecipe> GetRecipes();
+  
+  /**
+   * Find a valid recipe that contains the given item
+   * @param item The item required in the recipe
+   * @return
+   */
+  public IMeltingRecipe FindRecipe(ItemStack item);
+  
 }

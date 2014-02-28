@@ -8,6 +8,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.recipe.ISubstanceGuiTexture;
+import exter.foundry.api.substance.InfuserSubstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -25,17 +27,16 @@ public interface IInfuserRecipeManager
    * Get a list of all the recipes
    * @return List of all the recipes
    */
-  public List<? extends IInfuserRecipe> GetRecipes();
+  public List<IInfuserRecipe> GetRecipes();
   
 
   /**
    * Register a Metal Infuser substance recipe.
    * @param subs Substance produced.
-   * @param subs Substance produced.
    * @param item Item required.
    * @param energy Energy required (100 Energy = 1 MJ, 10 Energy = 1 RF, 40 Energy = 1 EU).
    */
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object item, int energy);
+  public void AddSubstanceRecipe(InfuserSubstance subs,Object item, int energy);
 
   /**
    * Get a list of all the substance recipes
@@ -58,5 +59,21 @@ public interface IInfuserRecipeManager
    * @return Substance type -> texture map.
    */
   @SideOnly(Side.CLIENT)
-  public Map<String,? extends ISubstanceGuiTexture> GetSubstanceGuiTextures();
+  public Map<String,ISubstanceGuiTexture> GetSubstanceGuiTextures();
+
+  /**
+   * Find a infusing recipe given a FluidStack and a substance.
+   * @param fluid FluidStack that contains the recipe's required fluid.
+   * @param substance Substance that contains the recipe's required substance.
+   * @return The infusing recipe, or null if no matching recipe.
+   */
+  public IInfuserRecipe FindRecipe(FluidStack fluid,InfuserSubstance substance);
+
+  /**
+   * Find a substance recipe given a Item.
+   * @param item The item required in the recipe
+   * @return The substance recipe, or null if no matching recipe.
+   */
+  public IInfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item);
+
 }

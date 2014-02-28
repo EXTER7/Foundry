@@ -15,34 +15,34 @@ import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.recipe.ISubstanceGuiTexture;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.recipes.InfuserRecipe;
-import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.SubstanceGuiTexture;
 
 public class InfuserRecipeManager implements IInfuserRecipeManager
 {
-  private List<InfuserRecipe> recipes;
+  private List<IInfuserRecipe> recipes;
 
   public static final InfuserRecipeManager instance = new InfuserRecipeManager();
 
   
   @SideOnly(Side.CLIENT)
-  private Map<String,SubstanceGuiTexture> substance_textures;
+  private Map<String,ISubstanceGuiTexture> substance_textures;
 
-  private List<InfuserSubstanceRecipe> substance_recipes;
+  private List<IInfuserSubstanceRecipe> substance_recipes;
 
   private InfuserRecipeManager()
   {
-    recipes = new ArrayList<InfuserRecipe>();
-    substance_recipes = new ArrayList<InfuserSubstanceRecipe>();
+    recipes = new ArrayList<IInfuserRecipe>();
+    substance_recipes = new ArrayList<IInfuserSubstanceRecipe>();
   }
   
   
   @SideOnly(Side.CLIENT)
   public void InitTextures()
   {
-    substance_textures = new HashMap<String,SubstanceGuiTexture>();
+    substance_textures = new HashMap<String,ISubstanceGuiTexture>();
   }
   @SideOnly(Side.CLIENT)
   public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y)
@@ -56,7 +56,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
    * @return The substance's texture.
    */
   @SideOnly(Side.CLIENT)
-  public SubstanceGuiTexture GetSubstanceTexture(String name)
+  public ISubstanceGuiTexture GetSubstanceTexture(String name)
   {
     return substance_textures.get(name);
   }
@@ -67,21 +67,16 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     recipes.add(new InfuserRecipe(result,in_fluid,new InfuserSubstance(substance_type,substance_amount)));
   }
   
-  /**
-   * Find a infusing recipe given a FluidStack and a substance.
-   * @param fluid FluidStack that contains the recipe's required fluid.
-   * @param substance Substance that contains the recipe's required substance.
-   * @return The infusing recipe, or null if no matching recipe.
-   */
-  public InfuserRecipe FindRecipe(FluidStack fluid,InfuserSubstance substance)
+  @Override
+  public IInfuserRecipe FindRecipe(FluidStack fluid,InfuserSubstance substance)
   {
     if(fluid == null || substance == null)
     {
       return null;
     }
-    for(InfuserRecipe ir:recipes)
+    for(IInfuserRecipe ir:recipes)
     {
-      if(ir.MatchesRecipe(fluid, substance.type, substance.amount))
+      if(ir.MatchesRecipe(fluid, substance))
       {
         return ir;
       }
@@ -90,23 +85,19 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddSubstanceRecipe(String substance_type,int substance_amount,Object itm, int energy)
+  public void AddSubstanceRecipe(InfuserSubstance substance,Object itm, int energy)
   {
-    substance_recipes.add(new InfuserSubstanceRecipe(new InfuserSubstance(substance_type,substance_amount),itm,energy));
+    substance_recipes.add(new InfuserSubstanceRecipe(substance,itm,energy));
   }
 
-  /**
-   * Find a substance recipe given a Item.
-   * @param item The item required in the recipe
-   * @return The substance recipe, or null if no matching recipe.
-   */
-  public InfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item)
+  @Override
+  public IInfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item)
   {
     if(item == null)
     {
       return null;
     }
-    for(InfuserSubstanceRecipe isr:substance_recipes)
+    for(IInfuserSubstanceRecipe isr:substance_recipes)
     {
       if(isr.MatchesRecipe(item))
       {
@@ -118,14 +109,14 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
 
 
   @Override
-  public List<? extends IInfuserRecipe> GetRecipes()
+  public List<IInfuserRecipe> GetRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
 
   @Override
-  public List<? extends IInfuserSubstanceRecipe> GetSubstanceRecipes()
+  public List<IInfuserSubstanceRecipe> GetSubstanceRecipes()
   {
     return Collections.unmodifiableList(substance_recipes);
   }
@@ -133,7 +124,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
 
   @Override
   @SideOnly(Side.CLIENT)
-  public Map<String, ? extends ISubstanceGuiTexture> GetSubstanceGuiTextures()
+  public Map<String, ISubstanceGuiTexture> GetSubstanceGuiTextures()
   {
     return Collections.unmodifiableMap(substance_textures);
   }

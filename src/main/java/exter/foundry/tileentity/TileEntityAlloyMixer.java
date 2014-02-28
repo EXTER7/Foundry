@@ -6,9 +6,10 @@ import io.netty.buffer.ByteBufInputStream;
 import java.io.IOException;
 
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.container.ContainerAlloyMixer;
-import exter.foundry.recipes.AlloyRecipe;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -103,7 +104,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     tank_info = new FluidTankInfo[5];
     for(i = 0; i < 5; i++)
     {
-      tanks[i] = new FluidTank(2000);
+      tanks[i] = new FluidTank(FoundryUtils.ALLOYMIXER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     mode = RedstoneMode.RSMODE_IGNORE;
@@ -479,12 +480,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       input_tank_fluids[i] = tanks[i].getFluid();
     }    
 
-    AlloyRecipe recipe = AlloyRecipeManager.instance.FindRecipe(input_tank_fluids, recipe_order);
+    IAlloyMixerRecipe recipe = AlloyMixerRecipeManager.instance.FindRecipe(input_tank_fluids, recipe_order);
     if(recipe == null)
     {
       return;
     }
-    FluidStack output = recipe.output;
+    FluidStack output = recipe.GetOutput();
 
     if(tanks[TANK_OUTPUT].fill(output, false) < output.amount)
     {
@@ -496,7 +497,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     UpdateTank(TANK_OUTPUT);
     for(i = 0; i < recipe.GetInputCount(); i++)
     {
-      tanks[recipe_order[i]].drain(recipe.inputs[i].amount, true);
+      tanks[recipe_order[i]].drain(recipe.GetInput(i).amount, true);
       UpdateTank(recipe_order[i]);
     }
   }

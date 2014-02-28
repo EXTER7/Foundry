@@ -8,8 +8,9 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.ISubstanceGuiTexture;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.container.ContainerMetalInfuser;
-import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
@@ -87,11 +88,11 @@ public class GuiMetalInfuser extends GuiFoundry
     InfuserSubstance sub = te_infuser.GetSubstance();
     if(sub != null && sub.amount > 0)
     {
-      SubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
-      mc.renderEngine.bindTexture(tex.texture);
+      ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
+      mc.renderEngine.bindTexture(tex.GetLocation());
       int height = sub.amount * TANK_HEIGHT / FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
-      drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.x, tex.y + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+      drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.GetX(), tex.GetY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
       mc.renderEngine.bindTexture(GetGUITexture());
     }
   }

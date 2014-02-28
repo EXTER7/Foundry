@@ -6,8 +6,9 @@ import io.netty.buffer.ByteBufInputStream;
 import java.io.IOException;
 
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -72,7 +73,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
-  CastingRecipe current_recipe;
+  ICastingRecipe current_recipe;
   
   
   private RedstoneMode mode;
@@ -82,7 +83,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   {
     super();
 
-    tank = new FluidTank(6000);
+    tank = new FluidTank(FoundryUtils.CASTER_TANK_CAPACITY);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
@@ -409,6 +410,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
       }
     }
     
+    
     ItemStack recipe_output = current_recipe.GetOutputItem();
 
     ItemStack inv_output = inventory[INVENTORY_OUTPUT];
@@ -465,7 +467,8 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     {
       if(CanCastCurrentRecipe())
       {
-        int increment = 18000 / current_recipe.fluid.amount;
+        FluidStack input_fluid = current_recipe.GetInputFluid();
+        int increment = 18000 / input_fluid.amount;
         if(increment > CAST_TIME / 15)
         {
           increment = CAST_TIME / 15;
@@ -479,10 +482,10 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
         if(progress >= CAST_TIME)
         {
           progress = -1;
-          tank.drain(current_recipe.fluid.amount, true);
+          tank.drain(input_fluid.amount, true);
           if(current_recipe.RequiresExtra())
           {
-            decrStackSize(INVENTORY_EXTRA, current_recipe.extra_amount);
+            decrStackSize(INVENTORY_EXTRA, current_recipe.GetInputExtraAmount());
             UpdateInventoryItem(INVENTORY_EXTRA);
           }
           if(inventory[INVENTORY_OUTPUT] == null)

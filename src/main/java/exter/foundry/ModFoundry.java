@@ -28,6 +28,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
@@ -42,7 +43,7 @@ import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -114,7 +115,7 @@ public class ModFoundry
     
     FoundryRecipes.melting = MeltingRecipeManager.instance;
     FoundryRecipes.casting = CastingRecipeManager.instance;
-    FoundryRecipes.alloy = AlloyRecipeManager.instance;
+    FoundryRecipes.alloymixer = AlloyMixerRecipeManager.instance;
     FoundryRecipes.infuser = InfuserRecipeManager.instance;
 
 
@@ -161,7 +162,7 @@ public class ModFoundry
     
     if(FoundryConfig.recipe_alloy_bronze_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_bronze, 3 * FoundryConfig.recipe_alloy_bronze_yield),
           new FluidStack[] {
             new FluidStack(liquid_copper, 9),
@@ -171,7 +172,7 @@ public class ModFoundry
     
     if(FoundryConfig.recipe_alloy_brass_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_brass, 3 * FoundryConfig.recipe_alloy_brass_yield),
           new FluidStack[] {
             new FluidStack(liquid_copper, 9),
@@ -181,7 +182,7 @@ public class ModFoundry
     
     if(FoundryConfig.recipe_alloy_invar_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_invar, 4 * FoundryConfig.recipe_alloy_invar_yield),
           new FluidStack[] {
             new FluidStack(liquid_iron, 8),
@@ -191,7 +192,7 @@ public class ModFoundry
 
     if(FoundryConfig.recipe_alloy_electrum_yield > 0)
     {
-      AlloyRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrum, 6 * FoundryConfig.recipe_alloy_electrum_yield),
           new FluidStack[] {
             new FluidStack(liquid_gold, 6),
@@ -325,11 +326,11 @@ public class ModFoundry
       }
     }
     
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, new ItemStack(Items.coal,1,0), 240000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, new ItemStack(Items.coal,1,1), 480000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",324, new ItemStack(Blocks.coal_block,1), 1920000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",36, "dustCoal", 160000);
-    InfuserRecipeManager.instance.AddSubstanceRecipe("carbon",12, "dustCharcoal", 320000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",36), new ItemStack(Items.coal,1,0), 240000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",12), new ItemStack(Items.coal,1,1), 480000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",324), new ItemStack(Blocks.coal_block,1), 1920000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",36), "dustCoal", 160000);
+    InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",12), "dustCharcoal", 320000);
 
     InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "carbon", 2);
 

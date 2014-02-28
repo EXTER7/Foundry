@@ -2,7 +2,7 @@ package exter.foundry.api.recipe;
 
 import net.minecraftforge.fluids.FluidStack;
 
-public interface IAlloyRecipe
+public interface IAlloyMixerRecipe
 {
   /**
    * Get the one of the recipe's inputs by index.
@@ -26,7 +26,7 @@ public interface IAlloyRecipe
   /**
    * Check if a list of fluid stacks matches this recipe.
    * @param in list of fluid stack to compare.
-   * @param [Output] order in which the input fluids are matched.
+   * @param order [Output] Order in which the input fluids are matched.
    * @return true if the fluids matches, false otherwise.
    */
   public boolean MatchesRecipe(FluidStack[] inputs,int[] order);

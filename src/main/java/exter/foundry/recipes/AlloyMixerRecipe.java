@@ -1,12 +1,12 @@
 package exter.foundry.recipes;
 
-import exter.foundry.api.recipe.IAlloyRecipe;
+import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
 /*
  * Alloy Mixer recipe manager
  */
-public class AlloyRecipe implements IAlloyRecipe
+public class AlloyMixerRecipe implements IAlloyMixerRecipe
 {
   
   public FluidStack[] inputs;
@@ -31,7 +31,7 @@ public class AlloyRecipe implements IAlloyRecipe
     return output.copy();
   }
   
-  public AlloyRecipe(FluidStack out,FluidStack[] in)
+  public AlloyMixerRecipe(FluidStack out,FluidStack[] in)
   {
     output = out.copy();
     int i;

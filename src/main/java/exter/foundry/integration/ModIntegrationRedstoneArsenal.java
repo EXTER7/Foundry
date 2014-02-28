@@ -5,7 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.item.ItemStack;
@@ -65,9 +65,9 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
       Fluid liquid_electrumflux = LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
 
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 27), new FluidStack[] { new FluidStack(liquid_electrum, 27), new FluidStack(liquid_redstone, 50) });
+      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 27), new FluidStack[] { new FluidStack(liquid_electrum, 27), new FluidStack(liquid_redstone, 50) });
 
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 54), new FluidStack[] { new FluidStack(liquid_gold, 27), new FluidStack(liquid_silver, 27), new FluidStack(liquid_redstone, 100) });
+      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 54), new FluidStack[] { new FluidStack(liquid_gold, 27), new FluidStack(liquid_silver, 27), new FluidStack(liquid_redstone, 100) });
 
     
       ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);

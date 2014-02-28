@@ -37,8 +37,31 @@ public interface ICastingRecipeManager
   public void AddMold(ItemStack mold);
   
   /**
-   * Get a list of all the recipes
-   * @return List of all the recipes
+   * Get a list of all the recipes.
+   * @return List of all the recipes.
    */
-  public List<? extends ICastingRecipe> GetRecipes();
+  public List<ICastingRecipe> GetRecipes();
+  
+  
+  /**
+   * Get a list of all registered molds.
+   * @return List of all registered molds.
+   */
+  public List<ItemStack> GetMolds();  
+
+  /**
+   * Find a casting recipe given a FluidStack and a mold.
+   * @param fluid FluidStack that contains the recipe's required fluid.
+   * @param mold Mold used by the recipe.
+   * @return The casting recipe, or null if no matching recipe.
+   */
+  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold);
+
+  /**
+   * Check if an item is registered as a mold.
+   * @param stack Item to check.
+   * @return true if an item is registered, false if not.
+   */
+  public boolean IsItemMold(ItemStack stack);
+
 }

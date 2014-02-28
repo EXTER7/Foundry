@@ -12,14 +12,14 @@ import exter.foundry.recipes.CastingRecipe;
 
 public class CastingRecipeManager implements ICastingRecipeManager
 {
-  private List<CastingRecipe> recipes;
+  private List<ICastingRecipe> recipes;
   private List<ItemStack> molds;
 
   public static final CastingRecipeManager instance = new CastingRecipeManager();
 
   private CastingRecipeManager()
   {
-    recipes = new ArrayList<CastingRecipe>();
+    recipes = new ArrayList<ICastingRecipe>();
     molds = new ArrayList<ItemStack>();
   }
 
@@ -35,19 +35,14 @@ public class CastingRecipeManager implements ICastingRecipeManager
     recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra,extra_amount));
   }
   
-  /**
-   * Find a casting recipe given a FluidStack and a mold.
-   * @param fluid FluidStack that contains the recipe's required fluid.
-   * @param mold Mold used by the recipe.
-   * @return The casting recipe, or null if no matching recipe.
-   */
-  public CastingRecipe FindRecipe(FluidStack fluid,ItemStack mold)
+  @Override
+  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold)
   {
     if(mold == null || fluid == null || fluid.amount == 0)
     {
       return null;
     }
-    for(CastingRecipe cr:recipes)
+    for(ICastingRecipe cr:recipes)
     {
       if(cr.MatchesRecipe(mold, fluid))
       {
@@ -63,11 +58,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
     molds.add(mold.copy());
   }
 
-  /**
-   * Check if an item is registered as a mold.
-   * @param stack Item to check
-   * @return true if an item is registered, false if not.
-   */
+  @Override
   public boolean IsItemMold(ItemStack stack)
   {
     if(stack == null)
@@ -85,8 +76,14 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public List<? extends ICastingRecipe> GetRecipes()
+  public List<ICastingRecipe> GetRecipes()
   {
     return Collections.unmodifiableList(recipes);
+  }
+
+  @Override
+  public List<ItemStack> GetMolds()
+  {
+    return Collections.unmodifiableList(molds);
   }
 }

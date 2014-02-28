@@ -17,7 +17,7 @@ import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -158,7 +158,7 @@ public class ModIntegrationTE3 extends ModIntegration
 
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM], new FluidStack(liquid_pyrotheum, 250), 2500);
 
-      AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_enderium, 108), new FluidStack[] { new FluidStack(liquid_tin, 81), new FluidStack(liquid_platinum, 27), new FluidStack(liquid_ender, 250) });
+      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_enderium, 108), new FluidStack[] { new FluidStack(liquid_tin, 81), new FluidStack(liquid_platinum, 27), new FluidStack(liquid_ender, 250) });
 
       CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_INGOT], new FluidStack(liquid_enderium, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_BLOCK], new FluidStack(liquid_enderium, FoundryRecipes.FLUID_AMOUNT_BLOCK), mold_block, null);

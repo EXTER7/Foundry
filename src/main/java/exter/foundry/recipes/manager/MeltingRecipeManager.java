@@ -12,26 +12,23 @@ import exter.foundry.recipes.MeltingRecipe;
 
 public class MeltingRecipeManager implements IMeltingRecipeManager
 {
-  private List<MeltingRecipe> recipes;
+  private List<IMeltingRecipe> recipes;
   
   public static final MeltingRecipeManager instance = new MeltingRecipeManager();
 
   private MeltingRecipeManager()
   {
-    recipes = new ArrayList<MeltingRecipe>();
+    recipes = new ArrayList<IMeltingRecipe>();
   }
-  /**
-   * Find a valid recipe that contains the given item
-   * @param item The item required in the recipe
-   * @return
-   */
-  public MeltingRecipe FindRecipe(ItemStack item)
+
+  @Override
+  public IMeltingRecipe FindRecipe(ItemStack item)
   {
     if(item == null)
     {
       return null;
     }
-    for (MeltingRecipe r : recipes)
+    for (IMeltingRecipe r : recipes)
     {
       if(r.MatchesRecipe(item))
       {
@@ -54,7 +51,7 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   }
 
   @Override
-  public List<? extends IMeltingRecipe> GetRecipes()
+  public List<IMeltingRecipe> GetRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }

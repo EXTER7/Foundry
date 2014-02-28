@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import io.netty.buffer.ByteBufInputStream;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
-import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -75,14 +76,14 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   private int melt_point;
 
   private RedstoneMode mode;
-  private MeltingRecipe current_recipe;
+  private IMeltingRecipe current_recipe;
   
   
   public TileEntityInductionCrucibleFurnace()
   {
     super();
     inventory = new ItemStack[3];
-    tank = new FluidTank(6000);
+    tank = new FluidTank(FoundryUtils.ICF_TANK_CAPACITY);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
@@ -422,8 +423,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       return;
     }
     
-    FluidStack fs = current_recipe.fluid;
-    melt_point = current_recipe.melting_point * 100;
+    FluidStack fs = current_recipe.GetOutput();
+    melt_point = current_recipe.GetMeltingPoint() * 100;
         
     if(heat <= melt_point || tank.fill(fs, false) < fs.amount)
     {

@@ -2,13 +2,13 @@ package exter.foundry.integration;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -176,12 +176,12 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(items[ITEM_COAL_COKE] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 36, items[ITEM_COAL_COKE], 110000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), items[ITEM_COAL_COKE], 110000);
     }
     
     if(items[ITEM_COAL_COKE_BLOCK] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe("carbon", 324, items[ITEM_COAL_COKE_BLOCK], 880000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), items[ITEM_COAL_COKE_BLOCK], 880000);
     }
   }
 }

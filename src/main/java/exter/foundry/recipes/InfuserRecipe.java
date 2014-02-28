@@ -1,6 +1,7 @@
 package exter.foundry.recipes;
 
 import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.substance.InfuserSubstance;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -31,15 +32,9 @@ public class InfuserRecipe implements IInfuserRecipe
   }
   
   @Override
-  public String GetInputSubstanceType()
+  public InfuserSubstance GetInputSubstance()
   {
-    return substance.type;
-  }
-  
-  @Override
-  public int GetInputSubstanceAmount()
-  {
-    return substance.amount;
+    return substance;
   }
   
   @Override
@@ -56,12 +51,12 @@ public class InfuserRecipe implements IInfuserRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(FluidStack in_fluid,String substance_type,int substance_amount)
+  public boolean MatchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance)
   {
-    if(substance_type == null || substance_amount <= 0)
+    if(substance == null || substance.amount <= 0)
     {
       return false;
     }
-    return in_fluid.containsFluid(fluid) && substance_type.equals(substance.type) && substance_amount >= substance.amount;
+    return in_fluid.containsFluid(fluid) && in_substance.Contains(substance);
   }
 }

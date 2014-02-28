@@ -46,4 +46,15 @@ public interface ICastingRecipe
    * @return true if the stack and mold matches, false otherwise.
    */
   public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack);
+  
+  public boolean ContainsExtra(ItemStack stack);
+  
+  public boolean RequiresExtra();
+
+  /**
+   * Get the actual item produced by casting.
+   * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
+   */
+  public ItemStack GetOutputItem();
+
 }

@@ -1,6 +1,7 @@
 package exter.foundry.recipes;
 
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -37,15 +38,9 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   }
   
   @Override
-  public String GetOutputSubstanceType()
+  public InfuserSubstance GetOutputSubstance()
   {
-    return substance.type;
-  }
-  
-  @Override
-  public int GetOutputSubstanceAmount()
-  {
-    return substance.amount;
+    return substance;
   }
   
   @Override

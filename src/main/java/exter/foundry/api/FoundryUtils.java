@@ -13,6 +13,14 @@ public class FoundryUtils
   static public final int INFUSER_SUBSTANCE_AMOUNT_MAX = 1000;
 
   /**
+   * Tank capacity for machines.
+   */
+  static public final int ICF_TANK_CAPACITY = 6000;
+  static public final int CASTER_TANK_CAPACITY = 6000;
+  static public final int INFUSER_TANK_CAPACITY = 5000;
+  static public final int ALLOYMIXER_TANK_CAPACITY = 2000;
+
+  /**
    * Helper method for registering basic melting recipes for a given metal.
    * @param partial_name The partial ore dictionary name e.g. "Copper" for "ingotCopper","oreCopper", etc.
    * @param fluid The liquid created by the smelter.

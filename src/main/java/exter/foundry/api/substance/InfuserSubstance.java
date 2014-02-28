@@ -1,4 +1,4 @@
-package exter.foundry.recipes;
+package exter.foundry.api.substance;
 
 import net.minecraft.nbt.NBTTagCompound;
 

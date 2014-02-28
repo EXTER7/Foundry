@@ -1,5 +1,6 @@
 package exter.foundry.api.recipe;
 
+import exter.foundry.api.substance.InfuserSubstance;
 import net.minecraft.item.ItemStack;
 
 public interface IInfuserSubstanceRecipe
@@ -11,16 +12,10 @@ public interface IInfuserSubstanceRecipe
   public Object GetInputItem();
   
   /**
-   * Get the substance type produced.
-   * @return The substance type.
+   * Get the substance produced.
+   * @return The substance produced.
    */
-  public String GetOutputSubstanceType();
-  
-  /**
-   * Get the substance amount produced.
-   * @return The substance amount.
-   */
-  public int GetOutputSubstanceAmount();
+  public InfuserSubstance GetOutputSubstance();
   
   /**
    * Get the amount of energy needed.

@@ -2,10 +2,11 @@ package exter.foundry.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import exter.foundry.slot.SlotContainer;
+import exter.foundry.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 
 public class ContainerAlloyFurnace extends Container
@@ -27,7 +28,7 @@ public class ContainerAlloyFurnace extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 142;
 
-  public ContainerAlloyFurnace(TileEntityAlloyFurnace furnace, EntityPlayer player)
+  public ContainerAlloyFurnace(TileEntityAlloyFurnace furnace, IInventory player_inventory)
   {
     te_alloyfurnace = furnace;
     te_alloyfurnace.openInventory();
@@ -36,7 +37,7 @@ public class ContainerAlloyFurnace extends Container
     
     addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_A,38,17));
     addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_B,56,17));
-    addSlotToContainer(new SlotFurnace(player,te_alloyfurnace,TileEntityAlloyFurnace.SLOT_OUTPUT,116,35));
+    addSlotToContainer(new SlotOutput(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_OUTPUT,116,35));
     addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_FUEL,48,53));
 
     //Player Inventory
@@ -44,12 +45,12 @@ public class ContainerAlloyFurnace extends Container
     {
       for(j = 0; j < 9; ++j)
       {
-        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
+        addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
       }
     }
     for(i = 0; i < 9; ++i)
     {
-      addSlotToContainer(new Slot(player.inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
+      addSlotToContainer(new Slot(player_inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
     }
   }
 

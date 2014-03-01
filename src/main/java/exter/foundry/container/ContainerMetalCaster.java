@@ -2,7 +2,7 @@ package exter.foundry.container;
 
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.slot.SlotCasterMold;
-import exter.foundry.slot.SlotCasterOutput;
+import exter.foundry.slot.SlotOutput;
 import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +41,7 @@ public class ContainerMetalCaster extends Container
     te_caster.openInventory();
     int i,j;
 
-    addSlotToContainer(new SlotCasterOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 86, 51));
+    addSlotToContainer(new SlotOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 86, 51));
     addSlotToContainer(new SlotCasterMold(te_caster, TileEntityMetalCaster.INVENTORY_MOLD, 66, 21));
     addSlotToContainer(new Slot(te_caster, TileEntityMetalCaster.INVENTORY_EXTRA, 86, 21));
     addSlotToContainer(new SlotContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_DRAIN, 11, 21));

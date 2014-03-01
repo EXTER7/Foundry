@@ -1,6 +1,6 @@
 package exter.foundry.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -32,12 +32,12 @@ public class GuiAlloyFurnace extends GuiFoundry
 
   private TileEntityAlloyFurnace te_af;
 
-  public GuiAlloyFurnace(TileEntityAlloyFurnace ms, EntityPlayer player)
+  public GuiAlloyFurnace(TileEntityAlloyFurnace af, IInventory player_inventory)
   {
-    super(new ContainerAlloyFurnace(ms, player));
+    super(new ContainerAlloyFurnace(af, player_inventory));
     allowUserInput = false;
     ySize = 166;
-    te_af = ms;
+    te_af = af;
   }
 
   @Override

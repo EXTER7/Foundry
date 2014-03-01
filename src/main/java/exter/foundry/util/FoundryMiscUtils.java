@@ -3,6 +3,7 @@ package exter.foundry.util;
 import java.util.List;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
@@ -118,6 +119,10 @@ public class FoundryMiscUtils
     {
       return IsItemInOreDictionary((String)match, item);
     }
+    if(match instanceof OreStack )
+    {
+      return IsItemInOreDictionary(((OreStack)match).name, item);
+    }
     if(match instanceof ItemStack)
     {
       ItemStack match_stack = (ItemStack)match;
@@ -133,4 +138,31 @@ public class FoundryMiscUtils
     }
     return false;
   }
+  
+  /**
+   * Get the stack size of an item.
+   * @param stack to check. Can be of the following types: {@link String} (Ore Dictionary name), {@link ItemStack}, {@link Item}, {@link Block}.
+   * @return the stack size
+   */
+  static public int GetStackSize(Object stack)
+  {
+    if(stack == null)
+    {
+      return 0;
+    }
+    if(stack instanceof String || stack instanceof Item || stack instanceof Block)
+    {
+      return 1;
+    }
+    if(stack instanceof OreStack )
+    {
+      return ((OreStack)stack).amount;
+    }
+    if(stack instanceof ItemStack)
+    {
+      return ((ItemStack)stack).stackSize;
+    }
+    return 0;
+  }
+
 }

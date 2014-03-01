@@ -1,27 +1,23 @@
 package exter.foundry.api.recipe;
 
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.item.ItemStack;
 
-public interface IAlloyMixerRecipe
+public interface IAlloyFurnaceRecipe
 {
   /**
    * Get the one of the recipe's inputs by index.
-   * @param in index of the input.
+   * @param in index of the input. Can be 0 or 1.
    * @return Recipe's input.
    */
-  public FluidStack GetInput(int in);
-  
-  /**
-   * Get the amount of recipe's inputs.
-   * @return Amount of recipe's inputs ranging from 1 to 4.
-   */
-  public int GetInputCount();
+  public Object GetInputA();
+
+  public Object GetInputB();
 
   /**
    * Get the recipe's output.
    * @return FluidStack containing Recipe's produced fluid and amount.
    */
-  public FluidStack GetOutput();
+  public ItemStack GetOutput();
 
   /**
    * Check if a list of fluid stacks matches this recipe.
@@ -29,5 +25,5 @@ public interface IAlloyMixerRecipe
    * @param order [Output] Order in which the input fluids are matched.
    * @return true if the fluids matches, false otherwise.
    */
-  public boolean MatchesRecipe(FluidStack[] inputs,int[] order);
+  public boolean MatchesRecipe(ItemStack input_a,ItemStack input_b);
 }

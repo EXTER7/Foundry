@@ -55,7 +55,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     }
   }
 
-  static private final int REQUIRED_ENERGY = 100;
   
   static private final int NETDATAID_TANK_INPUT_0_FLUID = 0;
   static private final int NETDATAID_TANK_INPUT_0_AMOUNT = 1;
@@ -445,11 +444,10 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   private void MixAlloy()
   {
-    if(energy_manager.GetStoredEnergy() < REQUIRED_ENERGY)
+    if(energy_manager.GetStoredEnergy() < 10)
     {
       return;
     }
-
     boolean do_mix = false;
     switch(mode)
     {
@@ -485,9 +483,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     {
       return;
     }
-    int mix_remaining = 20;
-    while(mix_remaining > 0)
+    int energy_used = 0;
+    while(true)
     {
+      if(energy_used >= 2500)
+      {
+        return;
+      }
       if(!recipe.MatchesRecipe(input_tank_fluids, recipe_order))
       {
         return;
@@ -498,8 +500,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       {
         return;
       }
-      
-      energy_manager.UseEnergy(REQUIRED_ENERGY, true);
+      int required_energy = 10 * output.amount;
+      if(energy_manager.UseEnergy(required_energy, false) < required_energy)
+      {
+        return;
+      }
+      energy_manager.UseEnergy(required_energy, true);
+      energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       UpdateTank(TANK_OUTPUT);
       for(i = 0; i < recipe.GetInputCount(); i++)
@@ -507,7 +514,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         tanks[recipe_order[i]].drain(recipe.GetInput(i).amount, true);
         UpdateTank(recipe_order[i]);
       }
-      mix_remaining -= output.amount;
     }
   }
 
@@ -541,12 +547,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   @Override
   public int GetMaxStoredEnergy()
   {
-    return 1500;
+    return 3000;
   }
 
   @Override
   public int GetEnergyUse()
   {
-    return REQUIRED_ENERGY;
+    return 2500;
   }
 }

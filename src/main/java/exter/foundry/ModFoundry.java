@@ -26,6 +26,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.api.registry.FoundryRegistry;
 import exter.foundry.api.substance.InfuserSubstance;
@@ -43,6 +44,7 @@ import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -161,6 +163,32 @@ public class ModFoundry
 
 
     
+    AlloyFurnaceRecipeManager.instance.AddRecipe(
+        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_BRONZE),
+        new OreStack("ingotCopper", 3),
+        new OreStack("ingotTin", 1)
+        );
+    
+    AlloyFurnaceRecipeManager.instance.AddRecipe(
+        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_BRASS),
+        new OreStack("ingotCopper", 3),
+        new OreStack("ingotZinc", 1)
+        );
+    
+    AlloyFurnaceRecipeManager.instance.AddRecipe(
+        new ItemStack(FoundryItems.item_ingot, 2, ItemIngot.INGOT_INVAR),
+        new OreStack("ingotIron", 2),
+        new OreStack("ingotNickel", 1)
+        );
+
+    AlloyFurnaceRecipeManager.instance.AddRecipe(
+        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_ELECTRUM),
+        new OreStack("ingotGold", 2),
+        new OreStack("ingotSilver", 2)
+        );
+    
+    
+
     AlloyMixerRecipeManager.instance.AddRecipe(
         new FluidStack(liquid_bronze, 4),
         new FluidStack[] {
@@ -465,6 +493,14 @@ public class ModFoundry
           'H', heatingcoil_stack));
     }
     
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryBlocks.block_alloy_furnace),
+        "BBB",
+        "BFB",
+        "BBB",
+        'B', foundrybrick_stack, 
+        'F', furnace_stack);
+
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
         " H ",

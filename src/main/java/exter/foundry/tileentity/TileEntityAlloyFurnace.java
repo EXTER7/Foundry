@@ -1,6 +1,7 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
+import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -121,6 +122,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   public void readFromNBT(NBTTagCompound tag)
   {
     super.readFromNBT(tag);
+    int last_burn_time = burn_time;
 
     if(tag.hasKey("BurnTime"))
     {
@@ -130,7 +132,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       progress = tag.getInteger("CookTime");
     }
-    item_burn_time = TileEntityFurnace.getItemBurnTime(inventory[SLOT_FUEL]);
+    if(tag.hasKey("ItemBurnTime"))
+    {
+      item_burn_time = tag.getInteger("ItemBurnTime");
+    }
+    if(worldObj.isRemote)
+    {
+      if(last_burn_time*burn_time == 0)
+      {
+        ((BlockAlloyFurnace)getBlockType()).SetFurnaceState(worldObj, xCoord, yCoord, zCoord, burn_time > 0);
+      }
+    }
   }
 
   @Override
@@ -139,6 +151,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     super.writeToNBT(tag);
     tag.setInteger("BurnTime", burn_time);
     tag.setInteger("CookTime", progress);
+    tag.setInteger("ItemBurnTime", item_burn_time);
   }
 
   @Override
@@ -258,6 +271,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   {
     int last_burn_time = burn_time;
     int last_progress = progress;
+    int last_item_burn_time = item_burn_time;
     
     if(burn_time > 0)
     {
@@ -265,13 +279,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     }
 
     boolean reversed = false;
-    IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
-    if(recipe == null)
+    IAlloyFurnaceRecipe recipe = null;
+    if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
     {
-      recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
-      if(recipe != null)
+      recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
+      if(recipe == null)
       {
-        reversed = true;
+        recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
+        if(recipe != null)
+        {
+          reversed = true;
+        }
       }
     }
 
@@ -286,13 +304,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
           {
             inventory[SLOT_FUEL] = inventory[SLOT_FUEL].getItem().getContainerItem(inventory[SLOT_FUEL]);
           }
+          UpdateInventoryItem(SLOT_FUEL);
         }
       }
     }
 
     if(burn_time > 0)
     {
-      DoSmelt(recipe,reversed);
+      if(recipe != null)
+      {
+        DoSmelt(recipe,reversed);
+      }
     } else
     {
       progress = 0;
@@ -300,7 +322,16 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     
     if(last_burn_time != burn_time)
     {
+      if(last_burn_time*burn_time == 0)
+      {
+        ((BlockAlloyFurnace)getBlockType()).SetFurnaceState(worldObj, xCoord, yCoord, zCoord, burn_time > 0);
+      }
       UpdateValue("BurnTime",burn_time);
+    }
+
+    if(last_item_burn_time != item_burn_time)
+    {
+      UpdateValue("ItemBurnTime",item_burn_time);
     }
 
     if(last_progress != progress)

@@ -18,8 +18,8 @@ public class GuiAlloyFurnace extends GuiFoundry
   public static final int BURN_WIDTH = 14;
   public static final int BURN_HEIGHT = 14;
 
-  public static final int PROGRESS_X = 80;
-  public static final int PROGRESS_Y = 34;
+  public static final int PROGRESS_X = 79;
+  public static final int PROGRESS_Y = 35;
   public static final int PROGRESS_WIDTH = 22;
   public static final int PROGRESS_HEIGHT = 15;
 
@@ -27,7 +27,7 @@ public class GuiAlloyFurnace extends GuiFoundry
   public static final int PROGRESS_OVERLAY_Y = 14;
 
   public static final int BURN_OVERLAY_X = 176;
-  public static final int BURN_OVERLAY_Y = 14;
+  public static final int BURN_OVERLAY_Y = 0;
 
 
   private TileEntityAlloyFurnace te_af;

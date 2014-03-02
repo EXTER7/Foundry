@@ -5,7 +5,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import exter.foundry.slot.SlotContainer;
 import exter.foundry.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 
@@ -35,10 +34,10 @@ public class ContainerAlloyFurnace extends Container
     int i,j;
 
     
-    addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_A,38,17));
-    addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_B,56,17));
+    addSlotToContainer(new Slot(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_A,38,17));
+    addSlotToContainer(new Slot(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_INPUT_B,56,17));
     addSlotToContainer(new SlotOutput(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_OUTPUT,116,35));
-    addSlotToContainer(new SlotContainer(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_FUEL,48,53));
+    addSlotToContainer(new Slot(te_alloyfurnace,TileEntityAlloyFurnace.SLOT_FUEL,48,53));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

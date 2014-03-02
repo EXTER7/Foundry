@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityFoundryPowered;
@@ -36,11 +37,14 @@ public class BlockAlloyFurnace extends BlockContainer
   @SideOnly(Side.CLIENT)
   private IIcon icon_front_off;
 
-
   public BlockAlloyFurnace()
   {
     super(Material.rock);
     setBlockName("alloyFurnace");
+    setHardness(1.0F);
+    setResistance(8.0F);
+    setStepSound(Block.soundTypeStone);
+    setCreativeTab(FoundryTabMachines.tab);
   }
 
   @Override
@@ -53,31 +57,30 @@ public class BlockAlloyFurnace extends BlockContainer
       Block block1 = world.getBlock(x, y, z + 1);
       Block block2 = world.getBlock(x - 1, y, z);
       Block block3 = world.getBlock(x + 1, y, z);
-      byte meta = 3;
+      byte meta = 0;
 
       if(block.func_149730_j/* isOpaque */() && !block1.func_149730_j/* isOpaque */())
       {
-        meta = 1;
+        meta = 2;
       }
 
       if(block1.func_149730_j/* isOpaque */() && !block.func_149730_j/* isOpaque */())
       {
-        meta = 0;
+        meta = 3;
       }
 
       if(block2.func_149730_j/* isOpaque */() && !block3.func_149730_j/* isOpaque */())
       {
-        meta = 3;
+        meta = 0;
       }
       if(block3.func_149730_j/* isOpaque */() && !block2.func_149730_j/* isOpaque */())
       {
-        meta = 2;
+        meta = 1;
       }
 
       world.setBlockMetadataWithNotify(x, y, z, meta, 2);
     }
   }
-
 
   @SideOnly(Side.CLIENT)
   @Override
@@ -89,7 +92,7 @@ public class BlockAlloyFurnace extends BlockContainer
       case 1:
         return icon_top_bottom;
       default:
-        return (side == GetDirection(meta) + 2)?(IsFurnaceOn(meta)?icon_front_on:icon_front_off):icon_sides;
+        return (side == 5 - GetDirection(meta)) ? (IsFurnaceOn(meta) ? icon_front_on : icon_front_off) : icon_sides;
     }
   }
 
@@ -115,12 +118,19 @@ public class BlockAlloyFurnace extends BlockContainer
     }
   }
 
-  public static void SetFurnaceState(World world, int x, int y, int z, boolean is_on)
+  public void SetFurnaceState(World world, int x, int y, int z, boolean is_on)
   {
+    TileEntity tileentity = world.getTileEntity(x, y, z);
+
     int meta = world.getBlockMetadata(x, y, z);
     meta = (meta & 3) | (is_on ? 4 : 0);
     world.setBlockMetadataWithNotify(x, y, z, meta, 2);
-  }   
+    if(tileentity != null)
+    {
+      tileentity.validate();
+      world.setTileEntity(x, y, z, tileentity);
+    }
+  }
 
   @Override
   public TileEntity createNewTileEntity(World world, int meta)
@@ -135,22 +145,22 @@ public class BlockAlloyFurnace extends BlockContainer
 
     if(dir == 0)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 0, 2);
+      world_.setBlockMetadataWithNotify(x, y, z, 3, 2);
     }
 
     if(dir == 1)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 3, 2);
+      world_.setBlockMetadataWithNotify(x, y, z, 0, 2);
     }
 
     if(dir == 2)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 1, 2);
+      world_.setBlockMetadataWithNotify(x, y, z, 2, 2);
     }
 
     if(dir == 3)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 2, 2);
+      world_.setBlockMetadataWithNotify(x, y, z, 1, 2);
     }
   }
 
@@ -207,19 +217,19 @@ public class BlockAlloyFurnace extends BlockContainer
       float f3 = 0.52F;
       float f4 = random.nextFloat() * 0.6F - 0.3F;
 
-      if(direction == 2)
+      if(direction == 1)
       {
         world.spawnParticle("smoke", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
         world.spawnParticle("flame", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 3)
+      } else if(direction == 0)
       {
         world.spawnParticle("smoke", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
         world.spawnParticle("flame", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 0)
+      } else if(direction == 3)
       {
         world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
         world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 1)
+      } else if(direction == 2)
       {
         world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
         world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);

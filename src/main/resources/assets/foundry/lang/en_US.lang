@@ -21,7 +21,7 @@ fluid.liquidCupronickel=Liquid Cupronickel
 fluid.liquidKanthal=Liquid Kanthal
 fluid.liquidNichrome=Liquid Nichrome
 fluid.liquidEnderium=Liquid Enderium
-fluid.liquidElectrumFlux.name=Fluxed Liquid Electrum
+fluid.liquidElectrumFlux=Fluxed Liquid Electrum
 fluid.liquidGlass=Liquid Glass
 
 
@@ -43,7 +43,7 @@ tile.machine0.name=Induction Crucible Furnace
 tile.machine1.name=Metal Caster
 tile.machine2.name=Alloy Mixer
 tile.machine3.name=Metal Infuser
-tile.alloyFurnace=Alloy Furnace
+tile.alloyFurnace.name=Alloy Furnace
 
 tile.metalBlock0.name=Block of Copper
 tile.metalBlock1.name=Block of Tin

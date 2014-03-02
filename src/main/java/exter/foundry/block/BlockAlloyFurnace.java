@@ -40,6 +40,7 @@ public class BlockAlloyFurnace extends BlockContainer
   public BlockAlloyFurnace()
   {
     super(Material.rock);
+    setBlockName("alloyFurnace");
   }
 
   @Override

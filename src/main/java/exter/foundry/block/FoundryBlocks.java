@@ -119,7 +119,7 @@ public class FoundryBlocks
     new MetalStair("Titanium",null,BlockMetal.BLOCK_TITANIUM)
   };
   
-  public static BlockRefractoryCasing block_foundry_crucible;
+  public static BlockRefractoryCasing block_refractory_casing;
   public static BlockFoundryMachine block_machine;
 
   public static BlockMetal block_metal;
@@ -134,6 +134,8 @@ public class FoundryBlocks
   public static BlockMetalSlab block_slabdouble3;
   
   public static BlockStairs[] block_metal_stairs;
+  
+  public static BlockAlloyFurnace block_alloy_furnace;
 
   //All blocks mapped by the metal name.
   public static Map<String,ItemStack> block_stacks = new HashMap<String,ItemStack>();
@@ -188,14 +190,16 @@ public class FoundryBlocks
   {
     int i;
     
-    block_foundry_crucible = new BlockRefractoryCasing();
+    block_refractory_casing = new BlockRefractoryCasing();
     block_machine = new BlockFoundryMachine();
     block_metal = new BlockMetal();
     block_ore = new BlockFoundryOre();
-    GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
+    block_alloy_furnace = new BlockAlloyFurnace();
+    GameRegistry.registerBlock(block_refractory_casing, "refractoryCasing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
     GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
+    GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
 
     RegisterHalfSlabs(config);
     
@@ -221,9 +225,8 @@ public class FoundryBlocks
 
     
     
-    ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_foundry_crucible));
-    
-
+    ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_refractory_casing));
+    ItemRegistry.instance.RegisterItem("blockMachineAlloyFurnace", new ItemStack(block_alloy_furnace));
     ItemRegistry.instance.RegisterItem("blockMachineICF", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF));
     ItemRegistry.instance.RegisterItem("blockMachineCaster", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER));
     ItemRegistry.instance.RegisterItem("blockMachineAlloyMixer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER));

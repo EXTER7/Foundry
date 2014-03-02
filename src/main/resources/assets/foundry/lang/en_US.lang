@@ -43,6 +43,7 @@ tile.machine0.name=Induction Crucible Furnace
 tile.machine1.name=Metal Caster
 tile.machine2.name=Alloy Mixer
 tile.machine3.name=Metal Infuser
+tile.alloyFurnace=Alloy Furnace
 
 tile.metalBlock0.name=Block of Copper
 tile.metalBlock1.name=Block of Tin

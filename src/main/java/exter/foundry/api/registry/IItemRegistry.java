@@ -20,6 +20,7 @@ public interface IItemRegistry
    * "blockMachineCaster"
    * "blockMachineAlloyMixer"
    * "blockMachineInfuser"
+   * "blockMachineAlloyFurnace"
    * 
    * Metal Blocks:
    * "blockMetalIron"

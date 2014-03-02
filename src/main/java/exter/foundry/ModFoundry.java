@@ -49,6 +49,7 @@ import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.ItemRegistry;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
@@ -370,10 +371,11 @@ public class ModFoundry
     //log.setParent(FMLLog.getLogger());
     ModIntegration.Init();
     
-    GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_MeltingFurnace");
+    GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
     GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");
+    GameRegistry.registerTileEntity(TileEntityAlloyFurnace.class, "Foundry_AlloyFurnace");
 
     ItemStack iron_stack = new ItemStack(Items.iron_ingot);
     ItemStack redstone_stack = new ItemStack(Items.redstone);
@@ -381,7 +383,7 @@ public class ModFoundry
     ItemStack clay_stack = new ItemStack(Items.clay_ball);
     ItemStack sand_stack = new ItemStack(Blocks.sand,1,-1);
     ItemStack clayblock_stack = new ItemStack(Blocks.clay, 1, -1);
-    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
+    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
     ItemStack piston_stack = new ItemStack(Blocks.piston);
     ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
     ItemStack chest_stack = new ItemStack(Blocks.chest);

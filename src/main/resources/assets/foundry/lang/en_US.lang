@@ -61,6 +61,7 @@ tile.metalBlock12.name=Block of Chromium
 tile.metalBlock13.name=Block of Platinum
 tile.metalBlock14.name=Block of Manganese
 tile.metalBlock15.name=Block of Titanium
+tile.metalBlock20.name=Block of Cupronickel
 
 tile.ore0.name=Copper Ore
 tile.ore1.name=Tin Ore
@@ -87,6 +88,7 @@ tile.metalSlab26.name=Chromium Slab
 tile.metalSlab27.name=Platinum Slab
 tile.metalSlab30.name=Manganese Slab
 tile.metalSlab31.name=Titanium Slab
+tile.metalSlab31.name=Cupronickel Slab
 
 tile.metalStairs0.name=Iron Stairs
 tile.metalStairs1.name=Gold Stairs
@@ -106,6 +108,7 @@ tile.metalStairs14.name=Chromium Stairs
 tile.metalStairs15.name=Platinum Stairs
 tile.metalStairs16.name=Manganese Stairs
 tile.metalStairs17.name=Titanium Stairs
+tile.metalStairs18.name=Cupronickel Stairs
 
 
 item.component0.name=Stone Gear
@@ -165,5 +168,6 @@ item.ingot12.name=Chromium Ingot
 item.ingot13.name=Platinum Ingot
 item.ingot14.name=Manganese Ingot
 item.ingot15.name=Titanium Ingot
+item.ingot16.name=Cupronickel Ingot
 
 item.foundryContainer.name=Refractory Fluid Container

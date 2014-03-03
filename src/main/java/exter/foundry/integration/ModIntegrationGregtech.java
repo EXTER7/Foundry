@@ -38,7 +38,6 @@ public class ModIntegrationGregtech extends ModIntegration
   public void OnPreInit(Configuration config)
   {
     Map<String,Fluid> fluids = new HashMap<String,Fluid>();
-    fluids.put("Cupronickel",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15));
     fluids.put("StainlessSteel",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "StainlessSteel", 1900, 15));
     fluids.put("Kanthal",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Kanthal", 1900, 15));
     fluids.put("Nichrome",LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nichrome", 1950, 15));

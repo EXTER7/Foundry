@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 
-public class BlockMetal extends Block
+public class BlockMetal1 extends Block
 {
   static public final int BLOCK_COPPER = 0;
   static public final int BLOCK_TIN = 1;
@@ -97,7 +97,7 @@ public class BlockMetal extends Block
   @SideOnly(Side.CLIENT)
   private IIcon[] icons;
   
-  public BlockMetal()
+  public BlockMetal1()
   {
     super( Material.iron);
     setHardness(1.0F);

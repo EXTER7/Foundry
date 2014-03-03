@@ -44,7 +44,8 @@ public class FoundryBlocks
   private static final String[] SLAB3_METALS = 
   {
     "Manganese",
-    "Titanium"
+    "Titanium",
+    "Cupronickel"
   };
 
   private static final String[] SLAB1_ICONS = 
@@ -74,7 +75,8 @@ public class FoundryBlocks
   private static final String[] SLAB3_ICONS = 
   {
     "foundry:metalblock_manganese",
-    "foundry:metalblock_titanium"
+    "foundry:metalblock_titanium",
+    "foundry:metalblock_cupronickel"
   };
   
   public static class MetalStair
@@ -92,7 +94,7 @@ public class FoundryBlocks
     
     public Block GetBlock()
     {
-      return block == null?block_metal:block;
+      return block == null?block_metal1:block;
     }
   }
   
@@ -101,28 +103,30 @@ public class FoundryBlocks
   {
     new MetalStair("Iron",Blocks.iron_block,0),
     new MetalStair("Gold",Blocks.gold_block,0),
-    new MetalStair("Copper",null,BlockMetal.BLOCK_COPPER),
-    new MetalStair("Tin",null,BlockMetal.BLOCK_TIN),
-    new MetalStair("Bronze",null,BlockMetal.BLOCK_BRONZE),
-    new MetalStair("Electrum",null,BlockMetal.BLOCK_ELECTRUM),
-    new MetalStair("Invar",null,BlockMetal.BLOCK_INVAR),
-    new MetalStair("Nickel",null,BlockMetal.BLOCK_NICKEL),
-    new MetalStair("Zinc",null,BlockMetal.BLOCK_ZINC),
-    new MetalStair("Brass",null,BlockMetal.BLOCK_BRASS),
-    new MetalStair("Silver",null,BlockMetal.BLOCK_SILVER),
-    new MetalStair("Steel",null,BlockMetal.BLOCK_STEEL),
-    new MetalStair("Lead",null,BlockMetal.BLOCK_LEAD),
-    new MetalStair("Aluminum",null,BlockMetal.BLOCK_ALUMINUM),
-    new MetalStair("Chromium",null,BlockMetal.BLOCK_CHROMIUM),
-    new MetalStair("Platinum",null,BlockMetal.BLOCK_PLATINUM),
-    new MetalStair("Manganese",null,BlockMetal.BLOCK_MANGANESE),
-    new MetalStair("Titanium",null,BlockMetal.BLOCK_TITANIUM)
+    new MetalStair("Copper",null,BlockMetal1.BLOCK_COPPER),
+    new MetalStair("Tin",null,BlockMetal1.BLOCK_TIN),
+    new MetalStair("Bronze",null,BlockMetal1.BLOCK_BRONZE),
+    new MetalStair("Electrum",null,BlockMetal1.BLOCK_ELECTRUM),
+    new MetalStair("Invar",null,BlockMetal1.BLOCK_INVAR),
+    new MetalStair("Nickel",null,BlockMetal1.BLOCK_NICKEL),
+    new MetalStair("Zinc",null,BlockMetal1.BLOCK_ZINC),
+    new MetalStair("Brass",null,BlockMetal1.BLOCK_BRASS),
+    new MetalStair("Silver",null,BlockMetal1.BLOCK_SILVER),
+    new MetalStair("Steel",null,BlockMetal1.BLOCK_STEEL),
+    new MetalStair("Lead",null,BlockMetal1.BLOCK_LEAD),
+    new MetalStair("Aluminum",null,BlockMetal1.BLOCK_ALUMINUM),
+    new MetalStair("Chromium",null,BlockMetal1.BLOCK_CHROMIUM),
+    new MetalStair("Platinum",null,BlockMetal1.BLOCK_PLATINUM),
+    new MetalStair("Manganese",null,BlockMetal1.BLOCK_MANGANESE),
+    new MetalStair("Titanium",null,BlockMetal1.BLOCK_TITANIUM),
+    new MetalStair("Cupronickel",null,BlockMetal2.BLOCK_CUPRONICKEL)
   };
   
   public static BlockRefractoryCasing block_refractory_casing;
   public static BlockFoundryMachine block_machine;
 
-  public static BlockMetal block_metal;
+  public static BlockMetal1 block_metal1;
+  public static BlockMetal2 block_metal2;
   public static BlockFoundryOre block_ore;
   
   public static BlockMetalSlab block_slab1;
@@ -192,12 +196,14 @@ public class FoundryBlocks
     
     block_refractory_casing = new BlockRefractoryCasing();
     block_machine = new BlockFoundryMachine();
-    block_metal = new BlockMetal();
+    block_metal1 = new BlockMetal1();
+    block_metal2 = new BlockMetal2();
     block_ore = new BlockFoundryOre();
     block_alloy_furnace = new BlockAlloyFurnace();
     GameRegistry.registerBlock(block_refractory_casing, "refractoryCasing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
-    GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
+    GameRegistry.registerBlock(block_metal1, ItemBlockMulti.class, "blockFoundryMetal");
+    GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockFoundryMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
 
@@ -212,11 +218,17 @@ public class FoundryBlocks
       ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
     }
 
-    for(i = 0; i < BlockMetal.METAL_NAMES.length; i++)
+    for(i = 0; i < BlockMetal1.METAL_NAMES.length; i++)
     {
-      ItemStack stack = new ItemStack(block_metal,1,i);
-      block_stacks.put(BlockMetal.METAL_NAMES[i], stack);
-      ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal.METAL_NAMES[i], stack);
+      ItemStack stack = new ItemStack(block_metal1,1,i);
+      block_stacks.put(BlockMetal1.METAL_NAMES[i], stack);
+      ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal1.METAL_NAMES[i], stack);
+    }
+    for(i = 0; i < BlockMetal2.METAL_NAMES.length; i++)
+    {
+      ItemStack stack = new ItemStack(block_metal2,1,i);
+      block_stacks.put(BlockMetal2.METAL_NAMES[i], stack);
+      ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal2.METAL_NAMES[i], stack);
     }
     block_stacks.put("Iron", new ItemStack(Blocks.iron_block));
     block_stacks.put("Gold", new ItemStack(Blocks.gold_block));
@@ -233,10 +245,15 @@ public class FoundryBlocks
     ItemRegistry.instance.RegisterItem("blockMachineInfuser", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER));
 
     
-    for(i = 0; i < BlockMetal.METAL_NAMES.length; i++)
+    for(i = 0; i < BlockMetal1.METAL_NAMES.length; i++)
     {
-      ItemStack stack = new ItemStack(block_metal,  1, i);
-      OreDictionary.registerOre(BlockMetal.OREDICT_NAMES[i], stack);
+      ItemStack stack = new ItemStack(block_metal1,  1, i);
+      OreDictionary.registerOre(BlockMetal1.OREDICT_NAMES[i], stack);
+    }
+    for(i = 0; i < BlockMetal2.METAL_NAMES.length; i++)
+    {
+      ItemStack stack = new ItemStack(block_metal2,  1, i);
+      OreDictionary.registerOre(BlockMetal2.OREDICT_NAMES[i], stack);
     }
     for(i = 0; i < BlockFoundryOre.OREDICT_NAMES.length; i++)
     {

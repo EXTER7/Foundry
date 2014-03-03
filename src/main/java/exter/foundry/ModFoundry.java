@@ -145,6 +145,7 @@ public class ModFoundry
     Fluid liquid_brass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Brass", 1400, 15);
     Fluid liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
     Fluid liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
+    Fluid liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Chromium", 2200, 8);
@@ -187,6 +188,11 @@ public class ModFoundry
         new OreStack("ingotSilver", 2)
         );
     
+    AlloyFurnaceRecipeManager.instance.AddRecipe(
+        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_CUPRONICKEL),
+        new OreStack("ingotCopper", 2),
+        new OreStack("ingotNickel", 2)
+        );
     
 
     AlloyMixerRecipeManager.instance.AddRecipe(
@@ -215,6 +221,13 @@ public class ModFoundry
         new FluidStack[] {
           new FluidStack(liquid_gold, 1),
           new FluidStack(liquid_silver, 1)
+        });
+
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(liquid_cupronickel, 2),
+        new FluidStack[] {
+          new FluidStack(liquid_copper, 1),
+          new FluidStack(liquid_nickel, 1)
         });
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
@@ -432,6 +445,8 @@ public class ModFoundry
     ModIntegrationGregtech gti = (ModIntegrationGregtech)ModIntegration.GetIntegration("gregtech");
     if(gti == null || !gti.IsLoaded() || !gti.change_recipes)
     {
+      ItemStack heatingcoil2_stack = new ItemStack(FoundryItems.item_component,2,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+
       GameRegistry.addRecipe(new ShapedOreRecipe(
           emptycontainer2_stack,
           " T ",
@@ -442,22 +457,11 @@ public class ModFoundry
           'G', glasspane_stack));
 
       GameRegistry.addRecipe(new ShapedOreRecipe(
-          heatingcoil_stack,
+          heatingcoil2_stack,
           "RCR",
-          "NGN",
-          "RCR",
-          'C', "ingotCopper",
-          'N', "ingotNickel",
-          'G', goldnugget_stack,
-          'R', redstone_stack));
-
-      GameRegistry.addRecipe(new ShapedOreRecipe(
-          heatingcoil_stack,
-          "RNR",
           "CGC",
-          "RNR",
-          'C', "ingotCopper",
-          'N', "ingotNickel",
+          "RCR",
+          'C', "ingotCupronickel",
           'G', goldnugget_stack,
           'R', redstone_stack));
 

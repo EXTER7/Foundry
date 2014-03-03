@@ -12,8 +12,8 @@ public class ItemBlockSlab extends ItemBlockMulti
   }
 
   @Override
-  public String getUnlocalizedName(ItemStack stack)
+  public int GetSubIndex(ItemStack stack)
   {
-    return getUnlocalizedName() + String.valueOf(stack.getItemDamage() & 7);
+    return stack.getItemDamage() & 7;
   }
 }

@@ -10,6 +10,7 @@ import exter.foundry.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -84,17 +85,35 @@ public class FoundryBlocks
     public final String metal;
     public final int block_meta;
     private final Block block;
+    private final int block_index;
     
     public MetalStair(String me,Block bl,int bm)
     {
       metal = me;
       block = bl;
       block_meta = bm;
+      block_index = -1;
+    }
+
+    public MetalStair(String me,int idx,int bm)
+    {
+      metal = me;
+      block = null;
+      block_meta = bm;
+      block_index = idx;
     }
     
     public Block GetBlock()
     {
-      return block == null?block_metal1:block;
+      switch(block_index)
+      {
+        case 0:
+          return block_metal1;
+        case 1:
+          return block_metal2;
+        default:
+          return block;
+      }
     }
   }
   
@@ -103,23 +122,23 @@ public class FoundryBlocks
   {
     new MetalStair("Iron",Blocks.iron_block,0),
     new MetalStair("Gold",Blocks.gold_block,0),
-    new MetalStair("Copper",null,BlockMetal1.BLOCK_COPPER),
-    new MetalStair("Tin",null,BlockMetal1.BLOCK_TIN),
-    new MetalStair("Bronze",null,BlockMetal1.BLOCK_BRONZE),
-    new MetalStair("Electrum",null,BlockMetal1.BLOCK_ELECTRUM),
-    new MetalStair("Invar",null,BlockMetal1.BLOCK_INVAR),
-    new MetalStair("Nickel",null,BlockMetal1.BLOCK_NICKEL),
-    new MetalStair("Zinc",null,BlockMetal1.BLOCK_ZINC),
-    new MetalStair("Brass",null,BlockMetal1.BLOCK_BRASS),
-    new MetalStair("Silver",null,BlockMetal1.BLOCK_SILVER),
-    new MetalStair("Steel",null,BlockMetal1.BLOCK_STEEL),
-    new MetalStair("Lead",null,BlockMetal1.BLOCK_LEAD),
-    new MetalStair("Aluminum",null,BlockMetal1.BLOCK_ALUMINUM),
-    new MetalStair("Chromium",null,BlockMetal1.BLOCK_CHROMIUM),
-    new MetalStair("Platinum",null,BlockMetal1.BLOCK_PLATINUM),
-    new MetalStair("Manganese",null,BlockMetal1.BLOCK_MANGANESE),
-    new MetalStair("Titanium",null,BlockMetal1.BLOCK_TITANIUM),
-    new MetalStair("Cupronickel",null,BlockMetal2.BLOCK_CUPRONICKEL)
+    new MetalStair("Copper",0,BlockMetal1.BLOCK_COPPER),
+    new MetalStair("Tin",0,BlockMetal1.BLOCK_TIN),
+    new MetalStair("Bronze",0,BlockMetal1.BLOCK_BRONZE),
+    new MetalStair("Electrum",0,BlockMetal1.BLOCK_ELECTRUM),
+    new MetalStair("Invar",0,BlockMetal1.BLOCK_INVAR),
+    new MetalStair("Nickel",0,BlockMetal1.BLOCK_NICKEL),
+    new MetalStair("Zinc",0,BlockMetal1.BLOCK_ZINC),
+    new MetalStair("Brass",0,BlockMetal1.BLOCK_BRASS),
+    new MetalStair("Silver",0,BlockMetal1.BLOCK_SILVER),
+    new MetalStair("Steel",0,BlockMetal1.BLOCK_STEEL),
+    new MetalStair("Lead",0,BlockMetal1.BLOCK_LEAD),
+    new MetalStair("Aluminum",0,BlockMetal1.BLOCK_ALUMINUM),
+    new MetalStair("Chromium",0,BlockMetal1.BLOCK_CHROMIUM),
+    new MetalStair("Platinum",0,BlockMetal1.BLOCK_PLATINUM),
+    new MetalStair("Manganese",0,BlockMetal1.BLOCK_MANGANESE),
+    new MetalStair("Titanium",0,BlockMetal1.BLOCK_TITANIUM),
+    new MetalStair("Cupronickel",1,BlockMetal2.BLOCK_CUPRONICKEL)
   };
   
   public static BlockRefractoryCasing block_refractory_casing;
@@ -151,9 +170,9 @@ public class FoundryBlocks
   static private void RegisterHalfSlabs(Configuration config)
   {
     int i;
-    block_slab1 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB1_METALS,SLAB1_ICONS).setBlockName("metalSlab1");
-    block_slab2 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB2_METALS,SLAB2_ICONS).setBlockName("metalSlab2");
-    block_slab3 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB3_METALS,SLAB3_ICONS).setBlockName("metalSlab3");
+    block_slab1 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB1_METALS,SLAB1_ICONS);
+    block_slab2 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB2_METALS,SLAB2_ICONS);
+    block_slab3 = (BlockMetalSlab)new BlockMetalSlab(false,null, SLAB3_METALS,SLAB3_ICONS);
     block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab1, SLAB1_METALS,SLAB1_ICONS).setBlockName("metalSlabDouble1");
     block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab2, SLAB2_METALS,SLAB2_ICONS).setBlockName("metalSlabDouble2");
     block_slabdouble3 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab3, SLAB3_METALS,SLAB3_ICONS).setBlockName("metalSlabDouble3");
@@ -167,6 +186,9 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
     GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
     GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
+    ((ItemBlockMulti)Item.getItemFromBlock(block_slab1)).SetSubNames(SLAB1_METALS);
+    ((ItemBlockMulti)Item.getItemFromBlock(block_slab2)).SetSubNames(SLAB2_METALS);
+    ((ItemBlockMulti)Item.getItemFromBlock(block_slab3)).SetSubNames(SLAB3_METALS);
 
     for(i = 0; i < SLAB1_METALS.length; i++)
     {
@@ -206,6 +228,9 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockFoundryMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
+    ((ItemBlockMulti)Item.getItemFromBlock(block_ore)).SetSubNames(BlockFoundryOre.ORE_NAMES);
+    ((ItemBlockMulti)Item.getItemFromBlock(block_metal1)).SetSubNames(BlockMetal1.METAL_NAMES);
+    ((ItemBlockMulti)Item.getItemFromBlock(block_metal2)).SetSubNames(BlockMetal2.METAL_NAMES);
 
     RegisterHalfSlabs(config);
     
@@ -213,7 +238,7 @@ public class FoundryBlocks
     for(i = 0; i < STAIRS_BLOCKS.length; i++)
     {
       MetalStair ms = STAIRS_BLOCKS[i];
-      block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(ms.GetBlock(),ms.block_meta).setBlockName("stairs" + i);
+      block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(ms.GetBlock(),ms.block_meta).setBlockName("metalStairs." + ms.metal);
       GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
       ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
     }

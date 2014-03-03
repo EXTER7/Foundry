@@ -39,6 +39,7 @@ public class BlockMetalSlab extends BlockSlab
     setHardness(5.0F);
     setResistance(10.0F);
     setStepSound(Block.soundTypeMetal);
+    setBlockName("metalSlab");
     if(!is_double)
     {
       useNeighborBrightness = true;

@@ -42,7 +42,7 @@ public class BlockMetal2 extends Block
     super( Material.iron);
     setHardness(1.0F);
     setResistance(8.0F);
-    setBlockName("metalBlock2");
+    setBlockName("metalBlock");
     setStepSound(Block.soundTypeMetal);
     setCreativeTab(FoundryTabBlocks.tab);
   }

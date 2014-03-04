@@ -446,7 +446,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       UpdateInventoryItem(INVENTORY_INPUT);
     }
   }
-  
+
+  static public int GetEnergyPerTickNeeded(int heat)
+  {
+    return (100 + heat * 6000 / HEAT_MAX) / 6;
+  }
 
   @Override
   protected void UpdateEntityServer()
@@ -472,9 +476,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
 
     int last_heat = heat;
+
+    //Heat loss
     if(heat > HEAT_MIN)
     {
-      heat -= heat * 60 / HEAT_MAX + 1;
+      heat -= heat * 240 / HEAT_MAX + 4;
       if(heat < HEAT_MIN)
       {
         heat = HEAT_MIN;
@@ -499,8 +505,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     {
       if(energy_manager.GetStoredEnergy() > 0)
       {
+        //Convert energy to heat
         int energy = energy_manager.UseEnergy(ENERGY_USE, true);
-        heat += energy * 6 / 100;
+        heat += energy * 24 / 100;
         if(heat > HEAT_MAX)
         {
           heat = HEAT_MAX;

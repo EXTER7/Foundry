@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
-public class BlockFoundryOre extends Block
+public class BlockFoundryOre extends Block implements ISubBlocks
 {
   static public final int ORE_COPPER = 0;
   static public final int ORE_TIN = 1;
@@ -103,5 +103,11 @@ public class BlockFoundryOre extends Block
     {
       list.add(new ItemStack(item, 1, i));
     }
+  }
+
+  @Override
+  public String[] GetSubNames()
+  {
+    return ORE_NAMES;
   }
 }

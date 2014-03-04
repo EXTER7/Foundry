@@ -26,7 +26,7 @@ import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 
-public class BlockFoundryMachine extends Block implements ITileEntityProvider
+public class BlockFoundryMachine extends Block implements ITileEntityProvider,ISubBlocks
 {
   private Random rand = new Random();
 
@@ -57,6 +57,14 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     "foundry:caster_bottom",
     "foundry:alloymixer_bottom",
     "foundry:infuser_bottom"
+  };
+
+  static private final String[] NAMES =
+  {
+    "ICF",
+    "Caster",
+    "AlloyMixer",
+    "Infuser"
   };
 
   private IIcon[] icon_top;
@@ -236,5 +244,11 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
     {
       te.UpdateRedstone();
     }
+  }
+
+  @Override
+  public String[] GetSubNames()
+  {
+    return NAMES;
   }
 }

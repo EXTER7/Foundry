@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 
-public class BlockMetal2 extends Block
+public class BlockMetal2 extends Block implements ISubBlocks
 {
   static public final int BLOCK_CUPRONICKEL = 0;
 
@@ -83,5 +83,11 @@ public class BlockMetal2 extends Block
     {
       list.add(new ItemStack(item, 1, i));
     }
+  }
+
+  @Override
+  public String[] GetSubNames()
+  {
+    return METAL_NAMES;
   }
 }

@@ -1,19 +1,26 @@
 package exter.foundry.item;
 
+import exter.foundry.block.ISubBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlockSlab extends ItemBlockMulti
 {
-  public ItemBlockSlab(Block block)
+  public <T extends Block & ISubBlocks> ItemBlockSlab(T block)
   {
     super(block);
-    setHasSubtypes(true);
   }
 
   @Override
-  public int GetSubIndex(ItemStack stack)
+  public int getMetadata(int dmg)
+  {
+    return dmg;
+  }
+  
+  @Override
+  protected int GetSubIndex(ItemStack stack)
   {
     return stack.getItemDamage() & 7;
   }
+  
 }

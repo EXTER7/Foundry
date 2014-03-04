@@ -1,18 +1,22 @@
 package exter.foundry.item;
 
+import exter.foundry.block.ISubBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlockMulti extends ItemBlock
 {
-  private String[] sub_names;
   
-  public ItemBlockMulti(Block block)
+  public <T extends Block & ISubBlocks> ItemBlockMulti(T block)
   {
     super(block);
     setHasSubtypes(true);
-    sub_names = null;
+  }
+  
+  protected int GetSubIndex(ItemStack stack)
+  {
+    return stack.getItemDamage();
   }
 
   @Override
@@ -21,25 +25,15 @@ public class ItemBlockMulti extends ItemBlock
     return dmg;
   }
   
-  public final void SetSubNames(String[] names)
-  {
-    sub_names = names.clone();
-  }
-  
-  protected int GetSubIndex(ItemStack stack)
-  {
-    return stack.getItemDamage();
-  }
-  
   @Override
   public final String getUnlocalizedName(ItemStack stack)
   {
-    if(sub_names != null)
+    int index = GetSubIndex(stack);
+    String[] names = ((ISubBlocks)field_150939_a).GetSubNames();
+    if(index >= names.length)
     {
-      return getUnlocalizedName() + "." + sub_names[GetSubIndex(stack)];
-    } else
-    {
-      return getUnlocalizedName() + String.valueOf(GetSubIndex(stack));
+      return null;
     }
+    return getUnlocalizedName() + "." + names[index];
   }
 }

@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 
-public class BlockMetal1 extends Block
+public class BlockMetal1 extends Block implements ISubBlocks
 {
   static public final int BLOCK_COPPER = 0;
   static public final int BLOCK_TIN = 1;
@@ -143,5 +143,11 @@ public class BlockMetal1 extends Block
     {
       list.add(new ItemStack(item, 1, i));
     }
+  }
+  
+  @Override
+  public String[] GetSubNames()
+  {
+    return METAL_NAMES;
   }
 }

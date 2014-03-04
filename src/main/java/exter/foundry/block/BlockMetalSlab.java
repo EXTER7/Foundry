@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 
-public class BlockMetalSlab extends BlockSlab
+public class BlockMetalSlab extends BlockSlab implements ISubBlocks
 {
   private final String[] metals;
   private final String[] icons;
@@ -161,4 +161,9 @@ public class BlockMetalSlab extends BlockSlab
     return super.getUnlocalizedName() + "." + metals[meta];
   }
 
+  @Override
+  public String[] GetSubNames()
+  {
+    return metals;
+  }
 }

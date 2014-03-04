@@ -10,7 +10,6 @@ import exter.foundry.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -186,9 +185,6 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
     GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
     GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
-    ((ItemBlockMulti)Item.getItemFromBlock(block_slab1)).SetSubNames(SLAB1_METALS);
-    ((ItemBlockMulti)Item.getItemFromBlock(block_slab2)).SetSubNames(SLAB2_METALS);
-    ((ItemBlockMulti)Item.getItemFromBlock(block_slab3)).SetSubNames(SLAB3_METALS);
 
     for(i = 0; i < SLAB1_METALS.length; i++)
     {
@@ -228,9 +224,6 @@ public class FoundryBlocks
     GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockFoundryMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
-    ((ItemBlockMulti)Item.getItemFromBlock(block_ore)).SetSubNames(BlockFoundryOre.ORE_NAMES);
-    ((ItemBlockMulti)Item.getItemFromBlock(block_metal1)).SetSubNames(BlockMetal1.METAL_NAMES);
-    ((ItemBlockMulti)Item.getItemFromBlock(block_metal2)).SetSubNames(BlockMetal2.METAL_NAMES);
 
     RegisterHalfSlabs(config);
     

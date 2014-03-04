@@ -63,10 +63,10 @@ tile.liquidElectrumFlux=Fluxed Liquid Electrum
 tile.liquidGlass.name=Liquid Glass
 
 
-tile.machine0.name=Induction Crucible Furnace
-tile.machine1.name=Metal Caster
-tile.machine2.name=Alloy Mixer
-tile.machine3.name=Metal Infuser
+tile.machine.ICF.name=Induction Crucible Furnace
+tile.machine.Caster.name=Metal Caster
+tile.machine.AlloyMixer.name=Alloy Mixer
+tile.machine.Infuser.name=Metal Infuser
 tile.alloyFurnace.name=Alloy Furnace
 
 tile.metalBlock.Copper.name=Block of Copper

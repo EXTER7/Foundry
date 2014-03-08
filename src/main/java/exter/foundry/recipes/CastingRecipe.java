@@ -2,9 +2,9 @@ package exter.foundry.recipes;
 
 import java.util.List;
 
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -39,7 +39,7 @@ public class CastingRecipe implements ICastingRecipe
     {
       return extra == null;
     }
-    return FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize >= FoundryMiscUtils.GetStackSize(extra);
+    return FoundryUtils.IsItemMatch(stack, extra) && stack.stackSize >= FoundryUtils.GetStackSize(extra);
   }
   
   @Override

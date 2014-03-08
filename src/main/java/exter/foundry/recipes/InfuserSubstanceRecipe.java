@@ -1,8 +1,8 @@
 package exter.foundry.recipes;
 
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -69,6 +69,6 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   @Override
   public boolean MatchesRecipe(ItemStack item_stack)
   {
-    return FoundryMiscUtils.IsItemMatch(item_stack, item);
+    return FoundryUtils.IsItemMatch(item_stack, item);
   }
 }

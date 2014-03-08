@@ -8,6 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -50,7 +51,7 @@ public class ModIntegrationIC2 extends ModIntegration
 
   private void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
   {
-    if(FoundryMiscUtils.IsItemInOreDictionary(oredict_name, item))
+    if(FoundryUtils.IsItemInOreDictionary(oredict_name, item))
     {
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, oredict_name);
     } else

@@ -1,7 +1,7 @@
 package exter.foundry.recipes;
 
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -68,6 +68,6 @@ public class MeltingRecipe implements IMeltingRecipe
   @Override
   public boolean MatchesRecipe(ItemStack item)
   {
-    return FoundryMiscUtils.IsItemMatch(item, solid);
+    return FoundryUtils.IsItemMatch(item, solid);
   }
 }

@@ -1,8 +1,8 @@
 package exter.foundry.recipes;
 
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 
 /*
@@ -71,7 +71,7 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   @Override
   public boolean MatchesRecipe(ItemStack in_a,ItemStack in_b)
   {
-    return FoundryMiscUtils.IsItemMatch(in_a, input_a) && in_a.stackSize >= FoundryMiscUtils.GetStackSize(input_a)
-        && FoundryMiscUtils.IsItemMatch(in_b, input_b) && in_b.stackSize >= FoundryMiscUtils.GetStackSize(input_b);
+    return FoundryUtils.IsItemMatch(in_a, input_a) && in_a.stackSize >= FoundryUtils.GetStackSize(input_a)
+        && FoundryUtils.IsItemMatch(in_b, input_b) && in_b.stackSize >= FoundryUtils.GetStackSize(input_b);
   }
 }

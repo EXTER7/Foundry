@@ -1,9 +1,9 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
@@ -245,12 +245,12 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       progress = 0;
       if(reversed)
       {
-        decrStackSize(SLOT_INPUT_B, FoundryMiscUtils.GetStackSize(recipe.GetInputA()));
-        decrStackSize(SLOT_INPUT_A, FoundryMiscUtils.GetStackSize(recipe.GetInputB()));
+        decrStackSize(SLOT_INPUT_B, FoundryUtils.GetStackSize(recipe.GetInputA()));
+        decrStackSize(SLOT_INPUT_A, FoundryUtils.GetStackSize(recipe.GetInputB()));
       } else
       {
-        decrStackSize(SLOT_INPUT_A, FoundryMiscUtils.GetStackSize(recipe.GetInputA()));
-        decrStackSize(SLOT_INPUT_B, FoundryMiscUtils.GetStackSize(recipe.GetInputB()));
+        decrStackSize(SLOT_INPUT_A, FoundryUtils.GetStackSize(recipe.GetInputA()));
+        decrStackSize(SLOT_INPUT_B, FoundryUtils.GetStackSize(recipe.GetInputB()));
       }
       UpdateInventoryItem(SLOT_INPUT_A);
       UpdateInventoryItem(SLOT_INPUT_B);

@@ -32,6 +32,8 @@ public interface ICastingRecipe
    */
   public Object GetOutput();
 
+  public int GetCastingSpeed();
+
   /**
    * Check if a fluid stack and mold matches this recipe.
    * @param mold_stack mold to check.

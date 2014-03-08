@@ -59,7 +59,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   
   static public final int HEAT_MAX = 500000;
   static public final int HEAT_MIN = 29000;
-  static public final int SMELT_TIME = 50000;
+  static public final int SMELT_TIME = 5000000;
   
   static public final int ENERGY_USE = 4000;
   
@@ -431,10 +431,14 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       progress = 0;
       return;
     }
-    int increment = (heat - melt_point) * 5 / (fs.amount * 4) + 1;
-    if(increment > SMELT_TIME / 15)
+    int increment = (heat - melt_point) * 5 * current_recipe.GetMeltingSpeed() / (fs.amount * 4);
+    if(increment < 1)
     {
-      increment = SMELT_TIME / 15;
+      increment = 1;
+    }
+    if(increment > SMELT_TIME / 4)
+    {
+      increment = SMELT_TIME / 4;
     }
     progress += increment;
     if(progress >= SMELT_TIME)

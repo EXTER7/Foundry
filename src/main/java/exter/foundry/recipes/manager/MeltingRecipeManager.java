@@ -41,13 +41,19 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   @Override
   public void AddRecipe(Object solid,FluidStack fluid_stack)
   {
-    recipes.add(new MeltingRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature()));
+    AddRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature(),100);
   }
   
   @Override
   public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point)
   {
-    recipes.add(new MeltingRecipe(solid,fluid_stack,melting_point));
+    AddRecipe(solid,fluid_stack,melting_point,100);
+  }
+
+  @Override
+  public void AddRecipe(Object solid, FluidStack fluid_stack, int melting_point, int melting_speed)
+  {
+    recipes.add(new MeltingRecipe(solid,fluid_stack,melting_point,melting_speed));
   }
 
   @Override
@@ -55,5 +61,6 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   {
     return Collections.unmodifiableList(recipes);
   }
+
 
 }

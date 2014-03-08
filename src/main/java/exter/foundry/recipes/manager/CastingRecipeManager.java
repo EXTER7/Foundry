@@ -24,11 +24,17 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
+  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
+  {
+    recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra,cast_speed));
+  }
+
+  @Override
   public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
   {
-    recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra));
+    AddRecipe(result,in_fluid,in_mold,in_extra,100);
   }
-  
+
   @Override
   public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold)
   {

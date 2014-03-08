@@ -20,6 +20,16 @@ public interface ICastingRecipeManager
   public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra);
 
   /**
+   * Register a Metal Caster recipe.
+   * Note: the mold must be registered with {@link RegisterMold}.
+   * @param result Item produced.
+   * @param in_fluid Fluid required (fluid type and amount).
+   * @param in_mold Mold required.
+   * @param in_extra Extra item required (null, if no extra item is required), can be an {@link ItemStack}, or {@link OreStack}.
+   */
+  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int speed);
+
+  /**
    * Register an item as a mold. Only registered items are accepted in the Metal Caster's mold slot.
    * @param mold Item to be registered.
    */

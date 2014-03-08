@@ -29,4 +29,6 @@ public interface IMeltingRecipe
    * @return true, if the item matches, false otherwise.
    */
   public boolean MatchesRecipe(ItemStack item);
+  
+  public int GetMeltingSpeed();
 }

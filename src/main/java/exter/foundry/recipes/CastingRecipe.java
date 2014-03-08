@@ -14,11 +14,13 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class CastingRecipe implements ICastingRecipe
 {
-  public final FluidStack fluid;
-  public final ItemStack mold;
-  public final Object extra;
+  private final FluidStack fluid;
+  private final ItemStack mold;
+  private final Object extra;
   
   private final Object output;
+  
+  private final int speed;
   
   @Override
   public FluidStack GetInputFluid()
@@ -92,7 +94,7 @@ public class CastingRecipe implements ICastingRecipe
     }
   }
 
-  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
+  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
   {
     if(result instanceof ItemStack)
     {
@@ -120,6 +122,11 @@ public class CastingRecipe implements ICastingRecipe
       }
       extra = null;
     }
+    if(cast_speed < 1)
+    {
+      throw new IllegalArgumentException("Casting recipe speed must be > 0.");
+    }
+    speed = cast_speed;
   }
   
   @Override
@@ -130,5 +137,11 @@ public class CastingRecipe implements ICastingRecipe
       return false;
     }
     return fluid_stack != null && fluid_stack.containsFluid(fluid) && mold_stack != null && mold.isItemEqual(mold_stack) && ItemStack.areItemStackTagsEqual(mold, mold_stack);
+  }
+
+  @Override
+  public int GetCastingSpeed()
+  {
+    return speed;
   }
 }

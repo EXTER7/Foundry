@@ -59,7 +59,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
-  static public final int CAST_TIME = 4000;
+  static public final int CAST_TIME = 400000;
   
   static public final int ENERGY_REQUIRED = 10000;
   
@@ -468,14 +468,14 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
       if(CanCastCurrentRecipe())
       {
         FluidStack input_fluid = current_recipe.GetInputFluid();
-        int increment = 18000 / input_fluid.amount;
-        if(increment > CAST_TIME / 15)
+        int increment = 18000 * current_recipe.GetCastingSpeed() / input_fluid.amount;
+        if(increment > CAST_TIME / 4)
         {
-          increment = CAST_TIME / 15;
+          increment = CAST_TIME / 4;
         }
-        if(increment < 30)
+        if(increment < 1)
         {
-          increment = 30;
+          increment = 1;
         }
         progress += increment;
         

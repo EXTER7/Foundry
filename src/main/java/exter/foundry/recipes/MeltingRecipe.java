@@ -15,20 +15,24 @@ public class MeltingRecipe implements IMeltingRecipe
   /**
    * Produced fluid and amount.
    */
-  public final FluidStack fluid;
+  private final FluidStack fluid;
 
   /**
    * Item required.
    * It can be an {@link ItemStack} of the item or a @{link String} of it's Ore Dictionary name.
    */
-  public final Object solid;
+  private final Object solid;
   
   /**
    * Melting point of the item in K.
    */
-  public final int melting_point;
+  private final int melting_point;
   
-  public MeltingRecipe(Object item,FluidStack fluid_stack, int melt)
+  
+  private final int melting_speed;
+  
+  
+  public MeltingRecipe(Object item,FluidStack fluid_stack, int melt, int speed)
   {
     if(!(item instanceof ItemStack) && !(item instanceof String) && !(item instanceof Item) && !(item instanceof Block))
     {
@@ -42,7 +46,16 @@ public class MeltingRecipe implements IMeltingRecipe
       solid = item;
     }
     fluid = fluid_stack.copy();
+    if(melt <= 295)
+    {
+      throw new IllegalArgumentException("Melting recipe melting point must be > 295.");
+    }
     melting_point = melt;
+    if(speed < 1)
+    {
+      throw new IllegalArgumentException("Melting recipe speed must be > 0.");
+    }
+    melting_speed = speed;
   }
   
   public Object GetInput()
@@ -69,5 +82,11 @@ public class MeltingRecipe implements IMeltingRecipe
   public boolean MatchesRecipe(ItemStack item)
   {
     return FoundryUtils.IsItemMatch(item, solid);
+  }
+
+  @Override
+  public int GetMeltingSpeed()
+  {
+    return melting_speed;
   }
 }

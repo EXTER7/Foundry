@@ -8,9 +8,17 @@ import exter.foundry.api.recipe.IMeltingRecipe;
 
 public interface IMeltingRecipeManager
 {
+  /**
+   * Register a ICF recipe
+   * @param solid Can be an {@link ItemStack}, {@link Item}, {@link Block} of the item, or a {@link String} of the Ore Dictionary name of the item to be melted
+   * @param fluid_stack Resulting fluid
+   * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
+   * @param melting_speed. Speed in which the item melts. Default is 100.
+   */
+  public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point,int melting_speed);
   
   /**
-   * Register a Metal Smelter recipe
+   * Register a ICF recipe
    * @param solid Can be an {@link ItemStack}, {@link Item}, {@link Block} of the item, or a {@link String} of the Ore Dictionary name of the item to be melted
    * @param fluid_stack Resulting fluid
    * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
@@ -18,7 +26,7 @@ public interface IMeltingRecipeManager
   public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point);
 
   /**
-   * Register a Metal Smelter recipe.
+   * Register a ICF recipe.
    * Uses the fluid's temperature as it's melting point.
    * @param solid Can be an {@link ItemStack}, {@link Item}, {@link Block} of the item, or a {@link String} of the Ore Dictionary name of the item to be melted
    * @param fluid_stack Resulting fluid

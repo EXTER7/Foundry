@@ -10,6 +10,7 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
@@ -485,7 +486,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           tank.drain(input_fluid.amount, true);
           if(current_recipe.RequiresExtra())
           {
-            decrStackSize(INVENTORY_EXTRA, current_recipe.GetInputExtraAmount());
+            decrStackSize(INVENTORY_EXTRA, FoundryMiscUtils.GetStackSize(current_recipe.GetInputExtra()));
             UpdateInventoryItem(INVENTORY_EXTRA);
           }
           if(inventory[INVENTORY_OUTPUT] == null)

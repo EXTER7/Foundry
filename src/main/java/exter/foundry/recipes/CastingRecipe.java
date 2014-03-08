@@ -2,6 +2,7 @@ package exter.foundry.recipes;
 
 import java.util.List;
 
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,6 @@ public class CastingRecipe implements ICastingRecipe
   public final FluidStack fluid;
   public final ItemStack mold;
   public final Object extra;
-  public final int extra_amount;
   
   private final Object output;
   
@@ -39,7 +39,7 @@ public class CastingRecipe implements ICastingRecipe
     {
       return extra == null;
     }
-    return (FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize >= extra_amount);
+    return FoundryMiscUtils.IsItemMatch(stack, extra) && stack.stackSize >= FoundryMiscUtils.GetStackSize(extra);
   }
   
   @Override
@@ -54,6 +54,9 @@ public class CastingRecipe implements ICastingRecipe
     if(extra instanceof ItemStack)
     {
       return ((ItemStack)extra).copy();
+    } else if(extra instanceof OreStack)
+    {
+      return new OreStack((OreStack)extra);
     }
     return extra;
   }
@@ -89,7 +92,7 @@ public class CastingRecipe implements ICastingRecipe
     }
   }
 
-  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,String in_extra,int in_extra_amount)
+  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
   {
     if(result instanceof ItemStack)
     {
@@ -103,39 +106,20 @@ public class CastingRecipe implements ICastingRecipe
     }
     fluid = in_fluid.copy();
     mold = in_mold.copy();
-    extra = in_extra;
-    extra_amount = in_extra_amount;
-  }
-
-  public CastingRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,ItemStack in_extra)
-  {
-    if(result instanceof ItemStack)
+    if(in_extra instanceof OreStack)
     {
-      output = ((ItemStack)result).copy();
-    } else if(result instanceof String)
+      extra = new OreStack((OreStack)in_extra);
+    } else if(in_extra instanceof ItemStack)
     {
-      output = result;
+      extra = ((ItemStack)in_extra).copy();
     } else
     {
-      throw new IllegalArgumentException("Casting recipe result is not of a valid class.");
-    }
-    fluid = in_fluid.copy();
-    mold = in_mold.copy();
-    if(in_extra != null)
-    {
-      extra = in_extra.copy();
-      extra_amount = in_extra.stackSize;
-    } else
-    {
+      if(in_extra != null)
+      {
+        throw new IllegalArgumentException("Casting recipe extra item is not of a valid class.");
+      }
       extra = null;
-      extra_amount = 0;
     }
-  }
-
-  @Override
-  public int GetInputExtraAmount()
-  {
-    return extra_amount;
   }
   
   @Override

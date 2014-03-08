@@ -566,5 +566,4 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   {
     return 4000;
   }
-
 }

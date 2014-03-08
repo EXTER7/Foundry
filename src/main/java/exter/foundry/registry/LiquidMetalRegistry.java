@@ -7,7 +7,6 @@ import java.util.Set;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.registry.IFluidRegistry;
@@ -56,7 +55,6 @@ public class LiquidMetalRegistry implements IFluidRegistry
     }
     Block liquid_block = new BlockLiquidMetal(fluid, Material.lava,"liquid" + metal_name,solid);
     liquid_block.setBlockName("liquid" + metal_name);
-    LanguageRegistry.addName(liquid_block, "Liquid " + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 
     fluid.setBlock(liquid_block);

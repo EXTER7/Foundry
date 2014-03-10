@@ -1,4 +1,4 @@
-package exter.foundry.api.recipe;
+package exter.foundry.api.substance;
 
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
@@ -24,4 +24,10 @@ public interface ISubstanceGuiTexture
    * @return The Y coordinate offset of the substance in the texture.
    */
   public int GetY();
+  
+  /**
+   * Get the color of the substance.
+   * @return The color of the substance.
+   */
+  public int GetColor();
 }

@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.recipe.ISubstanceGuiTexture;
+import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
@@ -92,7 +92,9 @@ public class GuiMetalInfuser extends GuiFoundry
       mc.renderEngine.bindTexture(tex.GetLocation());
       int height = sub.amount * TANK_HEIGHT / FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
+      SetColor(tex.GetColor());
       drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.GetX(), tex.GetY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+      GL11.glColor4f(1.0f,1.0f,1.0f,1.0f);
       mc.renderEngine.bindTexture(GetGUITexture());
     }
   }

@@ -13,8 +13,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
-import exter.foundry.api.recipe.ISubstanceGuiTexture;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
+import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.InfuserSubstanceRecipe;
@@ -44,12 +44,19 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   {
     substance_textures = new HashMap<String,ISubstanceGuiTexture>();
   }
+  
   @SideOnly(Side.CLIENT)
   public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y)
   {
-    substance_textures.put(substance_type, new SubstanceGuiTexture(texture_path,pos_x,pos_y));
+    RegisterSubstanceTexture(substance_type,texture_path,pos_x,pos_y,0xFFFFFF);
   }
-  
+
+  @SideOnly(Side.CLIENT)
+  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color)
+  {
+    substance_textures.put(substance_type, new SubstanceGuiTexture(texture_path,pos_x,pos_y,texture_color));
+  }
+
   /**
    * Get a substance's texture from it's name.
    * @param name Substance name. e.g: "Carbon".

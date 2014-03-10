@@ -103,10 +103,7 @@ public abstract class GuiFoundry extends GuiContainer
     {
       mc.renderEngine.bindTexture(BLOCK_TEXTURE);
       int color = fluid.getColor(liquid);
-      float red = (float) (color >> 16 & 255) / 255.0F;
-      float green = (float) (color >> 8 & 255) / 255.0F;
-      float blue = (float) (color & 255) / 255.0F;
-      GL11.glColor4f(red, green, blue, 1.0f);
+      SetColor(color);
       while(true)
       {
         int i;
@@ -142,5 +139,14 @@ public abstract class GuiFoundry extends GuiContainer
     }
 
     drawTexturedModalRect(window_x + x, window_y + y, overlay_x, overlay_y, 16, tank_height);
+  }
+
+
+  protected void SetColor(int color)
+  {
+    float red = (float) (color >> 16 & 255) / 255.0F;
+    float green = (float) (color >> 8 & 255) / 255.0F;
+    float blue = (float) (color & 255) / 255.0F;
+    GL11.glColor4f(red, green, blue, 1.0f);
   }
 }

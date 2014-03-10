@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
-import exter.foundry.api.recipe.ISubstanceGuiTexture;
+import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +42,7 @@ public interface IInfuserRecipeManager
    * Get a list of all the substance recipes
    * @return List of all the substance recipes
    */
-  public List<? extends IInfuserSubstanceRecipe> GetSubstanceRecipes();
+  public List<IInfuserSubstanceRecipe> GetSubstanceRecipes();
 
   /**
    * Register a texture for a substance
@@ -53,6 +53,17 @@ public interface IInfuserRecipeManager
    */
   @SideOnly(Side.CLIENT)
   public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y);
+
+  /**
+   * Register a texture for a substance
+   * @param substance_type Substance name. e.g: "Carbon"
+   * @param texture_path Location of the texture
+   * @param pos_x X coordinate in the texture
+   * @param pos_y Y coordinate in the texture
+   * @param texture_color color of the texture
+   */
+  @SideOnly(Side.CLIENT)
+  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color);
 
   /**
    * Get the substance GUI textures mapped by the type.

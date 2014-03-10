@@ -36,15 +36,22 @@ public class LiquidMetalRegistry implements IFluidRegistry
   }
 
   /**
-   * Helper method to register a metal's fluid, block, melting, and casting.
-   * @param config Forge Configuration file.
+   * Helper method to register a metal's fluid, and block.
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
-   * @param default_container_id Default item id of the fluid container.
    */
-  public Fluid RegisterLiquidMetal(Configuration config,String metal_name,int temperature,int luminosity)
+  public Fluid RegisterLiquidMetal(String metal_name,int temperature,int luminosity)
   {
 
-    Fluid fluid = new Fluid("liquid" + metal_name).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
+    return RegisterLiquidMetal(metal_name,temperature,luminosity,"liquid" + metal_name,0xFFFFFF);
+  }
+
+  /**
+   * Helper method to register a metal's fluid, and block.
+   * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
+   */
+  public Fluid RegisterLiquidMetal(String metal_name,int temperature,int luminosity,String texture,int color)
+  {
+    Fluid fluid = new ColoredFluid("liquid" + metal_name).SetColor(color).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
     String block_name = "block" + metal_name;
@@ -53,7 +60,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     {
       solid = block_name;
     }
-    Block liquid_block = new BlockLiquidMetal(fluid, Material.lava,"liquid" + metal_name,solid);
+    Block liquid_block = new BlockLiquidMetal(fluid, Material.lava,texture,solid);
     liquid_block.setBlockName("liquid" + metal_name);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 
@@ -63,7 +70,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     registry.put(metal_name, fluid);
     return fluid;
   }
-  
+
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void textureHook(TextureStitchEvent.Post event)

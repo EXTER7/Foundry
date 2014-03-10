@@ -133,25 +133,25 @@ public class ModFoundry
     FoundryConfig.Load(config);
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
-    Fluid liquid_iron = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Iron", 1850, 15);
-    Fluid liquid_gold = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Gold", 1350, 15);
-    Fluid liquid_copper = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Copper", 1400, 15);
-    Fluid liquid_tin = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Tin", 550, 7);
-    Fluid liquid_bronze = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Bronze", 1400, 15);
-    Fluid liquid_electrum = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Electrum", 1350, 15);
-    Fluid liquid_invar = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Invar", 1850, 15);
-    Fluid liquid_nickel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Nickel", 1750, 15);
-    Fluid liquid_zinc = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Zinc", 700, 15);
-    Fluid liquid_brass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Brass", 1400, 15);
-    Fluid liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Silver", 1250, 15);
-    Fluid liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Steel", 1850, 15);
-    Fluid liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Cupronickel", 1750, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Lead", 650, 1);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Aluminum", 1100, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Chromium", 2200, 8);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Platinum", 2050, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Manganese", 1550, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Titanium", 2000, 15);
+    Fluid liquid_iron = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Iron", 1850, 15);
+    Fluid liquid_gold = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Gold", 1350, 15);
+    Fluid liquid_copper = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Copper", 1400, 15);
+    Fluid liquid_tin = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Tin", 550, 7);
+    Fluid liquid_bronze = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Bronze", 1400, 15);
+    Fluid liquid_electrum = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Electrum", 1350, 15);
+    Fluid liquid_invar = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Invar", 1850, 15);
+    Fluid liquid_nickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Nickel", 1750, 15);
+    Fluid liquid_zinc = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Zinc", 700, 15);
+    Fluid liquid_brass = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Brass", 1400, 15);
+    Fluid liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Silver", 1250, 15);
+    Fluid liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steel", 1850, 15);
+    Fluid liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Cupronickel", 1750, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aluminum", 1100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Chromium", 2200, 8);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Platinum", 2050, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manganese", 1550, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Titanium", 2000, 15);
     
     ModIntegration.PreInit(config);
 
@@ -377,7 +377,7 @@ public class ModFoundry
            
     if(FoundryConfig.recipe_glass)
     {
-      Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Glass", 1550, 12);
+      Fluid liquid_glass = LiquidMetalRegistry.instance.RegisterLiquidMetal("Glass", 1550, 12);
 
       int temp = liquid_glass.getTemperature();
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);

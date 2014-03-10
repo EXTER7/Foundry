@@ -21,7 +21,7 @@ public interface IInfuserRecipeManager
    * @param in_fluid Fluid required (fluid type and amount).
    * @param in_substance Substance required (substance type and amount).
    */
-  public void AddRecipe(FluidStack result,FluidStack fluid,String substance_type,int substance_amount);
+  public void AddRecipe(FluidStack result,FluidStack fluid,InfuserSubstance substance);
 
   /**
    * Get a list of all the recipes

@@ -26,6 +26,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
 {
   private String texture_name;
   private Object solid;
+  private int color;
 
   public BlockLiquidMetal(Fluid fluid, Material material,String texture,Object solid_block)
   {
@@ -34,6 +35,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
     setLightLevel(1.0f);
     texture_name = texture;
     solid = solid_block;
+    color = fluid.getColor();
     setBlockName(fluid.getUnlocalizedName()+"Block");
     setCreativeTab(FoundryTabBlocks.tab);
   }
@@ -199,5 +201,12 @@ public class BlockLiquidMetal extends BlockFluidClassic
       }
       entity.setFire(15);
     }
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public int getRenderColor(int meta)
+  {
+    return color;
   }
 }

@@ -54,7 +54,7 @@ public class ModIntegrationTE3 extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    Fluid liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal(config, "Enderium", 1900, 12);
+    Fluid liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
     FoundryUtils.RegisterBasicMeltingRecipes("Enderium", liquid_enderium);
   }
 

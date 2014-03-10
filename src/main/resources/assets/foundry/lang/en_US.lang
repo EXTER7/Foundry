@@ -23,10 +23,42 @@ fluid.liquidNichrome=Liquid Nichrome
 fluid.liquidEnderium=Liquid Enderium
 fluid.liquidElectrumFlux=Fluxed Liquid Electrum
 fluid.liquidGlass=Liquid Glass
+fluid.liquidGlass.black=Liquid Glass (Black)
+fluid.liquidGlass.red=Liquid Glass (Red)
+fluid.liquidGlass.green=Liquid Glass (Green)
+fluid.liquidGlass.brown=Liquid Glass (Brown)
+fluid.liquidGlass.blue=Liquid Glass (Blue)
+fluid.liquidGlass.purple=Liquid Glass (Purple)
+fluid.liquidGlass.cyan=Liquid Glass (Cyan)
+fluid.liquidGlass.silver=Liquid Glass (Light Gray)
+fluid.liquidGlass.gray=Liquid Glass (Gray)
+fluid.liquidGlass.pink=Liquid Glass (Pink)
+fluid.liquidGlass.lime=Liquid Glass (Lime)
+fluid.liquidGlass.yellow=Liquid Glass (Yellow)
+fluid.liquidGlass.light_blue=Liquid Glass (Light Blue)
+fluid.liquidGlass.magenta=Liquid Glass (Magenta)
+fluid.liquidGlass.orange=Liquid Glass (Orange)
+fluid.liquidGlass.white=Liquid Glass (White)
 
 
 substance.carbon=Carbon
-
+substance.dye.black=Black Dye
+substance.dye.red=Red Dye
+substance.dye.green=Green Dye
+substance.dye.brown=Brown Dye
+substance.dye.blue=Blue Dye
+substance.dye.purple=Purple Dye
+substance.dye.cyan=Cyan Dye
+substance.dye.silver=Light Gray Dye
+substance.dye.gray=Gray Dye
+substance.dye.pink=Pink Dye
+substance.dye.lime=Lime Dye
+substance.dye.yellow=Yellow Dye
+substance.dye.light_blue=Light Blue Dye
+substance.dye.magenta=Magenta Dye
+substance.dye.orange=Orange Dye
+substance.dye.white=White Dye
+    
 
 itemGroup.foundryMaterials=Foundry - Materials
 itemGroup.foundryBlocks=Foundry - Blocks
@@ -61,6 +93,22 @@ tile.liquidNichrome.name=Liquid Nichrome
 tile.liquidEnderium.name=Liquid Enderium
 tile.liquidElectrumFlux=Fluxed Liquid Electrum
 tile.liquidGlass.name=Liquid Glass
+tile.liquidGlass.black.name=Liquid Glass (Black)
+tile.liquidGlass.red.name=Liquid Glass (Red)
+tile.liquidGlass.green.name=Liquid Glass (Green)
+tile.liquidGlass.brown.name=Liquid Glass (Brown)
+tile.liquidGlass.blue.name=Liquid Glass (Blue)
+tile.liquidGlass.purple.name=Liquid Glass (Purple)
+tile.liquidGlass.cyan.name=Liquid Glass (Cyan)
+tile.liquidGlass.silver.name=Liquid Glass (Light Gray)
+tile.liquidGlass.gray.name=Liquid Glass (Gray)
+tile.liquidGlass.pink.name=Liquid Glass (Pink)
+tile.liquidGlass.lime.name=Liquid Glass (Lime)
+tile.liquidGlass.yellow.name=Liquid Glass (Yellow)
+tile.liquidGlass.light_blue.name=Liquid Glass (Light Blue)
+tile.liquidGlass.magenta.name=Liquid Glass (Magenta)
+tile.liquidGlass.orange.name=Liquid Glass (Orange)
+tile.liquidGlass.white.name=Liquid Glass (White)
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

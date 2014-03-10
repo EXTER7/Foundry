@@ -69,9 +69,9 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddRecipe(FluidStack result,FluidStack in_fluid,String substance_type,int substance_amount)
+  public void AddRecipe(FluidStack result,FluidStack in_fluid,InfuserSubstance substance)
   {
-    recipes.add(new InfuserRecipe(result,in_fluid,new InfuserSubstance(substance_type,substance_amount)));
+    recipes.add(new InfuserRecipe(result,in_fluid,substance));
   }
   
   @Override

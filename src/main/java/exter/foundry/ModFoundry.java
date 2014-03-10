@@ -385,7 +385,7 @@ public class ModFoundry
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),mold_block,null,350);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),mold_block,null,400);
       
       for(i = 0; i < ItemDye.field_150921_b/*icon_names*/.length; i++)
       {
@@ -401,12 +401,11 @@ public class ModFoundry
         int meta = ~i & 15;
         MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),temp,250);
         MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass_pane,1,i), new FluidStack(liquid_glass_colored,375),temp,250);
-        CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),mold_block,null,350);
+        CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),mold_block,null,400);
         
-        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("dye." + name,100), oredict_names[i], 1000);
-        InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_glass_colored,80),new FluidStack(liquid_glass,80),new InfuserSubstance("dye." + name,1));
+        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[i], 25000);
+        InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
       }
-      
     }
 
     config.save();

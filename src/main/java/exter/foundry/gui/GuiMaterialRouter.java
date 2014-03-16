@@ -15,6 +15,7 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 @SideOnly(Side.CLIENT)
 public class GuiMaterialRouter extends GuiFoundry
@@ -36,7 +37,9 @@ public class GuiMaterialRouter extends GuiFoundry
     }
     
     public abstract void Draw(int x,int y);
-    
+
+    public abstract void DrawTooltip(int x,int y);
+
     public abstract void OnClick();
     
     public final String GetName()
@@ -60,6 +63,14 @@ public class GuiMaterialRouter extends GuiFoundry
     }
 
     @Override
+    public void DrawTooltip(int x,int y)
+    {
+      List<String> tooltip = new ArrayList<String>();
+      tooltip.add(StatCollector.translateToLocal("router.material." + name));
+      drawHoveringText(tooltip, x, y, fontRendererObj);
+    }
+
+    @Override
     public void OnClick()
     {
       te_router.gui_material_selected = index;
@@ -79,6 +90,14 @@ public class GuiMaterialRouter extends GuiFoundry
     public void Draw(int x, int y)
     {
       DrawTypeIcon(x,y,name);
+    }
+
+    @Override
+    public void DrawTooltip(int x,int y)
+    {
+      List<String> tooltip = new ArrayList<String>();
+      tooltip.add(StatCollector.translateToLocal("router.type." + name));
+      drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
     @Override
@@ -157,9 +176,60 @@ public class GuiMaterialRouter extends GuiFoundry
   public void drawScreen(int mousex, int mousey, float par3)
   {
     super.drawScreen(mousex, mousey, par3);
-    //int window_x = (width - xSize) / 2;
-    //int window_y = (height - ySize) / 2;
+
+    int i;
+    for(i = 0; i < 8; i++)
+    {
+      int index = i ;//+ material_scroll;
+      if(index >= material_slots.size())
+      {
+        break;
+      }
+      FilterSlot slot = material_slots.get(index);
+      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,mousex,mousey))
+      {
+        slot.DrawTooltip(mousex,mousey);
+      }
+    }
+
+    for(i = 0; i < 8; i++)
+    {
+      int index = i ;//+ type_scroll;
+      if(index >= type_slots.size())
+      {
+        break;
+      }
+      FilterSlot slot = type_slots.get(index);
+      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,mousex,mousey))
+      {
+        slot.DrawTooltip(mousex,mousey);
+      }
+    }
     
+    List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
+    for(i = 0; i < 4; i++)
+    {
+      int index = i ;//+ route_scroll;
+      if(index >= routes.size())
+      {
+        break;
+      }
+      
+      TileEntityMaterialRouter.Route r = routes.get(index);
+      int y = 49 + i * 17;
+      if(func_146978_c/*isPointInRegion*/(29,y,16,16,mousex,mousey))
+      {
+        List<String> tooltip = new ArrayList<String>();
+        tooltip.add(StatCollector.translateToLocal("router.material." + r.material));
+        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+      }
+      if(func_146978_c/*isPointInRegion*/(46,y,16,16,mousex,mousey))
+      {
+        List<String> tooltip = new ArrayList<String>();
+        tooltip.add(StatCollector.translateToLocal("router.type." + r.type));
+        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+      }
+    }
   }
 
   @Override

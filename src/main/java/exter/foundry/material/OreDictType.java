@@ -22,6 +22,7 @@ public class OreDictType
     new OreDictType("dustTiny","Iron", "TinyDust"),
     new OreDictType("dustSmall","Iron", "SmallDust"),
     new OreDictType("plate","Iron", "Plate"),
-    new OreDictType("gear","Stone", "Gear")
+    new OreDictType("gear","Stone", "Gear"),
+    new OreDictType("gem","Diamond", "Gem")
   };
 }

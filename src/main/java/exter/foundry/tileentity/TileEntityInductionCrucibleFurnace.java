@@ -1,10 +1,8 @@
 package exter.foundry.tileentity;
 
-import java.io.IOException;
-
-import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBuf;
 import exter.foundry.ModFoundry;
-import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -83,7 +81,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   {
     super();
     inventory = new ItemStack[3];
-    tank = new FluidTank(FoundryUtils.ICF_TANK_CAPACITY);
+    tank = new FluidTank(FoundryAPI.ICF_TANK_CAPACITY);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
@@ -176,7 +174,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public void ReceivePacketData(ByteBufInputStream data) throws IOException
+  public void ReceivePacketData(ByteBuf data)
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }

@@ -1,11 +1,9 @@
 package exter.foundry.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 
-import java.io.IOException;
+import java.util.List;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
@@ -15,8 +13,9 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityFoundryPowered;
+import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -35,7 +34,7 @@ public class FoundryNetworkChannel
     network_channel.register(this);
   }
 
-  static private void WriteTileEntityCoords(ByteBufOutputStream data,TileEntity sender) throws IOException
+  static private void WriteTileEntityCoords(ByteBuf data,TileEntity sender)
   {
     data.writeInt(sender.xCoord);
     data.writeInt(sender.yCoord);
@@ -45,54 +44,48 @@ public class FoundryNetworkChannel
 
   static private FMLProxyPacket MakeCasterModePacket(TileEntityMetalCaster sender)
   {
-    ByteBuf bytes = Unpooled.buffer();
-    ByteBufOutputStream data = new ByteBufOutputStream(bytes);
-    try
-    {
-      WriteTileEntityCoords(data,sender);
+    ByteBuf data = Unpooled.buffer();
+    WriteTileEntityCoords(data,sender);
+    data.writeByte(sender.GetMode().number);
 
-      data.writeByte(sender.GetMode().number);
-    } catch(IOException e)
-    {
-      e.printStackTrace();
-    }
-
-    return new FMLProxyPacket(bytes, CHANNEL_NAME);
+    return new FMLProxyPacket(data, CHANNEL_NAME);
   }
 
   static private FMLProxyPacket MakeICFModePacket(TileEntityInductionCrucibleFurnace sender)
   {
-    ByteBuf bytes = Unpooled.buffer();
-    ByteBufOutputStream data = new ByteBufOutputStream(bytes);
-    try
-    {
-      WriteTileEntityCoords(data,sender);
-      
-      data.writeByte(sender.GetMode().number);
-    } catch(IOException e)
-    {
-      e.printStackTrace();
-    }
-    return new FMLProxyPacket(bytes, CHANNEL_NAME);
+    ByteBuf data = Unpooled.buffer();
+    WriteTileEntityCoords(data,sender);
+    data.writeByte(sender.GetMode().number);
+    return new FMLProxyPacket(data, CHANNEL_NAME);
   }
   
 
   static private FMLProxyPacket MakeAlloyMixerModePacket(TileEntityAlloyMixer sender)
   {
-    ByteBuf bytes = Unpooled.buffer();
-    ByteBufOutputStream data = new ByteBufOutputStream(bytes);
-    try
-    {
-      WriteTileEntityCoords(data,sender);
-      
-      data.writeByte(sender.GetMode().number);
-    } catch(IOException e)
-    {
-      e.printStackTrace();
-    }
-    return new FMLProxyPacket(bytes, CHANNEL_NAME);
+    ByteBuf data = Unpooled.buffer();
+    WriteTileEntityCoords(data,sender);
+    data.writeByte(sender.GetMode().number);
+    return new FMLProxyPacket(data, CHANNEL_NAME);
   }
 
+  private FMLProxyPacket MakeMateralRouterPacket(TileEntityMaterialRouter sender)
+  {
+    ByteBuf data = Unpooled.buffer(512);
+    WriteTileEntityCoords(data,sender);
+    data.writeInt(sender.gui_material_scroll);
+    data.writeInt(sender.gui_type_scroll);
+    data.writeInt(sender.gui_route_scroll);
+    data.writeInt(sender.gui_material_selected);
+    data.writeInt(sender.gui_type_selected);
+    List<TileEntityMaterialRouter.Route> routes = sender.GetRoutes();
+    data.writeInt(routes.size());
+    for(TileEntityMaterialRouter.Route r:routes)
+    {
+      r.WriteToPacket(data);
+    }
+    return new FMLProxyPacket(data, CHANNEL_NAME);
+  }
+  
   public void SendCasterModeToServer(TileEntityMetalCaster sender)
   {
     network_channel.sendToServer(MakeCasterModePacket(sender));
@@ -129,7 +122,20 @@ public class FoundryNetworkChannel
         new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
   }
 
-  private void OnTEPacketData(ByteBufInputStream data, World world, int x, int y, int z) throws IOException
+  
+  public void SendMaterialRouterPacketToServer(TileEntityMaterialRouter sender)
+  {
+    network_channel.sendToServer(MakeMateralRouterPacket(sender));
+  }
+
+  public void SendMaterialRouterPacketToClients(TileEntityMaterialRouter sender)
+  {
+    network_channel.sendToAllAround(
+        MakeMateralRouterPacket(sender),
+        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+  }
+
+  private void OnTEPacketData(ByteBuf data, World world, int x, int y, int z)
   {
     if(world != null)
     {
@@ -137,9 +143,9 @@ public class FoundryNetworkChannel
 
       if(tileEntity != null)
       {
-        if(tileEntity instanceof TileEntityFoundryPowered)
+        if(tileEntity instanceof TileEntityFoundry)
         {
-          ((TileEntityFoundryPowered) tileEntity).ReceivePacketData(data);
+          ((TileEntityFoundry) tileEntity).ReceivePacketData(data);
         }
       }
     }
@@ -150,7 +156,7 @@ public class FoundryNetworkChannel
   {
     try
     {
-      ByteBufInputStream data = new ByteBufInputStream(event.packet.payload());
+      ByteBuf data = event.packet.payload();
       int x = data.readInt();
       int y = data.readInt();
       int z = data.readInt();
@@ -171,7 +177,7 @@ public class FoundryNetworkChannel
   {
     try
     {
-      ByteBufInputStream data = new ByteBufInputStream(event.packet.payload());
+      ByteBuf data = event.packet.payload();
       int x = data.readInt();
       int y = data.readInt();
       int z = data.readInt();

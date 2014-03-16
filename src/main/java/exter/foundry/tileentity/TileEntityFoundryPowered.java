@@ -4,9 +4,6 @@ package exter.foundry.tileentity;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
-import io.netty.buffer.ByteBufInputStream;
-
-import java.io.IOException;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -210,10 +207,5 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
   {
     return true;
-  }
-  
-  public void ReceivePacketData(ByteBufInputStream data) throws IOException
-  {
-    
   }
 }

@@ -3,7 +3,6 @@ package exter.foundry.api;
 import java.util.List;
 
 import exter.foundry.api.orestack.OreStack;
-import exter.foundry.api.recipe.FoundryRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -15,18 +14,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class FoundryUtils
 {
 
-  /**
-   * Maximum amount of substance a metal infuser can store.
-   */
-  static public final int INFUSER_SUBSTANCE_AMOUNT_MAX = 1000;
-
-  /**
-   * Tank capacity for machines.
-   */
-  static public final int ICF_TANK_CAPACITY = 6000;
-  static public final int CASTER_TANK_CAPACITY = 6000;
-  static public final int INFUSER_TANK_CAPACITY = 5000;
-  static public final int ALLOYMIXER_TANK_CAPACITY = 2000;
 
   /**
    * Helper method for registering basic melting recipes for a given metal.
@@ -35,13 +22,13 @@ public class FoundryUtils
    */
   static public void RegisterBasicMeltingRecipes(String partial_name,Fluid fluid)
   {
-    if(FoundryRecipes.melting != null)
+    if(FoundryAPI.recipes_melting != null)
     {
-      FoundryRecipes.melting.AddRecipe("ingot" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      FoundryRecipes.melting.AddRecipe("block" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_BLOCK));
-      FoundryRecipes.melting.AddRecipe("nugget" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_NUGGET));
-      FoundryRecipes.melting.AddRecipe("dust" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      FoundryRecipes.melting.AddRecipe("ore" + partial_name, new FluidStack(fluid, FoundryRecipes.FLUID_AMOUNT_ORE));
+      FoundryAPI.recipes_melting.AddRecipe("ingot" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
+      FoundryAPI.recipes_melting.AddRecipe("block" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK));
+      FoundryAPI.recipes_melting.AddRecipe("nugget" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_NUGGET));
+      FoundryAPI.recipes_melting.AddRecipe("dust" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
+      FoundryAPI.recipes_melting.AddRecipe("ore" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_ORE));
     }
   }
 

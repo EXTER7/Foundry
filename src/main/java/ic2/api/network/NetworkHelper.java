@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 /**
  * Provides methods to initiate events and synchronize tile entity fields in SMP.
@@ -112,28 +111,6 @@ public final class NetworkHelper {
 		}
 	}
 
-	/**
-	 * Schedule a block update (re-render) on the clients in range.
-	 *
-	 * If this method is being executed on the client (i.e. Singleplayer), it'll just trigger the
-	 * block update locally.
-	 *
-	 * @param world World containing the block
-	 * @param x The block's x coordinate
-	 * @param y The block's y coordinate
-	 * @param z The block's z coordinate
-	 */
-	public static void announceBlockUpdate(World world, int x, int y, int z) {
-		try {
-			if (NetworkManager_announceBlockUpdate == null) NetworkManager_announceBlockUpdate = Class.forName(getPackage() + ".core.network.NetworkManager").getMethod("announceBlockUpdate", World.class, Integer.TYPE, Integer.TYPE, Integer.TYPE);
-			if (instance == null) instance = getInstance();
-
-			NetworkManager_announceBlockUpdate.invoke(instance, world, x, y, z);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 
 	// client -> server
 
@@ -211,7 +188,6 @@ public final class NetworkHelper {
 	private static Method NetworkManager_updateTileEntityField;
 	private static Method NetworkManager_initiateTileEntityEvent;
 	private static Method NetworkManager_initiateItemEvent;
-	private static Method NetworkManager_announceBlockUpdate;
 	private static Method NetworkManager_initiateClientTileEntityEvent;
 	private static Method NetworkManager_initiateClientItemEvent;
 }

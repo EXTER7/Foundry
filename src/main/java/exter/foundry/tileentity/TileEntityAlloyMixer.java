@@ -1,12 +1,10 @@
 package exter.foundry.tileentity;
 
 
-import io.netty.buffer.ByteBufInputStream;
-
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
 
 import exter.foundry.ModFoundry;
-import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
@@ -103,7 +101,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     tank_info = new FluidTankInfo[5];
     for(i = 0; i < 5; i++)
     {
-      tanks[i] = new FluidTank(FoundryUtils.ALLOYMIXER_TANK_CAPACITY);
+      tanks[i] = new FluidTank(FoundryAPI.ALLOYMIXER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     mode = RedstoneMode.RSMODE_IGNORE;
@@ -223,7 +221,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
   
   @Override
-  public void ReceivePacketData(ByteBufInputStream data) throws IOException
+  public void ReceivePacketData(ByteBuf data)
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }

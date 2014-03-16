@@ -115,6 +115,7 @@ tile.machine.ICF.name=Induction Crucible Furnace
 tile.machine.Caster.name=Metal Caster
 tile.machine.AlloyMixer.name=Alloy Mixer
 tile.machine.Infuser.name=Metal Infuser
+tile.machine.MaterialRouter.name=Material Router
 tile.alloyFurnace.name=Alloy Furnace
 
 tile.metalBlock.Copper.name=Block of Copper

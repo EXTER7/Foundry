@@ -8,8 +8,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.recipe.FoundryRecipes;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -129,15 +129,15 @@ public class ModIntegrationIC2 extends ModIntegration
         ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
         ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
         
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SHOVEL], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SWORD], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HOE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CHESTPLATE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PICKAXE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_AXE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SHOVEL], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_SWORD], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HOE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_LEGGINGS], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
         FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
         FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
@@ -153,44 +153,44 @@ public class ModIntegrationIC2 extends ModIntegration
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CASING_IC2);
       ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE_IC2);
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 3));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 4));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 3));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT / 3));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 4));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 4));
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CASING], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CASING], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT));
 
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CABLE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CABLE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CABLE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 4), mold_cable, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CASING], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CASING], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_CASING], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_CASING], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_PLATE], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
 
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_COPPER_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_TIN_CABLE]);

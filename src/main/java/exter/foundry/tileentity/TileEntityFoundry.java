@@ -1,9 +1,7 @@
 package exter.foundry.tileentity;
 
 
-import io.netty.buffer.ByteBufInputStream;
-
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -320,7 +318,9 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     super.onDataPacket(net, pkt);
     if(FMLCommonHandler.instance().getEffectiveSide().isClient())
-    readFromNBT(pkt.func_148857_g());
+    {
+      readFromNBT(pkt.func_148857_g());
+    }
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
   }
     
@@ -329,7 +329,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
     
-  public void ReceivePacketData(ByteBufInputStream data) throws IOException
+  public void ReceivePacketData(ByteBuf data)
   {
     
   }

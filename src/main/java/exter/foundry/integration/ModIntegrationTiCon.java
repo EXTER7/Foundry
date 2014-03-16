@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.Loader;
-import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;

@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.gui.button.GuiButtonRedstoneMode;
+import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.IInventory;
@@ -44,7 +44,7 @@ public class GuiMetalCaster extends GuiFoundry
   private static final int POWER_OVERLAY_X = 176;
   private static final int POWER_OVERLAY_Y = 71;
   
-  private static final int RSMODE_X = 176 - GuiButtonRedstoneMode.TEXTURE_WIDTH - 4;
+  private static final int RSMODE_X = 176 - 16 - 4;
   private static final int RSMODE_Y = 4;
   private static final int RSMODE_TEXTURE_X = 176;
   private static final int RSMODE_TEXTURE_Y = 90;
@@ -52,7 +52,7 @@ public class GuiMetalCaster extends GuiFoundry
   
   
   private TileEntityMetalCaster te_caster;
-  private GuiButtonRedstoneMode button_mode;
+  private GuiButtonFoundry button_mode;
 
   public GuiMetalCaster(TileEntityMetalCaster cs, IInventory player_inv)
   {
@@ -117,7 +117,7 @@ public class GuiMetalCaster extends GuiFoundry
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,GuiButtonRedstoneMode.TEXTURE_WIDTH,GuiButtonRedstoneMode.TEXTURE_HEIGHT,mousex,mousey))
+    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       switch(te_caster.GetMode())
@@ -152,7 +152,12 @@ public class GuiMetalCaster extends GuiFoundry
     super.initGui();
     int window_x = (width - xSize) / 2;
     int window_y = (height - ySize) / 2;
-    button_mode = new GuiButtonRedstoneMode(1, RSMODE_X + window_x, RSMODE_Y + window_y,GUI_TEXTURE,RSMODE_TEXTURE_X,RSMODE_TEXTURE_Y);
+    button_mode = new GuiButtonFoundry(
+            1,
+            RSMODE_X + window_x, RSMODE_Y + window_y,
+            16, 15,
+            GUI_TEXTURE,RSMODE_TEXTURE_X,RSMODE_TEXTURE_Y,
+            RSMODE_TEXTURE_X + 16, RSMODE_TEXTURE_Y);
     buttonList.add(button_mode);
   }
 

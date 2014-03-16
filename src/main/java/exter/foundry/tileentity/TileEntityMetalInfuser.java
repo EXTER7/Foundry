@@ -1,6 +1,6 @@
 package exter.foundry.tileentity;
 
-import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
@@ -57,7 +57,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     tank_info = new FluidTankInfo[2];
     for(i = 0; i < 2; i++)
     {
-      tanks[i] = new FluidTank(FoundryUtils.INFUSER_TANK_CAPACITY);
+      tanks[i] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
     progress = 0;
@@ -391,7 +391,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     InfuserSubstance recipe_sub = current_substance_recipe.GetOutputSubstance();
     if(substance != null
         && (!recipe_sub.IsSubstanceEqual(substance)
-        || FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < recipe_sub.amount))
+        || FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < recipe_sub.amount))
     {
       progress = 0;
       extract_energy = 1;

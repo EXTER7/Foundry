@@ -21,8 +21,9 @@ import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityFoundryPowered;
+import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 
@@ -34,46 +35,67 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   static public final int MACHINE_CASTER = 1;
   static public final int MACHINE_ALLOYMIXER = 2;
   static public final int MACHINE_INFUSER = 3;
+  static public final int MACHINE_MATERIALROUTER = 4;
 
-  static private final String[] PATHS_ICON_SIDES =
+  static private final String[][] PATHS_ICONS =
   {
-    "foundry:metalsmelter_sides",
-    "foundry:caster_sides",
-    "foundry:alloymixer_sides",
-    "foundry:infuser_sides"
+    {
+      "foundry:metalsmelter_top",
+      "foundry:metalsmelter_top",
+      "foundry:metalsmelter_sides",
+      "foundry:metalsmelter_sides",
+      "foundry:metalsmelter_sides",
+      "foundry:metalsmelter_sides"
+    },
+    {
+      "foundry:caster_bottom",
+      "foundry:caster_top",
+      "foundry:caster_sides",
+      "foundry:caster_sides",
+      "foundry:caster_sides",
+      "foundry:caster_sides"
+    },
+    {
+      "foundry:alloymixer_bottom",
+      "foundry:alloymixer_top",
+      "foundry:alloymixer_sides",
+      "foundry:alloymixer_sides",
+      "foundry:alloymixer_sides",
+      "foundry:alloymixer_sides"
+    },
+    {
+      "foundry:infuser_bottom",
+      "foundry:infuser_top",
+      "foundry:infuser_sides",
+      "foundry:infuser_sides",
+      "foundry:infuser_sides",
+      "foundry:infuser_sides"
+    },
+    {
+      "foundry:materialrouter_0",
+      "foundry:materialrouter_1",
+      "foundry:materialrouter_2",
+      "foundry:materialrouter_3",
+      "foundry:materialrouter_4",
+      "foundry:materialrouter_5"
+    }
   };
   
-  static private final String[] PATHS_ICON_TOP = 
-  {
-    "foundry:metalsmelter_top",
-    "foundry:caster_top",
-    "foundry:alloymixer_top",
-    "foundry:infuser_top"
-  };
-
-  static private final String[] PATHS_ICON_BOTTOM =
-  {
-    "foundry:metalsmelter_top",
-    "foundry:caster_bottom",
-    "foundry:alloymixer_bottom",
-    "foundry:infuser_bottom"
-  };
 
   static private final String[] NAMES =
   {
     "ICF",
     "Caster",
     "AlloyMixer",
-    "Infuser"
+    "Infuser",
+    "MaterialRouter"
   };
 
-  private IIcon[] icon_top;
-  private IIcon[] icon_sides;
-  private IIcon[] icon_bottom;
+  private IIcon[][] icons;
 
   public BlockFoundryMachine()
   {
-    super(Material.rock);
+    super(Material.iron);
     setHardness(1.0F);
     setResistance(8.0F);
     setStepSound(Block.soundTypeStone);
@@ -86,9 +108,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   {
     TileEntity te = world.getTileEntity(x, y, z);
 
-    if(te != null && (te instanceof TileEntityFoundryPowered) && !world.isRemote)
+    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
     {
-      TileEntityFoundryPowered tef = (TileEntityFoundryPowered) te;
+      TileEntityFoundry tef = (TileEntityFoundry) te;
       int i;
       for(i = 0; i < tef.getSizeInventory(); i++)
       {
@@ -116,30 +138,22 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   {
     int i;
     
-    icon_sides = new IIcon[4];
-    icon_top = new IIcon[4];
-    icon_bottom = new IIcon[4];
+    icons = new IIcon[5][6];
     
-    for(i = 0; i < 4; i++)
+    for(i = 0; i < 5; i++)
     {
-      icon_sides[i] = register.registerIcon(PATHS_ICON_SIDES[i]);
-      icon_top[i] = register.registerIcon(PATHS_ICON_TOP[i]);
-      icon_bottom[i] = register.registerIcon(PATHS_ICON_BOTTOM[i]);
+      int j;
+      for(j = 0; j < 6; j++)
+      {
+        icons[i][j] = register.registerIcon(PATHS_ICONS[i][j]);
+      }
     }
   }
 
   @Override
   public IIcon getIcon(int side, int meta)
   {
-    switch(side)
-    {
-      case 0:
-        return icon_bottom[meta];
-      case 1:
-        return icon_top[meta];
-      default:
-        return icon_sides[meta];
-    }
+    return icons[meta][side];
   }
 
   @Override
@@ -163,6 +177,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
           break;
         case MACHINE_INFUSER:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_INFUSER, world, x, y, z);
+          break;
+        case MACHINE_MATERIALROUTER:
+          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_MATERIALROUTER, world, x, y, z);
           break;
       }
       return true;
@@ -188,6 +205,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
         return new TileEntityAlloyMixer();
       case MACHINE_INFUSER:
         return new TileEntityMetalInfuser();
+      case MACHINE_MATERIALROUTER:
+        return new TileEntityMaterialRouter();
     }
     return null;
   }
@@ -212,7 +231,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
-    for(i = 0; i < 4; i++)
+    for(i = 0; i < 5; i++)
     {
       list.add(new ItemStack(item, 1, i));
     }
@@ -221,24 +240,13 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   @Override
   public TileEntity createNewTileEntity(World world,int meta)
   {
-    switch(meta)
-    {
-      case MACHINE_ICF:
-        return new TileEntityInductionCrucibleFurnace();
-      case MACHINE_CASTER:
-        return new TileEntityMetalCaster();
-      case MACHINE_ALLOYMIXER:
-        return new TileEntityAlloyMixer();
-      case MACHINE_INFUSER:
-        return new TileEntityMetalInfuser();
-    }
-    return null;
+    return createTileEntity(world, meta);
   }
   
   @Override
   public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
   {
-    TileEntityFoundryPowered te = (TileEntityFoundryPowered) world.getTileEntity(x, y, z);
+    TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(x, y, z);
 
     if(te != null)
     {

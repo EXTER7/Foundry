@@ -3,11 +3,15 @@ package exter.foundry.gui;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -26,7 +30,37 @@ public abstract class GuiFoundry extends GuiContainer
   
   protected abstract ResourceLocation GetGUITexture();
 
-  
+  protected void DrawItemStack(int x,int y, ItemStack stack)
+  {
+    //GL11.glTranslatef(0.0F, 0.0F, 32.0F);
+    GL11.glPushMatrix();
+    RenderHelper.enableGUIStandardItemLighting();
+    GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+    GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+    GL11.glEnable(GL11.GL_LIGHTING);
+    zLevel = 200.0F;
+    itemRender.zLevel = 200.0F;
+    FontRenderer font = null;
+    if(stack != null)
+    {
+      font = stack.getItem().getFontRenderer(stack);
+    }
+    if(font == null)
+    {
+      font = fontRendererObj;
+    }
+    itemRender.renderItemAndEffectIntoGUI(font, mc.getTextureManager(), stack, x, y);
+    itemRender.renderItemOverlayIntoGUI(font, mc.getTextureManager(), stack, x, y, null);
+    zLevel = 0.0F;
+    itemRender.zLevel = 0.0F;
+    mc.renderEngine.bindTexture(this.GetGUITexture());
+    GL11.glPopMatrix();
+    RenderHelper.enableStandardItemLighting();
+    GL11.glEnable(GL11.GL_DEPTH_TEST);
+    GL11.glDisable(GL11.GL_LIGHTING);
+    GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    //GL11.glTranslatef(0.0F, 0.0F, -32.0F);
+  }
   
   /**
    * Draw part of an icon

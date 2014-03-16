@@ -1,11 +1,10 @@
 package exter.foundry.tileentity;
 
 
-import io.netty.buffer.ByteBufInputStream;
-
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
 
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.container.ContainerMetalCaster;
@@ -83,7 +82,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   {
     super();
 
-    tank = new FluidTank(FoundryUtils.CASTER_TANK_CAPACITY);
+    tank = new FluidTank(FoundryAPI.CASTER_TANK_CAPACITY);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
@@ -156,7 +155,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public void ReceivePacketData(ByteBufInputStream data) throws IOException
+  public void ReceivePacketData(ByteBuf data)
   {
     SetMode(RedstoneMode.FromNumber(data.readByte()));
   }

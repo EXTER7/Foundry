@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.container.ContainerMetalInfuser;
@@ -90,7 +90,7 @@ public class GuiMetalInfuser extends GuiFoundry
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
       mc.renderEngine.bindTexture(tex.GetLocation());
-      int height = sub.amount * TANK_HEIGHT / FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX;
+      int height = sub.amount * TANK_HEIGHT / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
       SetColor(tex.GetColor());
       drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.GetX(), tex.GetY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
@@ -124,10 +124,10 @@ public class GuiMetalInfuser extends GuiFoundry
       if(sub != null && sub.amount > 0)
       {
         currenttip.add(StatCollector.translateToLocal("substance." + sub.type));
-        currenttip.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
+        currenttip.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       } else
       {
-        currenttip.add("0 / " + String.valueOf(FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
+        currenttip.add("0 / " + String.valueOf(FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       }
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }

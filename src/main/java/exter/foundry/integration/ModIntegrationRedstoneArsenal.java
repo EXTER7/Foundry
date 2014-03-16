@@ -2,7 +2,7 @@ package exter.foundry.integration;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
-import exter.foundry.api.recipe.FoundryRecipes;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
@@ -73,8 +73,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
       ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
       
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_INGOT], new FluidStack(liquid_electrumflux, FoundryRecipes.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_BLOCK], new FluidStack(liquid_electrumflux, FoundryRecipes.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_INGOT], new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_BLOCK], new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
     }
   }

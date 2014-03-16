@@ -204,6 +204,7 @@ public class GuiMaterialRouter extends GuiFoundry
       {
         slot.DrawTooltip(mousex,mousey);
       }
+      
     }
     
     List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
@@ -227,6 +228,12 @@ public class GuiMaterialRouter extends GuiFoundry
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add(StatCollector.translateToLocal("router.type." + r.type));
+        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+      }
+      if(func_146978_c/*isPointInRegion*/(81,y + 4,8,8,mousex,mousey))
+      {
+        List<String> tooltip = new ArrayList<String>();
+        tooltip.add("Remove");
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
     }
@@ -294,6 +301,7 @@ public class GuiMaterialRouter extends GuiFoundry
       DrawMaterialIcon(window_x + 29,window_y + y,r.material);
       DrawTypeIcon(window_x + 46,window_y + y,r.type);
       drawTexturedModalRect(window_x + 63, window_y + y, 200, r.side.index * 16, 16, 16);
+      drawTexturedModalRect(window_x + 81, window_y + y + 4, 234, 194, 8, 8);
     }
 
   }
@@ -302,9 +310,6 @@ public class GuiMaterialRouter extends GuiFoundry
   protected void mouseClicked(int x, int y, int par3)
   {
     super.mouseClicked(x, y, par3);
-
-    int window_x = (width - xSize) / 2;
-    int window_y = (height - ySize) / 2;
 
     int i;
     for(i = 0; i < 8; i++)
@@ -315,11 +320,10 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = material_slots.get(index);
-      int fx = window_x + 111 + 17 * (i % 4);
-      int fy = window_y + 24 + 17 * (i / 4);
-      if(x >= fx && x <= fx + 16 && y >= fy && y <= fy + 16)
+      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,x,y))
       {
         slot.OnClick();
+        return;
       }
     }
 
@@ -331,13 +335,30 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = type_slots.get(index);
-      int fx = window_x + 111 + 17 * (i % 4);
-      int fy = window_y + 70 + 17 * (i / 4);
-      if(x >= fx && x <= fx + 16 && y >= fy && y <= fy + 16)
+      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,x,y))
       {
         slot.OnClick();
+        return;
       }
     }
+
+    List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
+    for(i = 0; i < 4; i++)
+    {
+      int index = i ;//+ route_scroll;
+      if(index >= routes.size())
+      {
+        break;
+      }
+      
+      if(func_146978_c/*isPointInRegion*/(81,49 + i * 17 + 4,8,8,x,y))
+      {
+        routes.remove(index);
+        te_router.SyncRoutes();
+        return;
+      }
+    }
+
   }
 
   @Override

@@ -11,13 +11,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.material.IMaterialRegistry;
-import exter.foundry.util.hashstack.HashableItemStack;
+import exter.foundry.util.hashstack.HashableItem;
 
 public final class MaterialRegistry implements IMaterialRegistry
 {
 
-  private HashMap<HashableItemStack,String> materials;
-  private HashMap<HashableItemStack,String> types;
+  private HashMap<HashableItem,String> materials;
+  private HashMap<HashableItem,String> types;
   
   private Set<String> material_names;
   private Set<String> type_names;
@@ -31,8 +31,8 @@ public final class MaterialRegistry implements IMaterialRegistry
 
   private MaterialRegistry()
   {
-    materials = new HashMap<HashableItemStack,String>();
-    types = new HashMap<HashableItemStack,String>();
+    materials = new HashMap<HashableItem,String>();
+    types = new HashMap<HashableItem,String>();
     material_names = new HashSet<String>();
     type_names = new HashSet<String>();
   }
@@ -46,7 +46,7 @@ public final class MaterialRegistry implements IMaterialRegistry
   @Override
   public void RegisterItem(ItemStack item, String material, String type)
   {
-    HashableItemStack hs = new HashableItemStack(item,1);
+    HashableItem hs = new HashableItem(item);
     materials.put(hs,material);
     types.put(hs,type);
     material_names.add(material);
@@ -56,13 +56,13 @@ public final class MaterialRegistry implements IMaterialRegistry
   @Override
   public String GetMaterial(ItemStack item)
   {
-    return materials.get(HashableItemStack.Cache(item));
+    return materials.get(HashableItem.Cache(item));
   }
 
   @Override
   public String GetType(ItemStack item)
   {
-    return types.get(HashableItemStack.Cache(item));
+    return types.get(HashableItem.Cache(item));
   }
 
   @Override

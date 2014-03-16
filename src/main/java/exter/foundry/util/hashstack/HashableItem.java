@@ -5,14 +5,14 @@ import net.minecraft.item.ItemStack;
 /**
  * ItemStack wrapper for use in HashMaps (stack size insensitive)
  */
-public class HashableItemStack
+public class HashableItem
 {
-  private ItemStack stack;
+  protected ItemStack stack;
   
   //Used to get value from a HashMap without creating a new object every time.
-  private static final HashableItemStack cache = new HashableItemStack();
+  private static final HashableItem cache = new HashableItem();
 
-  private HashableItemStack()
+  private HashableItem()
   {
     stack = null;
   }
@@ -23,13 +23,13 @@ public class HashableItemStack
   }
   
   //This should only be used as a key argument in HashMap.get or similar methods.
-  public static HashableItemStack Cache(ItemStack is)
+  public static HashableItem Cache(ItemStack is)
   {
     cache.SetStack(is);
     return cache;
   }
 
-  public HashableItemStack(ItemStack item_stack)
+  public HashableItem(ItemStack item_stack)
   {
     if(item_stack == null)
     {
@@ -37,20 +37,9 @@ public class HashableItemStack
       return;
     }
     stack = item_stack.copy();
-  }
-
-  public HashableItemStack(ItemStack item_stack,int stack_size)
-  {
-    if(item_stack == null)
-    {
-      stack = null;
-      return;
-    }
-    stack = item_stack.copy();
-    stack.stackSize = stack_size;
   }
   
-  public ItemStack GetItemStack()
+  public final ItemStack GetItemStack()
   {
     if(stack == null)
     {
@@ -85,11 +74,11 @@ public class HashableItemStack
     {
       return false;
     }
-    if(!(obj instanceof HashableItemStack))
+    if(!(obj instanceof HashableItem))
     {
       return false;
     }
-    HashableItemStack other = (HashableItemStack)obj;
+    HashableItem other = (HashableItem)obj;
     return stack.isItemEqual(other.stack) && ItemStack.areItemStackTagsEqual(stack, other.stack);
   }
 }

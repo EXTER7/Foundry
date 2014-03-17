@@ -112,6 +112,12 @@ public class GuiMaterialRouter extends GuiFoundry
   private List<FilterSlot> type_slots;
 
   private GuiButtonFoundry[] route_buttons;
+  private GuiButtonFoundry material_scroll_left;
+  private GuiButtonFoundry material_scroll_right;
+  private GuiButtonFoundry type_scroll_left;
+  private GuiButtonFoundry type_scroll_right;
+  private GuiButtonFoundry route_scroll_up;
+  private GuiButtonFoundry route_scroll_down;
   
   private void DrawMaterialIcon(int x,int y,String name)
   {
@@ -180,7 +186,7 @@ public class GuiMaterialRouter extends GuiFoundry
     int i;
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ material_scroll;
+      int index = i + te_router.gui_material_scroll;
       if(index >= material_slots.size())
       {
         break;
@@ -194,7 +200,7 @@ public class GuiMaterialRouter extends GuiFoundry
 
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ type_scroll;
+      int index = i + te_router.gui_type_scroll;
       if(index >= type_slots.size())
       {
         break;
@@ -210,7 +216,7 @@ public class GuiMaterialRouter extends GuiFoundry
     List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
     for(i = 0; i < 4; i++)
     {
-      int index = i ;//+ route_scroll;
+      int index = i + te_router.gui_route_scroll;
       if(index >= routes.size())
       {
         break;
@@ -252,7 +258,7 @@ public class GuiMaterialRouter extends GuiFoundry
     
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ material_scroll;
+      int index = i + te_router.gui_material_scroll;
       if(index >= material_slots.size())
       {
         break;
@@ -263,7 +269,7 @@ public class GuiMaterialRouter extends GuiFoundry
 
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ type_scroll;
+      int index = i + te_router.gui_type_scroll;
       if(index >= type_slots.size())
       {
         break;
@@ -275,22 +281,25 @@ public class GuiMaterialRouter extends GuiFoundry
     int selected_material = te_router.gui_material_selected;
     int selected_type = te_router.gui_type_selected;
     
-    if(selected_material >= 0/*material_scroll*/ && selected_material < /*material_scroll +*/ 8)
+    int material_scroll = te_router.gui_material_scroll;
+    int type_scroll = te_router.gui_type_scroll;
+    
+    if(selected_material >= material_scroll && selected_material < material_scroll + 8)
     {
-      int index = selected_material ;//- material_scroll;
+      int index = selected_material - material_scroll;
       drawTexturedModalRect(window_x + 111 + 17 * (index % 4) , window_y + 24 + 17 * (index / 4), 200, 193, 16, 16);
     }
     
-    if(selected_type >= 0/*type_scroll*/ && selected_type < /*type_scroll + */ 8)
+    if(selected_type >= type_scroll && selected_type < type_scroll + 8)
     {
-      int index = selected_type ;//- type_scroll;
+      int index = selected_type - type_scroll;
       drawTexturedModalRect(window_x + 111 + 17 * (index % 4) , window_y + 70 + 17 * (index / 4), 200, 193, 16, 16);
     }
 
     List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
     for(i = 0; i < 4; i++)
     {
-      int index = i ;//+ route_scroll;
+      int index = i + te_router.gui_route_scroll;
       if(index >= routes.size())
       {
         break;
@@ -314,7 +323,7 @@ public class GuiMaterialRouter extends GuiFoundry
     int i;
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ material_scroll;
+      int index = i + te_router.gui_material_scroll;
       if(index >= material_slots.size())
       {
         break;
@@ -329,7 +338,7 @@ public class GuiMaterialRouter extends GuiFoundry
 
     for(i = 0; i < 8; i++)
     {
-      int index = i ;//+ type_scroll;
+      int index = i + te_router.gui_type_scroll;
       if(index >= type_slots.size())
       {
         break;
@@ -345,7 +354,7 @@ public class GuiMaterialRouter extends GuiFoundry
     List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
     for(i = 0; i < 4; i++)
     {
-      int index = i ;//+ route_scroll;
+      int index = i + te_router.gui_route_scroll;
       if(index >= routes.size())
       {
         break;
@@ -372,6 +381,48 @@ public class GuiMaterialRouter extends GuiFoundry
               type_slots.get(te_router.gui_type_selected).GetName(),
               TileEntityMaterialRouter.RouteSide.values()[button.id]));
       te_router.SyncRoutes();
+    } else if(button.id == material_scroll_left.id)
+    {
+      if(te_router.gui_material_scroll > 0)
+      {
+        te_router.gui_material_scroll -= 8;
+        te_router.SyncRoutes();
+      }
+    } else if(button.id == material_scroll_right.id)
+    {
+      if(te_router.gui_material_scroll < material_slots.size() - 8)
+      {
+        te_router.gui_material_scroll += 8;
+        te_router.SyncRoutes();
+      }
+    } else if(button.id == type_scroll_left.id)
+    {
+      if(te_router.gui_type_scroll > 0)
+      {
+        te_router.gui_type_scroll -= 8;
+        te_router.SyncRoutes();
+      }
+    } else if(button.id == type_scroll_right.id)
+    {
+      if(te_router.gui_type_scroll < type_slots.size() - 8)
+      {
+        te_router.gui_type_scroll += 8;
+        te_router.SyncRoutes();
+      }
+    } else if(button.id == route_scroll_up.id)
+    {
+      if(te_router.gui_route_scroll > 0)
+      {
+        te_router.gui_route_scroll -= 4;
+        te_router.SyncRoutes();
+      }
+    } else if(button.id == route_scroll_down.id)
+    {
+      if(te_router.gui_route_scroll < te_router.GetRoutes().size() - 4)
+      {
+        te_router.gui_route_scroll += 4;
+        te_router.SyncRoutes();
+      }
     }
   }
 
@@ -395,6 +446,53 @@ public class GuiMaterialRouter extends GuiFoundry
           216, 177).SetIconTexture(201, i * 16 + 1, 14, 14);
       buttonList.add(route_buttons[i]);
     }
+    material_scroll_left = new GuiButtonFoundry(
+        6,
+        window_x + 96, window_y + 18,
+        12, 25,
+        GUI_TEXTURE,
+        200, 99,
+        212, 99);
+    buttonList.add(material_scroll_left);
+    material_scroll_right = new GuiButtonFoundry(
+        7,
+        window_x + 181, window_y + 18,
+        12, 25,
+        GUI_TEXTURE,
+        200, 124,
+        212, 124);
+    buttonList.add(material_scroll_right);
+    type_scroll_left = new GuiButtonFoundry(
+        8,
+        window_x + 96, window_y + 74,
+        12, 25,
+        GUI_TEXTURE,
+        200, 99,
+        212, 99);
+    buttonList.add(type_scroll_left);
+    type_scroll_right = new GuiButtonFoundry(
+        9,
+        window_x + 181, window_y + 74,
+        12, 25,
+        GUI_TEXTURE,
+        200, 124,
+        212, 124);
+    buttonList.add(type_scroll_right);
+    route_scroll_up = new GuiButtonFoundry(
+        10,
+        window_x + 47, window_y + 24,
+        25, 12,
+        GUI_TEXTURE,
+        200, 149,
+        225, 149);
+    buttonList.add(route_scroll_up);
+    route_scroll_down = new GuiButtonFoundry(
+        11,
+        window_x + 47, window_y + 119,
+        25, 12,
+        GUI_TEXTURE,
+        200, 161,
+        225, 161);
+    buttonList.add(route_scroll_down);
   }
-  
 }

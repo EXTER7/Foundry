@@ -255,6 +255,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   public void ReceivePacketData(ByteBuf data)
   {
     routes.clear();
+
     gui_material_scroll = data.readInt();
     gui_type_scroll = data.readInt();
     gui_route_scroll = data.readInt();
@@ -267,6 +268,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     {
       routes.add(new Route(data));
     }
+    markDirty();
   }
 
   @Override

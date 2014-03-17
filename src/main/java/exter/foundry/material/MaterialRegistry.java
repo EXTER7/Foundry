@@ -9,7 +9,6 @@ import java.util.Set;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
-import exter.foundry.ModFoundry;
 import exter.foundry.api.material.IMaterialRegistry;
 import exter.foundry.util.hashstack.HashableItem;
 

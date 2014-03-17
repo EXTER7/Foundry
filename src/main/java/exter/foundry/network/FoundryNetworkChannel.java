@@ -70,7 +70,7 @@ public class FoundryNetworkChannel
 
   private FMLProxyPacket MakeMateralRouterPacket(TileEntityMaterialRouter sender)
   {
-    ByteBuf data = Unpooled.buffer(512);
+    ByteBuf data = Unpooled.buffer();
     WriteTileEntityCoords(data,sender);
     data.writeInt(sender.gui_material_scroll);
     data.writeInt(sender.gui_type_scroll);

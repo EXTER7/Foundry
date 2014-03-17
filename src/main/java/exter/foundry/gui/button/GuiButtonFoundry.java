@@ -26,8 +26,8 @@ public class GuiButtonFoundry extends GuiButton
     super(id, x, y, w, h, "");
     texture_x = tex_x;
     texture_y = tex_y;
-    texture_mo_x = tex_x;
-    texture_mo_y = tex_y;
+    texture_mo_x = tex_mo_x;
+    texture_mo_y = tex_mo_y;
     gui_texture = texture;
     icon_width = 0;
     icon_height = 0;
@@ -48,11 +48,10 @@ public class GuiButtonFoundry extends GuiButton
     {
       mc.getTextureManager().bindTexture(gui_texture);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-      boolean mouse_over = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
       int tex_x = texture_x;
       int tex_y = texture_y;
 
-      if(mouse_over)
+      if(x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height)
       {
         tex_x = texture_mo_x;
         tex_y = texture_mo_y;

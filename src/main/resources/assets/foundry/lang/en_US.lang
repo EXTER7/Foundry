@@ -88,6 +88,7 @@ router.material.Redstone=Redstone
 router.material.Glowstone=Glowstone
 
 router.type._Any=All
+router.type.Ore=Ore
 router.type.Ingot=Ingot
 router.type.Dust=Dust
 router.type.Nugget=Nugget
@@ -97,6 +98,10 @@ router.type.SmallDust=Small Dust
 router.type.Plate=Plate
 router.type.Gear=Gear
 router.type.Gem=Gem
+router.type.Planks=Planks
+router.type.CrushedOre=Crushed Ore
+router.type.PurfiedCrushedOre=Purfied Crushed Ore
+router.type.DensePlate=Dense Plate
 
 substance.carbon=Carbon
 substance.dye.black=Black Dye

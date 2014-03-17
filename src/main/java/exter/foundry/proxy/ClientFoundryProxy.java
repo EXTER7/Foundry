@@ -17,7 +17,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ClientFoundryProxy extends CommonFoundryProxy
 {
   static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
-  
+
   @Override
   public void PreInit()
   {
@@ -29,38 +29,57 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   public void Init()
   {
     MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
-    InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE,0,0);
+    InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
-    for(i = 0; i < ItemDye.field_150921_b/*icon_names*/.length; i++)
+    for(i = 0; i < ItemDye.field_150921_b/* icon_names */.length; i++)
     {
-      InfuserRecipeManager.instance.RegisterSubstanceTexture(
-          "dye." + ItemDye.field_150921_b/*icon_names*/[i],
-          SUBSTANCES_TEXTURE,
-          8,0,
-          ItemDye.field_150922_c/*colors*/[i]);
+      InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + ItemDye.field_150921_b/* icon_names */[i], SUBSTANCES_TEXTURE, 8, 0, ItemDye.field_150922_c/* colors */[i]);
     }
   }
-  
+
   @Override
   public void PostInit()
   {
-    for(OreDictMaterial material:OreDictMaterial.MATERIALS)
+    for(OreDictMaterial material : OreDictMaterial.MATERIALS)
     {
       List<ItemStack> ores = OreDictionary.getOres(material.default_prefix + material.suffix);
       if(ores.size() > 0)
       {
         MaterialRegistry.instance.RegisterMaterialIcon(material.suffix, ores.get(0));
+      } else
+      {
+        for(OreDictType type : OreDictType.TYPES)
+        {
+          ores = OreDictionary.getOres(type.prefix + material.suffix);
+          if(ores.size() > 0)
+          {
+            MaterialRegistry.instance.RegisterMaterialIcon(material.suffix, ores.get(0));
+            break;
+          }
+        }
       }
     }
 
-    for(OreDictType type:OreDictType.TYPES)
+    for(OreDictType type : OreDictType.TYPES)
     {
       List<ItemStack> ores = OreDictionary.getOres(type.prefix + type.default_suffix);
       if(ores.size() > 0)
       {
-        MaterialRegistry.instance.RegisterTypeIcon(type.name,ores.get(0));
+        MaterialRegistry.instance.RegisterTypeIcon(type.name, ores.get(0));
+      } else
+      {
+        for(OreDictMaterial material : OreDictMaterial.MATERIALS)
+        {
+          ores = OreDictionary.getOres(type.prefix + material.suffix);
+          if(ores.size() > 0)
+          {
+            MaterialRegistry.instance.RegisterTypeIcon(type.name, ores.get(0));
+            break;
+          }
+        }
+
       }
     }
-}
+  }
 
 }

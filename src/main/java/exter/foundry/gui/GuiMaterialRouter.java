@@ -118,6 +118,7 @@ public class GuiMaterialRouter extends GuiFoundry
   private GuiButtonFoundry type_scroll_right;
   private GuiButtonFoundry route_scroll_up;
   private GuiButtonFoundry route_scroll_down;
+  private boolean do_scroll_sync;
   
   private void DrawMaterialIcon(int x,int y,String name)
   {
@@ -168,6 +169,8 @@ public class GuiMaterialRouter extends GuiFoundry
     {
       type_slots.add(new FilterSlotType(i++,name));
     }
+    do_scroll_sync = false;
+
   }
   
   public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/materialrouter.png");
@@ -386,42 +389,42 @@ public class GuiMaterialRouter extends GuiFoundry
       if(te_router.gui_material_scroll > 0)
       {
         te_router.gui_material_scroll -= 8;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     } else if(button.id == material_scroll_right.id)
     {
       if(te_router.gui_material_scroll < material_slots.size() - 8)
       {
         te_router.gui_material_scroll += 8;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     } else if(button.id == type_scroll_left.id)
     {
       if(te_router.gui_type_scroll > 0)
       {
         te_router.gui_type_scroll -= 8;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     } else if(button.id == type_scroll_right.id)
     {
       if(te_router.gui_type_scroll < type_slots.size() - 8)
       {
         te_router.gui_type_scroll += 8;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     } else if(button.id == route_scroll_up.id)
     {
       if(te_router.gui_route_scroll > 0)
       {
         te_router.gui_route_scroll -= 4;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     } else if(button.id == route_scroll_down.id)
     {
       if(te_router.gui_route_scroll < te_router.GetRoutes().size() - 4)
       {
         te_router.gui_route_scroll += 4;
-        te_router.SyncRoutes();
+        do_scroll_sync = true;
       }
     }
   }
@@ -495,4 +498,15 @@ public class GuiMaterialRouter extends GuiFoundry
         225, 161);
     buttonList.add(route_scroll_down);
   }
+  
+  @Override
+  public void onGuiClosed()
+  {
+    if(do_scroll_sync)
+    {
+      te_router.SyncRoutes();
+    }
+    super.onGuiClosed();
+  }
+
 }

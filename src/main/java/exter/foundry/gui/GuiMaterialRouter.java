@@ -318,6 +318,24 @@ public class GuiMaterialRouter extends GuiFoundry
 
   }
 
+  
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouse_x, int mouse_y)
+  {
+    super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
+    fontRendererObj.drawString("Material Router", 6, 6, 0x404040);
+    fontRendererObj.drawString("Inventory", 32, (ySize - 96) + 2, 0x404040);
+
+    fontRendererObj.drawString(
+        "Materials("+ (te_router.gui_material_scroll / 8 + 1) + "/" 
+            + (int)Math.ceil((double)material_slots.size() / 8) + "):",
+        111, 14, 0x404040);
+    fontRendererObj.drawString(
+        "Types("+ (te_router.gui_type_scroll / 8 + 1) + "/"
+            + (int)Math.ceil((double)type_slots.size() / 8) + "):",
+        111, 60, 0x404040);
+
+  }
   @Override
   protected void mouseClicked(int x, int y, int par3)
   {

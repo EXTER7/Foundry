@@ -441,7 +441,7 @@ public class ModFoundry
     ItemStack clay_stack = new ItemStack(Items.clay_ball);
     ItemStack sand_stack = new ItemStack(Blocks.sand,1,-1);
     ItemStack clayblock_stack = new ItemStack(Blocks.clay, 1, -1);
-    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
+    ItemStack casing_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
     ItemStack piston_stack = new ItemStack(Blocks.piston);
     ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
     ItemStack chest_stack = new ItemStack(Blocks.chest);
@@ -452,6 +452,8 @@ public class ModFoundry
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
+    ItemStack comparator_stack = new ItemStack(Items.comparator);
+    ItemStack diamond_stack = new ItemStack(Items.diamond);
     
     GameRegistry.addRecipe(foundryclay8_stack,
         "CCC",
@@ -495,7 +497,7 @@ public class ModFoundry
           'R', redstone_stack));
 
       GameRegistry.addRecipe(
-          crucible_stack,
+          casing_stack,
           "IBI",
           "B B",
           "IBI",
@@ -509,7 +511,7 @@ public class ModFoundry
           "HRH",
           'F', furnace_stack,
           'I', "ingotCopper",
-          'C', crucible_stack,
+          'C', casing_stack,
           'R', redstone_stack,
           'H', heatingcoil_stack));
 
@@ -521,7 +523,7 @@ public class ModFoundry
           'I', iron_stack, 
           'R', redstone_stack, 
           'B', foundrybrick_stack,
-          'C', crucible_stack,
+          'C', casing_stack,
           'G', "gearStone",
           'H', heatingcoil_stack));
     }
@@ -542,7 +544,7 @@ public class ModFoundry
         'H', chest_stack, 
         'I', iron_stack, 
         'P', piston_stack,
-        'C', crucible_stack,
+        'C', casing_stack,
         'R', redstone_stack);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
@@ -551,8 +553,19 @@ public class ModFoundry
         "GCG",
         "IRI",
         'I', iron_stack, 
-        'C', crucible_stack,
+        'C', casing_stack,
         'R', redstone_stack,
+        'G', "gearStone"));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER),
+        "GIG",
+        "DRD",
+        "GCG",
+        'I', diamond_stack, 
+        'R', casing_stack,
+        'D', redstone_stack,
+        'C', comparator_stack,
         'G', "gearStone"));
 
     //Mold crafting with vanilla items

@@ -451,7 +451,7 @@ public class GuiMaterialRouter extends GuiFoundry
     }
     material_scroll_left = new GuiButtonFoundry(
         6,
-        window_x + 96, window_y + 18,
+        window_x + 96, window_y + 28,
         12, 25,
         GUI_TEXTURE,
         200, 99,
@@ -459,7 +459,7 @@ public class GuiMaterialRouter extends GuiFoundry
     buttonList.add(material_scroll_left);
     material_scroll_right = new GuiButtonFoundry(
         7,
-        window_x + 181, window_y + 18,
+        window_x + 181, window_y + 28,
         12, 25,
         GUI_TEXTURE,
         200, 124,

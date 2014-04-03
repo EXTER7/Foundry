@@ -102,6 +102,8 @@ router.type.Planks=Planks
 router.type.CrushedOre=Crushed Ore
 router.type.PurfiedCrushedOre=Purfied Crushed Ore
 router.type.DensePlate=Dense Plate
+router.type.Casing=Casing
+router.type.Cable=Cable
 
 substance.carbon=Carbon
 substance.dye.black=Black Dye

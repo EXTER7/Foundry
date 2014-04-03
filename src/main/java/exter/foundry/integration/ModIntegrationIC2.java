@@ -1,6 +1,9 @@
 package exter.foundry.integration;
 
 //import ic2.api.item.Items;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.item.IC2Items;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -13,6 +16,7 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
+import exter.foundry.material.MaterialRegistry;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -73,6 +77,11 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnInit()
   {
+    if(!Loader.isModLoaded("IC2"))
+    {
+      is_loaded = false;
+      return;
+    }
     items = new ItemStack[25];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(IC2Items.getItem("bronzePickaxe"));
@@ -195,6 +204,7 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_COPPER_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_TIN_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_GOLD_CABLE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_IRON_CABLE]);
 
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_COPPER_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_TIN_CASING]);
@@ -202,6 +212,18 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_GOLD_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
+
+      MaterialRegistry.instance.RegisterItem(items[ITEM_COPPER_CASING], "Copper", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_TIN_CASING], "Tin", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_BRONZE_CASING], "Bronze", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_GOLD_CASING], "Gold", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_IRON_CASING], "Iron", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_LEAD_CASING], "Lead", "Casing");
+
+      MaterialRegistry.instance.RegisterItem( items[ITEM_COPPER_CABLE], "Copper", "Cable");
+      MaterialRegistry.instance.RegisterItem( items[ITEM_TIN_CABLE], "Tin", "Cable");
+      MaterialRegistry.instance.RegisterItem( items[ITEM_GOLD_CABLE], "Gold", "Cable");
+      MaterialRegistry.instance.RegisterItem( items[ITEM_IRON_CABLE], "Iron", "Cable");
 
       ModIntegration gti = GetIntegration("gregtech");
       if(gti == null || !gti.is_loaded)
@@ -214,6 +236,14 @@ public class ModIntegrationIC2 extends ModIntegration
         RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE], "plateLead");
       }
     }
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void OnClientInit()
+  {
+    MaterialRegistry.instance.RegisterTypeIcon("Casing", items[ITEM_COPPER_CASING]);
+    MaterialRegistry.instance.RegisterTypeIcon("Cable", items[ITEM_COPPER_CABLE]);
   }
 
   @Override

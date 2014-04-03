@@ -2,6 +2,7 @@ package exter.foundry.proxy;
 
 import java.util.List;
 
+import exter.foundry.integration.ModIntegration;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
@@ -23,6 +24,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   {
     MaterialRegistry.instance.InitIcons();
     InfuserRecipeManager.instance.InitTextures();
+    ModIntegration.ClientPreInit();
   }
 
   @Override
@@ -35,6 +37,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + ItemDye.field_150921_b/* icon_names */[i], SUBSTANCES_TEXTURE, 8, 0, ItemDye.field_150922_c/* colors */[i]);
     }
+    ModIntegration.ClientInit();
   }
 
   @Override
@@ -77,9 +80,9 @@ public class ClientFoundryProxy extends CommonFoundryProxy
             break;
           }
         }
-
       }
     }
+    ModIntegration.ClientPostInit();
   }
 
 }

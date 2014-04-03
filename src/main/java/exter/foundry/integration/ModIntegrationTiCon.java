@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 
+@SuppressWarnings("unused")
 public class ModIntegrationTiCon extends ModIntegration
 {
   static public final int ITEM_INGOT_CAST = 0;

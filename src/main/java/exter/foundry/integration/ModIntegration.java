@@ -3,6 +3,8 @@ package exter.foundry.integration;
 import java.util.HashMap;
 import java.util.Map;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -69,7 +71,25 @@ public abstract class ModIntegration
   public abstract void OnPreInit(Configuration config);
   public abstract void OnInit();
   public abstract void OnPostInit();
+
+  @SideOnly(Side.CLIENT)
+  public void OnClientPreInit()
+  {
+    
+  }
   
+  @SideOnly(Side.CLIENT)
+  public void OnClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  public void OnClientPostInit()
+  {
+    
+  }
+
   public final boolean IsLoaded()
   {
     return is_loaded;
@@ -125,4 +145,46 @@ public abstract class ModIntegration
       }
     }
   }
+  
+
+  @SideOnly(Side.CLIENT)
+  static final public void ClientPreInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnClientPreInit();
+      }
+    }
+  }
+
+  
+
+  @SideOnly(Side.CLIENT)
+  static final public void ClientPostInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnClientPostInit();
+      }
+    }
+  }
+
+  
+
+  @SideOnly(Side.CLIENT)
+  static final public void ClientInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.OnClientInit();
+      }
+    }
+  }
+
 }

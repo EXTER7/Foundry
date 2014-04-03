@@ -15,6 +15,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import forestry.api.core.ItemInterface;
 
+@SuppressWarnings("deprecation")
 public class ModIntegrationForestry extends ModIntegration
 {
   static public final int ITEM_COPPER_GEAR = 0;

@@ -25,6 +25,7 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 
+@SuppressWarnings("unused")
 public class ModIntegrationGregtech extends ModIntegration
 {
   public boolean change_recipes;

@@ -1,6 +1,5 @@
 package exter.foundry.integration.nei;
 
-/* TODO: Re-enable once mod's API is updated
 import static codechicken.core.gui.GuiDraw.changeTexture;
 import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
@@ -15,11 +14,11 @@ import net.minecraftforge.fluids.FluidStack;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import exter.foundry.api.recipe.IAlloyRecipe;
+import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.gui.GuiAlloyMixer;
-import exter.foundry.recipes.manager.AlloyRecipeManager;
-*/
-public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+
+public class AlloyRecipeHandler extends FoundryRecipeHandler
 {
 
   public class CachedAlloyRecipe extends CachedFoundryRecipe
@@ -27,7 +26,7 @@ public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
     public List<FluidTank> allTanks = Lists.newLinkedList();
     public FluidTank output;
 
-    public CachedAlloyRecipe(IAlloyRecipe recipe)
+    public CachedAlloyRecipe(IAlloyMixerRecipe recipe)
     {
       int maxSize = 0;
       int i;
@@ -76,7 +75,7 @@ public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(IAlloyRecipe recipe : AlloyRecipeManager.instance.GetRecipes())
+    for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
     {
       arecipes.add(new CachedAlloyRecipe(recipe));
     }
@@ -96,7 +95,7 @@ public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
       {
         return;
       }
-      for(IAlloyRecipe recipe : AlloyRecipeManager.instance.GetRecipes())
+      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
       {
         for(int idx = 0; idx < recipe.GetInputCount(); idx++)
         {
@@ -123,7 +122,7 @@ public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
       {
         return;
       }
-      for(IAlloyRecipe recipe : AlloyRecipeManager.instance.GetRecipes())
+      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
       {
         if(recipe.GetOutput().isFluidEqual(fluid))
         {
@@ -159,4 +158,3 @@ public class AlloyRecipeHandler {}/* extends FoundryRecipeHandler
     drawTexturedModalRect(0, 0, 5, 11, 166, 108);
   }
 }
-*/

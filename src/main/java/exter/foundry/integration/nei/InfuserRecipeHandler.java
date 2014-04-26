@@ -1,6 +1,5 @@
 package exter.foundry.integration.nei;
 
-/*
 import static codechicken.core.gui.GuiDraw.changeTexture;
 import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
@@ -17,12 +16,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.substance.ISubstanceGuiTexture;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.gui.GuiMetalInfuser;
-import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
-*/
-public class InfuserRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
+
+public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
 {
   
   private static final Rectangle SUBSTANCE_RECT = new Rectangle(71 - 5, 43 - 11, 8, 47);
@@ -35,7 +35,7 @@ public class InfuserRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
 
     public CachedInfuserRecipe(IInfuserRecipe recipe)
     {
-      substance = new InfuserSubstance(recipe.GetInputSubstanceType(),recipe.GetInputSubstanceAmount());
+      substance = recipe.GetInputSubstance();
       allTanks.add(new FluidTank(recipe.GetInputFluid(), recipe.GetInputFluid().amount, new Rectangle(80, 32, 16, 47)));
       output = new FluidTank(recipe.GetOutput(), recipe.GetOutput().amount, new Rectangle(129, 32, 16, 47));
       allTanks.add(output);
@@ -78,10 +78,12 @@ public class InfuserRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
   {
     if(substance != null && substance.amount > 0)
     {
-      SubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
+      ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
       GuiDraw.changeTexture(tex.GetLocation());
       Rectangle rect = GetSubstanceRect();
-      GuiDraw.drawTexturedModalRect(rect.x, rect.y, tex.x, tex.y, SubstanceGuiTexture.TEXTURE_WIDTH, 47);
+      SetColor(tex.GetColor());
+      GuiDraw.drawTexturedModalRect(rect.x, rect.y, tex.GetX(), tex.GetY(), SubstanceGuiTexture.TEXTURE_WIDTH, 47);
+      GL11.glColor4f(1, 1, 1, 1);
       GuiDraw.changeTexture(getGuiTexture());
     }    
   }
@@ -126,7 +128,7 @@ public class InfuserRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
       InfuserSubstance sub = (InfuserSubstance)results[0];
       for(IInfuserRecipe recipe : InfuserRecipeManager.instance.GetRecipes())
       {
-        if(recipe.GetInputSubstanceType().equals(sub.type))
+        if(recipe.GetInputSubstance().type.equals(sub.type))
         {
           arecipes.add(new CachedInfuserRecipe(recipe));
         }
@@ -191,4 +193,3 @@ public class InfuserRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
   }
   
 }
-*/

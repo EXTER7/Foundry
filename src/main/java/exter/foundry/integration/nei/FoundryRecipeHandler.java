@@ -1,5 +1,5 @@
 package exter.foundry.integration.nei;
-/*
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
@@ -7,12 +7,15 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -28,9 +31,10 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import exter.foundry.item.ItemRefractoryFluidContainer;
-*/
-public abstract class FoundryRecipeHandler {}/* extends TemplateRecipeHandler
+
+public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
 {
   public static Point TANK_OVERLAY = new Point(176, 0);
 
@@ -203,13 +207,14 @@ public abstract class FoundryRecipeHandler {}/* extends TemplateRecipeHandler
     if(input instanceof ItemStack)
     {
       ItemStack stack = (ItemStack) input;
-      if(stack.getItem() instanceof ItemRefractoryFluidContainer)
+      Item stack_item = stack.getItem();
+      if(stack_item instanceof ItemRefractoryFluidContainer)
       {
         return ((ItemRefractoryFluidContainer) stack.getItem()).getFluid(stack);
       }
-      if(stack.getItem() instanceof ItemBlock)
+      if(stack_item instanceof ItemBlock)
       {
-        Block block = Block.blocksList[stack.itemID];
+        Block block = ((ItemBlock)stack_item)./*block*/field_150939_a;
         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
         if(fluid != null)
         {
@@ -240,11 +245,16 @@ public abstract class FoundryRecipeHandler {}/* extends TemplateRecipeHandler
   public boolean isMouseOver(Rectangle rect, GuiRecipe gui, int recipe)
   {
     Point offset = gui.getRecipePosition(recipe);
-    Rectangle absoluteLoc = new Rectangle(rect.x + offset.x + gui.guiLeft, rect.y + offset.y + gui.guiTop, rect.width, rect.height);
+    
+    //Workaround to access GUI protected fields.
+    int gui_guiLeft = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "field_147003_i");
+    int gui_guiTop = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "field_147009_r");
+    
+    Rectangle absoluteLoc = new Rectangle(rect.x + offset.x + gui_guiLeft, rect.y + offset.y + gui_guiTop, rect.width, rect.height);
     return absoluteLoc.contains(GuiDraw.getMousePosition());
   }
 
-  public void drawRectWithIconAligned(Rectangle rect, Icon icon, boolean alignLeft, boolean alignTop)
+  public void drawRectWithIconAligned(Rectangle rect, IIcon icon, boolean alignLeft, boolean alignTop)
   {
     float minU = alignLeft ? icon.getInterpolatedU(0) : icon.getInterpolatedU(16 - rect.width);
     float minV = alignTop ? icon.getInterpolatedV(0) : icon.getInterpolatedV(16 - rect.height);
@@ -277,4 +287,3 @@ public abstract class FoundryRecipeHandler {}/* extends TemplateRecipeHandler
     }
   }
 }
-*/

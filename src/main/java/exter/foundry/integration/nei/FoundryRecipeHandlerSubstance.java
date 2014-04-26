@@ -1,19 +1,20 @@
 package exter.foundry.integration.nei;
 
-/*
+
 import java.awt.Rectangle;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
-import exter.foundry.recipes.InfuserSubstance;
-*/
+import exter.foundry.api.substance.InfuserSubstance;
 
-public abstract class FoundryRecipeHandlerSubstance {} /* extends FoundryRecipeHandler
+
+public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
 {
 
   public abstract class CachedFoundryRecipeSubstance extends CachedFoundryRecipe
@@ -55,5 +56,12 @@ public abstract class FoundryRecipeHandlerSubstance {} /* extends FoundryRecipeH
     }
     return super.mouseClicked(gui, button, recipe);
   }
+  
+  protected void SetColor(int color)
+  {
+    float red = (float) (color >> 16 & 255) / 255.0F;
+    float green = (float) (color >> 8 & 255) / 255.0F;
+    float blue = (float) (color & 255) / 255.0F;
+    GL11.glColor4f(red, green, blue, 1.0f);
+  }
 }
-*/

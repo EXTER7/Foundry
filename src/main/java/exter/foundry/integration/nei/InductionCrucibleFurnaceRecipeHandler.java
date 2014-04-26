@@ -1,6 +1,6 @@
 package exter.foundry.integration.nei;
 
-/*
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
@@ -19,9 +19,9 @@ import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.energy.EnergyManager;
-*/
 
-public class InductionCrucibleFurnaceRecipeHandler {} /* extends FoundryRecipeHandler
+
+public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
 {
 
   public static int GUI_SMELT_TIME = 40;
@@ -173,4 +173,3 @@ public class InductionCrucibleFurnaceRecipeHandler {} /* extends FoundryRecipeHa
   }
 
 }
-*/

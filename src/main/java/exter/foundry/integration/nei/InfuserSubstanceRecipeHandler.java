@@ -1,6 +1,6 @@
 package exter.foundry.integration.nei;
 
-/*
+
 import static codechicken.core.gui.GuiDraw.changeTexture;
 import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
@@ -18,15 +18,16 @@ import codechicken.nei.recipe.GuiRecipe;
 
 import com.google.common.collect.ImmutableList;
 
-import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
+import exter.foundry.api.substance.ISubstanceGuiTexture;
+import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.gui.GuiMetalInfuser;
-import exter.foundry.recipes.InfuserSubstance;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.energy.EnergyManager;
-*/
-public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSubstance
+
+public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
 {
   private static final Rectangle SUBSTANCE_RECT = new Rectangle(71 - 5, 43 - 11, 8, 47);
 
@@ -44,7 +45,7 @@ public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSub
     public CachedInfuserSubstanceRecipe(IInfuserSubstanceRecipe recipe)
     {
       input = new PositionedStack(asItemStackOrList(recipe.GetInputItem()), 19 - 5, 59 - 11, true);
-      substance = new InfuserSubstance(recipe.GetOutputSubstanceType(),recipe.GetOutputSubstanceAmount());
+      substance = recipe.GetOutputSubstance();
       energy = recipe.GetEnergyNeeded();
     }
 
@@ -88,7 +89,7 @@ public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSub
     {
       drawProgressBar(PROGRESS, currentProgress);
     }
-    int times = FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX / foundryRecipe.GetSubstance().amount;
+    int times = FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX / foundryRecipe.GetSubstance().amount;
     DrawSubstance(foundryRecipe.GetSubstance(), (foundryRecipe.getAgeTicks() / 30) % (times));
   }
   
@@ -96,16 +97,18 @@ public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSub
   {
     if(substance != null && substance.amount > 0)
     {
-      SubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
+      ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
       GuiDraw.changeTexture(tex.GetLocation());
-      int height = (substance.amount * multiplier) * 47 / FoundryUtils.INFUSER_SUBSTANCE_AMOUNT_MAX;
+      int height = (substance.amount * multiplier) * 47 / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
       if(height > 47)
       {
         height = 47;
       }
 
       Rectangle rect = GetSubstanceRect();
-      GuiDraw.drawTexturedModalRect(rect.x, rect.y + 47 - height, tex.x, tex.y + 47 - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+      SetColor(tex.GetColor());
+      GuiDraw.drawTexturedModalRect(rect.x, rect.y + 47 - height, tex.GetX(), tex.GetY() + 47 - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+      GL11.glColor4f(1, 1, 1, 1);
       GuiDraw.changeTexture(getGuiTexture());
     }    
   }
@@ -153,7 +156,7 @@ public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSub
       InfuserSubstance sub = (InfuserSubstance)results[0];
       for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
       {
-        if(recipe.GetOutputSubstanceType().equals(sub.type))
+        if(recipe.GetOutputSubstance().type.equals(sub.type))
         {
           arecipes.add(new CachedInfuserSubstanceRecipe(recipe));
         }
@@ -216,4 +219,3 @@ public class InfuserSubstanceRecipeHandler {} /* extends FoundryRecipeHandlerSub
     return super.handleTooltip(gui, currenttip, recipe);
   }
 }
-*/

@@ -21,8 +21,12 @@ version = "1.0.0.0-pre"
 group= "exter.fodc" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Foundry"
 
+dependencies { 
+    compile fileTree(dir: 'lib', includes: ['*.jar']) 
+} 
+
 minecraft {
-    version = "1.7.2-10.12.0.1048"
+    version = "1.7.2-10.12.1.1060"
     assetDir = "eclipse/assets"
 }
 processResources

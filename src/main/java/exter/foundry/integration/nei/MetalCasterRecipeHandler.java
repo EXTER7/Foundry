@@ -1,6 +1,5 @@
 package exter.foundry.integration.nei;
 
-/*
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -16,12 +15,13 @@ import codechicken.nei.recipe.GuiUsageRecipe;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.util.FoundryMiscUtils;
-*/
-public class MetalCasterRecipeHandler {} /* extends FoundryRecipeHandler
+
+public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 {
 
   public static int GUI_SMELT_TIME = 40;
@@ -71,25 +71,36 @@ public class MetalCasterRecipeHandler {} /* extends FoundryRecipeHandler
   @SuppressWarnings("unchecked")
   protected List<ItemStack> getExtraItems(ICastingRecipe recipe)
   {
-    if(recipe.GetInputExtra() == null)
+    Object extra = recipe.GetInputExtra();
+    if(extra == null)
     {
       return Lists.newArrayList();
-    }
-    if(recipe.GetInputExtra() instanceof String)
+    } else if(extra instanceof OreStack)
+    {
+      OreStack stack = (OreStack) extra;
+      List<ItemStack> list = (List<ItemStack>) asItemStackOrList(stack.name);
+      if(list != null && !list.isEmpty())
+      {
+        for(ItemStack s : list)
+        {
+          s.stackSize = stack.amount;
+        }
+      }
+      return list;
+    } else if(recipe.GetInputExtra() instanceof String)
     {
       List<ItemStack> list = (List<ItemStack>) asItemStackOrList(recipe.GetInputExtra());
       if(list != null && !list.isEmpty())
       {
         for(ItemStack stack : list)
         {
-          stack.stackSize = recipe.GetInputExtraAmount();
+          stack.stackSize = 1;
         }
       }
       return list;
     } else if(recipe.GetInputExtra() instanceof ItemStack)
     {
-      ItemStack stack = ((ItemStack) recipe.GetInputExtra()).copy();
-      stack.stackSize = recipe.GetInputExtraAmount();
+      ItemStack stack = (ItemStack) recipe.GetInputExtra();
       return Lists.newArrayList(stack);
     }
     return Lists.newArrayList();
@@ -198,7 +209,7 @@ public class MetalCasterRecipeHandler {} /* extends FoundryRecipeHandler
       for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
       {
         Object output = recipe.GetOutput();
-        if(output != null && FoundryMiscUtils.IsItemMatch((ItemStack) results[0], output))
+        if(output != null && FoundryUtils.IsItemMatch((ItemStack) results[0], output))
         {
           arecipes.add(new CachedCasterRecipe(recipe));
         }
@@ -233,4 +244,3 @@ public class MetalCasterRecipeHandler {} /* extends FoundryRecipeHandler
     return ImmutableList.<Class<? extends GuiContainer>> of(GuiMetalCaster.class);
   }
 }
-*/

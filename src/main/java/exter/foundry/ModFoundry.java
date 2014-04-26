@@ -406,7 +406,7 @@ public class ModFoundry
 
         int meta = ~i & 15;
         MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),temp,250);
-        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass_pane,1,i), new FluidStack(liquid_glass_colored,375),temp,250);
+        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(liquid_glass_colored,375),temp,250);
         CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),mold_block,null,400);
         
         InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[i], 25000);

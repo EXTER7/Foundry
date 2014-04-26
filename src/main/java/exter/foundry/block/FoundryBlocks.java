@@ -279,7 +279,7 @@ public class FoundryBlocks
     
     MinecraftForge.setBlockHarvestLevel(block_ore, "pickaxe", 1);
     
-    GameRegistry.registerBlock(block_foundry_crucible, "foundryCrucible");
+    GameRegistry.registerBlock(block_foundry_crucible, "refractoryCasing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
     GameRegistry.registerBlock(block_metal, ItemBlockMulti.class, "blockFoundryMetal");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");

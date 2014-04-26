@@ -46,6 +46,8 @@ public class AlloyRecipe implements IAlloyRecipe
     }
   }
 
+  static private final boolean[] matched = new boolean[4];
+  
   @Override
   public boolean MatchesRecipe(FluidStack[] in,int[] order)
   {
@@ -60,6 +62,12 @@ public class AlloyRecipe implements IAlloyRecipe
     {
       return false;
     }
+    
+    for(i = 0; i < 4; i++)
+    {
+      matched[i] = false;
+    }
+    
     for(i = 0; i < in.length; i++)
     {
       if(in[i] != null)
@@ -67,8 +75,9 @@ public class AlloyRecipe implements IAlloyRecipe
         int j;
         for(j = 0; j < inputs.length; j++)
         {
-          if(in[i].containsFluid(inputs[j]))
+          if(!matched[j] && in[i].containsFluid(inputs[j]))
           {
+            matched[j] = true;
             matches++;
             if(order != null)
             {

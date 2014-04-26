@@ -39,6 +39,7 @@ import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
+import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
@@ -111,7 +112,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,new ModIntegrationIC2("ic2"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationBuildcraft("buildcraft"));
     ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
-    //ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));

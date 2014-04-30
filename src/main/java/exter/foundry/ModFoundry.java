@@ -40,6 +40,7 @@ import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
+import exter.foundry.integration.ModIntegrationThaumcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
@@ -78,7 +79,8 @@ import exter.foundry.worldgen.WordGenOre;
       + "after:Redstone Arsenal;"
       + "after:IC2;"
       + "after:Forestry;"
-      + "after:gregtech_addon"
+      + "after:gregtech_addon;"
+      + "after:Thaumcraft"
 )
 public class ModFoundry
 {
@@ -117,6 +119,7 @@ public class ModFoundry
     //ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
+    ModIntegration.RegisterIntegration(config,new ModIntegrationThaumcraft("thaumcraft"));
     
 
     FoundryAPI.items = ItemRegistry.instance;

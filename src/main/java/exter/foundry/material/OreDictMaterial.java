@@ -56,6 +56,7 @@ public class OreDictMaterial
     new OreDictMaterial("Steel","ingot"),
     new OreDictMaterial("Topaz","gem"),
     new OreDictMaterial("Redstone","dust"),
-    new OreDictMaterial("Glowstone","dust")
+    new OreDictMaterial("Glowstone","dust"),
+    new OreDictMaterial("Thaumium","ingot")
   };
 }

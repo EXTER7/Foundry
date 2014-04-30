@@ -39,6 +39,7 @@ fluid.liquidGlass.light_blue=Liquid Glass (Light Blue)
 fluid.liquidGlass.magenta=Liquid Glass (Magenta)
 fluid.liquidGlass.orange=Liquid Glass (Orange)
 fluid.liquidGlass.white=Liquid Glass (White)
+fluid.liquidThaumium=Liquid Thaumium
 
 
 router.material._Any=All
@@ -86,6 +87,7 @@ router.material.Steel=Steel
 router.material.Topaz=Topaz
 router.material.Redstone=Redstone
 router.material.Glowstone=Glowstone
+router.material.Thaumium=Thaumium
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -173,6 +175,7 @@ tile.liquidGlass.light_blue.name=Liquid Glass (Light Blue)
 tile.liquidGlass.magenta.name=Liquid Glass (Magenta)
 tile.liquidGlass.orange.name=Liquid Glass (Orange)
 tile.liquidGlass.white.name=Liquid Glass (White)
+tile.liquidThaumium.name=Liquid Thaumium
 
 
 tile.machine.ICF.name=Induction Crucible Furnace
@@ -288,6 +291,8 @@ item.mold30.name=Stairs Mold
 item.mold31.name=Clay Stairs Mold
 item.mold32.name=Plate Mold
 item.mold33.name=Clay Plate Mold
+item.mold34.name=Wand Cap Mold
+item.mold35.name=Clay Wand Cap Mold
 
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot
@@ -308,3 +313,7 @@ item.ingot15.name=Titanium Ingot
 item.ingot16.name=Cupronickel Ingot
 
 item.foundryContainer.name=Refractory Fluid Container
+
+tc.research.capmold.text=This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. 
+tc.research_name.FOUNDRY_capmold=Wand Cap mold.
+tc.research_text.FOUNDRY_capmold=Making wand caps out of liquid metal.

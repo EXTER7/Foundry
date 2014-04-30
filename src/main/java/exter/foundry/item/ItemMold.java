@@ -48,6 +48,8 @@ public class ItemMold extends Item
   static public final int MOLD_STAIRS_CLAY = 31;
   static public final int MOLD_PLATE_IC2 = 32;
   static public final int MOLD_PLATE_IC2_CLAY = 33;
+  static public final int MOLD_CAP_TC = 34;
+  static public final int MOLD_CAP_TC_CLAY = 35;
 
 
   static private final String[] ICON_PATHS = 
@@ -85,7 +87,9 @@ public class ItemMold extends Item
     "foundry:mold_stairs",
     "foundry:claymold_stairs",
     "foundry:mold_plate_ic2",
-    "foundry:claymold_plate_ic2"
+    "foundry:claymold_plate_ic2",
+    "foundry:mold_cap_tc",
+    "foundry:claymold_cap_tc"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -123,7 +127,9 @@ public class ItemMold extends Item
     "itemStairsMold",
     "itemClayStairsMold",
     "itemPlateMold",
-    "itemClayPlateMold"
+    "itemClayPlateMold",
+    "itemCapMold",
+    "itemClayCapMold"
   };
 
   

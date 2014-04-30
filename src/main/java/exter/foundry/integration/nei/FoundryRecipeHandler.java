@@ -7,7 +7,6 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -21,7 +20,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
-import codechicken.core.gui.GuiDraw;
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
@@ -181,7 +180,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     int width = (value - bar.minValue) * bar.maxWidth / (bar.maxValue - bar.minValue);
     GuiDraw.drawTexturedModalRect(bar.posX, bar.posY, bar.texX, bar.texY, width, bar.height);
   }
-
+  
   protected Object asItemStackOrList(Object item)
   {
     if(item instanceof String)

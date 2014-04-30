@@ -1,8 +1,6 @@
 package exter.foundry.integration.nei;
 
 
-import static codechicken.core.gui.GuiDraw.changeTexture;
-import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 
 import java.awt.Rectangle;
 import java.util.List;
@@ -12,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import codechicken.core.gui.GuiDraw;
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 
@@ -194,8 +192,8 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
   public void drawBackground(int recipe)
   {
     GL11.glColor4f(1, 1, 1, 1);
-    changeTexture(getGuiTexture());
-    drawTexturedModalRect(0, 0, 5, 11, 166, 108);
+    GuiDraw.changeTexture(getGuiTexture());
+    GuiDraw.drawTexturedModalRect(0, 0, 5, 11, 166, 108);
   }
 
   @Override

@@ -21,6 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class FoundryNetworkChannel
 {
@@ -152,6 +154,7 @@ public class FoundryNetworkChannel
   }
 
   @SubscribeEvent
+  @SideOnly(Side.CLIENT)
   public void onClientPacketData(ClientCustomPacketEvent event)
   {
     try

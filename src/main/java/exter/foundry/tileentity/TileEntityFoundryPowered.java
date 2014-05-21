@@ -1,10 +1,10 @@
 package exter.foundry.tileentity;
 
 
+import cofh.api.energy.IEnergyHandler;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import buildcraft.api.power.IPowerReceptor;
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IPowerReceptor /*,IEnergyHandler*/,IEnergySink
+public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IPowerReceptor,IEnergyHandler,IEnergySink
 {
   private boolean added_enet;
   private PowerHandler power_handler;
@@ -122,8 +122,6 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
   
-  /* TODO Re-enable once COFH lib is updated
-
   @Override
   public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
   {
@@ -141,7 +139,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   }
 
   @Override
-  public boolean canInterface(ForgeDirection from)
+  public boolean canConnectEnergy(ForgeDirection from)
   {
     return true;
   }
@@ -157,9 +155,6 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     return GetMaxStoredEnergy() / EnergyManager.RATIO_RF;
   }
-  */
-  
-  
   
   @Override
   public void onChunkUnload()

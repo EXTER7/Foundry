@@ -213,7 +213,7 @@ public class ThaumcraftApi {
     }
 	
 	/**
-	 * @param stack the recipe result
+	 * @param item the recipe result
 	 * @return the recipe
 	 */
 	public static InfusionRecipe getInfusionRecipe(ItemStack res) {
@@ -258,7 +258,7 @@ public class ThaumcraftApi {
 	
 	/**
 	 * Used by the thaumonomicon drilldown feature.
-	 * @param stack the item
+	 * @param item the item
 	 * @return the thaumcraft recipe key that produces that item. 
 	 */
 	private static HashMap<int[],Object[]> keyCache = new HashMap<int[],Object[]>();

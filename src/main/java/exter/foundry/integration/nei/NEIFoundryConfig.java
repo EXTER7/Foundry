@@ -24,10 +24,11 @@ public class NEIFoundryConfig implements IConfigureNEI
 
     List<TemplateRecipeHandler> handlers = ImmutableList.<TemplateRecipeHandler>of(
         new InductionCrucibleFurnaceRecipeHandler(),
-        new AlloyRecipeHandler(),
+        new AlloyMixerRecipeHandler(),
         new MetalCasterRecipeHandler(),
         new InfuserRecipeHandler(),
-        new InfuserSubstanceRecipeHandler());
+        new InfuserSubstanceRecipeHandler(),
+        new AlloyFurnaceRecipeHandler());
     
     for(TemplateRecipeHandler handler : handlers)
     {

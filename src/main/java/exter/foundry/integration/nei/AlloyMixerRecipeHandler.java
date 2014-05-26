@@ -17,7 +17,7 @@ import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 
-public class AlloyRecipeHandler extends FoundryRecipeHandler
+public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
 {
 
   public class CachedAlloyRecipe extends CachedFoundryRecipe

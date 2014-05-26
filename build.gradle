@@ -29,6 +29,22 @@ minecraft {
     version = "1.7.2-10.12.1.1095"
     assetDir = "eclipse/assets"
 }
+
+repositories {
+    maven {
+        name = "ChickenBones"
+        url = "http://chickenbones.net/maven"
+    }
+}
+
+dependencies {
+    compile "codechicken:NotEnoughItems:1.7.2-1.0.1:dev"
+    compile "codechicken:CodeChickenCore:1.7.2-1.0.1:dev"
+    compile "codechicken:CodeChickenLib:1.7.2-1.1.0.77:dev"
+}
+
+
+
 processResources
 {
     // replace stuff in mcmod.info, nothing else

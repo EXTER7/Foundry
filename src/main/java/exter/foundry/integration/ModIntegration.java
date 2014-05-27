@@ -1,5 +1,6 @@
 package exter.foundry.integration;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,11 +106,36 @@ public abstract class ModIntegration
     return integrations.get(name);
   }
   
-  static final public void RegisterIntegration(Configuration config,ModIntegration mod)
+  static final public void RegisterIntegration(Configuration config,Class<? extends ModIntegration> mod,String name)
   {
-    if(config.get("integration", "enable."+mod.Name, true).getBoolean(true))
+    try
     {
-      integrations.put(mod.Name, mod);
+      ModIntegration integration = mod.getDeclaredConstructor(String.class).newInstance(name);
+      if(config.get("integration", "enable."+integration.Name, true).getBoolean(true))
+      {
+        integrations.put(integration.Name, integration);
+      }
+    } catch(NoClassDefFoundError e)
+    {
+      ModFoundry.log.fine(e.getMessage());
+    } catch(InstantiationException e)
+    {
+      e.printStackTrace();
+    } catch(IllegalAccessException e)
+    {
+      e.printStackTrace();
+    } catch(IllegalArgumentException e)
+    {
+      e.printStackTrace();
+    } catch(InvocationTargetException e)
+    {
+      e.printStackTrace();
+    } catch(NoSuchMethodException e)
+    {
+      e.printStackTrace();
+    } catch(SecurityException e)
+    {
+      e.printStackTrace();
     }
   }
   

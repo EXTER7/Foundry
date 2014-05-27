@@ -111,15 +111,15 @@ public class ModFoundry
     int i;
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegration.RegisterIntegration(config,new ModIntegrationIC2("ic2"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationBuildcraft("buildcraft"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationForestry("forestry"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationRailcraft("railcraft"));
+    ModIntegration.RegisterIntegration(config,ModIntegrationIC2.class,"ic2");
+    ModIntegration.RegisterIntegration(config,ModIntegrationBuildcraft.class,"buildcraft");
+    ModIntegration.RegisterIntegration(config,ModIntegrationForestry.class,"forestry");
+    ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
-    ModIntegration.RegisterIntegration(config,new ModIntegrationThaumcraft("thaumcraft"));
+    ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
     
 
     FoundryAPI.items = ItemRegistry.instance;

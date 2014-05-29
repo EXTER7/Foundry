@@ -16,6 +16,7 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.client.FluidRenderProperties;
 import tconstruct.library.crafting.AlloyMix;
 import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
@@ -220,6 +221,32 @@ public class ModIntegrationTiCon extends ModIntegration
       {
         CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
       }
+    }
+    
+    List<tconstruct.library.crafting.CastingRecipe> recipes = new ArrayList<tconstruct.library.crafting.CastingRecipe>();
+    for(tconstruct.library.crafting.CastingRecipe casting : table_casting.getCastingRecipes())
+    {
+      String mapped = liquid_map.get(casting.castingMetal.getFluid().getName());
+      if(mapped != null)
+      {
+        FluidStack mapped_liquid = new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid(mapped),
+            mapped.equals("Glass")?
+                casting.castingMetal.amount:
+                (casting.castingMetal.amount * FoundryRecipes.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue));
+        tconstruct.library.crafting.CastingRecipe recipe = new tconstruct.library.crafting.CastingRecipe(
+            casting.output,
+            mapped_liquid,
+            casting.cast,
+            casting.consumeCast,
+            casting.coolTime,
+            casting.fluidRenderProperties);
+        recipes.add(recipe);
+      }
+    }
+    for(tconstruct.library.crafting.CastingRecipe r:recipes)
+    {
+      table_casting.addCustomCastingRecipe(r);
     }
   }
 }

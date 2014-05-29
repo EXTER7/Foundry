@@ -15,12 +15,12 @@ public class CastingRecipe
 
     public CastingRecipe(ItemStack replacement, FluidStack metal, ItemStack cast, boolean consume, int delay, FluidRenderProperties props)
     {
-      castingMetal = metal;
-      this.cast = cast;
-      output = replacement;
-      consumeCast = consume;
-      coolTime = delay;
-      fluidRenderProperties = props;
+        castingMetal = metal;
+        this.cast = cast;
+        output = replacement;
+        consumeCast = consume;
+        coolTime = delay;
+        fluidRenderProperties = props;
     }
 
     public boolean matches (FluidStack metal, ItemStack inputCast)

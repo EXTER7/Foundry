@@ -216,8 +216,7 @@ public class ModIntegrationTiCon extends ModIntegration
     }
     for(tconstruct.library.crafting.CastingRecipe casting:basin_casting.getCastingRecipes())
     {
-      String mapped = liquid_map.get(casting.castingMetal.getFluid().getName());
-      if(mapped == null && casting.castingMetal.amount <= 6000)
+      if(casting.castingMetal.amount <= 6000 && casting.cast == null)
       {
         CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
       }

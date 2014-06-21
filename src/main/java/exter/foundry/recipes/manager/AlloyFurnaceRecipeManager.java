@@ -45,4 +45,15 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
     return Collections.unmodifiableList(recipes);
   }
 
+  @Override
+  public void AddRecipe(ItemStack out, Object[] in_a, Object[] in_b)
+  {
+    for(Object a:in_a)
+    {
+      for(Object b:in_b)
+      {
+        AddRecipe(out, a, b);
+      }
+    }
+  }
 }

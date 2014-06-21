@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.oredict.OreDictionary;
 import codechicken.nei.ItemList;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -121,7 +122,11 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(IAlloyFurnaceRecipe recipe)
   {
-    if(recipe.GetOutput() != null && recipe.GetInputA() != null && recipe.GetInputB() != null)
+    Object in_a = recipe.GetInputA();
+    Object in_b = recipe.GetInputB();
+    if(recipe.GetOutput() != null && in_a != null && in_b != null 
+        && (!(in_a instanceof OreStack) || OreDictionary.getOres(((OreStack)in_a).name).size() > 0)
+        && (!(in_b instanceof OreStack) || OreDictionary.getOres(((OreStack)in_b).name).size() > 0))
     {
       arecipes.add(new CachedAlloyFurnaceRecipe(recipe));
     }

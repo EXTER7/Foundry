@@ -175,33 +175,53 @@ public class ModFoundry
 
     
     AlloyFurnaceRecipeManager.instance.AddRecipe(
-        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_BRONZE),
-        new OreStack("ingotCopper", 3),
-        new OreStack("ingotTin", 1)
+        new ItemStack(FoundryItems.item_ingot, 4, ItemIngot.INGOT_BRONZE),
+        new Object[] {
+            new OreStack("ingotCopper", 3),
+            new OreStack("dustCopper", 3) },
+        new Object[] {
+            new OreStack("ingotTin", 1),
+            new OreStack("dustTin", 1) }
         );
     
     AlloyFurnaceRecipeManager.instance.AddRecipe(
-        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_BRASS),
-        new OreStack("ingotCopper", 3),
-        new OreStack("ingotZinc", 1)
+        new ItemStack(FoundryItems.item_ingot, 4, ItemIngot.INGOT_BRASS),
+        new Object[] {
+            new OreStack("ingotCopper", 3),
+            new OreStack("dustCopper", 3) },
+        new Object[] {
+            new OreStack("ingotZinc", 1),
+            new OreStack("dustZinc", 1) }
         );
     
     AlloyFurnaceRecipeManager.instance.AddRecipe(
-        new ItemStack(FoundryItems.item_ingot, 2, ItemIngot.INGOT_INVAR),
-        new OreStack("ingotIron", 2),
-        new OreStack("ingotNickel", 1)
+        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_INVAR),
+        new Object[] {
+            new OreStack("ingotIron", 2),
+            new OreStack("dustIron", 2) },
+        new Object[] {
+            new OreStack("ingotNickel", 1),
+            new OreStack("dustNickel", 1) }
         );
 
     AlloyFurnaceRecipeManager.instance.AddRecipe(
-        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_ELECTRUM),
-        new OreStack("ingotGold", 2),
-        new OreStack("ingotSilver", 2)
+        new ItemStack(FoundryItems.item_ingot, 2, ItemIngot.INGOT_ELECTRUM),
+        new Object[] {
+            new OreStack("ingotGold", 1),
+            new OreStack("dustGold", 1) },
+        new Object[] {
+            new OreStack("ingotSilver", 1),
+            new OreStack("dustSilver", 1) }
         );
     
     AlloyFurnaceRecipeManager.instance.AddRecipe(
-        new ItemStack(FoundryItems.item_ingot, 3, ItemIngot.INGOT_CUPRONICKEL),
-        new OreStack("ingotCopper", 2),
-        new OreStack("ingotNickel", 2)
+        new ItemStack(FoundryItems.item_ingot, 2, ItemIngot.INGOT_CUPRONICKEL),
+        new Object[] {
+            new OreStack("ingotCopper", 1),
+            new OreStack("dustCopper", 1) },
+        new Object[] {
+            new OreStack("ingotNickel", 1),
+            new OreStack("dustNickel", 1) }
         );
     
 

@@ -145,6 +145,7 @@ public abstract class ModIntegration
     {
       if(m.is_loaded)
       {
+        ModFoundry.log.info("PreInit integration: " + m.Name);
         m.OnPreInit(config);
       }
     }
@@ -156,6 +157,7 @@ public abstract class ModIntegration
     {
       if(m.is_loaded)
       {
+        ModFoundry.log.info("Init integration: " + m.Name);
         m.OnInit();
       }
     }
@@ -167,6 +169,7 @@ public abstract class ModIntegration
     {
       if(m.is_loaded)
       {
+        ModFoundry.log.info("PostInit integration: " + m.Name);
         m.OnPostInit();
       }
     }

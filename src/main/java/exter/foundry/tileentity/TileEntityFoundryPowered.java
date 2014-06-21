@@ -7,7 +7,9 @@ import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.api.mj.IBatteryObject;
+import buildcraft.api.mj.IBatteryProvider;
+import buildcraft.api.mj.MjAPI;
 import exter.foundry.tileentity.energy.EnergyManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,15 +19,128 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyHandler,IEnergySink
+public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyHandler,IEnergySink,IBatteryProvider
 {
+  
+  private class MjBattery implements IBatteryObject
+  {
+    private double energy;
+    private double capacity;
+    private double max_received;
+    private double minimum;
+
+    @Override
+    public double getEnergyRequested()
+    {
+      return minimum;
+    }
+
+    @Override
+    public double addEnergy(double mj)
+    {
+      return addEnergy(mj, false);
+    }
+
+    @Override
+    public double addEnergy(double mj, boolean ignoreCycleLimit)
+    {
+      if(mj > max_received && !ignoreCycleLimit)
+      {
+        mj = max_received;
+      }
+      double needed = capacity - energy;
+      if(mj > needed)
+      {
+        mj = needed;
+      }
+      
+      energy += mj;
+      return mj;
+    }
+
+    @Override
+    public double getEnergyStored()
+    {
+      return energy;
+    }
+
+    @Override
+    public void setEnergyStored(double mj)
+    {
+      if(mj < 0)
+      {
+        mj = 0;
+      }
+      if(mj > capacity)
+      {
+        mj = capacity;
+      }
+    }
+
+    @Override
+    public double maxCapacity()
+    {
+      return capacity;
+    }
+
+    @Override
+    public double minimumConsumption()
+    {
+      return minimum;
+    }
+
+    @Override
+    public double maxReceivedPerCycle()
+    {
+      return max_received;
+    }
+
+    @Override
+    public IBatteryObject reconfigure(double maxCapacity, double maxReceivedPerCycle, double minimumConsumption)
+    {
+      capacity = maxCapacity;
+      max_received = maxReceivedPerCycle;
+      minimum = minimumConsumption;
+      return this;
+    }
+
+    @Override
+    public String kind()
+    {
+      return MjAPI.DEFAULT_POWER_FRAMEWORK;
+    }
+    
+    public MjBattery(double maxCapacity, double maxReceivedPerCycle, double minimumConsumption)
+    {
+      energy = 0;
+      reconfigure(maxCapacity, maxReceivedPerCycle, minimumConsumption);
+    }
+    
+    public double UseEnergy(double amount,boolean do_use)
+    {
+      if(energy < amount)
+      {
+        amount = energy;
+        if(do_use)
+        {
+          energy = 0;
+        }
+        return amount;
+      }
+      if(do_use)
+      {
+        energy -= amount;
+      }
+      return amount;
+    }
+  }
+  
   private boolean added_enet;
   protected EnergyManager energy_manager;
   protected boolean update_energy;
   protected boolean update_energy_tick;
   
-  @MjBattery(maxCapacity = 240, maxReceivedPerCycle = 80)
-  double energy = 0;
+  private MjBattery battery;
 
   public abstract int GetMaxStoredEnergy();
 
@@ -40,6 +155,9 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     update_energy = false;
     update_energy_tick = true;
     added_enet = false;
+    double mj_tick = (double)GetEnergyUse() / EnergyManager.RATIO_MJ + 1;
+    battery = new MjBattery(mj_tick * 50, mj_tick * 5, 1);
+
   }
   
 
@@ -67,12 +185,12 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   protected void UpdateEntityServer()
   {
     int last_energy = energy_manager.GetStoredEnergy();
-    energy -= energy_manager.ReceiveMJ(energy, true);
-    if(energy < 0)
-    {
-      energy = 0;
-    }
+    
+    double mj = battery.UseEnergy(battery.getEnergyStored(),false);
+    double used = energy_manager.ReceiveMJ(mj, false);
 
+    energy_manager.ReceiveMJ(battery.UseEnergy(used, true), true);
+    
     if(update_energy && (update_energy_tick || energy_manager.GetStoredEnergy() != last_energy))
     {
       UpdateEnergy(energy_manager);
@@ -171,9 +289,20 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     return 32;
   }
+  
   @Override
   public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
   {
     return true;
+  }
+
+  @Override
+  public IBatteryObject getMjBattery(String kind)
+  {
+    if(kind.equals(battery.kind()))
+    {
+      return battery;
+    }
+    return null;
   }
 }

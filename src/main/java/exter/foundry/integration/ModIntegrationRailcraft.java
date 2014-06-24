@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -71,6 +72,10 @@ public class ModIntegrationRailcraft extends ModIntegration
     items[ITEM_COAL_COKE_BLOCK] = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
 
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
+    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
+    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
+    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
+    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -139,6 +144,11 @@ public class ModIntegrationRailcraft extends ModIntegration
     }
 
 
+    MeltingRecipeManager.instance.AddRecipe("orePoorIron", new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.AddRecipe("orePoorCopper", new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.AddRecipe("orePoorTin", new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.AddRecipe("orePoorGold", new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    
     if(items[ITEM_IRON_GEAR] != null)
     {
       FoundryMiscUtils.RegisterInOreDictionary("gearIron", items[ITEM_IRON_GEAR]);
@@ -151,7 +161,6 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(!FoundryConfig.recipe_gear_useoredict)
     {
-      Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
       ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
       if(items[ITEM_IRON_GEAR] != null)
       {

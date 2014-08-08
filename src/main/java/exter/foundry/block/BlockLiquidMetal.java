@@ -77,7 +77,37 @@ public class BlockLiquidMetal extends BlockFluidClassic
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(World world, int x, int y, int z, Random rand)
   {
-    super.randomDisplayTick(world, x, y, z, rand);
+    int l;
+
+        double d5;
+        double d6;
+        double d7;
+
+        if (world.getBlock(x, y + 1, z).getMaterial() == Material.air && !world.getBlock(x, y + 1, z).isOpaqueCube())
+        {
+            if (rand.nextInt(100) == 0)
+            {
+                d5 = (double)((float)x + rand.nextFloat());
+                d6 = (double)y + this.maxY;
+                d7 = (double)((float)z + rand.nextFloat());
+                world.spawnParticle("lava", d5, d6, d7, 0.0D, 0.0D, 0.0D);
+                world.playSound(d5, d6, d7, "liquid.lavapop", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+            }
+
+            if (rand.nextInt(200) == 0)
+            {
+                world.playSound((double)x, (double)y, (double)z, "liquid.lava", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+            }
+        }
+
+        if (rand.nextInt(10) == 0 && World.doesBlockHaveSolidTopSurface(world, x, y - 1, z) && !world.getBlock(x, y - 2, z).getMaterial().blocksMovement())
+        {
+            d5 = (double)((float)x + rand.nextFloat());
+            d6 = (double)y - 1.05D;
+            d7 = (double)((float)z + rand.nextFloat());
+
+            world.spawnParticle("dripLava", d5, d6, d7, 0.0D, 0.0D, 0.0D);
+        }
   }
 
   @Override

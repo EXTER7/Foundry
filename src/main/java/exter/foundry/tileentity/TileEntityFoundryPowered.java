@@ -1,163 +1,31 @@
 package exter.foundry.tileentity;
 
-
-import cofh.api.energy.IEnergyHandler;
-import ic2.api.energy.event.EnergyTileLoadEvent;
-import ic2.api.energy.event.EnergyTileUnloadEvent;
-import ic2.api.energy.tile.IEnergySink;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import buildcraft.api.mj.IBatteryObject;
-import buildcraft.api.mj.IBatteryProvider;
-import buildcraft.api.mj.MjAPI;
-import exter.foundry.tileentity.energy.EnergyManager;
+import universalelectricity.api.UniversalClass;
+import universalelectricity.api.core.grid.INodeProvider;
+import universalelectricity.api.core.grid.electric.IElectricNode;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyHandler,IEnergySink,IBatteryProvider
+@UniversalClass
+public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IElectricNode
 {
-  
-  private class MjBattery implements IBatteryObject
-  {
-    private double energy;
-    private double capacity;
-    private double max_received;
-    private double minimum;
-
-    @Override
-    public double getEnergyRequested()
-    {
-      return minimum;
-    }
-
-    @Override
-    public double addEnergy(double mj)
-    {
-      return addEnergy(mj, false);
-    }
-
-    @Override
-    public double addEnergy(double mj, boolean ignoreCycleLimit)
-    {
-      if(mj > max_received && !ignoreCycleLimit)
-      {
-        mj = max_received;
-      }
-      double needed = capacity - energy;
-      if(mj > needed)
-      {
-        mj = needed;
-      }
-      
-      energy += mj;
-      return mj;
-    }
-
-    @Override
-    public double getEnergyStored()
-    {
-      return energy;
-    }
-
-    @Override
-    public void setEnergyStored(double mj)
-    {
-      if(mj < 0)
-      {
-        mj = 0;
-      }
-      if(mj > capacity)
-      {
-        mj = capacity;
-      }
-    }
-
-    @Override
-    public double maxCapacity()
-    {
-      return capacity;
-    }
-
-    @Override
-    public double minimumConsumption()
-    {
-      return minimum;
-    }
-
-    @Override
-    public double maxReceivedPerCycle()
-    {
-      return max_received;
-    }
-
-    @Override
-    public IBatteryObject reconfigure(double maxCapacity, double maxReceivedPerCycle, double minimumConsumption)
-    {
-      capacity = maxCapacity;
-      max_received = maxReceivedPerCycle;
-      minimum = minimumConsumption;
-      return this;
-    }
-
-    @Override
-    public String kind()
-    {
-      return MjAPI.DEFAULT_POWER_FRAMEWORK;
-    }
-    
-    public MjBattery(double maxCapacity, double maxReceivedPerCycle, double minimumConsumption)
-    {
-      energy = 0;
-      reconfigure(maxCapacity, maxReceivedPerCycle, minimumConsumption);
-    }
-    
-    public double UseEnergy(double amount,boolean do_use)
-    {
-      if(energy < amount)
-      {
-        amount = energy;
-        if(do_use)
-        {
-          energy = 0;
-        }
-        return amount;
-      }
-      if(do_use)
-      {
-        energy -= amount;
-      }
-      return amount;
-    }
-  }
-  
-  private boolean added_enet;
-  protected EnergyManager energy_manager;
+  protected double energy;
   protected boolean update_energy;
   protected boolean update_energy_tick;
   
-  private MjBattery battery;
 
-  public abstract int GetMaxStoredEnergy();
-
-  public abstract int GetEnergyUse();
   
   public TileEntityFoundryPowered()
   {
     super();
     
-    energy_manager = new EnergyManager(GetMaxStoredEnergy());
+    energy = 0;
     
     update_energy = false;
     update_energy_tick = true;
-    added_enet = false;
-    double mj_tick = (double)GetEnergyUse() / EnergyManager.RATIO_MJ + 1;
-    battery = new MjBattery(mj_tick * 50, mj_tick * 5, 1);
-
   }
   
 
@@ -165,7 +33,10 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   public void readFromNBT(NBTTagCompound compound)
   {
     super.readFromNBT(compound);
-    energy_manager.ReadFromNBT(compound);
+    if(compound.hasKey("energy"))
+    {
+      energy = compound.getDouble("energy");
+    }
   }
   
   
@@ -173,7 +44,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   public void writeToNBT(NBTTagCompound compound)
   {
     super.writeToNBT(compound);
-    energy_manager.WriteToNBT(compound);
+    compound.setDouble("energy", 0);
   }
 
   protected void OnInitialize()
@@ -184,28 +55,14 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Override
   protected void UpdateEntityServer()
   {
-    int last_energy = energy_manager.GetStoredEnergy();
+    double last_energy = energy;
     
-    double mj = battery.UseEnergy(battery.getEnergyStored(),false);
-    double used = energy_manager.ReceiveMJ(mj, false);
-
-    energy_manager.ReceiveMJ(battery.UseEnergy(used, true), true);
     
-    if(update_energy && (update_energy_tick || energy_manager.GetStoredEnergy() != last_energy))
+    if(update_energy && (update_energy_tick || energy != last_energy))
     {
-      UpdateEnergy(energy_manager);
+      UpdateValue("energy",energy);
     }
     update_energy_tick = false;
-  }
-  
-  @Override
-  public void updateEntity()
-  {
-    if(!added_enet)
-    {
-      LoadEnet();
-    }
-    super.updateEntity();
   }
   
   public void UpdateRedstone()
@@ -213,96 +70,56 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
   
+  /** Adds energy to the node returns energy added */
   @Override
-  public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
+  public final double addEnergy(ForgeDirection from, double wattage, boolean doAdd)
   {
-    if(!simulate && update_energy && !worldObj.isRemote)
-    {
-      update_energy_tick = true;
-    }
-    return energy_manager.ReceiveRF(maxReceive, !simulate);
+    return 0;//TODO
   }
-
+  /** Removes energy from the node returns energy removed */
   @Override
-  public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
+  public final double removeEnergy(ForgeDirection from, double wattage, boolean doRemove)
   {
     return 0;
   }
+  /** Current energy stored in UE joules */
+  @Override
+  public final double getEnergy(ForgeDirection from)
+  {
+    return 0;//TODO
+  }
+  
+
+  protected double UseEnergy(double amount,boolean do_use)
+  {
+    if(amount > energy)
+    {
+      amount = energy;
+    }
+    if(do_use)
+    {
+      energy -= amount;
+    }
+    return amount;
+  }
+  
 
   @Override
-  public boolean canConnectEnergy(ForgeDirection from)
+  public void reconstruct()
   {
-    return true;
+
   }
 
   @Override
-  public int getEnergyStored(ForgeDirection from)
+  public void deconstruct()
   {
-    return energy_manager.GetStoredEnergy() / EnergyManager.RATIO_RF;
-  }
 
-  @Override
-  public int getMaxEnergyStored(ForgeDirection from)
-  {
-    return GetMaxStoredEnergy() / EnergyManager.RATIO_RF;
   }
   
   @Override
-  public void onChunkUnload()
+  public INodeProvider getParent()
   {
-    if(added_enet && Loader.isModLoaded("IC2"))
-    {
-      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
-      added_enet = false;
-    }
-  }
-
-  public void LoadEnet()
-  {
-    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient() && Loader.isModLoaded("IC2"))
-    {
-      MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
-      added_enet = true;
-    }
-  }
-  
-  @Override
-  public double demandedEnergyUnits()
-  {
-    return (double)(GetMaxStoredEnergy() - energy_manager.GetStoredEnergy()) / EnergyManager.RATIO_EU;
-  }
-
-  @Override
-  public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
-  {
-    double use_amount = Math.max(Math.min(amount, getMaxSafeInput()), 0);
-    if(update_energy && !worldObj.isRemote)
-    {
-      update_energy_tick = true;
-    }
-
-    return amount - energy_manager.ReceiveEU(use_amount, true);
-  }
-
-  @Override
-  public int getMaxSafeInput()
-  {
-    return 32;
-  }
-  
-  @Override
-  public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
-  {
-    return true;
-  }
-
-  @Override
-  public IBatteryObject getMjBattery(String kind)
-  {
-    if(kind.equals(battery.kind()))
-    {
-      return battery;
-    }
     return null;
   }
+
 }

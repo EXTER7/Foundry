@@ -8,7 +8,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -185,12 +184,12 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(items[ITEM_COAL_COKE] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), items[ITEM_COAL_COKE], 110000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), items[ITEM_COAL_COKE], 1100);
     }
     
     if(items[ITEM_COAL_COKE_BLOCK] != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), items[ITEM_COAL_COKE_BLOCK], 880000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), items[ITEM_COAL_COKE_BLOCK], 8800);
     }
   }
 }

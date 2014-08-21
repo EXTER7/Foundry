@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import exter.foundry.tileentity.energy.EnergyManager;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -241,13 +240,14 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     do_update = true;
   }
 
-  protected final void UpdateEnergy(EnergyManager em)
+  protected final void UpdateValue(String name,double value)
   {
     if(packet == null)
     {
       return;
     }
-    em.WriteToNBT(packet);
+    packet.setDouble(name, value);
+
     do_update = true;
   }
 

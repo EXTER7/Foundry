@@ -2,7 +2,6 @@ package exter.foundry.tileentity;
 
 
 import io.netty.buffer.ByteBuf;
-
 import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
@@ -442,7 +441,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   private void MixAlloy()
   {
-    if(energy_manager.GetStoredEnergy() < 10)
+    // TODO verify this
+    if(getEnergy(null) < 0.1)
     {
       return;
     }
@@ -481,10 +481,10 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     {
       return;
     }
-    int energy_used = 0;
+    double energy_used = 0;
     while(true)
     {
-      if(energy_used >= 2500)
+      if(energy_used >= 25)
       {
         return;
       }
@@ -498,12 +498,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       {
         return;
       }
-      int required_energy = 10 * output.amount;
-      if(energy_manager.UseEnergy(required_energy, false) < required_energy)
+      double required_energy = 0.1 * output.amount;
+      if(UseEnergy(required_energy, false) < required_energy)
       {
         return;
       }
-      energy_manager.UseEnergy(required_energy, true);
+      UseEnergy(required_energy, true);
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       UpdateTank(TANK_OUTPUT);
@@ -543,14 +543,17 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public double getVoltage(ForgeDirection arg0)
   {
-    return 3000;
+    // TODO Tweak this
+    return 32;
   }
 
   @Override
-  public int GetEnergyUse()
+  public double getEnergyCapacity(ForgeDirection arg0)
   {
-    return 2500;
+    // TODO Tweak this
+    return 30;
   }
+
 }

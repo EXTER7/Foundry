@@ -13,9 +13,7 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
-import forestry.api.core.ItemInterface;
 
-@SuppressWarnings("deprecation")
 public class ModIntegrationForestry extends ModIntegration
 {
   static public final int ITEM_COPPER_GEAR = 0;
@@ -42,6 +40,7 @@ public class ModIntegrationForestry extends ModIntegration
       return;
     }
     items = new ItemStack[3];
+    /* TODO Update this
     items[ITEM_COPPER_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearCopper"));
     items[ITEM_TIN_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearTin"));
     items[ITEM_BRONZE_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearBronze"));
@@ -68,6 +67,7 @@ public class ModIntegrationForestry extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
+    */
   }
 
   @Override

@@ -41,7 +41,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
 
   private InfuserSubstance substance;
   
-  static private final int INFUSE_ENERGY_NEEDED = 100;
+  static private final int INFUSE_ENERGY_NEEDED = 1;
   
   private int progress;
   private int extract_energy;
@@ -398,10 +398,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
     extract_energy = current_substance_recipe.GetEnergyNeeded();
-    if(energy_manager.GetStoredEnergy() > 0)
+    if(getEnergy(null) > 0)
     {
-      int energy = energy_manager.UseEnergy(600, true);
-      progress += energy;
+      double energy = UseEnergy(6, true);
+      progress += (int)(energy * 100);
       if(progress >= extract_energy)
       {
         progress -= extract_energy;
@@ -429,7 +429,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     int last_progress = progress;
     int last_extract_time = extract_energy;
     
-    if(tanks[TANK_INPUT].getFluidAmount() > 0 && energy_manager.GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
+    if(tanks[TANK_INPUT].getFluidAmount() > 0 && getEnergy(null) >= INFUSE_ENERGY_NEEDED)
     {
       IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
@@ -439,7 +439,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         {
           tanks[TANK_INPUT].drain(recipe.GetInputFluid().amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
-          energy_manager.UseEnergy(INFUSE_ENERGY_NEEDED, true);
+          UseEnergy(INFUSE_ENERGY_NEEDED, true);
           substance.amount -= recipe.GetInputSubstance().amount;
           if(substance.amount <= 0)
           {
@@ -501,14 +501,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public double getVoltage(ForgeDirection arg0)
   {
-    return 3000;
+    // TODO Tweak this
+    return 32;
   }
 
   @Override
-  public int GetEnergyUse()
+  public double getEnergyCapacity(ForgeDirection arg0)
   {
-    return INFUSE_ENERGY_NEEDED + 600;
+    // TODO Tweak this
+    return 30;
   }
 }

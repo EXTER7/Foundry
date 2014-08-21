@@ -60,7 +60,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
 
   static public final int CAST_TIME = 400000;
   
-  static public final int ENERGY_REQUIRED = 10000;
+  static public final int ENERGY_REQUIRED = 100;
   
   static public final int INVENTORY_OUTPUT = 0;
   static public final int INVENTORY_MOLD = 1;
@@ -175,11 +175,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
         ModFoundry.network_channel.SendCasterModeToServer(this);
       }
     }
-  }
-
-  public int GetStoredPower()
-  {
-    return energy_manager.GetStoredEnergy();
   }
 
   @Override
@@ -392,9 +387,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   
   private void BeginCasting()
   {
-    if(current_recipe != null && CanCastCurrentRecipe() && energy_manager.GetStoredEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && CanCastCurrentRecipe() && this.getEnergy(null) >= ENERGY_REQUIRED)
     {
-      energy_manager.UseEnergy(ENERGY_REQUIRED, true);
+      UseEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }
@@ -528,15 +523,17 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public double getVoltage(ForgeDirection arg0)
   {
-    return 40000;
+    // TODO Tweak this
+    return 32;
   }
 
 
   @Override
-  public int GetEnergyUse()
+  public double getEnergyCapacity(ForgeDirection arg0)
   {
-    return ENERGY_REQUIRED;
+    // TODO Tweak this
+    return 400;
   }
 }

@@ -267,15 +267,15 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   }
   
   @Override
-  public double demandedEnergyUnits()
+  public double getDemandedEnergy()
   {
     return (double)(GetMaxStoredEnergy() - energy_manager.GetStoredEnergy()) / EnergyManager.RATIO_EU;
   }
 
   @Override
-  public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
+  public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage)
   {
-    double use_amount = Math.max(Math.min(amount, getMaxSafeInput()), 0);
+    double use_amount = Math.max(Math.min(amount, getDemandedEnergy()), 0);
     if(update_energy && !worldObj.isRemote)
     {
       update_energy_tick = true;
@@ -285,9 +285,9 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   }
 
   @Override
-  public int getMaxSafeInput()
+  public int getSinkTier()
   {
-    return 32;
+    return 1;
   }
   
   @Override

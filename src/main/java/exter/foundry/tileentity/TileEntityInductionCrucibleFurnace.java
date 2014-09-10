@@ -558,9 +558,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }  
   
   @Override
-  public int getMaxSafeInput()
+  public int getSinkTier()
   {
-    return 128;
+    return 2;
   }
 
   @Override

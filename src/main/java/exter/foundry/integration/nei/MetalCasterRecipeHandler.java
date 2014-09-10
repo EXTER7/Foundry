@@ -18,6 +18,8 @@ import com.google.common.collect.Lists;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.ICastingRecipe;
+import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 
@@ -232,6 +234,19 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     }
   }
 
+
+  @Override
+  public ItemStack getMachineItem()
+  {
+    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER);
+  }
+  
+  @Override
+  public Rectangle getRecipeRect()
+  {
+    return new Rectangle(55, 40, 25, 15);
+  }
+  
   @Override
   public void loadTransferRects()
   {

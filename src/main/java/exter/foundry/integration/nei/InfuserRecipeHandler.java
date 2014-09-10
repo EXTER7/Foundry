@@ -7,6 +7,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import codechicken.lib.gui.GuiDraw;
 
@@ -16,6 +17,8 @@ import com.google.common.collect.Lists;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
+import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -156,6 +159,18 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
         }
       }
     }
+  }
+
+  @Override
+  public ItemStack getMachineItem()
+  {
+    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER);
+  }
+  
+  @Override
+  public Rectangle getRecipeRect()
+  {
+    return new Rectangle(107 - 5, 59 - 11, 22, 15);
   }
 
   @Override

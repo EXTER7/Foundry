@@ -20,6 +20,8 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
+import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -168,6 +170,18 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       arecipes.add(new CachedInfuserSubstanceRecipe(recipe));
     }
+  }
+
+  @Override
+  public ItemStack getMachineItem()
+  {
+    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER);
+  }
+  
+  @Override
+  public Rectangle getRecipeRect()
+  {
+    return new Rectangle(42 - 5, 59 - 11, 22, 15);
   }
 
   @Override

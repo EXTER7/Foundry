@@ -22,6 +22,8 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
+import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 
@@ -97,6 +99,19 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
   public static ArrayList<FurnaceFuel> afuels;
   public static Set<Block> efuels;
 
+
+  @Override
+  public ItemStack getMachineItem()
+  {
+    return new ItemStack(FoundryBlocks.block_alloy_furnace);
+  }
+  
+  @Override
+  public Rectangle getRecipeRect()
+  {
+    return new Rectangle(80 - 5, 35 - 5, 24, 16);
+  }
+  
   @Override
   public void loadTransferRects()
   {

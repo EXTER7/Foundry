@@ -119,10 +119,19 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     }
   }
 
+
+  public abstract Rectangle getRecipeRect();
+
+  public abstract ItemStack getMachineItem();
+
   @Override
   public boolean mouseClicked(GuiRecipe gui, int button, int recipe)
   {
     CachedFoundryRecipe foundryRecipe = (CachedFoundryRecipe) arecipes.get(recipe);
+    if(button == 1 && isMouseOver(getRecipeRect(),gui,recipe))
+    {
+      return GuiCraftingRecipe.openRecipeGui("item", getMachineItem());
+    }
     for(FluidTank tank : foundryRecipe.getTanks())
     {
       if(isMouseOver(tank.position, gui, recipe))
@@ -240,6 +249,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     }
     return false;
   }
+
 
   public boolean isMouseOver(Rectangle rect, GuiRecipe gui, int recipe)
   {

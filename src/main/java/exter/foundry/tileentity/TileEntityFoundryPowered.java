@@ -70,33 +70,23 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
   }
   
-
+  /** Adds energy to the node returns energy added */
   @Override
   public final double addEnergy(ForgeDirection from, double wattage, boolean doAdd)
   {
-    double capacity = getEnergyCapacity(from);
-    double needed = capacity - energy;
-    if(wattage > needed)
-    {
-      wattage = needed;
-    }
-    if(doAdd)
-    {
-      energy += wattage;
-    }
-    return wattage;
+    return 0;//TODO
   }
-
+  /** Removes energy from the node returns energy removed */
   @Override
   public final double removeEnergy(ForgeDirection from, double wattage, boolean doRemove)
   {
     return 0;
   }
-
+  /** Current energy stored in UE joules */
   @Override
   public final double getEnergy(ForgeDirection from)
   {
-    return energy;
+    return 0;//TODO
   }
   
 

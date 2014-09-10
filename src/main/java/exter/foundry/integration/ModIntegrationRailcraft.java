@@ -8,7 +8,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;

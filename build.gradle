@@ -19,10 +19,12 @@ apply plugin: 'forge'
 
 def mod_version = "1.0.0.0"
 
+def mc_version = "1.7.10"
+
 def build_number = System.getenv("DRONE_BUILD_NUMBER")
 
-version = mod_version + ( build_number != null ?("-" + build_number): "")
-group = "exter.fodc" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = mc_version + "-" + mod_version + ( build_number != null ?("-" + build_number): "")
+group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Foundry"
 
 minecraft {

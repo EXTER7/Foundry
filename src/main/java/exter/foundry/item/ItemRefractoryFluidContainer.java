@@ -149,7 +149,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
       list.add(EnumChatFormatting.BLUE + "Empty");
     } else
     {
-      list.add(EnumChatFormatting.BLUE + fluid.getFluid().getLocalizedName(fluid));
+      list.add(EnumChatFormatting.BLUE + fluid.getFluid().getLocalizedName());
       list.add(EnumChatFormatting.BLUE + String.valueOf(fluid.amount) + " / " + String.valueOf(capacity) + " mB");
     }
   }

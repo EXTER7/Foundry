@@ -59,7 +59,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   static public final int HEAT_MIN = 29000;
   static public final int SMELT_TIME = 5000000;
   
-  static public final int ENERGY_USE = 40;
+  static public final int ENERGY_USE = 4000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -451,7 +451,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
 
   static public int GetEnergyPerTickNeeded(int heat)
   {
-    return (1 + heat * 60 / HEAT_MAX) / 6;
+    return (100 + heat * 6000 / HEAT_MAX) / 6;
   }
 
   @Override
@@ -505,11 +505,11 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
     if(use_energy)
     {
-      if(getEnergy(null) > 0)
+      if(energy_manager.GetStoredEnergy() > 0)
       {
         //Convert energy to heat
-        double energy = UseEnergy(ENERGY_USE, true);
-        heat += energy * 24;
+        int energy = energy_manager.UseEnergy(ENERGY_USE, true);
+        heat += energy * 24 / 100;
         if(heat > HEAT_MAX)
         {
           heat = HEAT_MAX;
@@ -552,16 +552,20 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public double getVoltage(ForgeDirection arg0)
+  public int GetMaxStoredEnergy()
   {
-    // TODO Tweak this
+    return 12000;
+  }  
+  
+  @Override
+  public int getMaxSafeInput()
+  {
     return 128;
   }
 
   @Override
-  public double getEnergyCapacity(ForgeDirection arg0)
+  public int GetEnergyUse()
   {
-    // TODO Tweak this
-    return 120;
+    return 4000;
   }
 }

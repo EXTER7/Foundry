@@ -35,17 +35,12 @@ repositories {
         name = "ChickenBones"
         url = "http://chickenbones.net/maven"
     }
-    maven {
-        name 'Calclavia Maven'
-        url 'http://calclavia.com/maven'
-    }
 }
 
 dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev"
     compile "codechicken:CodeChickenCore:1.7.10-1.0.2.9:dev"
     compile "codechicken:CodeChickenLib:1.7.10-1.1.1.93:dev"
-    compile "dev.calclavia.universalelectricity:universal-electricity:4.+:dev"
 }
 
 

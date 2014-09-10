@@ -148,7 +148,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     {
       if(isMouseOver(tank.position, gui, recipe))
       {
-        currenttip.add(tank.fluid.getFluid().getLocalizedName(tank.fluid));
+        currenttip.add(tank.fluid.getFluid().getLocalizedName());
         currenttip.add(String.valueOf(EnumChatFormatting.GRAY) + tank.fluid.amount + " mB");
       }
     }

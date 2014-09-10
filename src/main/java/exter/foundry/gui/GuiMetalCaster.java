@@ -88,7 +88,7 @@ public class GuiMetalCaster extends GuiFoundry
     }
 
     //Draw stored power bar.
-    int power = (int)(te_caster.getEnergy(null) * POWER_HEIGHT / te_caster.getEnergyCapacity(null));
+    int power = te_caster.GetStoredPower() * POWER_HEIGHT / te_caster.GetMaxStoredEnergy();
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
@@ -111,8 +111,8 @@ public class GuiMetalCaster extends GuiFoundry
     if(func_146978_c/*isPointInRegion*/(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      double power = te_caster.getEnergy(null);
-      double max_power = te_caster.getEnergyCapacity(null);
+      int power = te_caster.GetStoredPower();
+      int  max_power = te_caster.GetMaxStoredEnergy();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }

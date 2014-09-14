@@ -13,23 +13,23 @@ import exter.foundry.api.registry.IItemRegistry;
  */
 public class FoundryAPI
 {
-  static public final int FLUID_AMOUNT_BLOCK = 972;
-  static public final int FLUID_AMOUNT_INGOT = 108;
-  static public final int FLUID_AMOUNT_NUGGET = 12;
-  static public final int FLUID_AMOUNT_ORE = 216;
+  static public final int FLUID_AMOUNT_BLOCK = 1296;
+  static public final int FLUID_AMOUNT_INGOT = 144;
+  static public final int FLUID_AMOUNT_NUGGET = 16;
+  static public final int FLUID_AMOUNT_ORE = 288;
 
   /**
    * Maximum amount of substance a metal infuser can store.
    */
-  static public final int INFUSER_SUBSTANCE_AMOUNT_MAX = 1000;
+  static public final int INFUSER_SUBSTANCE_AMOUNT_MAX = 2000;
 
   /**
    * Tank capacity for machines.
    */
-  static public final int ICF_TANK_CAPACITY = 6000;
-  static public final int CASTER_TANK_CAPACITY = 6000;
-  static public final int INFUSER_TANK_CAPACITY = 5000;
-  static public final int ALLOYMIXER_TANK_CAPACITY = 2000;
+  static public final int ICF_TANK_CAPACITY = 10000;
+  static public final int CASTER_TANK_CAPACITY = 10000;
+  static public final int INFUSER_TANK_CAPACITY = 10000;
+  static public final int ALLOYMIXER_TANK_CAPACITY = 4000;
 
   //These fields are set by Foundry during it's preInit phase.
   //If foundry is not installed they become null.

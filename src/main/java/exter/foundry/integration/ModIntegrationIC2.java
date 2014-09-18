@@ -57,10 +57,10 @@ public class ModIntegrationIC2 extends ModIntegration
   {
     if(FoundryUtils.IsItemInOreDictionary(oredict_name, item))
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, oredict_name);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_SOFT, oredict_name);
     } else
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, item);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_SOFT, item);
     }
   }
   
@@ -148,15 +148,15 @@ public class ModIntegrationIC2 extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_HELMET], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_BOOTS], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_BRONZE_CHESTPLATE]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_BRONZE_LEGGINGS]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, items[ITEM_BRONZE_HELMET]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, items[ITEM_BRONZE_BOOTS]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, items[ITEM_BRONZE_PICKAXE]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, items[ITEM_BRONZE_AXE]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, items[ITEM_BRONZE_SHOVEL]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_BRONZE_HOE]);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_BRONZE_SWORD]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, items[ITEM_BRONZE_CHESTPLATE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, items[ITEM_BRONZE_LEGGINGS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, items[ITEM_BRONZE_HELMET]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, items[ITEM_BRONZE_BOOTS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, items[ITEM_BRONZE_PICKAXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, items[ITEM_BRONZE_AXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, items[ITEM_BRONZE_SHOVEL]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, items[ITEM_BRONZE_HOE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, items[ITEM_BRONZE_SWORD]);
       }
       ItemStack mold_cable = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CABLE_IC2);
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CASING_IC2);
@@ -201,17 +201,17 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_COPPER_CABLE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_TIN_CABLE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_GOLD_CABLE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_CLAY, items[ITEM_IRON_CABLE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_COPPER_CABLE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_TIN_CABLE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_GOLD_CABLE]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_IRON_CABLE]);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_COPPER_CASING]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_TIN_CASING]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_BRONZE_CASING]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_GOLD_CASING]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_IRON_CASING]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_CLAY, items[ITEM_LEAD_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_COPPER_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_TIN_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_BRONZE_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_GOLD_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_IRON_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_LEAD_CASING]);
 
       MaterialRegistry.instance.RegisterItem(items[ITEM_COPPER_CASING], "Copper", "Casing");
       MaterialRegistry.instance.RegisterItem(items[ITEM_TIN_CASING], "Tin", "Casing");

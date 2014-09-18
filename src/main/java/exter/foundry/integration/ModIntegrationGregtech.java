@@ -178,7 +178,7 @@ public class ModIntegrationGregtech extends ModIntegration
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)
   {
     ItemStack plate_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE_IC2);
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_CLAY, "plate" + partial_name);
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_SOFT, "plate" + partial_name);
     MeltingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT));
     MeltingRecipeManager.instance.AddRecipe("dustSmall" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 4));
     MeltingRecipeManager.instance.AddRecipe("dustTiny" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 9));

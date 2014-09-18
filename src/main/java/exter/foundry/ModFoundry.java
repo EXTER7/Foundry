@@ -594,50 +594,50 @@ public class ModFoundry
         'G', "gearStone"));
 
     //Mold crafting with vanilla items
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Blocks.planks,1,-1));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, new ItemStack(Blocks.stone,1,-1));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Items.brick));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, new ItemStack(Items.netherbrick));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, foundrybrick_stack);
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.brick));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.netherbrick));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, foundrybrick_stack);
     if(FoundryConfig.recipe_tools_armor)
     {
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.iron_chestplate,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.golden_chestplate,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, new ItemStack(Items.diamond_chestplate,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.iron_leggings,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.golden_leggings,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, new ItemStack(Items.diamond_leggings,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.iron_helmet,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.golden_helmet,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, new ItemStack(Items.diamond_helmet,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.iron_boots,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.golden_boots,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, new ItemStack(Items.diamond_boots,1,-1));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.wooden_pickaxe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.stone_pickaxe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.iron_pickaxe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.golden_pickaxe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, new ItemStack(Items.diamond_pickaxe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.wooden_axe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.stone_axe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.iron_axe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.golden_axe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, new ItemStack(Items.diamond_axe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.wooden_shovel));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.stone_shovel));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.iron_shovel));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.golden_shovel));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, new ItemStack(Items.diamond_shovel));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.wooden_hoe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.stone_hoe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.iron_hoe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.golden_hoe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, new ItemStack(Items.diamond_hoe));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.wooden_sword));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.stone_sword));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.iron_sword));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.golden_sword));
-	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, new ItemStack(Items.diamond_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.iron_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.golden_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.diamond_chestplate,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.iron_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.golden_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.diamond_leggings,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.iron_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.golden_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.diamond_helmet,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.iron_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.golden_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.diamond_boots,1,-1));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.wooden_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.stone_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.iron_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.golden_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.diamond_pickaxe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.wooden_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.stone_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.iron_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.golden_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.diamond_axe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.wooden_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.stone_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.iron_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.golden_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.diamond_shovel));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.wooden_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.stone_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.iron_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.golden_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.diamond_hoe));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.wooden_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.stone_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.iron_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.golden_sword));
+	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.diamond_sword));
     }
 
     for(Field f:Blocks.class.getFields())
@@ -659,31 +659,31 @@ public class ModFoundry
         if(obj instanceof BlockStairs)
         {
 
-          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_CLAY, new ItemStack(block, 1, -1));
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_SOFT, new ItemStack(block, 1, -1));
         } else if(block instanceof BlockSlab && !block.isOpaqueCube())
         {
-          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_CLAY, new ItemStack(block, 1, -1));
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_SOFT, new ItemStack(block, 1, -1));
         }
       }
     }
     
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gear" + name);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gear" + name);
     }
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearWood");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearDiamond");
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_CLAY, "gearStone");
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearWood");
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearDiamond");
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearStone");
 
     //Ingot and block mold crafting recipes
     for(String name:OreDictionary.getOreNames())
     {
       if(name.startsWith("ingot"))
       {
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_CLAY, name);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, name);
       } else if(name.startsWith("block"))
       {
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_CLAY, name);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, name);
       }
     }
 
@@ -695,26 +695,26 @@ public class ModFoundry
     FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_SILVER,ItemIngot.INGOT_SILVER);
     
     //Clay mold furnace recipes
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BLOCK_CLAY,ItemMold.MOLD_BLOCK);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_INGOT_CLAY,ItemMold.MOLD_INGOT);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CABLE_IC2_CLAY,ItemMold.MOLD_CABLE_IC2);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CASING_IC2_CLAY,ItemMold.MOLD_CASING_IC2);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SLAB_CLAY,ItemMold.MOLD_SLAB);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_STAIRS_CLAY,ItemMold.MOLD_STAIRS);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_CLAY,ItemMold.MOLD_PLATE_IC2);
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_CLAY,ItemMold.MOLD_GEAR);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BLOCK_SOFT,ItemMold.MOLD_BLOCK);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_INGOT_SOFT,ItemMold.MOLD_INGOT);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CABLE_IC2_SOFT,ItemMold.MOLD_CABLE_IC2);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CASING_IC2_SOFT,ItemMold.MOLD_CASING_IC2);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SLAB_SOFT,ItemMold.MOLD_SLAB);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_STAIRS_SOFT,ItemMold.MOLD_STAIRS);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_SOFT,ItemMold.MOLD_PLATE_IC2);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
 
     if(FoundryConfig.recipe_tools_armor)
     {
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CHESTPLATE_CLAY,ItemMold.MOLD_CHESTPLATE);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PICKAXE_CLAY,ItemMold.MOLD_PICKAXE);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_AXE_CLAY,ItemMold.MOLD_AXE);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SHOVEL_CLAY,ItemMold.MOLD_SHOVEL);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SWORD_CLAY,ItemMold.MOLD_SWORD);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HOE_CLAY,ItemMold.MOLD_HOE);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_LEGGINGS_CLAY,ItemMold.MOLD_LEGGINGS);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HELMET_CLAY,ItemMold.MOLD_HELMET);
-	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_CLAY,ItemMold.MOLD_BOOTS);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CHESTPLATE_SOFT,ItemMold.MOLD_CHESTPLATE);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PICKAXE_SOFT,ItemMold.MOLD_PICKAXE);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_AXE_SOFT,ItemMold.MOLD_AXE);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SHOVEL_SOFT,ItemMold.MOLD_SHOVEL);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SWORD_SOFT,ItemMold.MOLD_SWORD);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HOE_SOFT,ItemMold.MOLD_HOE);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_LEGGINGS_SOFT,ItemMold.MOLD_LEGGINGS);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HELMET_SOFT,ItemMold.MOLD_HELMET);
+	    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_SOFT,ItemMold.MOLD_BOOTS);
     }
     
 

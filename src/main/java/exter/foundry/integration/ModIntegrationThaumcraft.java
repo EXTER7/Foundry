@@ -137,52 +137,52 @@ public class ModIntegrationThaumcraft extends ModIntegration
       if(items[ITEM_THAUMIUM_CHESTPLATE] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_CHESTPLATE], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_CLAY, items[ITEM_THAUMIUM_CHESTPLATE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, items[ITEM_THAUMIUM_CHESTPLATE]);
       }
       if(items[ITEM_THAUMIUM_PICKAXE] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_PICKAXE], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_CLAY, items[ITEM_THAUMIUM_PICKAXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, items[ITEM_THAUMIUM_PICKAXE]);
       }
       if(items[ITEM_THAUMIUM_AXE] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_AXE], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_CLAY, items[ITEM_THAUMIUM_AXE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, items[ITEM_THAUMIUM_AXE]);
       }
 
       if(items[ITEM_THAUMIUM_SHOVEL] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_SHOVEL], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_CLAY, items[ITEM_THAUMIUM_SHOVEL]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, items[ITEM_THAUMIUM_SHOVEL]);
       }
       if(items[ITEM_THAUMIUM_SWORD] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_SWORD], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_CLAY, items[ITEM_THAUMIUM_SWORD]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, items[ITEM_THAUMIUM_SWORD]);
       }
 
       if(items[ITEM_THAUMIUM_HOE] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_HOE], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_CLAY, items[ITEM_THAUMIUM_HOE]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, items[ITEM_THAUMIUM_HOE]);
       }
 
       if(items[ITEM_THAUMIUM_LEGGINGS] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_LEGGINGS], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_CLAY, items[ITEM_THAUMIUM_LEGGINGS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, items[ITEM_THAUMIUM_LEGGINGS]);
       }
 
       if(items[ITEM_THAUMIUM_HELMET] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_HELMET], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_CLAY, items[ITEM_THAUMIUM_HELMET]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, items[ITEM_THAUMIUM_HELMET]);
       }
 
       if(items[ITEM_THAUMIUM_BOOTS] != null)
       {
         CastingRecipeManager.instance.AddRecipe(items[ITEM_THAUMIUM_BOOTS], new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_CLAY, items[ITEM_THAUMIUM_BOOTS]);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, items[ITEM_THAUMIUM_BOOTS]);
       }
     }
 
@@ -220,14 +220,14 @@ public class ModIntegrationThaumcraft extends ModIntegration
 
     ShapelessArcaneRecipe capmold_recipe_iron = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_CLAY),
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT),
         mold_aspects,
         new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
         items[ITEM_CAP_IRON]);
 
     ShapelessArcaneRecipe capmold_recipe_copper = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_CLAY),
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT),
         mold_aspects,
         new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
         items[ITEM_CAP_COPPER]);
@@ -247,7 +247,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
     
     ItemStack cap_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC);
     
-    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CAP_TC_CLAY, ItemMold.MOLD_CAP_TC);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CAP_TC_SOFT, ItemMold.MOLD_CAP_TC);
     CastingRecipeManager.instance.AddMold( cap_mold);
     
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");

@@ -15,41 +15,41 @@ public class ItemMold extends Item
 {
   
   static public final int MOLD_INGOT = 0;
-  static public final int MOLD_INGOT_CLAY = 1;
+  static public final int MOLD_INGOT_SOFT = 1;
   static public final int MOLD_CHESTPLATE = 2;
-  static public final int MOLD_CHESTPLATE_CLAY = 3;
+  static public final int MOLD_CHESTPLATE_SOFT = 3;
   static public final int MOLD_PICKAXE = 4;
-  static public final int MOLD_PICKAXE_CLAY = 5;
+  static public final int MOLD_PICKAXE_SOFT = 5;
   static public final int MOLD_BLOCK = 6;
-  static public final int MOLD_BLOCK_CLAY = 7;
+  static public final int MOLD_BLOCK_SOFT = 7;
   static public final int MOLD_AXE = 8;
-  static public final int MOLD_AXE_CLAY = 9;
+  static public final int MOLD_AXE_SOFT = 9;
   static public final int MOLD_SWORD = 10;
-  static public final int MOLD_SWORD_CLAY = 11;
+  static public final int MOLD_SWORD_SOFT = 11;
   static public final int MOLD_SHOVEL = 12;
-  static public final int MOLD_SHOVEL_CLAY = 13;
+  static public final int MOLD_SHOVEL_SOFT = 13;
   static public final int MOLD_HOE = 14;
-  static public final int MOLD_HOE_CLAY = 15;
+  static public final int MOLD_HOE_SOFT = 15;
   static public final int MOLD_LEGGINGS = 16;
-  static public final int MOLD_LEGGINGS_CLAY = 17;
+  static public final int MOLD_LEGGINGS_SOFT = 17;
   static public final int MOLD_HELMET = 18;
-  static public final int MOLD_HELMET_CLAY = 19;
+  static public final int MOLD_HELMET_SOFT = 19;
   static public final int MOLD_BOOTS = 20;
-  static public final int MOLD_BOOTS_CLAY = 21;
+  static public final int MOLD_BOOTS_SOFT = 21;
   static public final int MOLD_GEAR = 22;
-  static public final int MOLD_GEAR_CLAY = 23;
+  static public final int MOLD_GEAR_SOFT = 23;
   static public final int MOLD_CABLE_IC2 = 24;
-  static public final int MOLD_CABLE_IC2_CLAY = 25;
+  static public final int MOLD_CABLE_IC2_SOFT = 25;
   static public final int MOLD_CASING_IC2 = 26;
-  static public final int MOLD_CASING_IC2_CLAY = 27;
+  static public final int MOLD_CASING_IC2_SOFT = 27;
   static public final int MOLD_SLAB = 28;
-  static public final int MOLD_SLAB_CLAY = 29;
+  static public final int MOLD_SLAB_SOFT = 29;
   static public final int MOLD_STAIRS = 30;
-  static public final int MOLD_STAIRS_CLAY = 31;
+  static public final int MOLD_STAIRS_SOFT = 31;
   static public final int MOLD_PLATE_IC2 = 32;
-  static public final int MOLD_PLATE_IC2_CLAY = 33;
+  static public final int MOLD_PLATE_IC2_SOFT = 33;
   static public final int MOLD_CAP_TC = 34;
-  static public final int MOLD_CAP_TC_CLAY = 35;
+  static public final int MOLD_CAP_TC_SOFT = 35;
 
 
   static private final String[] ICON_PATHS = 
@@ -95,41 +95,41 @@ public class ItemMold extends Item
   static public final String[] REGISTRY_NAMES = 
   {
     "itemIngotMold",
-    "itemClayIngotMold",
+    "itemSoftIngotMold",
     "itemChestplateMold",
-    "itemClayChestplateMold",
+    "itemSoftChestplateMold",
     "itemPickaxeMold",
-    "itemClayPickaxeMold",
+    "itemSoftPickaxeMold",
     "itemBlockMold",
-    "itemClayBlockMold",    
+    "itemSoftBlockMold",    
     "itemAxeMold",
-    "itemClayAxeMold",
+    "itemSoftAxeMold",
     "itemSwordMold",
-    "itemClaySwordMold",
+    "itemSoftSwordMold",
     "itemShovelMold",
-    "itemClayShovelMold",
+    "itemSoftShovelMold",
     "itemHoeMold",
-    "itemClayHoeMold",
+    "itemSoftHoeMold",
     "itemLeggingsMold",
-    "itemClayLeggingsMold",
+    "itemSoftLeggingsMold",
     "itemHelmetMold",
-    "itemClayHelmetMold",
+    "itemSoftHelmetMold",
     "itemBootsMold",
-    "itemClayBootsMold",
+    "itemSoftBootsMold",
     "itemGearMold",
-    "itemClayGearMold",
+    "itemSoftGearMold",
     "itemCableMold",
-    "itemClayCableMold",
+    "itemSoftCableMold",
     "itemCasingMold",
-    "itemClayCasingMold",
+    "itemSoftCasingMold",
     "itemSlabMold",
-    "itemClaySlabMold",
+    "itemSoftSlabMold",
     "itemStairsMold",
-    "itemClayStairsMold",
+    "itemSoftStairsMold",
     "itemPlateMold",
-    "itemClayPlateMold",
+    "itemSoftPlateMold",
     "itemCapMold",
-    "itemClayCapMold"
+    "itemSoftCapMold"
   };
 
   

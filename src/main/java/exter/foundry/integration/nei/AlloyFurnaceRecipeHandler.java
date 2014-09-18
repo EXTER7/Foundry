@@ -22,7 +22,6 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;

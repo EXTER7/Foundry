@@ -96,7 +96,7 @@ public abstract class GuiFoundry extends GuiContainer
     if(stack != null && stack.amount > 0)
     {
       
-      tooltip.add(stack.getFluid().getLocalizedName());
+      tooltip.add(stack.getLocalizedName());
       tooltip.add(String.valueOf(stack.amount) + " / " + String.valueOf(tank.getCapacity()) + " mB");
     } else
     {

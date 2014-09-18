@@ -217,17 +217,19 @@ public class ModIntegrationThaumcraft extends ModIntegration
     mold_aspects.add(Aspect.ORDER, 5);
     mold_aspects.add(Aspect.EARTH, 4);
     mold_aspects.add(Aspect.WATER, 2);
+    
+    ItemStack capmold_soft = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT);
 
     ShapelessArcaneRecipe capmold_recipe_iron = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT),
+        capmold_soft,
         mold_aspects,
         new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
         items[ITEM_CAP_IRON]);
 
     ShapelessArcaneRecipe capmold_recipe_copper = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT),
+        capmold_soft,
         mold_aspects,
         new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
         items[ITEM_CAP_COPPER]);
@@ -241,7 +243,8 @@ public class ModIntegrationThaumcraft extends ModIntegration
     mold_research.setPages(
         new ResearchPage("tc.research.capmold.text"),
         new ResearchPage(capmold_recipe_copper),
-        new ResearchPage(capmold_recipe_iron));
+        new ResearchPage(capmold_recipe_iron),
+        new ResearchPage(capmold_soft));
     mold_research.setParents("CAP_copper","CAP_silver","CAP_thaumium");
     mold_research.registerResearchItem();
     

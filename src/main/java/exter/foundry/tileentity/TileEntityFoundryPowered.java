@@ -12,10 +12,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-
+import cpw.mods.fml.common.Optional;
 /**
  * Base class for all machines.
  */
+@Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2")
 public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyHandler,IEnergySink
 {
   private boolean added_enet;
@@ -127,12 +128,14 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     }
   }
   
+  @Optional.Method(modid = "IC2")
   @Override
   public double getDemandedEnergy()
   {
     return (double)(GetMaxStoredEnergy() - energy_manager.GetStoredEnergy()) / EnergyManager.RATIO_EU;
   }
 
+  @Optional.Method(modid = "IC2")
   @Override
   public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage)
   {
@@ -145,12 +148,14 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     return amount - energy_manager.ReceiveEU(use_amount, true);
   }
 
+  @Optional.Method(modid = "IC2")
   @Override
   public int getSinkTier()
   {
     return 1;
   }
   
+  @Optional.Method(modid = "IC2")
   @Override
   public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
   {

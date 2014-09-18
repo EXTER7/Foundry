@@ -1,5 +1,6 @@
 package exter.foundry.tileentity;
 
+import cpw.mods.fml.common.Optional;
 import io.netty.buffer.ByteBuf;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
@@ -555,6 +556,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     return 12000;
   }  
   
+  @Optional.Method(modid = "IC2")
   @Override
   public int getSinkTier()
   {

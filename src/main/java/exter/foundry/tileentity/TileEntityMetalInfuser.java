@@ -424,8 +424,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   @Override
   protected void UpdateEntityServer()
   {
-    super.UpdateEntityServer();
-
     int last_progress = progress;
     int last_extract_time = extract_energy;
     

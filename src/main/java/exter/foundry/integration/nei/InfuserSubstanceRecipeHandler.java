@@ -224,7 +224,6 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       float energy = foundryRecipe.GetEnergyNeeded();
       currenttip.add(EnumChatFormatting.GRAY + "Required power: ");
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f MJ/t", energy / EnergyManager.RATIO_MJ));
       currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f RF/t", energy / EnergyManager.RATIO_RF));
       currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f EU/t", energy / EnergyManager.RATIO_EU));
     }

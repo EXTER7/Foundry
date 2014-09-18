@@ -4,7 +4,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class EnergyManager
 {
-  static public int RATIO_MJ = 100;
   static public int RATIO_RF = 10;
   static public int RATIO_EU = 40;
   
@@ -32,11 +31,6 @@ public class EnergyManager
       stored += en;
     }
     return en;
-  }
-
-  public double ReceiveMJ(double mj,boolean do_receive)
-  {
-    return (double)ReceiveEnergy((int)(mj * RATIO_MJ),do_receive,false) / RATIO_MJ;
   }
   
   public int ReceiveRF(int rf,boolean do_receive)

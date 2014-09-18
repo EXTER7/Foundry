@@ -96,7 +96,6 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     {
       currenttip.add(EnumChatFormatting.GRAY + "Melting point: " + EnumChatFormatting.YELLOW + meltingRecipe.meltingPoint + " K");
       float internalPower = FIXED_POWER + TEMP_POWER * (float) meltingRecipe.meltingPoint * 100.0f;
-      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f MJ/t", internalPower / EnergyManager.RATIO_MJ));
       currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
       currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
     }

@@ -169,7 +169,11 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
     for(FluidTank tank : tanks)
     {
-      int times = drawMultiplier % (tank.capacity / tank.fluid.amount) + 1;
+      int times = 1;
+      if(tank.fluid.amount != 0)
+      {
+        times = drawMultiplier % (tank.capacity / tank.fluid.amount) + 1;
+      }
       int drawHeight = times * tank.fluid.amount * tank.position.height / tank.capacity;
       
       int color = tank.fluid.getFluid().getColor(tank.fluid);

@@ -43,6 +43,7 @@ import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationThaumcraft;
+import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
@@ -119,7 +120,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
     //ModIntegration.RegisterIntegration(config,new ModIntegrationTE3("te3"));
     //ModIntegration.RegisterIntegration(config,new ModIntegrationRedstoneArsenal("redarsenal"));
-    //ModIntegration.RegisterIntegration(config,new ModIntegrationTiCon("ticon"));
+    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
     //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
     

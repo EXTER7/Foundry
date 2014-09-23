@@ -1,6 +1,8 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -41,11 +43,11 @@ public class ModIntegrationForestry extends ModIntegration
       return;
     }
     is_loaded = false;
-    /*
+
     items = new ItemStack[3];
-    items[ITEM_COPPER_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearCopper"));
-    items[ITEM_TIN_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearTin"));
-    items[ITEM_BRONZE_GEAR] = ItemStack.copyItemStack(ItemInterface.getItem("gearBronze"));
+    items[ITEM_COPPER_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearCopper"));
+    items[ITEM_TIN_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearTin"));
+    items[ITEM_BRONZE_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearBronze"));
     VerifyItems();
 
     if(is_loaded)
@@ -69,7 +71,6 @@ public class ModIntegrationForestry extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
-    */
   }
 
   @Override

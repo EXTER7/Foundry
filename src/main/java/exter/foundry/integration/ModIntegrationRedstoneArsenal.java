@@ -43,8 +43,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void OnPostInit()
   {
-    ModIntegration te3 = GetIntegration("te3");
-    if(!Loader.isModLoaded("Redstone Arsenal") || te3 == null || !te3.is_loaded)
+    ModIntegration te3 = GetIntegration("te4");
+    if(!Loader.isModLoaded("RedstoneArsenal") || te3 == null || !te3.is_loaded)
     {
       is_loaded = false;
       return;
@@ -52,8 +52,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
 
     items = new ItemStack[2];
 
-    items[ITEM_ELECTRUMFLUX_INGOT] = GameRegistry.findItemStack("Redstone Arsenal", "ingotElectrumFlux", 1);
-    items[ITEM_ELECTRUMFLUX_BLOCK] = GameRegistry.findItemStack("Redstone Arsenal", "blockElectrumFlux", 1);
+    items[ITEM_ELECTRUMFLUX_INGOT] = GameRegistry.findItemStack("RedstoneArsenal", "ingotElectrumFlux", 1);
+    items[ITEM_ELECTRUMFLUX_BLOCK] = GameRegistry.findItemStack("RedstoneArsenal", "blockElectrumFlux", 1);
 
     VerifyItems();
 

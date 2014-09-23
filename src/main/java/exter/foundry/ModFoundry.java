@@ -25,6 +25,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
@@ -640,30 +642,17 @@ public class ModFoundry
 	    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.diamond_sword));
     }
 
-    for(Field f:Blocks.class.getFields())
+    FMLControlledNamespacedRegistry<Block> reg = GameData.getBlockRegistry();
+    for(Object obj:reg)
     {
-      Object obj;
-      try
+      Block block = (Block)obj;
+      if(block instanceof BlockStairs)
       {
-        obj = f.get(Blocks.class);
-      } catch(IllegalArgumentException e)
-      {
-        continue;
-      } catch(IllegalAccessException e)
-      {
-        continue;
-      }
-      if(obj instanceof Block)
-      {
-        Block block = (Block) obj;
-        if(obj instanceof BlockStairs)
-        {
 
-          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_SOFT, new ItemStack(block, 1, -1));
-        } else if(block instanceof BlockSlab && !block.isOpaqueCube())
-        {
-          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_SOFT, new ItemStack(block, 1, -1));
-        }
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_STAIRS_SOFT, new ItemStack(block, 1, -1));
+      } else if(block instanceof BlockSlab && !block.isOpaqueCube())
+      {
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SLAB_SOFT, new ItemStack(block, 1, -1));
       }
     }
     

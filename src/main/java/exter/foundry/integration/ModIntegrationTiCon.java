@@ -21,7 +21,6 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import mantle.utils.ItemMetaWrapper;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 /*
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;

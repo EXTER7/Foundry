@@ -1,7 +1,6 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -16,7 +15,6 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 
-@SuppressWarnings("deprecation")
 public class ModIntegrationForestry extends ModIntegration
 {
   static public final int ITEM_COPPER_GEAR = 0;

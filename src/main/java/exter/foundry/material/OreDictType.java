@@ -28,6 +28,7 @@ public class OreDictType
     new OreDictType("gem","Diamond", "Gem"),
     new OreDictType("planks","Wood", "Planks"),
     new OreDictType("crushed","Iron", "CrushedOre"),
-    new OreDictType("crushedPurified","Iron", "PurfiedCrushedOre")
+    new OreDictType("crushedPurified","Iron", "PurfiedCrushedOre"),
+    new OreDictType("orePoor","Iron", "PoorOre")
   };
 }

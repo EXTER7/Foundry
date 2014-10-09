@@ -107,6 +107,7 @@ router.type.DensePlate=Dense Plate
 router.type.Casing=Casing
 router.type.Cable=Cable
 router.type.NativeCluster=Native Cluster
+router.type.PoorOre=Poor Ore
 
 substance.carbon=Carbon
 substance.dye.black=Black Dye

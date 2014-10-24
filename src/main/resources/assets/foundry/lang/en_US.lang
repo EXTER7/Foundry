@@ -40,6 +40,9 @@ fluid.liquidGlass.magenta=Liquid Glass (Magenta)
 fluid.liquidGlass.orange=Liquid Glass (Orange)
 fluid.liquidGlass.white=Liquid Glass (White)
 fluid.liquidThaumium=Liquid Thaumium
+fluid.liquidManasteel=Liquid Manasteel
+fluid.liquidTerrasteel=Liquid Terrasteel
+fluid.liquidElementium=Liquid Elementium
 
 
 router.material._Any=All
@@ -88,6 +91,9 @@ router.material.Topaz=Topaz
 router.material.Redstone=Redstone
 router.material.Glowstone=Glowstone
 router.material.Thaumium=Thaumium
+router.material.Manasteel=Manasteel
+router.material.Terrasteel=Terrasteel
+router.material.Elementium=Elementium
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -178,6 +184,9 @@ tile.liquidGlass.magenta.name=Liquid Glass (Magenta)
 tile.liquidGlass.orange.name=Liquid Glass (Orange)
 tile.liquidGlass.white.name=Liquid Glass (White)
 tile.liquidThaumium.name=Liquid Thaumium
+tile.liquidManasteel.name=Liquid Manasteel
+tile.liquidTerrasteel.name=Liquid Terrasteel
+tile.liquidElementium.name=Liquid Elementium
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

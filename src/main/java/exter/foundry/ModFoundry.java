@@ -20,6 +20,7 @@ import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.integration.ModIntegration;
+import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationIC2;
@@ -100,6 +101,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
     //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
     ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
+    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
     
 
     FoundryAPI.items = ItemRegistry.instance;
@@ -124,10 +126,10 @@ public class ModFoundry
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
 
+    FoundryRecipes.PreInit();
     
     ModIntegration.PreInit(config);
 
-    FoundryRecipes.PreInit();
     
     config.save();
 

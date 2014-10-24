@@ -74,7 +74,12 @@ public class FoundryRecipes
     liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Silver", 1250, 15);
     liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Cupronickel", 1750, 15);
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);  
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aluminum", 1100, 15);  
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Chromium", 2200, 8);   
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Platinum", 2050, 15);  
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manganese", 1550, 15);   
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Titanium", 2000, 15);
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));

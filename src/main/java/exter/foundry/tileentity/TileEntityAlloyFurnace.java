@@ -1,5 +1,6 @@
 package exter.foundry.tileentity;
 
+import vazkii.botania.api.item.IExoflameHeatable;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
@@ -11,8 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fluids.FluidTank;
+import cpw.mods.fml.common.Optional;
 
-public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory
+@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
+public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory,IExoflameHeatable
 {
 
   public static final int SLOT_INPUT_A = 0;
@@ -27,6 +30,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   public int progress;
 
+  private boolean update_burn_times;
 
   private static final int[] SLOTS_TOP = new int[] { SLOT_INPUT_A, SLOT_INPUT_B };
   private static final int[] SLOTS_BOTTOM = new int[] { SLOT_OUTPUT, SLOT_FUEL };
@@ -38,6 +42,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     burn_time = 0;
     item_burn_time = 0;
     progress = 0;
+    update_burn_times = false;
   }
 
   @Override
@@ -234,7 +239,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   {
     ItemStack output = recipe.GetOutput();
     ItemStack inv_output = inventory[SLOT_OUTPUT];
-    if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize >= inv_output.getMaxStackSize()))
+    if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
     {
       progress = 0;
       return;
@@ -320,7 +325,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       progress = 0;
     }
     
-    if(last_burn_time != burn_time)
+    if(last_burn_time != burn_time || update_burn_times)
     {
       if(last_burn_time*burn_time == 0)
       {
@@ -329,10 +334,11 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       UpdateValue("BurnTime",burn_time);
     }
 
-    if(last_item_burn_time != item_burn_time)
+    if(last_item_burn_time != item_burn_time || update_burn_times)
     {
       UpdateValue("ItemBurnTime",item_burn_time);
     }
+    update_burn_times = false;
 
     if(last_progress != progress)
     {
@@ -358,4 +364,56 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   }
 
+  @Optional.Method(modid = "Botania")
+  @Override
+  public boolean canSmelt()
+  {
+    if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
+    {
+      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
+      if(recipe == null)
+      {
+        recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
+      }
+      if(recipe == null)
+      {
+        return false;
+      }
+      ItemStack output = recipe.GetOutput();
+      ItemStack inv_output = inventory[SLOT_OUTPUT];
+      if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
+      {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public int getBurnTime()
+  {
+    return burn_time <= 1 ? 0 : burn_time - 1;
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public void boostBurnTime()
+  {
+    if(!worldObj.isRemote)
+    {
+      burn_time = 200;
+      item_burn_time = 199;
+      update_burn_times = true;
+      markDirty();
+    }
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public void boostCookTime()
+  {
+
+  }
 }

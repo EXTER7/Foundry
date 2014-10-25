@@ -323,6 +323,6 @@ item.ingot16.name=白铜锭
 
 item.foundryContainer.name=耐火液罐
 
-tc.research.capmold.text=这个模具能配合液态金属制作杖端, 当然首先它先要经过烧制强化后才能使用
+tc.research.capmold.text=这个模具能配合液态金属制作杖端, 当然首先它先要经过熔炼强化后才能使用
 tc.research_name.FOUNDRY_capmold=杖端模具
 tc.research_text.FOUNDRY_capmold=用液态金属制作杖端

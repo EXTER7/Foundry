@@ -40,9 +40,9 @@ fluid.liquidGlass.magenta=液态玻璃 (品红色)
 fluid.liquidGlass.orange=液态玻璃 (橙色)
 fluid.liquidGlass.white=液态玻璃 (白色)
 fluid.liquidThaumium=液态神秘锭
-fluid.liquidManasteel=熔融魔力钢
-fluid.liquidTerrasteel=熔融泰拉钢
-fluid.liquidElementium=熔融源质钢
+fluid.liquidManasteel=液态魔力钢
+fluid.liquidTerrasteel=液态泰拉钢
+fluid.liquidElementium=液态源质钢
 
 router.material._Any=全部
 router.material.Aluminum=铝
@@ -183,9 +183,9 @@ tile.liquidGlass.magenta.name=液态玻璃 (品红色)
 tile.liquidGlass.orange.name=液态玻璃 (橙色)
 tile.liquidGlass.white.name=液态玻璃 (白色)
 tile.liquidThaumium.name=液态神秘锭
-tile.liquidManasteel.name=熔融魔力钢
-tile.liquidTerrasteel.name=熔融泰拉钢
-tile.liquidElementium.name=熔融源质钢
+tile.liquidManasteel.name=液态魔力钢
+tile.liquidTerrasteel.name=液态泰拉钢
+tile.liquidElementium.name=液态源质钢
 
 tile.machine.ICF.name=坩埚式感应炉
 tile.machine.Caster.name=金属铸造机

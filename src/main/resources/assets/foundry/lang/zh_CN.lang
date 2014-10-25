@@ -40,7 +40,9 @@ fluid.liquidGlass.magenta=液态玻璃 (品红色)
 fluid.liquidGlass.orange=液态玻璃 (橙色)
 fluid.liquidGlass.white=液态玻璃 (白色)
 fluid.liquidThaumium=液态神秘锭
-
+fluid.liquidManasteel=液态魔力钢
+fluid.liquidTerrasteel=液态泰拉钢
+fluid.liquidElementium=液态源质钢
 
 router.material._Any=全部
 router.material.Aluminum=铝
@@ -88,6 +90,9 @@ router.material.Topaz=黄玉
 router.material.Redstone=红石
 router.material.Glowstone=萤石
 router.material.Thaumium=神秘锭
+router.material.Manasteel=魔力钢
+router.material.Terrasteel=泰拉钢
+router.material.Elementium=源质钢
 
 router.type._Any=全部
 router.type.Ore=矿石
@@ -107,6 +112,7 @@ router.type.DensePlate=致密板
 router.type.Casing=外壳
 router.type.Cable=线缆
 router.type.NativeCluster=纯净的矿簇
+router.type.PoorOre=贫矿
 
 substance.carbon=碳
 substance.dye.black=黑色染料
@@ -177,7 +183,9 @@ tile.liquidGlass.magenta.name=液态玻璃 (品红色)
 tile.liquidGlass.orange.name=液态玻璃 (橙色)
 tile.liquidGlass.white.name=液态玻璃 (白色)
 tile.liquidThaumium.name=液态神秘锭
-
+tile.liquidManasteel.name=液态魔力钢
+tile.liquidTerrasteel.name=液态泰拉钢
+tile.liquidElementium.name=液态源质钢
 
 tile.machine.ICF.name=坩埚式感应炉
 tile.machine.Caster.name=金属铸造机
@@ -315,6 +323,6 @@ item.ingot16.name=白铜锭
 
 item.foundryContainer.name=耐火液罐
 
-tc.research.capmold.text=这个模具能配合液态金属制作杖端, 当然首先它先要经过烧制强化后才能使用.
+tc.research.capmold.text=这个模具能配合液态金属制作杖端, 当然首先它先要经过熔炼强化后才能使用
 tc.research_name.FOUNDRY_capmold=杖端模具
 tc.research_text.FOUNDRY_capmold=用液态金属制作杖端

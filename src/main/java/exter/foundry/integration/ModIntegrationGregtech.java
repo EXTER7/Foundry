@@ -6,6 +6,8 @@ import java.util.Map;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -52,18 +54,17 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnInit()
   {
-    /* TODO: Re-enable once mod's API is updated
     if(!Loader.isModLoaded("gregtech_addon"))
     {
       is_loaded = false;
       return;
     }
-    ItemStack iron_stack = new ItemStack(Item.ingotIron);
-    ItemStack redstone_stack = new ItemStack(Item.redstone);
-    ItemStack furnace_stack = new ItemStack(Block.furnaceIdle);
-    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_foundry_crucible);
+    ItemStack iron_stack = new ItemStack(Items.iron_ingot);
+    ItemStack redstone_stack = new ItemStack(Items.redstone);
+    ItemStack furnace_stack = new ItemStack(Blocks.furnace);
+    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
-    ItemStack glasspane_stack = new ItemStack(Block.thinGlass);
+    ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
     if(change_recipes)
@@ -107,6 +108,7 @@ public class ModIntegrationGregtech extends ModIntegration
           'B', foundrybrick_stack,
           'G', glasspane_stack));
     }
+    
     Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
     Fluid liquid_nickel = LiquidMetalRegistry.instance.GetFluid("Nickel");
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
@@ -119,18 +121,13 @@ public class ModIntegrationGregtech extends ModIntegration
     Fluid liquid_kanthal = LiquidMetalRegistry.instance.GetFluid("Kanthal");
     Fluid liquid_nichrome = LiquidMetalRegistry.instance.GetFluid("Nichrome");
 
+    /* TODO
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_stainless_steel,18),
         new FluidStack[] {
           new FluidStack(liquid_iron,12),
           new FluidStack(liquid_nickel,2),
           new FluidStack(liquid_manganese,2),
           new FluidStack(liquid_chromium,2)
-    });
-
-    AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_cupronickel,12),
-        new FluidStack[] {
-          new FluidStack(liquid_copper,6),
-          new FluidStack(liquid_nickel,6)
     });
 
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_kanthal,12),
@@ -145,26 +142,25 @@ public class ModIntegrationGregtech extends ModIntegration
           new FluidStack(liquid_nickel,12),
           new FluidStack(liquid_chromium,3)
     });
+    */
     
     ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
     
-    CastingRecipeManager.instance.AddRecipe("ingotStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
-    CastingRecipeManager.instance.AddRecipe("ingotCupronickel", new FluidStack(liquid_cupronickel,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
-    CastingRecipeManager.instance.AddRecipe("ingotKanthal", new FluidStack(liquid_kanthal,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
-    CastingRecipeManager.instance.AddRecipe("ingotNichrome", new FluidStack(liquid_nichrome,FoundryRecipes.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotCupronickel", new FluidStack(liquid_cupronickel,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotKanthal", new FluidStack(liquid_kanthal,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("ingotNichrome", new FluidStack(liquid_nichrome,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
 
-    CastingRecipeManager.instance.AddRecipe("blockStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
-    CastingRecipeManager.instance.AddRecipe("blockCupronickel", new FluidStack(liquid_cupronickel,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
-    CastingRecipeManager.instance.AddRecipe("blockKanthal", new FluidStack(liquid_kanthal,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
-    CastingRecipeManager.instance.AddRecipe("blockNichrome", new FluidStack(liquid_nichrome,FoundryRecipes.FLUID_AMOUNT_BLOCK), block_mold, null);
-    */
+    CastingRecipeManager.instance.AddRecipe("blockStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockCupronickel", new FluidStack(liquid_cupronickel,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockKanthal", new FluidStack(liquid_kanthal,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockNichrome", new FluidStack(liquid_nichrome,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
   }
   
   @Override
   public void OnPostInit()
   {
-    /* TODO: Re-enable once mod's API is updated
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       Fluid fluid = LiquidMetalRegistry.instance.GetFluid(name);
@@ -172,7 +168,6 @@ public class ModIntegrationGregtech extends ModIntegration
     }
     RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
-    */
   }
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)

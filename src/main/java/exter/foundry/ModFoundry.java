@@ -23,6 +23,7 @@ import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
+import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationRedstoneArsenal;
@@ -99,7 +100,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
     ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
     ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
-    //ModIntegration.RegisterIntegration(config,new ModIntegrationGregtech("gregtech"));
+    ModIntegration.RegisterIntegration(config,ModIntegrationGregtech.class,"gregtech");
     ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
     

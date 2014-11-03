@@ -3,6 +3,7 @@ package exter.foundry.integration;
 import java.util.HashMap;
 import java.util.Map;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -84,6 +85,11 @@ public class ModIntegrationBotania extends ModIntegration
   @Override
   public void OnInit()
   {
+    if(!Loader.isModLoaded("Botania"))
+    {
+      is_loaded = false;
+      return;
+    }
 
     items = new ItemStack[28];
 

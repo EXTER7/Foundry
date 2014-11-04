@@ -62,8 +62,9 @@ import exter.foundry.worldgen.WordGenOre;
       + "after:RedstoneArsenal;"
       + "after:IC2;"
       + "after:Forestry;"
-      + "after:gregtech_addon;"
-      + "after:Thaumcraft"
+      + "after:gregtech;"
+      + "after:Thaumcraft;"
+      + "after:Botania"
 )
 public class ModFoundry
 {

@@ -61,6 +61,11 @@ public class ModIntegrationTE4 extends ModIntegration
   @Override
   public void OnInit()
   {
+  }
+
+  @Override
+  public void OnPostInit()
+  {
     if(!Loader.isModLoaded("ThermalExpansion"))
     {
       is_loaded = false;
@@ -193,11 +198,6 @@ public class ModIntegrationTE4 extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_SILVER_GEAR], new FluidStack(liquid_silver, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
       }
     }
-  }
-
-  @Override
-  public void OnPostInit()
-  {
 
   }
 }

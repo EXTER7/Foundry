@@ -85,6 +85,20 @@ public class ModIntegrationBotania extends ModIntegration
   @Override
   public void OnInit()
   {
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void OnClientPostInit()
+  {
+    MaterialRegistry.instance.RegisterMaterialIcon("Manasteel", items[ITEM_MANASTEEL_INGOT]);
+    MaterialRegistry.instance.RegisterMaterialIcon("Terrasteel", items[ITEM_TERRASTEEL_INGOT]);
+    MaterialRegistry.instance.RegisterMaterialIcon("Elementium", items[ITEM_ELEMENTIUM_INGOT]);
+  }
+  
+  @Override
+  public void OnPostInit()
+  {
     if(!Loader.isModLoaded("Botania"))
     {
       is_loaded = false;
@@ -234,20 +248,4 @@ public class ModIntegrationBotania extends ModIntegration
       MaterialRegistry.instance.RegisterItem(items[ITEM_ELEMENTIUM_BLOCK], "Elementium", "Block");
     }
   }
-
-  @SideOnly(Side.CLIENT)
-  @Override
-  public void OnClientInit()
-  {
-    MaterialRegistry.instance.RegisterMaterialIcon("Manasteel", items[ITEM_MANASTEEL_INGOT]);
-    MaterialRegistry.instance.RegisterMaterialIcon("Terrasteel", items[ITEM_TERRASTEEL_INGOT]);
-    MaterialRegistry.instance.RegisterMaterialIcon("Elementium", items[ITEM_ELEMENTIUM_INGOT]);
-  }
-  
-  @Override
-  public void OnPostInit()
-  {
-
-  }
-
 }

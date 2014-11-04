@@ -71,6 +71,19 @@ public class ModIntegrationThaumcraft extends ModIntegration
   @Override
   public void OnInit()
   {
+
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void OnClientPostInit()
+  {
+    MaterialRegistry.instance.RegisterTypeIcon("NativeCluster", items[ITEM_CLUSTER_IRON]);
+  }
+
+  @Override
+  public void OnPostInit()
+  {
     if(!Loader.isModLoaded("Thaumcraft"))
     {
       is_loaded = false;
@@ -201,18 +214,6 @@ public class ModIntegrationThaumcraft extends ModIntegration
         new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT),
         null);
 
-  }
-  
-  @SideOnly(Side.CLIENT)
-  @Override
-  public void OnClientInit()
-  {
-    MaterialRegistry.instance.RegisterTypeIcon("NativeCluster", items[ITEM_CLUSTER_IRON]);
-  }
-
-  @Override
-  public void OnPostInit()
-  {
     AspectList mold_aspects = new AspectList();
     mold_aspects.add(Aspect.ORDER, 5);
     mold_aspects.add(Aspect.EARTH, 4);
@@ -253,12 +254,6 @@ public class ModIntegrationThaumcraft extends ModIntegration
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CAP_TC_SOFT, ItemMold.MOLD_CAP_TC);
     CastingRecipeManager.instance.AddMold( cap_mold);
     
-    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
-    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-    Fluid liquid_thaumium = LiquidMetalRegistry.instance.GetFluid("Thaumium");
-
     MeltingRecipeManager.instance.AddRecipe(
         items[ITEM_CAP_IRON],
         new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
@@ -296,5 +291,4 @@ public class ModIntegrationThaumcraft extends ModIntegration
         new FluidStack(liquid_thaumium,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);
   }
-
 }

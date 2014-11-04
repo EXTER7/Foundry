@@ -35,6 +35,11 @@ public class ModIntegrationForestry extends ModIntegration
   @Override
   public void OnInit()
   {
+  }
+
+  @Override
+  public void OnPostInit()
+  {
     if(!Loader.isModLoaded("Forestry"))
     {
       is_loaded = false;
@@ -69,11 +74,5 @@ public class ModIntegrationForestry extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
-  }
-
-  @Override
-  public void OnPostInit()
-  {
-
   }
 }

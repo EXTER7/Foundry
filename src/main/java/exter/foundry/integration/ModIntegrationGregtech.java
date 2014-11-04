@@ -1,6 +1,8 @@
 package exter.foundry.integration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.Loader;
@@ -10,6 +12,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -54,7 +58,13 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnInit()
   {
-    if(!Loader.isModLoaded("gregtech_addon"))
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  public void OnPostInit()
+  {
+    if(!Loader.isModLoaded("gregtech"))
     {
       is_loaded = false;
       return;
@@ -62,26 +72,54 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack iron_stack = new ItemStack(Items.iron_ingot);
     ItemStack redstone_stack = new ItemStack(Items.redstone);
     ItemStack furnace_stack = new ItemStack(Blocks.furnace);
-    ItemStack crucible_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
+    ItemStack casing_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
     ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
     if(change_recipes)
     {
+      ItemStack heating_coil = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+      ItemStack heating_coil2 = new ItemStack(FoundryItems.item_component,2,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+      ItemStack machine_icf = new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF);
+      ItemStack machine_infuser = new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER);
+      
+      List<IRecipe> toremove = new ArrayList<IRecipe>();
+      for(Object obj:CraftingManager.getInstance().getRecipeList())
+      {
+        if(obj instanceof IRecipe)
+        {
+          IRecipe res = (IRecipe)obj;
+          ItemStack out = res.getRecipeOutput();
+          if(out != null)
+          {
+            if(out.isItemEqual(heating_coil))
+            {
+              toremove.add(res);
+            }
+            if(out.isItemEqual(casing_stack))
+            {
+              toremove.add(res);
+            }
+            if(out.isItemEqual(emptycontainer2_stack))
+            {
+              toremove.add(res);
+            }
+          }
+        }
+      }
+      CraftingManager.getInstance().getRecipeList().removeAll(toremove);
+      
       GameRegistry.addRecipe(new ShapedOreRecipe(
-          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF),
-          "IFI",
-          "HCH",
-          "HRH",
-          'F', furnace_stack, 
-          'I', "ingotCopper", 
-          'C', crucible_stack,
-          'R', redstone_stack,
-          'H', "craftingHeatingCoilTier00"));
+          heating_coil2,
+          "WWW",
+          "WRW",
+          "WWW",
+          'W', "wireGt02Cupronickel",
+          'R', redstone_stack));
 
       GameRegistry.addRecipe(new ShapedOreRecipe(
-          crucible_stack, 
+          casing_stack, 
           "IBI",
           "B B",
           "IBI",
@@ -89,18 +127,19 @@ public class ModIntegrationGregtech extends ModIntegration
           'B', foundrybrick_stack));
 
       GameRegistry.addRecipe(new ShapedOreRecipe(
-          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
+          machine_infuser,
           "IRI",
           "GCG",
           "HRH",
           'I', iron_stack, 
           'R', redstone_stack, 
           'B', foundrybrick_stack,
-          'C', crucible_stack,
+          'C', casing_stack,
           'G', "gearStone",
           'H', "craftingHeatingCoilTier00"));
 
-      GameRegistry.addRecipe(new ShapedOreRecipe(emptycontainer2_stack,
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          emptycontainer2_stack,
           " T ",
           "BGB",
           " T ",
@@ -156,11 +195,8 @@ public class ModIntegrationGregtech extends ModIntegration
     CastingRecipeManager.instance.AddRecipe("blockCupronickel", new FluidStack(liquid_cupronickel,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockKanthal", new FluidStack(liquid_kanthal,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockNichrome", new FluidStack(liquid_nichrome,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
-  }
-  
-  @Override
-  public void OnPostInit()
-  {
+
+    
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       Fluid fluid = LiquidMetalRegistry.instance.GetFluid(name);

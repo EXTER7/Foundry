@@ -64,33 +64,6 @@ public class ModIntegrationTiCon extends ModIntegration
   @Override
   public void OnInit()
   {
-    if(!Loader.isModLoaded("TConstruct"))
-    {
-      is_loaded = false;
-      return;
-    }
-    items = new ItemStack[1];
-
-    items[ITEM_INGOT_CAST] = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
-    
-    liquid_map = new HashMap<String,String>();
-    liquid_map.put("iron.molten","Iron");
-    liquid_map.put("gold.molten","Gold");
-    liquid_map.put("copper.molten", "Copper");
-    liquid_map.put("tin.molten", "Tin");
-    liquid_map.put("platinum.molten","Platinum");
-    liquid_map.put("aluminum.molten","Aluminum");
-    liquid_map.put("bronze.molten","Bronze");
-    liquid_map.put("steel.molten","Steel");
-    liquid_map.put("nickel.molten","Nickel");
-    liquid_map.put("lead.molten","Lead");
-    liquid_map.put("silver.molten","Silver");
-    liquid_map.put("invar.molten","Invar");
-    liquid_map.put("electrum.molten","Electrum");
-    if(FoundryConfig.recipe_glass)
-    {
-      liquid_map.put("glass.molten", "Glass");
-    }
   }
   
   private void CreateAlloyRecipe(AlloyMix mix,int index,List<FluidStack> inputs)
@@ -132,6 +105,35 @@ public class ModIntegrationTiCon extends ModIntegration
   @Override
   public void OnPostInit()
   {
+    if(!Loader.isModLoaded("TConstruct"))
+    {
+      is_loaded = false;
+      return;
+    }
+    items = new ItemStack[1];
+
+    items[ITEM_INGOT_CAST] = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
+    
+    liquid_map = new HashMap<String,String>();
+    liquid_map.put("iron.molten","Iron");
+    liquid_map.put("gold.molten","Gold");
+    liquid_map.put("copper.molten", "Copper");
+    liquid_map.put("tin.molten", "Tin");
+    liquid_map.put("platinum.molten","Platinum");
+    liquid_map.put("aluminum.molten","Aluminum");
+    liquid_map.put("bronze.molten","Bronze");
+    liquid_map.put("steel.molten","Steel");
+    liquid_map.put("nickel.molten","Nickel");
+    liquid_map.put("lead.molten","Lead");
+    liquid_map.put("silver.molten","Silver");
+    liquid_map.put("invar.molten","Invar");
+    liquid_map.put("electrum.molten","Electrum");
+    if(FoundryConfig.recipe_glass)
+    {
+      liquid_map.put("glass.molten", "Glass");
+    }
+
+    
     //Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
     for(ItemMetaWrapper item : Smeltery.getSmeltingList().keySet())
     {

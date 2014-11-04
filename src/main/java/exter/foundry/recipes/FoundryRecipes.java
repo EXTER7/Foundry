@@ -25,8 +25,6 @@ import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
-import exter.foundry.integration.ModIntegration;
-import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 import exter.foundry.item.ItemIngot;
@@ -394,60 +392,56 @@ public class FoundryRecipes
         'C', foundryclay_stack);
 
 
-    ModIntegrationGregtech gti = (ModIntegrationGregtech)ModIntegration.GetIntegration("gregtech");
-    if(gti == null || !gti.IsLoaded() || !gti.change_recipes)
-    {
-      ItemStack heatingcoil2_stack = new ItemStack(FoundryItems.item_component,2,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+    ItemStack heatingcoil2_stack = new ItemStack(FoundryItems.item_component,2,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
 
-      GameRegistry.addRecipe(new ShapedOreRecipe(
-          emptycontainer2_stack,
-          " T ",
-          "BGB",
-          " T ",
-          'T', "ingotTin",
-          'B', foundrybrick_stack,
-          'G', glasspane_stack));
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        emptycontainer2_stack,
+        " T ",
+        "BGB",
+        " T ",
+        'T', "ingotTin",
+        'B', foundrybrick_stack,
+        'G', glasspane_stack));
 
-      GameRegistry.addRecipe(new ShapedOreRecipe(
-          heatingcoil2_stack,
-          "RCR",
-          "CGC",
-          "RCR",
-          'C', "ingotCupronickel",
-          'G', goldnugget_stack,
-          'R', redstone_stack));
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        heatingcoil2_stack,
+        "RCR",
+        "CGC",
+        "RCR",
+        'C', "ingotCupronickel",
+        'G', goldnugget_stack,
+        'R', redstone_stack));
 
-      GameRegistry.addRecipe(
-          casing_stack,
-          "IBI",
-          "B B",
-          "IBI",
-          'I', iron_stack, 'B',
-          foundrybrick_stack);
+    GameRegistry.addRecipe(
+        casing_stack,
+        "IBI",
+        "B B",
+        "IBI",
+        'I', iron_stack, 'B',
+        foundrybrick_stack);
 
-      GameRegistry.addRecipe(new ShapedOreRecipe(
-          new ItemStack(FoundryBlocks.block_machine, 1, BlockFoundryMachine.MACHINE_ICF),
-          "IFI",
-          "HCH",
-          "HRH",
-          'F', furnace_stack,
-          'I', "ingotCopper",
-          'C', casing_stack,
-          'R', redstone_stack,
-          'H', heatingcoil_stack));
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine, 1, BlockFoundryMachine.MACHINE_ICF),
+        "IFI",
+        "HCH",
+        "HRH",
+        'F', furnace_stack,
+        'I', "ingotCopper",
+        'C', casing_stack,
+        'R', redstone_stack,
+        'H', heatingcoil_stack));
 
-      GameRegistry.addRecipe(new ShapedOreRecipe(
-          new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
-          "IRI",
-          "GCG",
-          "HRH",
-          'I', iron_stack, 
-          'R', redstone_stack, 
-          'B', foundrybrick_stack,
-          'C', casing_stack,
-          'G', "gearStone",
-          'H', heatingcoil_stack));
-    }
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
+        "IRI",
+        "GCG",
+        "HRH",
+        'I', iron_stack, 
+        'R', redstone_stack, 
+        'B', foundrybrick_stack,
+        'C', casing_stack,
+        'G', "gearStone",
+        'H', heatingcoil_stack));
     
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_alloy_furnace),

@@ -1,5 +1,6 @@
 package exter.foundry;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.item.ItemStack;
@@ -44,6 +45,6 @@ public class CraftingEvents
   
   public CraftingEvents()
   {
-    MinecraftForge.EVENT_BUS.register(this);
+    FMLCommonHandler.instance().bus().register(this); 
   }
 }

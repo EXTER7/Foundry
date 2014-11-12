@@ -4,7 +4,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
 

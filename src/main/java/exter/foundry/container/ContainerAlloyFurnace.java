@@ -5,6 +5,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import exter.foundry.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 
@@ -70,7 +71,14 @@ public class ContainerAlloyFurnace extends Container
 
       if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if(!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + TileEntityAlloyFurnace.SLOT_INPUT_B, false))
+        if(TileEntityFurnace.isItemFuel(stack))
+        {
+          int s = SLOTS_TE + TileEntityAlloyFurnace.SLOT_FUEL;
+          if(!mergeItemStack(stack, s, s + 1, false))
+          {
+            return null;
+          } 
+        } else if(!mergeItemStack(stack, SLOTS_TE, SLOTS_TE + TileEntityAlloyFurnace.SLOT_INPUT_B + 1, false))
         {
           return null;
         }

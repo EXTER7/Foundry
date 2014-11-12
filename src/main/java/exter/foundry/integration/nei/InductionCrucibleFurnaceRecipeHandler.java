@@ -95,7 +95,7 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     if(isMouseOver(HEAT.asRectangle(), gui, recipe))
     {
       currenttip.add(EnumChatFormatting.GRAY + "Melting point: " + EnumChatFormatting.YELLOW + meltingRecipe.meltingPoint + " K");
-      float internalPower = FIXED_POWER + TEMP_POWER * (float) meltingRecipe.meltingPoint * 100.0f;
+      float internalPower = TileEntityInductionCrucibleFurnace.GetEnergyPerTickNeeded(meltingRecipe.meltingPoint * 100);
       currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
       currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
     }

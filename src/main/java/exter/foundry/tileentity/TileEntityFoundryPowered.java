@@ -70,6 +70,15 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     super.updateEntity();
   }
   
+  @Override
+  protected void UpdateEntityServer()
+  {
+    if(update_energy_tick)
+    {
+      UpdateEnergy(energy_manager);
+    }
+  }
+  
   public void UpdateRedstone()
   {
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);

@@ -457,7 +457,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
 
   @Override
   protected void UpdateEntityServer()
-  {    
+  {
+    super.UpdateEntityServer();
     int last_progress = progress;
     int last_melt_point = melt_point;
     CheckCurrentRecipe();

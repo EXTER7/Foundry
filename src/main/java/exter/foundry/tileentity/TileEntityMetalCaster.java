@@ -423,6 +423,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   @Override
   protected void UpdateEntityServer()
   {
+    super.UpdateEntityServer();
     int last_progress = progress;
     
     CheckCurrentRecipe();

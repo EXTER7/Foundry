@@ -518,6 +518,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   @Override
   protected void UpdateEntityServer()
   {
+    super.UpdateEntityServer();
     if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_1].getFluidAmount() > 0

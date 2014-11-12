@@ -45,13 +45,15 @@ public class ModIntegrationIC2 extends ModIntegration
   static public final int ITEM_GOLD_CASING = 16;
   static public final int ITEM_IRON_CASING = 17;
   static public final int ITEM_LEAD_CASING = 18;
+  static public final int ITEM_STEEL_CASING = 19;
 
-  static public final int ITEM_COPPER_PLATE = 19;
-  static public final int ITEM_TIN_PLATE = 20;
-  static public final int ITEM_BRONZE_PLATE = 21;
-  static public final int ITEM_GOLD_PLATE = 22;
-  static public final int ITEM_IRON_PLATE = 23;
-  static public final int ITEM_LEAD_PLATE = 24;
+  static public final int ITEM_COPPER_PLATE = 20;
+  static public final int ITEM_TIN_PLATE = 21;
+  static public final int ITEM_BRONZE_PLATE = 22;
+  static public final int ITEM_GOLD_PLATE = 23;
+  static public final int ITEM_IRON_PLATE = 24;
+  static public final int ITEM_LEAD_PLATE = 25;
+  static public final int ITEM_STEEL_PLATE = 26;
 
   private void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
   {
@@ -77,12 +79,23 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnInit()
   {
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void OnClientPostInit()
+  {
+  }
+
+  @Override
+  public void OnPostInit()
+  {
     if(!Loader.isModLoaded("IC2"))
     {
       is_loaded = false;
       return;
     }
-    items = new ItemStack[25];
+    items = new ItemStack[27];
 
     items[ITEM_BRONZE_PICKAXE] = ItemStack.copyItemStack(IC2Items.getItem("bronzePickaxe"));
     items[ITEM_BRONZE_AXE] = ItemStack.copyItemStack(IC2Items.getItem("bronzeAxe"));
@@ -105,6 +118,7 @@ public class ModIntegrationIC2 extends ModIntegration
     items[ITEM_GOLD_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casinggold"));
     items[ITEM_IRON_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingiron"));
     items[ITEM_LEAD_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casinglead"));
+    items[ITEM_STEEL_CASING] = ItemStack.copyItemStack(IC2Items.getItem("casingadviron"));
 
     items[ITEM_COPPER_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platecopper"));
     items[ITEM_TIN_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platetin"));
@@ -112,6 +126,7 @@ public class ModIntegrationIC2 extends ModIntegration
     items[ITEM_GOLD_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("plategold"));
     items[ITEM_IRON_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("plateiron"));
     items[ITEM_LEAD_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("platelead"));
+    items[ITEM_STEEL_PLATE] = ItemStack.copyItemStack(IC2Items.getItem("plateadviron"));
 
     VerifyItems();
 
@@ -123,6 +138,7 @@ public class ModIntegrationIC2 extends ModIntegration
       Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
       Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
       Fluid liquid_lead = LiquidMetalRegistry.instance.GetFluid("Lead");
+      Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
 
       if(FoundryConfig.recipe_tools_armor)
       {
@@ -173,6 +189,7 @@ public class ModIntegrationIC2 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_CASING], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
 
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT));
@@ -180,6 +197,7 @@ public class ModIntegrationIC2 extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_PLATE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT));
 
 
       CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_CABLE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 3), mold_cable, null);
@@ -193,6 +211,7 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_CASING], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_CASING], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_CASING], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_CASING], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_casing, null);
 
       CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_PLATE], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_PLATE], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
@@ -200,6 +219,7 @@ public class ModIntegrationIC2 extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_PLATE], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_PLATE], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_PLATE], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_PLATE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
 
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_COPPER_CABLE]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CABLE_IC2_SOFT, items[ITEM_TIN_CABLE]);
@@ -212,6 +232,7 @@ public class ModIntegrationIC2 extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_GOLD_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_IRON_CASING]);
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_LEAD_CASING]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CASING_IC2_SOFT, items[ITEM_STEEL_CASING]);
 
       MaterialRegistry.instance.RegisterItem(items[ITEM_COPPER_CASING], "Copper", "Casing");
       MaterialRegistry.instance.RegisterItem(items[ITEM_TIN_CASING], "Tin", "Casing");
@@ -219,6 +240,7 @@ public class ModIntegrationIC2 extends ModIntegration
       MaterialRegistry.instance.RegisterItem(items[ITEM_GOLD_CASING], "Gold", "Casing");
       MaterialRegistry.instance.RegisterItem(items[ITEM_IRON_CASING], "Iron", "Casing");
       MaterialRegistry.instance.RegisterItem(items[ITEM_LEAD_CASING], "Lead", "Casing");
+      MaterialRegistry.instance.RegisterItem(items[ITEM_STEEL_CASING], "Steel", "Casing");
 
       MaterialRegistry.instance.RegisterItem( items[ITEM_COPPER_CABLE], "Copper", "Cable");
       MaterialRegistry.instance.RegisterItem( items[ITEM_TIN_CABLE], "Tin", "Cable");
@@ -234,21 +256,8 @@ public class ModIntegrationIC2 extends ModIntegration
         RegisterPlateMoldRecipe(items[ITEM_GOLD_PLATE], "plateGold");
         RegisterPlateMoldRecipe(items[ITEM_IRON_PLATE], "plateIron");
         RegisterPlateMoldRecipe(items[ITEM_LEAD_PLATE], "plateLead");
+        RegisterPlateMoldRecipe(items[ITEM_STEEL_PLATE], "plateSteel");
       }
     }
-  }
-  
-  @SideOnly(Side.CLIENT)
-  @Override
-  public void OnClientInit()
-  {
-    MaterialRegistry.instance.RegisterTypeIcon("Casing", items[ITEM_COPPER_CASING]);
-    MaterialRegistry.instance.RegisterTypeIcon("Cable", items[ITEM_COPPER_CABLE]);
-  }
-
-  @Override
-  public void OnPostInit()
-  {
-
   }
 }

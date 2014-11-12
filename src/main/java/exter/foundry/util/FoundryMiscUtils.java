@@ -60,6 +60,20 @@ public class FoundryMiscUtils
     return null;
   }
 
+  static public ItemStack GetModItemFromOreDictionary(String modid,String orename)
+  {
+    for(ItemStack is:OreDictionary.getOres(orename))
+    {
+      if(GameRegistry.findUniqueIdentifierFor(is.getItem()).modId.equals(modid))
+      {
+        is = is.copy();
+        is.stackSize = 1;
+        return is;
+      }
+    }
+    return null;
+  }
+  
   /**
    * Register item in the ore dictionary only if it's not already registered.
    * @param name Ore Dictionary name.

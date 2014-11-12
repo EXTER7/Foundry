@@ -43,6 +43,7 @@ fluid.liquidThaumium=Liquid Thaumium
 fluid.liquidManasteel=Liquid Manasteel
 fluid.liquidTerrasteel=Liquid Terrasteel
 fluid.liquidElementium=Liquid Elementium
+fluid.liquidRubber=Liquid Rubber
 
 
 router.material._Any=All
@@ -94,6 +95,7 @@ router.material.Thaumium=Thaumium
 router.material.Manasteel=Manasteel
 router.material.Terrasteel=Terrasteel
 router.material.Elementium=Elementium
+router.material.Rubber=Rubber
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -187,6 +189,7 @@ tile.liquidThaumium.name=Liquid Thaumium
 tile.liquidManasteel.name=Liquid Manasteel
 tile.liquidTerrasteel.name=Liquid Terrasteel
 tile.liquidElementium.name=Liquid Elementium
+tile.liquidElementium.name=Liquid Rubber
 
 
 tile.machine.ICF.name=Induction Crucible Furnace
@@ -304,6 +307,8 @@ item.mold32.name=Plate Mold
 item.mold33.name=Soft Plate Mold
 item.mold34.name=Wand Cap Mold
 item.mold35.name=Soft Wand Cap Mold
+item.mold36.name=Insulated Cable Mold
+item.mold37.name=Soft Insulated Cable Mold
 
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot

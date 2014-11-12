@@ -154,6 +154,7 @@ public class ModIntegrationGregtech extends ModIntegration
     Fluid liquid_manganese = LiquidMetalRegistry.instance.GetFluid("Manganese");
     Fluid liquid_chromium = LiquidMetalRegistry.instance.GetFluid("Chromium");
     Fluid liquid_aluminum = LiquidMetalRegistry.instance.GetFluid("Aluminum");
+    Fluid liquid_rubber = LiquidMetalRegistry.instance.GetFluid("Rubber");
     
     Fluid liquid_stainless_steel = LiquidMetalRegistry.instance.GetFluid("StainlessSteel");
     Fluid liquid_cupronickel = LiquidMetalRegistry.instance.GetFluid("Cupronickel");
@@ -204,6 +205,9 @@ public class ModIntegrationGregtech extends ModIntegration
     }
     RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
+    RegisterMetalRecipes("Rubber",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
+    CastingRecipeManager.instance.AddRecipe("ingotRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
+    CastingRecipeManager.instance.AddRecipe("blockRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
   }
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)

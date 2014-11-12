@@ -77,7 +77,10 @@ public class BlockLiquidMetal extends BlockFluidClassic
   @SideOnly(Side.CLIENT)
   public void randomDisplayTick(World world, int x, int y, int z, Random rand)
   {
-
+    if(temperature < 1200)
+    {
+      return;
+    }
     double dx;
     double dy;
     double dz;

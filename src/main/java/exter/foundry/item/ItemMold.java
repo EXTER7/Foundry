@@ -12,8 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemMold extends Item
-{
-  
+{  
   static public final int MOLD_INGOT = 0;
   static public final int MOLD_INGOT_SOFT = 1;
   static public final int MOLD_CHESTPLATE = 2;
@@ -50,6 +49,8 @@ public class ItemMold extends Item
   static public final int MOLD_PLATE_IC2_SOFT = 33;
   static public final int MOLD_CAP_TC = 34;
   static public final int MOLD_CAP_TC_SOFT = 35;
+  static public final int MOLD_INSULATED_CABLE_IC2 = 36;
+  static public final int MOLD_INSULATED_CABLE_IC2_SOFT = 37;
 
 
   static private final String[] ICON_PATHS = 
@@ -89,7 +90,9 @@ public class ItemMold extends Item
     "foundry:mold_plate_ic2",
     "foundry:claymold_plate_ic2",
     "foundry:mold_cap_tc",
-    "foundry:claymold_cap_tc"
+    "foundry:claymold_cap_tc",
+    "foundry:mold_cable_insulated_ic2",
+    "foundry:claymold_cable_insulated_ic2"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -129,7 +132,9 @@ public class ItemMold extends Item
     "itemPlateMold",
     "itemSoftPlateMold",
     "itemCapMold",
-    "itemSoftCapMold"
+    "itemSoftCapMold",
+    "itemInsulatedCableMold",
+    "itemSoftInsulatedCableMold"
   };
 
   

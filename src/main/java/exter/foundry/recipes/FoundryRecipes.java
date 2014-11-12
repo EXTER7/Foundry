@@ -55,6 +55,7 @@ public class FoundryRecipes
   static public Fluid liquid_silver;
   static public Fluid liquid_steel;
   static public Fluid liquid_cupronickel;
+  static public Fluid liquid_rubber;
 
   static public void PreInit()
   {
@@ -72,12 +73,15 @@ public class FoundryRecipes
     liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Silver", 1250, 15);
     liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Cupronickel", 1750, 15);
+    
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aluminum", 1100, 15);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Chromium", 2200, 8);   
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Platinum", 2050, 15);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manganese", 1550, 15);   
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Titanium", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Rubber", 460, 0);
+
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));
@@ -580,6 +584,7 @@ public class FoundryRecipes
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_STAIRS_SOFT,ItemMold.MOLD_STAIRS);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_IC2_SOFT,ItemMold.MOLD_PLATE_IC2);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_INSULATED_CABLE_IC2_SOFT,ItemMold.MOLD_INSULATED_CABLE_IC2);
 
     if(FoundryConfig.recipe_tools_armor)
     {

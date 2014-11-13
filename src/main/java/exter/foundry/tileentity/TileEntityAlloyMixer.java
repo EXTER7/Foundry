@@ -442,7 +442,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   private void MixAlloy()
   {
-    if(energy_manager.GetStoredEnergy() < 10)
+    if(GetStoredEnergy() < 10)
     {
       return;
     }
@@ -499,11 +499,11 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         return;
       }
       int required_energy = 10 * output.amount;
-      if(energy_manager.UseEnergy(required_energy, false) < required_energy)
+      if(UseEnergy(required_energy, false) < required_energy)
       {
         return;
       }
-      energy_manager.UseEnergy(required_energy, true);
+      UseEnergy(required_energy, true);
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       UpdateTank(TANK_OUTPUT);
@@ -542,14 +542,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public int GetEnergyCapacity()
   {
     return 3000;
-  }
-
-  @Override
-  public int GetEnergyUse()
-  {
-    return 2500;
   }
 }

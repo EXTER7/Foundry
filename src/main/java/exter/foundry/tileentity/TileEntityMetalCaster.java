@@ -177,11 +177,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     }
   }
 
-  public int GetStoredPower()
-  {
-    return energy_manager.GetStoredEnergy();
-  }
-
   @Override
   public int getSizeInventory()
   {
@@ -392,9 +387,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   
   private void BeginCasting()
   {
-    if(current_recipe != null && CanCastCurrentRecipe() && energy_manager.GetStoredEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && CanCastCurrentRecipe() && GetStoredEnergy() >= ENERGY_REQUIRED)
     {
-      energy_manager.UseEnergy(ENERGY_REQUIRED, true);
+      UseEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }
@@ -527,15 +522,8 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public int GetEnergyCapacity()
   {
     return 40000;
-  }
-
-
-  @Override
-  public int GetEnergyUse()
-  {
-    return ENERGY_REQUIRED;
   }
 }

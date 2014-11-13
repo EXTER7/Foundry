@@ -505,10 +505,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
     if(use_energy)
     {
-      if(energy_manager.GetStoredEnergy() > 0)
+      if(GetStoredEnergy() > 0)
       {
         //Convert energy to heat
-        int energy = energy_manager.UseEnergy(ENERGY_USE, true);
+        int energy = UseEnergy(ENERGY_USE, true);
         heat += energy * 6 / 25;
         if(heat > HEAT_MAX)
         {
@@ -552,7 +552,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public int GetEnergyCapacity()
   {
     return 18000;
   }  
@@ -562,11 +562,5 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   public int getSinkTier()
   {
     return 2;
-  }
-
-  @Override
-  public int GetEnergyUse()
-  {
-    return ENERGY_USE;
   }
 }

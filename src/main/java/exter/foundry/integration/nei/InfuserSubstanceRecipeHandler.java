@@ -25,7 +25,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
-import exter.foundry.tileentity.energy.EnergyManager;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 
 public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
 {
@@ -224,8 +224,8 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       float energy = foundryRecipe.GetEnergyNeeded();
       currenttip.add(EnumChatFormatting.GRAY + "Required power: ");
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f RF/t", energy / EnergyManager.RATIO_RF));
-      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f EU/t", energy / EnergyManager.RATIO_EU));
+      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f RF/t", energy / TileEntityFoundryPowered.RATIO_RF));
+      currenttip.add(EnumChatFormatting.AQUA + String.format("%.1f EU/t", energy / TileEntityFoundryPowered.RATIO_EU));
     }
     return super.handleTooltip(gui, currenttip, recipe);
   }

@@ -398,9 +398,9 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
     extract_energy = current_substance_recipe.GetEnergyNeeded();
-    if(energy_manager.GetStoredEnergy() > 0)
+    if(GetStoredEnergy() > 0)
     {
-      int energy = energy_manager.UseEnergy(600, true);
+      int energy = UseEnergy(600, true);
       progress += energy;
       if(progress >= extract_energy)
       {
@@ -428,7 +428,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     int last_progress = progress;
     int last_extract_time = extract_energy;
     
-    if(tanks[TANK_INPUT].getFluidAmount() > 0 && energy_manager.GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
+    if(tanks[TANK_INPUT].getFluidAmount() > 0 && GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
     {
       IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
@@ -438,7 +438,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         {
           tanks[TANK_INPUT].drain(recipe.GetInputFluid().amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
-          energy_manager.UseEnergy(INFUSE_ENERGY_NEEDED, true);
+          UseEnergy(INFUSE_ENERGY_NEEDED, true);
           substance.amount -= recipe.GetInputSubstance().amount;
           if(substance.amount <= 0)
           {
@@ -500,14 +500,8 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public int GetMaxStoredEnergy()
+  public int GetEnergyCapacity()
   {
     return 3000;
-  }
-
-  @Override
-  public int GetEnergyUse()
-  {
-    return INFUSE_ENERGY_NEEDED + 600;
   }
 }

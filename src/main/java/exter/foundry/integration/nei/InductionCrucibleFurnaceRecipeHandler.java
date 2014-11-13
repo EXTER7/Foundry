@@ -19,8 +19,8 @@ import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
-import exter.foundry.tileentity.energy.EnergyManager;
 
 
 public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
@@ -96,8 +96,8 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     {
       currenttip.add(EnumChatFormatting.GRAY + "Melting point: " + EnumChatFormatting.YELLOW + meltingRecipe.meltingPoint + " K");
       float internalPower = TileEntityInductionCrucibleFurnace.GetEnergyPerTickNeeded(meltingRecipe.meltingPoint * 100);
-      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f RF/t", internalPower / EnergyManager.RATIO_RF));
-      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f EU/t", internalPower / EnergyManager.RATIO_EU));
+      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f RF/t", internalPower / TileEntityFoundryPowered.RATIO_RF));
+      currenttip.add(EnumChatFormatting.GRAY + "Mininum power: " + EnumChatFormatting.AQUA + String.format("%.2f EU/t", internalPower / TileEntityFoundryPowered.RATIO_EU));
     }
     return super.handleTooltip(gui, currenttip, recipe);
   }

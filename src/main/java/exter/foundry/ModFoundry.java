@@ -28,6 +28,7 @@ import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationRedstoneArsenal;
 import exter.foundry.integration.ModIntegrationTE4;
+import exter.foundry.integration.ModIntegrationTF;
 import exter.foundry.integration.ModIntegrationThaumcraft;
 import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
@@ -98,6 +99,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationBuildcraft.class,"buildcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationForestry.class,"forestry");
     ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
+    ModIntegration.RegisterIntegration(config,ModIntegrationTF.class,"tf");
     ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
     ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
     ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");

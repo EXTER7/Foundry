@@ -44,6 +44,9 @@ fluid.liquidManasteel=Liquid Manasteel
 fluid.liquidTerrasteel=Liquid Terrasteel
 fluid.liquidElementium=Liquid Elementium
 fluid.liquidRubber=Liquid Rubber
+fluid.liquidMithril=Liquid Mithril
+fluid.liquidSignalum=Liquid Signalum
+fluid.liquidLumium=Liquid Lumium
 
 
 router.material._Any=All
@@ -96,6 +99,9 @@ router.material.Manasteel=Manasteel
 router.material.Terrasteel=Terrasteel
 router.material.Elementium=Elementium
 router.material.Rubber=Rubber
+router.material.Mithril=Mithril
+router.material.Signalum=Signalum
+router.material.Lumium=Lumium
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -189,7 +195,10 @@ tile.liquidThaumium.name=Liquid Thaumium
 tile.liquidManasteel.name=Liquid Manasteel
 tile.liquidTerrasteel.name=Liquid Terrasteel
 tile.liquidElementium.name=Liquid Elementium
-tile.liquidElementium.name=Liquid Rubber
+tile.liquidRubber.name=Liquid Rubber
+tile.liquidMithril.name=Liquid Mithril
+tile.liquidSignalum.name=Liquid Signalum
+tile.liquidLumium.name=Liquid Lumium
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

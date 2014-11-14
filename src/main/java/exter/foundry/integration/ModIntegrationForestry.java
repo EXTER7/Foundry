@@ -45,7 +45,6 @@ public class ModIntegrationForestry extends ModIntegration
       is_loaded = false;
       return;
     }
-    is_loaded = false;
 
     items = new ItemStack[3];
     items[ITEM_COPPER_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearCopper"));

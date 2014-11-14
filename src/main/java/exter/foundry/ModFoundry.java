@@ -1,6 +1,6 @@
 package exter.foundry;
-
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -83,7 +83,7 @@ public class ModFoundry
   public static CommonFoundryProxy proxy;
 
   
-  public static Logger log = Logger.getLogger(MODNAME);
+  public static Logger log = LogManager.getLogger(MODNAME);
 
   public CraftingEvents crafting_events;
   
@@ -192,7 +192,6 @@ public class ModFoundry
   public void postInit(FMLPostInitializationEvent event)
   {
     ModIntegration.PostInit();
-    //Check for the existence of a stone gear, add it's own if it doesn't exist.
     FoundryRecipes.PostInit();
     proxy.PostInit();
   }

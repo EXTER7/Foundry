@@ -7,7 +7,6 @@ import java.util.Map;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
@@ -21,43 +20,14 @@ public abstract class ModIntegration
   
   protected ItemStack[] items;
   
-  protected ItemStack GetItemFromField(Class<?> clazz,String field_name)
-  {
-    try
-    {
-      Object obj = clazz.getField(field_name).get(null);
-      if(obj == null)
-      {
-        return null;
-      }
-      if(obj instanceof Item)
-      {
-        return new ItemStack((Item)obj);
-      } 
-      if(obj instanceof ItemStack)
-      {
-        return ((ItemStack)obj).copy();
-      }
-
-      ModFoundry.log.info("[ModIntegration ("+ Name +")] field" + field_name + "is not Item or ItemStack");
-    } catch(IllegalAccessException e)
-    {
-      ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find item " + field_name);
-    } catch(NoSuchFieldException e)
-    {
-      ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find item " + field_name);
-    }
-    return null;
-  }
-
   protected void VerifyItems()
   {
     int i;
     for(i = 0; i < items.length; i++)
     {
-      if(items[i] == null)
+      if(items[i] == null || items[i].getItem() == null)
       {
-        ModFoundry.log.warning("Integration " + Name + ": item " + i + " is null.");
+        ModFoundry.log.warn("Integration " + Name + ": item " + i + " is null.");
         is_loaded = false;
       }
     }
@@ -117,7 +87,7 @@ public abstract class ModIntegration
       }
     } catch(NoClassDefFoundError e)
     {
-      ModFoundry.log.fine(e.getMessage());
+      ModFoundry.log.debug(e.getMessage());
     } catch(InstantiationException e)
     {
       e.printStackTrace();

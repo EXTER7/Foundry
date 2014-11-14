@@ -8,7 +8,6 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
-import exter.foundry.ModFoundry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -16,11 +15,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationBuildcraft extends ModIntegration
 {
-  static public final int ITEM_WOOD_GEAR = 0;
-  static public final int ITEM_STONE_GEAR = 1;
-  static public final int ITEM_IRON_GEAR = 2;
-  static public final int ITEM_GOLD_GEAR = 3;
-  static public final int ITEM_DIAMOND_GEAR = 4;
+  static public final int ITEM_IRON_GEAR = 0;
+  static public final int ITEM_GOLD_GEAR = 1;
   
   public ModIntegrationBuildcraft(String mod_name)
   {
@@ -36,22 +32,15 @@ public class ModIntegrationBuildcraft extends ModIntegration
   @Override
   public void OnInit()
   {
-    try
-    {
-      items = new ItemStack[5];
-      Class<?> BuildCraftCore = Class.forName("buildcraft.BuildCraftCore");
-      items[ITEM_WOOD_GEAR] = GetItemFromField(BuildCraftCore,"woodenGearItem");
-      items[ITEM_STONE_GEAR] = GetItemFromField(BuildCraftCore,"stoneGearItem");
-      items[ITEM_IRON_GEAR] = GetItemFromField(BuildCraftCore,"ironGearItem");
-      items[ITEM_GOLD_GEAR] = GetItemFromField(BuildCraftCore,"goldGearItem");
-      items[ITEM_DIAMOND_GEAR] = GetItemFromField(BuildCraftCore,"diamondGearItem");
-      VerifyItems();
-    } catch(ClassNotFoundException e)
-    {
-      ModFoundry.log.info("[ModIntegration ("+ Name +")] Cannot find buildcraft.BuildCraftCore class");
-      is_loaded = false;
-      return;
-    }
+  }
+
+  @Override
+  public void OnPostInit()
+  {
+    items = new ItemStack[2];
+    items[ITEM_IRON_GEAR] = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearIron");
+    items[ITEM_GOLD_GEAR] = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearGold");
+    VerifyItems();
 
     if(is_loaded)
     {
@@ -66,17 +55,6 @@ public class ModIntegrationBuildcraft extends ModIntegration
         CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
         CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_GEAR], new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
-      FoundryMiscUtils.RegisterInOreDictionary("gearWood",items[ITEM_WOOD_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearStone",items[ITEM_STONE_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearIron",items[ITEM_IRON_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearGold",items[ITEM_GOLD_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearDiamond",items[ITEM_DIAMOND_GEAR]);
     }
-  }
-
-  @Override
-  public void OnPostInit()
-  {
-    
   }
 }

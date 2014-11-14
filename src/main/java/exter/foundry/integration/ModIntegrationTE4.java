@@ -53,7 +53,7 @@ public class ModIntegrationTE4 extends ModIntegration
       return;
     }
 
-    items = new ItemStack[20];
+    items = new ItemStack[9];
 
     items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
     items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);

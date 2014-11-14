@@ -22,19 +22,19 @@ import exter.foundry.registry.LiquidMetalRegistry;
 public class ModIntegrationTF extends ModIntegration
 {
 
-  static public final int ITEM_INVAR_GEAR = 1;
-  static public final int ITEM_ELECTRUM_GEAR = 2;
+  static public final int ITEM_INVAR_GEAR = 0;
+  static public final int ITEM_ELECTRUM_GEAR = 1;
 
-  static public final int ITEM_COPPER_GEAR = 3;
-  static public final int ITEM_TIN_GEAR = 4;
+  static public final int ITEM_COPPER_GEAR = 2;
+  static public final int ITEM_TIN_GEAR = 3;
 
-  static public final int ITEM_ENDERIUM_INGOT = 5;
-  static public final int ITEM_ENDERIUM_BLOCK = 6;
-  static public final int ITEM_PYROTHEUM = 7;
-  static public final int ITEM_BRONZE_GEAR = 8;
-  static public final int ITEM_GOLD_GEAR = 9;
-  static public final int ITEM_ENDERIUM_GEAR = 10;
-  static public final int ITEM_SILVER_GEAR = 11;
+  static public final int ITEM_ENDERIUM_INGOT = 4;
+  static public final int ITEM_ENDERIUM_BLOCK = 5;
+  static public final int ITEM_PYROTHEUM = 6;
+  static public final int ITEM_BRONZE_GEAR = 7;
+  static public final int ITEM_GOLD_GEAR = 8;
+  static public final int ITEM_ENDERIUM_GEAR = 9;
+  static public final int ITEM_SILVER_GEAR = 10;
 
   public ModIntegrationTF(String mod_name)
   {
@@ -62,7 +62,7 @@ public class ModIntegrationTF extends ModIntegration
       return;
     }
 
-    items = new ItemStack[12];
+    items = new ItemStack[11];
 
     items[ITEM_INVAR_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearInvar", 1);
     items[ITEM_ELECTRUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearElectrum", 1);

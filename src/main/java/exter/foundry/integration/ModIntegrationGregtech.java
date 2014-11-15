@@ -205,7 +205,6 @@ public class ModIntegrationGregtech extends ModIntegration
     }
     RegisterMetalRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
-    RegisterMetalRecipes("Rubber",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
     CastingRecipeManager.instance.AddRecipe("ingotRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
   }
@@ -217,6 +216,6 @@ public class ModIntegrationGregtech extends ModIntegration
     MeltingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT));
     MeltingRecipeManager.instance.AddRecipe("dustSmall" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 4));
     MeltingRecipeManager.instance.AddRecipe("dustTiny" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 9));
-    CastingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT), plate_mold, null);
+    CastingRecipeManager.instance.AddRecipe(FoundryMiscUtils.GetModItemFromOreDictionary("gregtech", "plate" + partial_name), new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT), plate_mold, null);
   }
 }

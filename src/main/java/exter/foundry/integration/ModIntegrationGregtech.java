@@ -216,6 +216,13 @@ public class ModIntegrationGregtech extends ModIntegration
     MeltingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT));
     MeltingRecipeManager.instance.AddRecipe("dustSmall" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 4));
     MeltingRecipeManager.instance.AddRecipe("dustTiny" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 9));
-    CastingRecipeManager.instance.AddRecipe(FoundryMiscUtils.GetModItemFromOreDictionary("gregtech", "plate" + partial_name), new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT), plate_mold, null);
+    if(!partial_name.startsWith("Glass"))
+    {
+      ItemStack plate = FoundryMiscUtils.GetModItemFromOreDictionary("gregtech", "plate" + partial_name);
+      if(plate != null)
+      {
+        CastingRecipeManager.instance.AddRecipe(plate, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT), plate_mold, null);
+      }
+    }
   }
 }

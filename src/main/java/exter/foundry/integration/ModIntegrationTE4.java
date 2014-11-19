@@ -52,21 +52,17 @@ public class ModIntegrationTE4 extends ModIntegration
       is_loaded = false;
       return;
     }
+    
+    ItemStack invar_pickaxe = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
+    ItemStack invar_axe = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
+    ItemStack invar_shovel = GameRegistry.findItemStack("ThermalExpansion", "toolInvarShovel", 1);
+    ItemStack invar_hoe = GameRegistry.findItemStack("ThermalExpansion", "toolInvarHoe", 1);
+    ItemStack invar_sword = GameRegistry.findItemStack("ThermalExpansion", "toolInvarSword", 1);
 
-    items = new ItemStack[9];
-
-    items[ITEM_INVAR_PICKAXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarPickaxe", 1);
-    items[ITEM_INVAR_AXE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarAxe", 1);
-    items[ITEM_INVAR_SHOVEL] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarShovel", 1);
-    items[ITEM_INVAR_HOE] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarHoe", 1);
-    items[ITEM_INVAR_SWORD] = GameRegistry.findItemStack("ThermalExpansion", "toolInvarSword", 1);
-
-    items[ITEM_INVAR_HELMET] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarHelmet", 1);
-    items[ITEM_INVAR_CHESTPLATE] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarPlate", 1);
-    items[ITEM_INVAR_LEGGINGS] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarLegs", 1);
-    items[ITEM_INVAR_BOOTS] = GameRegistry.findItemStack("ThermalExpansion", "armorInvarBoots", 1);
-
-    VerifyItems();
+    ItemStack invar_helmet = GameRegistry.findItemStack("ThermalExpansion", "armorInvarHelmet", 1);
+    ItemStack invar_chestplate = GameRegistry.findItemStack("ThermalExpansion", "armorInvarPlate", 1);
+    ItemStack invar_leggings = GameRegistry.findItemStack("ThermalExpansion", "armorInvarLegs", 1);
+    ItemStack invar_boots = GameRegistry.findItemStack("ThermalExpansion", "armorInvarBoots", 1);
 
     if(is_loaded && FoundryConfig.recipe_tools_armor)
     {
@@ -84,25 +80,25 @@ public class ModIntegrationTE4 extends ModIntegration
       ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_CHESTPLATE], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_PICKAXE], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_AXE], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_SHOVEL], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_SWORD], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_HOE], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_LEGGINGS], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_HELMET], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_BOOTS], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.AddRecipe(invar_chestplate, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.AddRecipe(invar_pickaxe, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(invar_axe, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(invar_shovel, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(invar_sword, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+      CastingRecipeManager.instance.AddRecipe(invar_hoe, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+      CastingRecipeManager.instance.AddRecipe(invar_leggings, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.AddRecipe(invar_helmet, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.AddRecipe(invar_boots, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, items[ITEM_INVAR_CHESTPLATE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, items[ITEM_INVAR_LEGGINGS]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, items[ITEM_INVAR_HELMET]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, items[ITEM_INVAR_BOOTS]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, items[ITEM_INVAR_PICKAXE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, items[ITEM_INVAR_AXE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, items[ITEM_INVAR_SHOVEL]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, items[ITEM_INVAR_HOE]);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, items[ITEM_INVAR_SWORD]);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, invar_chestplate);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, invar_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, invar_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, invar_boots);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, invar_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, invar_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, invar_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, invar_hoe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, invar_sword);
     }
   }
 }

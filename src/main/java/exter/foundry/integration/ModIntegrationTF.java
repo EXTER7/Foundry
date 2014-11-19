@@ -21,34 +21,6 @@ import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationTF extends ModIntegration
 {
-
-  static public final int ITEM_INVAR_GEAR = 0;
-  static public final int ITEM_ELECTRUM_GEAR = 1;
-
-  static public final int ITEM_COPPER_GEAR = 2;
-  static public final int ITEM_TIN_GEAR = 3;
-
-  static public final int ITEM_ENDERIUM_INGOT = 4;
-  static public final int ITEM_ENDERIUM_BLOCK = 5;
-  static public final int ITEM_PYROTHEUM = 6;
-  static public final int ITEM_BRONZE_GEAR = 7;
-  static public final int ITEM_GOLD_GEAR = 8;
-  static public final int ITEM_ENDERIUM_GEAR = 9;
-  static public final int ITEM_SILVER_GEAR = 10;
-  static public final int ITEM_LEAD_GEAR = 11;
-  static public final int ITEM_MITHRIL_GEAR = 12;
-  static public final int ITEM_SIGNALUM_GEAR = 13;
-  static public final int ITEM_LUMIUM_GEAR = 14;
-  static public final int ITEM_MITHRIL_INGOT = 15;
-  static public final int ITEM_MITHRIL_BLOCK = 16;
-  static public final int ITEM_SIGNALUM_INGOT = 17;
-  static public final int ITEM_SIGNALUM_BLOCK = 18;
-  static public final int ITEM_LUMIUM_INGOT = 19;
-  static public final int ITEM_LUMIUM_BLOCK = 20;
-  static public final int ITEM_IRON_GEAR = 21;
-  static public final int ITEM_NICKEL_GEAR = 22;
-  static public final int ITEM_PLATINUM_GEAR = 23;
-
   public boolean gear_recipes;
   
   public ModIntegrationTF(String mod_name)
@@ -85,43 +57,40 @@ public class ModIntegrationTF extends ModIntegration
       return;
     }
 
-    items = new ItemStack[24];
+    ItemStack invar_gear = GameRegistry.findItemStack("ThermalFoundation", "gearInvar", 1);
+    ItemStack electrum_gear = GameRegistry.findItemStack("ThermalFoundation", "gearElectrum", 1);
 
-    items[ITEM_INVAR_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearInvar", 1);
-    items[ITEM_ELECTRUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearElectrum", 1);
+    ItemStack copper_gear = GameRegistry.findItemStack("ThermalFoundation", "gearCopper", 1);
+    ItemStack tin_gear = GameRegistry.findItemStack("ThermalFoundation", "gearTin", 1);
 
-    items[ITEM_COPPER_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearCopper", 1);
-    items[ITEM_TIN_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearTin", 1);
+    ItemStack mithril_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotMithril", 1);
+    ItemStack mithril_block = GameRegistry.findItemStack("ThermalFoundation", "blockMithril", 1);
 
-    items[ITEM_MITHRIL_INGOT] = GameRegistry.findItemStack("ThermalFoundation", "ingotMithril", 1);
-    items[ITEM_MITHRIL_BLOCK] = GameRegistry.findItemStack("ThermalFoundation", "blockMithril", 1);
+    ItemStack enderium_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotEnderium", 1);
+    ItemStack enderium_block = GameRegistry.findItemStack("ThermalFoundation", "blockEnderium", 1);
 
-    items[ITEM_ENDERIUM_INGOT] = GameRegistry.findItemStack("ThermalFoundation", "ingotEnderium", 1);
-    items[ITEM_ENDERIUM_BLOCK] = GameRegistry.findItemStack("ThermalFoundation", "blockEnderium", 1);
+    ItemStack signalum_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotSignalum", 1);
+    ItemStack signalum_block = GameRegistry.findItemStack("ThermalFoundation", "blockSignalum", 1);
 
-    items[ITEM_SIGNALUM_INGOT] = GameRegistry.findItemStack("ThermalFoundation", "ingotSignalum", 1);
-    items[ITEM_SIGNALUM_BLOCK] = GameRegistry.findItemStack("ThermalFoundation", "blockSignalum", 1);
+    ItemStack lumium_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotLumium", 1);
+    ItemStack lumium_block = GameRegistry.findItemStack("ThermalFoundation", "blockLumium", 1);
 
-    items[ITEM_LUMIUM_INGOT] = GameRegistry.findItemStack("ThermalFoundation", "ingotLumium", 1);
-    items[ITEM_LUMIUM_BLOCK] = GameRegistry.findItemStack("ThermalFoundation", "blockLumium", 1);
+    ItemStack pyrotheum = GameRegistry.findItemStack("ThermalFoundation", "dustPyrotheum", 1);
 
-    items[ITEM_PYROTHEUM] = GameRegistry.findItemStack("ThermalFoundation", "dustPyrotheum", 1);
+    ItemStack bronze_gear = GameRegistry.findItemStack("ThermalFoundation", "gearBronze", 1);
+    ItemStack gold_gear = GameRegistry.findItemStack("ThermalFoundation", "gearGold", 1);
+    ItemStack enderium_gear = GameRegistry.findItemStack("ThermalFoundation", "gearEnderium", 1);
+    ItemStack silver_gear = GameRegistry.findItemStack("ThermalFoundation", "gearSilver", 1);
 
-    items[ITEM_BRONZE_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearBronze", 1);
-    items[ITEM_GOLD_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearGold", 1);
-    items[ITEM_ENDERIUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearEnderium", 1);
-    items[ITEM_SILVER_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearSilver", 1);
+    ItemStack lead_gear = GameRegistry.findItemStack("ThermalFoundation", "gearLead", 1);
+    ItemStack mithril_gear = GameRegistry.findItemStack("ThermalFoundation", "gearMithril", 1);
+    ItemStack signalum_gear = GameRegistry.findItemStack("ThermalFoundation", "gearSignalum", 1);
+    ItemStack lumium_gear = GameRegistry.findItemStack("ThermalFoundation", "gearLumium", 1);
+    ItemStack iron_gear = GameRegistry.findItemStack("ThermalFoundation", "gearIron", 1);
+    ItemStack nickel_gear = GameRegistry.findItemStack("ThermalFoundation", "gearNickel", 1);
+    ItemStack platinum_gear = GameRegistry.findItemStack("ThermalFoundation", "gearPlatinum", 1);
 
-    items[ITEM_LEAD_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearLead", 1);
-    items[ITEM_MITHRIL_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearMithril", 1);
-    items[ITEM_SIGNALUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearSignalum", 1);
-    items[ITEM_LUMIUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearLumium", 1);
-    items[ITEM_IRON_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearIron", 1);
-    items[ITEM_NICKEL_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearNickel", 1);
-    items[ITEM_PLATINUM_GEAR] = GameRegistry.findItemStack("ThermalFoundation", "gearPlatinum", 1);
-
-    VerifyItems();
-
+  
     if(is_loaded)
     {
       Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
@@ -156,7 +125,7 @@ public class ModIntegrationTF extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
-      MeltingRecipeManager.instance.AddRecipe(items[ITEM_PYROTHEUM], new FluidStack(liquid_pyrotheum, 250), 2500);
+      MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500);
 
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_enderium, 108),
@@ -183,17 +152,17 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(liquid_glowstone, 250)
             });
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_MITHRIL_INGOT], new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_MITHRIL_BLOCK], new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(mithril_ingot, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(mithril_block, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_INGOT], new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_BLOCK], new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(enderium_ingot, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(enderium_block, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_SIGNALUM_INGOT], new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_SIGNALUM_BLOCK], new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(signalum_ingot, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(signalum_block, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_INGOT], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_BLOCK], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(lumium_ingot, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(lumium_block, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
@@ -201,38 +170,38 @@ public class ModIntegrationTF extends ModIntegration
         Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
         Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
         ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_GEAR], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_GEAR], new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_SILVER_GEAR], new FluidStack(liquid_silver, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_GEAR], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_MITHRIL_GEAR], new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_SIGNALUM_GEAR], new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_GEAR], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_NICKEL_GEAR], new FluidStack(liquid_nickel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_PLATINUM_GEAR], new FluidStack(liquid_platinum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(invar_gear, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(electrum_gear, new FluidStack(liquid_electrum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(enderium_gear, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(silver_gear, new FluidStack(liquid_silver, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(lead_gear, new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(mithril_gear, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(signalum_gear, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(lumium_gear, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(nickel_gear, new FluidStack(liquid_nickel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(platinum_gear, new FluidStack(liquid_platinum, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
         
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_INVAR_GEAR], new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUM_GEAR], new FluidStack(liquid_electrum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_GOLD_GEAR], new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_ENDERIUM_GEAR], new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_SILVER_GEAR], new FluidStack(liquid_silver, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_LEAD_GEAR], new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_MITHRIL_GEAR], new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_SIGNALUM_GEAR], new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_GEAR], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_NICKEL_GEAR], new FluidStack(liquid_nickel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_PLATINUM_GEAR], new FluidStack(liquid_platinum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(invar_gear, new FluidStack(liquid_invar, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(electrum_gear, new FluidStack(liquid_electrum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(enderium_gear, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(silver_gear, new FluidStack(liquid_silver, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(lead_gear, new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(mithril_gear, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(signalum_gear, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(lumium_gear, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(nickel_gear, new FluidStack(liquid_nickel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(platinum_gear, new FluidStack(liquid_platinum, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
       }
     }
   }

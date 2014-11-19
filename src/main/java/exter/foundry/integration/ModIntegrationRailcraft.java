@@ -19,21 +19,6 @@ import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationRailcraft extends ModIntegration
 {
-  static public final int ITEM_STEEL_PICKAXE = 0;
-  static public final int ITEM_STEEL_AXE = 1;
-  static public final int ITEM_STEEL_SHOVEL = 2;
-  static public final int ITEM_STEEL_HOE = 3;
-  static public final int ITEM_STEEL_SWORD = 4;
-
-  static public final int ITEM_STEEL_HELMET = 5;
-  static public final int ITEM_STEEL_CHESTPLATE = 6;
-  static public final int ITEM_STEEL_LEGGINGS = 7;
-  static public final int ITEM_STEEL_BOOTS = 8;
-
-  static public final int ITEM_IRON_GEAR = 9;
-  static public final int ITEM_STEEL_GEAR = 10;
-  static public final int ITEM_COAL_COKE = 11;
-  static public final int ITEM_COAL_COKE_BLOCK = 12;
 
   public boolean gear_recipes;
 
@@ -53,23 +38,21 @@ public class ModIntegrationRailcraft extends ModIntegration
   @Override
   public void OnInit()
   {
-    items = new ItemStack[13];
+    ItemStack steel_pickaxe = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
+    ItemStack steel_axe = GameRegistry.findItemStack("Railcraft", "tool.steel.axe", 1);
+    ItemStack steel_shovel = GameRegistry.findItemStack("Railcraft", "tool.steel.shovel", 1);
+    ItemStack steel_hoe = GameRegistry.findItemStack("Railcraft", "tool.steel.hoe", 1);
+    ItemStack steel_sword = GameRegistry.findItemStack("Railcraft", "tool.steel.sword", 1);
 
-    items[ITEM_STEEL_PICKAXE] = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
-    items[ITEM_STEEL_AXE] = GameRegistry.findItemStack("Railcraft", "tool.steel.axe", 1);
-    items[ITEM_STEEL_SHOVEL] = GameRegistry.findItemStack("Railcraft", "tool.steel.shovel", 1);
-    items[ITEM_STEEL_HOE] = GameRegistry.findItemStack("Railcraft", "tool.steel.hoe", 1);
-    items[ITEM_STEEL_SWORD] = GameRegistry.findItemStack("Railcraft", "tool.steel.sword", 1);
+    ItemStack steel_helmet = GameRegistry.findItemStack("Railcraft", "armor.steel.helmet", 1);
+    ItemStack steel_chestplate = GameRegistry.findItemStack("Railcraft", "armor.steel.plate", 1);
+    ItemStack steel_leggings = GameRegistry.findItemStack("Railcraft", "armor.steel.legs", 1);
+    ItemStack steel_boots = GameRegistry.findItemStack("Railcraft", "armor.steel.boots", 1);
 
-    items[ITEM_STEEL_HELMET] = GameRegistry.findItemStack("Railcraft", "armor.steel.helmet", 1);
-    items[ITEM_STEEL_CHESTPLATE] = GameRegistry.findItemStack("Railcraft", "armor.steel.plate", 1);
-    items[ITEM_STEEL_LEGGINGS] = GameRegistry.findItemStack("Railcraft", "armor.steel.legs", 1);
-    items[ITEM_STEEL_BOOTS] = GameRegistry.findItemStack("Railcraft", "armor.steel.boots", 1);
+    ItemStack iron_gear = GameRegistry.findItemStack("Railcraft", "part.gear.iron", 1);
+    ItemStack steel_gear = GameRegistry.findItemStack("Railcraft", "part.gear.steel", 1);
 
-    items[ITEM_IRON_GEAR] = GameRegistry.findItemStack("Railcraft", "part.gear.iron", 1);
-    items[ITEM_STEEL_GEAR] = GameRegistry.findItemStack("Railcraft", "part.gear.steel", 1);
-    items[ITEM_COAL_COKE] = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
-    items[ITEM_COAL_COKE_BLOCK] = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
+
 
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
@@ -91,55 +74,55 @@ public class ModIntegrationRailcraft extends ModIntegration
       ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
       ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
 
-      if(items[ITEM_STEEL_CHESTPLATE] != null)
+      if(steel_chestplate != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_CHESTPLATE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, items[ITEM_STEEL_CHESTPLATE]);
+        CastingRecipeManager.instance.AddRecipe(steel_chestplate, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, steel_chestplate);
       }
-      if(items[ITEM_STEEL_PICKAXE] != null)
+      if(steel_pickaxe != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_PICKAXE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, items[ITEM_STEEL_PICKAXE]);
+        CastingRecipeManager.instance.AddRecipe(steel_pickaxe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, steel_pickaxe);
       }
-      if(items[ITEM_STEEL_AXE] != null)
+      if(steel_axe != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_AXE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, items[ITEM_STEEL_AXE]);
-      }
-
-      if(items[ITEM_STEEL_SHOVEL] != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_SHOVEL], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, items[ITEM_STEEL_SHOVEL]);
-      }
-      if(items[ITEM_STEEL_SWORD] != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_SWORD], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, items[ITEM_STEEL_SWORD]);
+        CastingRecipeManager.instance.AddRecipe(steel_axe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, steel_axe);
       }
 
-      if(items[ITEM_STEEL_HOE] != null)
+      if(steel_shovel != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_HOE], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, items[ITEM_STEEL_HOE]);
+        CastingRecipeManager.instance.AddRecipe(steel_shovel, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, steel_shovel);
+      }
+      if(steel_sword != null)
+      {
+        CastingRecipeManager.instance.AddRecipe(steel_sword, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, steel_sword);
       }
 
-      if(items[ITEM_STEEL_LEGGINGS] != null)
+      if(steel_hoe != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_LEGGINGS], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, items[ITEM_STEEL_LEGGINGS]);
+        CastingRecipeManager.instance.AddRecipe(steel_hoe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, steel_hoe);
       }
 
-      if(items[ITEM_STEEL_HELMET] != null)
+      if(steel_leggings != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_HELMET], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, items[ITEM_STEEL_HELMET]);
+        CastingRecipeManager.instance.AddRecipe(steel_leggings, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, steel_leggings);
       }
 
-      if(items[ITEM_STEEL_BOOTS] != null)
+      if(steel_helmet != null)
       {
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_BOOTS], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, items[ITEM_STEEL_BOOTS]);
+        CastingRecipeManager.instance.AddRecipe(steel_helmet, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, steel_helmet);
+      }
+
+      if(steel_boots != null)
+      {
+        CastingRecipeManager.instance.AddRecipe(steel_boots, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, steel_boots);
       }
     }
 
@@ -149,29 +132,29 @@ public class ModIntegrationRailcraft extends ModIntegration
     MeltingRecipeManager.instance.AddRecipe("orePoorTin", new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
     MeltingRecipeManager.instance.AddRecipe("orePoorGold", new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
     
-    if(items[ITEM_IRON_GEAR] != null)
+    if(iron_gear != null)
     {
-      FoundryMiscUtils.RegisterInOreDictionary("gearIron", items[ITEM_IRON_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearIron", iron_gear);
     }
-    if(items[ITEM_STEEL_GEAR] != null)
+    if(steel_gear != null)
     {
-      FoundryMiscUtils.RegisterInOreDictionary("gearSteel", items[ITEM_STEEL_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearSteel", steel_gear);
     }
 
 
     if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
     {
       ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
-      if(items[ITEM_IRON_GEAR] != null)
+      if(iron_gear != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_IRON_GEAR], new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
       }
 
-      if(items[ITEM_STEEL_GEAR] != null)
+      if(steel_gear != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_GEAR], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_STEEL_GEAR], new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        MeltingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        CastingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
       }
     }
   }
@@ -180,17 +163,17 @@ public class ModIntegrationRailcraft extends ModIntegration
   @Override
   public void OnPostInit()
   {
-    items[ITEM_COAL_COKE] = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
-    items[ITEM_COAL_COKE_BLOCK] = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
+    ItemStack coal_coke = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
+    ItemStack coal_coke_block = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
 
-    if(items[ITEM_COAL_COKE] != null)
+    if(coal_coke != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), items[ITEM_COAL_COKE], 110000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), coal_coke, 110000);
     }
     
-    if(items[ITEM_COAL_COKE_BLOCK] != null)
+    if(coal_coke_block != null)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), items[ITEM_COAL_COKE_BLOCK], 880000);
+      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), coal_coke_block, 880000);
     }
   }
 }

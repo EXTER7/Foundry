@@ -7,7 +7,6 @@ import java.util.Map;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public abstract class ModIntegration
@@ -17,21 +16,6 @@ public abstract class ModIntegration
   public final String Name;
   
   protected boolean is_loaded;
-  
-  protected ItemStack[] items;
-  
-  protected void VerifyItems()
-  {
-    int i;
-    for(i = 0; i < items.length; i++)
-    {
-      if(items[i] == null || items[i].getItem() == null)
-      {
-        ModFoundry.log.warn("Integration " + Name + ": item " + i + " is null.");
-        is_loaded = false;
-      }
-    }
-  }
   
   public ModIntegration(String mod_name)
   {
@@ -64,11 +48,6 @@ public abstract class ModIntegration
   public final boolean IsLoaded()
   {
     return is_loaded;
-  }
-  
-  public final ItemStack GetItem(int index)
-  {
-    return items[index];
   }
   
   static final public ModIntegration GetIntegration(String name)

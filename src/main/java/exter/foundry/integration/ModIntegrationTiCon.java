@@ -34,8 +34,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTiCon extends ModIntegration
 {
-  static public final int ITEM_INGOT_CAST = 0;
-  
+
   private Map<String,String> liquid_map;
   static private final int GCD(int a, int b)
   {
@@ -110,9 +109,8 @@ public class ModIntegrationTiCon extends ModIntegration
       is_loaded = false;
       return;
     }
-    items = new ItemStack[1];
 
-    items[ITEM_INGOT_CAST] = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
+    ItemStack ingot_cast = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
     
     liquid_map = new HashMap<String,String>();
     liquid_map.put("iron.molten","Iron");
@@ -209,7 +207,7 @@ public class ModIntegrationTiCon extends ModIntegration
               LiquidMetalRegistry.instance.GetFluid(mapped),
               casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
         }
-        if(casting.cast.isItemEqual(items[ITEM_INGOT_CAST]))
+        if(casting.cast.isItemEqual(ingot_cast))
         {
           ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
           if(casting.castingMetal.amount <= 6000)

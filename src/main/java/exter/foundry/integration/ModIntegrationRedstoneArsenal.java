@@ -17,10 +17,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationRedstoneArsenal extends ModIntegration
 {
-  
-  static public final int ITEM_ELECTRUMFLUX_INGOT = 0;
-  static public final int ITEM_ELECTRUMFLUX_BLOCK = 1;
-  
   public ModIntegrationRedstoneArsenal(String mod_name)
   {
     super(mod_name);
@@ -50,12 +46,9 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       return;
     }
 
-    items = new ItemStack[2];
 
-    items[ITEM_ELECTRUMFLUX_INGOT] = GameRegistry.findItemStack("RedstoneArsenal", "ingotElectrumFlux", 1);
-    items[ITEM_ELECTRUMFLUX_BLOCK] = GameRegistry.findItemStack("RedstoneArsenal", "blockElectrumFlux", 1);
-
-    VerifyItems();
+    ItemStack electrumflux_ingot = GameRegistry.findItemStack("RedstoneArsenal", "ingotElectrumFlux", 1);
+    ItemStack electrumflux_block = GameRegistry.findItemStack("RedstoneArsenal", "blockElectrumFlux", 1);
 
     if(is_loaded)
     {
@@ -65,16 +58,25 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
       Fluid liquid_electrumflux = LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
 
-      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 27), new FluidStack[] { new FluidStack(liquid_electrum, 27), new FluidStack(liquid_redstone, 50) });
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_electrumflux, 27),
+          new FluidStack[] {
+            new FluidStack(liquid_electrum, 27),
+            new FluidStack(liquid_redstone, 50) });
 
-      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_electrumflux, 54), new FluidStack[] { new FluidStack(liquid_gold, 27), new FluidStack(liquid_silver, 27), new FluidStack(liquid_redstone, 100) });
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_electrumflux, 54),
+          new FluidStack[] {
+            new FluidStack(liquid_gold, 27),
+            new FluidStack(liquid_silver, 27),
+            new FluidStack(liquid_redstone, 100) });
 
     
       ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
       ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
       
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_INGOT], new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(items[ITEM_ELECTRUMFLUX_BLOCK], new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.AddRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.AddRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
     }
   }

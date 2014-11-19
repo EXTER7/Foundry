@@ -17,10 +17,7 @@ import exter.foundry.util.FoundryMiscUtils;
 
 public class ModIntegrationForestry extends ModIntegration
 {
-  static public final int ITEM_COPPER_GEAR = 0;
-  static public final int ITEM_TIN_GEAR = 1;
-  static public final int ITEM_BRONZE_GEAR = 2;
-
+  
   public boolean gear_recipes;
   
   public ModIntegrationForestry(String mod_name)
@@ -48,17 +45,15 @@ public class ModIntegrationForestry extends ModIntegration
       return;
     }
 
-    items = new ItemStack[3];
-    items[ITEM_COPPER_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearCopper"));
-    items[ITEM_TIN_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearTin"));
-    items[ITEM_BRONZE_GEAR] = new ItemStack(GameRegistry.findItem("Forestry","gearBronze"));
-    VerifyItems();
+    ItemStack copper_gear = new ItemStack(GameRegistry.findItem("Forestry","gearCopper"));
+    ItemStack tin_gear = new ItemStack(GameRegistry.findItem("Forestry","gearTin"));
+    ItemStack bronze_gear = new ItemStack(GameRegistry.findItem("Forestry","gearBronze"));
 
     if(is_loaded)
     {
-      FoundryMiscUtils.RegisterInOreDictionary("gearCopper",items[ITEM_COPPER_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearTin",items[ITEM_TIN_GEAR]);
-      FoundryMiscUtils.RegisterInOreDictionary("gearBronze",items[ITEM_BRONZE_GEAR]);
+      FoundryMiscUtils.RegisterInOreDictionary("gearCopper",copper_gear);
+      FoundryMiscUtils.RegisterInOreDictionary("gearTin",tin_gear);
+      FoundryMiscUtils.RegisterInOreDictionary("gearBronze",bronze_gear);
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
@@ -66,13 +61,13 @@ public class ModIntegrationForestry extends ModIntegration
         Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
 
         ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_COPPER_GEAR], new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_TIN_GEAR], new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(items[ITEM_BRONZE_GEAR], new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

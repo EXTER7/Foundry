@@ -78,7 +78,7 @@ public class RendererItemContainer implements IItemRenderer
   {
     ItemRefractoryFluidContainer item = (ItemRefractoryFluidContainer) stack.getItem();
     FluidStack fluid_stack = item.getFluid(stack);
-
+    GL11.glEnable(GL11.GL_BLEND);
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid_stack != null)
     {
@@ -109,6 +109,7 @@ public class RendererItemContainer implements IItemRenderer
         }
       }
     }
+    GL11.glEnable(GL11.GL_BLEND);
     renderItem.renderIcon(0, 0, item.icon_fg, 16, 16);
   }
 }

@@ -124,6 +124,7 @@ public class GuiMaterialRouter extends GuiFoundry
   {
     if(name.equals("_Any"))
     {
+      GL11.glEnable(GL11.GL_BLEND);
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
@@ -135,6 +136,7 @@ public class GuiMaterialRouter extends GuiFoundry
   {
     if(name.equals("_Any"))
     {
+      GL11.glEnable(GL11.GL_BLEND);
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
@@ -287,6 +289,8 @@ public class GuiMaterialRouter extends GuiFoundry
     int material_scroll = te_router.gui_material_scroll;
     int type_scroll = te_router.gui_type_scroll;
     
+    GL11.glEnable(GL11.GL_BLEND);
+    
     if(selected_material >= material_scroll && selected_material < material_scroll + 8)
     {
       int index = selected_material - material_scroll;
@@ -312,6 +316,8 @@ public class GuiMaterialRouter extends GuiFoundry
       int y = 49 + i * 17;
       DrawMaterialIcon(window_x + 29,window_y + y,r.material);
       DrawTypeIcon(window_x + 46,window_y + y,r.type);
+      GL11.glEnable(GL11.GL_BLEND);
+      
       drawTexturedModalRect(window_x + 63, window_y + y, 200, r.side.index * 16, 16, 16);
       drawTexturedModalRect(window_x + 81, window_y + y + 4, 234, 194, 8, 8);
     }

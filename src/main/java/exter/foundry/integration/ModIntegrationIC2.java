@@ -53,6 +53,8 @@ public class ModIntegrationIC2 extends ModIntegration
   @Override
   public void OnClientPostInit()
   {
+    MaterialRegistry.instance.RegisterTypeIcon("Casing", ItemStack.copyItemStack(IC2Items.getItem("casingcopper")));  
+    MaterialRegistry.instance.RegisterTypeIcon("Cable", ItemStack.copyItemStack(IC2Items.getItem("copperCableItem")));
   }
 
   @Override

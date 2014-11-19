@@ -4,7 +4,6 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemFoundryComponent;
@@ -38,8 +37,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    Fluid liquid_thaumium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Thaumium", 1850, 14);
-    FoundryUtils.RegisterBasicMeltingRecipes("Thaumium", liquid_thaumium);
+
   }
 
   @Override

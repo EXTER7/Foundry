@@ -44,14 +44,6 @@ public class ModIntegrationGregtech extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    Map<String,Fluid> fluids = new HashMap<String,Fluid>();
-    fluids.put("StainlessSteel",LiquidMetalRegistry.instance.RegisterLiquidMetal( "StainlessSteel", 1900, 15));
-    fluids.put("Kanthal",LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kanthal", 1900, 15));
-    fluids.put("Nichrome",LiquidMetalRegistry.instance.RegisterLiquidMetal( "Nichrome", 1950, 15));
-    for(Map.Entry<String, Fluid> entry:fluids.entrySet())
-    {
-      FoundryUtils.RegisterBasicMeltingRecipes(entry.getKey(), entry.getValue());
-    }
     change_recipes = config.get("integration", "gregtech.change_recipes", true).getBoolean(true);
   }
 

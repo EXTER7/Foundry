@@ -26,7 +26,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 1500, 14);
+
   }
 
 

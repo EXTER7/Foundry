@@ -73,7 +73,7 @@ public class FoundryRecipes
     liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Silver", 1250, 15);
     liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Cupronickel", 1750, 15);
-    
+
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aluminum", 1100, 15);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Chromium", 2200, 8);   
@@ -81,6 +81,19 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manganese", 1550, 15);   
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Titanium", 2000, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Rubber", 460, 0);
+
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "StainlessSteel", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kanthal", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Nichrome", 1950, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Mithril", 1950, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Signalum", 1400, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lumium", 2500, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 1500, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Thaumium", 1850, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manasteel", 1950, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
 
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {

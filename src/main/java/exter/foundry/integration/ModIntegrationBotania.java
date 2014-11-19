@@ -1,14 +1,10 @@
 package exter.foundry.integration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -34,14 +30,6 @@ public class ModIntegrationBotania extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    Map<String,Fluid> fluids = new HashMap<String,Fluid>();
-    fluids.put("Manasteel",LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manasteel", 1950, 15));
-    fluids.put("Terrasteel",LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15));
-    fluids.put("Elementium",LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15));
-    for(Map.Entry<String, Fluid> entry:fluids.entrySet())
-    {
-      FoundryUtils.RegisterBasicMeltingRecipes(entry.getKey(), entry.getValue());
-    }
   }
 
   @Override

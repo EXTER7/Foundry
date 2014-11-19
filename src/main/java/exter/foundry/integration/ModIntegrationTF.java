@@ -10,7 +10,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -32,15 +31,6 @@ public class ModIntegrationTF extends ModIntegration
   public void OnPreInit(Configuration config)
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
-
-    Fluid liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
-    FoundryUtils.RegisterBasicMeltingRecipes("Enderium", liquid_enderium);
-    Fluid liquid_mithril = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Mithril", 1950, 12);
-    FoundryUtils.RegisterBasicMeltingRecipes("Mithril", liquid_mithril);
-    Fluid liquid_signalum = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Signalum", 1400, 12);
-    FoundryUtils.RegisterBasicMeltingRecipes("Signalum", liquid_signalum);
-    Fluid liquid_lumium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lumium", 2500, 15);
-    FoundryUtils.RegisterBasicMeltingRecipes("Lumium", liquid_lumium);
   }
 
   @Override

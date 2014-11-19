@@ -91,7 +91,8 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
       Fluid liquid_lead = LiquidMetalRegistry.instance.GetFluid("Lead");
       Fluid liquid_invar = LiquidMetalRegistry.instance.GetFluid("Invar");
-      Fluid liquid_redstone = FluidRegistry.getFluid("redstone");
+      Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
+      Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_ender = FluidRegistry.getFluid("ender");
       Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
       Fluid liquid_coal = FluidRegistry.getFluid("coal");
@@ -106,9 +107,6 @@ public class ModIntegrationTF extends ModIntegration
       ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
-
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(liquid_redstone, 100), 1000);
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(liquid_redstone, 900), 1000);
 
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_ender, 250), 1500);
 
@@ -131,7 +129,15 @@ public class ModIntegrationTF extends ModIntegration
           new FluidStack[] {
             new FluidStack(liquid_copper, 81),
             new FluidStack(liquid_silver, 27),
-            new FluidStack(liquid_redstone, 250)
+            new FluidStack(destabilized_redstone, 250)
+            });
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_signalum, 4),
+          new FluidStack[] {
+            new FluidStack(liquid_copper, 3),
+            new FluidStack(liquid_silver, 4),
+            new FluidStack(liquid_redstone, 4)
             });
 
       AlloyMixerRecipeManager.instance.AddRecipe(

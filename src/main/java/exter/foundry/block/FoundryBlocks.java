@@ -251,6 +251,7 @@ public class FoundryBlocks
     block_stacks.put("Iron", new ItemStack(Blocks.iron_block));
     block_stacks.put("Gold", new ItemStack(Blocks.gold_block));
     block_stacks.put("Glass", new ItemStack(Blocks.glass));
+    block_stacks.put("Redstone", new ItemStack(Blocks.redstone_block));
     
 
     

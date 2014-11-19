@@ -124,6 +124,8 @@ public class ModFoundry
     OreDictionary.registerOre("ingotGold", Items.gold_ingot);
     OreDictionary.registerOre("blockGold", Blocks.gold_block);
     OreDictionary.registerOre("nuggetGold", Items.gold_nugget);
+    OreDictionary.registerOre("dustRedstone", Items.redstone);
+    OreDictionary.registerOre("blockRedstone", Blocks.redstone_block);
 
 
     FoundryConfig.Load(config);

@@ -95,7 +95,7 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Redstone", 1000, 8);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1800, 10);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1350, 10);
 
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {

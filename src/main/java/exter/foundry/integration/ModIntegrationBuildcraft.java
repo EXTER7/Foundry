@@ -18,6 +18,8 @@ public class ModIntegrationBuildcraft extends ModIntegration
   static public final int ITEM_IRON_GEAR = 0;
   static public final int ITEM_GOLD_GEAR = 1;
   
+  public boolean gear_recipes;
+  
   public ModIntegrationBuildcraft(String mod_name)
   {
     super(mod_name);
@@ -26,7 +28,7 @@ public class ModIntegrationBuildcraft extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
   }
 
   @Override
@@ -44,7 +46,7 @@ public class ModIntegrationBuildcraft extends ModIntegration
 
     if(is_loaded)
     {
-      if(!FoundryConfig.recipe_gear_useoredict)
+      if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
         Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");

@@ -20,6 +20,8 @@ public class ModIntegrationForestry extends ModIntegration
   static public final int ITEM_COPPER_GEAR = 0;
   static public final int ITEM_TIN_GEAR = 1;
   static public final int ITEM_BRONZE_GEAR = 2;
+
+  public boolean gear_recipes;
   
   public ModIntegrationForestry(String mod_name)
   {
@@ -29,7 +31,7 @@ public class ModIntegrationForestry extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    
+    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
   }
 
   @Override
@@ -57,7 +59,7 @@ public class ModIntegrationForestry extends ModIntegration
       FoundryMiscUtils.RegisterInOreDictionary("gearCopper",items[ITEM_COPPER_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearTin",items[ITEM_TIN_GEAR]);
       FoundryMiscUtils.RegisterInOreDictionary("gearBronze",items[ITEM_BRONZE_GEAR]);
-      if(!FoundryConfig.recipe_gear_useoredict)
+      if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
         Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");

@@ -49,6 +49,8 @@ public class ModIntegrationTF extends ModIntegration
   static public final int ITEM_NICKEL_GEAR = 22;
   static public final int ITEM_PLATINUM_GEAR = 23;
 
+  public boolean gear_recipes;
+  
   public ModIntegrationTF(String mod_name)
   {
     super(mod_name);
@@ -57,6 +59,8 @@ public class ModIntegrationTF extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
+    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
+
     Fluid liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
     FoundryUtils.RegisterBasicMeltingRecipes("Enderium", liquid_enderium);
     Fluid liquid_mithril = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Mithril", 1950, 12);
@@ -191,7 +195,7 @@ public class ModIntegrationTF extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_INGOT], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(items[ITEM_LUMIUM_BLOCK], new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      if(!FoundryConfig.recipe_gear_useoredict)
+      if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
         Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");

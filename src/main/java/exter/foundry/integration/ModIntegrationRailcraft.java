@@ -34,7 +34,8 @@ public class ModIntegrationRailcraft extends ModIntegration
   static public final int ITEM_STEEL_GEAR = 10;
   static public final int ITEM_COAL_COKE = 11;
   static public final int ITEM_COAL_COKE_BLOCK = 12;
-  
+
+  public boolean gear_recipes;
 
   public ModIntegrationRailcraft(String mod_name)
   {
@@ -45,7 +46,7 @@ public class ModIntegrationRailcraft extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
   }
 
 
@@ -158,7 +159,7 @@ public class ModIntegrationRailcraft extends ModIntegration
     }
 
 
-    if(!FoundryConfig.recipe_gear_useoredict)
+    if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
     {
       ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
       if(items[ITEM_IRON_GEAR] != null)

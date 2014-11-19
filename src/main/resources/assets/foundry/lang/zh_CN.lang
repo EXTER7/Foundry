@@ -44,6 +44,11 @@ fluid.liquidManasteel=液态魔力钢
 fluid.liquidTerrasteel=液态泰拉钢
 fluid.liquidElementium=液态源质钢
 fluid.liquidRubber=液态橡胶
+fluid.liquidMithril=液态秘银
+fluid.liquidSignalum=信素液
+fluid.liquidLumium=流明液
+fluid.liquidRedstone=液态红石
+fluid.liquidRedAlloy=液态红石合金
 
 router.material._Any=全部
 router.material.Aluminum=铝
@@ -95,6 +100,10 @@ router.material.Manasteel=魔力钢
 router.material.Terrasteel=泰拉钢
 router.material.Elementium=源质钢
 router.material.Rubber=橡胶
+router.material.Mithril=秘银
+router.material.Signalum=信素金属
+router.material.Lumium=流明金属
+router.material.RedAlloy=红石合金
 
 router.type._Any=全部
 router.type.Ore=矿石
@@ -188,7 +197,12 @@ tile.liquidThaumium.name=液态神秘锭
 tile.liquidManasteel.name=液态魔力钢
 tile.liquidTerrasteel.name=液态泰拉钢
 tile.liquidElementium.name=液态源质钢
-tile.liquidElementium.name=液态橡胶
+tile.liquidRubber.name=液态橡胶
+tile.liquidMithril.name=液态秘银
+tile.liquidSignalum.name=信素液
+tile.liquidLumium.name=流明液
+tile.liquidRedAlloy.name=液态红石合金
+tile.liquidRedstone.name=液态红石
 
 tile.machine.ICF.name=坩埚式感应炉
 tile.machine.Caster.name=金属铸造机

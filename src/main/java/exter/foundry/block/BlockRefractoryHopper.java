@@ -4,8 +4,10 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.ClientFoundryProxy;
+import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import net.minecraft.block.Block;
@@ -107,7 +109,7 @@ public class BlockRefractoryHopper extends BlockContainer
       return true;
     } else
     {
-      // TODO
+      player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_REFRACTORYHOPPER, world, x, y, z);
       return true;
     }
   }

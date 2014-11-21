@@ -158,6 +158,8 @@ public class FoundryBlocks
   public static BlockStairs[] block_metal_stairs;
   
   public static BlockAlloyFurnace block_alloy_furnace;
+  
+  public static BlockRefractoryHopper block_refractory_hopper;
 
   //All blocks mapped by the metal name.
   public static Map<String,ItemStack> block_stacks = new HashMap<String,ItemStack>();
@@ -218,12 +220,15 @@ public class FoundryBlocks
     block_metal2 = new BlockMetal2();
     block_ore = new BlockFoundryOre();
     block_alloy_furnace = new BlockAlloyFurnace();
+    block_refractory_hopper = new BlockRefractoryHopper();
+
     GameRegistry.registerBlock(block_refractory_casing, "refractoryCasing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "foundryMachine");
     GameRegistry.registerBlock(block_metal1, ItemBlockMulti.class, "blockFoundryMetal");
     GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockFoundryMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "blockFoundryOre");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
+    GameRegistry.registerBlock(block_refractory_hopper, "refractoryHopper");
 
     RegisterHalfSlabs(config);
     
@@ -263,6 +268,7 @@ public class FoundryBlocks
     ItemRegistry.instance.RegisterItem("blockMachineAlloyMixer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER));
     ItemRegistry.instance.RegisterItem("blockMachineInfuser", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER));
     ItemRegistry.instance.RegisterItem("blockMachineMaterialRouter", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER));
+    ItemRegistry.instance.RegisterItem("blockRefractoryHopper", new ItemStack(block_refractory_hopper));
 
     
     for(i = 0; i < BlockMetal1.METAL_NAMES.length; i++)

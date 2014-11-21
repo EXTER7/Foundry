@@ -212,6 +212,7 @@ tile.machine.AlloyMixer.name=Alloy Mixer
 tile.machine.Infuser.name=Metal Infuser
 tile.machine.MaterialRouter.name=Material Router
 tile.alloyFurnace.name=Alloy Furnace
+tile.refractoryHopper.name=Refractory Hopper
 
 tile.metalBlock.Copper.name=Block of Copper
 tile.metalBlock.Tin.name=Block of Tin

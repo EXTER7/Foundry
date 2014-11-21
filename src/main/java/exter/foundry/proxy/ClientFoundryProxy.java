@@ -2,6 +2,7 @@ package exter.foundry.proxy;
 
 import java.util.List;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
@@ -9,6 +10,7 @@ import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.renderer.RendererItemContainer;
+import exter.foundry.renderer.RendererRefractoryHopper;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +21,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
 {
   static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
 
+  static public int hopper_renderer_id;
+  
   @Override
   public void PreInit()
   {
@@ -37,6 +41,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + ItemDye.field_150921_b/* icon_names */[i], SUBSTANCES_TEXTURE, 8, 0, ItemDye.field_150922_c/* colors */[i]);
     }
+    
+    
+    hopper_renderer_id = RenderingRegistry.getNextAvailableRenderId();
+    RenderingRegistry.registerBlockHandler(hopper_renderer_id,new RendererRefractoryHopper());
+    
     ModIntegration.ClientInit();
   }
 

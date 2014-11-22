@@ -385,13 +385,14 @@ public class FoundryRecipes
     ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack foundryclay_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
     ItemStack foundryclay8_stack = new ItemStack(FoundryItems.item_component,8,ItemFoundryComponent.COMPONENT_FOUNDRYCLAY);
-    ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
+    ItemStack refbrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
     ItemStack blankmold_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
     ItemStack comparator_stack = new ItemStack(Items.comparator);
     ItemStack diamond_stack = new ItemStack(Items.diamond);
+    ItemStack bucket_stack = new ItemStack(Items.bucket);
     
     GameRegistry.addRecipe(foundryclay8_stack,
         "CCC",
@@ -404,7 +405,7 @@ public class FoundryRecipes
 
     FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
         new ItemStack(FoundryItems.item_component, 1, ItemFoundryComponent.COMPONENT_FOUNDRYCLAY),
-        foundrybrick_stack, 0.0f);
+        refbrick_stack, 0.0f);
 
     GameRegistry.addRecipe(blankmold_stack,
         "CC",
@@ -419,7 +420,7 @@ public class FoundryRecipes
         "BGB",
         " T ",
         'T', "ingotTin",
-        'B', foundrybrick_stack,
+        'B', refbrick_stack,
         'G', glasspane_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
@@ -437,7 +438,7 @@ public class FoundryRecipes
         "B B",
         "IBI",
         'I', iron_stack, 'B',
-        foundrybrick_stack);
+        refbrick_stack);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_machine, 1, BlockFoundryMachine.MACHINE_ICF),
@@ -457,7 +458,7 @@ public class FoundryRecipes
         "HRH",
         'I', iron_stack, 
         'R', redstone_stack, 
-        'B', foundrybrick_stack,
+        'B', refbrick_stack,
         'C', casing_stack,
         'G', "gearStone",
         'H', heatingcoil_stack));
@@ -467,8 +468,16 @@ public class FoundryRecipes
         "BBB",
         "BFB",
         "BBB",
-        'B', foundrybrick_stack, 
+        'B', refbrick_stack, 
         'F', furnace_stack);
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryBlocks.block_refractory_hopper),
+        "R R",
+        "RBR",
+        " R ",
+        'R', refbrick_stack, 
+        'B', bucket_stack);
 
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
@@ -481,6 +490,7 @@ public class FoundryRecipes
         'C', casing_stack,
         'R', redstone_stack);
 
+    
     GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER),
         "GIG",
@@ -507,7 +517,7 @@ public class FoundryRecipes
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.brick));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.netherbrick));
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, foundrybrick_stack);
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, refbrick_stack);
     if(FoundryConfig.recipe_tools_armor)
     {
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.iron_chestplate,1,-1));

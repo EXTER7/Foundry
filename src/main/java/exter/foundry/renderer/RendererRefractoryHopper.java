@@ -114,7 +114,6 @@ public class RendererRefractoryHopper implements ISimpleBlockRenderingHandler
     double rx = 0.25D;
     double ry = 0.25D;
     rb.setRenderBounds(rx, ry, rx, 1.0D - rx, d0 - 0.002D, 1.0D - rx);
-
     if(item)
     {
       tessellator.startDrawingQuads();
@@ -146,10 +145,37 @@ public class RendererRefractoryHopper implements ISimpleBlockRenderingHandler
       rb.renderStandardBlock(hopper, x, y, z);
     }
 
-    if(!item)
+    double d1 = 0.375D;
+    double d2 = 0.25D;
+    if(item)
     {
-      double d1 = 0.375D;
-      double d2 = 0.25D;
+      rb.setRenderBounds(d1, 0.0D, d1, 1.0D - d1, 0.25D, 1.0D - d1);
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(1.0F, 0.0F, 0.0F);
+      rb.renderFaceXPos(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside);
+      tessellator.draw();
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+      rb.renderFaceXNeg(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside);
+      tessellator.draw();
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(0.0F, 0.0F, 1.0F);
+      rb.renderFaceZPos(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside);
+      tessellator.draw();
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(0.0F, 0.0F, -1.0F);
+      rb.renderFaceZNeg(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside);
+      tessellator.draw();
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(0.0F, 1.0F, 0.0F);
+      rb.renderFaceYPos(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside);
+      tessellator.draw();
+      tessellator.startDrawingQuads();
+      tessellator.setNormal(0.0F, -1.0F, 0.0F);
+      rb.renderFaceYNeg(hopper, 0.0D, 0.0D, 0.0D, hopper.icon_outside_bottom);
+      tessellator.draw();
+    } else
+    {
       rb.setOverrideBlockTexture(hopper.icon_outside_bottom);
 
       switch(side)

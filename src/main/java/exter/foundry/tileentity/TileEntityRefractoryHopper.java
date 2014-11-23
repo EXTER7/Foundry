@@ -39,12 +39,13 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   private int next_fill;
 
   // Used by world draining system.
-  private boolean[] visited;
+  private int top_y;
+  private int[] distance;
   private boolean[] isfluid;
 
   public TileEntityRefractoryHopper()
   {
-    visited = new boolean[41 * 20 * 41];
+    distance = new int[41 * 20 * 41];
     isfluid = new boolean[41 * 20 * 41];
     random = new Random();
     inventory = new ItemStack[2];
@@ -321,18 +322,22 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
   }
 
-  private void Visit(int x, int y, int z, List<Integer> queue, Fluid fluid)
+  private void Visit(int x, int y, int z,int dist, List<Integer> queue, Fluid fluid)
   {
     int i = x + (y + z * 20) * 41;
-    if(x >= 0 && x < 41 && y >= 0 && y < 20 && z >= 0 && z < 41 && !visited[i])
+    if(x >= 0 && x < 41 && y >= 0 && y < 20 && z >= 0 && z < 41 && distance[i] == 0)
     {
       FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + y + 1, zCoord + z - 20, false);
       if(todrain != null && todrain.getFluid() == fluid && tank.fill(todrain, false) == todrain.amount)
       {
-        queue.add(x | (y << 6) | (z << 11));
+        queue.add(i);
+        if(y > top_y)
+        {
+          top_y = y;
+        }
         isfluid[i] = true;
       }
-      visited[i] = true;
+      distance[i] = dist;
     }
   }
 
@@ -345,14 +350,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     {
       next_world_drain = 300;
 
-      int x;
-      int y;
-      int z;
-      for(x = 0; x < 41 * 20 * 41; x++)
-      {
-        visited[x] = false;
-        isfluid[x] = false;
-      }
 
       FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord, yCoord + 1, zCoord, false);
 
@@ -362,54 +359,69 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
         if(!drainfluid.isGaseous(todrain) && drainfluid.getDensity(todrain) > 0)
         {
           // Find all the valid fluid blocks in range
+          int x;
+          int z;
+          for(x = 0; x < 41 * 20 * 41; x++)
+          {
+            distance[x] = 0;
+            isfluid[x] = false;
+          }
+
           List<Integer> queue = new ArrayList<Integer>();
-          queue.add(20 | 20 << 11);
+          int i = 20 + (20 * 20) * 41;
+          distance[i] = 1;
+          isfluid[i] = true;
+          top_y = 0;
+          queue.add(i);
+          int dist = 2;
           do
           {
             List<Integer> newqueue = new ArrayList<Integer>();
             for(int p : queue)
             {
-              int px = p & 63;
-              int py = (p >>> 6) & 31;
-              int pz = (p >>> 11) & 63;
-              Visit(px - 1, py, pz, newqueue, drainfluid);
-              Visit(px + 1, py, pz, newqueue, drainfluid);
-              Visit(px, py, pz - 1, newqueue, drainfluid);
-              Visit(px, py, pz + 1, newqueue, drainfluid);
-              Visit(px, py + 1, pz, newqueue, drainfluid);
+              int px = p % 41;
+              int py = (p / 41) % 20;
+              int pz = p / (41 * 20);
+              Visit(px - 1, py, pz, dist, newqueue, drainfluid);
+              Visit(px + 1, py, pz, dist, newqueue, drainfluid);
+              Visit(px, py, pz - 1, dist, newqueue, drainfluid);
+              Visit(px, py, pz + 1, dist, newqueue, drainfluid);
+              Visit(px, py + 1, pz, dist, newqueue, drainfluid);
             }
+            dist++;
             queue = newqueue;
           } while(!queue.isEmpty());
 
           // Find the top-most fluid blocks.
-          List<Integer> top = null;
-          for(y = 19; y >= 0; y--)
+          List<Integer> top = new ArrayList<Integer>();
+          dist = 0;
+          for(z = 0; z < 41; z++)
           {
-            for(z = 0; z < 41; z++)
+            for(x = 0; x < 41; x++)
             {
-              for(x = 0; x < 41; x++)
+              // Pick the furthests blocks on the top.
+              i = x + (top_y + z * 20) * 41;
+              if(isfluid[i])
               {
-                if(isfluid[x + (y + z * 20) * 41])
+                int d = distance[i];
+                if(d > dist)
                 {
-                  if(top == null)
-                  {
-                    top = new ArrayList<Integer>();
-                  }
+                  top.clear();
+                  top.add(x | z << 7);
+                  dist = d;
+                } else if(d == dist)
+                {
                   top.add(x | z << 7);
                 }
               }
             }
-            if(top != null)
-            {
-              //Drain a random block from the top.
-              int p = top.get(random.nextInt(top.size()));
-              int px = p & 127;
-              int pz = (p >>> 7);
-              todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + px - 20, yCoord + y + 1, zCoord + pz - 20, true);
-              tank.fill(todrain, true);
-              break;
-            }
           }
+          int s = top.size();
+          int p = top.get(s == 1 ? 0 : random.nextInt(s));
+          int px = p & 127;
+          int pz = (p >>> 7);
+          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + px - 20, yCoord + top_y + 1, zCoord + pz - 20, true);
+          tank.fill(todrain, true);
         }
       }
     }
@@ -420,7 +432,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
       // Drain from the top TileEntity
       TileEntity source = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
-      if(source instanceof IFluidHandler && !(source instanceof TileEntityRefractoryHopper))
+      if(source instanceof IFluidHandler)
       {
         IFluidHandler hsource = (IFluidHandler) source;
         FluidStack fs = tank.getFluid();

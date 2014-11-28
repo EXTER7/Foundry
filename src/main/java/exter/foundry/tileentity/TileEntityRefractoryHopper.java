@@ -1,8 +1,9 @@
 package exter.foundry.tileentity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.Set;
 
 import exter.foundry.block.BlockRefractoryHopper;
 import exter.foundry.container.ContainerRefractoryHopper;
@@ -23,8 +24,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISidedInventory, IFluidHandler
 {
 
-  private Random random;
-
   static private final int NETDATAID_TANK_FLUID = 0;
   static private final int NETDATAID_TANK_AMOUNT = 1;
 
@@ -39,15 +38,11 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   private int next_fill;
 
   // Used by world draining system.
-  private int top_y;
-  private int[] distance;
-  private boolean[] isfluid;
+  private boolean[] visited;
 
   public TileEntityRefractoryHopper()
   {
-    distance = new int[41 * 20 * 41];
-    isfluid = new boolean[41 * 20 * 41];
-    random = new Random();
+    visited = new boolean[41 * 20 * 41];
     inventory = new ItemStack[2];
 
     next_drain = 12;
@@ -322,25 +317,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
   }
 
-  private void Visit(int x, int y, int z,int dist, List<Integer> queue, Fluid fluid)
-  {
-    int i = x + (y + z * 20) * 41;
-    if(x >= 0 && x < 41 && y >= 0 && y < 20 && z >= 0 && z < 41 && distance[i] == 0)
-    {
-      FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + y + 1, zCoord + z - 20, false);
-      if(todrain != null && todrain.getFluid() == fluid && tank.fill(todrain, false) == todrain.amount)
-      {
-        queue.add(i);
-        if(y > top_y)
-        {
-          top_y = y;
-        }
-        isfluid[i] = true;
-      }
-      distance[i] = dist;
-    }
-  }
-
   @Override
   protected void UpdateEntityServer()
   {
@@ -356,71 +332,76 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       if(todrain != null && tank.fill(todrain, false) == todrain.amount)
       {
         Fluid drainfluid = todrain.getFluid();
-        if(!drainfluid.isGaseous(todrain) && drainfluid.getDensity(todrain) > 0)
+        if(!drainfluid.isGaseous(todrain) && drainfluid.getDensity(todrain) >= 0)
         {
-          // Find all the valid fluid blocks in range
-          int x;
-          int z;
-          for(x = 0; x < 41 * 20 * 41; x++)
+          int i;
+          for(i = 0; i < 41 * 20 * 41; i++)
           {
-            distance[x] = 0;
-            isfluid[x] = false;
+            visited[i] = false;
           }
 
           List<Integer> queue = new ArrayList<Integer>();
-          int i = 20 + (20 * 20) * 41;
-          distance[i] = 1;
-          isfluid[i] = true;
-          top_y = 0;
-          queue.add(i);
-          int dist = 2;
+          Set<Integer> newqueue = new HashSet<Integer>();
+          i = 20 + (20 * 20) * 41; // x = 20, y = 0, z = 20
+          visited[i] = true;
+          int top_y = 0;
+
+          queue.add(i - 1); // x - 1
+          queue.add(i + 1); // x + 1
+          queue.add(i - 20 * 41); // z - 1
+          queue.add(i + 20 * 41); // z + 1
+          queue.add(i + 41); // y + 1
+          int drainblock = i;
           do
           {
-            List<Integer> newqueue = new ArrayList<Integer>();
+            newqueue.clear();
             for(int p : queue)
             {
-              int px = p % 41;
-              int py = (p / 41) % 20;
-              int pz = p / (41 * 20);
-              Visit(px - 1, py, pz, dist, newqueue, drainfluid);
-              Visit(px + 1, py, pz, dist, newqueue, drainfluid);
-              Visit(px, py, pz - 1, dist, newqueue, drainfluid);
-              Visit(px, py, pz + 1, dist, newqueue, drainfluid);
-              Visit(px, py + 1, pz, dist, newqueue, drainfluid);
-            }
-            dist++;
-            queue = newqueue;
-          } while(!queue.isEmpty());
-
-          // Find the top-most fluid blocks.
-          List<Integer> top = new ArrayList<Integer>();
-          dist = 0;
-          for(z = 0; z < 41; z++)
-          {
-            for(x = 0; x < 41; x++)
-            {
-              // Pick the furthests blocks on the top.
-              i = x + (top_y + z * 20) * 41;
-              if(isfluid[i])
+              int x = p % 41;
+              int y = (p / 41) % 20;
+              int z = p / (41 * 20);
+              
+              todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + y + 1, zCoord + z - 20, false);
+              if(todrain != null && todrain.getFluid() == drainfluid && tank.fill(todrain, false) == todrain.amount)
               {
-                int d = distance[i];
-                if(d > dist)
+                if(y > top_y)
                 {
-                  top.clear();
-                  top.add(x | z << 7);
-                  dist = d;
-                } else if(d == dist)
+                  top_y = y;
+                }
+                if(y == top_y)
                 {
-                  top.add(x | z << 7);
+                  drainblock = p;
+                }
+                if(x > 0 && !visited[ p - 1])
+                {
+                  newqueue.add(p - 1); // x - 1
+                }
+                if(x < 40 && !visited[ p + 1])
+                {
+                  newqueue.add(p + 1); // x + 1
+                }
+                if(z > 0 && !visited[ p - 20 * 41])
+                {
+                  newqueue.add(p - 20 * 41); // z - 1
+                }
+                if(z < 40 && !visited[ p + 20 * 41])
+                {
+                  newqueue.add(p + 20 * 41); // z + 1
+                }
+                if(y < 19 && !visited[ p + 41])
+                {
+                  newqueue.add(p + 41); // y + 1
                 }
               }
+              visited[p] = true;
             }
-          }
-          int s = top.size();
-          int p = top.get(s == 1 ? 0 : random.nextInt(s));
-          int px = p & 127;
-          int pz = (p >>> 7);
-          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + px - 20, yCoord + top_y + 1, zCoord + pz - 20, true);
+            queue.clear();
+            queue.addAll(newqueue);
+          } while(!queue.isEmpty());
+
+          int x = drainblock % 41;
+          int z = drainblock / (41 * 20);
+          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + top_y + 1, zCoord + z - 20, true);
           tank.fill(todrain, true);
         }
       }

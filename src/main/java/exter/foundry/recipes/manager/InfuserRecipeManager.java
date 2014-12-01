@@ -135,4 +135,18 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   {
     return Collections.unmodifiableMap(substance_textures);
   }
+
+
+  @Override
+  public void RemoveRecipe(IInfuserRecipe recipe)
+  {
+    recipes.remove(recipe);
+  }
+
+
+  @Override
+  public void RemoveSubstanceRecipe(IInfuserSubstanceRecipe recipe)
+  {
+    substance_recipes.remove(recipe);
+  }
 }

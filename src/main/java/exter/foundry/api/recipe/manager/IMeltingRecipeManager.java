@@ -46,4 +46,9 @@ public interface IMeltingRecipeManager
    */
   public IMeltingRecipe FindRecipe(ItemStack item);
   
+  /**
+   * Removes a recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveRecipe(IMeltingRecipe recipe);
 }

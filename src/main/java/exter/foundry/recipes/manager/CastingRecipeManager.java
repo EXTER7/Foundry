@@ -86,4 +86,10 @@ public class CastingRecipeManager implements ICastingRecipeManager
   {
     return Collections.unmodifiableList(molds);
   }
+
+  @Override
+  public void RemoveRecipe(ICastingRecipe recipe)
+  {
+    recipes.remove(recipe);
+  }
 }

@@ -63,4 +63,9 @@ public interface ICastingRecipeManager
    */
   public boolean IsItemMold(ItemStack stack);
 
+  /**
+   * Removes a recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveRecipe(ICastingRecipe recipe);
 }

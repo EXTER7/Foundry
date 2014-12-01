@@ -60,4 +60,10 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
     return Collections.unmodifiableList(recipes);
   }
 
+  @Override
+  public void RemoveRecipe(IAlloyMixerRecipe recipe)
+  {
+    recipes.remove(recipe);
+  }
+
 }

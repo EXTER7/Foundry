@@ -30,4 +30,9 @@ public interface IAlloyMixerRecipeManager
    */
   public IAlloyMixerRecipe FindRecipe(FluidStack[] in,int[] order);
 
+  /**
+   * Removes a recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveRecipe(IAlloyMixerRecipe recipe);
 }

@@ -38,4 +38,10 @@ public interface IAlloyFurnaceRecipeManager
    */
   public IAlloyFurnaceRecipe FindRecipe(ItemStack in_a,ItemStack in_b);
 
+  
+  /**
+   * Removes a recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveRecipe(IAlloyFurnaceRecipe recipe);
 }

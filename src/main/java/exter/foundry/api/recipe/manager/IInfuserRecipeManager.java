@@ -87,4 +87,15 @@ public interface IInfuserRecipeManager
    */
   public IInfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item);
 
+  /**
+   * Removes a recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveRecipe(IInfuserRecipe recipe);
+
+  /**
+   * Removes a substance recipe.
+   * @param The recipe to remove.
+   */
+  public void RemoveSubstanceRecipe(IInfuserSubstanceRecipe recipe);
 }

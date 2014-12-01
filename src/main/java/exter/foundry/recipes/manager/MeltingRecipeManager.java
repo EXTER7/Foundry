@@ -62,5 +62,9 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
     return Collections.unmodifiableList(recipes);
   }
 
-
+  @Override
+  public void RemoveRecipe(IMeltingRecipe recipe)
+  {
+    recipes.remove(recipe);
+  }
 }

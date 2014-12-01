@@ -56,4 +56,10 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
       }
     }
   }
+
+  @Override
+  public void RemoveRecipe(IAlloyFurnaceRecipe recipe)
+  {
+    recipes.remove(recipe);    
+  }
 }

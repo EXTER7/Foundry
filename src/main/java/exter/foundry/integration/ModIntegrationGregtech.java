@@ -17,9 +17,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
@@ -35,6 +37,7 @@ import exter.foundry.util.FoundryMiscUtils;
 public class ModIntegrationGregtech extends ModIntegration
 {
   public boolean change_recipes;
+  public boolean change_aluminum;
   
   public ModIntegrationGregtech(String mod_name)
   {
@@ -45,12 +48,14 @@ public class ModIntegrationGregtech extends ModIntegration
   public void OnPreInit(Configuration config)
   {
     change_recipes = config.get("integration", "gregtech.change_recipes", true).getBoolean(true);
+    change_aluminum = config.get("integration", "gregtech.change_aluminum", true).getBoolean(true);
   }
 
   @Override
   public void OnInit()
   {
   }
+  
   
   @SuppressWarnings("unchecked")
   @Override
@@ -69,6 +74,34 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
+    if(change_aluminum)
+    {
+      Fluid liquid_aluminum = LiquidMetalRegistry.instance.GetFluid("Aluminum");
+      List<IMeltingRecipe> toremove = new ArrayList<IMeltingRecipe>();
+      for(IMeltingRecipe recipe:MeltingRecipeManager.instance.recipes)
+      {
+        Object input = recipe.GetInput();
+        Fluid fluid = recipe.GetOutput().getFluid();
+        if(fluid.getName().equals(liquid_aluminum.getName()) && input instanceof String)
+        {
+          String input_name = (String)input;
+          if(input_name.startsWith("ore") || input_name.startsWith("dust"))
+          {
+            toremove.add(recipe);
+          }
+        }
+      }
+      MeltingRecipeManager.instance.recipes.removeAll(toremove);
+      MeltingRecipeManager.instance.AddRecipe("oreAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("oreAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
+    }
+    
     if(change_recipes)
     {
       ItemStack heating_coil = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);

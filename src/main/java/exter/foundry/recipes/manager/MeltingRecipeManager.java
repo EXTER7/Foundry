@@ -12,7 +12,7 @@ import exter.foundry.recipes.MeltingRecipe;
 
 public class MeltingRecipeManager implements IMeltingRecipeManager
 {
-  private List<IMeltingRecipe> recipes;
+  public List<IMeltingRecipe> recipes;
   
   public static final MeltingRecipeManager instance = new MeltingRecipeManager();
 

@@ -691,8 +691,8 @@ public class FoundryRecipes
               base_amount = FoundryAPI.FLUID_AMOUNT_ORE;
               break;
             }
-            MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize));
           }
+          MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize));
         }
       }
     }

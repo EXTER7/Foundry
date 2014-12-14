@@ -1,5 +1,6 @@
 package exter.foundry.recipes;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
@@ -10,6 +11,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -20,6 +22,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
+import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
@@ -623,7 +626,6 @@ public class FoundryRecipes
       FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HELMET_SOFT,ItemMold.MOLD_HELMET);
       FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_SOFT,ItemMold.MOLD_BOOTS);
     }
-
   }
 
   static public void PostInit()
@@ -651,6 +653,46 @@ public class FoundryRecipes
         for(ItemStack item:OreDictionary.getOres(od_name))
         {
           MaterialRegistry.instance.RegisterItem(item, material.suffix, type.name);
+        }
+      }
+    }
+    
+    for(Object obj:FurnaceRecipes.smelting().getSmeltingList().entrySet())
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<Object, ItemStack> entry = (Map.Entry<Object, ItemStack>)obj;
+      Object key = entry.getKey();
+      ItemStack stack = null;
+      if(key instanceof Item)
+      {
+        stack = new ItemStack((Item)key);
+      } else if(key instanceof Block)
+      {
+        stack = new ItemStack((Block)key);
+      } else if(key instanceof ItemStack)
+      {
+        stack = ((ItemStack)key).copy();
+      }
+      
+      if(stack != null && MeltingRecipeManager.instance.FindRecipe(stack) == null)
+      {
+        ItemStack result = entry.getValue();
+        IMeltingRecipe recipe = MeltingRecipeManager.instance.FindRecipe(result);
+        if(recipe != null)
+        {
+          Fluid liquid_metal = recipe.GetOutput().getFluid();
+          int base_amount = recipe.GetOutput().amount;
+
+          int[] ids = OreDictionary.getOreIDs(stack);
+          for(int j : ids)
+          {
+            if(OreDictionary.getOreName(j).startsWith("ore"))
+            {
+              base_amount = FoundryAPI.FLUID_AMOUNT_ORE;
+              break;
+            }
+            MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize));
+          }
         }
       }
     }

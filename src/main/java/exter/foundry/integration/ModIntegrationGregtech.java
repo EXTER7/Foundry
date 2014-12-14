@@ -74,33 +74,6 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
-    if(change_aluminum)
-    {
-      Fluid liquid_aluminum = LiquidMetalRegistry.instance.GetFluid("Aluminum");
-      List<IMeltingRecipe> toremove = new ArrayList<IMeltingRecipe>();
-      for(IMeltingRecipe recipe:MeltingRecipeManager.instance.recipes)
-      {
-        Object input = recipe.GetInput();
-        Fluid fluid = recipe.GetOutput().getFluid();
-        if(fluid.getName().equals(liquid_aluminum.getName()) && input instanceof String)
-        {
-          String input_name = (String)input;
-          if(input_name.startsWith("ore") || input_name.startsWith("dust"))
-          {
-            toremove.add(recipe);
-          }
-        }
-      }
-      MeltingRecipeManager.instance.recipes.removeAll(toremove);
-      MeltingRecipeManager.instance.AddRecipe("oreAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("oreAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
-      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
-    }
     
     if(change_recipes)
     {
@@ -243,6 +216,33 @@ public class ModIntegrationGregtech extends ModIntegration
     RegisterMetalRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
     CastingRecipeManager.instance.AddRecipe("ingotRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
     CastingRecipeManager.instance.AddRecipe("blockRubber", new FluidStack(liquid_rubber,FoundryAPI.FLUID_AMOUNT_BLOCK), block_mold, null);
+
+    if(change_aluminum)
+    {
+      List<IMeltingRecipe> toremove = new ArrayList<IMeltingRecipe>();
+      for(IMeltingRecipe recipe:MeltingRecipeManager.instance.recipes)
+      {
+        Object input = recipe.GetInput();
+        Fluid fluid = recipe.GetOutput().getFluid();
+        if(fluid.getName().equals(liquid_aluminum.getName()) && input instanceof String)
+        {
+          String input_name = (String)input;
+          if(input_name.startsWith("ore") || input_name.startsWith("dust"))
+          {
+            toremove.add(recipe);
+          }
+        }
+      }
+      MeltingRecipeManager.instance.recipes.removeAll(toremove);
+      MeltingRecipeManager.instance.AddRecipe("oreAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("oreAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_ORE),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustSmallAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 4),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminum", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
+      MeltingRecipeManager.instance.AddRecipe("dustTinyAluminium", new FluidStack(liquid_aluminum,FoundryAPI.FLUID_AMOUNT_INGOT / 9),2000,80);
+    }
   }
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)

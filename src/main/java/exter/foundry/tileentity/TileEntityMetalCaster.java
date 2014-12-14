@@ -377,7 +377,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
       return;
     }
 
-    if(!current_recipe.MatchesRecipe(inventory[INVENTORY_MOLD], tank.getFluid()))
+    if(!current_recipe.MatchesRecipe(inventory[INVENTORY_MOLD], tank.getFluid(),inventory[INVENTORY_EXTRA]))
     {
       progress = -1;
       current_recipe = null;
@@ -425,7 +425,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     
     if(current_recipe == null)
     {
-      current_recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[INVENTORY_MOLD]);
+      current_recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[INVENTORY_MOLD],inventory[INVENTORY_EXTRA]);
       progress = -1;
     }
     

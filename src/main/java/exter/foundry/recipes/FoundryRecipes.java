@@ -197,6 +197,7 @@ public class FoundryRecipes
 
     ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
     ItemStack mold_cable_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CABLE_IC2);
+    ItemStack mold_insulated_cable_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INSULATED_CABLE_IC2);
     ItemStack mold_casing_ic2 = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CASING_IC2);
     ItemStack mold_slab = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_SLAB);
     ItemStack mold_stairs = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_STAIRS);
@@ -208,6 +209,7 @@ public class FoundryRecipes
     
     CastingRecipeManager.instance.AddMold(mold_ingot);
     CastingRecipeManager.instance.AddMold(mold_cable_ic2);
+    CastingRecipeManager.instance.AddMold(mold_insulated_cable_ic2);
     CastingRecipeManager.instance.AddMold(mold_casing_ic2);
     CastingRecipeManager.instance.AddMold(mold_slab);
     CastingRecipeManager.instance.AddMold(mold_stairs);

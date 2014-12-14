@@ -26,7 +26,14 @@ public class CastingRecipeManager implements ICastingRecipeManager
   @Override
   public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
   {
-    recipes.add(new CastingRecipe(result,in_fluid,in_mold,in_extra,cast_speed));
+    ICastingRecipe recipe = new CastingRecipe(result,in_fluid,in_mold,in_extra,cast_speed);
+    if(recipe.RequiresExtra())
+    {
+      recipes.add(0,recipe);
+    } else
+    {
+      recipes.add(recipe);
+    }
   }
 
   @Override
@@ -36,7 +43,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold)
+  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold,ItemStack extra)
   {
     if(mold == null || fluid == null || fluid.amount == 0)
     {
@@ -44,7 +51,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
     }
     for(ICastingRecipe cr:recipes)
     {
-      if(cr.MatchesRecipe(mold, fluid))
+      if(cr.MatchesRecipe(mold, fluid, extra))
       {
         return cr;
       }

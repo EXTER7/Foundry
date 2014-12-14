@@ -130,13 +130,14 @@ public class CastingRecipe implements ICastingRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack)
+  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack in_extra)
   {
     if(GetOutputItem() == null)
     {
       return false;
     }
-    return fluid_stack != null && fluid_stack.containsFluid(fluid) && mold_stack != null && mold.isItemEqual(mold_stack) && ItemStack.areItemStackTagsEqual(mold, mold_stack);
+    return fluid_stack != null && fluid_stack.containsFluid(fluid) && mold_stack != null && mold.isItemEqual(mold_stack) && ItemStack.areItemStackTagsEqual(mold, mold_stack)
+        && (extra == null || (FoundryUtils.IsItemMatch(in_extra, extra) && in_extra.stackSize >= FoundryUtils.GetStackSize(in_extra)));
   }
 
   @Override

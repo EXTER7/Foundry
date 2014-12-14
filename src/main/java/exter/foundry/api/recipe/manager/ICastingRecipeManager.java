@@ -54,7 +54,7 @@ public interface ICastingRecipeManager
    * @param mold Mold used by the recipe.
    * @return The casting recipe, or null if no matching recipe.
    */
-  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold);
+  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold,ItemStack extra);
 
   /**
    * Check if an item is registered as a mold.

@@ -416,20 +416,16 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       if(source instanceof IFluidHandler)
       {
         IFluidHandler hsource = (IFluidHandler) source;
-        FluidStack fs = tank.getFluid();
-        if(hsource.canDrain(ForgeDirection.DOWN, fs == null ? null : fs.getFluid()))
+        FluidStack drained = hsource.drain(ForgeDirection.DOWN, 40, false);
+        if(drained != null && !drained.getFluid().isGaseous(drained) && drained.getFluid().getDensity(drained) > 0)
         {
-          FluidStack drained = hsource.drain(ForgeDirection.DOWN, 40, false);
-          if(drained != null && !drained.getFluid().isGaseous(drained) && drained.getFluid().getDensity(drained) > 0)
+          drained.amount = tank.fill(drained, false);
+          if(drained.amount > 0)
           {
-            drained.amount = tank.fill(drained, false);
-            if(drained.amount > 0)
-            {
-              hsource.drain(ForgeDirection.DOWN, drained, true);
-              tank.fill(drained, true);
-              UpdateTank(0);
-              markDirty();
-            }
+            hsource.drain(ForgeDirection.DOWN, drained, true);
+            tank.fill(drained, true);
+            UpdateTank(0);
+             markDirty();
           }
         }
       }

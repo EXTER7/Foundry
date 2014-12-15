@@ -694,7 +694,7 @@ public class FoundryRecipes
               break;
             }
           }
-          MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize));
+          MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize),recipe.GetMeltingPoint(),recipe.GetMeltingSpeed());
         }
       }
     }

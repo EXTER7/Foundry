@@ -1,7 +1,7 @@
 package exter.foundry.tileentity;
 
 
-import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
@@ -16,7 +16,7 @@ import cpw.mods.fml.common.Optional;
  * Base class for all machines.
  */
 @Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2")
-public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyHandler,IEnergySink
+public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyReceiver,IEnergySink
 {
   private boolean added_enet;
   protected boolean update_energy;
@@ -158,12 +158,6 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
   {
     return ReceiveRF(maxReceive, !simulate);
-  }
-
-  @Override
-  public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
-  {
-    return 0;
   }
 
   @Override

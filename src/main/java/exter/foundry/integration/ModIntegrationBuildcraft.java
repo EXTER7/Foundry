@@ -1,5 +1,6 @@
 package exter.foundry.integration;
 
+import cpw.mods.fml.common.Loader;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -37,6 +38,11 @@ public class ModIntegrationBuildcraft extends ModIntegration
   @Override
   public void OnPostInit()
   {
+    if(!Loader.isModLoaded("BuildCraft|Core"))
+    {
+      is_loaded = false;
+      return;
+    }
     ItemStack iron_gear = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearIron");
     ItemStack gold_gear = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearGold");
 

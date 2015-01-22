@@ -39,8 +39,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void OnPostInit()
   {
-    ModIntegration te3 = GetIntegration("te4");
-    if(!Loader.isModLoaded("RedstoneArsenal") || te3 == null || !te3.is_loaded)
+    ModIntegration mod_tf = GetIntegration("tf");
+    if(!Loader.isModLoaded("RedstoneArsenal") || mod_tf == null || !mod_tf.is_loaded)
     {
       is_loaded = false;
       return;

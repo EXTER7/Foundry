@@ -21,6 +21,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 public class ModIntegrationTF extends ModIntegration
 {
   public boolean gear_recipes;
+  public boolean override_redstone_melting;
   
   public ModIntegrationTF(String mod_name)
   {
@@ -31,6 +32,7 @@ public class ModIntegrationTF extends ModIntegration
   public void OnPreInit(Configuration config)
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
+    override_redstone_melting = config.get("integration", Name + ".override_redstone_melting", true).getBoolean(true);
   }
 
   @Override
@@ -66,6 +68,7 @@ public class ModIntegrationTF extends ModIntegration
     ItemStack lumium_block = GameRegistry.findItemStack("ThermalFoundation", "blockLumium", 1);
 
     ItemStack pyrotheum = GameRegistry.findItemStack("ThermalFoundation", "dustPyrotheum", 1);
+    ItemStack cryotheum = GameRegistry.findItemStack("ThermalFoundation", "dustCryotheum", 1);
 
     ItemStack bronze_gear = GameRegistry.findItemStack("ThermalFoundation", "gearBronze", 1);
     ItemStack gold_gear = GameRegistry.findItemStack("ThermalFoundation", "gearGold", 1);
@@ -97,6 +100,7 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
       Fluid liquid_coal = FluidRegistry.getFluid("coal");
       Fluid liquid_pyrotheum = FluidRegistry.getFluid("pyrotheum");
+      Fluid liquid_cryotheum = FluidRegistry.getFluid("cryotheum");
 
       Fluid liquid_mithril = LiquidMetalRegistry.instance.GetFluid("Mithril");
       Fluid liquid_enderium = LiquidMetalRegistry.instance.GetFluid("Enderium");
@@ -114,7 +118,16 @@ public class ModIntegrationTF extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
       MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500);
+      MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 100), 320, 25);
 
+      if(override_redstone_melting)
+      {
+        MeltingRecipeManager.instance.RemoveRecipe(MeltingRecipeManager.instance.FindRecipe(new ItemStack(Items.redstone)));
+        MeltingRecipeManager.instance.RemoveRecipe(MeltingRecipeManager.instance.FindRecipe(new ItemStack(Blocks.redstone_block)));
+        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100), 1000);
+        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), 1000);
+      }
+      
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_enderium, 108),
           new FluidStack[] {
@@ -148,6 +161,8 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(liquid_glowstone, 250)
             });
 
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), mold_block, null);
+
       CastingRecipeManager.instance.AddRecipe(mithril_ingot, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(mithril_block, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
@@ -160,6 +175,8 @@ public class ModIntegrationTF extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(lumium_ingot, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(lumium_block, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
+      
+      
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");

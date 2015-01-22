@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -161,6 +162,7 @@ public class ModIntegrationGregtech extends ModIntegration
     Fluid liquid_kanthal = LiquidMetalRegistry.instance.GetFluid("Kanthal");
     Fluid liquid_nichrome = LiquidMetalRegistry.instance.GetFluid("Nichrome");
 
+    Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
 
     AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_stainless_steel,18),
         new FluidStack[] {
@@ -175,6 +177,15 @@ public class ModIntegrationGregtech extends ModIntegration
           new FluidStack(liquid_copper,1),
           new FluidStack(liquid_redstone,4)
     });
+
+    if(destabilized_redstone != null)
+    {
+      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_redalloy,1),
+          new FluidStack[] {
+            new FluidStack(liquid_copper,27),
+            new FluidStack(destabilized_redstone,100)
+      });
+    };
 
     /*
     AlloyRecipeManager.instance.AddRecipe(new FluidStack(liquid_kanthal,12),

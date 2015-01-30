@@ -1,5 +1,7 @@
 package exter.foundry.material;
 
+import exter.foundry.registry.LiquidMetalRegistry;
+
 public class OreDictMaterial
 {
   
@@ -64,6 +66,17 @@ public class OreDictMaterial
     new OreDictMaterial("Atlarus","ingot"),
     new OreDictMaterial("Rubracium","ingot"),
     new OreDictMaterial("Haderoth","ingot"),
-    new OreDictMaterial("Tartarite","ingot")
+    new OreDictMaterial("Tartarite","ingot"),
+    new OreDictMaterial( "Midasium", "ingot"),
+    new OreDictMaterial( "DamascusSteel", "ingot"),
+    new OreDictMaterial( "Angmallen", "ingot"),
+    new OreDictMaterial( "Quicksilver", "ingot"),
+    new OreDictMaterial( "Orichalcum", "ingot"),
+    new OreDictMaterial( "Celenegil", "ingot"),
+    new OreDictMaterial( "Vyroxeres", "ingot"),
+    new OreDictMaterial( "Sanguinite", "ingot"),
+    new OreDictMaterial( "Carmot", "ingot"),
+    new OreDictMaterial( "Infuscolium", "ingot")
+
   };
 }

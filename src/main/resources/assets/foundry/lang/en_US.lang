@@ -49,6 +49,11 @@ fluid.liquidSignalum=Liquid Signalum
 fluid.liquidLumium=Liquid Lumium
 fluid.liquidRedstone=Liquid Redstone
 fluid.liquidRedAlloy=Liquid Red Alloy
+fluid.liquidAdamantine=Liquid Adamantine
+fluid.liquidAtlarus=Liquid Atlarus
+fluid.liquidRubracium=Liquid Rubracium
+fluid.liquidHaderoth=Liquid Haderoth
+fluid.liquidTartarite=Liquid Tartarite
 
 
 router.material._Any=All
@@ -105,6 +110,11 @@ router.material.Mithril=Mithril
 router.material.Signalum=Signalum
 router.material.Lumium=Lumium
 router.material.RedAlloy=Red Alloy
+router.material.Adamantine=Adamantine
+router.material.Atlarus=Atlarus
+router.material.Rubracium=Rubracium
+router.material.Haderoth=Haderoth
+router.material.Tartarite=Tartarite
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -204,6 +214,11 @@ tile.liquidSignalum.name=Liquid Signalum
 tile.liquidLumium.name=Liquid Lumium
 tile.liquidRedAlloy.name=Liquid Red Alloy
 tile.liquidRedstone.name=Liquid Redstone
+tile.liquidAdamantine=Liquid Adamantine
+tile.liquidAtlarus=Liquid Atlarus
+tile.liquidRubracium=Liquid Rubracium
+tile.liquidHaderoth=Liquid Haderoth
+tile.liquidTartarite=Liquid Tartarite
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

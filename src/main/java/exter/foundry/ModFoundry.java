@@ -25,6 +25,7 @@ import exter.foundry.integration.ModIntegrationBuildcraft;
 import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
+import exter.foundry.integration.ModIntegrationMetallurgy;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationRedstoneArsenal;
 import exter.foundry.integration.ModIntegrationTE4;
@@ -107,6 +108,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationGregtech.class,"gregtech");
     ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
+    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
     
 
     FoundryAPI.items = ItemRegistry.instance;

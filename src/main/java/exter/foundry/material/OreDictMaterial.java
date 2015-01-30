@@ -59,6 +59,11 @@ public class OreDictMaterial
     new OreDictMaterial("Glowstone","dust"),
     new OreDictMaterial("Thaumium","ingot"),
     new OreDictMaterial("RedAlloy","ingot"),
-    new OreDictMaterial("Rubber","item")
+    new OreDictMaterial("Rubber","item"),
+    new OreDictMaterial("Adamantine","ingot"),
+    new OreDictMaterial("Atlarus","ingot"),
+    new OreDictMaterial("Rubracium","ingot"),
+    new OreDictMaterial("Haderoth","ingot"),
+    new OreDictMaterial("Tartarite","ingot")
   };
 }

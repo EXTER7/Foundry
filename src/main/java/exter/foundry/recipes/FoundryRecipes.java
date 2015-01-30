@@ -84,7 +84,6 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manganese", 1550, 15);   
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Titanium", 2000, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Rubber", 460, 0);
-
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "StainlessSteel", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kanthal", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Nichrome", 1950, 15);
@@ -98,7 +97,13 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Redstone", 1000, 8);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1350, 10);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1350, 10);    
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Adamantine", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Atlarus", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Rubracium", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Haderoth", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Tartarite", 2000, 15);
+    
 
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {

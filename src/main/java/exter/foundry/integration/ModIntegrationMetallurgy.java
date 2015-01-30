@@ -38,20 +38,16 @@ public class ModIntegrationMetallurgy extends ModIntegration
 
   }
   
-  private void RegisterCasting(ItemStack item,String metal_name,int ingots,int mold_meta,ItemStack extra)
+  private void RegisterCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
   {
     if(item != null)
     {
-      Fluid liquid_metal = LiquidMetalRegistry.instance.GetFluid(metal_name);
-      if(liquid_metal != null)
+      ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
+      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(liquid_metal,FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
       {
-        ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
-        if(CastingRecipeManager.instance.FindRecipe(new FluidStack(liquid_metal,FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
-        {
-          CastingRecipeManager.instance.AddRecipe(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold, extra);
-        }
-        FoundryMiscUtils.RegisterMoldRecipe(mold_meta, item);
+        CastingRecipeManager.instance.AddRecipe(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold, extra);
       }
+      FoundryMiscUtils.RegisterMoldRecipe(mold_meta, item);
     }
   }
 
@@ -69,27 +65,72 @@ public class ModIntegrationMetallurgy extends ModIntegration
       IMetalSet metalset = MetallurgyApi.getMetalSet(setname);
       for(String metalname:metalset.getMetalNames())
       {
-        RegisterCasting(metalset.getIngot(metalname),metalname,1,ItemMold.MOLD_INGOT,null);
-        RegisterCasting(metalset.getBlock(metalname),metalname,9,ItemMold.MOLD_BLOCK,null);
-        
-        if(FoundryConfig.recipe_tools_armor)
+        Fluid liquid_metal = LiquidMetalRegistry.instance.GetFluid(metalname.replace(" ", ""));
+        if(liquid_metal != null)
         {
-          ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
-          ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
+          if(!metalname.equals("Gold") && !metalname.equals("Midasium"))
+          {
+            AlloyMixerRecipeManager.instance.AddRecipe(
+                new FluidStack(
+                    LiquidMetalRegistry.instance.GetFluid("Gold"),
+                    1),
+                new FluidStack[] {
+                  new FluidStack(
+                      LiquidMetalRegistry.instance.GetFluid("Midasium"),
+                      1),
+                  new FluidStack(liquid_metal, 1)
+                });
 
-          RegisterCasting(metalset.getAxe(metalname),metalname,3,ItemMold.MOLD_AXE,extra_sticks2);
-          RegisterCasting(metalset.getSword(metalname),metalname,2,ItemMold.MOLD_SWORD,extra_sticks1);
-          RegisterCasting(metalset.getPickaxe(metalname),metalname,3,ItemMold.MOLD_PICKAXE,extra_sticks2);
-          RegisterCasting(metalset.getShovel(metalname),metalname,1,ItemMold.MOLD_SHOVEL,extra_sticks2);
-          RegisterCasting(metalset.getHoe(metalname),metalname,2,ItemMold.MOLD_HOE,extra_sticks2);
+          }
+        
+          RegisterCasting(metalset.getIngot(metalname),liquid_metal,1,ItemMold.MOLD_INGOT,null);
+          RegisterCasting(metalset.getBlock(metalname),liquid_metal,9,ItemMold.MOLD_BLOCK,null);
 
-          RegisterCasting(metalset.getHelmet(metalname),metalname,5,ItemMold.MOLD_HELMET,null);
-          RegisterCasting(metalset.getChestplate(metalname),metalname,8,ItemMold.MOLD_CHESTPLATE,null);
-          RegisterCasting(metalset.getLeggings(metalname),metalname,7,ItemMold.MOLD_LEGGINGS,null);
-          RegisterCasting(metalset.getBoots(metalname),metalname,4,ItemMold.MOLD_BOOTS,null);
+          if(FoundryConfig.recipe_tools_armor)
+          {
+            ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+            ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
+
+            RegisterCasting(metalset.getAxe(metalname),liquid_metal,3,ItemMold.MOLD_AXE,extra_sticks2);
+            RegisterCasting(metalset.getSword(metalname),liquid_metal,2,ItemMold.MOLD_SWORD,extra_sticks1);
+            RegisterCasting(metalset.getPickaxe(metalname),liquid_metal,3,ItemMold.MOLD_PICKAXE,extra_sticks2);
+            RegisterCasting(metalset.getShovel(metalname),liquid_metal,1,ItemMold.MOLD_SHOVEL,extra_sticks2);
+            RegisterCasting(metalset.getHoe(metalname),liquid_metal,2,ItemMold.MOLD_HOE,extra_sticks2);
+
+            RegisterCasting(metalset.getHelmet(metalname),liquid_metal,5,ItemMold.MOLD_HELMET,null);
+            RegisterCasting(metalset.getChestplate(metalname),liquid_metal,8,ItemMold.MOLD_CHESTPLATE,null);
+            RegisterCasting(metalset.getLeggings(metalname),liquid_metal,7,ItemMold.MOLD_LEGGINGS,null);
+            RegisterCasting(metalset.getBoots(metalname),liquid_metal,4,ItemMold.MOLD_BOOTS,null);
+          }
         }
       }
     }
+
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("DamascusSteel"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Iron"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Bronze"),
+              1)
+        });
+
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Angmallen"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Iron"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Gold"),
+              1)
+        });
 
     AlloyMixerRecipeManager.instance.AddRecipe(
         new FluidStack(
@@ -116,6 +157,32 @@ public class ModIntegrationMetallurgy extends ModIntegration
               LiquidMetalRegistry.instance.GetFluid("Atlarus"),
               1)
         });
-    
+
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Celenegil"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Orichalcum"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Platinum"),
+              1)
+        });
+
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Quicksilver"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Mithril"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Silver"),
+              1)
+        });
+
   }
 }

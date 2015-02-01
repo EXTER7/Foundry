@@ -183,6 +183,57 @@ public class ModIntegrationMetallurgy extends ModIntegration
               LiquidMetalRegistry.instance.GetFluid("Silver"),
               1)
         });
+    
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Desichalkos"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Eximite"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Meutoite"),
+              1)
+        });
 
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Inolashite"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Alduorite"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Ceruclase"),
+              1)
+        });
+    
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Amordrine"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Kalendrite"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Platinum"),
+              1)
+        });
+    
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("BlackSteel"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Infuscolium"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("DeepIron"),
+              1)
+        });
   }
 }

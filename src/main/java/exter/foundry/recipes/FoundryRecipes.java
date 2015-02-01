@@ -113,6 +113,19 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Sanguinite", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Carmot", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Infuscolium", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Meutoite", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Hepatizon", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Eximite", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Desichalkos", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "DeepIron", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ceruclase", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "BlackSteel", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "AstralSilver", 1500, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Amordrine", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Alduorite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kalendrite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lemurite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Inolashite", 2000, 15);
 
 
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())

@@ -126,7 +126,12 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kalendrite", 2000, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lemurite", 2000, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Inolashite", 2000, 15);
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ShadowIron", 2000, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ShadowSteel", 2000, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Oureclase", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ignatius", 2100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Vulcanite", 2100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Prometheum", 1900, 14);
 
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {

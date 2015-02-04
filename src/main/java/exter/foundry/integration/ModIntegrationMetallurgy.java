@@ -225,6 +225,20 @@ public class ModIntegrationMetallurgy extends ModIntegration
     
     AlloyMixerRecipeManager.instance.AddRecipe(
         new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("ShadowSteel"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("ShadowIron"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Lemurite"),
+              1)
+        });
+
+    
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
             LiquidMetalRegistry.instance.GetFluid("BlackSteel"),
             2),
         new FluidStack[] {

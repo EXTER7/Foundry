@@ -77,6 +77,13 @@ fluid.liquidAlduorite=Liquid Alduorite
 fluid.liquidKalendrite=Liquid Kalendrite
 fluid.liquidLemurite=Liquid Lemurite
 fluid.liquidInolashite=Liquid Inolashite
+fluid.liquidShadowIron=Liquid Shadow Iron
+fluid.liquidShadowSteel=Liquid Shadow Steel
+fluid.liquidOureclase=Liquid Oureclase
+fluid.liquidIgnatius=Liquid Ignatius
+fluid.liquidVulcanite=Liquid Vulcanite
+fluid.liquidPrometheum=Liquid Prometheum
+
 
 router.material._Any=All
 router.material.Aluminum=Aluminum
@@ -160,6 +167,12 @@ router.material.Alduorite=Alduorite
 router.material.Kalendrite=Kalendrite
 router.material.Lemurite=Lemurite
 router.material.Inolashite=Inolashite
+router.material.ShadowIron=Shadow Iron
+router.material.ShadowSteel=Shadow Steel
+router.material.Oureclase=Oureclase
+router.material.Ignatius=Ignatius
+router.material.Vulcanite=Vulcanite
+router.material.Prometheum=Prometheum
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -287,6 +300,12 @@ tile.liquidAlduorite.name=Liquid Alduorite
 tile.liquidKalendrite.name=Liquid Kalendrite
 tile.liquidLemurite.name=Liquid Lemurite
 tile.liquidInolashite.name=Liquid Inolashite
+tile.liquidShadowIron.name=Liquid Shadow Iron
+tile.liquidShadowSteel.name=Liquid Shadow Steel
+tile.liquidOureclase.name=Liquid Oureclase
+tile.liquidIgnatius.name=Liquid Ignatius
+tile.liquidVulcanite.name=Liquid Vulcanite
+tile.liquidPrometheum.name=Liquid Prometheum
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

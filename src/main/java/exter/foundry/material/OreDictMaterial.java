@@ -89,6 +89,12 @@ public class OreDictMaterial
     new OreDictMaterial("Alduorite", "ingot"),
     new OreDictMaterial("Kalendrite", "ingot"),
     new OreDictMaterial("Lemurite", "ingot"),
-    new OreDictMaterial("Inolashite", "ingot")    
+    new OreDictMaterial("Inolashite", "ingot"),
+    new OreDictMaterial("ShadowIron", "ingot"),
+    new OreDictMaterial("ShadowSteel", "ingot"),
+    new OreDictMaterial("Oureclase", "ingot"),
+    new OreDictMaterial("Ignatius", "ingot"),
+    new OreDictMaterial("Vulcanite", "ingot"),
+    new OreDictMaterial("Prometheum", "ingot")
   };
 }

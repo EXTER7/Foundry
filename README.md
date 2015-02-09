@@ -1,4 +1,6 @@
 Foundry
 =======
 
-Minecraft mod that adds liquid metals
+Minecraft mod centered around melting and casting with metal.
+
+[MCF Thread](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1292684-foundry-melt-ores-and-metals-into-liquid-cast-them)

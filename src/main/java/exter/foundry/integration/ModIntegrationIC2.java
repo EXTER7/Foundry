@@ -237,7 +237,7 @@ public class ModIntegrationIC2 extends ModIntegration
       MaterialRegistry.instance.RegisterItem(iron_cable, "Iron", "Cable");
 
       ModIntegration gti = GetIntegration("gregtech");
-      if(gti == null || !gti.is_loaded)
+      if(gti == null || !Loader.isModLoaded("gregtech"))
       {
         CastingRecipeManager.instance.AddRecipe(copper_plate, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
         CastingRecipeManager.instance.AddRecipe(tin_plate, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);

@@ -1,7 +1,5 @@
 package exter.foundry.material;
 
-import exter.foundry.registry.LiquidMetalRegistry;
-
 public class OreDictMaterial
 {
   

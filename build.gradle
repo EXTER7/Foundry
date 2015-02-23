@@ -29,7 +29,7 @@ archivesBaseName = "Foundry"
 
 minecraft {
     version = "1.7.10-10.13.0.1200"
-    assetDir = "eclipse/assets"
+    runDir = "eclipse"
 }
 
 repositories {

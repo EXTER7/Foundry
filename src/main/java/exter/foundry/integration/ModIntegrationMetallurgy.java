@@ -4,12 +4,10 @@ import com.teammetallurgy.metallurgy.api.IMetalSet;
 import com.teammetallurgy.metallurgy.api.MetallurgyApi;
 
 import cpw.mods.fml.common.Loader;
-import exter.foundry.api.FoundryAPI;
+import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.config.FoundryConfig;
-import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Items;
@@ -38,18 +36,6 @@ public class ModIntegrationMetallurgy extends ModIntegration
 
   }
   
-  private void RegisterCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
-  {
-    if(item != null)
-    {
-      ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
-      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(liquid_metal,FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
-      {
-        CastingRecipeManager.instance.AddRecipe(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold, extra);
-      }
-      FoundryMiscUtils.RegisterMoldRecipe(mold_meta, item);
-    }
-  }
 
   @Override
   public void OnPostInit()
@@ -60,6 +46,8 @@ public class ModIntegrationMetallurgy extends ModIntegration
       return;
     }
 
+    ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+    ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
     for(String setname:MetallurgyApi.getSetNames())
     {
       IMetalSet metalset = MetallurgyApi.getMetalSet(setname);
@@ -88,19 +76,35 @@ public class ModIntegrationMetallurgy extends ModIntegration
 
           if(FoundryConfig.recipe_tools_armor)
           {
-            ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
-            ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
+            ItemStack pickaxe = metalset.getPickaxe(metalname);
+            ItemStack axe = metalset.getAxe(metalname);
+            ItemStack shovel = metalset.getShovel(metalname);
+            ItemStack hoe = metalset.getHoe(metalname);
+            ItemStack sword = metalset.getSword(metalname);
+            ItemStack helmet = metalset.getHelmet(metalname);
+            ItemStack chestplate = metalset.getChestplate(metalname);
+            ItemStack leggings = metalset.getLeggings(metalname);
+            ItemStack boots = metalset.getBoots(metalname);
 
-            RegisterCasting(metalset.getAxe(metalname),liquid_metal,3,ItemMold.MOLD_AXE,extra_sticks2);
-            RegisterCasting(metalset.getSword(metalname),liquid_metal,2,ItemMold.MOLD_SWORD,extra_sticks1);
-            RegisterCasting(metalset.getPickaxe(metalname),liquid_metal,3,ItemMold.MOLD_PICKAXE,extra_sticks2);
-            RegisterCasting(metalset.getShovel(metalname),liquid_metal,1,ItemMold.MOLD_SHOVEL,extra_sticks2);
-            RegisterCasting(metalset.getHoe(metalname),liquid_metal,2,ItemMold.MOLD_HOE,extra_sticks2);
-
-            RegisterCasting(metalset.getHelmet(metalname),liquid_metal,5,ItemMold.MOLD_HELMET,null);
-            RegisterCasting(metalset.getChestplate(metalname),liquid_metal,8,ItemMold.MOLD_CHESTPLATE,null);
-            RegisterCasting(metalset.getLeggings(metalname),liquid_metal,7,ItemMold.MOLD_LEGGINGS,null);
-            RegisterCasting(metalset.getBoots(metalname),liquid_metal,4,ItemMold.MOLD_BOOTS,null);
+            RegisterCasting(axe,liquid_metal,3,ItemMold.MOLD_AXE,extra_sticks2);
+            RegisterCasting(sword,liquid_metal,2,ItemMold.MOLD_SWORD,extra_sticks1);
+            RegisterCasting(pickaxe,liquid_metal,3,ItemMold.MOLD_PICKAXE,extra_sticks2);
+            RegisterCasting(shovel,liquid_metal,1,ItemMold.MOLD_SHOVEL,extra_sticks2);
+            RegisterCasting(hoe,liquid_metal,2,ItemMold.MOLD_HOE,extra_sticks2);
+            RegisterCasting(helmet,liquid_metal,5,ItemMold.MOLD_HELMET,null);
+            RegisterCasting(chestplate,liquid_metal,8,ItemMold.MOLD_CHESTPLATE,null);
+            RegisterCasting(leggings,liquid_metal,7,ItemMold.MOLD_LEGGINGS,null);
+            RegisterCasting(boots,liquid_metal,4,ItemMold.MOLD_BOOTS,null);
+            
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, chestplate);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, leggings);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, helmet);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, boots);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, pickaxe);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, axe);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, shovel);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, hoe);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, sword); 
           }
         }
       }

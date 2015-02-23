@@ -7,7 +7,13 @@ import java.util.Map;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.FoundryAPI;
+import exter.foundry.item.FoundryItems;
+import exter.foundry.recipes.manager.CastingRecipeManager;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
 public abstract class ModIntegration
 {
@@ -161,6 +167,18 @@ public abstract class ModIntegration
       if(m.is_loaded)
       {
         m.OnClientInit();
+      }
+    }
+  }
+  
+  static protected void RegisterCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
+  {
+    if(item != null)
+    {
+      ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
+      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(liquid_metal,FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
+      {
+        CastingRecipeManager.instance.AddRecipe(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold, extra);
       }
     }
   }

@@ -27,8 +27,11 @@ public class FoundryMiscUtils
 {
   static public void RegisterMoldRecipe(int dv,ItemStack pattern)
   {
-    GameRegistry.addShapelessRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
-      new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD), pattern);  
+    if(pattern != null)
+    {
+      GameRegistry.addShapelessRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
+          new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD), pattern);  
+    }
   }
 
   static public void RegisterMoldRecipe(int dv,String oredict_pattern)

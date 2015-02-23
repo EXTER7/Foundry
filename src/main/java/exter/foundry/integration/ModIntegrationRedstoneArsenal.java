@@ -3,11 +3,13 @@ package exter.foundry.integration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -93,6 +95,51 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       CastingRecipeManager.instance.AddRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
+      if(FoundryConfig.recipe_tools_armor)
+      {
+        ItemStack extra_sticks1 = GameRegistry.findItemStack("RedstoneArsenal", "rodObsidianFlux", 1);
+        ItemStack extra_sticks2 = GameRegistry.findItemStack("RedstoneArsenal", "rodObsidianFlux", 2);
+        if(extra_sticks1 != null && extra_sticks2 != null)
+        {
+          ItemStack pickaxe = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxPickaxe", 1);
+          ItemStack axe = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxAxe", 1);
+          ItemStack shovel = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxShovel", 1);
+          ItemStack hoe = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxHoe", 1);
+          ItemStack sword = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxSword", 1);
+          ItemStack helmet = GameRegistry.findItemStack("RedstoneArsenal", "armorFluxHelmet", 1);
+          ItemStack chestplate = GameRegistry.findItemStack("RedstoneArsenal", "armorFluxPlate", 1);
+          ItemStack leggings = GameRegistry.findItemStack("RedstoneArsenal", "armorFluxLegs", 1);
+          ItemStack boots = GameRegistry.findItemStack("RedstoneArsenal", "armorFluxBoots", 1);
+          ItemStack sickle = GameRegistry.findItemStack("RedstoneArsenal", "toolFluxSickle", 1);
+          
+          RegisterCasting(pickaxe, liquid_electrumflux, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+          RegisterCasting(axe, liquid_electrumflux, 3, ItemMold.MOLD_AXE, extra_sticks2);
+          RegisterCasting(shovel, liquid_electrumflux, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+          RegisterCasting(sword, liquid_electrumflux, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+          RegisterCasting(hoe, liquid_electrumflux, 2, ItemMold.MOLD_HOE, extra_sticks2);
+          RegisterCasting(sickle, liquid_electrumflux, 3, ItemMold.MOLD_SICKLE, extra_sticks1);
+          
+          ItemStack fluxplate = GameRegistry.findItemStack("RedstoneArsenal", "plateFlux", 1);
+          ItemStack fluxgem2 = GameRegistry.findItemStack("RedstoneArsenal", "gemCrystalFlux", 2);
+
+          if(fluxplate != null && fluxgem2 != null)
+          {
+            int plate_amount = FoundryAPI.FLUID_AMOUNT_INGOT + FoundryAPI.FLUID_AMOUNT_NUGGET * 6;
+            CastingRecipeManager.instance.AddRecipe(
+                fluxplate,
+                new FluidStack(liquid_electrumflux, plate_amount),
+                new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_FLUXPLATE),
+                fluxgem2);
+            FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_FLUXPLATE_SOFT, fluxplate);
+            FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_FLUXPLATE_SOFT, ItemMold.MOLD_FLUXPLATE);
+
+            RegisterCasting(leggings, new FluidStack(liquid_electrumflux, plate_amount * 7), ItemMold.MOLD_LEGGINGS, GameRegistry.findItemStack("RedstoneArsenal", "gemCrystalFlux", 14));
+            RegisterCasting(chestplate, new FluidStack(liquid_electrumflux, plate_amount * 8), ItemMold.MOLD_CHESTPLATE, GameRegistry.findItemStack("RedstoneArsenal", "gemCrystalFlux", 16));
+            RegisterCasting(helmet, new FluidStack(liquid_electrumflux, plate_amount * 5), ItemMold.MOLD_HELMET, GameRegistry.findItemStack("RedstoneArsenal", "gemCrystalFlux", 10));
+            RegisterCasting(boots, new FluidStack(liquid_electrumflux, plate_amount * 4), ItemMold.MOLD_BOOTS, GameRegistry.findItemStack("RedstoneArsenal", "gemCrystalFlux", 8));
+          }
+        }
+      }
     }
   }
 }

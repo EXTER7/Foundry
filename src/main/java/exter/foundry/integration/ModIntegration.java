@@ -173,14 +173,18 @@ public abstract class ModIntegration
   
   static protected void RegisterCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
   {
+    RegisterCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,extra);
+  }
+
+  static protected void RegisterCasting(ItemStack item,FluidStack fluid,int mold_meta,ItemStack extra)
+  {
     if(item != null)
     {
       ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
-      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(liquid_metal,FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
+      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
       {
-        CastingRecipeManager.instance.AddRecipe(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold, extra);
+        CastingRecipeManager.instance.AddRecipe(item, fluid, mold, extra);
       }
     }
   }
-
 }

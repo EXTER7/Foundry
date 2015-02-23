@@ -55,6 +55,8 @@ public class ItemMold extends Item
   static public final int MOLD_SICKLE_SOFT = 39;
   static public final int MOLD_BOW = 40;
   static public final int MOLD_BOW_SOFT = 41;
+  static public final int MOLD_FLUXPLATE = 42;
+  static public final int MOLD_FLUXPLATE_SOFT = 43;
 
 
   static private final String[] ICON_PATHS = 
@@ -100,7 +102,9 @@ public class ItemMold extends Item
     "foundry:mold_sickle",
     "foundry:claymold_sickle",
     "foundry:mold_bow",
-    "foundry:claymold_bow"
+    "foundry:claymold_bow",
+    "foundry:mold_fluxplate",
+    "foundry:claymold_fluxplate"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -147,6 +151,8 @@ public class ItemMold extends Item
     "itemSoftSickleMold",
     "itemBowMold",
     "itemSoftBowMold",
+    "itemFluxPlateMold",
+    "itemSoftFluxPlateMold",
   };
 
   

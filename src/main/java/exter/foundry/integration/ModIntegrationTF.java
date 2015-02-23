@@ -199,7 +199,7 @@ public class ModIntegrationTF extends ModIntegration
           ItemStack shovel = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Shovel", 1);
           ItemStack hoe = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Hoe", 1);
           ItemStack sword = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Sword", 1);
-          ItemStack helmet = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "rHelmet", 1);
+          ItemStack helmet = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Helmet", 1);
           ItemStack chestplate = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Plate", 1);
           ItemStack leggings = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Legs", 1);
           ItemStack boots = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Boots", 1);

@@ -44,8 +44,8 @@ repositories {
 }
 
 dependencies {
-    compile "mantle:Mantle:${mc_version}-0.3.1.jenkins180:deobf"
-    compile "tconstruct:TConstruct:${mc_version}-1.6.0.build611:deobf"
+    compile "mantle:Mantle:${mc_version}-0.3.2.jenkins187:deobf"
+    compile "tconstruct:TConstruct:${mc_version}-1.8.2.build880:deobf"
     compile "codechicken:NotEnoughItems:${mc_version}-1.0.2.15:dev"
     compile "codechicken:CodeChickenCore:${mc_version}-1.0.2.9:dev"
     compile "codechicken:CodeChickenLib:${mc_version}-1.1.1.93:dev"

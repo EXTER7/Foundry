@@ -33,6 +33,11 @@ public abstract class ModIntegration
   public abstract void OnInit();
   public abstract void OnPostInit();
 
+  public void OnAfterPostInit()
+  {
+    
+  }
+
   @SideOnly(Side.CLIENT)
   public void OnClientPreInit()
   {
@@ -129,7 +134,19 @@ public abstract class ModIntegration
       }
     }
   }
-  
+
+  static final public void AfterPostInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        ModFoundry.log.info("AfterPostInit integration: " + m.Name);
+        m.OnAfterPostInit();
+      }
+    }
+  }
+
 
   @SideOnly(Side.CLIENT)
   static final public void ClientPreInit()

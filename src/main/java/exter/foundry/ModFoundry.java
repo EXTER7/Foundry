@@ -202,5 +202,6 @@ public class ModFoundry
     ModIntegration.PostInit();
     FoundryRecipes.PostInit();
     proxy.PostInit();
+    ModIntegration.AfterPostInit();
   }
 }

@@ -12,6 +12,7 @@ import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
 import cpw.mods.fml.common.Loader;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -21,21 +22,17 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import mantle.utils.ItemMetaWrapper;
 import net.minecraft.init.Items;
-/*
-import tconstruct.TConstruct;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.AlloyMix;
-import tconstruct.library.crafting.LiquidCasting;
-import tconstruct.library.crafting.Smeltery;
-*/
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTiCon extends ModIntegration
 {
 
   private Map<String,String> liquid_map;
+  private Map<String,String> reverse_liquid_map;
   static private final int GCD(int a, int b)
   {
     while(b != 0)
@@ -46,6 +43,12 @@ public class ModIntegrationTiCon extends ModIntegration
     }
     return a;
   }
+  
+  static private int DivCeil(int a,int b)
+  {
+    return a / b + ((a % b == 0) ? 0 : 1);
+  }
+
 
   static private final int INGOT_GCD = GCD(TConstruct.ingotLiquidValue,FoundryAPI.FLUID_AMOUNT_INGOT);
   
@@ -100,9 +103,15 @@ public class ModIntegrationTiCon extends ModIntegration
     }
     CreateAlloyRecipe(mix,0,new ArrayList<FluidStack>());
   }
-  
+
   @Override
   public void OnPostInit()
+  {
+    
+  }
+  
+  @Override
+  public void OnAfterPostInit()
   {
     if(!Loader.isModLoaded("TConstruct"))
     {
@@ -131,6 +140,34 @@ public class ModIntegrationTiCon extends ModIntegration
       liquid_map.put("glass.molten", "Glass");
     }
 
+    reverse_liquid_map = new HashMap<String,String>();
+    for(Map.Entry<String,String> e:liquid_map.entrySet())
+    {
+      reverse_liquid_map.put(
+          LiquidMetalRegistry.instance.GetFluid(e.getValue()).getName(),
+          e.getKey());
+    }
+
+    //Add support for TiCon's fluids to the Metal Caster recipes.
+    for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.GetRecipes()))
+    {
+      String mapped = reverse_liquid_map.get(casting.GetInputFluid().getFluid().getName());
+      if(mapped != null)
+      {
+        Fluid mapped_fluid = FluidRegistry.getFluid(mapped);
+        if(mapped_fluid != null)
+        {
+          CastingRecipeManager.instance.AddRecipe(
+              casting.GetOutput(),
+              new FluidStack(
+                  mapped_fluid,
+                  DivCeil(casting.GetInputFluid().amount * TConstruct.ingotLiquidValue, FoundryAPI.FLUID_AMOUNT_INGOT)),
+              casting.GetInputMold(),
+              casting.GetInputExtra());
+        }
+      }
+    }
+
     
     //Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
     for(ItemMetaWrapper item : Smeltery.getSmeltingList().keySet())
@@ -153,7 +190,7 @@ public class ModIntegrationTiCon extends ModIntegration
           {
             mapped_liquid = new FluidStack(
                 LiquidMetalRegistry.instance.GetFluid(mapped),
-                result.amount * FoundryAPI.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+                DivCeil(result.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
           }
           if(mapped_liquid.amount <= 6000)
           {
@@ -205,7 +242,7 @@ public class ModIntegrationTiCon extends ModIntegration
         {
           mapped_liquid = new FluidStack(
               LiquidMetalRegistry.instance.GetFluid(mapped),
-              casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue);
+              DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
         }
         if(casting.cast.isItemEqual(ingot_cast))
         {
@@ -252,7 +289,7 @@ public class ModIntegrationTiCon extends ModIntegration
           LiquidMetalRegistry.instance.GetFluid(mapped),
           mapped.equals("Glass") ?
               casting.castingMetal.amount :
-              (casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue));
+              DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
       tconstruct.library.crafting.CastingRecipe recipe = new tconstruct.library.crafting.CastingRecipe(
           casting.output,
           mapped_liquid,
@@ -285,7 +322,7 @@ public class ModIntegrationTiCon extends ModIntegration
           LiquidMetalRegistry.instance.GetFluid(mapped),
           mapped.equals("Glass") ?
               casting.castingMetal.amount :
-              (casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT / TConstruct.ingotLiquidValue));
+              DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
       tconstruct.library.crafting.CastingRecipe recipe = new tconstruct.library.crafting.CastingRecipe(
           casting.output,
           mapped_liquid,

@@ -191,6 +191,7 @@ public class ModIntegrationTF extends ModIntegration
       {
         ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
         ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
+        ItemStack extra_bow = new ItemStack(Items.bow, 1);
         for(String metal_name:TOOL_METALS)
         {
           ItemStack pickaxe = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Pickaxe", 1);
@@ -198,11 +199,12 @@ public class ModIntegrationTF extends ModIntegration
           ItemStack shovel = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Shovel", 1);
           ItemStack hoe = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Hoe", 1);
           ItemStack sword = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Sword", 1);
-
           ItemStack helmet = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "rHelmet", 1);
           ItemStack chestplate = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Plate", 1);
           ItemStack leggings = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Legs", 1);
           ItemStack boots = GameRegistry.findItemStack("ThermalFoundation", "armor" + metal_name + "Boots", 1);
+          ItemStack sickle = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Sickle", 1);
+          ItemStack bow = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Bow", 1);
           
           Fluid metal = LiquidMetalRegistry.instance.GetFluid(metal_name);
           RegisterCasting(pickaxe, metal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
@@ -214,6 +216,8 @@ public class ModIntegrationTF extends ModIntegration
           RegisterCasting(chestplate, metal, 8, ItemMold.MOLD_CHESTPLATE, null);
           RegisterCasting(helmet, metal, 5, ItemMold.MOLD_HELMET, null);
           RegisterCasting(boots, metal, 4, ItemMold.MOLD_BOOTS, null);
+          RegisterCasting(sickle, metal, 3, ItemMold.MOLD_SICKLE, extra_sticks1);
+          RegisterCasting(bow, metal, 2, ItemMold.MOLD_BOW, extra_bow);
 
           FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, chestplate);
           FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, leggings);
@@ -224,7 +228,10 @@ public class ModIntegrationTF extends ModIntegration
           FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, shovel);
           FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, hoe);
           FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, sword);          
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SICKLE_SOFT, sickle);          
+          FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOW_SOFT, bow);          
         }
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOW_SOFT, new ItemStack(Items.bow));          
       }
       
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)

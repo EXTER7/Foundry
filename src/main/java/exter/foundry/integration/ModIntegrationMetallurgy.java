@@ -4,7 +4,6 @@ import com.teammetallurgy.metallurgy.api.IMetalSet;
 import com.teammetallurgy.metallurgy.api.MetallurgyApi;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;

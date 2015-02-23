@@ -660,6 +660,8 @@ public class FoundryRecipes
       FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_LEGGINGS_SOFT,ItemMold.MOLD_LEGGINGS);
       FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_HELMET_SOFT,ItemMold.MOLD_HELMET);
       FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOOTS_SOFT,ItemMold.MOLD_BOOTS);
+      FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SICKLE_SOFT,ItemMold.MOLD_SICKLE);
+      FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BOW_SOFT,ItemMold.MOLD_BOW);
     }
   }
 

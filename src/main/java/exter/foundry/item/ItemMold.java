@@ -51,6 +51,10 @@ public class ItemMold extends Item
   static public final int MOLD_CAP_TC_SOFT = 35;
   static public final int MOLD_INSULATED_CABLE_IC2 = 36;
   static public final int MOLD_INSULATED_CABLE_IC2_SOFT = 37;
+  static public final int MOLD_SICKLE = 38;
+  static public final int MOLD_SICKLE_SOFT = 39;
+  static public final int MOLD_BOW = 40;
+  static public final int MOLD_BOW_SOFT = 41;
 
 
   static private final String[] ICON_PATHS = 
@@ -92,7 +96,11 @@ public class ItemMold extends Item
     "foundry:mold_cap_tc",
     "foundry:claymold_cap_tc",
     "foundry:mold_cable_insulated_ic2",
-    "foundry:claymold_cable_insulated_ic2"
+    "foundry:claymold_cable_insulated_ic2",
+    "foundry:mold_sickle",
+    "foundry:claymold_sickle",
+    "foundry:mold_bow",
+    "foundry:claymold_bow"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -134,7 +142,11 @@ public class ItemMold extends Item
     "itemCapMold",
     "itemSoftCapMold",
     "itemInsulatedCableMold",
-    "itemSoftInsulatedCableMold"
+    "itemSoftInsulatedCableMold",
+    "itemSickleMold",
+    "itemSoftSickleMold",
+    "itemBowMold",
+    "itemSoftBowMold",
   };
 
   

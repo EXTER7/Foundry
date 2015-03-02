@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 
 public interface IMaterialRegistry
 {
+  public void RegisterItem(String oredict_name,String material,String type);
+
   public void RegisterItem(ItemStack item,String material,String type);
   
   public String GetMaterial(ItemStack item);

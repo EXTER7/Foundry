@@ -9,6 +9,7 @@ import java.util.Set;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import exter.foundry.api.material.IMaterialRegistry;
 import exter.foundry.util.hashstack.HashableItem;
 
@@ -40,6 +41,15 @@ public final class MaterialRegistry implements IMaterialRegistry
   {
     material_icons = new HashMap<String,ItemStack>();
     type_icons = new HashMap<String,ItemStack>();
+  }
+
+  @Override
+  public void RegisterItem(String oredict_name, String material, String type)
+  {
+    for(ItemStack item:OreDictionary.getOres(oredict_name))
+    {
+      RegisterItem(item, material, type);
+    }
   }
 
   @Override

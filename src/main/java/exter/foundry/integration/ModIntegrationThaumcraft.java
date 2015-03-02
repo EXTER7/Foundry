@@ -67,15 +67,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
     ItemStack cap_silver = ItemStack.copyItemStack(ItemApi.getItem("itemWandCap",5));
     ItemStack cap_thaumium = ItemStack.copyItemStack(ItemApi.getItem("itemWandCap",6));
     ItemStack ingot_thaumium = ItemStack.copyItemStack(ItemApi.getItem("itemResource",2));
-    //ItemStack NUGGET_THAUMIUM = ItemStack.copyItemStack(ItemApi.getItem("itemResource",6));
 
-    ItemStack cluster_iron = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",16));
-    ItemStack cluster_copper = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",17));
-    ItemStack cluster_tin = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",18));
-    ItemStack cluster_gold = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",31));
-    ItemStack cluster_silver = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",19));
-    ItemStack cluster_lead = ItemStack.copyItemStack(ItemApi.getItem("itemNugget",20));
-    
     ItemStack thaumium_pickaxe = ItemStack.copyItemStack(ItemApi.getItem("itemPickThaumium",0));
     ItemStack thaumium_axe = ItemStack.copyItemStack(ItemApi.getItem("itemAxeThaumium",0));
     ItemStack thaumium_shovel = ItemStack.copyItemStack(ItemApi.getItem("itemShovelThaumium",0));
@@ -87,94 +79,48 @@ public class ModIntegrationThaumcraft extends ModIntegration
     ItemStack thaumium_leggings = ItemStack.copyItemStack(ItemApi.getItem("itemLegsThaumium",0));
     ItemStack thaumium_boots = ItemStack.copyItemStack(ItemApi.getItem("itemBootsThaumium",0));
 
-    MaterialRegistry.instance.RegisterItem(cluster_iron, "Iron", "NativeCluster");
-    MaterialRegistry.instance.RegisterItem(cluster_copper, "Copper", "NativeCluster");
-    MaterialRegistry.instance.RegisterItem(cluster_tin, "Tin", "NativeCluster");
-    MaterialRegistry.instance.RegisterItem(cluster_gold, "Gold", "NativeCluster");
-    MaterialRegistry.instance.RegisterItem(cluster_silver, "Silver", "NativeCluster");
-    MaterialRegistry.instance.RegisterItem(cluster_lead, "Lead", "NativeCluster");
+    for(String metal:LiquidMetalRegistry.instance.GetFluidNames())
+    {
+      String oredict_name = "cluster" + metal;
+      MeltingRecipeManager.instance.AddRecipe(oredict_name,
+          new FluidStack(LiquidMetalRegistry.instance.GetFluid(metal),FoundryAPI.FLUID_AMOUNT_INGOT * 2));
+      MaterialRegistry.instance.RegisterItem(oredict_name, metal, "NativeCluster");
+    }
     
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
     Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-    Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
     Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
     Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-    Fluid liquid_lead = LiquidMetalRegistry.instance.GetFluid("Lead");
     Fluid liquid_thaumium = LiquidMetalRegistry.instance.GetFluid("Thaumium");
 
     if(FoundryConfig.recipe_tools_armor)
     {
       ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
-      ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
-      ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
-      ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
-      ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
-      ItemStack mold_hoe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HOE);
-      ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
-      ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
-      ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
-      ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
 
-      if(thaumium_chestplate != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_chestplate, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, thaumium_chestplate);
-      }
-      if(thaumium_pickaxe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_pickaxe, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, thaumium_pickaxe);
-      }
-      if(thaumium_axe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_axe, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, thaumium_axe);
-      }
+      RegisterCasting(thaumium_chestplate, liquid_thaumium, 8, ItemMold.MOLD_CHESTPLATE, null);
+      RegisterCasting(thaumium_helmet, liquid_thaumium, 5, ItemMold.MOLD_HELMET, null);
+      RegisterCasting(thaumium_leggings, liquid_thaumium, 5, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(thaumium_boots, liquid_thaumium, 4, ItemMold.MOLD_BOOTS, null);
 
-      if(thaumium_shovel != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_shovel, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, thaumium_shovel);
-      }
-      if(thaumium_sword != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_sword, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, thaumium_sword);
-      }
+      RegisterCasting(thaumium_pickaxe, liquid_thaumium, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      RegisterCasting(thaumium_axe, liquid_thaumium, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      RegisterCasting(thaumium_hoe, liquid_thaumium, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      RegisterCasting(thaumium_shovel, liquid_thaumium, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      RegisterCasting(thaumium_sword, liquid_thaumium, 2, ItemMold.MOLD_SWORD, extra_sticks1);
 
-      if(thaumium_hoe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_hoe, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, thaumium_hoe);
-      }
+      
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, thaumium_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, thaumium_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, thaumium_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, thaumium_boots);
 
-      if(thaumium_leggings != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_leggings, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, thaumium_leggings);
-      }
-
-      if(thaumium_helmet != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_helmet, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, thaumium_helmet);
-      }
-
-      if(thaumium_boots != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(thaumium_boots, new FluidStack(liquid_thaumium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, thaumium_boots);
-      }
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, thaumium_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, thaumium_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, thaumium_hoe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, thaumium_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, thaumium_sword);
     }
-
-    
-    MeltingRecipeManager.instance.AddRecipe(cluster_iron, new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT*2));
-    MeltingRecipeManager.instance.AddRecipe(cluster_copper, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT*2));
-    MeltingRecipeManager.instance.AddRecipe(cluster_tin, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT*2));
-    MeltingRecipeManager.instance.AddRecipe(cluster_gold, new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT*2));
-    MeltingRecipeManager.instance.AddRecipe(cluster_silver, new FluidStack(liquid_silver,FoundryAPI.FLUID_AMOUNT_INGOT*2));
-    MeltingRecipeManager.instance.AddRecipe(cluster_lead, new FluidStack(liquid_lead,FoundryAPI.FLUID_AMOUNT_INGOT*2));
 
     
     CastingRecipeManager.instance.AddRecipe(

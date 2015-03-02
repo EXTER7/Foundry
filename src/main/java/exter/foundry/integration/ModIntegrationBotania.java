@@ -95,6 +95,7 @@ public class ModIntegrationBotania extends ModIntegration
 
     
     ItemStack livingwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,3);
+    ItemStack dreamwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,13);
     
     
     if(is_loaded)
@@ -105,10 +106,13 @@ public class ModIntegrationBotania extends ModIntegration
 
       if(FoundryConfig.recipe_tools_armor)
       {
-        //TODO
         ItemStack extra_sticks1 = livingwood_twig.copy();
         ItemStack extra_sticks2 = livingwood_twig.copy();
         extra_sticks2.stackSize = 2;
+
+        ItemStack extra_dreamsticks1 = dreamwood_twig.copy();
+        ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
+        extra_dreamsticks2.stackSize = 2;
 
         ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
         ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
@@ -137,10 +141,10 @@ public class ModIntegrationBotania extends ModIntegration
 
 
         CastingRecipeManager.instance.AddRecipe(elementium_chestplate, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.AddRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        CastingRecipeManager.instance.AddRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_dreamsticks2);
+        CastingRecipeManager.instance.AddRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_dreamsticks2);
+        CastingRecipeManager.instance.AddRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_dreamsticks2);
+        CastingRecipeManager.instance.AddRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_dreamsticks1);
         CastingRecipeManager.instance.AddRecipe(elementium_leggings, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
         CastingRecipeManager.instance.AddRecipe(elementium_helmet, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
         CastingRecipeManager.instance.AddRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);

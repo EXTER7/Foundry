@@ -100,7 +100,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
 
       RegisterCasting(thaumium_chestplate, liquid_thaumium, 8, ItemMold.MOLD_CHESTPLATE, null);
       RegisterCasting(thaumium_helmet, liquid_thaumium, 5, ItemMold.MOLD_HELMET, null);
-      RegisterCasting(thaumium_leggings, liquid_thaumium, 5, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(thaumium_leggings, liquid_thaumium, 7, ItemMold.MOLD_LEGGINGS, null);
       RegisterCasting(thaumium_boots, liquid_thaumium, 4, ItemMold.MOLD_BOOTS, null);
 
       RegisterCasting(thaumium_pickaxe, liquid_thaumium, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);

@@ -45,8 +45,8 @@ public class ItemMold extends Item
   static public final int MOLD_SLAB_SOFT = 29;
   static public final int MOLD_STAIRS = 30;
   static public final int MOLD_STAIRS_SOFT = 31;
-  static public final int MOLD_PLATE_IC2 = 32;
-  static public final int MOLD_PLATE_IC2_SOFT = 33;
+  static public final int MOLD_PLATE = 32;
+  static public final int MOLD_PLATE_SOFT = 33;
   static public final int MOLD_CAP_TC = 34;
   static public final int MOLD_CAP_TC_SOFT = 35;
   static public final int MOLD_INSULATED_CABLE_IC2 = 36;

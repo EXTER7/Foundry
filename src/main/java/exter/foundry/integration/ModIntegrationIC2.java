@@ -12,7 +12,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.util.FoundryMiscUtils;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -23,17 +22,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 
 public class ModIntegrationIC2 extends ModIntegration
 {
-  private void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
-  {
-    if(FoundryUtils.IsItemInOreDictionary(oredict_name, item))
-    {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_SOFT, oredict_name);
-    } else
-    {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_IC2_SOFT, item);
-    }
-  }
-  
+
   public ModIntegrationIC2(String mod_name)
   {
     super(mod_name);
@@ -150,7 +139,7 @@ public class ModIntegrationIC2 extends ModIntegration
       }
       ItemStack mold_cable = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CABLE_IC2);
       ItemStack mold_casing = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CASING_IC2);
-      ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE_IC2);
+      ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE);
       ItemStack mold_insulated_cable = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INSULATED_CABLE_IC2);
 
       MeltingRecipeManager.instance.AddRecipe(copper_cable, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT / 3));

@@ -1,5 +1,6 @@
 package exter.foundry.integration;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,19 @@ public class ModIntegrationRailcraft extends ModIntegration
   @Override
   public void OnInit()
   {
+
+  }
+
+
+  @Override
+  public void OnPostInit()
+  {
+    if(!Loader.isModLoaded("Railcraft"))
+    {
+      is_loaded = false;
+      return;
+    }
+    
     ItemStack steel_pickaxe = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
     ItemStack steel_axe = GameRegistry.findItemStack("Railcraft", "tool.steel.axe", 1);
     ItemStack steel_shovel = GameRegistry.findItemStack("Railcraft", "tool.steel.shovel", 1);
@@ -51,8 +65,13 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     ItemStack iron_gear = GameRegistry.findItemStack("Railcraft", "part.gear.iron", 1);
     ItemStack steel_gear = GameRegistry.findItemStack("Railcraft", "part.gear.steel", 1);
+    ItemStack goldplated_gear = GameRegistry.findItemStack("Railcraft", "part.gear.gold.plate", 1);
 
-
+    ItemStack bushing = GameRegistry.findItemStack("Railcraft", "part.gear.bushing",1);
+    //ItemStack tin_plate = GameRegistry.findItemStack("Railcraft", "part.plate.tin", 1);
+    ItemStack iron_plate = GameRegistry.findItemStack("Railcraft", "part.plate.iron", 1);
+    ItemStack copper_plate = GameRegistry.findItemStack("Railcraft", "part.plate.copper", 1);
+    ItemStack steel_plate = GameRegistry.findItemStack("Railcraft", "part.plate.steel", 1);
 
     Fluid liquid_steel = LiquidMetalRegistry.instance.GetFluid("Steel");
     Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
@@ -64,66 +83,27 @@ public class ModIntegrationRailcraft extends ModIntegration
     {
       ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
-      ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
-      ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
-      ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
-      ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
-      ItemStack mold_hoe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HOE);
-      ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
-      ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
-      ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
-      ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
 
-      if(steel_chestplate != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_chestplate, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, steel_chestplate);
-      }
-      if(steel_pickaxe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_pickaxe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, steel_pickaxe);
-      }
-      if(steel_axe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_axe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, steel_axe);
-      }
+      RegisterCasting(steel_chestplate, liquid_steel, 8, ItemMold.MOLD_CHESTPLATE, null);
+      RegisterCasting(steel_helmet, liquid_steel, 5, ItemMold.MOLD_HELMET, null);
+      RegisterCasting(steel_leggings, liquid_steel, 7, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(steel_boots, liquid_steel, 4, ItemMold.MOLD_BOOTS, null);
 
-      if(steel_shovel != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_shovel, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, steel_shovel);
-      }
-      if(steel_sword != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_sword, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, steel_sword);
-      }
-
-      if(steel_hoe != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_hoe, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, extra_sticks2);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, steel_hoe);
-      }
-
-      if(steel_leggings != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_leggings, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, steel_leggings);
-      }
-
-      if(steel_helmet != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_helmet, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, steel_helmet);
-      }
-
-      if(steel_boots != null)
-      {
-        CastingRecipeManager.instance.AddRecipe(steel_boots, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, steel_boots);
-      }
+      RegisterCasting(steel_pickaxe, liquid_steel, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      RegisterCasting(steel_axe, liquid_steel, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      RegisterCasting(steel_hoe, liquid_steel, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      RegisterCasting(steel_shovel, liquid_steel, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      RegisterCasting(steel_sword, liquid_steel, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, steel_boots);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, steel_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, steel_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, steel_hoe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, steel_sword);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, steel_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, steel_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, steel_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, steel_chestplate);
     }
 
 
@@ -148,21 +128,43 @@ public class ModIntegrationRailcraft extends ModIntegration
       if(iron_gear != null)
       {
         MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
       }
 
       if(steel_gear != null)
       {
         MeltingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+        CastingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
+      }
+      
+      if(goldplated_gear != null)
+      {
+        MeltingRecipeManager.instance.AddRecipe(goldplated_gear, new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4));
+        CastingRecipeManager.instance.AddRecipe(goldplated_gear, new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4), mold_gear, bushing);
       }
     }
-  }
 
 
-  @Override
-  public void OnPostInit()
-  {
+    ModIntegration gti = GetIntegration("gregtech");
+    if(gti == null || !Loader.isModLoaded("gregtech"))
+    {
+      ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE);
+
+      CastingRecipeManager.instance.AddRecipe(copper_plate, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      //CastingRecipeManager.instance.AddRecipe(tin_plate, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(iron_plate, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.AddRecipe(steel_plate, new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+
+      RegisterPlateMoldRecipe(copper_plate, "plateCopper");
+      //RegisterPlateMoldRecipe(tin_plate, "plateTin");
+      RegisterPlateMoldRecipe(iron_plate, "plateIron");
+      RegisterPlateMoldRecipe(steel_plate, "plateSteel");
+      
+      FoundryMiscUtils.RegisterInOreDictionary("plateCopper", copper_plate);
+      //FoundryMiscUtils.RegisterInOreDictionary("plateTin", tin_plate);
+      FoundryMiscUtils.RegisterInOreDictionary("plateIron", iron_plate);
+      FoundryMiscUtils.RegisterInOreDictionary("plateSteel", steel_plate);
+    }
     ItemStack coal_coke = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
     ItemStack coal_coke_block = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
 

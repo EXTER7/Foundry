@@ -8,8 +8,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -204,4 +207,16 @@ public abstract class ModIntegration
       }
     }
   }
+  
+  static protected void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
+  {
+    if(FoundryUtils.IsItemInOreDictionary(oredict_name, item))
+    {
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
+    } else
+    {
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, item);
+    }
+  }
+  
 }

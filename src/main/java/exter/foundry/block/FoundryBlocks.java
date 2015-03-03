@@ -10,6 +10,7 @@ import exter.foundry.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -257,8 +258,13 @@ public class FoundryBlocks
     block_stacks.put("Gold", new ItemStack(Blocks.gold_block));
     block_stacks.put("Glass", new ItemStack(Blocks.glass));
     block_stacks.put("Redstone", new ItemStack(Blocks.redstone_block));
-    
 
+    for(i = 0; i < ItemDye.field_150921_b/*icon_names*/.length; i++)
+    {
+      block_stacks.put(
+          "Glass." + ItemDye.field_150921_b/*icon_names*/[i],
+          new ItemStack(Blocks.stained_glass,1,~i & 15));
+    }
     
     
     ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_refractory_casing));

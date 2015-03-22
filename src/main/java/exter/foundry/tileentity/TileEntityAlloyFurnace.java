@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fluids.FluidTank;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
@@ -141,7 +142,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       item_burn_time = tag.getInteger("ItemBurnTime");
     }
-    if(worldObj.isRemote)
+    if(FMLCommonHandler.instance().getEffectiveSide().isClient())
     {
       if(last_burn_time*burn_time == 0)
       {

@@ -21,6 +21,5 @@ public class ItemBlockSlab extends ItemBlockMulti
   protected int GetSubIndex(ItemStack stack)
   {
     return stack.getItemDamage() & 7;
-  }
-  
+  }  
 }

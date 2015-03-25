@@ -1,6 +1,8 @@
 package exter.foundry.tileentity;
 
 
+import java.lang.reflect.InvocationTargetException;
+
 import cofh.api.energy.IEnergyReceiver;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
@@ -126,7 +128,28 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     if(!added_enet)
     {
-      LoadEnet();
+      try
+      {
+        getClass().getMethod("LoadEnet").invoke(this);
+      } catch(IllegalAccessException e)
+      {
+        throw new RuntimeException(e);
+      } catch(IllegalArgumentException e)
+      {
+        throw new RuntimeException(e);
+      } catch(InvocationTargetException e)
+      {
+        throw new RuntimeException(e);
+      } catch(NoSuchMethodException e)
+      {
+        if(Loader.isModLoaded("IC2"))
+        {
+          throw new RuntimeException(e);
+        }
+      } catch(SecurityException e)
+      {
+        throw new RuntimeException(e);
+      }
     }
     super.updateEntity();
   }
@@ -181,16 +204,44 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Override
   public void onChunkUnload()
   {
-    if(added_enet && Loader.isModLoaded("IC2"))
+    try
+    {
+      getClass().getMethod("UnloadEnet").invoke(this);
+    } catch(IllegalAccessException e)
+    {
+      throw new RuntimeException(e);
+    } catch(IllegalArgumentException e)
+    {
+      throw new RuntimeException(e);
+    } catch(InvocationTargetException e)
+    {
+      throw new RuntimeException(e);
+    } catch(NoSuchMethodException e)
+    {
+      if(Loader.isModLoaded("IC2"))
+      {
+        throw new RuntimeException(e);
+      }
+    } catch(SecurityException e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Optional.Method(modid = "IC2")
+  public void UnloadEnet()
+  {
+    if(added_enet)
     {
       MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
       added_enet = false;
     }
   }
-
+  
+  @Optional.Method(modid = "IC2")
   public void LoadEnet()
   {
-    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient() && Loader.isModLoaded("IC2"))
+    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient())
     {
       MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
       added_enet = true;

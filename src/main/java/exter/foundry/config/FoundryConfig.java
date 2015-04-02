@@ -1,7 +1,5 @@
 package exter.foundry.config;
 
-import java.util.Map;
-
 import net.minecraftforge.common.config.Configuration;
 
 
@@ -15,9 +13,7 @@ public class FoundryConfig
   public static boolean worldgen_lead;
 
   public static boolean recipe_gear_useoredict;
-  
-  public static Map<String,Integer> recipe_melting_gears;
-  public static Map<String,Integer> recipe_casting_gears;
+  public static boolean recipe_steel_enable;
   
   public static boolean recipe_tools_armor;
   public static boolean recipe_glass;
@@ -33,7 +29,8 @@ public class FoundryConfig
     worldgen_nickel = config.get("worldgen", "nickel", true).getBoolean(true);
     worldgen_silver = config.get("worldgen", "silver", true).getBoolean(true);
     worldgen_lead = config.get("worldgen", "lead", true).getBoolean(true);
-    
+
+    recipe_steel_enable = config.get("recipe", "recipe.enable_infuser_steel", true).getBoolean(true);    
     recipe_gear_useoredict = config.get("recipe", "recipe.gear_use_oredictionary", false).getBoolean(false);
   }
 }

@@ -165,17 +165,21 @@ public class ModIntegrationRailcraft extends ModIntegration
       FoundryMiscUtils.RegisterInOreDictionary("plateIron", iron_plate);
       FoundryMiscUtils.RegisterInOreDictionary("plateSteel", steel_plate);
     }
-    ItemStack coal_coke = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
-    ItemStack coal_coke_block = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
-
-    if(coal_coke != null)
-    {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), coal_coke, 110000);
-    }
     
-    if(coal_coke_block != null)
+    if(FoundryConfig.recipe_steel_enable)
     {
-      InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), coal_coke_block, 880000);
+      ItemStack coal_coke = GameRegistry.findItemStack("Railcraft", "fuel.coke", 1);
+      ItemStack coal_coke_block = GameRegistry.findItemStack("Railcraft", "cube.coke", 1);
+
+      if(coal_coke != null)
+      {
+        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 36), coal_coke, 110000);
+      }
+    
+      if(coal_coke_block != null)
+      {
+        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), coal_coke_block, 880000);
+      }
     }
   }
 }

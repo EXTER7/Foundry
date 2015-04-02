@@ -38,6 +38,8 @@ public class BlockRefractoryHopper extends BlockContainer
   {
     super(Material.iron);
     setCreativeTab(FoundryTabMachines.tab);
+    setHardness(1.0F);
+    setResistance(8.0F);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     setBlockName("refractoryHopper");
   }

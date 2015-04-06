@@ -408,7 +408,6 @@ public class FoundryRecipes
         InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
       }
     }
-
   }
 
   static public void Init()

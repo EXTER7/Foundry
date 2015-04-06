@@ -76,6 +76,17 @@ task apiZip(type: Zip) {
     destinationDir = file 'output'
 }
 
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier ='dev'
+    destinationDir = file 'output'
+}
+
+artifacts {
+    archives deobfJar
+}
+
 jar {
     apiZip.execute()
     destinationDir = file 'output'

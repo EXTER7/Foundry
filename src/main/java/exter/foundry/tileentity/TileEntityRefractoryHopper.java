@@ -84,44 +84,22 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     compound.setInteger("next_fill", next_fill);
   }
 
-  private void SetTankFluid(int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(value, 0));
-    } else
-    {
-      tank.getFluid().fluidID = value;
-    }
-  }
-
-  private void SetTankAmount(int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(0, value));
-    } else
-    {
-      tank.getFluid().amount = value;
-    }
-  }
-
   public void GetGUINetworkData(int id, int value)
   {
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        SetTankFluid(value);
+        SetTankFluid(tank,value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        SetTankAmount(value);
+        SetTankAmount(tank,value);
         break;
     }
   }
 
   private int GetTankFluid()
   {
-    return tank.getFluid() != null ? tank.getFluid().fluidID : 0;
+    return tank.getFluid() != null ? tank.getFluid().getFluidID() : 0;
   }
 
   private int GetTankAmount()

@@ -128,30 +128,18 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        if(tank.getFluid() == null)
-        {
-          tank.setFluid(new FluidStack(value, 0));
-        } else
-        {
-          tank.getFluid().fluidID = value;
-        }
+        SetTankFluid(tank,value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        if(tank.getFluid() == null)
-        {
-          tank.setFluid(new FluidStack(0, value));
-        } else
-        {
-          tank.getFluid().amount = value;
-        }
+        SetTankAmount(tank,value);
         break;
     }
   }
 
   public void SendGUINetworkData(ContainerMetalCaster container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, tank.getFluid() != null ? tank.getFluid().fluidID : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, tank.getFluid() != null ? tank.getFluid().amount : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, GetTankFluid(tank));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, GetTankAmount(tank));
   }
 
   @Override

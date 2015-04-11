@@ -136,28 +136,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     compound.setInteger("mode", mode.number);
   }
   
-  private void SetTankFluid(FluidTank tank,int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(value, 0));
-    } else
-    {
-      tank.getFluid().fluidID = value;
-    }
-  }
-
-  private void SetTankAmount(FluidTank tank,int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(0, value));
-    } else
-    {
-      tank.getFluid().amount = value;
-    }
-  }
-
   
   public void GetGUINetworkData(int id, int value)
   {
@@ -196,15 +174,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     }
   }
 
-  private int GetTankFluid(FluidTank tank)
-  {
-    return tank.getFluid() != null ? tank.getFluid().fluidID : 0;
-  }
-
-  private int GetTankAmount(FluidTank tank)
-  {
-    return tank.getFluid() != null ? tank.getFluid().amount : 0;
-  }
 
   public void SendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
   {

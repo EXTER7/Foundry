@@ -15,6 +15,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
@@ -266,8 +268,53 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       }
     }
   }
+   
+
+  protected final int GetTankFluid(FluidTank tank)
+  {
+    FluidStack f = tank.getFluid();
+    return f != null ? f.getFluidID() : 0;
+  }
+
+  protected final int GetTankAmount(FluidTank tank)
+  {
+    FluidStack f = tank.getFluid();
+    return f != null ? f.amount : 0;
+  }
   
-  
+  protected final void SetTankFluid(FluidTank tank,int value)
+  {
+    Fluid f = FluidRegistry.getFluid(value);
+    if(f == null)
+    {
+      tank.setFluid(null);
+      return;
+    }
+    if(tank.getFluid() == null)
+    {
+      tank.setFluid(new FluidStack(f, 0));
+    } else
+    {
+      tank.setFluid(new FluidStack(f, tank.getFluidAmount()));
+    }
+  }
+
+  protected final void SetTankAmount(FluidTank tank,int value)
+  {
+    if(value == 0)
+    {
+      tank.setFluid(null);
+      return;
+    }
+    if(tank.getFluid() == null)
+    {
+      tank.setFluid(new FluidStack(FluidRegistry.getFluid(value), value));
+    } else
+    {
+      tank.getFluid().amount = value;
+    }
+  }
+
 
   @Override
   public void updateEntity()

@@ -126,28 +126,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     compound.setInteger("extract_time", extract_energy);
   }
 
-  private void SetTankFluid(FluidTank tank,int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(value, 0));
-    } else
-    {
-      tank.getFluid().fluidID = value;
-    }
-  }
-
-  private void SetTankAmount(FluidTank tank,int value)
-  {
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(0, value));
-    } else
-    {
-      tank.getFluid().amount = value;
-    }
-  }
-
   public void GetGUINetworkData(int id, int value)
   {
     switch(id)
@@ -169,9 +147,9 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
 
   public void SendGUINetworkData(ContainerMetalInfuser container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().fluidID : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().getFluidID() : 0);
     crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_AMOUNT, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().amount : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_FLUID, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().fluidID : 0);
+    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_FLUID, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().getFluidID() : 0);
     crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_AMOUNT, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().amount : 0);
   }
   

@@ -28,7 +28,7 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.7.10-10.13.0.1200"
+    version = "1.7.10-10.13.3.1366-1.7.10"
     runDir = "eclipse"
 }
 

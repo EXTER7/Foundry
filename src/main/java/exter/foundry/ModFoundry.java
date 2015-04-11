@@ -57,7 +57,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[10.13.0.1200,);"
+  dependencies = "required-after:Forge@[10.13.3.1366,);"
       + "after:TConstruct;"
       + "after:BuildCraft|Core;"
       + "after:Railcraft;"

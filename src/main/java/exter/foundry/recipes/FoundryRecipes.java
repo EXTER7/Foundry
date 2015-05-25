@@ -93,6 +93,7 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lumium", 2500, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 1500, 14);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Thaumium", 1850, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Void", 1700, 6);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manasteel", 1950, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);

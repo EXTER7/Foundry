@@ -93,6 +93,9 @@ public class OreDictMaterial
     new OreDictMaterial("Oureclase", "ingot"),
     new OreDictMaterial("Ignatius", "ingot"),
     new OreDictMaterial("Vulcanite", "ingot"),
-    new OreDictMaterial("Prometheum", "ingot")
+    new OreDictMaterial("Prometheum", "ingot"),
+    new OreDictMaterial("Ironwood", "ingot"),
+    new OreDictMaterial("Steeleaf", "ingot"),
+    new OreDictMaterial("Knightmetal", "ingot")
   };
 }

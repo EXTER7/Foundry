@@ -132,7 +132,10 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ignatius", 2100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Vulcanite", 2100, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Prometheum", 1900, 14);
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ironwood", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steeleaf", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Knightmetal", 1900, 15);
+    
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));

@@ -32,6 +32,7 @@ import exter.foundry.integration.ModIntegrationTE4;
 import exter.foundry.integration.ModIntegrationTF;
 import exter.foundry.integration.ModIntegrationThaumcraft;
 import exter.foundry.integration.ModIntegrationTiCon;
+import exter.foundry.integration.ModIntegrationTwilightForest;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -109,6 +110,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
     ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
+    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
     
 
     FoundryAPI.items = ItemRegistry.instance;

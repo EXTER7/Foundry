@@ -83,6 +83,9 @@ fluid.liquidOureclase=Liquid Oureclase
 fluid.liquidIgnatius=Liquid Ignatius
 fluid.liquidVulcanite=Liquid Vulcanite
 fluid.liquidPrometheum=Liquid Prometheum
+fluid.liquidIronwood=Liquid Ironwood
+fluid.liquidSteeleaf=Liquid Steeleaf
+fluid.liquidKnightmetal=Liquid Knightmetal
 
 
 router.material._Any=All
@@ -173,6 +176,9 @@ router.material.Oureclase=Oureclase
 router.material.Ignatius=Ignatius
 router.material.Vulcanite=Vulcanite
 router.material.Prometheum=Prometheum
+router.material.Ironwood=Ironwood
+router.material.Steeleaf=Steeleaf
+router.material.Knightmetal=Knightmetal
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -306,6 +312,9 @@ tile.liquidOureclase.name=Liquid Oureclase
 tile.liquidIgnatius.name=Liquid Ignatius
 tile.liquidVulcanite.name=Liquid Vulcanite
 tile.liquidPrometheum.name=Liquid Prometheum
+tile.liquidIronwood=Liquid Ironwood
+tile.liquidSteeleaf=Liquid Steeleaf
+tile.liquidKnightmetal=Liquid Knightmetal
 
 
 tile.machine.ICF.name=Induction Crucible Furnace

@@ -356,12 +356,36 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
   {
     int i;
+    FluidTank empty = null;
+    FluidTank partial = null;
     for(i = 0; i < 4; i++)
     {
-      if(tanks[i].fill(resource, false) > 0)
+      FluidTank ft = tanks[i];
+      if(ft.getFluidAmount() > 0)
+      { 
+        if(ft.getFluid().isFluidEqual(resource))
+        {
+          if(ft.getFluidAmount() < ft.getCapacity())
+          {
+            partial = ft;
+          } else
+          {
+            return 0;
+          }
+        }
+      } else
       {
-        return tanks[i].fill(resource, doFill);
+        empty = ft;
       }
+    }
+
+    if(partial != null)
+    {
+      return partial.fill(resource, doFill);
+    }
+    if(empty != null)
+    {
+      return empty.fill(resource, doFill);
     }
     return 0;
   }

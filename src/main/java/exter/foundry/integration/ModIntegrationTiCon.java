@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import tconstruct.TConstruct;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.AlloyMix;
@@ -27,10 +26,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
 public class ModIntegrationTiCon extends ModIntegration
 {
-
   private Map<String,String> liquid_map;
   private Map<String,String> reverse_liquid_map;
   static private final int GCD(int a, int b)
@@ -51,7 +48,7 @@ public class ModIntegrationTiCon extends ModIntegration
 
 
   static private final int INGOT_GCD = GCD(TConstruct.ingotLiquidValue,FoundryAPI.FLUID_AMOUNT_INGOT);
-  
+
   public ModIntegrationTiCon(String mod_name)
   {
     super(mod_name);
@@ -67,7 +64,7 @@ public class ModIntegrationTiCon extends ModIntegration
   public void OnInit()
   {
   }
-  
+
   private void CreateAlloyRecipe(AlloyMix mix,int index,List<FluidStack> inputs)
   {
     if(index == mix.mixers.size())
@@ -109,7 +106,7 @@ public class ModIntegrationTiCon extends ModIntegration
   {
     
   }
-  
+
   @Override
   public void OnAfterPostInit()
   {

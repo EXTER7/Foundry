@@ -465,6 +465,13 @@ item.ingot16.name=Cupronickel Ingot
 
 item.foundryContainer.name=Refractory Fluid Container
 
+item.revolver.name=Revolver
+item.ammoNormal.name=Ammo
+item.ammoJacketed.name=Jacketed Ammo
+item.ammoHollow.name=Hollow Point Ammo
+item.ammoFire.name=Incendiary Ammo
+
+
 tc.research.capmold.text=This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. 
 tc.research_name.FOUNDRY_capmold=Wand Cap mold.
 tc.research_text.FOUNDRY_capmold=Making wand caps out of liquid metal.

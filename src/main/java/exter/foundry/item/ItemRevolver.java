@@ -14,6 +14,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -120,18 +121,12 @@ public class ItemRevolver extends Item
     return true;
   }
 
-  
   @Override
-  public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+  public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int p_77615_4_)
   {
-    if(player.isSneaking())
+    if(!player.isSneaking())
     {
-      if (!world.isRemote)
-      {
-        player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_REVOLVER, world, 0, 0, 0);
-      }
-    } else
-    {
+
       int position = stack.getTagCompound().getInteger("position");
       NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Slot_" + position);
       if(!tag.getBoolean("Empty"))
@@ -141,7 +136,7 @@ public class ItemRevolver extends Item
         {
           MovingObjectPosition obj = Trace(world, player);
           IFirearmAmmo ammo = (IFirearmAmmo) ammo_item.getItem();
-          world.playSoundAtEntity(player, "random.explode", 0.8F, 3F);
+          world.playSoundAtEntity(player, "foundry:revolver_fire", 0.9F, 1F);
           if(obj != null)
           {
             switch(obj.typeOfHit)
@@ -158,6 +153,13 @@ public class ItemRevolver extends Item
           }
         } else
         {
+          player.rotationPitch -= 2;
+          float pitch = -player.rotationPitch;
+          float yaw = -player.rotationYaw;
+          float cpitch = -MathHelper.cos(pitch * 0.017453292F);          
+          player.motionX -= MathHelper.sin(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
+          player.motionY -= MathHelper.sin(pitch * 0.017453292F) * 0.1;
+          player.motionZ -= MathHelper.cos(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
           player.swingItem();
         }
         tag.setBoolean("Empty", true);
@@ -166,29 +168,46 @@ public class ItemRevolver extends Item
         if(!world.isRemote)
         {
           world.playSoundAtEntity(player, "random.click", 0.3F, 1.5F);
-        }
-        
+        }        
       }
       stack.getTagCompound().setInteger("position", (position + 1) % 8);
+    }    
+  }
+
+  
+  @Override
+  public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+  {
+    if(player.isSneaking())
+    {
+      if (!world.isRemote)
+      {
+        player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_REVOLVER, world, 0, 0, 0);
+      }
+    } else
+    {
+       player.setItemInUse(stack, getMaxItemUseDuration(stack));
     }
     return stack;
   }
-  
-  @Override
-  public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
-  {
-    return true;
-  }
 
   @Override
-  public boolean isFull3D() {
-    return true;
+  public int getMaxItemUseDuration(ItemStack p_77626_1_)
+  {
+    return 72000;
   }
-  
+
+
   @Override
   public int getItemStackLimit(ItemStack stack)
   {
     return 1;
+  }
+
+  @Override
+  public EnumAction getItemUseAction(ItemStack p_77661_1_)
+  {
+      return EnumAction.bow;
   }
 
   @SuppressWarnings("unchecked")
@@ -225,6 +244,17 @@ public class ItemRevolver extends Item
     }
   }
 
+  @Override
+  public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+  {
+    return true;
+  }
+
+  @Override
+  public boolean isFull3D() {
+    return true;
+  }
+  
   public void SetAmmo(ItemStack stack,int slot,ItemStack ammo)
   {
     if(stack.getItem() != this)

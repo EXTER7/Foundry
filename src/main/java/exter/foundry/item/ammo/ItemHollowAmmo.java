@@ -3,7 +3,7 @@ package exter.foundry.item.ammo;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.firearms.IFirearmAmmo;
-import exter.foundry.creativetab.FoundryTabFluids;
+import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +13,6 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemHollowAmmo extends Item implements IFirearmAmmo
@@ -23,12 +22,8 @@ public class ItemHollowAmmo extends Item implements IFirearmAmmo
   public ItemHollowAmmo()
   {
     super();
-    setCreativeTab(FoundryTabFluids.tab);
-    setMaxStackSize(1);
+    setCreativeTab(FoundryTabFirearms.tab);
     setUnlocalizedName("ammoHollow");
-    setHasSubtypes(true);
-
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
 

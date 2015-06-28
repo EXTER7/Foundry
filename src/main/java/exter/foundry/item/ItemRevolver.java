@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmAmmo;
-import exter.foundry.creativetab.FoundryTabFluids;
+import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,7 +32,7 @@ public class ItemRevolver extends Item
   public ItemRevolver()
   {
     super();
-    setCreativeTab(FoundryTabFluids.tab);
+    setCreativeTab(FoundryTabFirearms.tab);
     setMaxStackSize(1);
     setUnlocalizedName("revolver");
     setHasSubtypes(true);

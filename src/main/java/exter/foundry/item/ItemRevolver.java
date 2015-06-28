@@ -8,10 +8,13 @@ import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmAmmo;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.proxy.CommonFoundryProxy;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -138,6 +141,7 @@ public class ItemRevolver extends Item
         {
           MovingObjectPosition obj = Trace(world, player);
           IFirearmAmmo ammo = (IFirearmAmmo) ammo_item.getItem();
+          world.playSoundAtEntity(player, "random.explode", 0.8F, 3F);
           if(obj != null)
           {
             switch(obj.typeOfHit)
@@ -150,14 +154,35 @@ public class ItemRevolver extends Item
                 break;
               default:
                 break;
-            }
+            } 
           }
+        } else
+        {
+          player.swingItem();
         }
         tag.setBoolean("Empty", true);
+      } else
+      {
+        if(!world.isRemote)
+        {
+          world.playSoundAtEntity(player, "random.click", 0.3F, 1.5F);
+        }
+        
       }
       stack.getTagCompound().setInteger("position", (position + 1) % 8);
     }
     return stack;
+  }
+  
+  @Override
+  public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+  {
+    return true;
+  }
+
+  @Override
+  public boolean isFull3D() {
+    return true;
   }
   
   @Override
@@ -180,7 +205,7 @@ public class ItemRevolver extends Item
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
   {
-    if(/*player.isSneaking()*/true)
+    if(GuiScreen.isShiftKeyDown())
     {
       int position = stack.getTagCompound().getInteger("position");
       int i;

@@ -53,7 +53,7 @@ public class ItemHollowAmmo extends Item implements IFirearmAmmo
   {
     Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
     float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance * 3;
+    float damage = 30 - distance * 1.5f;
     if(damage > 20)
     {
       damage = 20;

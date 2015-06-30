@@ -53,7 +53,7 @@ public class ItemAmmoJacketed extends Item implements IFirearmAmmo
   {
     Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
     float distance = (float)end.distanceTo(from);
-    float damage = 45 - distance;
+    float damage = 50 - distance / 3.0f;
     if(damage > 8)
     {
       damage = 8;

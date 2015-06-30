@@ -60,10 +60,10 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   {
     Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
     float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance;
-    if(damage > 10)
+    float damage = 30 - distance / 2.0f;
+    if(damage > 8)
     {
-      damage = 10;
+      damage = 8;
     }
     if(damage >= 1)
     {

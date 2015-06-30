@@ -226,6 +226,7 @@ itemGroup.foundryBlocks=Foundry - Blocks
 itemGroup.foundryFluids=Foundry - Fluids
 itemGroup.foundryMachines=Foundry - Machines
 itemGroup.foundryMolds=Foundry - Molds
+itemGroup.foundryFirearms=Foundry - Firearms
 
 tile.refractoryCasing.name=Refractory Casing
 
@@ -448,7 +449,7 @@ item.mold43.name=Soft Flux Plate Mold
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot
 item.ingot2.name=Bronze Ingot
-item.ingot3.name=Electrum
+item.ingot3.name=Electrum Ingot
 item.ingot4.name=Invar Ingot
 item.ingot5.name=Nickel Ingot
 item.ingot6.name=Zinc Ingot

@@ -555,6 +555,72 @@ public class FoundryRecipes
         'C', comparator_stack,
         'G', "gearStone"));
 
+    GameRegistry.addRecipe(
+        FoundryItems.item_revolver.Empty(),
+        "BD",
+        " F",
+        'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_GUN_BARREL), 
+        'D', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_REVOLVER_DRUM),
+        'F', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_REVOLVER_FRAME));
+ 
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_component,4,ItemFoundryComponent.COMPONENT_GUNPOWDER_SMALL),
+        "  ",
+        " G",
+        'G', Items.gunpowder);
+
+    GameRegistry.addRecipe(
+        new ItemStack(Items.gunpowder),
+        "GG",
+        "GG",
+        'G', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_GUNPOWDER_SMALL));
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_component,4,ItemFoundryComponent.COMPONENT_BLAZEPOWDER_SMALL),
+        "  ",
+        " B",
+        'B', Items.blaze_powder);
+
+    GameRegistry.addRecipe(
+        new ItemStack(Items.blaze_powder),
+        "BB",
+        "BB",
+        'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLAZEPOWDER_SMALL));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_ammo,
+        "B",
+        "G",
+        "C",
+        'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET), 
+        'G', "dustSmallGunpowder",
+        'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_ammo_hollow,
+        "B",
+        "G",
+        "C",
+        'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET_HOLLOW), 
+        'G', "dustSmallGunpowder",
+        'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_ammo_jacketed,
+        "B",
+        "G",
+        "C",
+        'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET_JACKETED), 
+        'G', "dustSmallGunpowder",
+        'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_ammo_fire,
+        "B",
+        "A",
+        'B', "dustSmallBlaze", 
+        'A', FoundryItems.item_ammo_hollow));
+
     //Mold crafting with vanilla items
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));

@@ -400,6 +400,15 @@ item.component1.name=Heating Coil
 item.component2.name=Refractory Clay
 item.component3.name=Refractory Brick
 item.component4.name=Blank Soft Mold
+item.component5.name=Gun Barrel
+item.component6.name=Revolver Drum
+item.component7.name=Revolver Frame
+item.component8.name=Bullet Casing
+item.component9.name=Bullet
+item.component10.name=Hollow Point Bullet
+item.component11.name=Jacketed Bullet
+item.component12.name=Small Pile of Gunpowder
+item.component13.name=Small Pile of Blaze Powder
 
 item.mold0.name=Ingot Mold
 item.mold1.name=Soft Ingot Mold

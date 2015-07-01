@@ -91,6 +91,12 @@ public class ContainerRevolver extends Container
         {
           return null;
         }
+      } else if(slot_index < SLOTS_INVENTORY)
+      {
+        if(!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
+        {
+          return null;
+        }
       } else
       {
         return null;

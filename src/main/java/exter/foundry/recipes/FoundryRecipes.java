@@ -667,7 +667,7 @@ public class FoundryRecipes
         'A', FoundryItems.item_round_hollow));
 
     GameRegistry.addShapelessRecipe(
-        new ItemStack(FoundryItems.item_round_poison),
+        new ItemStack(FoundryItems.item_round_poison,2),
         Items.spider_eye, 
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);

@@ -57,8 +57,19 @@ public class ItemMold extends Item
   static public final int MOLD_BOW_SOFT = 41;
   static public final int MOLD_FLUXPLATE = 42;
   static public final int MOLD_FLUXPLATE_SOFT = 43;
-
-
+  static public final int MOLD_BULLET = 44;
+  static public final int MOLD_BULLET_SOFT = 45;
+  static public final int MOLD_BULLET_HOLLOW = 46;
+  static public final int MOLD_BULLET_HOLLOW_SOFT = 47;
+  static public final int MOLD_BULLET_CASING = 48;
+  static public final int MOLD_BULLET_CASING_SOFT = 49;
+  static public final int MOLD_GUN_BARREL = 50;
+  static public final int MOLD_GUN_BARREL_SOFT = 51;
+  static public final int MOLD_REVOLVER_DRUM = 52;
+  static public final int MOLD_REVOLVER_DRUM_SOFT = 53;
+  static public final int MOLD_REVOLVER_FRAME = 54;
+  static public final int MOLD_REVOLVER_FRAME_SOFT = 55;
+  
   static private final String[] ICON_PATHS = 
   {
     "foundry:mold_ingot",
@@ -104,8 +115,20 @@ public class ItemMold extends Item
     "foundry:mold_bow",
     "foundry:claymold_bow",
     "foundry:mold_fluxplate",
-    "foundry:claymold_fluxplate"
-  };
+    "foundry:claymold_fluxplate",
+    "foundry:mold_bullet",
+    "foundry:claymold_bullet",
+    "foundry:mold_bulletHollow",
+    "foundry:claymold_bulletHollow",
+    "foundry:mold_bulletCasing",
+    "foundry:claymold_bulletCasing",
+    "foundry:mold_gunBarrel",
+    "foundry:claymold_gunBarrel",
+    "foundry:mold_revolverDrum",
+    "foundry:claymold_revolverDrum",
+    "foundry:mold_revolverFrame",
+    "foundry:claymold_revolverFrame"
+};
   
   static public final String[] REGISTRY_NAMES = 
   {
@@ -153,6 +176,18 @@ public class ItemMold extends Item
     "itemSoftBowMold",
     "itemFluxPlateMold",
     "itemSoftFluxPlateMold",
+    "ItemBulletMold",
+    "ItemSoftBulletMold",
+    "ItemBulletHollowMold",
+    "ItemSoftBulletHollowMold",
+    "ItemBulletCasingMold",
+    "ItemSoftBulletCasingMold",
+    "ItemGunBarrelMold",
+    "ItemSoftGunBarrelMold",
+    "ItemRevolverDrumMold",
+    "ItemSoftRevolverDrumMold",
+    "ItemRevolverFrameMold",
+    "ItemSoftRevolverFrameMold"
   };
 
   

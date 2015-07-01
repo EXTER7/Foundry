@@ -454,7 +454,19 @@ item.mold40.name=Bow Mold
 item.mold41.name=Soft Bow Mold
 item.mold42.name=Flux Plate Mold
 item.mold43.name=Soft Flux Plate Mold
-
+item.mold44.name=Bullet Mold
+item.mold45.name=Soft Bullet Mold
+item.mold46.name=Hollow Point Bullet Mold
+item.mold47.name=Soft Hollow Point Bullet Mold
+item.mold48.name=Bullet Casing Mold
+item.mold49.name=Soft Bullet Casing Mold
+item.mold50.name=Gun Barrel Mold
+item.mold51.name=Soft Gun Barrel Mold
+item.mold52.name=Revolver Drum Mold
+item.mold53.name=Soft Revolver Drum Mold
+item.mold54.name=Revolver Frame Mold
+item.mold55.name=Soft Revolver Frame Mold
+  
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot
 item.ingot2.name=Bronze Ingot

@@ -58,6 +58,7 @@ public class FoundryRecipes
   static public Fluid liquid_silver;
   static public Fluid liquid_steel;
   static public Fluid liquid_cupronickel;
+  static public Fluid liquid_lead;
   static public Fluid liquid_rubber;
 
   static public void PreInit()
@@ -76,8 +77,8 @@ public class FoundryRecipes
     liquid_silver = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Silver", 1250, 15);
     liquid_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Cupronickel", 1750, 15);
+    liquid_lead = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);  
 
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lead", 650, 1);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aluminum", 1100, 15);  
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Chromium", 2200, 8);   
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Platinum", 2050, 15);  
@@ -243,6 +244,14 @@ public class FoundryRecipes
     ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
     ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
+
+    ItemStack mold_bullet = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET);
+    ItemStack mold_bullet_hollow = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET_HOLLOW);
+    ItemStack mold_bullet_casing = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET_CASING);
+    ItemStack mold_gun_barrel = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GUN_BARREL);
+    ItemStack mold_revolver_drum = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_REVOLVER_DRUM);
+    ItemStack mold_revolver_frame = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_REVOLVER_FRAME);
+
     
     CastingRecipeManager.instance.AddMold(mold_ingot);
     CastingRecipeManager.instance.AddMold(mold_cable_ic2);
@@ -253,6 +262,12 @@ public class FoundryRecipes
     CastingRecipeManager.instance.AddMold(mold_plate_ic2);
     CastingRecipeManager.instance.AddMold(mold_block);
     CastingRecipeManager.instance.AddMold(mold_gear);
+    CastingRecipeManager.instance.AddMold(mold_bullet);
+    CastingRecipeManager.instance.AddMold(mold_bullet_hollow);
+    CastingRecipeManager.instance.AddMold(mold_bullet_casing);
+    CastingRecipeManager.instance.AddMold(mold_gun_barrel);
+    CastingRecipeManager.instance.AddMold(mold_revolver_drum);
+    CastingRecipeManager.instance.AddMold(mold_revolver_frame);
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -412,6 +427,36 @@ public class FoundryRecipes
         InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
       }
     }
+    
+    ItemStack bullet = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET);
+    ItemStack bullet_hollow = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET_HOLLOW);
+    ItemStack bullet_jacketed = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_BULLET_JACKETED);
+    ItemStack bullet_casing = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING);
+    ItemStack gun_barrel = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_GUN_BARREL);
+    ItemStack revolver_drum = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_REVOLVER_DRUM);
+    ItemStack revolver_frame = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_REVOLVER_FRAME);
+    
+    CastingRecipeManager.instance.AddRecipe(
+        bullet,
+        new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET * 3), mold_bullet, null);
+    CastingRecipeManager.instance.AddRecipe(
+        bullet_hollow,
+        new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET * 3), mold_bullet_hollow, null);
+    CastingRecipeManager.instance.AddRecipe(
+        bullet_jacketed,
+        new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_NUGGET), mold_bullet, bullet);
+    CastingRecipeManager.instance.AddRecipe(
+        bullet_casing,
+        new FluidStack(liquid_brass, FoundryAPI.FLUID_AMOUNT_NUGGET), mold_bullet_casing, null);
+    CastingRecipeManager.instance.AddRecipe(
+        gun_barrel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_gun_barrel, null);
+    CastingRecipeManager.instance.AddRecipe(
+        revolver_drum,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 4), mold_revolver_drum, null);
+    CastingRecipeManager.instance.AddRecipe(
+        revolver_frame,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2), mold_revolver_frame, null);
   }
 
   static public void Init()
@@ -668,6 +713,48 @@ public class FoundryRecipes
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.diamond_sword));
     }
 
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET_SOFT),
+        "   ",
+        " M ",
+        "   ",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET_HOLLOW_SOFT),
+        "   ",
+        "   ",
+        " M ",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BULLET_CASING_SOFT),
+        "   ",
+        "   ",
+        "M  ",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GUN_BARREL_SOFT),
+        "   ",
+        "   ",
+        "  M",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+    
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_REVOLVER_DRUM_SOFT),
+        "   ",
+        "  M",
+        "   ",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+
+    GameRegistry.addRecipe(
+        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_REVOLVER_FRAME_SOFT),
+        "  M",
+        "   ",
+        "   ",
+        'M', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD));
+
     FMLControlledNamespacedRegistry<Block> reg = GameData.getBlockRegistry();
     for(Object obj:reg)
     {
@@ -719,6 +806,13 @@ public class FoundryRecipes
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_SOFT,ItemMold.MOLD_PLATE);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_INSULATED_CABLE_IC2_SOFT,ItemMold.MOLD_INSULATED_CABLE_IC2);
+
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BULLET_SOFT,ItemMold.MOLD_BULLET);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BULLET_HOLLOW_SOFT,ItemMold.MOLD_BULLET_HOLLOW);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BULLET_CASING_SOFT,ItemMold.MOLD_BULLET_CASING);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GUN_BARREL_SOFT,ItemMold.MOLD_GUN_BARREL);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_REVOLVER_DRUM_SOFT,ItemMold.MOLD_REVOLVER_DRUM);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_REVOLVER_FRAME_SOFT,ItemMold.MOLD_REVOLVER_FRAME);
 
     if(FoundryConfig.recipe_tools_armor)
     {

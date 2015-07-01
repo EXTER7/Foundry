@@ -260,8 +260,8 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     Point offset = gui.getRecipePosition(recipe);
     
     //Workaround to access GUI protected fields.
-    int gui_guiLeft = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "field_147003_i");
-    int gui_guiTop = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "field_147009_r");
+    int gui_guiLeft = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, 4);
+    int gui_guiTop = (Integer)ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, 5);
     
     Rectangle absoluteLoc = new Rectangle(rect.x + offset.x + gui_guiLeft, rect.y + offset.y + gui_guiTop, rect.width, rect.height);
     return absoluteLoc.contains(GuiDraw.getMousePosition());

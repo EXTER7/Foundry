@@ -1,9 +1,12 @@
 package exter.foundry.item.ammo;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.firearms.IFirearmAmmo;
 import exter.foundry.creativetab.FoundryTabFirearms;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSourceIndirect;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -60,7 +64,7 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   {
     Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
     float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance / 2.0f;
+    float damage = 30 - distance / 3.0f;
     if(damage > 8)
     {
       damage = 8;
@@ -78,5 +82,19 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   public int getItemStackLimit(ItemStack stack)
   {
     return 16;
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
+  {
+    if(GuiScreen.isShiftKeyDown())
+    {
+      list.add(EnumChatFormatting.BLUE + "Base Damage: 8");
+      list.add(EnumChatFormatting.BLUE + "Base Range: 60");
+      list.add(EnumChatFormatting.BLUE + "Fallof Range: 24");
+      list.add(EnumChatFormatting.YELLOW + "Sets target on fire.");
+    }
   }
 }

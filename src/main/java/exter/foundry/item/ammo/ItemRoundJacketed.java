@@ -4,13 +4,12 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.api.firearms.IFirearmAmmo;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSourceIndirect;
@@ -20,15 +19,15 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemFireAmmo extends Item implements IFirearmAmmo
+public class ItemRoundJacketed extends Item implements IFirearmRound
 {
   public IIcon icon;
   
-  public ItemFireAmmo()
+  public ItemRoundJacketed()
   {
     super();
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("ammoFire");
+    setUnlocalizedName("roundJacketed");
   }
 
 
@@ -36,7 +35,7 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   @SideOnly(Side.CLIENT)
   public void registerIcons(IIconRegister register)
   {
-    icon = register.registerIcon("foundry:ammoFire");
+    icon = register.registerIcon("foundry:round_jacketed");
   }
 
   @Override
@@ -50,13 +49,7 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   @Override
   public void OnHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
   {
-    x += side.offsetX;
-    y += side.offsetY;
-    z += side.offsetZ;
-    if(world.isAirBlock(x, y, z))
-    {
-      world.setBlock(x, y, z, Blocks.fire);
-    }
+
   }
 
   @Override
@@ -64,20 +57,17 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   {
     Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
     float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance / 3.0f;
-    if(damage > 8)
+    float damage = 27 - distance / 5.0f;
+    if(damage > 7)
     {
-      damage = 8;
+      damage = 7;
     }
     if(damage >= 1)
     {
-      if (!entity.isImmuneToFire() && entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
-      {
-        entity.setFire(5);
-      }
+      entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage);
     }
   }
-
+  
   @Override
   public int getItemStackLimit(ItemStack stack)
   {
@@ -91,10 +81,9 @@ public class ItemFireAmmo extends Item implements IFirearmAmmo
   {
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(EnumChatFormatting.BLUE + "Base Damage: 8");
-      list.add(EnumChatFormatting.BLUE + "Base Range: 60");
-      list.add(EnumChatFormatting.BLUE + "Fallof Range: 24");
-      list.add(EnumChatFormatting.YELLOW + "Sets target on fire.");
+      list.add(EnumChatFormatting.BLUE + "Base Damage : 7");
+      list.add(EnumChatFormatting.BLUE + "Base Range: 100");
+      list.add(EnumChatFormatting.BLUE + "Fallof Range: 35");
     }
   }
 }

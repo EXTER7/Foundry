@@ -5,7 +5,7 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
-import exter.foundry.api.firearms.IFirearmAmmo;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.gui.GuiScreen;
@@ -134,7 +134,7 @@ public class ItemRevolver extends Item
         if(!world.isRemote)
         {
           MovingObjectPosition obj = Trace(world, player);
-          IFirearmAmmo ammo = (IFirearmAmmo) ammo_item.getItem();
+          IFirearmRound ammo = (IFirearmRound) ammo_item.getItem();
           world.playSoundAtEntity(player, "foundry:revolver_fire", 0.9F, 1F);
           if(obj != null)
           {
@@ -319,7 +319,7 @@ public class ItemRevolver extends Item
     NBTTagCompound nbt = new NBTTagCompound();
     nbt.setInteger("position", 0);
     int i;
-    ItemStack ammo = new ItemStack(FoundryItems.item_ammo);
+    ItemStack ammo = new ItemStack(FoundryItems.item_round);
     for(i = 0; i < 8; i++)
     {
       NBTTagCompound slot = new NBTTagCompound();

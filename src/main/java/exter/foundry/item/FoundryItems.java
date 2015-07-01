@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import exter.foundry.item.ammo.ItemAmmo;
-import exter.foundry.item.ammo.ItemAmmoJacketed;
-import exter.foundry.item.ammo.ItemFireAmmo;
-import exter.foundry.item.ammo.ItemHollowAmmo;
+import exter.foundry.item.ammo.ItemRound;
+import exter.foundry.item.ammo.ItemRoundJacketed;
+import exter.foundry.item.ammo.ItemRoundFire;
+import exter.foundry.item.ammo.ItemRoundHollow;
 import exter.foundry.registry.ItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -21,10 +21,10 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   static public ItemRevolver item_revolver;
-  static public ItemAmmo item_ammo;
-  static public ItemAmmoJacketed item_ammo_jacketed;
-  static public ItemHollowAmmo item_ammo_hollow;
-  static public ItemFireAmmo item_ammo_fire;
+  static public ItemRound item_round;
+  static public ItemRoundJacketed item_round_jacketed;
+  static public ItemRoundHollow item_round_hollow;
+  static public ItemRoundFire item_round_fire;
   
   static public ItemRefractoryFluidContainer item_container;
   
@@ -38,19 +38,19 @@ public class FoundryItems
     item_mold = new ItemMold();
     item_ingot = new ItemIngot();
     item_revolver = new ItemRevolver();
-    item_ammo = new ItemAmmo();
-    item_ammo_jacketed = new ItemAmmoJacketed();
-    item_ammo_hollow = new ItemHollowAmmo();
-    item_ammo_fire = new ItemFireAmmo();
+    item_round = new ItemRound();
+    item_round_jacketed = new ItemRoundJacketed();
+    item_round_hollow = new ItemRoundHollow();
+    item_round_fire = new ItemRoundFire();
     
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
     GameRegistry.registerItem(item_ingot, "foundryIngot");
     GameRegistry.registerItem(item_revolver, "foundryRevolver");
-    GameRegistry.registerItem(item_ammo, "foundryAmmo");
-    GameRegistry.registerItem(item_ammo_jacketed, "foundryAmmoJacketed");
-    GameRegistry.registerItem(item_ammo_hollow, "foundryAmmoHollow");
-    GameRegistry.registerItem(item_ammo_fire, "foundryAmmoFire");
+    GameRegistry.registerItem(item_round, "foundryRound");
+    GameRegistry.registerItem(item_round_jacketed, "foundryRoundJacketed");
+    GameRegistry.registerItem(item_round_hollow, "foundryRoundHollow");
+    GameRegistry.registerItem(item_round_fire, "foundryRoundFire");
     
     for (i = 0; i < ItemFoundryComponent.REGISTRY_NAMES.length; i++)
     {

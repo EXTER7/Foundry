@@ -1,7 +1,7 @@
 package exter.foundry.slot;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import exter.foundry.api.firearms.IFirearmAmmo;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.inventory.InventoryRevolver;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -17,7 +17,7 @@ public class SlotRevolverAmmo extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return stack.getItem() instanceof IFirearmAmmo;
+    return stack.getItem() instanceof IFirearmRound;
   }
 
   @Override

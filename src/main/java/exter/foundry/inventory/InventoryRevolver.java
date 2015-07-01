@@ -1,6 +1,6 @@
 package exter.foundry.inventory;
 
-import exter.foundry.api.firearms.IFirearmAmmo;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -134,7 +134,7 @@ public class InventoryRevolver implements IInventory
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack stack)
   {
-    return stack.getItem() instanceof IFirearmAmmo;
+    return stack.getItem() instanceof IFirearmRound;
   }
 
   @Override

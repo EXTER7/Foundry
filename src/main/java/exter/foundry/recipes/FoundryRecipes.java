@@ -633,7 +633,7 @@ public class FoundryRecipes
         'B', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLAZEPOWDER_SMALL));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.item_ammo,
+        FoundryItems.item_round,
         "B",
         "G",
         "C",
@@ -642,7 +642,7 @@ public class FoundryRecipes
         'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.item_ammo_hollow,
+        FoundryItems.item_round_hollow,
         "B",
         "G",
         "C",
@@ -651,7 +651,7 @@ public class FoundryRecipes
         'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.item_ammo_jacketed,
+        FoundryItems.item_round_jacketed,
         "B",
         "G",
         "C",
@@ -660,11 +660,11 @@ public class FoundryRecipes
         'C', new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.item_ammo_fire,
+        FoundryItems.item_round_fire,
         "B",
         "A",
         'B', "dustSmallBlaze", 
-        'A', FoundryItems.item_ammo_hollow));
+        'A', FoundryItems.item_round_hollow));
 
     //Mold crafting with vanilla items
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));

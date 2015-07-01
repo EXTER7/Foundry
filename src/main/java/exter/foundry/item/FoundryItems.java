@@ -6,6 +6,7 @@ import java.util.Map;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.item.ammo.ItemRound;
 import exter.foundry.item.ammo.ItemRoundJacketed;
+import exter.foundry.item.ammo.ItemRoundPoison;
 import exter.foundry.item.ammo.ItemRoundFire;
 import exter.foundry.item.ammo.ItemRoundHollow;
 import exter.foundry.registry.ItemRegistry;
@@ -25,6 +26,7 @@ public class FoundryItems
   static public ItemRoundJacketed item_round_jacketed;
   static public ItemRoundHollow item_round_hollow;
   static public ItemRoundFire item_round_fire;
+  static public ItemRoundPoison item_round_poison;
   
   static public ItemRefractoryFluidContainer item_container;
   
@@ -42,6 +44,7 @@ public class FoundryItems
     item_round_jacketed = new ItemRoundJacketed();
     item_round_hollow = new ItemRoundHollow();
     item_round_fire = new ItemRoundFire();
+    item_round_poison = new ItemRoundPoison();
     
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
@@ -51,6 +54,7 @@ public class FoundryItems
     GameRegistry.registerItem(item_round_jacketed, "foundryRoundJacketed");
     GameRegistry.registerItem(item_round_hollow, "foundryRoundHollow");
     GameRegistry.registerItem(item_round_fire, "foundryRoundFire");
+    GameRegistry.registerItem(item_round_poison, "foundryRoundPoison");
     
     for (i = 0; i < ItemFoundryComponent.REGISTRY_NAMES.length; i++)
     {

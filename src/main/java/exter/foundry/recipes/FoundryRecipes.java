@@ -666,6 +666,12 @@ public class FoundryRecipes
         'B', "dustSmallBlaze", 
         'A', FoundryItems.item_round_hollow));
 
+    GameRegistry.addShapelessRecipe(
+        new ItemStack(FoundryItems.item_round_poison),
+        Items.spider_eye, 
+        FoundryItems.item_round_hollow,
+        FoundryItems.item_round_hollow);
+
     //Mold crafting with vanilla items
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));

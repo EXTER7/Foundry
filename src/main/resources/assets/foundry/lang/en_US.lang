@@ -492,6 +492,7 @@ item.roundNormal.name=Round
 item.roundJacketed.name=Jacketed Round
 item.roundHollow.name=Hollow Point Round
 item.roundFire.name=Incendiary Round
+item.roundPoison.name=Poison Round
 
 
 tc.research.capmold.text=This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. 

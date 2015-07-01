@@ -9,6 +9,7 @@ import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,16 +56,19 @@ public class ItemRoundJacketed extends Item implements IFirearmRound
   @Override
   public void OnHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity)
   {
-    Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
-    float distance = (float)end.distanceTo(from);
-    float damage = 27 - distance / 5.0f;
-    if(damage > 7)
+    if(entity instanceof EntityLiving)
     {
-      damage = 7;
-    }
-    if(damage >= 1)
-    {
-      entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage);
+      Vec3 end = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
+      float distance = (float) end.distanceTo(from);
+      float damage = 27 - distance / 5.0f;
+      if(damage > 7)
+      {
+        damage = 7;
+      }
+      if(damage >= 1)
+      {
+        entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage);
+      }
     }
   }
   

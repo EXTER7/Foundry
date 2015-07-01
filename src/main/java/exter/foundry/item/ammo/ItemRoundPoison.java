@@ -65,20 +65,20 @@ public class ItemRoundPoison extends Item implements IFirearmRound
   @Override
   public void OnHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity)
   {
-    Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
-    float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance / 3.0f;
-    if(damage > 8)
+    if(entity instanceof EntityLiving)
     {
-      damage = 8;
-    }
-    if(damage >= 1)
-    {
-      if(entity instanceof EntityLiving)
+      Vec3 end = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
+      float distance = (float) end.distanceTo(from);
+      float damage = 30 - distance / 3.0f;
+      if(damage > 8)
       {
-        if (entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
+        damage = 8;
+      }
+      if(damage >= 1)
+      {
+        if(entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
         {
-          ((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.poison.id,400));
+          ((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.poison.id, 400));
         }
       }
     }

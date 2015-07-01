@@ -9,6 +9,7 @@ import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -62,18 +63,21 @@ public class ItemRoundFire extends Item implements IFirearmRound
   @Override
   public void OnHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity)
   {
-    Vec3 end = Vec3.createVectorHelper( entity.posX, entity.posY, entity.posZ); 
-    float distance = (float)end.distanceTo(from);
-    float damage = 30 - distance / 3.0f;
-    if(damage > 8)
+    if(entity instanceof EntityLiving)
     {
-      damage = 8;
-    }
-    if(damage >= 1)
-    {
-      if (!entity.isImmuneToFire() && entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
+      Vec3 end = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
+      float distance = (float) end.distanceTo(from);
+      float damage = 30 - distance / 3.0f;
+      if(damage > 8)
       {
-        entity.setFire(5);
+        damage = 8;
+      }
+      if(damage >= 1)
+      {
+        if(!entity.isImmuneToFire() && entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
+        {
+          entity.setFire(5);
+        }
       }
     }
   }

@@ -141,10 +141,10 @@ public class ItemRevolver extends Item
             switch(obj.typeOfHit)
             {
               case BLOCK:
-                ammo.OnHitBlock(ammo_item, player, (Vec3) obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+                ammo.OnBulletHitBlock(ammo_item, player, (Vec3) obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
                 break;
               case ENTITY:
-                ammo.OnHitEntity(ammo_item, player, (Vec3) obj.hitInfo, obj.entityHit);
+                ammo.OnBulletHitEntity(ammo_item, player, (Vec3) obj.hitInfo, obj.entityHit);
                 break;
               default:
                 break;

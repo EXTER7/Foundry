@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import exter.foundry.item.ammo.ItemRound;
+import exter.foundry.item.ammo.ItemRoundNormal;
 import exter.foundry.item.ammo.ItemRoundJacketed;
 import exter.foundry.item.ammo.ItemRoundPoison;
 import exter.foundry.item.ammo.ItemRoundFire;
@@ -22,7 +22,7 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   static public ItemRevolver item_revolver;
-  static public ItemRound item_round;
+  static public ItemRoundNormal item_round;
   static public ItemRoundJacketed item_round_jacketed;
   static public ItemRoundHollow item_round_hollow;
   static public ItemRoundFire item_round_fire;
@@ -40,7 +40,7 @@ public class FoundryItems
     item_mold = new ItemMold();
     item_ingot = new ItemIngot();
     item_revolver = new ItemRevolver();
-    item_round = new ItemRound();
+    item_round = new ItemRoundNormal();
     item_round_jacketed = new ItemRoundJacketed();
     item_round_hollow = new ItemRoundHollow();
     item_round_fire = new ItemRoundFire();

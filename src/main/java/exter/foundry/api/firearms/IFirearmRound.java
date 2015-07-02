@@ -9,6 +9,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IFirearmRound
 {
-  public void OnHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world,int x,int y,int z,ForgeDirection side);
-  public void OnHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity);
+  public void OnBulletHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world,int x,int y,int z,ForgeDirection side);
+  public void OnBulletHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity);
 }

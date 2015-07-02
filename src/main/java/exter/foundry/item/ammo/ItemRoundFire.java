@@ -4,30 +4,26 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemRoundFire extends Item implements IFirearmRound
+public class ItemRoundFire extends ItemRoundBase
 {
   public IIcon icon;
   
   public ItemRoundFire()
   {
-    super();
+    super(8, 50, 25);
     setCreativeTab(FoundryTabFirearms.tab);
     setUnlocalizedName("roundFire");
   }
@@ -49,43 +45,16 @@ public class ItemRoundFire extends Item implements IFirearmRound
 
 
   @Override
-  public void OnHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
+  public void OnBulletHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
   {
-    x += side.offsetX;
-    y += side.offsetY;
-    z += side.offsetZ;
-    if(world.isAirBlock(x, y, z))
+    super.OnBulletHitBlock(ammo, player, from, world, x, y, z, side);
+    int xx = x + side.offsetX;
+    int yy = y + side.offsetY;
+    int zz = z + side.offsetZ;
+    if(world.isAirBlock(xx, yy, zz) && !world.isAirBlock(x, y, z))
     {
-      world.setBlock(x, y, z, Blocks.fire);
+      world.setBlock(xx, yy, zz, Blocks.fire);
     }
-  }
-
-  @Override
-  public void OnHitEntity(ItemStack ammo, EntityPlayer player, Vec3 from, Entity entity)
-  {
-    if(entity instanceof EntityLiving)
-    {
-      Vec3 end = Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ);
-      float distance = (float) end.distanceTo(from);
-      float damage = 30 - distance / 3.0f;
-      if(damage > 8)
-      {
-        damage = 8;
-      }
-      if(damage >= 1)
-      {
-        if(!entity.isImmuneToFire() && entity.attackEntityFrom((new EntityDamageSourceIndirect("bullet", entity, player)).setProjectile(), damage))
-        {
-          entity.setFire(5);
-        }
-      }
-    }
-  }
-
-  @Override
-  public int getItemStackLimit(ItemStack stack)
-  {
-    return 16;
   }
   
   @SuppressWarnings("unchecked")
@@ -93,12 +62,20 @@ public class ItemRoundFire extends Item implements IFirearmRound
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
   {
+    super.addInformation(stack, player, list, par4);
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(EnumChatFormatting.BLUE + "Base Damage: 8");
-      list.add(EnumChatFormatting.BLUE + "Base Range: 60");
-      list.add(EnumChatFormatting.BLUE + "Fallof Range: 24");
       list.add(EnumChatFormatting.YELLOW + "Sets target on fire.");
+    }
+  }
+
+
+  @Override
+  protected void OnBulletDamagedLivingEntity(EntityLiving entity)
+  {
+    if(!entity.isImmuneToFire())
+    {
+      entity.setFire(5);
     }
   }
 }

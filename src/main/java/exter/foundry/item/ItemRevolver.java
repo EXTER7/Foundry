@@ -70,7 +70,7 @@ public class ItemRevolver extends Item
     float syaw = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI);
     float cpitch = -MathHelper.cos(pitch * 0.017453292F);
     
-    double distance = 100.0D;
+    double distance = 150.0D;
     
     double dx = syaw * cpitch * distance;
     double dy = MathHelper.sin(pitch * 0.017453292F) * distance;
@@ -83,8 +83,8 @@ public class ItemRevolver extends Item
     
     
     @SuppressWarnings("unchecked")
-    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(100, 100, 100));
-    double min_dist = obj != null?obj.hitVec.distanceTo(start):100;
+    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(150, 150, 100));
+    double min_dist = obj != null?obj.hitVec.distanceTo(start):150;
     for(Entity ent:entities)
     {
       if(ent.canBeCollidedWith() && ent.boundingBox != null)

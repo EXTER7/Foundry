@@ -4,6 +4,8 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Mod;
@@ -197,6 +199,27 @@ public class ModFoundry
       WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_LEAD);
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
+
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),8,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),7,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),8,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),6,1,3));
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),6,1,2));
+    ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),6,1,2));
+
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),12,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),10,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),12,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),9,1,3));
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),9,1,2));
+    ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),9,1,2));
+
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),14,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),12,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),14,1,5));
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),11,1,3));
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),11,1,2));
+    ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),11,1,2));
 
     proxy.Init();
   }

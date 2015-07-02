@@ -719,47 +719,12 @@ public class FoundryRecipes
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.diamond_sword));
     }
 
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_BULLET_SOFT),
-        "   ",
-        " M ",
-        "   ",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
-
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_BULLET_HOLLOW_SOFT),
-        "   ",
-        "   ",
-        " M ",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
-
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_BULLET_CASING_SOFT),
-        "   ",
-        "   ",
-        "M  ",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
-
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_GUN_BARREL_SOFT),
-        "   ",
-        "   ",
-        "  M",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
-    
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_REVOLVER_DRUM_SOFT),
-        "   ",
-        "  M",
-        "   ",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
-
-    GameRegistry.addRecipe(
-        FoundryItems.Mold(ItemMold.MOLD_REVOLVER_FRAME_SOFT),
-        "  M",
-        "   ",
-        "   ",
-        'M', FoundryItems.Component(ItemComponent.COMPONENT_BLANKMOLD));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BULLET_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BULLET_HOLLOW_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BULLET_CASING_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_GUN_BARREL_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_REVOLVER_DRUM_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM));
+    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_REVOLVER_FRAME_SOFT, FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME));
 
     FMLControlledNamespacedRegistry<Block> reg = GameData.getBlockRegistry();
     for(Object obj:reg)

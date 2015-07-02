@@ -6,7 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import exter.foundry.slot.SlotOutput;
+import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 
 public class ContainerAlloyFurnace extends Container

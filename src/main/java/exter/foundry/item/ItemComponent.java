@@ -11,12 +11,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
-public class ItemFoundryComponent extends Item
+public class ItemComponent extends Item
 {
   static public final int COMPONENT_GEAR = 0;
   static public final int COMPONENT_HEATINGCOIL = 1;
-  static public final int COMPONENT_FOUNDRYCLAY = 2;
-  static public final int COMPONENT_FOUNDRYBRICK = 3;
+  static public final int COMPONENT_REFRACTORYCLAY = 2;
+  static public final int COMPONENT_REFRACTORYBRICK = 3;
   static public final int COMPONENT_BLANKMOLD = 4;
   static public final int COMPONENT_GUN_BARREL = 5;
   static public final int COMPONENT_REVOLVER_DRUM = 6;
@@ -69,7 +69,7 @@ public class ItemFoundryComponent extends Item
   @SideOnly(Side.CLIENT)
   private IIcon[] icons;
 
-  public ItemFoundryComponent() {
+  public ItemComponent() {
     super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);

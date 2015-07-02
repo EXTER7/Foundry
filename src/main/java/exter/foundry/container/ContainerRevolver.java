@@ -1,9 +1,9 @@
 package exter.foundry.container;
 
 
+import exter.foundry.container.slot.SlotLocked;
+import exter.foundry.container.slot.SlotRevolverAmmo;
 import exter.foundry.inventory.InventoryRevolver;
-import exter.foundry.slot.SlotLocked;
-import exter.foundry.slot.SlotRevolverAmmo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

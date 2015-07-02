@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -161,12 +161,12 @@ public class ModIntegrationThaumcraft extends ModIntegration
     CastingRecipeManager.instance.AddRecipe(
         ingot_thaumium,
         new FluidStack(liquid_thaumium,FoundryAPI.FLUID_AMOUNT_INGOT),
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT),
+        FoundryItems.Mold(ItemMold.MOLD_INGOT),
         null);
     CastingRecipeManager.instance.AddRecipe(
         ingot_voidmetal,
         new FluidStack(liquid_voidmetal,FoundryAPI.FLUID_AMOUNT_INGOT),
-        new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT),
+        FoundryItems.Mold(ItemMold.MOLD_INGOT),
         null);
 
     AspectList mold_aspects = new AspectList();
@@ -174,20 +174,20 @@ public class ModIntegrationThaumcraft extends ModIntegration
     mold_aspects.add(Aspect.EARTH, 4);
     mold_aspects.add(Aspect.WATER, 2);
     
-    ItemStack capmold_soft = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC_SOFT);
+    ItemStack capmold_soft = FoundryItems.Mold(ItemMold.MOLD_CAP_TC_SOFT);
 
     ShapelessArcaneRecipe capmold_recipe_iron = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
         capmold_soft,
         mold_aspects,
-        new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
+        new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD),
         cap_iron);
 
     ShapelessArcaneRecipe capmold_recipe_copper = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
         "FOUNDRY_capmold",
         capmold_soft,
         mold_aspects,
-        new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLANKMOLD),
+        new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD),
         cap_copper);
 
     ResearchItem mold_research = new ResearchItem(
@@ -204,7 +204,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
     mold_research.setParents("CAP_copper","CAP_silver","CAP_thaumium");
     mold_research.registerResearchItem();
     
-    ItemStack cap_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_CAP_TC);
+    ItemStack cap_mold = FoundryItems.Mold(ItemMold.MOLD_CAP_TC);
     
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_CAP_TC_SOFT, ItemMold.MOLD_CAP_TC);
     CastingRecipeManager.instance.AddMold( cap_mold);

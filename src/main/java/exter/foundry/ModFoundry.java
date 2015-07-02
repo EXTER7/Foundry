@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Mod;
@@ -35,7 +34,7 @@ import exter.foundry.integration.ModIntegrationThaumcraft;
 import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.integration.ModIntegrationTwilightForest;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemComponent;
 import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.FoundryRecipes;
@@ -139,8 +138,8 @@ public class ModFoundry
     FoundryItems.RegisterItems(config);
     FoundryBlocks.RegisterBlocks(config);
 
-    OreDictionary.registerOre("dustSmallGunpowder", new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_GUNPOWDER_SMALL));
-    OreDictionary.registerOre("dustSmallBlaze", new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_BLAZEPOWDER_SMALL));
+    OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.Component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
+    OreDictionary.registerOre("dustSmallBlaze", FoundryItems.Component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
 
     FoundryRecipes.PreInit();
     
@@ -160,7 +159,6 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
-    //log.setParent(FMLLog.getLogger());
     ModIntegration.Init();
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");

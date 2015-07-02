@@ -124,7 +124,7 @@ public class ModIntegrationRailcraft extends ModIntegration
 
     if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
     {
-      ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
+      ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
       if(iron_gear != null)
       {
         MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
@@ -148,7 +148,7 @@ public class ModIntegrationRailcraft extends ModIntegration
     ModIntegration gti = GetIntegration("gregtech");
     if(gti == null || !Loader.isModLoaded("gregtech"))
     {
-      ItemStack mold_plate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PLATE);
+      ItemStack mold_plate = FoundryItems.Mold(ItemMold.MOLD_PLATE);
 
       CastingRecipeManager.instance.AddRecipe(copper_plate, new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       //CastingRecipeManager.instance.AddRecipe(tin_plate, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);

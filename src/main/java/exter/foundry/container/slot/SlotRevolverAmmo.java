@@ -1,4 +1,4 @@
-package exter.foundry.slot;
+package exter.foundry.container.slot;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import exter.foundry.api.firearms.IFirearmRound;

@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.slot.SlotContainer;
+import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

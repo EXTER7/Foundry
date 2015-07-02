@@ -89,8 +89,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
             new FluidStack(liquid_silver, 5),
             new FluidStack(liquid_redstone, 8) });
     
-      ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
-      ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
+      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+      ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
       
       CastingRecipeManager.instance.AddRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       CastingRecipeManager.instance.AddRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
@@ -128,7 +128,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
             CastingRecipeManager.instance.AddRecipe(
                 fluxplate,
                 new FluidStack(liquid_electrumflux, plate_amount),
-                new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_FLUXPLATE),
+                FoundryItems.Mold(ItemMold.MOLD_FLUXPLATE),
                 fluxgem2);
             FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_FLUXPLATE_SOFT, fluxplate);
             FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_FLUXPLATE_SOFT, ItemMold.MOLD_FLUXPLATE);

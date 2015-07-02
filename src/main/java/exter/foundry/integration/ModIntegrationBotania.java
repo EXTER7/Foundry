@@ -114,14 +114,14 @@ public class ModIntegrationBotania extends ModIntegration
         ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
         extra_dreamsticks2.stackSize = 2;
 
-        ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
-        ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
-        ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
-        ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
-        ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
-        ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
-        ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
-        ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
+        ItemStack mold_chestplate = FoundryItems.Mold(ItemMold.MOLD_CHESTPLATE);
+        ItemStack mold_pickaxe = FoundryItems.Mold(ItemMold.MOLD_PICKAXE);
+        ItemStack mold_axe = FoundryItems.Mold(ItemMold.MOLD_AXE);
+        ItemStack mold_shovel = FoundryItems.Mold(ItemMold.MOLD_SHOVEL);
+        ItemStack mold_sword = FoundryItems.Mold(ItemMold.MOLD_SWORD);
+        ItemStack mold_leggings = FoundryItems.Mold(ItemMold.MOLD_LEGGINGS);
+        ItemStack mold_helmet = FoundryItems.Mold(ItemMold.MOLD_HELMET);
+        ItemStack mold_boots = FoundryItems.Mold(ItemMold.MOLD_BOOTS);
 
         CastingRecipeManager.instance.AddRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
         CastingRecipeManager.instance.AddRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
@@ -174,8 +174,8 @@ public class ModIntegrationBotania extends ModIntegration
         FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT,     elementium_shovel);
         FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT,      elementium_sword);
       }
-      ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
-      ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
+      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+      ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.AddRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));

@@ -5,7 +5,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.item.ItemStack;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemComponent;
 
 public class CraftingEvents
 {
@@ -25,7 +25,7 @@ public class CraftingEvents
         if(is == null)
         {
           empty++;
-        } else if(is.getItem() == FoundryItems.item_component && is.getItemDamage() == ItemFoundryComponent.COMPONENT_BLANKMOLD)
+        } else if(is.getItem() == FoundryItems.item_component && is.getItemDamage() == ItemComponent.COMPONENT_BLANKMOLD)
         {
           blanks++;
         } else

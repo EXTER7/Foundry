@@ -222,7 +222,7 @@ public class ModIntegrationTiCon extends ModIntegration
     LiquidCasting basin_casting = TConstructRegistry.getBasinCasting();
     
     //Convert TiCon table casting recipes to Foundry Metal Caster recipes.
-    ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
+    ItemStack block_mold = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
     for(tconstruct.library.crafting.CastingRecipe casting:table_casting.getCastingRecipes())
     {
       if(casting.cast != null && !casting.consumeCast)
@@ -243,7 +243,7 @@ public class ModIntegrationTiCon extends ModIntegration
         }
         if(casting.cast.isItemEqual(ingot_cast))
         {
-          ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
+          ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
           if(casting.castingMetal.amount <= 6000)
           {
             CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, ingot_mold, null);

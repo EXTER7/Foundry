@@ -60,7 +60,7 @@ public class ModIntegrationForestry extends ModIntegration
         Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
         Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
 
-        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
         MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));

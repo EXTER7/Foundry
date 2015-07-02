@@ -52,7 +52,7 @@ public class ModIntegrationBuildcraft extends ModIntegration
       {
         Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
         Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_GEAR);
+        ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
         MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 

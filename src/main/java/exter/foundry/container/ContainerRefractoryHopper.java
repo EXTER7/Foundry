@@ -6,7 +6,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import exter.foundry.slot.SlotContainer;
+import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 
 public class ContainerRefractoryHopper extends Container

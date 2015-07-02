@@ -1,9 +1,9 @@
 package exter.foundry.container;
 
+import exter.foundry.container.slot.SlotCasterMold;
+import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.slot.SlotCasterMold;
-import exter.foundry.slot.SlotOutput;
-import exter.foundry.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

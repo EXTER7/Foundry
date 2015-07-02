@@ -5,7 +5,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import exter.foundry.slot.SlotOutput;
+import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 
 public class ContainerMaterialRouter extends Container

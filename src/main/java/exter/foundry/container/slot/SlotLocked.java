@@ -1,4 +1,4 @@
-package exter.foundry.slot;
+package exter.foundry.container.slot;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

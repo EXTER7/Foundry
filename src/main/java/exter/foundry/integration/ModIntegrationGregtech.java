@@ -26,7 +26,7 @@ import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemFoundryComponent;
+import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -71,15 +71,15 @@ public class ModIntegrationGregtech extends ModIntegration
     ItemStack redstone_stack = new ItemStack(Items.redstone);
     ItemStack furnace_stack = new ItemStack(Blocks.furnace);
     ItemStack casing_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
-    ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_FOUNDRYBRICK);
+    ItemStack foundrybrick_stack = new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_REFRACTORYBRICK);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.EmptyContainer(2);
 
     
     if(change_recipes)
     {
-      ItemStack heating_coil = new ItemStack(FoundryItems.item_component,1,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
-      ItemStack heating_coil2 = new ItemStack(FoundryItems.item_component,2,ItemFoundryComponent.COMPONENT_HEATINGCOIL);
+      ItemStack heating_coil = new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_HEATINGCOIL);
+      ItemStack heating_coil2 = new ItemStack(FoundryItems.item_component,2,ItemComponent.COMPONENT_HEATINGCOIL);
       ItemStack machine_icf = new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF);
       ItemStack machine_infuser = new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER);
       
@@ -202,8 +202,8 @@ public class ModIntegrationGregtech extends ModIntegration
     });
     */
     
-    ItemStack ingot_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
-    ItemStack block_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_BLOCK);
+    ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+    ItemStack block_mold = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
     
     CastingRecipeManager.instance.AddRecipe("ingotStainlessSteel", new FluidStack(liquid_stainless_steel,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
     CastingRecipeManager.instance.AddRecipe("ingotCupronickel", new FluidStack(liquid_cupronickel,FoundryAPI.FLUID_AMOUNT_INGOT), ingot_mold, null);
@@ -258,7 +258,7 @@ public class ModIntegrationGregtech extends ModIntegration
 
   private void RegisterMetalRecipes(String partial_name, Fluid fluid)
   {
-    ItemStack plate_mold = new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_PLATE);
+    ItemStack plate_mold = FoundryItems.Mold(ItemMold.MOLD_PLATE);
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plate" + partial_name);
     MeltingRecipeManager.instance.AddRecipe("plate" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT));
     MeltingRecipeManager.instance.AddRecipe("dustSmall" + partial_name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT / 4));

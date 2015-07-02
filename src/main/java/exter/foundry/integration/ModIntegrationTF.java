@@ -118,8 +118,8 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_signalum = LiquidMetalRegistry.instance.GetFluid("Signalum");
       Fluid liquid_lumium = LiquidMetalRegistry.instance.GetFluid("Lumium");
 
-      ItemStack mold_ingot = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_INGOT);
-      ItemStack mold_block = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BLOCK);
+      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+      ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
 
@@ -236,7 +236,7 @@ public class ModIntegrationTF extends ModIntegration
       
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
-        ItemStack mold_gear = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_GEAR);
+        ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
         for(String metal_name:GEAR_METALS)
         {
           ItemStack gear = GameRegistry.findItemStack("ThermalFoundation", "gear" + metal_name, 1);

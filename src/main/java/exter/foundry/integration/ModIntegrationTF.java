@@ -97,6 +97,8 @@ public class ModIntegrationTF extends ModIntegration
 
     ItemStack pyrotheum = GameRegistry.findItemStack("ThermalFoundation", "dustPyrotheum", 1);
     ItemStack cryotheum = GameRegistry.findItemStack("ThermalFoundation", "dustCryotheum", 1);
+    ItemStack aerotheum = GameRegistry.findItemStack("ThermalFoundation", "dustAerotheum", 1);
+    ItemStack petrotheum = GameRegistry.findItemStack("ThermalFoundation", "dustPetrotheum", 1);
 
   
     if(is_loaded)
@@ -112,6 +114,8 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_coal = FluidRegistry.getFluid("coal");
       Fluid liquid_pyrotheum = FluidRegistry.getFluid("pyrotheum");
       Fluid liquid_cryotheum = FluidRegistry.getFluid("cryotheum");
+      Fluid liquid_aerotheum = FluidRegistry.getFluid("aerotheum");
+      Fluid liquid_petrotheum = FluidRegistry.getFluid("petrotheum");
 
       Fluid liquid_mithril = LiquidMetalRegistry.instance.GetFluid("Mithril");
       Fluid liquid_enderium = LiquidMetalRegistry.instance.GetFluid("Enderium");
@@ -129,7 +133,9 @@ public class ModIntegrationTF extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
       MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500);
-      MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 100), 320, 25);
+      MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
+      MeltingRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
+      MeltingRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
 
       if(override_redstone_melting)
       {

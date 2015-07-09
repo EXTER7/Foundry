@@ -42,8 +42,18 @@ public class ItemRevolver extends ItemTool
     setMaxStackSize(1);
     setUnlocalizedName("revolver");
     setHasSubtypes(true);
-
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
+  {
+    ItemStack mat = FoundryItems.ingot_stacks.get("Steel");
+    if(mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, p_82789_2_, false))
+    {
+      return true;
+    }
+    return super.getIsRepairable(p_82789_1_, p_82789_2_);
   }
 
 
@@ -123,6 +133,7 @@ public class ItemRevolver extends ItemTool
     return true;
   }
 
+  
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int p_77615_4_)
   {

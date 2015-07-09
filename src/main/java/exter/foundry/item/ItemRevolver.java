@@ -1,5 +1,6 @@
 package exter.foundry.item;
 
+import java.util.HashSet;
 import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
@@ -12,11 +13,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
@@ -28,13 +29,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemRevolver extends Item
+public class ItemRevolver extends ItemTool
 {
   public IIcon icon;
   
+  @SuppressWarnings("rawtypes")
   public ItemRevolver()
   {
-    super();
+    super(2,ToolMaterial.IRON,new HashSet());
+    setMaxDamage(800);
     setCreativeTab(FoundryTabFirearms.tab);
     setMaxStackSize(1);
     setUnlocalizedName("revolver");
@@ -152,15 +155,15 @@ public class ItemRevolver extends Item
           }
         } else
         {
-          player.rotationPitch -= 2;
+          player.rotationPitch -= 3;
           float pitch = -player.rotationPitch;
           float yaw = -player.rotationYaw;
           float cpitch = -MathHelper.cos(pitch * 0.017453292F);          
           player.motionX -= MathHelper.sin(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
           player.motionY -= MathHelper.sin(pitch * 0.017453292F) * 0.1;
           player.motionZ -= MathHelper.cos(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
-          player.swingItem();
         }
+        stack.damageItem(1, player);
         tag.setBoolean("Empty", true);
       } else
       {
@@ -216,6 +219,9 @@ public class ItemRevolver extends Item
   {
     list.add(Empty());
     list.add(Loaded());
+    ItemStack test= Loaded();
+    test.setItemDamage(getMaxDamage() - 3);
+    list.add(test);
   }
 
   @SuppressWarnings("unchecked")
@@ -241,12 +247,6 @@ public class ItemRevolver extends Item
         }
       }
     }
-  }
-
-  @Override
-  public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
-  {
-    return true;
   }
 
   @Override

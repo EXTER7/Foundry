@@ -53,7 +53,7 @@ public class ItemRevolver extends ItemTool
     {
       return true;
     }
-    return super.getIsRepairable(p_82789_1_, p_82789_2_);
+    return false;
   }
 
 

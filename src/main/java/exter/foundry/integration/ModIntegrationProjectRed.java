@@ -1,17 +1,24 @@
 package exter.foundry.integration;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.orestack.OreStack;
+import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.ItemRegistry;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModIntegrationProjectRed extends ModIntegration
 {
@@ -44,6 +51,7 @@ public class ModIntegrationProjectRed extends ModIntegration
       Fluid liquid_redalloy = LiquidMetalRegistry.instance.GetFluid("RedAlloy");
 
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
+      
 
       AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_redalloy,1),
           new FluidStack[] {
@@ -66,6 +74,25 @@ public class ModIntegrationProjectRed extends ModIntegration
               new OreStack("dustRedstone",4)});
 
       RegisterCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
+      
+      if(Loader.isModLoaded("ProjRed|Transmission"))
+      {
+        Item redalloy_wire_item = GameRegistry.findItem("ProjRed|Transmission", "projectred.transmission.wire");
+        ItemStack redalloy_wire = new ItemStack(redalloy_wire_item,1,0);
+        FluidStack wire_fluid = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4);
+        FluidStack wire_fluid_bundled = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4 * 5);
+        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_WIRE_PR_SOFT, redalloy_wire);
+        RegisterCasting(redalloy_wire, wire_fluid, ItemMold.MOLD_WIRE_PR, null);
+        int i;
+        for(i = 0; i < 17; i++)
+        {
+          MeltingRecipeManager.instance.AddRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid);
+        }
+        for(i = 17; i < 34; i++)
+        {
+          MeltingRecipeManager.instance.AddRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid_bundled);
+        }
+      }
     }
   }
 }

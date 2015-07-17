@@ -240,6 +240,7 @@ public class FoundryRecipes
     ItemStack mold_slab = FoundryItems.Mold(ItemMold.MOLD_SLAB);
     ItemStack mold_stairs = FoundryItems.Mold(ItemMold.MOLD_STAIRS);
     ItemStack mold_plate_ic2 = FoundryItems.Mold(ItemMold.MOLD_PLATE);
+    ItemStack mold_wire_pr = FoundryItems.Mold(ItemMold.MOLD_WIRE_PR);
     ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
     ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
     ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
@@ -260,6 +261,7 @@ public class FoundryRecipes
     CastingRecipeManager.instance.AddMold(mold_slab);
     CastingRecipeManager.instance.AddMold(mold_stairs);
     CastingRecipeManager.instance.AddMold(mold_plate_ic2);
+    CastingRecipeManager.instance.AddMold(mold_wire_pr);
     CastingRecipeManager.instance.AddMold(mold_block);
     CastingRecipeManager.instance.AddMold(mold_gear);
     CastingRecipeManager.instance.AddMold(mold_bullet);
@@ -777,6 +779,7 @@ public class FoundryRecipes
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_PLATE_SOFT,ItemMold.MOLD_PLATE);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_INSULATED_CABLE_IC2_SOFT,ItemMold.MOLD_INSULATED_CABLE_IC2);
+    FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_WIRE_PR_SOFT,ItemMold.MOLD_WIRE_PR);
 
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BULLET_SOFT,ItemMold.MOLD_BULLET);
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BULLET_HOLLOW_SOFT,ItemMold.MOLD_BULLET_HOLLOW);

@@ -47,7 +47,6 @@ public class ItemRoundFire extends ItemRoundBase
   @Override
   public void OnBulletHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
   {
-    super.OnBulletHitBlock(ammo, player, from, world, x, y, z, side);
     int xx = x + side.offsetX;
     int yy = y + side.offsetY;
     int zz = z + side.offsetZ;
@@ -70,8 +69,10 @@ public class ItemRoundFire extends ItemRoundBase
   }
 
 
+
+
   @Override
-  protected void OnBulletDamagedLivingEntity(EntityLiving entity)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity)
   {
     if(!entity.isImmuneToFire())
     {

@@ -9,16 +9,20 @@ import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.proxy.CommonFoundryProxy;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -155,10 +159,44 @@ public class ItemRevolver extends ItemTool
             switch(obj.typeOfHit)
             {
               case BLOCK:
-                ammo.OnBulletHitBlock(ammo_item, player, (Vec3) obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+                Block b = world.getBlock(obj.blockX, obj.blockY, obj.blockZ);
+                int m = world.getBlockMetadata(obj.blockX, obj.blockY, obj.blockZ);
+                if(ammo.BreakGlass() && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
+                {
+                  world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
+                  world.setBlockToAir(obj.blockX, obj.blockY, obj.blockZ);
+                } else
+                {
+                  ammo.OnBulletHitBlock(ammo_item, player, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+                }
                 break;
               case ENTITY:
-                ammo.OnBulletHitEntity(ammo_item, player, (Vec3) obj.hitInfo, obj.entityHit);
+                if(obj.entityHit instanceof EntityLiving)
+                {
+                  Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
+                  double distance = end.distanceTo((Vec3)obj.hitInfo);
+                  double base_range = ammo.GetBaseRange();
+                  double falloff_range = ammo.GetFalloffRange();
+                  double base_damage = ammo.GetBaseDamage();
+                  double damage;
+                  if(distance < base_range)
+                  {
+                    damage = base_damage;
+                  } else if(distance > base_range + falloff_range)
+                  {
+                    damage = 0;
+                  } else
+                  {
+                    damage = base_damage * (1.0f - (distance - base_range) / falloff_range);
+                  }    
+                  if(damage >= 1)
+                  {
+                    if(obj.entityHit.attackEntityFrom((new EntityDamageSourceIndirect("bullet", obj.entityHit, player)).setProjectile(), (float)damage))
+                    {
+                      ammo.OnBulletDamagedLivingEntity(ammo_item,(EntityLiving)obj.entityHit);
+                    }
+                  }
+                }
                 break;
               default:
                 break;

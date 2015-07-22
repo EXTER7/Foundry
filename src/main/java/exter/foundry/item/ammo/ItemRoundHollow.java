@@ -4,7 +4,6 @@ package exter.foundry.item.ammo;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.IIcon;
 
 public class ItemRoundHollow extends ItemRoundBase
@@ -32,9 +31,5 @@ public class ItemRoundHollow extends ItemRoundBase
     return icon;
   }
 
-  @Override
-  protected void OnBulletDamagedLivingEntity(EntityLiving entity)
-  {
-    
-  }
+
 }

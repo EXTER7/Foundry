@@ -89,7 +89,7 @@ public abstract class ItemFirearm extends ItemTool
     {
       if(ent.canBeCollidedWith() && ent.boundingBox != null)
       {
-        MovingObjectPosition ent_obj = ent.boundingBox.expand(0.3, 0.3, 0.3).calculateIntercept(start, end);
+        MovingObjectPosition ent_obj = ent.boundingBox.expand(0.1, 0.1, 0.1).calculateIntercept(start, end);
         if(ent_obj != null)
         {
           if(ent_obj.typeOfHit == MovingObjectType.BLOCK)
@@ -132,7 +132,10 @@ public abstract class ItemFirearm extends ItemTool
             if(ammo.BreakGlass() && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
-              world.setBlockToAir(obj.blockX, obj.blockY, obj.blockZ);
+              if(!world.isRemote)
+              {
+                world.setBlockToAir(obj.blockX, obj.blockY, obj.blockZ);
+              }
             } else
             {
               ammo.OnBulletHitBlock(ammo_item, player, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));

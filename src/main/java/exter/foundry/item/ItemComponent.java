@@ -29,6 +29,8 @@ public class ItemComponent extends Item
   static public final int COMPONENT_BLAZEPOWDER_SMALL = 13;
   static public final int COMPONENT_AMMO_PELLET = 14;
   static public final int COMPONENT_AMMO_CASING_SHELL = 15;
+  static public final int COMPONENT_SHOTGUN_PUMP = 16;
+  static public final int COMPONENT_SHOTGUN_FRAME = 17;
 
 
   static private final String[] ICON_PATHS = 
@@ -48,7 +50,9 @@ public class ItemComponent extends Item
     "foundry:gunpowderSmall",
     "foundry:blazePowderSmall",
     "foundry:ammo_pellet",
-    "foundry:ammo_casingShell"
+    "foundry:ammo_casingShell",
+    "foundry:shotgun_pump",
+    "foundry:shotgun_frame"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -68,7 +72,9 @@ public class ItemComponent extends Item
     "itemGunpowderSmall",
     "itemBlazePowderSmall",
     "itemAmmoPellet",
-    "itemAmmoShellCasing"
+    "itemAmmoShellCasing",
+    "itemShotgunPump",
+    "itemShotgunFrame"
   };
   
   

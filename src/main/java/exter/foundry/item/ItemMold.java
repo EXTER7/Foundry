@@ -75,6 +75,10 @@ public class ItemMold extends Item
   static public final int MOLD_PELLET_SOFT = 59;
   static public final int MOLD_SHELL_CASING = 60;
   static public final int MOLD_SHELL_CASING_SOFT = 61;
+  static public final int MOLD_SHOTGUN_PUMP = 62;
+  static public final int MOLD_SHOTGUN_PUMP_SOFT = 63;
+  static public final int MOLD_SHOTGUN_FRAME = 64;
+  static public final int MOLD_SHOTGUN_FRAME_SOFT = 65;
   
   static private final String[] ICON_PATHS = 
   {
@@ -139,7 +143,11 @@ public class ItemMold extends Item
     "foundry:mold_pellet",
     "foundry:claymold_pellet",
     "foundry:mold_shellCasing",
-    "foundry:claymold_shellCasing"
+    "foundry:claymold_shellCasing",
+    "foundry:mold_shotgunPump",
+    "foundry:claymold_shotgunPump",
+    "foundry:mold_shotgunFrame",
+    "foundry:claymold_shotgunFrame"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -205,14 +213,19 @@ public class ItemMold extends Item
     "itemPelletMold",
     "itemSoftPelletMold",
     "ItemShellCasingMold",
-    "ItemSoftShellCasingMold"
+    "ItemSoftShellCasingMold",
+    "ItemShotgunPumpMold",
+    "ItemSoftShotgunPumpMold",
+    "ItemShotgunFrameMold",
+    "ItemSoftShotgunFrameMold"
   };
 
   
   @SideOnly(Side.CLIENT)
   private IIcon[] icons;
 
-  public ItemMold() {
+  public ItemMold()
+  {
     super();
     maxStackSize = 1;
     setCreativeTab(FoundryTabMolds.tab);
@@ -221,7 +234,8 @@ public class ItemMold extends Item
   }
   
   @Override
-  public String getUnlocalizedName(ItemStack itemstack) {
+  public String getUnlocalizedName(ItemStack itemstack)
+  {
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
   

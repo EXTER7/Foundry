@@ -411,6 +411,8 @@ item.component12.name=Small Pile of Gunpowder
 item.component13.name=Small Pile of Blaze Powder
 item.component14.name=Pellet
 item.component15.name=Shell Casing
+item.component16.name=Shotgun Pump
+item.component17.name=Shotgun Frame
 
 item.mold0.name=Ingot Mold
 item.mold1.name=Soft Ingot Mold
@@ -474,7 +476,11 @@ item.mold58.name=Pellet Mold
 item.mold59.name=Soft Pellet Mold
 item.mold60.name=Shell Casing Mold
 item.mold61.name=Soft Shell Casing Mold
-
+item.mold62.name=Shotgun Pump Mold
+item.mold63.name=Soft Shotgun Pump Mold
+item.mold64.name=Shotgun Frame Mold
+item.mold65.name=Soft Shotgun Frame Mold
+  
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot
 item.ingot2.name=Bronze Ingot

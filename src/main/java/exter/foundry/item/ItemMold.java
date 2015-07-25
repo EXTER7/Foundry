@@ -71,6 +71,10 @@ public class ItemMold extends Item
   static public final int MOLD_REVOLVER_FRAME_SOFT = 55;
   static public final int MOLD_WIRE_PR = 56;
   static public final int MOLD_WIRE_PR_SOFT = 57;
+  static public final int MOLD_PELLET = 58;
+  static public final int MOLD_PELLET_SOFT = 59;
+  static public final int MOLD_SHELL_CASING = 60;
+  static public final int MOLD_SHELL_CASING_SOFT = 61;
   
   static private final String[] ICON_PATHS = 
   {
@@ -131,7 +135,11 @@ public class ItemMold extends Item
     "foundry:mold_revolverFrame",
     "foundry:claymold_revolverFrame",
     "foundry:mold_wire_pr",
-    "foundry:claymold_wire_pr"
+    "foundry:claymold_wire_pr",
+    "foundry:mold_pellet",
+    "foundry:claymold_pellet",
+    "foundry:mold_shellCasing",
+    "foundry:claymold_shellCasing"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -194,6 +202,10 @@ public class ItemMold extends Item
     "ItemSoftRevolverFrameMold",
     "itemWireMold",
     "itemSoftWireMold",
+    "itemPelletMold",
+    "itemSoftPelletMold",
+    "ItemShellCasingMold",
+    "ItemSoftShellCasingMold"
   };
 
   

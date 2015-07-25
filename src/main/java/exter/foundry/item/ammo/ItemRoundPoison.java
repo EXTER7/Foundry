@@ -4,6 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLiving;
@@ -53,8 +54,14 @@ public class ItemRoundPoison extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity,int count)
   {
     entity.addPotionEffect(new PotionEffect(Potion.poison.id, 400));    
+  }
+  
+  @Override
+  public String GetRoundType()
+  {
+    return ItemRevolver.AMMO_TYPE;
   }
 }

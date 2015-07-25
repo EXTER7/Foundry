@@ -76,7 +76,7 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
   
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity,int count)
   {
     
   }

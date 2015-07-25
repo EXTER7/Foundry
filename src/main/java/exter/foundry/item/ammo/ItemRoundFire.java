@@ -5,6 +5,7 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabFirearms;
+import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLiving;
@@ -72,11 +73,18 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity,int count)
   {
     if(!entity.isImmuneToFire())
     {
       entity.setFire(5);
     }
+  }
+
+
+  @Override
+  public String GetRoundType()
+  {
+    return ItemRevolver.AMMO_TYPE;
   }
 }

@@ -27,6 +27,8 @@ public class ItemComponent extends Item
   static public final int COMPONENT_AMMO_BULLET_JACKETED = 11;
   static public final int COMPONENT_GUNPOWDER_SMALL = 12;
   static public final int COMPONENT_BLAZEPOWDER_SMALL = 13;
+  static public final int COMPONENT_AMMO_PELLET = 14;
+  static public final int COMPONENT_AMMO_CASING_SHELL = 15;
 
 
   static private final String[] ICON_PATHS = 
@@ -44,7 +46,9 @@ public class ItemComponent extends Item
     "foundry:ammo_bulletHollow",
     "foundry:ammo_bulletJacketed",
     "foundry:gunpowderSmall",
-    "foundry:blazePowderSmall"
+    "foundry:blazePowderSmall",
+    "foundry:ammo_pellet",
+    "foundry:ammo_casingShell"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -62,7 +66,9 @@ public class ItemComponent extends Item
     "itemAmmoBulletHollow",
     "itemAmmoBulletJacketed",
     "itemGunpowderSmall",
-    "itemBlazePowderSmall"
+    "itemBlazePowderSmall",
+    "itemAmmoPellet",
+    "itemAmmoShellCasing"
   };
   
   

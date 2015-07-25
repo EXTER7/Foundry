@@ -11,6 +11,7 @@ import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.container.ContainerRefractoryHopper;
 import exter.foundry.container.ContainerRevolver;
+import exter.foundry.container.ContainerShotgun;
 import exter.foundry.gui.GuiAlloyFurnace;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMaterialRouter;
@@ -19,6 +20,7 @@ import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.gui.GuiRefractoryHopper;
 import exter.foundry.gui.GuiRevolver;
+import exter.foundry.gui.GuiShotgun;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
@@ -37,6 +39,7 @@ public class CommonFoundryProxy implements IGuiHandler
   static public final int GUI_MATERIALROUTER = 5;
   static public final int GUI_REFRACTORYHOPPER = 6;
   static public final int GUI_REVOLVER = 7;
+  static public final int GUI_SHOTGUN = 8;
 
   public void PreInit()
   {
@@ -69,6 +72,8 @@ public class CommonFoundryProxy implements IGuiHandler
         return new ContainerRefractoryHopper((TileEntityRefractoryHopper)world.getTileEntity(x, y, z),player.inventory);
       case GUI_REVOLVER:
         return new ContainerRevolver(player.getHeldItem(),player.inventory);
+      case GUI_SHOTGUN:
+        return new ContainerShotgun(player.getHeldItem(),player.inventory);
     }
     return null;
   }
@@ -116,6 +121,10 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_REVOLVER:
       {
         return new GuiRevolver(player.getHeldItem(),player.inventory);
+      }
+      case GUI_SHOTGUN:
+      {
+        return new GuiShotgun(player.getHeldItem(),player.inventory);
       }
     } 
     return null;

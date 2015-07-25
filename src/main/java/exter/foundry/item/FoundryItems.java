@@ -7,6 +7,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.item.ammo.ItemRoundNormal;
 import exter.foundry.item.ammo.ItemRoundJacketed;
 import exter.foundry.item.ammo.ItemRoundPoison;
+import exter.foundry.item.ammo.ItemShellNormal;
+import exter.foundry.item.firearm.ItemRevolver;
+import exter.foundry.item.firearm.ItemShotgun;
 import exter.foundry.item.ammo.ItemRoundFire;
 import exter.foundry.item.ammo.ItemRoundHollow;
 import exter.foundry.registry.ItemRegistry;
@@ -22,11 +25,13 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   static public ItemRevolver item_revolver;
+  static public ItemShotgun item_shotgun;
   static public ItemRoundNormal item_round;
   static public ItemRoundJacketed item_round_jacketed;
   static public ItemRoundHollow item_round_hollow;
   static public ItemRoundFire item_round_fire;
   static public ItemRoundPoison item_round_poison;
+  static public ItemShellNormal item_shell;
   
   static public ItemRefractoryFluidContainer item_container;
   
@@ -40,21 +45,25 @@ public class FoundryItems
     item_mold = new ItemMold();
     item_ingot = new ItemIngot();
     item_revolver = new ItemRevolver();
+    item_shotgun = new ItemShotgun();
     item_round = new ItemRoundNormal();
     item_round_jacketed = new ItemRoundJacketed();
     item_round_hollow = new ItemRoundHollow();
     item_round_fire = new ItemRoundFire();
     item_round_poison = new ItemRoundPoison();
+    item_shell = new ItemShellNormal();
     
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
     GameRegistry.registerItem(item_ingot, "foundryIngot");
     GameRegistry.registerItem(item_revolver, "foundryRevolver");
+    GameRegistry.registerItem(item_shotgun, "foundryShotgun");
     GameRegistry.registerItem(item_round, "foundryRound");
     GameRegistry.registerItem(item_round_jacketed, "foundryRoundJacketed");
     GameRegistry.registerItem(item_round_hollow, "foundryRoundHollow");
     GameRegistry.registerItem(item_round_fire, "foundryRoundFire");
     GameRegistry.registerItem(item_round_poison, "foundryRoundPoison");
+    GameRegistry.registerItem(item_shell, "foundryShell");
     
     for (i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
     {

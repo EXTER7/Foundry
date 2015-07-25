@@ -1,3 +1,5 @@
 {
-	"revolver_fire": { "category": "player", "sounds":["revolver_fire"] }
+	"revolver_fire": { "category": "player", "sounds":["revolver_fire"] },
+	"shotgun_fire":  { "category": "player", "sounds":["shotgun_fire"] },
+	"shotgun_cock":  { "category": "player", "sounds":["shotgun_cock"] }
 }

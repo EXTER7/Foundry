@@ -1,35 +1,35 @@
 package exter.foundry.inventory;
 
 import exter.foundry.api.firearms.IFirearmRound;
-import exter.foundry.item.FoundryItems;
+import exter.foundry.item.firearm.ItemFirearm;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InventoryRevolver implements IInventory
+public class InventoryFirearm implements IInventory
 {
-  ItemStack[] items;
+  protected ItemStack[] items;
   
-  ItemStack revolver;
+  protected ItemStack firearm;
 
   InventoryPlayer player_inv;
-  public InventoryRevolver(ItemStack revolver_item,InventoryPlayer player)
+  public InventoryFirearm(ItemStack firearm_item,InventoryPlayer player,int size)
   {
-    revolver = revolver_item;
+    firearm = firearm_item;
     player_inv = player;
-    items = new ItemStack[8];
+    items = new ItemStack[size];
     int i;
-    for(i = 0; i < 8; i++)
+    for(i = 0; i < items.length; i++)
     {
-      items[i] = FoundryItems.item_revolver.GetAmmo(revolver,i);
+      items[i] = ((ItemFirearm)firearm.getItem()).GetAmmo(firearm,i);
     }      
   }
 
   @Override
   public int getSizeInventory()
   {
-    return 8;
+    return items.length;
   }
 
   @Override
@@ -146,10 +146,10 @@ public class InventoryRevolver implements IInventory
   public void Save()
   {
     int i;
-    for(i = 0; i < 8; i++)
+    for(i = 0; i < items.length; i++)
     {
-      FoundryItems.item_revolver.SetAmmo(revolver,i,items[i]);
+      ((ItemFirearm)firearm.getItem()).SetAmmo(firearm,i,items[i]);
     }
-    player_inv.setInventorySlotContents(player_inv.currentItem, revolver);
+    player_inv.setInventorySlotContents(player_inv.currentItem, firearm);
   }
 }

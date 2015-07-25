@@ -2,6 +2,7 @@ package exter.foundry.item.ammo;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
@@ -28,5 +29,11 @@ public class ItemRoundNormal extends ItemRoundBase
   public IIcon getIconFromDamage(int dmg)
   {
     return icon;
+  }
+  
+  @Override
+  public String GetRoundType()
+  {
+    return ItemRevolver.AMMO_TYPE;
   }
 }

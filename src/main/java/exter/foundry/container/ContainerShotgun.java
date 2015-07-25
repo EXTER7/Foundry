@@ -4,7 +4,8 @@ package exter.foundry.container;
 import exter.foundry.container.slot.SlotLocked;
 import exter.foundry.container.slot.SlotFirearmAmmo;
 import exter.foundry.inventory.InventoryFirearm;
-import exter.foundry.item.firearm.ItemRevolver;
+import exter.foundry.inventory.InventoryShotgun;
+import exter.foundry.item.firearm.ItemShotgun;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,34 +13,29 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerRevolver extends Container
+public class ContainerShotgun extends Container
 {
   IInventory inventory;
-  private ItemStack revolver;
-  InventoryFirearm rev_inv;
+  private ItemStack shotgun;
+  InventoryFirearm shotgun_inv;
   // Slot numbers
-  private static final int SLOTS_REVOLVER = 0;
-  private static final int SLOTS_INVENTORY = SLOTS_REVOLVER + 8;
+  private static final int SLOTS_SHOTGUN = 0;
+  private static final int SLOTS_INVENTORY = SLOTS_SHOTGUN + 5;
   private static final int SLOTS_HOTBAR = SLOTS_INVENTORY + 3 * 9;
 
-  public ContainerRevolver(ItemStack revolver_item,InventoryPlayer inventory_player)
+  public ContainerShotgun(ItemStack revolver_item,InventoryPlayer inventory_player)
   {
-    revolver = revolver_item;
+    shotgun = revolver_item;
     inventory = inventory_player;
 
 
-    rev_inv = new InventoryFirearm(revolver,inventory_player,8);
-    int position = revolver.getTagCompound().getInteger("position");
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, position,            80,  30, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 1) % 8, 106,  39, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 2) % 8, 115,  65, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 3) % 8, 106,  91, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 4) % 8,  80, 100, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 5) % 8,  54,  91, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 6) % 8,  45,  65, ItemRevolver.AMMO_TYPE));
-    addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 7) % 8,  54,  39, ItemRevolver.AMMO_TYPE));
-
+    shotgun_inv = new InventoryShotgun(shotgun,inventory_player,5);
     int i,j;
+    for(i = 0; i < 5; i++)
+    {
+      addSlotToContainer(new SlotFirearmAmmo(shotgun_inv, i, 44 + 18 * i, 40, ItemShotgun.AMMO_TYPE));
+    }
+
 
     // Player inventory
     for(i = 0; i < 3; ++i)
@@ -49,10 +45,10 @@ public class ContainerRevolver extends Container
         int s = j + i * 9 + 9;
         if(s == inventory_player.currentItem)
         {
-          addSlotToContainer(new SlotLocked(inventory_player, s, 8 + j * 18, 140 + i * 18));
+          addSlotToContainer(new SlotLocked(inventory_player, s, 8 + j * 18, 91 + i * 18));
         } else
         {
-          addSlotToContainer(new Slot(inventory_player, s, 8 + j * 18, 140 + i * 18));
+          addSlotToContainer(new Slot(inventory_player, s, 8 + j * 18, 91 + i * 18));
         }
       }
     }
@@ -62,10 +58,10 @@ public class ContainerRevolver extends Container
     {
       if(i == inventory_player.currentItem)
       {
-        addSlotToContainer(new SlotLocked(inventory_player, i, 8 + i * 18, 198));
+        addSlotToContainer(new SlotLocked(inventory_player, i, 8 + i * 18, 149));
       } else
       {
-        addSlotToContainer(new Slot(inventory_player, i, 8 + i * 18, 198));
+        addSlotToContainer(new Slot(inventory_player, i, 8 + i * 18, 149));
       }
     }
   }
@@ -125,16 +121,17 @@ public class ContainerRevolver extends Container
   @Override
   public boolean canInteractWith(EntityPlayer player)
   {
-    return player.inventory.hasItemStack(revolver);
+    return player.inventory.hasItemStack(shotgun);
   }
   
   @Override
   public void onContainerClosed(EntityPlayer entityPlayer)
   {
     super.onContainerClosed(entityPlayer);
+    shotgun_inv.closeInventory();
     if (!entityPlayer.worldObj.isRemote)
     {
-      rev_inv.Save();
+      shotgun_inv.Save();
     }
   }
 }

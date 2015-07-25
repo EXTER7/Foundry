@@ -9,9 +9,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IFirearmRound
 {
+  public String GetRoundType();
+  
   public void OnBulletHitBlock(ItemStack round, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side);
 
-  public void OnBulletDamagedLivingEntity(ItemStack round,EntityLiving entity);
+  public void OnBulletDamagedLivingEntity(ItemStack round,EntityLiving entity, int count);
 
   public boolean BreakGlass();
   

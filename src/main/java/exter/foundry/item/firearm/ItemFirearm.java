@@ -86,7 +86,7 @@ public abstract class ItemFirearm extends ItemTool
 
     Vec3 tstart = Vec3.createVectorHelper(start.xCoord, start.yCoord, start.zCoord);
     Vec3 tend = Vec3.createVectorHelper(end.xCoord, end.yCoord, end.zCoord);
-    MovingObjectPosition obj = world.func_147447_a(tstart, tend, true, false, false);
+    MovingObjectPosition obj = world.func_147447_a(tstart, tend, false, true, false);
     
     
     @SuppressWarnings("unchecked")

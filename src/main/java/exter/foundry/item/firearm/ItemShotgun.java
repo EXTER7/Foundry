@@ -142,7 +142,7 @@ public class ItemShotgun extends ItemFirearm
     {
       int position = stack.getTagCompound().getInteger("position");
       int i;
-      for(i = 0; i < 8; i++)
+      for(i = 0; i < 5; i++)
       {
         int j = (i + position) % 8;
         NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Slot_" + j);

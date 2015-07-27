@@ -1,11 +1,15 @@
 package exter.foundry;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -17,11 +21,13 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
+import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationBuildcraft;
@@ -161,6 +167,7 @@ public class ModFoundry
   }
   
  
+  @SuppressWarnings("unchecked")
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
@@ -242,6 +249,10 @@ public class ModFoundry
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.item_revolver.Empty(),1,1,2));
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
 
+    EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 5, 0, 1, EnumCreatureType.creature,
+        ((Set<BiomeGenBase>)BiomeGenBase.explorationBiomesList).toArray(new BiomeGenBase[BiomeGenBase.explorationBiomesList.size()]));
+    
     proxy.Init();
   }
 

@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -54,7 +54,7 @@ public class ItemRoundPoison extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity,int count)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
     entity.addPotionEffect(new PotionEffect(Potion.poison.id, 400));    
   }

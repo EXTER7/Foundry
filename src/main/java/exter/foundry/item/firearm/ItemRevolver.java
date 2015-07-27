@@ -69,7 +69,7 @@ public class ItemRevolver extends ItemFirearm
         {
           world.playSoundAtEntity(player, "foundry:revolver_fire", 0.9F, 1F);
         }
-        Shoot(ammo_item,world,player,1,0.0f);
+        Shoot(ammo_item,world,player,null,1,0.0f);
         tag.setBoolean("Empty", true);
         if(world.isRemote)
         {
@@ -81,6 +81,7 @@ public class ItemRevolver extends ItemFirearm
           player.motionY -= MathHelper.sin(pitch * 0.017453292F) * 0.1;
           player.motionZ -= MathHelper.cos(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
         }
+        stack.damageItem(1, player);
       } else
       {
         if(!world.isRemote)

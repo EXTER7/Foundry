@@ -8,7 +8,7 @@ import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -46,7 +46,7 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public void OnBulletHitBlock(ItemStack ammo, EntityPlayer player, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
+  public void OnBulletHitBlock(ItemStack ammo, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
   {
     int xx = x + side.offsetX;
     int yy = y + side.offsetY;
@@ -73,7 +73,7 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLiving entity,int count)
+  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
     if(!entity.isImmuneToFire())
     {

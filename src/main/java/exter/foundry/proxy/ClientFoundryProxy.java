@@ -3,6 +3,7 @@ package exter.foundry.proxy;
 import java.util.List;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
@@ -11,6 +12,7 @@ import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.renderer.RendererItemContainer;
 import exter.foundry.renderer.RendererRefractoryHopper;
+import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -45,6 +47,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     
     hopper_renderer_id = RenderingRegistry.getNextAvailableRenderId();
     RenderingRegistry.registerBlockHandler(hopper_renderer_id,new RendererRefractoryHopper());
+   
+    RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton());
     
     ModIntegration.ClientInit();
   }

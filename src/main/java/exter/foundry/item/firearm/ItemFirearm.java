@@ -14,8 +14,7 @@ import exter.foundry.item.FoundryItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -53,28 +52,36 @@ public abstract class ItemFirearm extends ItemTool
     return false;
   }
 
-  static private MovingObjectPosition Trace(World world, EntityPlayer player,float spread)
+  static private MovingObjectPosition Trace(World world, EntityLivingBase shooter,Entity target,float spread)
   {
-    float pitch = -player.rotationPitch;
-    float yaw = -player.rotationYaw;
-    Vec3 start = Vec3.createVectorHelper(player.posX, player.posY + player.getEyeHeight() - 0.1, player.posZ);
-    float cyaw = MathHelper.cos(yaw * 0.017453292F - (float) Math.PI);
-    float syaw = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI);
-    float cpitch = -MathHelper.cos(pitch * 0.017453292F);
-    
-    double distance = 150.0D;
-    
+    Vec3 start = Vec3.createVectorHelper(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
+    Vec3 dir;
+    if(target != null)
+    {
+      dir = Vec3.createVectorHelper(target.posX - start.xCoord, target.posY - start.yCoord,target.posZ - start.zCoord).normalize();
+    } else
+    {
+      float pitch = -shooter.rotationPitch;
+      float yaw = -shooter.rotationYaw;
+      float cyaw = MathHelper.cos(yaw * 0.017453292F - (float) Math.PI);
+      float syaw = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI);
+      float cpitch = -MathHelper.cos(pitch * 0.017453292F);
+
+      dir = Vec3.createVectorHelper(
+          syaw * cpitch,
+          MathHelper.sin(pitch * 0.017453292F),
+          cyaw * cpitch);
+    }
     Vec3 vspread = Vec3.createVectorHelper(
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1)).normalize();
-    
     spread = random.nextFloat() * spread;
+    dir = dir.addVector(vspread.xCoord * spread, vspread.yCoord * spread, vspread.zCoord * spread).normalize();
     
-    Vec3 dir = Vec3.createVectorHelper(
-        syaw * cpitch + vspread.xCoord * spread,
-        MathHelper.sin(pitch * 0.017453292F) + vspread.yCoord * spread,
-        cyaw * cpitch + vspread.zCoord * spread).normalize();
+
+    double distance = 150.0D;
+
     Vec3 end = start.addVector(dir.xCoord * distance,dir.yCoord * distance,dir.zCoord * distance);
 
     Vec3 tstart = Vec3.createVectorHelper(start.xCoord, start.yCoord, start.zCoord);
@@ -83,7 +90,7 @@ public abstract class ItemFirearm extends ItemTool
     
     
     @SuppressWarnings("unchecked")
-    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.expand(150, 150, 100));
+    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.boundingBox.expand(150, 150, 100));
     double min_dist = obj != null?obj.hitVec.distanceTo(start):150;
     for(Entity ent:entities)
     {
@@ -114,14 +121,14 @@ public abstract class ItemFirearm extends ItemTool
     return obj;
   }
   
-  static protected final void Shoot(ItemStack ammo_item, World world, EntityPlayer player, int times, float spread)
+  static public final void Shoot(ItemStack ammo_item, World world, EntityLivingBase shooter,Entity target, int times, float spread)
   {
-    Map<EntityLiving,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLiving,MutablePair<Float,Integer>>();
+    Map<EntityLivingBase,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLivingBase,MutablePair<Float,Integer>>();
     IFirearmRound ammo = (IFirearmRound) ammo_item.getItem();
     int i;
     for(i = 0; i < times; i++)
     {
-      MovingObjectPosition obj = Trace(world, player,spread);
+      MovingObjectPosition obj = Trace(world, shooter, target, spread);
       if(obj != null)
       {
         switch(obj.typeOfHit)
@@ -138,11 +145,11 @@ public abstract class ItemFirearm extends ItemTool
               }
             } else
             {
-              ammo.OnBulletHitBlock(ammo_item, player, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+              ammo.OnBulletHitBlock(ammo_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
             }
             break;
           case ENTITY:
-            if(obj.entityHit instanceof EntityLiving)
+            if(obj.entityHit instanceof EntityLivingBase)
             {
               Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3)obj.hitInfo);
@@ -166,7 +173,7 @@ public abstract class ItemFirearm extends ItemTool
                 if(accum == null)
                 {
                   accum = new MutablePair<Float,Integer>(0.0f,0);
-                  entities_hit.put((EntityLiving)obj.entityHit, accum);
+                  entities_hit.put((EntityLivingBase)obj.entityHit, accum);
                 }
                 accum.left += (float)damage;
                 accum.right++;
@@ -178,10 +185,10 @@ public abstract class ItemFirearm extends ItemTool
         } 
       }
     }
-    for(Map.Entry<EntityLiving, MutablePair<Float,Integer>> hit : entities_hit.entrySet())
+    for(Map.Entry<EntityLivingBase, MutablePair<Float,Integer>> hit : entities_hit.entrySet())
     {
-      EntityLiving en = hit.getKey();
-      if(en.attackEntityFrom((new EntityDamageSourceIndirect("bullet", en, player)).setProjectile(), hit.getValue().left))
+      EntityLivingBase en = hit.getKey();
+      if(en.attackEntityFrom((new EntityDamageSourceIndirect("bullet", en, shooter)).setProjectile(), hit.getValue().left))
       {
         ammo.OnBulletDamagedLivingEntity(ammo_item, en,hit.getValue().right);
       }

@@ -32,7 +32,6 @@ public class FoundryItems
   static public ItemRoundFire item_round_fire;
   static public ItemRoundPoison item_round_poison;
   static public ItemShellNormal item_shell;
-  
   static public ItemRefractoryFluidContainer item_container;
   
   static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();

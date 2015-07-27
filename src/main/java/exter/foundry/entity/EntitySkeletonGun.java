@@ -20,16 +20,13 @@ import net.minecraft.world.World;
 public class EntitySkeletonGun extends EntitySkeleton
 {
 
-  private ItemStack ammo;
-  
-
   static private ItemStack[] LOOT_COMMON =
   {
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET),
+    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET)
   };
 
   static private ItemStack[] LOOT_RARE =
@@ -46,24 +43,48 @@ public class EntitySkeletonGun extends EntitySkeleton
     super(p_i1741_1_);
     tasks.addTask(4, new EntityAIArrowAttack(this, 1.0D, 20, 210, 15.0F));
     setCurrentItemOrArmor(0,FoundryItems.item_revolver.Empty());
-    ammo = new ItemStack(FoundryItems.item_round);
   }
 
   @Override
+  public void setCurrentItemOrArmor(int slot, ItemStack item)
+  {
+    if(slot != 0)
+    {
+      super.setCurrentItemOrArmor(slot, item);
+    }
+  }
+  
+  @Override
   public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
   {
-    if(!worldObj.isRemote)
+    if(getHeldItem().getItem() == FoundryItems.item_shotgun)
     {
-      worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
-    }                 
-    ItemFirearm.Shoot(ammo, worldObj, this, target, 1, 0.025f);
+      if(!worldObj.isRemote)
+      {
+        worldObj.playSoundAtEntity(this, "foundry:shotgun_fire", 0.9F, 1F);
+      }
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.5f);
+    } else
+    {
+      if(!worldObj.isRemote)
+      {
+        worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
+      }
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.025f);
+    }
   }
 
   @Override
   protected void addRandomArmor()
   {
     super.addRandomArmor();
-    this.setCurrentItemOrArmor(0, FoundryItems.item_revolver.Empty());
+    if(rand.nextInt(100) < 10)
+    {
+      super.setCurrentItemOrArmor(0, FoundryItems.item_shotgun.Empty());
+    } else
+    {
+      super.setCurrentItemOrArmor(0, FoundryItems.item_revolver.Empty());
+    }
   }
 
   @Override

@@ -55,22 +55,29 @@ public class EntitySkeletonGun extends EntitySkeleton
   }
   
   @Override
+  public void setCombatTask()
+  {
+    
+  }
+  
+  @Override
   public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
   {
+    float damage = (float)this.worldObj.difficultySetting.getDifficultyId() * 0.1f + 0.7f;
     if(getHeldItem().getItem() == FoundryItems.item_shotgun)
     {
       if(!worldObj.isRemote)
       {
         worldObj.playSoundAtEntity(this, "foundry:shotgun_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.5f);
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.5f,damage);
     } else
     {
       if(!worldObj.isRemote)
       {
         worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.025f);
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.025f,damage);
     }
   }
 

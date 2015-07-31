@@ -69,7 +69,7 @@ public class ItemRevolver extends ItemFirearm
         {
           world.playSoundAtEntity(player, "foundry:revolver_fire", 0.9F, 1F);
         }
-        Shoot(ammo_item,world,player,null,1,0.0f);
+        Shoot(ammo_item,world,player,null,1,0.0f,1.0f);
         tag.setBoolean("Empty", true);
         if(world.isRemote)
         {
@@ -148,7 +148,8 @@ public class ItemRevolver extends ItemFirearm
   }
 
   @Override
-  public boolean isFull3D() {
+  public boolean isFull3D()
+  {
     return true;
   }
   

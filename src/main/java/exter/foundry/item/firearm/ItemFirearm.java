@@ -121,7 +121,7 @@ public abstract class ItemFirearm extends ItemTool
     return obj;
   }
   
-  static public final void Shoot(ItemStack ammo_item, World world, EntityLivingBase shooter,Entity target, int times, float spread)
+  static public final void Shoot(ItemStack ammo_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
   {
     Map<EntityLivingBase,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLivingBase,MutablePair<Float,Integer>>();
     IFirearmRound ammo = (IFirearmRound) ammo_item.getItem();
@@ -166,7 +166,8 @@ public abstract class ItemFirearm extends ItemTool
               } else
               {
                 damage = base_damage * (1.0f - (distance - base_range) / falloff_range);
-              }    
+              }
+              damage *= damage_multiplier;
               if(damage >= 1)
               {
                 MutablePair<Float,Integer> accum = entities_hit.get(obj.entityHit);
@@ -212,7 +213,7 @@ public abstract class ItemFirearm extends ItemTool
   @Override
   public final EnumAction getItemUseAction(ItemStack p_77661_1_)
   {
-      return EnumAction.bow;
+    return EnumAction.bow;
   }
   
   public abstract void SetAmmo(ItemStack stack,int slot,ItemStack ammo);

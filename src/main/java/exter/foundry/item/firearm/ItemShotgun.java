@@ -77,7 +77,7 @@ public class ItemShotgun extends ItemFirearm
         {
           world.playSoundAtEntity(player, "foundry:shotgun_fire", 0.9F, 1F);
         }
-        Shoot(ammo_item,world,player,null,6,0.4f);
+        Shoot(ammo_item,world,player,null,6,0.4f,1.0f);
         if(world.isRemote)
         {
           player.rotationPitch -= 3;
@@ -159,7 +159,8 @@ public class ItemShotgun extends ItemFirearm
   }
 
   @Override
-  public boolean isFull3D() {
+  public boolean isFull3D()
+  {
     return true;
   }
   

@@ -19,7 +19,7 @@ public class SlotFirearmAmmo extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return (stack.getItem() instanceof IFirearmRound) && ((IFirearmRound)stack.getItem()).GetRoundType().equals(type);
+    return (stack.getItem() instanceof IFirearmRound) && ((IFirearmRound)stack.getItem()).GetRoundType(stack).equals(type);
   }
 
   @Override

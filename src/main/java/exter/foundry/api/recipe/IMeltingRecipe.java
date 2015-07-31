@@ -30,5 +30,9 @@ public interface IMeltingRecipe
    */
   public boolean MatchesRecipe(ItemStack item);
   
+  /**
+   * Get the melting speed.
+   * @return The melting speed.
+   */
   public int GetMeltingSpeed();
 }

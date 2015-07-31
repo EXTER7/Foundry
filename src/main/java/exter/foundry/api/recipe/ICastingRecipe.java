@@ -32,6 +32,10 @@ public interface ICastingRecipe
    */
   public Object GetOutput();
 
+  /**
+   * Get the casting speed.
+   * @return The casting speed.
+   */
   public int GetCastingSpeed();
 
   /**

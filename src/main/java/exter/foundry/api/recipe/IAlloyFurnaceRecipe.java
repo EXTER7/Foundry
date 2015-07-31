@@ -5,25 +5,28 @@ import net.minecraft.item.ItemStack;
 public interface IAlloyFurnaceRecipe
 {
   /**
-   * Get the one of the recipe's inputs by index.
-   * @param in index of the input. Can be 0 or 1.
-   * @return Recipe's input.
+   * Get the recipe's input A by index.
+   * @return Recipe's input A.
    */
   public Object GetInputA();
 
+  /**
+   * Get the recipe's input B by index.
+   * @return Recipe's input B.
+   */
   public Object GetInputB();
 
   /**
    * Get the recipe's output.
-   * @return FluidStack containing Recipe's produced fluid and amount.
+   * @return ItemStack containing recipe's output.
    */
   public ItemStack GetOutput();
 
   /**
-   * Check if a list of fluid stacks matches this recipe.
-   * @param in list of fluid stack to compare.
-   * @param order [Output] Order in which the input fluids are matched.
-   * @return true if the fluids matches, false otherwise.
+   * Check if the items matches this recipe.
+   * @param input_a item to compare.
+   * @param input_b item to compare.
+   * @return true if the items matches, false otherwise.
    */
   public boolean MatchesRecipe(ItemStack input_a,ItemStack input_b);
 }

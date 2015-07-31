@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.firearm.ItemShotgun;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemShellNormal extends ItemRoundBase
@@ -30,7 +31,7 @@ public class ItemShellNormal extends ItemRoundBase
   }
   
   @Override
-  public String GetRoundType()
+  public String GetRoundType(ItemStack round)
   {
     return ItemShotgun.AMMO_TYPE;
   }

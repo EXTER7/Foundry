@@ -136,7 +136,7 @@ public abstract class ItemFirearm extends ItemTool
           case BLOCK:
             Block b = world.getBlock(obj.blockX, obj.blockY, obj.blockZ);
             int m = world.getBlockMetadata(obj.blockX, obj.blockY, obj.blockZ);
-            if(ammo.BreakGlass() && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
+            if(ammo.BreakGlass(ammo_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
               if(!world.isRemote)
@@ -153,9 +153,9 @@ public abstract class ItemFirearm extends ItemTool
             {
               Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3)obj.hitInfo);
-              double base_range = ammo.GetBaseRange();
-              double falloff_range = ammo.GetFalloffRange();
-              double base_damage = ammo.GetBaseDamage();
+              double base_range = ammo.GetBaseRange(ammo_item);
+              double falloff_range = ammo.GetFalloffRange(ammo_item);
+              double base_damage = ammo.GetBaseDamage(ammo_item);
               double damage;
               if(distance < base_range)
               {

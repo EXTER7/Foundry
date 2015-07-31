@@ -52,25 +52,25 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
 
   @Override
-  public boolean BreakGlass()
+  public boolean BreakGlass(ItemStack round)
   {
     return true;
   }
 
   @Override
-  public double GetBaseRange()
+  public double GetBaseRange(ItemStack round)
   {
     return base_range;
   }
 
   @Override
-  public double GetFalloffRange()
+  public double GetFalloffRange(ItemStack round)
   {
     return falloff_range;
   }
 
   @Override
-  public double GetBaseDamage()
+  public double GetBaseDamage(ItemStack round)
   {
     return base_damage;
   }

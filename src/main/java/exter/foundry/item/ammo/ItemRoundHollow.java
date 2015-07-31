@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemRoundHollow extends ItemRoundBase
@@ -33,7 +34,7 @@ public class ItemRoundHollow extends ItemRoundBase
   }
 
   @Override
-  public String GetRoundType()
+  public String GetRoundType(ItemStack round)
   {
     return ItemRevolver.AMMO_TYPE;
   }

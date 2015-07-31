@@ -2,7 +2,7 @@
 {
   "modid" : "foundry",
   "name" : "Foundry",
-  "version" : "1.0.0.0",
+  "version" : "1.1.0.0-beta1",
   "credits" : "",
   "authors": [
     "EXTER"

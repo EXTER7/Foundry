@@ -132,10 +132,22 @@ public class ModIntegrationTF extends ModIntegration
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
-      MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500);
-      MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
-      MeltingRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
-      MeltingRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
+      if(liquid_pyrotheum != null)
+      {
+        MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500, 200);
+      }      
+      if(liquid_cryotheum != null)
+      {
+        MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
+      }      
+      if(liquid_aerotheum != null)
+      {
+        MeltingRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
+      }
+      if(liquid_petrotheum != null)
+      {
+        MeltingRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
+      }
 
       if(override_redstone_melting)
       {

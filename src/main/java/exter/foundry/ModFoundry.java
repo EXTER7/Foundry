@@ -250,7 +250,7 @@ public class ModFoundry
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
 
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
-    EntityRegistry.addSpawn(EntitySkeletonGun.class, 5, 0, 1, EnumCreatureType.creature,
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 7, 1, 3, EnumCreatureType.creature,
         ((Set<BiomeGenBase>)BiomeGenBase.explorationBiomesList).toArray(new BiomeGenBase[BiomeGenBase.explorationBiomesList.size()]));
     
     proxy.Init();

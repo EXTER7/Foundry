@@ -450,6 +450,44 @@ public class FoundryRecipes
     ItemStack shotgun_pump = FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP);
     ItemStack shotgun_frame = FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME);
     
+       
+    MeltingRecipeManager.instance.AddRecipe(
+        bullet,
+        new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET * 3));
+    MeltingRecipeManager.instance.AddRecipe(
+        bullet_hollow,
+        new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET * 3));
+    MeltingRecipeManager.instance.AddRecipe(
+        bullet_jacketed,
+        new FluidStack(liquid_copper, FoundryAPI.FLUID_AMOUNT_NUGGET));
+    MeltingRecipeManager.instance.AddRecipe(
+        bullet_casing,
+        new FluidStack(liquid_brass, FoundryAPI.FLUID_AMOUNT_NUGGET));
+    MeltingRecipeManager.instance.AddRecipe(
+        pellet,
+        new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET));
+    MeltingRecipeManager.instance.AddRecipe(
+        shell_casing,
+        new FluidStack(liquid_brass, FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+
+
+    MeltingRecipeManager.instance.AddRecipe(
+        gun_barrel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.AddRecipe(
+        revolver_drum,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 4));
+    MeltingRecipeManager.instance.AddRecipe(
+        revolver_frame,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2));
+    MeltingRecipeManager.instance.AddRecipe(
+        shotgun_pump,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT / 2));
+    MeltingRecipeManager.instance.AddRecipe(
+        shotgun_frame,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2));
+
+
     CastingRecipeManager.instance.AddRecipe(
         bullet,
         new FluidStack(liquid_lead, FoundryAPI.FLUID_AMOUNT_NUGGET * 3), mold_bullet, null);

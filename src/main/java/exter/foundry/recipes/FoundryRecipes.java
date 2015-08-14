@@ -274,6 +274,10 @@ public class FoundryRecipes
     CastingRecipeManager.instance.AddMold(mold_gun_barrel);
     CastingRecipeManager.instance.AddMold(mold_revolver_drum);
     CastingRecipeManager.instance.AddMold(mold_revolver_frame);
+    CastingRecipeManager.instance.AddMold(mold_pellet);
+    CastingRecipeManager.instance.AddMold(mold_shell_casing);
+    CastingRecipeManager.instance.AddMold(mold_shotgun_pump);
+    CastingRecipeManager.instance.AddMold(mold_shotgun_frame);
 
     if(FoundryConfig.recipe_tools_armor)
     {

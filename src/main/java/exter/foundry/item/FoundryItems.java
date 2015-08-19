@@ -89,7 +89,17 @@ public class FoundryItems
     ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));
 
   }
-  
+
+  static public ItemStack Ingot(int dv)
+  {
+    return Ingot(dv,1);
+  }
+
+  static public ItemStack Ingot(int dv,int amount)
+  {
+    return new ItemStack(item_ingot,amount,dv);
+  }
+
   static public ItemStack Component(int dv)
   {
     return Component(dv,1);

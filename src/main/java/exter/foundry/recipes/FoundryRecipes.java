@@ -757,6 +757,34 @@ public class FoundryRecipes
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
 
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.Component(ItemComponent.COMPONENT_DUST_BRASS,4),
+        "CC",
+        "CZ",
+        'C', "dustCopper", 
+        'Z', "dustZinc"));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.Component(ItemComponent.COMPONENT_DUST_CUPRONICKEL,2),
+        "CN",
+        'C', "dustCopper", 
+        'N', "dustNickel"));
+
+    GameRegistry.addSmelting(
+        FoundryItems.Component(ItemComponent.COMPONENT_DUST_ZINC),
+        FoundryItems.Ingot(ItemIngot.INGOT_ZINC),
+        0);
+
+    GameRegistry.addSmelting(
+        FoundryItems.Component(ItemComponent.COMPONENT_DUST_BRASS),
+        FoundryItems.Ingot(ItemIngot.INGOT_BRASS),
+        0);
+
+    GameRegistry.addSmelting(
+        FoundryItems.Component(ItemComponent.COMPONENT_DUST_CUPRONICKEL),
+        FoundryItems.Ingot(ItemIngot.INGOT_CUPRONICKEL),
+        0);
+    
     //Mold crafting with vanilla items
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
     FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));

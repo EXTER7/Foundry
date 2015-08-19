@@ -413,6 +413,9 @@ item.component14.name=Pellet
 item.component15.name=Shell Casing
 item.component16.name=Shotgun Pump
 item.component17.name=Shotgun Frame
+item.component18.name=Zinc Dust
+item.component19.name=Brass Dust
+item.component20.name=Cupronickel Dust
 
 item.mold0.name=Ingot Mold
 item.mold1.name=Soft Ingot Mold

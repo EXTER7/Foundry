@@ -31,6 +31,9 @@ public class ItemComponent extends Item
   static public final int COMPONENT_AMMO_CASING_SHELL = 15;
   static public final int COMPONENT_SHOTGUN_PUMP = 16;
   static public final int COMPONENT_SHOTGUN_FRAME = 17;
+  static public final int COMPONENT_DUST_ZINC = 18;
+  static public final int COMPONENT_DUST_BRASS = 19;
+  static public final int COMPONENT_DUST_CUPRONICKEL = 20;
 
 
   static private final String[] ICON_PATHS = 
@@ -52,7 +55,10 @@ public class ItemComponent extends Item
     "foundry:ammo_pellet",
     "foundry:ammo_casingShell",
     "foundry:shotgun_pump",
-    "foundry:shotgun_frame"
+    "foundry:shotgun_frame",
+    "foundry:dust_zinc",
+    "foundry:dust_brass",
+    "foundry:dust_cupronickel"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -74,7 +80,10 @@ public class ItemComponent extends Item
     "itemAmmoPellet",
     "itemAmmoShellCasing",
     "itemShotgunPump",
-    "itemShotgunFrame"
+    "itemShotgunFrame",
+    "itemZincDust",
+    "itemBrassDust",
+    "itemCupronickelDust"
   };
   
   

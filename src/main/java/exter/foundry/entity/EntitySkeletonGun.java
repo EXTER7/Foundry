@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class EntitySkeletonGun extends EntitySkeleton
 {
 
-  static private ItemStack[] LOOT_COMMON =
+  static private final ItemStack[] LOOT_COMMON =
   {
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),
@@ -29,7 +29,7 @@ public class EntitySkeletonGun extends EntitySkeleton
     FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET)
   };
 
-  static private ItemStack[] LOOT_RARE =
+  static private final ItemStack[] LOOT_RARE =
   {
     FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),
     FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),
@@ -42,7 +42,7 @@ public class EntitySkeletonGun extends EntitySkeleton
   {
     super(p_i1741_1_);
     tasks.addTask(4, new EntityAIArrowAttack(this, 1.0D, 20, 210, 15.0F));
-    setCurrentItemOrArmor(0,FoundryItems.item_revolver.Empty());
+    SetGun();
   }
 
   @Override
@@ -80,11 +80,9 @@ public class EntitySkeletonGun extends EntitySkeleton
       ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.025f,damage);
     }
   }
-
-  @Override
-  protected void addRandomArmor()
+  
+  private void SetGun()
   {
-    super.addRandomArmor();
     if(rand.nextInt(100) < 10)
     {
       super.setCurrentItemOrArmor(0, FoundryItems.item_shotgun.Empty());
@@ -92,6 +90,13 @@ public class EntitySkeletonGun extends EntitySkeleton
     {
       super.setCurrentItemOrArmor(0, FoundryItems.item_revolver.Empty());
     }
+  }
+
+  @Override
+  protected void addRandomArmor()
+  {
+    super.addRandomArmor();
+    SetGun();
   }
 
   @Override
@@ -145,6 +150,11 @@ public class EntitySkeletonGun extends EntitySkeleton
     super.setSkeletonType(0);
   }
   
+  @Override
+  public boolean canPickUpLoot()
+  {
+    return false;
+  }
 
   @Override
   public IEntityLivingData onSpawnWithEgg(IEntityLivingData data)

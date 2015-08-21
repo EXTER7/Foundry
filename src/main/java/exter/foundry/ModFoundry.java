@@ -1,15 +1,18 @@
 package exter.foundry;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -253,8 +256,53 @@ public class ModFoundry
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
 
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
-    EntityRegistry.addSpawn(EntitySkeletonGun.class, 7, 1, 3, EnumCreatureType.creature,
-        ((Set<BiomeGenBase>)BiomeGenBase.explorationBiomesList).toArray(new BiomeGenBase[BiomeGenBase.explorationBiomesList.size()]));
+
+    List<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
+    for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
+    {
+      for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(type))
+      {
+        if(!biomes.contains(bio))
+        {
+          biomes.add(bio);
+        }
+      }
+    }
+    for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END))
+    {
+      if(biomes.contains(bio))
+      {
+        biomes.remove(bio);
+      }
+    }
+    for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER))
+    {
+      if(biomes.contains(bio))
+      {
+        biomes.remove(bio);
+      }
+    }
+
+    List<BiomeGenBase> toremove = new ArrayList<BiomeGenBase>();
+    for(BiomeGenBase bio : biomes)
+    {
+      boolean remove = true;
+      for(BiomeGenBase.SpawnListEntry e : (List<BiomeGenBase.SpawnListEntry>)bio.getSpawnableList(EnumCreatureType.monster))
+      {
+        if(e.entityClass == EntitySkeleton.class)
+        {
+          remove = false;
+          break;
+        }
+      }
+      if(remove)
+      {
+        toremove.add(bio);
+      }
+    }
+    biomes.removeAll(toremove);
+
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 3, EnumCreatureType.creature, biomes.toArray(new BiomeGenBase[0]));
     
     proxy.Init();
   }

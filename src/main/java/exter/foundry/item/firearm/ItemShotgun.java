@@ -75,9 +75,9 @@ public class ItemShotgun extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSoundAtEntity(player, "foundry:shotgun_fire", 0.9F, 1F);
+          world.playSoundAtEntity(player, "foundry:shotgun_fire", 1F, 1F);
         }
-        Shoot(ammo_item,world,player,null,6,0.4f,1.0f);
+        Shoot(ammo_item,world,player,null,6,0.35f,1.0f);
         if(world.isRemote)
         {
           player.rotationPitch -= 3;
@@ -94,7 +94,7 @@ public class ItemShotgun extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSoundAtEntity(player, "random.click", 0.3F, 1.5F);
+          world.playSoundAtEntity(player, "random.click", 0.4F, 1.5F);
         }        
       }
     }    

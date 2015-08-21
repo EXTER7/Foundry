@@ -32,12 +32,6 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
     setCreativeTab(FoundryTabFirearms.tab);
   }
   
-  @Override
-  public final int getItemStackLimit(ItemStack stack)
-  {
-    return 16;
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)

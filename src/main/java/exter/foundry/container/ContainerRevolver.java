@@ -4,6 +4,7 @@ package exter.foundry.container;
 import exter.foundry.container.slot.SlotLocked;
 import exter.foundry.container.slot.SlotFirearmAmmo;
 import exter.foundry.inventory.InventoryFirearm;
+import exter.foundry.item.FoundryItems;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -29,7 +30,7 @@ public class ContainerRevolver extends Container
 
 
     rev_inv = new InventoryFirearm(revolver,inventory_player,8);
-    int position = revolver.getTagCompound().getInteger("position");
+    int position = FoundryItems.item_revolver.GetPosition(revolver);
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, position,            80,  30, ItemRevolver.AMMO_TYPE));
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 1) % 8, 106,  39, ItemRevolver.AMMO_TYPE));
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 2) % 8, 115,  65, ItemRevolver.AMMO_TYPE));

@@ -128,9 +128,6 @@ public class ItemShotgun extends ItemFirearm
   {
     list.add(Empty());
     list.add(Loaded());
-    ItemStack test= Loaded();
-    test.setItemDamage(getMaxDamage() - 3);
-    list.add(test);
   }
 
   @SuppressWarnings("unchecked")
@@ -175,16 +172,23 @@ public class ItemShotgun extends ItemFirearm
     {
       throw new IllegalArgumentException("Slot index not in range: " + slot);
     }
-    NBTTagCompound tag = new NBTTagCompound();
+    NBTTagCompound tag = stack.getTagCompound();
+    if(tag == null)
+    {
+      tag = new NBTTagCompound();
+      stack.setTagCompound(tag);
+    }
+
+    NBTTagCompound ammo_tag = new NBTTagCompound();
     if(ammo == null)
     {
-      tag.setBoolean("Empty", true);
+      ammo_tag.setBoolean("Empty", true);
     } else
     {
-      tag.setBoolean("Empty", false);
-      ammo.writeToNBT(tag);
+      ammo_tag.setBoolean("Empty", false);
+      ammo.writeToNBT(ammo_tag);
     }
-    stack.getTagCompound().setTag("Slot_" + slot,tag);
+    tag.setTag("Slot_" + slot,ammo_tag);
   }
 
   @Override
@@ -198,13 +202,18 @@ public class ItemShotgun extends ItemFirearm
     {
       throw new IllegalArgumentException("Slot index not in range: " + slot);
     }
-    NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Slot_" + slot);
-    if(tag.getBoolean("Empty"))
+    NBTTagCompound tag = stack.getTagCompound();
+    if(tag == null)
+    {
+      return null;
+    }
+    NBTTagCompound ammo_tag = tag.getCompoundTag("Slot_" + slot);
+    if(ammo_tag == null || ammo_tag.getBoolean("Empty"))
     {
       return null;
     } else
     {
-      return ItemStack.loadItemStackFromNBT(tag);
+      return ItemStack.loadItemStackFromNBT(ammo_tag);
     }
   }
 

@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.proxy.ClientFoundryProxy;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
@@ -132,7 +131,7 @@ public class BlockRefractoryHopper extends BlockContainer
   @Override
   public int getRenderType()
   {
-    return ClientFoundryProxy.hopper_renderer_id;
+    return CommonFoundryProxy.hopper_renderer_id;
   }
 
   @Override

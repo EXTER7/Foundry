@@ -44,6 +44,7 @@ repositories {
 }
 
 dependencies {
+    compile "codechicken:ForgeMultipart:1.7.10-1.2.0.345:dev"
     compile "mantle:Mantle:${mc_version}-0.3.2.jenkins187:deobf"
     compile "tconstruct:TConstruct:${mc_version}-1.8.5.build961:deobf"
     compile "codechicken:NotEnoughItems:${mc_version}-1.0.5.111:dev"

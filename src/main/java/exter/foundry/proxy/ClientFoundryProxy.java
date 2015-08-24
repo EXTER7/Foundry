@@ -23,7 +23,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
 {
   static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
 
-  static public int hopper_renderer_id;
+  
   
   @Override
   public void PreInit()

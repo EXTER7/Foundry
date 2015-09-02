@@ -41,14 +41,13 @@ public class EntitySkeletonGun extends EntitySkeleton
   public EntitySkeletonGun(World p_i1741_1_)
   {
     super(p_i1741_1_);
-    tasks.addTask(4, new EntityAIArrowAttack(this, 1.0D, 20, 210, 15.0F));
-    SetGun();
+    tasks.addTask(4, new EntityAIArrowAttack(this, 1.0D, 20, 180, 15.0F));
   }
 
   @Override
   public void setCurrentItemOrArmor(int slot, ItemStack item)
   {
-    if(slot != 0)
+    if(slot != 0 || worldObj.isRemote)
     {
       super.setCurrentItemOrArmor(slot, item);
     }
@@ -70,14 +69,14 @@ public class EntitySkeletonGun extends EntitySkeleton
       {
         worldObj.playSoundAtEntity(this, "foundry:shotgun_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.5f,damage);
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.4f,damage);
     } else
     {
       if(!worldObj.isRemote)
       {
         worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.025f,damage);
+      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.015f,damage);
     }
   }
   

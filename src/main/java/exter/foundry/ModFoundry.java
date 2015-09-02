@@ -302,7 +302,7 @@ public class ModFoundry
     }
     biomes.removeAll(toremove);
 
-    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 3, EnumCreatureType.creature, biomes.toArray(new BiomeGenBase[0]));
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.monster, biomes.toArray(new BiomeGenBase[0]));
     
     proxy.Init();
   }

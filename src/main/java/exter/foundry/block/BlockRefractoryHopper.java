@@ -1,6 +1,7 @@
 package exter.foundry.block;
 
 import java.util.List;
+import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,7 +15,9 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
@@ -32,6 +35,8 @@ public class BlockRefractoryHopper extends BlockContainer
   public IIcon icon_top;
   @SideOnly(Side.CLIENT)
   public IIcon icon_inside;
+
+  private Random rand = new Random();
 
   public BlockRefractoryHopper()
   {
@@ -114,18 +119,35 @@ public class BlockRefractoryHopper extends BlockContainer
       return true;
     }
   }
-
+  
   @Override
-  public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+  public void breakBlock(World world, int x, int y, int z, Block block, int par6)
   {
-    TileEntityRefractoryHopper terh = (TileEntityRefractoryHopper) world.getTileEntity(x, y, z);
+    TileEntity te = world.getTileEntity(x, y, z);
 
-    if(terh != null)
+    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
     {
       world.func_147453_f(x, y, z, block);
-    }
+      TileEntityFoundry tef = (TileEntityFoundry) te;
+      int i;
+      for(i = 0; i < tef.getSizeInventory(); i++)
+      {
+        ItemStack is = tef.getStackInSlot(i);
 
-    super.breakBlock(world, x, y, z, block, meta);
+        if(is != null && is.stackSize > 0)
+        {
+          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
+          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
+          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
+          EntityItem entityitem = new EntityItem(world, x + drop_x, y + drop_y, z + drop_z, is);
+          entityitem.delayBeforeCanPickup = 10;
+
+          world.spawnEntityInWorld(entityitem);
+        }
+      }
+    }
+    world.removeTileEntity(x, y, z);
+    super.breakBlock(world, x, y, z, block, par6);
   }
 
   @Override

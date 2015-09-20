@@ -9,6 +9,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
+import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -18,17 +19,35 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
+import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModIntegrationThaumcraft extends ModIntegration
 {
+  private boolean enable_shards;
+  
+  private Fluid liquid_aer;
+  private Fluid liquid_terra;
+  private Fluid liquid_aqua;
+  private Fluid liquid_ignis;
+  private Fluid liquid_ordo;
+  private Fluid liquid_perditio;
+
+  private Fluid liquid_potentia;
+  private Fluid liquid_victus;
+  private Fluid liquid_vacous;
+
+  private Fluid liquid_primal;
+
   public ModIntegrationThaumcraft(String mod_name)
   {
     super(mod_name);
@@ -37,7 +56,23 @@ public class ModIntegrationThaumcraft extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
+    enable_shards = config.get("thaumcraft.liquidshards", "integration", true).getBoolean(true);
+    
+    if(enable_shards)
+    {
+      liquid_aer = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aer", 1200, 13);
+      liquid_terra = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terra", 1200, 13);
+      liquid_aqua = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Aqua", 1200, 13);
+      liquid_ignis = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ignis", 1200, 13);
+      liquid_ordo = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ordo", 1200, 13);
+      liquid_perditio = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Perditio", 1200, 13);
 
+      liquid_potentia = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Potentia", 1200, 13);
+      liquid_victus = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Victus", 1200, 13);
+      liquid_vacous = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Vacous", 1200, 13);
+
+      liquid_primal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Primal", 1200, 13);
+    }
   }
 
   @Override
@@ -50,7 +85,23 @@ public class ModIntegrationThaumcraft extends ModIntegration
   @Override
   public void OnClientPostInit()
   {
+    Item shard = ItemApi.getItem("itemShard",6).getItem();
+
     MaterialRegistry.instance.RegisterTypeIcon("NativeCluster", ItemStack.copyItemStack(ItemApi.getItem("itemNugget",16)));
+    MaterialRegistry.instance.RegisterTypeIcon("Shard", ItemStack.copyItemStack(ItemApi.getItem("itemShard",7)));
+
+    MaterialRegistry.instance.RegisterMaterialIcon("Aer",new ItemStack(shard,1,0));
+    MaterialRegistry.instance.RegisterMaterialIcon("Ignis",new ItemStack(shard,1,1));
+    MaterialRegistry.instance.RegisterMaterialIcon("Aqua",new ItemStack(shard,1,2));
+    MaterialRegistry.instance.RegisterMaterialIcon("Terra",new ItemStack(shard,1,3));
+    MaterialRegistry.instance.RegisterMaterialIcon("Ordo",new ItemStack(shard,1,4));
+    MaterialRegistry.instance.RegisterMaterialIcon("Perditio",new ItemStack(shard,1,5));
+
+    MaterialRegistry.instance.RegisterMaterialIcon("Energy",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC));
+    MaterialRegistry.instance.RegisterMaterialIcon("Life",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC));
+    MaterialRegistry.instance.RegisterMaterialIcon("Void",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC));
+    
+    MaterialRegistry.instance.RegisterMaterialIcon("Balanced",new ItemStack(shard,1,6));
   }
 
   @Override
@@ -105,7 +156,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
     Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
     Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
     Fluid liquid_thaumium = LiquidMetalRegistry.instance.GetFluid("Thaumium");
-    Fluid liquid_voidmetal = LiquidMetalRegistry.instance.GetFluid("Void");
+    Fluid liquid_voidmetal = LiquidMetalRegistry.instance.GetFluid("Voidmetal");
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -190,12 +241,17 @@ public class ModIntegrationThaumcraft extends ModIntegration
         new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD),
         cap_copper);
 
+    ResearchCategories.registerCategory(
+        "FOUNDRY",
+        new ResourceLocation("foundry:textures/misc/tc_research_shard.png"), 
+        new ResourceLocation("thaumcraft:textures/gui/gui_researchback.png"));
+    
     ResearchItem mold_research = new ResearchItem(
-        "FOUNDRY_capmold", "THAUMATURGY",
+        "FOUNDRY_capmold", "FOUNDRY",
         (new AspectList()).add(Aspect.METAL, 1).add(Aspect.CRAFT, 1),
-        7, 0,
+        3, 0,
         1,
-        new ResourceLocation("foundry:textures/items/mold_cap_tc.png"));
+        new ResourceLocation("foundry:textures/misc/tc_research_cap.png"));
     mold_research.setPages(
         new ResearchPage("tc.research.capmold.text"),
         new ResearchPage(capmold_recipe_copper),
@@ -245,5 +301,114 @@ public class ModIntegrationThaumcraft extends ModIntegration
         cap_thaumium,
         new FluidStack(liquid_thaumium,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);    
+
+    if(enable_shards)
+    {
+      ThaumcraftApi.registerObjectTag(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC),
+          (new AspectList()).add(Aspect.ENERGY, 2).add(Aspect.CRYSTAL, 1).add(Aspect.MAGIC, 1));
+      ThaumcraftApi.registerObjectTag(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC),
+          (new AspectList()).add(Aspect.LIFE, 2).add(Aspect.CRYSTAL, 1).add(Aspect.MAGIC, 1));
+      ThaumcraftApi.registerObjectTag(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),
+          (new AspectList()).add(Aspect.VOID, 2).add(Aspect.CRYSTAL, 1).add(Aspect.MAGIC, 1));
+
+
+      ItemStack shardmold_soft = FoundryItems.Mold(ItemMold.MOLD_SHARD_TC_SOFT);
+      Item shard = ItemApi.getItem("itemShard",6).getItem();
+      
+      ShapelessArcaneRecipe shardmold_recipe = ThaumcraftApi.addShapelessArcaneCraftingRecipe(
+          "FOUNDRY_shardmold",
+          shardmold_soft,
+          mold_aspects,
+          new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD),
+          new ItemStack(shard,1,OreDictionary.WILDCARD_VALUE));
+
+      ResearchItem shardmold_research = new ResearchItem(
+          "FOUNDRY_shardmold", "FOUNDRY",
+          (new AspectList()).add(Aspect.METAL, 1).add(Aspect.CRAFT, 1),
+          -3, 0,
+          1,
+          new ResourceLocation("foundry:textures/misc/tc_research_shard.png"));
+      shardmold_research.setPages(
+          new ResearchPage("tc.research.shardmold.text1"),
+          new ResearchPage("tc.research.shardmold.text2"),
+          new ResearchPage(shardmold_recipe),
+          new ResearchPage(shardmold_soft));
+      shardmold_research.setParents("BASICARTIFACE");
+      shardmold_research.registerResearchItem();
+      
+      ItemStack shard_mold = FoundryItems.Mold(ItemMold.MOLD_SHARD_TC);
+      
+      FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_SHARD_TC_SOFT, ItemMold.MOLD_SHARD_TC);
+      CastingRecipeManager.instance.AddMold(shard_mold);
+
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,0), new FluidStack(liquid_aer,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,1), new FluidStack(liquid_ignis,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,2), new FluidStack(liquid_aqua,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,3), new FluidStack(liquid_terra,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,4), new FluidStack(liquid_ordo,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,5), new FluidStack(liquid_perditio,FoundryAPI.FLUID_AMOUNT_INGOT));
+
+      MeltingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC), new FluidStack(liquid_potentia,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC), new FluidStack(liquid_victus,FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC), new FluidStack(liquid_vacous,FoundryAPI.FLUID_AMOUNT_INGOT));
+      
+      MeltingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,6), new FluidStack(liquid_primal,FoundryAPI.FLUID_AMOUNT_INGOT));
+
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,0), new FluidStack(liquid_aer,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,1), new FluidStack(liquid_ignis,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,2), new FluidStack(liquid_aqua,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,3), new FluidStack(liquid_terra,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,4), new FluidStack(liquid_ordo,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,5), new FluidStack(liquid_perditio,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+
+      CastingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC), new FluidStack(liquid_potentia,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC), new FluidStack(liquid_victus,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      CastingRecipeManager.instance.AddRecipe(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC), new FluidStack(liquid_vacous,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+      
+      CastingRecipeManager.instance.AddRecipe(new ItemStack(shard,1,6), new FluidStack(liquid_primal,FoundryAPI.FLUID_AMOUNT_INGOT),shard_mold,null);
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_potentia,2),
+          new FluidStack[] {
+              new FluidStack(liquid_ignis,1),
+              new FluidStack(liquid_ordo,1)
+          });
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_victus,2),
+          new FluidStack[] {
+              new FluidStack(liquid_aqua,1),
+              new FluidStack(liquid_terra,1)
+          });
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_vacous,2),
+          new FluidStack[] {
+              new FluidStack(liquid_aer,1),
+              new FluidStack(liquid_perditio,1)
+          });
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_primal,3),
+          new FluidStack[] {
+              new FluidStack(liquid_potentia,1),
+              new FluidStack(liquid_victus,1),
+              new FluidStack(liquid_vacous,1)
+          });
+      
+      
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,0),"Aer","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,1),"Ignis","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,2),"Aqua","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,3),"Terra","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,4),"Ordo","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,5),"Perditio","Shard");
+
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC),"Energy","Shard");
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC),"Life","Shard");
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),"Void","Shard");
+      
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,6),"Balanced","Shard");
+    }
   }
 }

@@ -40,7 +40,7 @@ fluid.liquidGlass.magenta=Liquid Glass (Magenta)
 fluid.liquidGlass.orange=Liquid Glass (Orange)
 fluid.liquidGlass.white=Liquid Glass (White)
 fluid.liquidThaumium=Liquid Thaumium
-fluid.liquidVoid=Liquid Void Metal
+fluid.liquidVoidmetal=Liquid Void Metal
 fluid.liquidManasteel=Liquid Manasteel
 fluid.liquidTerrasteel=Liquid Terrasteel
 fluid.liquidElementium=Liquid Elementium
@@ -87,6 +87,16 @@ fluid.liquidPrometheum=Liquid Prometheum
 fluid.liquidIronwood=Liquid Ironwood
 fluid.liquidSteeleaf=Liquid Steeleaf
 fluid.liquidKnightmetal=Liquid Knightmetal
+fluid.liquidAer=Air Infused Liquid
+fluid.liquidIgnis=Fire Infused Liquid
+fluid.liquidTerra=Earth Infused Liquid
+fluid.liquidAqua=Water Infused Liquid
+fluid.liquidOrdo=Order Infused Liquid
+fluid.liquidPerditio=Entropy Infused Liquid
+fluid.liquidPotentia=Energy Infused Liquid
+fluid.liquidVictus=Life Infused Liquid
+fluid.liquidVacous=Void Infused Liquid
+fluid.liquidPrimal=Primal Liquid
 
 
 router.material._Any=All
@@ -135,7 +145,7 @@ router.material.Topaz=Topaz
 router.material.Redstone=Redstone
 router.material.Glowstone=Glowstone
 router.material.Thaumium=Thaumium
-router.material.Void=Void Metal
+router.material.Voidmetal=Void Metal
 router.material.Manasteel=Manasteel
 router.material.Terrasteel=Terrasteel
 router.material.Elementium=Elementium
@@ -181,6 +191,16 @@ router.material.Prometheum=Prometheum
 router.material.Ironwood=Ironwood
 router.material.Steeleaf=Steeleaf
 router.material.Knightmetal=Knightmetal
+router.material.Aer=Aer
+router.material.Ignis=Ignis
+router.material.Terra=Terra
+router.material.Aqua=Aqua
+router.material.Ordo=Ordo
+router.material.Perditio=Perditio
+router.material.Potentia=Potentia
+router.material.Victus=Victus
+router.material.Vacous=Vacous
+router.material.Primal=Primal
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -201,6 +221,7 @@ router.type.Casing=Casing
 router.type.Cable=Cable
 router.type.NativeCluster=Native Cluster
 router.type.PoorOre=Poor Ore
+router.type.Shard=Shard
 
 substance.carbon=Carbon
 substance.dye.black=Black Dye
@@ -272,7 +293,7 @@ tile.liquidGlass.magenta.name=Liquid Glass (Magenta)
 tile.liquidGlass.orange.name=Liquid Glass (Orange)
 tile.liquidGlass.white.name=Liquid Glass (White)
 tile.liquidThaumium.name=Liquid Thaumium
-tile.liquidVoid=Liquid Void Metal
+tile.liquidVoidmetal=Liquid Void Metal
 tile.liquidManasteel.name=Liquid Manasteel
 tile.liquidTerrasteel.name=Liquid Terrasteel
 tile.liquidElementium.name=Liquid Elementium
@@ -316,9 +337,19 @@ tile.liquidOureclase.name=Liquid Oureclase
 tile.liquidIgnatius.name=Liquid Ignatius
 tile.liquidVulcanite.name=Liquid Vulcanite
 tile.liquidPrometheum.name=Liquid Prometheum
-tile.liquidIronwood=Liquid Ironwood
-tile.liquidSteeleaf=Liquid Steeleaf
-tile.liquidKnightmetal=Liquid Knightmetal
+tile.liquidIronwood.name=Liquid Ironwood
+tile.liquidSteeleaf.name=Liquid Steeleaf
+tile.liquidKnightmetal.name=Liquid Knightmetal
+tile.liquidAer.name=Air Infused Liquid
+tile.liquidIgnis.name=Fire Infused Liquid
+tile.liquidTerra.name=Earth Infused Liquid
+tile.liquidAqua.name=Water Infused Liquid
+tile.liquidOrdo.name=Order Infused Liquid
+tile.liquidPerditio.name=Entropy Infused Liquid
+tile.liquidPotentia.name=Energy Infused Liquid
+tile.liquidVictus.name=Life Infused Liquid
+tile.liquidVacous.name=Void Infused Liquid
+tile.liquidPrimal.name=Primal Liquid
 
 
 tile.machine.ICF.name=Induction Crucible Furnace
@@ -416,7 +447,9 @@ item.component17.name=Shotgun Frame
 item.component18.name=Zinc Dust
 item.component19.name=Brass Dust
 item.component20.name=Cupronickel Dust
-
+item.component21.name=Energy Shard
+item.component22.name=Life Shard
+item.component23.name=Void Shard
 item.mold0.name=Ingot Mold
 item.mold1.name=Soft Ingot Mold
 item.mold2.name=Chestplate Mold
@@ -483,6 +516,8 @@ item.mold62.name=Shotgun Pump Mold
 item.mold63.name=Soft Shotgun Pump Mold
 item.mold64.name=Shotgun Frame Mold
 item.mold65.name=Soft Shotgun Frame Mold
+item.mold66.name=Shard Mold
+item.mold67.name=Soft Shard Mold
   
 item.ingot0.name=Copper Ingot
 item.ingot1.name=Tin Ingot
@@ -514,8 +549,15 @@ item.roundPoison.name=Poison Round
 item.shellNormal.name=Standard Shell
 
 
-tc.research.capmold.text=This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. 
-tc.research_name.FOUNDRY_capmold=Wand Cap mold.
+tc.research_category.FOUNDRY=Foundry
+
+tc.research.shardmold.text1=Using an Induction Crucible Furnace, shards can be molten into liquid and cast in a Metal Caster with the Shard Mold, This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. Each shard melts into 108mB of Infused Liquid.
+tc.research.shardmold.text2=It's possible to combine certain infused liquids in an Alloy Mixer:<BR/><BR/>Fire Infused Liquid + Order Infused Liquid -> Energy Infused Liquid.<BR/>Air Infused Liquid + Entropy Infused Liquid -> Void Infused Liquid.<BR/>Earth Infused Liquid + Water Infused Liquid -> Life Infused Liquid.<BR/><BR/>Finally this three liquid can be mixed to create Primal Liquid which can be cast into Balanced Shards.<BR/><BR/>Energy, Void, and Life infused liquids can be cast into shards as well. However there is no known use for these shards.
+tc.research_name.FOUNDRY_shardmold=[Foundry] Shard casting.
+tc.research_text.FOUNDRY_shardmold=Melt, combine, and cast shards.
+
+tc.research.capmold.text=This mold allows creating wand caps from liquid metal in a Metal Caster. After crafting, this mold needs to be hardened in a furnace before using. 
+tc.research_name.FOUNDRY_capmold=[Foundry] Wand Cap mold.
 tc.research_text.FOUNDRY_capmold=Making wand caps out of liquid metal.
 
 entity.foundry.gunSkeleton.name=Gun Skeleton

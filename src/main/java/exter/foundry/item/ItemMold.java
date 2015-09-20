@@ -79,6 +79,8 @@ public class ItemMold extends Item
   static public final int MOLD_SHOTGUN_PUMP_SOFT = 63;
   static public final int MOLD_SHOTGUN_FRAME = 64;
   static public final int MOLD_SHOTGUN_FRAME_SOFT = 65;
+  static public final int MOLD_SHARD_TC = 66;
+  static public final int MOLD_SHARD_TC_SOFT = 67;
   
   static private final String[] ICON_PATHS = 
   {
@@ -147,7 +149,9 @@ public class ItemMold extends Item
     "foundry:mold_shotgunPump",
     "foundry:claymold_shotgunPump",
     "foundry:mold_shotgunFrame",
-    "foundry:claymold_shotgunFrame"
+    "foundry:claymold_shotgunFrame",
+    "foundry:mold_shard_tc",
+    "foundry:claymold_shard_tc"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -217,7 +221,9 @@ public class ItemMold extends Item
     "ItemShotgunPumpMold",
     "ItemSoftShotgunPumpMold",
     "ItemShotgunFrameMold",
-    "ItemSoftShotgunFrameMold"
+    "ItemSoftShotgunFrameMold",
+    "ItemShardMold",
+    "ItemSoftShardMold"
   };
 
   

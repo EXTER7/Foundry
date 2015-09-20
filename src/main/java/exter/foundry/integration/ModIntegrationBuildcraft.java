@@ -5,6 +5,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -50,14 +51,12 @@ public class ModIntegrationBuildcraft extends ModIntegration
     {
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
-        Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
-        Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
         ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

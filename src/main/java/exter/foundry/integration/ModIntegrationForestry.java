@@ -10,6 +10,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -56,18 +57,14 @@ public class ModIntegrationForestry extends ModIntegration
       FoundryMiscUtils.RegisterInOreDictionary("gearBronze",bronze_gear);
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
-        Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-        Fluid liquid_tin = LiquidMetalRegistry.instance.GetFluid("Tin");
-        Fluid liquid_bronze = LiquidMetalRegistry.instance.GetFluid("Bronze");
-
         ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

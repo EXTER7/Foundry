@@ -6,6 +6,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -56,37 +57,34 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
     {
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
-      Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-      Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-      Fluid liquid_electrum = LiquidMetalRegistry.instance.GetFluid("Electrum");
       Fluid liquid_electrumflux = LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
 
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrumflux, 27),
           new FluidStack[] {
-            new FluidStack(liquid_electrum, 27),
+            new FluidStack(FoundryRecipes.liquid_electrum, 27),
             new FluidStack(destabilized_redstone, 50) });
 
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrumflux,5),
           new FluidStack[] {
-            new FluidStack(liquid_electrum,5),
+            new FluidStack(FoundryRecipes.liquid_electrum,5),
             new FluidStack(liquid_redstone,4)});
 
       
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrumflux, 54),
           new FluidStack[] {
-            new FluidStack(liquid_gold, 27),
-            new FluidStack(liquid_silver, 27),
+            new FluidStack(FoundryRecipes.liquid_gold, 27),
+            new FluidStack(FoundryRecipes.liquid_silver, 27),
             new FluidStack(destabilized_redstone, 100) });
 
       
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrumflux, 10),
           new FluidStack[] {
-            new FluidStack(liquid_gold, 5),
-            new FluidStack(liquid_silver, 5),
+            new FluidStack(FoundryRecipes.liquid_gold, 5),
+            new FluidStack(FoundryRecipes.liquid_silver, 5),
             new FluidStack(liquid_redstone, 8) });
     
       ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);

@@ -6,6 +6,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
+import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemComponent;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,5 +81,11 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   public void OnBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
   {
     
+  }
+  
+  @Override
+  public ItemStack GetCasing(ItemStack round)
+  {
+    return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING);
   }
 }

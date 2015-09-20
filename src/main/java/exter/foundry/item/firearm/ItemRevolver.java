@@ -5,6 +5,7 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.gui.GuiScreen;
@@ -97,15 +98,15 @@ public class ItemRevolver extends ItemFirearm
     if(!player.isSneaking())
     {      
       int position = GetPosition(stack);
-      ItemStack ammo_item = GetAmmo(stack,position);
-      if(ammo_item != null)
+      ItemStack round = GetAmmo(stack,position);
+      if(RoundMatches(round,"revolver"))
       {
         if(!world.isRemote)
         {
           world.playSoundAtEntity(player, "foundry:revolver_fire", 1F, 1F);
         }
-        Shoot(ammo_item,world,player,null,1,0.01f,1.0f);
-        SetAmmo(stack,position,null);
+        Shoot(round,world,player,null,1,0.01f,1.0f);
+        SetAmmo(stack,position,((IFirearmRound)round.getItem()).GetCasing(round).copy());
         if(world.isRemote)
         {
           player.rotationPitch -= 3;

@@ -16,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.EntityDamageSourceIndirect;
@@ -195,7 +196,6 @@ public abstract class ItemFirearm extends ItemTool
       }
     }
   }
-
   
   @Override
   public final int getMaxItemUseDuration(ItemStack p_77626_1_)
@@ -220,4 +220,18 @@ public abstract class ItemFirearm extends ItemTool
   
   public abstract ItemStack GetAmmo(ItemStack stack,int slot);
 
+  
+  static public boolean RoundMatches(ItemStack stack,String type)
+  {
+    if(stack == null)
+    {
+      return false;
+    }
+    Item item = stack.getItem(); 
+    if(!(item instanceof IFirearmRound))
+    {
+      return false;
+    }
+    return ((IFirearmRound)item).GetRoundType(stack).equals(type);
+  }
 }

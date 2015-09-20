@@ -5,11 +5,13 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,8 +31,6 @@ public class ItemShotgun extends ItemFirearm
   {
     setUnlocalizedName("shotgun");
   }
-
-
 
   @Override
   @SideOnly(Side.CLIENT)
@@ -59,34 +59,51 @@ public class ItemShotgun extends ItemFirearm
   {
     if(!player.isSneaking())
     {
-      ItemStack ammo_item = null;
+      ItemStack round = null;
       int i;
       int shot = -1;
       for(i = 4; i >= 0; i--)
       {
-        ammo_item = GetAmmo(stack,i);
-        if(ammo_item != null)
+        round = GetAmmo(stack,i);
+        if(round != null)
         {
           shot = i;
           break;
         }
       }
-      if(ammo_item != null)
+      if(RoundMatches(round,"shotgun"))
       {
         if(!world.isRemote)
         {
           world.playSoundAtEntity(player, "foundry:shotgun_fire", 1F, 1F);
         }
-        Shoot(ammo_item,world,player,null,6,0.35f,1.0f);
+        Shoot(round,world,player,null,6,0.35f,1.0f);
+        float pitch = -player.rotationPitch;
+        float yaw = -player.rotationYaw;
+        float cpitch = -MathHelper.cos(pitch * 0.017453292F);          
+        double look_x = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI) * cpitch;
+        double look_y = MathHelper.sin(pitch * 0.017453292F);
+        double look_z = MathHelper.cos(yaw * 0.017453292F - (float) Math.PI) * cpitch;
+
         if(world.isRemote)
         {
           player.rotationPitch -= 3;
-          float pitch = -player.rotationPitch;
-          float yaw = -player.rotationYaw;
-          float cpitch = -MathHelper.cos(pitch * 0.017453292F);          
-          player.motionX -= MathHelper.sin(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
-          player.motionY -= MathHelper.sin(pitch * 0.017453292F) * 0.1;
-          player.motionZ -= MathHelper.cos(yaw * 0.017453292F - (float) Math.PI) * cpitch * 0.1;
+          player.motionX -= look_x * 0.1;
+          player.motionY -= look_y * 0.1;
+          player.motionZ -= look_z * 0.1;
+        } else
+        {
+          EntityItem casing = new EntityItem(
+              world,
+              player.posX,
+              player.posY + player.getEyeHeight() - 0.1,
+              player.posZ,
+              ((IFirearmRound)(round.getItem())).GetCasing(round).copy());
+          casing.delayBeforeCanPickup = 10;
+          casing.motionX = -look_z * 0.2;
+          casing.motionY = look_y * 0.2;
+          casing.motionZ = look_x * 0.2;
+          world.spawnEntityInWorld(casing);          
         }
         SetAmmo(stack,shot,null);
         stack.damageItem(1, player);

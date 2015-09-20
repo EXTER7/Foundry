@@ -71,4 +71,7 @@ public interface IFirearmRound
    * @return The base damage of the round
    */
   public double GetBaseDamage(ItemStack round);
+  
+  
+  public ItemStack GetCasing(ItemStack round);
 }

@@ -3,6 +3,7 @@ package exter.foundry.integration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -19,6 +20,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationTwilightForest extends ModIntegration
 {
+  private Fluid liquid_ironwood;
+  private Fluid liquid_steeleaf;
+  private Fluid liquid_knightmetal;
+  
   public ModIntegrationTwilightForest(String mod_name)
   {
     super(mod_name);
@@ -27,7 +32,13 @@ public class ModIntegrationTwilightForest extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    liquid_ironwood = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ironwood", 1850, 15);
+    liquid_steeleaf = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steeleaf", 1850, 15);
+    liquid_knightmetal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Knightmetal", 1900, 15);
+    
+    FoundryUtils.RegisterBasicMeltingRecipes("Ironwood", liquid_ironwood);
+    FoundryUtils.RegisterBasicMeltingRecipes("Steeleaf", liquid_steeleaf);
+    FoundryUtils.RegisterBasicMeltingRecipes("Knightmetal", liquid_knightmetal);
   }
 
   @Override
@@ -62,9 +73,6 @@ public class ModIntegrationTwilightForest extends ModIntegration
       is_loaded = false;
       return;
     }
-    Fluid liquid_ironwood = LiquidMetalRegistry.instance.GetFluid("Ironwood");
-    Fluid liquid_steeleaf = LiquidMetalRegistry.instance.GetFluid("Steeleaf");
-    Fluid liquid_knightmetal = LiquidMetalRegistry.instance.GetFluid("Knightmetal");
 
     ItemStack ironwood_raw = new ItemStack(GameRegistry.findItem("TwilightForest", "item.ironwoodRaw"));
     ItemStack ironwood_ingot = new ItemStack(GameRegistry.findItem("TwilightForest", "item.ironwoodIngot"));

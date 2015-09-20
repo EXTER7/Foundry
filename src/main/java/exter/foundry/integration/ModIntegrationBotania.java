@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -20,7 +21,9 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationBotania extends ModIntegration
 {
-
+  private Fluid liquid_manasteel;
+  private Fluid liquid_terrasteel;
+  private Fluid liquid_elementium;
   
   public ModIntegrationBotania(String mod_name)
   {
@@ -30,6 +33,13 @@ public class ModIntegrationBotania extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
+    liquid_manasteel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manasteel", 1950, 15);
+    liquid_terrasteel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
+    liquid_elementium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
+
+    FoundryUtils.RegisterBasicMeltingRecipes("Manasteel", liquid_manasteel);
+    FoundryUtils.RegisterBasicMeltingRecipes("Terrasteel", liquid_terrasteel);
+    FoundryUtils.RegisterBasicMeltingRecipes("Elementium", liquid_elementium);
   }
 
   @Override
@@ -100,10 +110,6 @@ public class ModIntegrationBotania extends ModIntegration
     
     if(is_loaded)
     {
-      Fluid liquid_manasteel = LiquidMetalRegistry.instance.GetFluid("Manasteel");
-      Fluid liquid_terrasteel = LiquidMetalRegistry.instance.GetFluid("Terrasteel");
-      Fluid liquid_elementium = LiquidMetalRegistry.instance.GetFluid("Elementium");
-
       if(FoundryConfig.recipe_tools_armor)
       {
         ItemStack extra_sticks1 = livingwood_twig.copy();

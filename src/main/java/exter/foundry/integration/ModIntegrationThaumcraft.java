@@ -4,11 +4,13 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
+import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -47,6 +49,9 @@ public class ModIntegrationThaumcraft extends ModIntegration
   private Fluid liquid_vacous;
 
   private Fluid liquid_primal;
+  
+  private Fluid liquid_thaumium;
+  private Fluid liquid_voidmetal;
 
   public ModIntegrationThaumcraft(String mod_name)
   {
@@ -56,6 +61,13 @@ public class ModIntegrationThaumcraft extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
+    liquid_thaumium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Thaumium", 1850, 14);
+    liquid_voidmetal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Void", 1700, 6);
+
+    FoundryUtils.RegisterBasicMeltingRecipes("Thaumium", liquid_thaumium);
+    FoundryUtils.RegisterBasicMeltingRecipes("Void", liquid_voidmetal);
+
+    
     enable_shards = config.get("thaumcraft.liquidshards", "integration", true).getBoolean(true);
     
     if(enable_shards)
@@ -151,12 +163,6 @@ public class ModIntegrationThaumcraft extends ModIntegration
       MaterialRegistry.instance.RegisterItem(oredict_name, metal, "NativeCluster");
     }
     
-    Fluid liquid_iron = LiquidMetalRegistry.instance.GetFluid("Iron");
-    Fluid liquid_copper = LiquidMetalRegistry.instance.GetFluid("Copper");
-    Fluid liquid_gold = LiquidMetalRegistry.instance.GetFluid("Gold");
-    Fluid liquid_silver = LiquidMetalRegistry.instance.GetFluid("Silver");
-    Fluid liquid_thaumium = LiquidMetalRegistry.instance.GetFluid("Thaumium");
-    Fluid liquid_voidmetal = LiquidMetalRegistry.instance.GetFluid("Voidmetal");
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -267,35 +273,35 @@ public class ModIntegrationThaumcraft extends ModIntegration
     
     MeltingRecipeManager.instance.AddRecipe(
         cap_iron,
-        new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
+        new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
     MeltingRecipeManager.instance.AddRecipe(
         cap_copper,
-        new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
+        new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
     MeltingRecipeManager.instance.AddRecipe(
         cap_gold,
-        new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
+        new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
     MeltingRecipeManager.instance.AddRecipe(
         cap_silver,
-        new FluidStack(liquid_silver,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
+        new FluidStack(FoundryRecipes.liquid_silver,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
     MeltingRecipeManager.instance.AddRecipe(
         cap_thaumium,
         new FluidStack(liquid_thaumium,FoundryAPI.FLUID_AMOUNT_NUGGET*5));
 
     CastingRecipeManager.instance.AddRecipe(
         cap_iron,
-        new FluidStack(liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
+        new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);
     CastingRecipeManager.instance.AddRecipe(
         cap_copper,
-        new FluidStack(liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
+        new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);
     CastingRecipeManager.instance.AddRecipe(
         cap_gold,
-        new FluidStack(liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
+        new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);
     CastingRecipeManager.instance.AddRecipe(
         cap_silver,
-        new FluidStack(liquid_silver,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
+        new FluidStack(FoundryRecipes.liquid_silver,FoundryAPI.FLUID_AMOUNT_NUGGET*5),
         cap_mold, null);
     CastingRecipeManager.instance.AddRecipe(
         cap_thaumium,

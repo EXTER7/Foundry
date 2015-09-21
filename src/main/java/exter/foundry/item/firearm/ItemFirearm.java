@@ -19,7 +19,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.EntityDamageSourceIndirect;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -30,6 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class ItemFirearm extends ItemTool
 {
+ 
   static private Random random = new Random();
   
   @SuppressWarnings("rawtypes")
@@ -190,7 +191,7 @@ public abstract class ItemFirearm extends ItemTool
     for(Map.Entry<EntityLivingBase, MutablePair<Float,Integer>> hit : entities_hit.entrySet())
     {
       EntityLivingBase en = hit.getKey();
-      if(en.attackEntityFrom((new EntityDamageSourceIndirect("bullet", en, shooter)).setProjectile(), hit.getValue().left))
+      if(en.attackEntityFrom((new EntityDamageSource("bullet", shooter)).setProjectile(), hit.getValue().left))
       {
         ammo.OnBulletDamagedLivingEntity(ammo_item, en,hit.getValue().right);
       }

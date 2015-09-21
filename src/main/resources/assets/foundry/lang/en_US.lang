@@ -562,4 +562,4 @@ tc.research_text.FOUNDRY_capmold=Making wand caps out of liquid metal.
 
 entity.foundry.gunSkeleton.name=Gun Skeleton
 
-death.attack.bullet=%s got hit by a bullet.
+death.attack.bullet=%1$s was gunned down by %2$s

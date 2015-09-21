@@ -48,28 +48,12 @@ public class RendererItemContainer implements IItemRenderer
     float green = (float) (color >> 8 & 255) / 255.0F;
     float blue = (float) (color & 255) / 255.0F;
     GL11.glColor4f(red, green, blue, (alpha & 255) / 255.0F);
-    int src = GL11.glGetInteger(GL11.GL_BLEND_SRC);
-    int dst = GL11.glGetInteger(GL11.GL_BLEND_DST);
-    boolean enabled = GL11.glIsEnabled(GL11.GL_BLEND);
-    boolean enabled_test = GL11.glIsEnabled(GL11.GL_ALPHA_TEST);
-    GL11.glEnable(GL11.GL_BLEND);
-    GL11.glDisable(GL11.GL_ALPHA_TEST);
-    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     tessellator.startDrawingQuads();
     tessellator.addVertexWithUV(x, y + height, 0, min_u, max_v);
     tessellator.addVertexWithUV(x + width, y + height, 0, max_u, max_v);
     tessellator.addVertexWithUV(x + width, y, 0, max_u, min_v);
     tessellator.addVertexWithUV(x, y, 0, min_u, min_v);
     tessellator.draw();
-    if(!enabled)
-    {
-      GL11.glDisable(GL11.GL_BLEND);
-    }
-    if(enabled_test)
-    {
-      GL11.glEnable(GL11.GL_ALPHA_TEST);
-    }
-    GL11.glBlendFunc(src, dst);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
   }
 
@@ -78,7 +62,15 @@ public class RendererItemContainer implements IItemRenderer
   {
     ItemRefractoryFluidContainer item = (ItemRefractoryFluidContainer) stack.getItem();
     FluidStack fluid_stack = item.getFluid(stack);
+    boolean enabled_depth_test = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+    boolean enabled_blend = GL11.glIsEnabled(GL11.GL_BLEND);
+    boolean enabled_alpha_test = GL11.glIsEnabled(GL11.GL_ALPHA_TEST);
+    int src = GL11.glGetInteger(GL11.GL_BLEND_SRC);
+    int dst = GL11.glGetInteger(GL11.GL_BLEND_DST);
     GL11.glEnable(GL11.GL_BLEND);
+    GL11.glDisable(GL11.GL_ALPHA_TEST);
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    GL11.glDisable(GL11.GL_DEPTH_TEST);
     renderItem.renderIcon(0, 0, item.icon_bg, 16, 16);
     if(fluid_stack != null)
     {
@@ -109,7 +101,19 @@ public class RendererItemContainer implements IItemRenderer
         }
       }
     }
-    GL11.glEnable(GL11.GL_BLEND);
     renderItem.renderIcon(0, 0, item.icon_fg, 16, 16);
+    if(!enabled_blend)
+    {
+      GL11.glDisable(GL11.GL_BLEND);
+    }
+    if(enabled_alpha_test)
+    {
+      GL11.glEnable(GL11.GL_ALPHA_TEST);
+    }
+    GL11.glBlendFunc(src, dst);
+    if(enabled_depth_test)
+    {
+      GL11.glEnable(GL11.GL_DEPTH_TEST);
+    }
   }
 }

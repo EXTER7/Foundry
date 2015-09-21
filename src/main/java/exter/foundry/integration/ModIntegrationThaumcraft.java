@@ -330,7 +330,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
 
       ResearchItem shardmold_research = new ResearchItem(
           "FOUNDRY_shardmold", "FOUNDRY",
-          (new AspectList()).add(Aspect.METAL, 1).add(Aspect.CRAFT, 1),
+          (new AspectList()).add(Aspect.CRYSTAL, 1).add(Aspect.CRAFT, 1).add(Aspect.MAGIC, 1),
           -3, 0,
           1,
           new ResourceLocation("foundry:textures/misc/tc_research_shard.png"));

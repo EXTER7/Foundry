@@ -1,5 +1,6 @@
 package exter.foundry.recipes;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -980,6 +981,23 @@ public class FoundryRecipes
             }
           }
           MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize),recipe.GetMeltingPoint(),recipe.GetMeltingSpeed());
+        }
+      }
+    }
+    
+    ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+    for(String name:LiquidMetalRegistry.instance.GetFluidNames())
+    {
+      if(!name.startsWith("Glass"))
+      {
+        List<ItemStack> ores = OreDictionary.getOres("ingot" + name);
+        if(ores != null && ores.size() > 0)
+        {
+          FluidStack fluid = new FluidStack(LiquidMetalRegistry.instance.GetFluid(name), FoundryAPI.FLUID_AMOUNT_INGOT);
+          if(CastingRecipeManager.instance.FindRecipe(fluid, ingot_mold, null) == null)
+          {
+            CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, ingot_mold, null);
+          }
         }
       }
     }

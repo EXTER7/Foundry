@@ -68,10 +68,21 @@ public interface IFirearmRound
    * Get the base damage of the round.
    * Note: The base damage is applied per bullet/pellet (revolvers shoot 1 bullet, shotguns shoot 6 pellets).
    * @param round The Round item.
-   * @return The base damage of the round
+   * @return The base damage of the round.
    */
   public double GetBaseDamage(ItemStack round);
   
-  
+  /**
+   * Get the casing that the round uses.
+   * @param round The Round item.
+   * @return ItemStack of the casing.
+   */
   public ItemStack GetCasing(ItemStack round);
+  
+  /**
+   * Check if the round ignores armor.
+   * @param round The Round item.
+   * @return true if the round ignores armor.
+   */
+  public boolean IgnoresArmor(ItemStack round);
 }

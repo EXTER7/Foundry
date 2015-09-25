@@ -71,7 +71,7 @@ public class ItemShotgun extends ItemFirearm
           break;
         }
       }
-      if(RoundMatches(round,"shotgun"))
+      if(RoundMatches(round,AMMO_TYPE))
       {
         if(!world.isRemote)
         {

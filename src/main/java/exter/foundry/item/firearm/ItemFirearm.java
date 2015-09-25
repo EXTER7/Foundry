@@ -19,6 +19,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -123,10 +124,10 @@ public abstract class ItemFirearm extends ItemTool
     return obj;
   }
   
-  static public final void Shoot(ItemStack ammo_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
+  static public final void Shoot(ItemStack round_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
   {
     Map<EntityLivingBase,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLivingBase,MutablePair<Float,Integer>>();
-    IFirearmRound ammo = (IFirearmRound) ammo_item.getItem();
+    IFirearmRound round = (IFirearmRound) round_item.getItem();
     int i;
     for(i = 0; i < times; i++)
     {
@@ -138,7 +139,7 @@ public abstract class ItemFirearm extends ItemTool
           case BLOCK:
             Block b = world.getBlock(obj.blockX, obj.blockY, obj.blockZ);
             int m = world.getBlockMetadata(obj.blockX, obj.blockY, obj.blockZ);
-            if(ammo.BreakGlass(ammo_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
+            if(round.BreakGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
               if(!world.isRemote)
@@ -147,7 +148,7 @@ public abstract class ItemFirearm extends ItemTool
               }
             } else
             {
-              ammo.OnBulletHitBlock(ammo_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+              round.OnBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
             }
             break;
           case ENTITY:
@@ -155,9 +156,9 @@ public abstract class ItemFirearm extends ItemTool
             {
               Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3)obj.hitInfo);
-              double base_range = ammo.GetBaseRange(ammo_item);
-              double falloff_range = ammo.GetFalloffRange(ammo_item);
-              double base_damage = ammo.GetBaseDamage(ammo_item);
+              double base_range = round.GetBaseRange(round_item);
+              double falloff_range = round.GetFalloffRange(round_item);
+              double base_damage = round.GetBaseDamage(round_item);
               double damage;
               if(distance < base_range)
               {
@@ -191,9 +192,14 @@ public abstract class ItemFirearm extends ItemTool
     for(Map.Entry<EntityLivingBase, MutablePair<Float,Integer>> hit : entities_hit.entrySet())
     {
       EntityLivingBase en = hit.getKey();
-      if(en.attackEntityFrom((new EntityDamageSource("bullet", shooter)).setProjectile(), hit.getValue().left))
+      DamageSource damage = (new EntityDamageSource("bullet", shooter)).setProjectile();
+      if(round.IgnoresArmor(round_item))
       {
-        ammo.OnBulletDamagedLivingEntity(ammo_item, en,hit.getValue().right);
+        damage.setDamageBypassesArmor();
+      }
+      if(en.attackEntityFrom(damage, hit.getValue().left))
+      {
+        round.OnBulletDamagedLivingEntity(round_item, en,hit.getValue().right);
       }
     }
   }

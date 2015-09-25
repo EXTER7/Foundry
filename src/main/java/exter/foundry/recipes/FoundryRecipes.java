@@ -442,6 +442,8 @@ public class FoundryRecipes
     ItemStack revolver_frame = FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME);
     ItemStack shotgun_pump = FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP);
     ItemStack shotgun_frame = FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME);
+    ItemStack bullet_steel = FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_STEEL);
+    ItemStack pellet_steel = FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET_STEEL);
     
        
     MeltingRecipeManager.instance.AddRecipe(
@@ -462,6 +464,12 @@ public class FoundryRecipes
     MeltingRecipeManager.instance.AddRecipe(
         shell_casing,
         new FluidStack(liquid_brass, FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.AddRecipe(
+        bullet_steel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET * 3));
+    MeltingRecipeManager.instance.AddRecipe(
+        pellet_steel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET));
 
 
     MeltingRecipeManager.instance.AddRecipe(
@@ -499,6 +507,12 @@ public class FoundryRecipes
     CastingRecipeManager.instance.AddRecipe(
         shell_casing,
         new FluidStack(liquid_brass, FoundryAPI.FLUID_AMOUNT_NUGGET * 2), mold_shell_casing, null);
+    CastingRecipeManager.instance.AddRecipe(
+        bullet_steel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET * 3), mold_bullet, null);
+    CastingRecipeManager.instance.AddRecipe(
+        pellet_steel,
+        new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET), mold_pellet, null);
 
     
     CastingRecipeManager.instance.AddRecipe(
@@ -516,6 +530,7 @@ public class FoundryRecipes
     CastingRecipeManager.instance.AddRecipe(
         shotgun_frame,
         new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2), mold_shotgun_frame, null);
+
   }
 
   static public void Init()
@@ -740,6 +755,25 @@ public class FoundryRecipes
         "PGP",
         "PCP",
         'P', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET), 
+        'A', paper_stack, 
+        'G', "dustSmallGunpowder",
+        'C', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_round_ap,
+        "B",
+        "G",
+        "C",
+        'B', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_STEEL), 
+        'G', "dustSmallGunpowder",
+        'C', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_shell_ap,
+        "PAP",
+        "PGP",
+        "PCP",
+        'P', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET_STEEL), 
         'A', paper_stack, 
         'G', "dustSmallGunpowder",
         'C', FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL)));

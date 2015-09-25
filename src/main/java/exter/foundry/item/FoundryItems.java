@@ -7,9 +7,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.item.ammo.ItemRoundNormal;
 import exter.foundry.item.ammo.ItemRoundJacketed;
 import exter.foundry.item.ammo.ItemRoundPoison;
+import exter.foundry.item.ammo.ItemShellAP;
 import exter.foundry.item.ammo.ItemShellNormal;
 import exter.foundry.item.firearm.ItemRevolver;
 import exter.foundry.item.firearm.ItemShotgun;
+import exter.foundry.item.ammo.ItemRoundAP;
 import exter.foundry.item.ammo.ItemRoundFire;
 import exter.foundry.item.ammo.ItemRoundHollow;
 import exter.foundry.registry.ItemRegistry;
@@ -31,7 +33,11 @@ public class FoundryItems
   static public ItemRoundHollow item_round_hollow;
   static public ItemRoundFire item_round_fire;
   static public ItemRoundPoison item_round_poison;
+  static public ItemRoundAP item_round_ap;
   static public ItemShellNormal item_shell;
+  static public ItemShellAP item_shell_ap;
+
+  
   static public ItemRefractoryFluidContainer item_container;
   
   static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
@@ -50,7 +56,9 @@ public class FoundryItems
     item_round_hollow = new ItemRoundHollow();
     item_round_fire = new ItemRoundFire();
     item_round_poison = new ItemRoundPoison();
+    item_round_ap = new ItemRoundAP();
     item_shell = new ItemShellNormal();
+    item_shell_ap = new ItemShellAP();
     
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
@@ -63,6 +71,8 @@ public class FoundryItems
     GameRegistry.registerItem(item_round_fire, "foundryRoundFire");
     GameRegistry.registerItem(item_round_poison, "foundryRoundPoison");
     GameRegistry.registerItem(item_shell, "foundryShell");
+    GameRegistry.registerItem(item_round_ap, "foundryRoundAP");
+    GameRegistry.registerItem(item_shell_ap, "foundryShellAP");
     
     for (i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
     {

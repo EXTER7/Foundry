@@ -450,6 +450,9 @@ item.component20.name=Cupronickel Dust
 item.component21.name=Energy Shard
 item.component22.name=Life Shard
 item.component23.name=Void Shard
+item.component24.name=Steel Bullet
+item.component25.name=Steel Pellet
+
 item.mold0.name=Ingot Mold
 item.mold1.name=Soft Ingot Mold
 item.mold2.name=Chestplate Mold
@@ -546,7 +549,9 @@ item.roundJacketed.name=Jacketed Round
 item.roundHollow.name=Hollow Point Round
 item.roundFire.name=Incendiary Round
 item.roundPoison.name=Poison Round
+item.roundAP.name=Armor Piercing Round
 item.shellNormal.name=Standard Shell
+item.shellAP.name=Armor Piercing Shell
 
 
 tc.research_category.FOUNDRY=Foundry

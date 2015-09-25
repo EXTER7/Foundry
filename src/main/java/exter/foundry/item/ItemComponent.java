@@ -37,6 +37,8 @@ public class ItemComponent extends Item
   static public final int COMPONENT_SHARD_ENERGY_TC = 21;
   static public final int COMPONENT_SHARD_LIFE_TC = 22;
   static public final int COMPONENT_SHARD_VOID_TC = 23;
+  static public final int COMPONENT_AMMO_BULLET_STEEL = 24;
+  static public final int COMPONENT_AMMO_PELLET_STEEL = 25;
 
 
   static private final String[] ICON_PATHS = 
@@ -64,7 +66,9 @@ public class ItemComponent extends Item
     "foundry:dust_cupronickel",
     "foundry:shard_energy_tc",
     "foundry:shard_life_tc",
-    "foundry:shard_void_tc"
+    "foundry:shard_void_tc",
+    "foundry:ammo_bullet_steel",
+    "foundry:ammo_pellet_steel"
   };
   
   static public final String[] REGISTRY_NAMES = 
@@ -92,7 +96,9 @@ public class ItemComponent extends Item
     "itemCupronickelDust",
     "itemShardEnergy",
     "itemShardLife",
-    "itemShardVoid"
+    "itemShardVoid",
+    "itemAmmoBulletSteel",
+    "itemAmmoPelletSteel"
   };
   
   

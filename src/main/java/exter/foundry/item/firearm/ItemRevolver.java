@@ -99,7 +99,7 @@ public class ItemRevolver extends ItemFirearm
     {      
       int position = GetPosition(stack);
       ItemStack round = GetAmmo(stack,position);
-      if(RoundMatches(round,"revolver"))
+      if(RoundMatches(round,AMMO_TYPE))
       {
         if(!world.isRemote)
         {

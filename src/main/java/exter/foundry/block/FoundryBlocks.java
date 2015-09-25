@@ -194,6 +194,7 @@ public class FoundryBlocks
       ItemStack stack = new ItemStack(block_slab1,  1, i);
       slab_stacks.put(SLAB1_METALS[i], stack);
       ItemRegistry.instance.RegisterItem("blockSlab" + SLAB1_METALS[i], stack);
+      GameRegistry.registerCustomItemStack("blockSlab" + SLAB1_METALS[i], stack);
     }
 
     for(i = 0; i < SLAB2_METALS.length; i++)
@@ -201,6 +202,7 @@ public class FoundryBlocks
       ItemStack stack = new ItemStack(block_slab2,  1, i);
       slab_stacks.put(SLAB2_METALS[i], stack);
       ItemRegistry.instance.RegisterItem("blockSlab" + SLAB2_METALS[i], stack);
+      GameRegistry.registerCustomItemStack("blockSlab" + SLAB2_METALS[i], stack);
     }
 
     for(i = 0; i < SLAB3_METALS.length; i++)
@@ -208,6 +210,7 @@ public class FoundryBlocks
       ItemStack stack = new ItemStack(block_slab3,  1, i);
       slab_stacks.put(SLAB3_METALS[i], stack);
       ItemRegistry.instance.RegisterItem("blockSlab" + SLAB3_METALS[i], stack);
+      GameRegistry.registerCustomItemStack("blockSlab" + SLAB3_METALS[i], stack);
     }
   }
   
@@ -240,6 +243,7 @@ public class FoundryBlocks
       block_metal_stairs[i] = (BlockStairs)new BlockStairsFoundry(ms.GetBlock(),ms.block_meta).setBlockName("metalStairs." + ms.metal);
       GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
       ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
+      GameRegistry.registerCustomItemStack("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
     }
 
     for(i = 0; i < BlockMetal1.METAL_NAMES.length; i++)
@@ -247,12 +251,14 @@ public class FoundryBlocks
       ItemStack stack = new ItemStack(block_metal1,1,i);
       block_stacks.put(BlockMetal1.METAL_NAMES[i], stack);
       ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal1.METAL_NAMES[i], stack);
+      GameRegistry.registerCustomItemStack("blockMetal" + BlockMetal1.METAL_NAMES[i], stack);
     }
     for(i = 0; i < BlockMetal2.METAL_NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(block_metal2,1,i);
       block_stacks.put(BlockMetal2.METAL_NAMES[i], stack);
       ItemRegistry.instance.RegisterItem("blockMetal" + BlockMetal2.METAL_NAMES[i], stack);
+      GameRegistry.registerCustomItemStack("blockMetal" + BlockMetal2.METAL_NAMES[i], stack);
     }
     block_stacks.put("Iron", new ItemStack(Blocks.iron_block));
     block_stacks.put("Gold", new ItemStack(Blocks.gold_block));
@@ -276,6 +282,16 @@ public class FoundryBlocks
     ItemRegistry.instance.RegisterItem("blockMachineMaterialRouter", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER));
     ItemRegistry.instance.RegisterItem("blockRefractoryHopper", new ItemStack(block_refractory_hopper));
 
+    GameRegistry.registerCustomItemStack("refractoryCasing", new ItemStack(block_refractory_casing));
+    GameRegistry.registerCustomItemStack("machineAlloyFurnace", new ItemStack(block_alloy_furnace));
+    GameRegistry.registerCustomItemStack("machineICF", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ICF));
+    GameRegistry.registerCustomItemStack("machineCaster", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_CASTER));
+    GameRegistry.registerCustomItemStack("machineAlloyMixer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER));
+    GameRegistry.registerCustomItemStack("machineInfuser", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER));
+    GameRegistry.registerCustomItemStack("machineMaterialRouter", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER));
+    GameRegistry.registerCustomItemStack("refractoryHopper", new ItemStack(block_refractory_hopper));
+
+    
     
     for(i = 0; i < BlockMetal1.METAL_NAMES.length; i++)
     {

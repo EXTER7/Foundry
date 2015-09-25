@@ -77,13 +77,15 @@ public class FoundryItems
     for (i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_component,  1, i);
-      ItemRegistry.instance.RegisterItem(ItemComponent.REGISTRY_NAMES[i], stack);
+      ItemRegistry.instance.RegisterItem(ItemComponent.REGISTRY_NAMES_LEGACY[i], stack);
+      GameRegistry.registerCustomItemStack(ItemComponent.REGISTRY_NAMES[i], stack);
     }
     
     for (i = 0; i < ItemMold.REGISTRY_NAMES.length; i++)
     {
       ItemStack stack = new ItemStack(item_mold,  1, i);
-      ItemRegistry.instance.RegisterItem(ItemMold.REGISTRY_NAMES[i], stack);
+      ItemRegistry.instance.RegisterItem(ItemMold.REGISTRY_NAMES_LEGACY[i], stack);
+      GameRegistry.registerCustomItemStack(ItemMold.REGISTRY_NAMES[i], stack);
     }
     for (i = 0; i < ItemIngot.METAL_NAMES.length; i++)
     {
@@ -97,7 +99,7 @@ public class FoundryItems
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
     GameRegistry.registerItem(item_container, "foundryContainer");
     ItemRegistry.instance.RegisterItem("itemRefractoryFluidContainer", item_container.EmptyContainer(1));
-
+    GameRegistry.registerCustomItemStack("refractoryFluidContainer", item_container.EmptyContainer(1));
   }
 
   static public ItemStack Ingot(int dv)

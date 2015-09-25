@@ -2,6 +2,7 @@ package exter.foundry.api.registry;
 
 import net.minecraft.item.ItemStack;
 
+@Deprecated
 public interface IItemRegistry
 {
   /**
@@ -9,6 +10,7 @@ public interface IItemRegistry
    * @param Name of the block/item
    * @return ItemStack of the item
    */
+  @Deprecated
   public ItemStack GetItem(String name);
   
   /**

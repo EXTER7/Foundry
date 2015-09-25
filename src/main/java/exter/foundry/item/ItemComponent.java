@@ -71,7 +71,8 @@ public class ItemComponent extends Item
     "foundry:ammo_pellet_steel"
   };
   
-  static public final String[] REGISTRY_NAMES = 
+  @Deprecated
+  static public final String[] REGISTRY_NAMES_LEGACY = 
   {
     "itemStoneGear",
     "itemHeatingCoil",
@@ -101,6 +102,35 @@ public class ItemComponent extends Item
     "itemAmmoPelletSteel"
   };
   
+  static public final String[] REGISTRY_NAMES = 
+  {
+    "gearStone",
+    "heatingCoil",
+    "refractoryClay",
+    "refractoryBrick",
+    "moldSoftBlank",
+    "gunBarrel",
+    "revolverDrum",
+    "revolverFrame",
+    "ammoCasing",
+    "ammoBullet",
+    "ammoBulletHollow",
+    "AmmoBulletJacketed",
+    "dustSmallGunpowder",
+    "dustSmallBlaze",
+    "ammoPellet",
+    "ammoShellCasing",
+    "shotgunPump",
+    "shotgunFrame",
+    "dustZinc",
+    "dustBrass",
+    "dustCupronickel",
+    "shardEnergy",
+    "shardLife",
+    "shardVoid",
+    "ammoBulletSteel",
+    "ammoPelletSteel"
+  };
   
   @SideOnly(Side.CLIENT)
   private IIcon[] icons;

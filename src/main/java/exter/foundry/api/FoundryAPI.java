@@ -39,6 +39,7 @@ public class FoundryAPI
   static public IInfuserRecipeManager recipes_infuser;
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   
+  @Deprecated
   static public IItemRegistry items;
   static public IFluidRegistry fluids;
 }

@@ -2,7 +2,6 @@ package exter.foundry.container;
 
 import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.container.slot.SlotOutput;
-import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -18,7 +17,6 @@ public class ContainerMetalAtomizer extends Container
   private TileEntityMetalAtomizer te_atomizer;
   
   // Slot numbers
-  private static final int SLOTS_TE = 0;
   private static final int SLOTS_INVENTORY = 5;
   private static final int SLOTS_HOTBAR = 5 + 3 * 9;
 

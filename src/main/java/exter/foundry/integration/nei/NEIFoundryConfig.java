@@ -28,7 +28,8 @@ public class NEIFoundryConfig implements IConfigureNEI
         new MetalCasterRecipeHandler(),
         new InfuserRecipeHandler(),
         new InfuserSubstanceRecipeHandler(),
-        new AlloyFurnaceRecipeHandler());
+        new AlloyFurnaceRecipeHandler(),
+        new MetalAtomizerRecipeHandler());
     
     for(TemplateRecipeHandler handler : handlers)
     {

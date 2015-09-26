@@ -16,6 +16,7 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
+import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -45,6 +46,15 @@ public class FoundryNetworkChannel
   }
 
   static private FMLProxyPacket MakeCasterModePacket(TileEntityMetalCaster sender)
+  {
+    ByteBuf data = Unpooled.buffer();
+    WriteTileEntityCoords(data,sender);
+    data.writeByte(sender.GetMode().number);
+
+    return new FMLProxyPacket(data, CHANNEL_NAME);
+  }
+
+  static private FMLProxyPacket MakeAtomizerModePacket(TileEntityMetalAtomizer sender)
   {
     ByteBuf data = Unpooled.buffer();
     WriteTileEntityCoords(data,sender);
@@ -93,10 +103,22 @@ public class FoundryNetworkChannel
     network_channel.sendToServer(MakeCasterModePacket(sender));
   }
 
+  public void SendAtomizerModeToServer(TileEntityMetalAtomizer sender)
+  {
+    network_channel.sendToServer(MakeAtomizerModePacket(sender));
+  }
+
   public void SendCasterModeToClients(TileEntityMetalCaster sender)
   {
     network_channel.sendToAllAround(
         MakeCasterModePacket(sender),
+        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+  }
+
+  public void SendAtomizerModeToClients(TileEntityMetalAtomizer sender)
+  {
+    network_channel.sendToAllAround(
+        MakeAtomizerModePacket(sender),
         new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
   }
 

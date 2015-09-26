@@ -38,6 +38,7 @@ import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -642,6 +643,17 @@ public class FoundryRecipes
         'R', refbrick_stack, 
         'B', bucket_stack);
 
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ATOMIZER),
+        "GHG",
+        "RCR",
+        " B ",
+        'H', new ItemStack(FoundryBlocks.block_refractory_hopper), 
+        'B', Items.bucket, 
+        'R', Items.redstone,
+        'C', casing_stack,
+        'G', "gearStone"));
+
     GameRegistry.addRecipe(
         new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
         " H ",
@@ -1024,15 +1036,17 @@ public class FoundryRecipes
     {
       if(!name.startsWith("Glass"))
       {
+        FluidStack fluid = new FluidStack(LiquidMetalRegistry.instance.GetFluid(name), FoundryAPI.FLUID_AMOUNT_INGOT);
         List<ItemStack> ores = OreDictionary.getOres("ingot" + name);
         if(ores != null && ores.size() > 0)
         {
-          FluidStack fluid = new FluidStack(LiquidMetalRegistry.instance.GetFluid(name), FoundryAPI.FLUID_AMOUNT_INGOT);
           if(CastingRecipeManager.instance.FindRecipe(fluid, ingot_mold, null) == null)
           {
             CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, ingot_mold, null);
           }
         }
+        
+        AtomizerRecipeManager.instance.AddRecipe("dust" + name, fluid);
       }
     }
   }

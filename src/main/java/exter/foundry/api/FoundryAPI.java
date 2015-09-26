@@ -2,6 +2,7 @@ package exter.foundry.api;
 
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
+import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
@@ -30,6 +31,8 @@ public class FoundryAPI
   static public final int CASTER_TANK_CAPACITY = 6000;
   static public final int INFUSER_TANK_CAPACITY = 5000;
   static public final int ALLOYMIXER_TANK_CAPACITY = 2000;
+  static public final int ATOMIZER_TANK_CAPACITY = 6000;
+  static public final int ATOMIZER_WATER_TANK_CAPACITY = 6000;
 
   //These fields are set by Foundry during it's preInit phase.
   //If foundry is not installed they become null.
@@ -38,6 +41,7 @@ public class FoundryAPI
   static public IAlloyMixerRecipeManager recipes_alloymixer;
   static public IInfuserRecipeManager recipes_infuser;
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
+  static public IAtomizerRecipeManager recipes_atomizer;
   
   @Deprecated
   static public IItemRegistry items;

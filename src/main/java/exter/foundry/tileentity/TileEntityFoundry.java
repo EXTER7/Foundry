@@ -36,11 +36,19 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     public final int tank_slot;
     public final int slot;
     
+    public final Fluid fluid;
+    
     public ContainerSlot(int container_tank,int container_slot,boolean container_fill)
+    {
+      this(container_tank,container_slot,container_fill,null);
+    }
+
+    public ContainerSlot(int container_tank,int container_slot,boolean container_fill,Fluid container_fluid)
     {
       tank_slot = container_tank;
       slot = container_slot;
       fill = container_fill;
+      fluid = container_fluid;
     }
     
     public void Update()
@@ -72,7 +80,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       } else
       {
         FluidStack drained = fluid_cont.drain(stack, 25, false);
-        if(drained == null || drained.amount == 0)
+        if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
         {
           return;
         }

@@ -24,6 +24,7 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
+import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 
@@ -36,6 +37,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   static public final int MACHINE_ALLOYMIXER = 2;
   static public final int MACHINE_INFUSER = 3;
   static public final int MACHINE_MATERIALROUTER = 4;
+  static public final int MACHINE_ATOMIZER = 5;
 
   static private final String[][] PATHS_ICONS =
   {
@@ -78,6 +80,14 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
       "foundry:materialrouter_3",
       "foundry:materialrouter_4",
       "foundry:materialrouter_5"
+    },
+    {
+      "foundry:atomizer_bottom",
+      "foundry:atomizer_top",
+      "foundry:atomizer_sides",
+      "foundry:atomizer_sides",
+      "foundry:atomizer_sides",
+      "foundry:atomizer_sides"
     }
   };
   
@@ -88,7 +98,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
     "Caster",
     "AlloyMixer",
     "Infuser",
-    "MaterialRouter"
+    "MaterialRouter",
+    "Atomizer"
   };
 
   private IIcon[][] icons;
@@ -138,9 +149,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   {
     int i;
     
-    icons = new IIcon[5][6];
+    icons = new IIcon[PATHS_ICONS.length][6];
     
-    for(i = 0; i < 5; i++)
+    for(i = 0; i < PATHS_ICONS.length; i++)
     {
       int j;
       for(j = 0; j < 6; j++)
@@ -181,6 +192,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
         case MACHINE_MATERIALROUTER:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_MATERIALROUTER, world, x, y, z);
           break;
+        case MACHINE_ATOMIZER:
+          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ATOMIZER, world, x, y, z);
+          break;
       }
       return true;
     }
@@ -207,15 +221,17 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
         return new TileEntityMetalInfuser();
       case MACHINE_MATERIALROUTER:
         return new TileEntityMaterialRouter();
+      case MACHINE_ATOMIZER:
+        return new TileEntityMetalAtomizer();
     }
     return null;
   }
 
   @Override
-  public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6)
+  public boolean onBlockEventReceived(World world, int x, int y, int z, int par5, int par6)
   {
-    super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
-    TileEntity tileentity = par1World.getTileEntity(par2, par3, par4);
+    super.onBlockEventReceived(world, x, y, z, par5, par6);
+    TileEntity tileentity = world.getTileEntity(x, y, z);
     return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
   }
 
@@ -231,7 +247,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IS
   public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
     int i;
-    for(i = 0; i < 5; i++)
+    for(i = 0; i < NAMES.length; i++)
     {
       list.add(new ItemStack(item, 1, i));
     }

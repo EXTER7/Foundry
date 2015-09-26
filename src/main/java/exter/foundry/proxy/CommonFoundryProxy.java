@@ -6,6 +6,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMaterialRouter;
+import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.container.ContainerMetalInfuser;
@@ -15,6 +16,7 @@ import exter.foundry.container.ContainerShotgun;
 import exter.foundry.gui.GuiAlloyFurnace;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMaterialRouter;
+import exter.foundry.gui.GuiMetalAtomizer;
 import exter.foundry.gui.GuiMetalCaster;
 import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.gui.GuiMetalInfuser;
@@ -24,6 +26,7 @@ import exter.foundry.gui.GuiShotgun;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
+import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
@@ -40,6 +43,7 @@ public class CommonFoundryProxy implements IGuiHandler
   static public final int GUI_REFRACTORYHOPPER = 6;
   static public final int GUI_REVOLVER = 7;
   static public final int GUI_SHOTGUN = 8;
+  static public final int GUI_ATOMIZER = 9;
 
   static public int hopper_renderer_id = -1;
   
@@ -76,6 +80,8 @@ public class CommonFoundryProxy implements IGuiHandler
         return new ContainerRevolver(player.getHeldItem(),player.inventory);
       case GUI_SHOTGUN:
         return new ContainerShotgun(player.getHeldItem(),player.inventory);
+      case GUI_ATOMIZER:
+        return new ContainerMetalAtomizer((TileEntityMetalAtomizer)world.getTileEntity(x, y, z),player.inventory);
     }
     return null;
   }
@@ -127,6 +133,11 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_SHOTGUN:
       {
         return new GuiShotgun(player.getHeldItem(),player.inventory);
+      }
+      case GUI_ATOMIZER:
+      {
+        TileEntityMetalAtomizer te = (TileEntityMetalAtomizer)world.getTileEntity(x, y, z);
+        return new GuiMetalAtomizer(te,player.inventory);
       }
     } 
     return null;

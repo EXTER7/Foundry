@@ -53,6 +53,7 @@ import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -61,6 +62,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
+import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
@@ -136,6 +138,7 @@ public class ModFoundry
     FoundryAPI.recipes_alloymixer = AlloyMixerRecipeManager.instance;
     FoundryAPI.recipes_infuser = InfuserRecipeManager.instance;
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
+    FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
 
 
     
@@ -186,6 +189,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityAlloyFurnace.class, "Foundry_AlloyFurnace");
     GameRegistry.registerTileEntity(TileEntityMaterialRouter.class, "Foundry_MaterialRouter");
     GameRegistry.registerTileEntity(TileEntityRefractoryHopper.class, "Foundry_RefractoryHopper");
+    GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, "Foundry_MetalAtomizer");
 
 
     FoundryRecipes.Init();

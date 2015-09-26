@@ -290,6 +290,7 @@ public class FoundryBlocks
     GameRegistry.registerCustomItemStack("machineInfuser", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_INFUSER));
     GameRegistry.registerCustomItemStack("machineMaterialRouter", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER));
     GameRegistry.registerCustomItemStack("refractoryHopper", new ItemStack(block_refractory_hopper));
+    GameRegistry.registerCustomItemStack("machineAtomizer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ATOMIZER));
 
     
     

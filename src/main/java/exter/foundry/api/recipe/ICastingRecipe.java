@@ -28,7 +28,7 @@ public interface ICastingRecipe
 
   /**
    * Get the item produced by casting.
-   * @return ItemStack containing the required extra item, or null if no extra item is required.
+   * @return the produced item can be an ItemStack or a String with an Ore Dictionary name.
    */
   public Object GetOutput();
 

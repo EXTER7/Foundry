@@ -12,6 +12,7 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -317,6 +318,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
       ThaumcraftApi.registerObjectTag(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),
           (new AspectList()).add(Aspect.VOID, 2).add(Aspect.CRYSTAL, 1).add(Aspect.MAGIC, 1));
 
+      
 
       ItemStack shardmold_soft = FoundryItems.Mold(ItemMold.MOLD_SHARD_TC_SOFT);
       Item shard = ItemApi.getItem("itemShard",6).getItem();
@@ -415,6 +417,8 @@ public class ModIntegrationThaumcraft extends ModIntegration
       MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),"Void","Shard");
       
       MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,6),"Balanced","Shard");
+      
+      AtomizerRecipeManager.instance.AddRecipe(ItemApi.getItem("itemResource", 14)/* salis mundus */, new FluidStack(liquid_primal,FoundryAPI.FLUID_AMOUNT_INGOT));
     }
   }
 }

@@ -16,6 +16,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -106,7 +107,8 @@ public class ModIntegrationTiCon extends ModIntegration
   {
     
   }
-
+  
+ 
   @Override
   public void OnAfterPostInit()
   {
@@ -119,22 +121,22 @@ public class ModIntegrationTiCon extends ModIntegration
     ItemStack ingot_cast = ItemStack.copyItemStack(TConstructRegistry.getItemStack("ingotCast"));
     
     liquid_map = new HashMap<String,String>();
-    liquid_map.put("iron.molten","Iron");
-    liquid_map.put("gold.molten","Gold");
-    liquid_map.put("copper.molten", "Copper");
-    liquid_map.put("tin.molten", "Tin");
-    liquid_map.put("platinum.molten","Platinum");
-    liquid_map.put("aluminum.molten","Aluminum");
-    liquid_map.put("bronze.molten","Bronze");
-    liquid_map.put("steel.molten","Steel");
-    liquid_map.put("nickel.molten","Nickel");
-    liquid_map.put("lead.molten","Lead");
-    liquid_map.put("silver.molten","Silver");
-    liquid_map.put("invar.molten","Invar");
-    liquid_map.put("electrum.molten","Electrum");
-    if(FoundryConfig.recipe_glass)
+    for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
-      liquid_map.put("glass.molten", "Glass");
+      if(name.equals("Glass"))
+      {
+        if(FoundryConfig.recipe_glass)
+        {
+          liquid_map.put("glass.molten", "Glass");
+        }
+      } else if(!name.startsWith("Glass") && !name.startsWith("Redstone"))
+      {
+        String tic_name = name.toLowerCase() + ".molten";
+        if(FluidRegistry.getFluid(tic_name) != null)
+        {
+          liquid_map.put(tic_name, name);
+        }
+      }
     }
 
     reverse_liquid_map = new HashMap<String,String>();
@@ -332,6 +334,16 @@ public class ModIntegrationTiCon extends ModIntegration
     for(tconstruct.library.crafting.CastingRecipe r : recipes)
     {
       basin_casting.addCustomCastingRecipe(r);
+    }
+    
+    //Add TiCon molten metal support to the Atomizer.
+    for(Map.Entry<String, String> entry:liquid_map.entrySet())
+    {
+      String name = entry.getKey();
+      if(!name.equals("glass.molten"))
+      {
+        AtomizerRecipeManager.instance.AddRecipe("dust" + entry.getValue(), new FluidStack(FluidRegistry.getFluid(name),TConstruct.ingotLiquidValue));
+      }
     }
   }
 }

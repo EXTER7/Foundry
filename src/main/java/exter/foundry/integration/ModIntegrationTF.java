@@ -15,6 +15,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
@@ -124,27 +125,34 @@ public class ModIntegrationTF extends ModIntegration
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
+      AtomizerRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100));
 
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_ender, 250), 1500);
 
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
       MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
+      AtomizerRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250));
+      
       if(liquid_pyrotheum != null)
       {
         MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500, 200);
+        AtomizerRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250));
       }      
       if(liquid_cryotheum != null)
       {
         MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
+        AtomizerRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250));
       }      
       if(liquid_aerotheum != null)
       {
         MeltingRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
+        AtomizerRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250));
       }
       if(liquid_petrotheum != null)
       {
         MeltingRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
+        AtomizerRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250));
       }
 
       if(override_redstone_melting)
@@ -153,6 +161,7 @@ public class ModIntegrationTF extends ModIntegration
         MeltingRecipeManager.instance.RemoveRecipe(MeltingRecipeManager.instance.FindRecipe(new ItemStack(Blocks.redstone_block)));
         MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100), 1000);
         MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), 1000);
+        AtomizerRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100));
       }
       
       AlloyMixerRecipeManager.instance.AddRecipe(

@@ -9,19 +9,19 @@ public interface IAlloyMixerRecipe
    * @param in index of the input.
    * @return Recipe's input.
    */
-  public FluidStack GetInput(int in);
+  public FluidStack getInput(int in);
   
   /**
    * Get the amount of recipe's inputs.
    * @return Amount of recipe's inputs ranging from 1 to 4.
    */
-  public int GetInputCount();
+  public int getInputCount();
 
   /**
    * Get the recipe's output.
    * @return FluidStack containing Recipe's produced fluid and amount.
    */
-  public FluidStack GetOutput();
+  public FluidStack getOutput();
 
   /**
    * Check if a list of fluid stacks matches this recipe.
@@ -29,5 +29,5 @@ public interface IAlloyMixerRecipe
    * @param order [Output] Order in which the input fluids are matched.
    * @return true if the fluids matches, false otherwise.
    */
-  public boolean MatchesRecipe(FluidStack[] inputs,int[] order);
+  public boolean matchesRecipe(FluidStack[] inputs,int[] order);
 }

@@ -9,30 +9,30 @@ public interface IMeltingRecipe
    * Get the required item.
    * @return If the recipe used the Ore Dictionary, a {@link String} of it's name, an {@link ItemStack} of the required item otherwise.
    */
-  public Object GetInput();
+  public Object getInput();
 
   /**
    * Get the produced fluid.
    * @return The fluid that the recipe produces.
    */
-  public FluidStack GetOutput();
+  public FluidStack getOutput();
   
   /**
    * Get the melting temperature of the item.
    * @return Melting temperature in K.
    */
-  public int GetMeltingPoint();
+  public int getMeltingPoint();
   
   /**
    * Check if an item matches this recipe.
    * @param item The item to check.
    * @return true, if the item matches, false otherwise.
    */
-  public boolean MatchesRecipe(ItemStack item);
+  public boolean matchesRecipe(ItemStack item);
   
   /**
    * Get the melting speed.
    * @return The melting speed.
    */
-  public int GetMeltingSpeed();
+  public int getMeltingSpeed();
 }

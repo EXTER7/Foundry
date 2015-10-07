@@ -18,13 +18,13 @@ public class AtomizerRecipe implements IAtomizerRecipe
   
   
   @Override
-  public FluidStack GetInputFluid()
+  public FluidStack getInput()
   {
     return fluid.copy();
   }
 
   @Override
-  public Object GetOutput()
+  public Object getOutput()
   {
     if(output instanceof ItemStack)
     {
@@ -34,7 +34,7 @@ public class AtomizerRecipe implements IAtomizerRecipe
   }
 
   @Override
-  public ItemStack GetOutputItem()
+  public ItemStack getOutputItem()
   {
     if(output instanceof String)
     {
@@ -70,9 +70,9 @@ public class AtomizerRecipe implements IAtomizerRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(FluidStack fluid_stack)
+  public boolean matchesRecipe(FluidStack fluid_stack)
   {
-    if(GetOutputItem() == null)
+    if(getOutputItem() == null)
     {
       return false;
     }

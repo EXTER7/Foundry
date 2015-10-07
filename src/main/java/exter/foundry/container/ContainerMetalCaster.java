@@ -86,7 +86,7 @@ public class ContainerMetalCaster extends Container
 
       if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
       {
-        if(CastingRecipeManager.instance.IsItemMold(stack))
+        if(CastingRecipeManager.instance.isItemMold(stack))
         {
           int mold_slot = SLOTS_TE + TileEntityMetalCaster.INVENTORY_MOLD; 
           if(((SlotCasterMold)inventorySlots.get(mold_slot)).getStack() == null)

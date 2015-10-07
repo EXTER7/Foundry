@@ -23,35 +23,35 @@ public class CastingRecipe implements ICastingRecipe
   private final int speed;
   
   @Override
-  public FluidStack GetInputFluid()
+  public FluidStack getInput()
   {
     return fluid.copy();
   }
 
   @Override
-  public ItemStack GetInputMold()
+  public ItemStack getMold()
   {
     return mold.copy();
   }
   
   @Override
-  public boolean ContainsExtra(ItemStack stack)
+  public boolean containsExtra(ItemStack stack)
   {
     if(stack == null)
     {
       return extra == null;
     }
-    return FoundryUtils.IsItemMatch(stack, extra) && stack.stackSize >= FoundryUtils.GetStackSize(extra);
+    return FoundryUtils.isItemMatch(stack, extra) && stack.stackSize >= FoundryUtils.getStackSize(extra);
   }
   
   @Override
-  public boolean RequiresExtra()
+  public boolean requiresExtra()
   {
     return extra != null;
   }
 
   @Override
-  public Object GetInputExtra()
+  public Object getInputExtra()
   {
     if(extra instanceof ItemStack)
     {
@@ -64,7 +64,7 @@ public class CastingRecipe implements ICastingRecipe
   }
 
   @Override
-  public Object GetOutput()
+  public Object getOutput()
   {
     if(output instanceof ItemStack)
     {
@@ -130,18 +130,18 @@ public class CastingRecipe implements ICastingRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack in_extra)
+  public boolean matchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack in_extra)
   {
     if(GetOutputItem() == null)
     {
       return false;
     }
     return fluid_stack != null && fluid_stack.containsFluid(fluid) && mold_stack != null && mold.isItemEqual(mold_stack) && ItemStack.areItemStackTagsEqual(mold, mold_stack)
-        && (extra == null || (FoundryUtils.IsItemMatch(in_extra, extra) && in_extra.stackSize >= FoundryUtils.GetStackSize(in_extra)));
+        && (extra == null || (FoundryUtils.isItemMatch(in_extra, extra) && in_extra.stackSize >= FoundryUtils.getStackSize(in_extra)));
   }
 
   @Override
-  public int GetCastingSpeed()
+  public int getCastingSpeed()
   {
     return speed;
   }

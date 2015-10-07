@@ -33,19 +33,19 @@ public class ItemShellAP extends ItemRoundBase
   }
   
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemShotgun.AMMO_TYPE;
   }
 
   @Override
-  public ItemStack GetCasing(ItemStack round)
+  public ItemStack getCasing(ItemStack round)
   {
     return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
   }
   
   @Override
-  public boolean IgnoresArmor(ItemStack round)
+  public boolean ignoresArmor(ItemStack round)
   {
     return true;
   }

@@ -33,13 +33,13 @@ public class ItemRoundAP extends ItemRoundBase
   }
   
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemRevolver.AMMO_TYPE;
   }
 
   @Override
-  public boolean IgnoresArmor(ItemStack round)
+  public boolean ignoresArmor(ItemStack round)
   {
     return true;
   }

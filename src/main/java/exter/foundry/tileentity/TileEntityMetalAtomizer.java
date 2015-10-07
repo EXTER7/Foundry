@@ -387,7 +387,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
       return;
     }
     
-    if(!current_recipe.MatchesRecipe(tanks[TANK_INPUT].getFluid()))
+    if(!current_recipe.matchesRecipe(tanks[TANK_INPUT].getFluid()))
     {
       progress = -1;
       current_recipe = null;
@@ -411,7 +411,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
       return false;
     }
     
-    ItemStack recipe_output = current_recipe.GetOutputItem();
+    ItemStack recipe_output = current_recipe.getOutputItem();
 
     ItemStack inv_output = inventory[INVENTORY_OUTPUT];
     if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize >= inv_output.getMaxStackSize()))
@@ -431,7 +431,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     
     if(current_recipe == null)
     {
-      current_recipe = AtomizerRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid());
+      current_recipe = AtomizerRecipeManager.instance.findRecipe(tanks[TANK_INPUT].getFluid());
       progress = -1;
     }
     
@@ -466,7 +466,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     {
       if(CanAtomizeCurrentRecipe())
       {
-        FluidStack input_fluid = current_recipe.GetInputFluid();
+        FluidStack input_fluid = current_recipe.getInput();
         int increment = 1800000 / input_fluid.amount;
         if(increment > ATOMIZE_TIME / 4)
         {
@@ -485,7 +485,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
           tanks[TANK_WATER].drain(water_required.amount, true);
           if(inventory[INVENTORY_OUTPUT] == null)
           {
-            inventory[INVENTORY_OUTPUT] = current_recipe.GetOutputItem();
+            inventory[INVENTORY_OUTPUT] = current_recipe.getOutputItem();
             inventory[INVENTORY_OUTPUT].stackSize = 1;
           } else
           {

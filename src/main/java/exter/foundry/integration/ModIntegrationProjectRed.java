@@ -44,26 +44,26 @@ public class ModIntegrationProjectRed extends ModIntegration
     {
       ItemStack redalloy = FoundryMiscUtils.GetModItemFromOreDictionary("ProjRed|Core", "ingotRedAlloy");
 
-      Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
-      Fluid liquid_redalloy = LiquidMetalRegistry.instance.GetFluid("RedAlloy");
+      Fluid liquid_redstone = LiquidMetalRegistry.instance.getFluid("Redstone");
+      Fluid liquid_redalloy = LiquidMetalRegistry.instance.getFluid("RedAlloy");
 
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       
 
-      AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_redalloy,1),
+      AlloyMixerRecipeManager.instance.addRecipe(new FluidStack(liquid_redalloy,1),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_iron,1),
             new FluidStack(liquid_redstone,4)});
 
       if(destabilized_redstone != null)
       {
-        AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_redalloy,1),
+        AlloyMixerRecipeManager.instance.addRecipe(new FluidStack(liquid_redalloy,1),
             new FluidStack[] {
               new FluidStack(FoundryRecipes.liquid_iron,27),
               new FluidStack(destabilized_redstone,100)});
       }
 
-      AlloyFurnaceRecipeManager.instance.AddRecipe(redalloy, 
+      AlloyFurnaceRecipeManager.instance.addRecipe(redalloy, 
           new Object[] {
               new OreStack("ingotIron",1),
               new OreStack("dustIron",1)},
@@ -83,11 +83,11 @@ public class ModIntegrationProjectRed extends ModIntegration
         int i;
         for(i = 0; i < 17; i++)
         {
-          MeltingRecipeManager.instance.AddRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid);
+          MeltingRecipeManager.instance.addRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid);
         }
         for(i = 17; i < 34; i++)
         {
-          MeltingRecipeManager.instance.AddRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid_bundled);
+          MeltingRecipeManager.instance.addRecipe(new ItemStack(redalloy_wire_item,1,i), wire_fluid_bundled);
         }
       }
     }

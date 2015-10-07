@@ -394,7 +394,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       return;
     }
     
-    if(!current_recipe.MatchesRecipe(inventory[INVENTORY_INPUT]))
+    if(!current_recipe.matchesRecipe(inventory[INVENTORY_INPUT]))
     {
       progress = 0;
       current_recipe = null;
@@ -410,15 +410,15 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       return;
     }
     
-    FluidStack fs = current_recipe.GetOutput();
-    melt_point = current_recipe.GetMeltingPoint() * 100;
+    FluidStack fs = current_recipe.getOutput();
+    melt_point = current_recipe.getMeltingPoint() * 100;
         
     if(heat <= melt_point || tank.fill(fs, false) < fs.amount)
     {
       progress = 0;
       return;
     }
-    int increment = (heat - melt_point) * 5 * current_recipe.GetMeltingSpeed() / (fs.amount * 4);
+    int increment = (heat - melt_point) * 5 * current_recipe.getMeltingSpeed() / (fs.amount * 4);
     if(increment < 1)
     {
       increment = 1;
@@ -452,7 +452,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     CheckCurrentRecipe();
     if(current_recipe == null)
     {
-      current_recipe = MeltingRecipeManager.instance.FindRecipe(inventory[INVENTORY_INPUT]);
+      current_recipe = MeltingRecipeManager.instance.findRecipe(inventory[INVENTORY_INPUT]);
     }
     
     if(last_progress != progress)

@@ -11,32 +11,32 @@ public interface ICastingRecipe
    * Get the fluid required for casting.
    * @return FluidStack containing the required fluid.
    */
-  public FluidStack GetInputFluid();
+  public FluidStack getInput();
 
   /**
    * Get the mold required for casting.
    * @return ItemStack containing the required mold.
    */
 
-  public ItemStack GetInputMold();
+  public ItemStack getMold();
 
   /**
    * Get the extra item required for casting.
    * @return Can be an {@link ItemStack} containing the required extra item, a {@link OreStack}, or null if no extra item is required.
    */
-  public Object GetInputExtra();
+  public Object getInputExtra();
 
   /**
    * Get the item produced by casting.
    * @return the produced item can be an ItemStack or a String with an Ore Dictionary name.
    */
-  public Object GetOutput();
+  public Object getOutput();
 
   /**
    * Get the casting speed.
    * @return The casting speed.
    */
-  public int GetCastingSpeed();
+  public int getCastingSpeed();
 
   /**
    * Check if a fluid stack and mold matches this recipe.
@@ -44,11 +44,11 @@ public interface ICastingRecipe
    * @param fluid_stack fluid to check (must contain the fluid in the recipe).
    * @return true if the stack and mold matches, false otherwise.
    */
-  public boolean MatchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack extra);
+  public boolean matchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack extra);
   
-  public boolean ContainsExtra(ItemStack stack);
+  public boolean containsExtra(ItemStack stack);
   
-  public boolean RequiresExtra();
+  public boolean requiresExtra();
 
   /**
    * Get the actual item produced by casting.

@@ -40,9 +40,9 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 
     public CachedCasterRecipe(ICastingRecipe recipe)
     {
-      tank = new FluidTank(recipe.GetInputFluid(), 6000, new Rectangle(34, 10, 16, 47));
-      mold = new PositionedStack(recipe.GetInputMold(), 61, 10, true);
-      output = new PositionedStack(asItemStackOrList(recipe.GetOutput()), 81, 40, true);
+      tank = new FluidTank(recipe.getInput(), 6000, new Rectangle(34, 10, 16, 47));
+      mold = new PositionedStack(recipe.getMold(), 61, 10, true);
+      output = new PositionedStack(asItemStackOrList(recipe.getOutput()), 81, 40, true);
       output.setPermutationToRender(0);
       List<ItemStack> extras = getExtraItems(recipe);
       if(!extras.isEmpty())
@@ -73,7 +73,7 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
   @SuppressWarnings("unchecked")
   protected List<ItemStack> getExtraItems(ICastingRecipe recipe)
   {
-    Object extra = recipe.GetInputExtra();
+    Object extra = recipe.getInputExtra();
     if(extra == null)
     {
       return Lists.newArrayList();
@@ -89,9 +89,9 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
         }
       }
       return list;
-    } else if(recipe.GetInputExtra() instanceof String)
+    } else if(recipe.getInputExtra() instanceof String)
     {
-      List<ItemStack> list = (List<ItemStack>) asItemStackOrList(recipe.GetInputExtra());
+      List<ItemStack> list = (List<ItemStack>) asItemStackOrList(recipe.getInputExtra());
       if(list != null && !list.isEmpty())
       {
         for(ItemStack stack : list)
@@ -100,9 +100,9 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
         }
       }
       return list;
-    } else if(recipe.GetInputExtra() instanceof ItemStack)
+    } else if(recipe.getInputExtra() instanceof ItemStack)
     {
-      ItemStack stack = (ItemStack) recipe.GetInputExtra();
+      ItemStack stack = (ItemStack) recipe.getInputExtra();
       return Lists.newArrayList(stack);
     }
     return Lists.newArrayList();
@@ -152,7 +152,7 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
+    for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
     {
       addRecipe(recipe);
     }
@@ -167,7 +167,7 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item"))
     {
-      for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
+      for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
       {
         for(ItemStack stack : getExtraItems(recipe))
         {
@@ -176,12 +176,12 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
             addRecipe(recipe);
           }
         }
-        if(recipe.GetInputMold().isItemEqual((ItemStack) results[0]) && recipe.GetOutput() != null)
+        if(recipe.getMold().isItemEqual((ItemStack) results[0]) && recipe.getOutput() != null)
         {
           addRecipe(recipe);
         }
         FluidStack fluid = getFluidStackFor((ItemStack) results[0]);
-        if(fluid != null && fluid.isFluidEqual(recipe.GetInputFluid()))
+        if(fluid != null && fluid.isFluidEqual(recipe.getInput()))
         {
           addRecipe(recipe);
         }
@@ -189,9 +189,9 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("liquid"))
     {
-      for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
+      for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
       {
-        if(recipe.GetInputFluid().isFluidEqual((FluidStack) results[0]))
+        if(recipe.getInput().isFluidEqual((FluidStack) results[0]))
         {
           addRecipe(recipe);
         }
@@ -208,10 +208,10 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item"))
     {
-      for(ICastingRecipe recipe : CastingRecipeManager.instance.GetRecipes())
+      for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
       {
-        Object output = recipe.GetOutput();
-        if(output != null && FoundryUtils.IsItemMatch((ItemStack) results[0], output))
+        Object output = recipe.getOutput();
+        if(output != null && FoundryUtils.isItemMatch((ItemStack) results[0], output))
         {
           arecipes.add(new CachedCasterRecipe(recipe));
         }
@@ -221,11 +221,11 @@ public class MetalCasterRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(ICastingRecipe recipe)
   {
-    if(recipe.GetOutput() != null && recipe.GetInputFluid() != null)
+    if(recipe.getOutput() != null && recipe.getInput() != null)
     {
-      if(recipe.GetOutput() instanceof String)
+      if(recipe.getOutput() instanceof String)
       {
-        if(OreDictionary.getOres((String)recipe.GetOutput()).size() == 0)
+        if(OreDictionary.getOres((String)recipe.getOutput()).size() == 0)
         {
           return;
         }

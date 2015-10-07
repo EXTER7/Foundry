@@ -469,7 +469,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       input_tank_fluids[i] = tanks[i].getFluid();
     }    
 
-    IAlloyMixerRecipe recipe = AlloyMixerRecipeManager.instance.FindRecipe(input_tank_fluids, recipe_order);
+    IAlloyMixerRecipe recipe = AlloyMixerRecipeManager.instance.findRecipe(input_tank_fluids, recipe_order);
     if(recipe == null)
     {
       return;
@@ -481,11 +481,11 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       {
         return;
       }
-      if(!recipe.MatchesRecipe(input_tank_fluids, recipe_order))
+      if(!recipe.matchesRecipe(input_tank_fluids, recipe_order))
       {
         return;
       }
-      FluidStack output = recipe.GetOutput();
+      FluidStack output = recipe.getOutput();
 
       if(tanks[TANK_OUTPUT].fill(output, false) < output.amount)
       {
@@ -500,9 +500,9 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       UpdateTank(TANK_OUTPUT);
-      for(i = 0; i < recipe.GetInputCount(); i++)
+      for(i = 0; i < recipe.getInputCount(); i++)
       {
-        tanks[recipe_order[i]].drain(recipe.GetInput(i).amount, true);
+        tanks[recipe_order[i]].drain(recipe.getInput(i).amount, true);
         UpdateTank(recipe_order[i]);
       }
     }

@@ -98,7 +98,7 @@ public class ItemShotgun extends ItemFirearm
               player.posX,
               player.posY + player.getEyeHeight() - 0.1,
               player.posZ,
-              ((IFirearmRound)(round.getItem())).GetCasing(round).copy());
+              ((IFirearmRound)(round.getItem())).getCasing(round).copy());
           casing.delayBeforeCanPickup = 10;
           casing.motionX = -look_z * 0.2;
           casing.motionY = look_y * 0.2;

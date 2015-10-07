@@ -16,7 +16,7 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   public ItemStack output;
 
   @Override
-  public Object GetInputA()
+  public Object getInputA()
   {
     if(input_a instanceof ItemStack)
     {
@@ -26,7 +26,7 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   }
 
   @Override
-  public Object GetInputB()
+  public Object getInputB()
   {
     if(input_b instanceof ItemStack)
     {
@@ -36,7 +36,7 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   }
 
   @Override
-  public ItemStack GetOutput()
+  public ItemStack getOutput()
   {
     return output.copy();
   }
@@ -69,9 +69,9 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   }
 
   @Override
-  public boolean MatchesRecipe(ItemStack in_a,ItemStack in_b)
+  public boolean matchesRecipe(ItemStack in_a,ItemStack in_b)
   {
-    return FoundryUtils.IsItemMatch(in_a, input_a) && in_a.stackSize >= FoundryUtils.GetStackSize(input_a)
-        && FoundryUtils.IsItemMatch(in_b, input_b) && in_b.stackSize >= FoundryUtils.GetStackSize(input_b);
+    return FoundryUtils.isItemMatch(in_a, input_a) && in_a.stackSize >= FoundryUtils.getStackSize(input_a)
+        && FoundryUtils.isItemMatch(in_b, input_b) && in_b.stackSize >= FoundryUtils.getStackSize(input_b);
   }
 }

@@ -2,9 +2,9 @@ package exter.foundry.api.firearms;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * API for a firearm round. this interface is implemented in the item's class.
@@ -16,7 +16,7 @@ public interface IFirearmRound
    * Possible values are "revolver" for the Revolver, or "shotgun" for the shotgun.
    * @return The type of gun this ammo is used for.
    */
-  public String GetRoundType(ItemStack round);
+  public String getRoundType(ItemStack round);
   
   /**
    * Called when a bullet hits a block.
@@ -29,7 +29,7 @@ public interface IFirearmRound
    * @param z Z coordinate of the block hit.
    * @param side Side of the block hit.
    */
-  public void OnBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, ForgeDirection side);
+  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, EnumFacing side);
 
   /**
    * Called after a shot hit and damaged an entity
@@ -38,14 +38,14 @@ public interface IFirearmRound
    * @param entity Entity that the shot hit.
    * @param count How many bullets/pellets the shot hit the entity.
    */
-  public void OnBulletDamagedLivingEntity(ItemStack round,EntityLivingBase entity, int count);
+  public void onBulletDamagedLivingEntity(ItemStack round,EntityLivingBase entity, int count);
 
   /**
    * Should the round break glass.
    * @param round The Round item.
    * @return Should the round break glass
    */
-  public boolean BreakGlass(ItemStack round);
+  public boolean breaksGlass(ItemStack round);
   
   /**
    * Get the base range of the round.
@@ -53,7 +53,7 @@ public interface IFirearmRound
    * @param round The Round item.
    * @return The base range of the round.
    */
-  public double GetBaseRange(ItemStack round);
+  public double getBaseRange(ItemStack round);
   
   /**
    * Get the damage fall-off range of the round.
@@ -62,7 +62,7 @@ public interface IFirearmRound
    * @param round The Round item.
    * @return The base range of the round.
    */
-  public double GetFalloffRange(ItemStack round);
+  public double getFalloffRange(ItemStack round);
   
   /**
    * Get the base damage of the round.
@@ -70,19 +70,19 @@ public interface IFirearmRound
    * @param round The Round item.
    * @return The base damage of the round.
    */
-  public double GetBaseDamage(ItemStack round);
+  public double getBaseDamage(ItemStack round);
   
   /**
    * Get the casing that the round uses.
    * @param round The Round item.
    * @return ItemStack of the casing.
    */
-  public ItemStack GetCasing(ItemStack round);
+  public ItemStack getCasing(ItemStack round);
   
   /**
    * Check if the round ignores armor.
    * @param round The Round item.
    * @return true if the round ignores armor.
    */
-  public boolean IgnoresArmor(ItemStack round);
+  public boolean ignoresArmor(ItemStack round);
 }

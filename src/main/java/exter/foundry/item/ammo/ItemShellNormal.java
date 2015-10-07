@@ -33,13 +33,13 @@ public class ItemShellNormal extends ItemRoundBase
   }
   
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemShotgun.AMMO_TYPE;
   }
 
   @Override
-  public ItemStack GetCasing(ItemStack round)
+  public ItemStack getCasing(ItemStack round)
   {
     return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
   }

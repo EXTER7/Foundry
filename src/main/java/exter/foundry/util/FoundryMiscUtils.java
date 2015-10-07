@@ -95,7 +95,7 @@ public class FoundryMiscUtils
     {
       return;
     }
-    if(!FoundryUtils.IsItemInOreDictionary(name,stack))
+    if(!FoundryUtils.isItemInOreDictionary(name,stack))
     {
       OreDictionary.registerOre(name, stack);
     }

@@ -139,7 +139,7 @@ public abstract class ItemFirearm extends ItemTool
           case BLOCK:
             Block b = world.getBlock(obj.blockX, obj.blockY, obj.blockZ);
             int m = world.getBlockMetadata(obj.blockX, obj.blockY, obj.blockZ);
-            if(round.BreakGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
+            if(round.breaksGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
               if(!world.isRemote)
@@ -148,7 +148,7 @@ public abstract class ItemFirearm extends ItemTool
               }
             } else
             {
-              round.OnBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+              round.onBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
             }
             break;
           case ENTITY:
@@ -156,9 +156,9 @@ public abstract class ItemFirearm extends ItemTool
             {
               Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3)obj.hitInfo);
-              double base_range = round.GetBaseRange(round_item);
-              double falloff_range = round.GetFalloffRange(round_item);
-              double base_damage = round.GetBaseDamage(round_item);
+              double base_range = round.getBaseRange(round_item);
+              double falloff_range = round.getFalloffRange(round_item);
+              double base_damage = round.getBaseDamage(round_item);
               double damage;
               if(distance < base_range)
               {
@@ -193,13 +193,13 @@ public abstract class ItemFirearm extends ItemTool
     {
       EntityLivingBase en = hit.getKey();
       DamageSource damage = (new EntityDamageSource("bullet", shooter)).setProjectile();
-      if(round.IgnoresArmor(round_item))
+      if(round.ignoresArmor(round_item))
       {
         damage.setDamageBypassesArmor();
       }
       if(en.attackEntityFrom(damage, hit.getValue().left))
       {
-        round.OnBulletDamagedLivingEntity(round_item, en,hit.getValue().right);
+        round.onBulletDamagedLivingEntity(round_item, en,hit.getValue().right);
       }
     }
   }
@@ -239,6 +239,6 @@ public abstract class ItemFirearm extends ItemTool
     {
       return false;
     }
-    return ((IFirearmRound)item).GetRoundType(stack).equals(type);
+    return ((IFirearmRound)item).getRoundType(stack).equals(type);
   }
 }

@@ -52,11 +52,11 @@ public class ModIntegrationBuildcraft extends ModIntegration
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

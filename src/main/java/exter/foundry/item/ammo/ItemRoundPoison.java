@@ -54,13 +54,13 @@ public class ItemRoundPoison extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
+  public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
     entity.addPotionEffect(new PotionEffect(Potion.poison.id, 400));    
   }
   
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemRevolver.AMMO_TYPE;
   }

@@ -73,7 +73,7 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
+  public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
     if(!entity.isImmuneToFire())
     {
@@ -83,7 +83,7 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemRevolver.AMMO_TYPE;
   }

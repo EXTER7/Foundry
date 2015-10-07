@@ -73,7 +73,7 @@ public class ModIntegrationTiCon extends ModIntegration
       FluidStack[] in = new FluidStack[mix.mixers.size()];
       in = inputs.toArray(in);
       FluidStack result = new FluidStack(mix.result.getFluid(),mix.result.amount * 9 / INGOT_GCD);
-      AlloyMixerRecipeManager.instance.AddRecipe(result, in);
+      AlloyMixerRecipeManager.instance.addRecipe(result, in);
       return;
     }
 
@@ -83,7 +83,7 @@ public class ModIntegrationTiCon extends ModIntegration
     {
       List<FluidStack> in = new ArrayList<FluidStack>(inputs);
       in.add(new FluidStack( // Convert TiCon Fluid Stack to Foundry Fluid Stack
-          LiquidMetalRegistry.instance.GetFluid(mapped),
+          LiquidMetalRegistry.instance.getFluid(mapped),
           ing.amount * 9 * TConstruct.ingotLiquidValue / (FoundryAPI.FLUID_AMOUNT_INGOT * INGOT_GCD)));
       CreateAlloyRecipe(mix,index + 1,in);
     }
@@ -143,26 +143,26 @@ public class ModIntegrationTiCon extends ModIntegration
     for(Map.Entry<String,String> e:liquid_map.entrySet())
     {
       reverse_liquid_map.put(
-          LiquidMetalRegistry.instance.GetFluid(e.getValue()).getName(),
+          LiquidMetalRegistry.instance.getFluid(e.getValue()).getName(),
           e.getKey());
     }
 
     //Add support for TiCon's fluids to the Metal Caster recipes.
-    for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.GetRecipes()))
+    for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.getRecipes()))
     {
-      String mapped = reverse_liquid_map.get(casting.GetInputFluid().getFluid().getName());
+      String mapped = reverse_liquid_map.get(casting.getInput().getFluid().getName());
       if(mapped != null)
       {
         Fluid mapped_fluid = FluidRegistry.getFluid(mapped);
         if(mapped_fluid != null)
         {
-          CastingRecipeManager.instance.AddRecipe(
-              casting.GetOutput(),
+          CastingRecipeManager.instance.addRecipe(
+              casting.getOutput(),
               new FluidStack(
                   mapped_fluid,
-                  DivCeil(casting.GetInputFluid().amount * TConstruct.ingotLiquidValue, FoundryAPI.FLUID_AMOUNT_INGOT)),
-              casting.GetInputMold(),
-              casting.GetInputExtra());
+                  DivCeil(casting.getInput().amount * TConstruct.ingotLiquidValue, FoundryAPI.FLUID_AMOUNT_INGOT)),
+              casting.getMold(),
+              casting.getInputExtra());
         }
       }
     }
@@ -172,7 +172,7 @@ public class ModIntegrationTiCon extends ModIntegration
     for(ItemMetaWrapper item : Smeltery.getSmeltingList().keySet())
     {
       ItemStack stack = new ItemStack(item.item, 1, item.meta);
-      if(MeltingRecipeManager.instance.FindRecipe(stack) == null)
+      if(MeltingRecipeManager.instance.findRecipe(stack) == null)
       {
         FluidStack result = Smeltery.getSmelteryResult(stack);
         String mapped = liquid_map.get(result.getFluid().getName());
@@ -183,17 +183,17 @@ public class ModIntegrationTiCon extends ModIntegration
           if(mapped.equals("Glass"))
           {
             mapped_liquid = new FluidStack(
-                LiquidMetalRegistry.instance.GetFluid(mapped),
+                LiquidMetalRegistry.instance.getFluid(mapped),
                 result.amount);
           } else
           {
             mapped_liquid = new FluidStack(
-                LiquidMetalRegistry.instance.GetFluid(mapped),
+                LiquidMetalRegistry.instance.getFluid(mapped),
                 DivCeil(result.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
           }
           if(mapped_liquid.amount <= 6000)
           {
-            MeltingRecipeManager.instance.AddRecipe(stack, mapped_liquid);
+            MeltingRecipeManager.instance.addRecipe(stack, mapped_liquid);
           }
         } else
         {
@@ -204,7 +204,7 @@ public class ModIntegrationTiCon extends ModIntegration
             {
               temp = 350;
             }
-            MeltingRecipeManager.instance.AddRecipe(stack, result, temp);
+            MeltingRecipeManager.instance.addRecipe(stack, result, temp);
           }
         }
       }
@@ -229,10 +229,10 @@ public class ModIntegrationTiCon extends ModIntegration
     {
       if(casting.cast != null && !casting.consumeCast)
       {
-        if(!CastingRecipeManager.instance.IsItemMold(casting.cast))
+        if(!CastingRecipeManager.instance.isItemMold(casting.cast))
         {
           //Register the cast as a mold
-          CastingRecipeManager.instance.AddMold(casting.cast);
+          CastingRecipeManager.instance.addMold(casting.cast);
         }
         
         String mapped = liquid_map.get(casting.castingMetal.getFluid().getName());
@@ -240,7 +240,7 @@ public class ModIntegrationTiCon extends ModIntegration
         if(mapped != null)
         {
           mapped_liquid = new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid(mapped),
+              LiquidMetalRegistry.instance.getFluid(mapped),
               DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
         }
         if(casting.cast.isItemEqual(ingot_cast))
@@ -248,18 +248,18 @@ public class ModIntegrationTiCon extends ModIntegration
           ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
           if(casting.castingMetal.amount <= 6000)
           {
-            CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, ingot_mold, null);
+            CastingRecipeManager.instance.addRecipe(casting.output, casting.castingMetal, ingot_mold, null);
           }
         } else if(mapped_liquid != null)
         {
           if(mapped_liquid.amount <= 6000)
           {
-            CastingRecipeManager.instance.AddRecipe(casting.output, mapped_liquid, casting.cast, null);
+            CastingRecipeManager.instance.addRecipe(casting.output, mapped_liquid, casting.cast, null);
           }
         }
         if(casting.castingMetal.amount <= 6000)
         {
-          CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, casting.cast, null);
+          CastingRecipeManager.instance.addRecipe(casting.output, casting.castingMetal, casting.cast, null);
         }
       }
     }
@@ -267,7 +267,7 @@ public class ModIntegrationTiCon extends ModIntegration
     {
       if(casting.castingMetal.amount <= 6000 && casting.cast == null)
       {
-        CastingRecipeManager.instance.AddRecipe(casting.output, casting.castingMetal, block_mold, null);
+        CastingRecipeManager.instance.addRecipe(casting.output, casting.castingMetal, block_mold, null);
       }
     }
     
@@ -285,7 +285,7 @@ public class ModIntegrationTiCon extends ModIntegration
         continue;
       }
       FluidStack mapped_liquid = new FluidStack(
-          LiquidMetalRegistry.instance.GetFluid(mapped),
+          LiquidMetalRegistry.instance.getFluid(mapped),
           mapped.equals("Glass") ?
               casting.castingMetal.amount :
               DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
@@ -318,7 +318,7 @@ public class ModIntegrationTiCon extends ModIntegration
         continue;
       }
       FluidStack mapped_liquid = new FluidStack(
-          LiquidMetalRegistry.instance.GetFluid(mapped),
+          LiquidMetalRegistry.instance.getFluid(mapped),
           mapped.equals("Glass") ?
               casting.castingMetal.amount :
               DivCeil(casting.castingMetal.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TConstruct.ingotLiquidValue));
@@ -342,7 +342,7 @@ public class ModIntegrationTiCon extends ModIntegration
       String name = entry.getKey();
       if(!name.equals("glass.molten"))
       {
-        AtomizerRecipeManager.instance.AddRecipe("dust" + entry.getValue(), new FluidStack(FluidRegistry.getFluid(name),TConstruct.ingotLiquidValue));
+        AtomizerRecipeManager.instance.addRecipe("dust" + entry.getValue(), new FluidStack(FluidRegistry.getFluid(name),TConstruct.ingotLiquidValue));
       }
     }
   }

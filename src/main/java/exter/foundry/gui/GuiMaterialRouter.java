@@ -128,7 +128,7 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
-      DrawItemStack(x,y,MaterialRegistry.instance.GetMaterialIcon(name));
+      DrawItemStack(x,y,MaterialRegistry.instance.getMaterialIcon(name));
     }
   }
 
@@ -140,7 +140,7 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
-      DrawItemStack(x,y,MaterialRegistry.instance.GetTypeIcon(name));
+      DrawItemStack(x,y,MaterialRegistry.instance.getTypeIcon(name));
     }
   }
 
@@ -154,7 +154,7 @@ public class GuiMaterialRouter extends GuiFoundry
     
     material_slots = new ArrayList<FilterSlot>();
     material_slots.add(new FilterSlotMaterial(0, "_Any"));
-    List<String> materials = new ArrayList<String>(MaterialRegistry.instance.GetMaterialNames());
+    List<String> materials = new ArrayList<String>(MaterialRegistry.instance.getMaterialNames());
     Collections.sort(materials, String.CASE_INSENSITIVE_ORDER);
     int i = 1;
     for(String name : materials)
@@ -164,7 +164,7 @@ public class GuiMaterialRouter extends GuiFoundry
 
     type_slots = new ArrayList<FilterSlot>();
     type_slots.add(new FilterSlotType(0,"_Any"));
-    List<String> types = new ArrayList<String>(MaterialRegistry.instance.GetTypeNames());
+    List<String> types = new ArrayList<String>(MaterialRegistry.instance.getTypeNames());
     Collections.sort(types,String.CASE_INSENSITIVE_ORDER);
     i = 1;
     for(String name:types)

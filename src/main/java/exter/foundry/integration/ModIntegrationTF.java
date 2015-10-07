@@ -105,8 +105,8 @@ public class ModIntegrationTF extends ModIntegration
   
     if(is_loaded)
     {
-      Fluid liquid_platinum = LiquidMetalRegistry.instance.GetFluid("Platinum");
-      Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
+      Fluid liquid_platinum = LiquidMetalRegistry.instance.getFluid("Platinum");
+      Fluid liquid_redstone = LiquidMetalRegistry.instance.getFluid("Redstone");
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_ender = FluidRegistry.getFluid("ender");
       Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
@@ -116,55 +116,55 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_aerotheum = FluidRegistry.getFluid("aerotheum");
       Fluid liquid_petrotheum = FluidRegistry.getFluid("petrotheum");
 
-      Fluid liquid_mithril = LiquidMetalRegistry.instance.GetFluid("Mithril");
-      Fluid liquid_enderium = LiquidMetalRegistry.instance.GetFluid("Enderium");
-      Fluid liquid_signalum = LiquidMetalRegistry.instance.GetFluid("Signalum");
-      Fluid liquid_lumium = LiquidMetalRegistry.instance.GetFluid("Lumium");
+      Fluid liquid_mithril = LiquidMetalRegistry.instance.getFluid("Mithril");
+      Fluid liquid_enderium = LiquidMetalRegistry.instance.getFluid("Enderium");
+      Fluid liquid_signalum = LiquidMetalRegistry.instance.getFluid("Signalum");
+      Fluid liquid_lumium = LiquidMetalRegistry.instance.getFluid("Lumium");
 
       ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
-      MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
-      AtomizerRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100));
+      MeltingRecipeManager.instance.addRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
+      AtomizerRecipeManager.instance.addRecipe("dustCoal", new FluidStack(liquid_coal, 100));
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_ender, 250), 1500);
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_ender, 250), 1500);
 
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
-      MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250), 2500);
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glowstone), new FluidStack(liquid_glowstone, 1000), 2500);
 
-      AtomizerRecipeManager.instance.AddRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250));
+      AtomizerRecipeManager.instance.addRecipe(new ItemStack(Items.glowstone_dust), new FluidStack(liquid_glowstone, 250));
       
       if(liquid_pyrotheum != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500, 200);
-        AtomizerRecipeManager.instance.AddRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250));
+        MeltingRecipeManager.instance.addRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250), 2500, 200);
+        AtomizerRecipeManager.instance.addRecipe(pyrotheum, new FluidStack(liquid_pyrotheum, 250));
       }      
       if(liquid_cryotheum != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
-        AtomizerRecipeManager.instance.AddRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250));
+        MeltingRecipeManager.instance.addRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250), 400, 25);
+        AtomizerRecipeManager.instance.addRecipe(cryotheum, new FluidStack(liquid_cryotheum, 250));
       }      
       if(liquid_aerotheum != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
-        AtomizerRecipeManager.instance.AddRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250));
+        MeltingRecipeManager.instance.addRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250), 1600);
+        AtomizerRecipeManager.instance.addRecipe(aerotheum, new FluidStack(liquid_aerotheum, 250));
       }
       if(liquid_petrotheum != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
-        AtomizerRecipeManager.instance.AddRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250));
+        MeltingRecipeManager.instance.addRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250), 1600);
+        AtomizerRecipeManager.instance.addRecipe(petrotheum, new FluidStack(liquid_petrotheum, 250));
       }
 
       if(override_redstone_melting)
       {
-        MeltingRecipeManager.instance.RemoveRecipe(MeltingRecipeManager.instance.FindRecipe(new ItemStack(Items.redstone)));
-        MeltingRecipeManager.instance.RemoveRecipe(MeltingRecipeManager.instance.FindRecipe(new ItemStack(Blocks.redstone_block)));
-        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100), 1000);
-        MeltingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), 1000);
-        AtomizerRecipeManager.instance.AddRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100));
+        MeltingRecipeManager.instance.removeRecipe(MeltingRecipeManager.instance.findRecipe(new ItemStack(Items.redstone)));
+        MeltingRecipeManager.instance.removeRecipe(MeltingRecipeManager.instance.findRecipe(new ItemStack(Blocks.redstone_block)));
+        MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100), 1000);
+        MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), 1000);
+        AtomizerRecipeManager.instance.addRecipe(new ItemStack(Items.redstone), new FluidStack(destabilized_redstone, 100));
       }
       
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_enderium, 108),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_tin, 54),
@@ -173,7 +173,7 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(liquid_ender, 250)
             });
 
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_signalum, 108),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_copper, 81),
@@ -181,7 +181,7 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(destabilized_redstone, 250)
             });
 
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_signalum, 4),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_copper, 3),
@@ -189,7 +189,7 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(liquid_redstone, 4)
             });
 
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_lumium, 108),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_tin, 81),
@@ -197,19 +197,19 @@ public class ModIntegrationTF extends ModIntegration
             new FluidStack(liquid_glowstone, 250)
             });
 
-      CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(mithril_ingot, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(mithril_block, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(mithril_ingot, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(mithril_block, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(enderium_ingot, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(enderium_block, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(enderium_ingot, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(enderium_block, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(signalum_ingot, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(signalum_block, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(signalum_ingot, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(signalum_block, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-      CastingRecipeManager.instance.AddRecipe(lumium_ingot, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(lumium_block, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(lumium_ingot, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(lumium_block, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
 
       if(FoundryConfig.recipe_tools_armor)
@@ -231,7 +231,7 @@ public class ModIntegrationTF extends ModIntegration
           ItemStack sickle = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Sickle", 1);
           ItemStack bow = GameRegistry.findItemStack("ThermalFoundation", "tool" + metal_name + "Bow", 1);
           
-          Fluid metal = LiquidMetalRegistry.instance.GetFluid(metal_name);
+          Fluid metal = LiquidMetalRegistry.instance.getFluid(metal_name);
           RegisterCasting(pickaxe, metal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
           RegisterCasting(axe, metal, 3, ItemMold.MOLD_AXE, extra_sticks2);
           RegisterCasting(shovel, metal, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
@@ -267,9 +267,9 @@ public class ModIntegrationTF extends ModIntegration
           ItemStack gear = GameRegistry.findItemStack("ThermalFoundation", "gear" + metal_name, 1);
           if(gear != null)
           {
-            Fluid metal = LiquidMetalRegistry.instance.GetFluid(metal_name);
-            MeltingRecipeManager.instance.AddRecipe(gear, new FluidStack(metal, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-            CastingRecipeManager.instance.AddRecipe(gear, new FluidStack(metal, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+            Fluid metal = LiquidMetalRegistry.instance.getFluid(metal_name);
+            MeltingRecipeManager.instance.addRecipe(gear, new FluidStack(metal, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+            CastingRecipeManager.instance.addRecipe(gear, new FluidStack(metal, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
           }
         }
       }

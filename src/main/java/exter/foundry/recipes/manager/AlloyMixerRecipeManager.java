@@ -25,13 +25,13 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
   }
   
   @Override
-  public void AddRecipe(FluidStack out, FluidStack[] in)
+  public void addRecipe(FluidStack out, FluidStack[] in)
   {
     recipes.add(new AlloyMixerRecipe(out,in));
   }
 
   @Override
-  public IAlloyMixerRecipe FindRecipe(FluidStack[] in,int[] order)
+  public IAlloyMixerRecipe findRecipe(FluidStack[] in,int[] order)
   {
     int inputs = 0;
     IAlloyMixerRecipe result = null;
@@ -41,13 +41,13 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
     }
     for(IAlloyMixerRecipe r:recipes)
     {
-      if(r.MatchesRecipe(in,recipe_order) && r.GetInputCount() > inputs)
+      if(r.matchesRecipe(in,recipe_order) && r.getInputCount() > inputs)
       {
         if(order != null)
         {
           System.arraycopy(recipe_order, 0, order, 0, recipe_order.length);
         }
-        inputs = r.GetInputCount();
+        inputs = r.getInputCount();
         result = r;
       }
     }
@@ -55,13 +55,13 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
   }
 
   @Override
-  public List<IAlloyMixerRecipe> GetRecipes()
+  public List<IAlloyMixerRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
   @Override
-  public void RemoveRecipe(IAlloyMixerRecipe recipe)
+  public void removeRecipe(IAlloyMixerRecipe recipe)
   {
     recipes.remove(recipe);
   }

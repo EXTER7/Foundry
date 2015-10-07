@@ -15,6 +15,6 @@ public class SlotCasterMold extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return CastingRecipeManager.instance.IsItemMold(stack);
+    return CastingRecipeManager.instance.isItemMold(stack);
   }
 }

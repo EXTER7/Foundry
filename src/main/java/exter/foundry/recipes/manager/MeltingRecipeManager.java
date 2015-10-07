@@ -22,7 +22,7 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   }
 
   @Override
-  public IMeltingRecipe FindRecipe(ItemStack item)
+  public IMeltingRecipe findRecipe(ItemStack item)
   {
     if(item == null)
     {
@@ -30,7 +30,7 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
     }
     for (IMeltingRecipe r : recipes)
     {
-      if(r.MatchesRecipe(item))
+      if(r.matchesRecipe(item))
       {
         return r;
       }
@@ -39,31 +39,31 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   }
   
   @Override
-  public void AddRecipe(Object solid,FluidStack fluid_stack)
+  public void addRecipe(Object solid,FluidStack fluid_stack)
   {
-    AddRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature(),100);
+    addRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature(),100);
   }
   
   @Override
-  public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point)
+  public void addRecipe(Object solid,FluidStack fluid_stack,int melting_point)
   {
-    AddRecipe(solid,fluid_stack,melting_point,100);
+    addRecipe(solid,fluid_stack,melting_point,100);
   }
 
   @Override
-  public void AddRecipe(Object solid, FluidStack fluid_stack, int melting_point, int melting_speed)
+  public void addRecipe(Object solid, FluidStack fluid_stack, int melting_point, int melting_speed)
   {
     recipes.add(new MeltingRecipe(solid,fluid_stack,melting_point,melting_speed));
   }
 
   @Override
-  public List<IMeltingRecipe> GetRecipes()
+  public List<IMeltingRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
   @Override
-  public void RemoveRecipe(IMeltingRecipe recipe)
+  public void removeRecipe(IMeltingRecipe recipe)
   {
     recipes.remove(recipe);
   }

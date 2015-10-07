@@ -15,7 +15,7 @@ public interface IMeltingRecipeManager
    * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
    * @param melting_speed. Speed in which the item melts. Default is 100.
    */
-  public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point,int melting_speed);
+  public void addRecipe(Object solid,FluidStack fluid_stack,int melting_point,int melting_speed);
   
   /**
    * Register a ICF recipe
@@ -23,7 +23,7 @@ public interface IMeltingRecipeManager
    * @param fluid_stack Resulting fluid
    * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
    */
-  public void AddRecipe(Object solid,FluidStack fluid_stack,int melting_point);
+  public void addRecipe(Object solid,FluidStack fluid_stack,int melting_point);
 
   /**
    * Register a ICF recipe.
@@ -31,24 +31,24 @@ public interface IMeltingRecipeManager
    * @param solid Can be an {@link ItemStack}, {@link Item}, {@link Block} of the item, or a {@link String} of the Ore Dictionary name of the item to be melted
    * @param fluid_stack Resulting fluid
    */
-  public void AddRecipe(Object solid,FluidStack fluid_stack);
+  public void addRecipe(Object solid,FluidStack fluid_stack);
 
   /**
    * Get a list of all the recipes
    * @return List of all the recipes
    */
-  public List<IMeltingRecipe> GetRecipes();
+  public List<IMeltingRecipe> getRecipes();
   
   /**
    * Find a valid recipe that contains the given item
    * @param item The item required in the recipe
    * @return
    */
-  public IMeltingRecipe FindRecipe(ItemStack item);
+  public IMeltingRecipe findRecipe(ItemStack item);
   
   /**
    * Removes a recipe.
    * @param The recipe to remove.
    */
-  public void RemoveRecipe(IMeltingRecipe recipe);
+  public void removeRecipe(IMeltingRecipe recipe);
 }

@@ -83,7 +83,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     }
     for(IInfuserRecipe ir:recipes)
     {
-      if(ir.MatchesRecipe(fluid, substance))
+      if(ir.matchesRecipe(fluid, substance))
       {
         return ir;
       }
@@ -106,7 +106,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     }
     for(IInfuserSubstanceRecipe isr:substance_recipes)
     {
-      if(isr.MatchesRecipe(item))
+      if(isr.matchesRecipe(item))
       {
         return isr;
       }

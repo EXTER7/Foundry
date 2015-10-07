@@ -106,7 +106,7 @@ public class ItemRevolver extends ItemFirearm
           world.playSoundAtEntity(player, "foundry:revolver_fire", 1F, 1F);
         }
         Shoot(round,world,player,null,1,0.01f,1.0f);
-        SetAmmo(stack,position,((IFirearmRound)round.getItem()).GetCasing(round).copy());
+        SetAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
         if(world.isRemote)
         {
           player.rotationPitch -= 3;

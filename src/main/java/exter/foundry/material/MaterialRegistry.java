@@ -44,16 +44,16 @@ public final class MaterialRegistry implements IMaterialRegistry
   }
 
   @Override
-  public void RegisterItem(String oredict_name, String material, String type)
+  public void registerItem(String oredict_name, String material, String type)
   {
     for(ItemStack item:OreDictionary.getOres(oredict_name))
     {
-      RegisterItem(item, material, type);
+      registerItem(item, material, type);
     }
   }
 
   @Override
-  public void RegisterItem(ItemStack item, String material, String type)
+  public void registerItem(ItemStack item, String material, String type)
   {
     HashableItem hs = new HashableItem(item);
     materials.put(hs,material);
@@ -63,32 +63,32 @@ public final class MaterialRegistry implements IMaterialRegistry
   }
 
   @Override
-  public String GetMaterial(ItemStack item)
+  public String getMaterial(ItemStack item)
   {
     return materials.get(HashableItem.Cache(item));
   }
 
   @Override
-  public String GetType(ItemStack item)
+  public String getType(ItemStack item)
   {
     return types.get(HashableItem.Cache(item));
   }
 
   @Override
-  public Set<String> GetMaterialNames()
+  public Set<String> getMaterialNames()
   {
     return Collections.unmodifiableSet(material_names);
   }
 
   @Override
-  public Set<String> GetTypeNames()
+  public Set<String> getTypeNames()
   {
     return Collections.unmodifiableSet(type_names);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void RegisterMaterialIcon(String material, ItemStack icon)
+  public void registerMaterialIcon(String material, ItemStack icon)
   {
     material_icons.put(material, icon);
 
@@ -96,21 +96,21 @@ public final class MaterialRegistry implements IMaterialRegistry
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void RegisterTypeIcon(String type, ItemStack icon)
+  public void registerTypeIcon(String type, ItemStack icon)
   {
     type_icons.put(type, icon);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public ItemStack GetMaterialIcon(String material)
+  public ItemStack getMaterialIcon(String material)
   {
     return material_icons.get(material);
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public ItemStack GetTypeIcon(String type)
+  public ItemStack getTypeIcon(String type)
   {
     return type_icons.get(type);
   }

@@ -348,7 +348,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
 
-    if(!current_substance_recipe.MatchesRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]))
+    if(!current_substance_recipe.matchesRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]))
     {
       progress = 0;
       extract_energy = 1;
@@ -366,7 +366,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
       
-    InfuserSubstance recipe_sub = current_substance_recipe.GetOutputSubstance();
+    InfuserSubstance recipe_sub = current_substance_recipe.getOutput();
     if(substance != null
         && (!recipe_sub.IsSubstanceEqual(substance)
         || FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < recipe_sub.amount))
@@ -375,7 +375,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       extract_energy = 1;
       return;
     }
-    extract_energy = current_substance_recipe.GetEnergyNeeded();
+    extract_energy = current_substance_recipe.getEnergyNeeded();
     if(GetStoredEnergy() > 0)
     {
       int energy = UseEnergy(600, true);
@@ -411,13 +411,13 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
       {
-        FluidStack result = recipe.GetOutput();
+        FluidStack result = recipe.getOutput();
         if(tanks[TANK_OUTPUT].fill(result, false) == result.amount)
         {
-          tanks[TANK_INPUT].drain(recipe.GetInputFluid().amount, true);
+          tanks[TANK_INPUT].drain(recipe.getInputFluid().amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
           UseEnergy(INFUSE_ENERGY_NEEDED, true);
-          substance.amount -= recipe.GetInputSubstance().amount;
+          substance.amount -= recipe.getInputSubstance().amount;
           if(substance.amount <= 0)
           {
             substance = null;

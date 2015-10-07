@@ -13,20 +13,20 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
   public FluidStack output;
 
   @Override
-  public FluidStack GetInput(int in)
+  public FluidStack getInput(int in)
   {
     return inputs[in].copy();
   }
   
   @Override
-  public int GetInputCount()
+  public int getInputCount()
   {
     return inputs.length;
   }
 
 
   @Override
-  public FluidStack GetOutput()
+  public FluidStack getOutput()
   {
     return output.copy();
   }
@@ -49,7 +49,7 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
   static private final boolean[] matched = new boolean[4];
   
   @Override
-  public boolean MatchesRecipe(FluidStack[] in,int[] order)
+  public boolean matchesRecipe(FluidStack[] in,int[] order)
   {
     int matches = 0;
     int i;

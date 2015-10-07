@@ -77,11 +77,11 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     public boolean MatchesItem(ItemStack stack)
     {
       ModFoundry.log.info("Item: " + stack.getUnlocalizedName());
-      ModFoundry.log.info("Material: " + MaterialRegistry.instance.GetMaterial(stack));
-      ModFoundry.log.info("Type: " + MaterialRegistry.instance.GetType(stack));
+      ModFoundry.log.info("Material: " + MaterialRegistry.instance.getMaterial(stack));
+      ModFoundry.log.info("Type: " + MaterialRegistry.instance.getType(stack));
       if(!material.equals("_Any"))
       {
-        String stack_material = MaterialRegistry.instance.GetMaterial(stack);
+        String stack_material = MaterialRegistry.instance.getMaterial(stack);
         if(!material.equals(stack_material))
         {
           return false;
@@ -90,7 +90,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
       if(!type.equals("_Any"))
       {
-        String stack_type = MaterialRegistry.instance.GetType(stack);
+        String stack_type = MaterialRegistry.instance.getType(stack);
         if(!type.equals(stack_type))
         {
           return false;

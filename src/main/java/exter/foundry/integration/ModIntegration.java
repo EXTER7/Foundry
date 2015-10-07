@@ -201,16 +201,16 @@ public abstract class ModIntegration
     if(item != null)
     {
       ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
-      if(CastingRecipeManager.instance.FindRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
+      if(CastingRecipeManager.instance.findRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
       {
-        CastingRecipeManager.instance.AddRecipe(item, fluid, mold, extra);
+        CastingRecipeManager.instance.addRecipe(item, fluid, mold, extra);
       }
     }
   }
   
   static protected void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
   {
-    if(FoundryUtils.IsItemInOreDictionary(oredict_name, item))
+    if(FoundryUtils.isItemInOreDictionary(oredict_name, item))
     {
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
     } else

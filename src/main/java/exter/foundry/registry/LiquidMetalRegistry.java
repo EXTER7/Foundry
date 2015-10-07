@@ -84,7 +84,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
   }
  
   @Override
-  public Fluid GetFluid(String name)
+  public Fluid getFluid(String name)
   {
     return registry.get(name);
   }

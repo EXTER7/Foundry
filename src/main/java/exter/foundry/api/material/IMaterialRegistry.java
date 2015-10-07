@@ -2,33 +2,33 @@ package exter.foundry.api.material;
 
 import java.util.Set;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.item.ItemStack;
 
 public interface IMaterialRegistry
 {
-  public void RegisterItem(String oredict_name,String material,String type);
+  public void registerItem(String oredict_name,String material,String type);
 
-  public void RegisterItem(ItemStack item,String material,String type);
+  public void registerItem(ItemStack item,String material,String type);
   
-  public String GetMaterial(ItemStack item);
+  public String getMaterial(ItemStack item);
 
-  public String GetType(ItemStack item);
+  public String getType(ItemStack item);
   
-  public Set<String> GetTypeNames();
+  public Set<String> getTypeNames();
 
-  public Set<String> GetMaterialNames();
-
-  @SideOnly(Side.CLIENT)
-  public void RegisterMaterialIcon(String material,ItemStack icon);
+  public Set<String> getMaterialNames();
 
   @SideOnly(Side.CLIENT)
-  public void RegisterTypeIcon(String type,ItemStack stack);
+  public void registerMaterialIcon(String material,ItemStack icon);
 
   @SideOnly(Side.CLIENT)
-  public ItemStack GetMaterialIcon(String material);
+  public void registerTypeIcon(String type,ItemStack stack);
 
   @SideOnly(Side.CLIENT)
-  public ItemStack GetTypeIcon(String type);
+  public ItemStack getMaterialIcon(String material);
+
+  @SideOnly(Side.CLIENT)
+  public ItemStack getTypeIcon(String type);
 }

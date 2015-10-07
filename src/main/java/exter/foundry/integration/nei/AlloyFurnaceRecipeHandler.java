@@ -32,9 +32,9 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
   {
     public CachedAlloyFurnaceRecipe(IAlloyFurnaceRecipe recipe)
     {
-      this.in_a = new PositionedStack(getItems(recipe.GetInputA()), 38 - 5, 17 - 11);
-      this.in_b = new PositionedStack(getItems(recipe.GetInputB()), 56 - 5, 17 - 11);
-      this.result = new PositionedStack(recipe.GetOutput(), 116 - 5, 35 - 11);
+      this.in_a = new PositionedStack(getItems(recipe.getInputA()), 38 - 5, 17 - 11);
+      this.in_b = new PositionedStack(getItems(recipe.getInputB()), 56 - 5, 17 - 11);
+      this.result = new PositionedStack(recipe.getOutput(), 116 - 5, 35 - 11);
     }
 
     @SuppressWarnings("unchecked")
@@ -136,9 +136,9 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(IAlloyFurnaceRecipe recipe)
   {
-    Object in_a = recipe.GetInputA();
-    Object in_b = recipe.GetInputB();
-    if(recipe.GetOutput() != null && in_a != null && in_b != null 
+    Object in_a = recipe.getInputA();
+    Object in_b = recipe.getInputB();
+    if(recipe.getOutput() != null && in_a != null && in_b != null 
         && (!(in_a instanceof OreStack) || OreDictionary.getOres(((OreStack)in_a).name).size() > 0)
         && (!(in_b instanceof OreStack) || OreDictionary.getOres(((OreStack)in_b).name).size() > 0))
     {
@@ -148,7 +148,7 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.GetRecipes())
+    for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.getRecipes())
     {
       addRecipe(recipe);
     }
@@ -163,10 +163,10 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item"))
     {
-      for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.GetRecipes())
+      for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.getRecipes())
       {
-        Object output = recipe.GetOutput();
-        if(output != null && FoundryUtils.IsItemMatch((ItemStack) results[0], output))
+        Object output = recipe.getOutput();
+        if(output != null && FoundryUtils.isItemMatch((ItemStack) results[0], output))
         {
           arecipes.add(new CachedAlloyFurnaceRecipe(recipe));
         }
@@ -183,9 +183,9 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item") && results[0] instanceof ItemStack)
     {
-      for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.GetRecipes())
+      for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.getRecipes())
       {
-        if(FoundryUtils.IsItemMatch((ItemStack) results[0], recipe.GetInputA()) || FoundryUtils.IsItemMatch((ItemStack) results[0], recipe.GetInputB()))
+        if(FoundryUtils.isItemMatch((ItemStack) results[0], recipe.getInputA()) || FoundryUtils.isItemMatch((ItemStack) results[0], recipe.getInputB()))
         {
           addRecipe(recipe);
         }

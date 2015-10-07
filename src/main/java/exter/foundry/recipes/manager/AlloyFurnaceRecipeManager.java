@@ -21,17 +21,17 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
   }
   
   @Override
-  public void AddRecipe(ItemStack out, Object in_a,Object in_b)
+  public void addRecipe(ItemStack out, Object in_a,Object in_b)
   {
     recipes.add(new AlloyFurnaceRecipe(out,in_a,in_b));
   }
 
   @Override
-  public IAlloyFurnaceRecipe FindRecipe(ItemStack in_a,ItemStack in_b)
+  public IAlloyFurnaceRecipe findRecipe(ItemStack in_a,ItemStack in_b)
   {
     for(IAlloyFurnaceRecipe r:recipes)
     {
-      if(r.MatchesRecipe(in_a,in_b))
+      if(r.matchesRecipe(in_a,in_b))
       {
         return r;
       }
@@ -40,25 +40,25 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
   }
 
   @Override
-  public List<IAlloyFurnaceRecipe> GetRecipes()
+  public List<IAlloyFurnaceRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
   @Override
-  public void AddRecipe(ItemStack out, Object[] in_a, Object[] in_b)
+  public void addRecipe(ItemStack out, Object[] in_a, Object[] in_b)
   {
     for(Object a:in_a)
     {
       for(Object b:in_b)
       {
-        AddRecipe(out, a, b);
+        addRecipe(out, a, b);
       }
     }
   }
 
   @Override
-  public void RemoveRecipe(IAlloyFurnaceRecipe recipe)
+  public void removeRecipe(IAlloyFurnaceRecipe recipe)
   {
     recipes.remove(recipe);    
   }

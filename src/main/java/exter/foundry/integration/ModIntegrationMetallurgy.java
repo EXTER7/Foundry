@@ -52,18 +52,18 @@ public class ModIntegrationMetallurgy extends ModIntegration
       IMetalSet metalset = MetallurgyApi.getMetalSet(setname);
       for(String metalname:metalset.getMetalNames())
       {
-        Fluid liquid_metal = LiquidMetalRegistry.instance.GetFluid(metalname.replace(" ", ""));
+        Fluid liquid_metal = LiquidMetalRegistry.instance.getFluid(metalname.replace(" ", ""));
         if(liquid_metal != null)
         {
           if(!metalname.equals("Gold") && !metalname.equals("Midasium"))
           {
-            AlloyMixerRecipeManager.instance.AddRecipe(
+            AlloyMixerRecipeManager.instance.addRecipe(
                 new FluidStack(
-                    LiquidMetalRegistry.instance.GetFluid("Gold"),
+                    LiquidMetalRegistry.instance.getFluid("Gold"),
                     1),
                 new FluidStack[] {
                   new FluidStack(
-                      LiquidMetalRegistry.instance.GetFluid("Midasium"),
+                      LiquidMetalRegistry.instance.getFluid("Midasium"),
                       1),
                   new FluidStack(liquid_metal, 1)
                 });
@@ -109,147 +109,147 @@ public class ModIntegrationMetallurgy extends ModIntegration
       }
     }
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("DamascusSteel"),
+            LiquidMetalRegistry.instance.getFluid("DamascusSteel"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Iron"),
+              LiquidMetalRegistry.instance.getFluid("Iron"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Bronze"),
+              LiquidMetalRegistry.instance.getFluid("Bronze"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Angmallen"),
+            LiquidMetalRegistry.instance.getFluid("Angmallen"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Iron"),
+              LiquidMetalRegistry.instance.getFluid("Iron"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Gold"),
+              LiquidMetalRegistry.instance.getFluid("Gold"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Haderoth"),
+            LiquidMetalRegistry.instance.getFluid("Haderoth"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Mithril"),
+              LiquidMetalRegistry.instance.getFluid("Mithril"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Rubracium"),
+              LiquidMetalRegistry.instance.getFluid("Rubracium"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Tartarite"),
+            LiquidMetalRegistry.instance.getFluid("Tartarite"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Adamantine"),
+              LiquidMetalRegistry.instance.getFluid("Adamantine"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Atlarus"),
+              LiquidMetalRegistry.instance.getFluid("Atlarus"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Celenegil"),
+            LiquidMetalRegistry.instance.getFluid("Celenegil"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Orichalcum"),
+              LiquidMetalRegistry.instance.getFluid("Orichalcum"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Platinum"),
+              LiquidMetalRegistry.instance.getFluid("Platinum"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Quicksilver"),
+            LiquidMetalRegistry.instance.getFluid("Quicksilver"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Mithril"),
+              LiquidMetalRegistry.instance.getFluid("Mithril"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Silver"),
+              LiquidMetalRegistry.instance.getFluid("Silver"),
               1)
         });
     
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Desichalkos"),
+            LiquidMetalRegistry.instance.getFluid("Desichalkos"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Eximite"),
+              LiquidMetalRegistry.instance.getFluid("Eximite"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Meutoite"),
+              LiquidMetalRegistry.instance.getFluid("Meutoite"),
               1)
         });
 
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Inolashite"),
+            LiquidMetalRegistry.instance.getFluid("Inolashite"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Alduorite"),
+              LiquidMetalRegistry.instance.getFluid("Alduorite"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Ceruclase"),
+              LiquidMetalRegistry.instance.getFluid("Ceruclase"),
               1)
         });
     
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("Amordrine"),
+            LiquidMetalRegistry.instance.getFluid("Amordrine"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Kalendrite"),
+              LiquidMetalRegistry.instance.getFluid("Kalendrite"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Platinum"),
+              LiquidMetalRegistry.instance.getFluid("Platinum"),
               1)
         });
     
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("ShadowSteel"),
+            LiquidMetalRegistry.instance.getFluid("ShadowSteel"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("ShadowIron"),
+              LiquidMetalRegistry.instance.getFluid("ShadowIron"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Lemurite"),
+              LiquidMetalRegistry.instance.getFluid("Lemurite"),
               1)
         });
 
     
-    AlloyMixerRecipeManager.instance.AddRecipe(
+    AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(
-            LiquidMetalRegistry.instance.GetFluid("BlackSteel"),
+            LiquidMetalRegistry.instance.getFluid("BlackSteel"),
             2),
         new FluidStack[] {
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("Infuscolium"),
+              LiquidMetalRegistry.instance.getFluid("Infuscolium"),
               1),
           new FluidStack(
-              LiquidMetalRegistry.instance.GetFluid("DeepIron"),
+              LiquidMetalRegistry.instance.getFluid("DeepIron"),
               1)
         });
   }

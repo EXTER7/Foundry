@@ -44,9 +44,9 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
 
     public CachedInfuserSubstanceRecipe(IInfuserSubstanceRecipe recipe)
     {
-      input = new PositionedStack(asItemStackOrList(recipe.GetInputItem()), 19 - 5, 59 - 11, true);
-      substance = recipe.GetOutputSubstance();
-      energy = recipe.GetEnergyNeeded();
+      input = new PositionedStack(asItemStackOrList(recipe.getInput()), 19 - 5, 59 - 11, true);
+      substance = recipe.getOutput();
+      energy = recipe.getEnergyNeeded();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     if(substance != null && substance.amount > 0)
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
-      GuiDraw.changeTexture(tex.GetLocation());
+      GuiDraw.changeTexture(tex.getLocation());
       int height = (substance.amount * multiplier) * 47 / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
       if(height > 47)
       {
@@ -106,8 +106,8 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
       }
 
       Rectangle rect = GetSubstanceRect();
-      SetColor(tex.GetColor());
-      GuiDraw.drawTexturedModalRect(rect.x, rect.y + 47 - height, tex.GetX(), tex.GetY() + 47 - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+      SetColor(tex.getColor());
+      GuiDraw.drawTexturedModalRect(rect.x, rect.y + 47 - height, tex.getX(), tex.getY() + 47 - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
       GL11.glColor4f(1, 1, 1, 1);
       GuiDraw.changeTexture(getGuiTexture());
     }    
@@ -132,7 +132,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
       {
-        if(recipe.MatchesRecipe((ItemStack) results[0]))
+        if(recipe.matchesRecipe((ItemStack) results[0]))
         {
           addRecipe(recipe);
         }
@@ -156,7 +156,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
       InfuserSubstance sub = (InfuserSubstance)results[0];
       for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
       {
-        if(recipe.GetOutputSubstance().type.equals(sub.type))
+        if(recipe.getOutput().type.equals(sub.type))
         {
           arecipes.add(new CachedInfuserSubstanceRecipe(recipe));
         }
@@ -166,7 +166,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
 
   public void addRecipe(IInfuserSubstanceRecipe recipe)
   {
-    if(!isEmptyOre(recipe.GetInputItem()))
+    if(!isEmptyOre(recipe.getInput()))
     {
       arecipes.add(new CachedInfuserSubstanceRecipe(recipe));
     }

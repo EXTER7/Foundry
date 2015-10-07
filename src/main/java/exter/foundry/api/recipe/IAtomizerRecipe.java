@@ -11,20 +11,20 @@ public interface IAtomizerRecipe
    * Get the fluid required for atomizing.
    * @return FluidStack containing the required fluid.
    */
-  public FluidStack GetInputFluid();
+  public FluidStack getInput();
 
   /**
    * Get the item produced by atomizing.
    * @return the produced item can be an ItemStack or a String with an Ore Dictionary name.
    */
-  public Object GetOutput();
+  public Object getOutput();
 
-  public boolean MatchesRecipe(FluidStack fluid_stack);
+  public boolean matchesRecipe(FluidStack fluid_stack);
   
   /**
    * Get the actual item produced by atomizing.
    * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
    */
-  public ItemStack GetOutputItem();
+  public ItemStack getOutputItem();
 
 }

@@ -7,7 +7,6 @@ import exter.foundry.api.recipe.manager.ICastingRecipeManager;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
 import exter.foundry.api.registry.IFluidRegistry;
-import exter.foundry.api.registry.IItemRegistry;
 
 /**
  * API for recipes of Foundry machines.
@@ -43,7 +42,5 @@ public class FoundryAPI
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   static public IAtomizerRecipeManager recipes_atomizer;
   
-  @Deprecated
-  static public IItemRegistry items;
   static public IFluidRegistry fluids;
 }

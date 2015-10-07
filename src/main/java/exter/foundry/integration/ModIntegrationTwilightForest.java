@@ -36,9 +36,9 @@ public class ModIntegrationTwilightForest extends ModIntegration
     liquid_steeleaf = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steeleaf", 1850, 15);
     liquid_knightmetal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Knightmetal", 1900, 15);
     
-    FoundryUtils.RegisterBasicMeltingRecipes("Ironwood", liquid_ironwood);
-    FoundryUtils.RegisterBasicMeltingRecipes("Steeleaf", liquid_steeleaf);
-    FoundryUtils.RegisterBasicMeltingRecipes("Knightmetal", liquid_knightmetal);
+    FoundryUtils.registerBasicMeltingRecipes("Ironwood", liquid_ironwood);
+    FoundryUtils.registerBasicMeltingRecipes("Steeleaf", liquid_steeleaf);
+    FoundryUtils.registerBasicMeltingRecipes("Knightmetal", liquid_knightmetal);
   }
 
   @Override
@@ -87,10 +87,10 @@ public class ModIntegrationTwilightForest extends ModIntegration
     ItemStack kightmetal_cluster = new ItemStack(GameRegistry.findItem("TwilightForest", "item.shardCluster"));
     ItemStack kightmetal_shard = new ItemStack(GameRegistry.findItem("TwilightForest", "item.armorShards"));
 
-    MeltingRecipeManager.instance.AddRecipe(ironwood_raw, new FluidStack(liquid_ironwood,FoundryAPI.FLUID_AMOUNT_INGOT * 2));
+    MeltingRecipeManager.instance.addRecipe(ironwood_raw, new FluidStack(liquid_ironwood,FoundryAPI.FLUID_AMOUNT_INGOT * 2));
 
-    MeltingRecipeManager.instance.AddRecipe(kightmetal_cluster, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_INGOT));
-    MeltingRecipeManager.instance.AddRecipe(kightmetal_shard, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_NUGGET));
+    MeltingRecipeManager.instance.addRecipe(kightmetal_cluster, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.addRecipe(kightmetal_shard, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_NUGGET));
 
     RegisterCasting(ironwood_ingot, liquid_ironwood, 1, ItemMold.MOLD_INGOT, null);
     RegisterCasting(steeleaf_ingot, liquid_steeleaf, 1, ItemMold.MOLD_INGOT, null);

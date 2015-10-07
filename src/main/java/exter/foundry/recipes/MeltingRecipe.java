@@ -58,7 +58,7 @@ public class MeltingRecipe implements IMeltingRecipe
     melting_speed = speed;
   }
   
-  public Object GetInput()
+  public Object getInput()
   {
     if(solid instanceof ItemStack)
     {
@@ -67,25 +67,25 @@ public class MeltingRecipe implements IMeltingRecipe
     return solid;
   }
   
-  public FluidStack GetOutput()
+  public FluidStack getOutput()
   {
     return fluid.copy();
   }
 
   @Override
-  public int GetMeltingPoint()
+  public int getMeltingPoint()
   {
     return melting_point;
   }
   
   @Override
-  public boolean MatchesRecipe(ItemStack item)
+  public boolean matchesRecipe(ItemStack item)
   {
-    return FoundryUtils.IsItemMatch(item, solid);
+    return FoundryUtils.isItemMatch(item, solid);
   }
 
   @Override
-  public int GetMeltingSpeed()
+  public int getMeltingSpeed()
   {
     return melting_speed;
   }

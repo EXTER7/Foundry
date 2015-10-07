@@ -61,7 +61,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       List<ItemStack> ores = OreDictionary.getOres(material.default_prefix + material.suffix);
       if(ores.size() > 0)
       {
-        MaterialRegistry.instance.RegisterMaterialIcon(material.suffix, ores.get(0));
+        MaterialRegistry.instance.registerMaterialIcon(material.suffix, ores.get(0));
       } else
       {
         for(OreDictType type : OreDictType.TYPES)
@@ -69,7 +69,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
           ores = OreDictionary.getOres(type.prefix + material.suffix);
           if(ores.size() > 0)
           {
-            MaterialRegistry.instance.RegisterMaterialIcon(material.suffix, ores.get(0));
+            MaterialRegistry.instance.registerMaterialIcon(material.suffix, ores.get(0));
             break;
           }
         }
@@ -81,7 +81,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       List<ItemStack> ores = OreDictionary.getOres(type.prefix + type.default_suffix);
       if(ores.size() > 0)
       {
-        MaterialRegistry.instance.RegisterTypeIcon(type.name, ores.get(0));
+        MaterialRegistry.instance.registerTypeIcon(type.name, ores.get(0));
       } else
       {
         for(OreDictMaterial material : OreDictMaterial.MATERIALS)
@@ -89,7 +89,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
           ores = OreDictionary.getOres(type.prefix + material.suffix);
           if(ores.size() > 0)
           {
-            MaterialRegistry.instance.RegisterTypeIcon(type.name, ores.get(0));
+            MaterialRegistry.instance.registerTypeIcon(type.name, ores.get(0));
             break;
           }
         }

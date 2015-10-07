@@ -37,9 +37,9 @@ public class ModIntegrationBotania extends ModIntegration
     liquid_terrasteel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
     liquid_elementium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
 
-    FoundryUtils.RegisterBasicMeltingRecipes("Manasteel", liquid_manasteel);
-    FoundryUtils.RegisterBasicMeltingRecipes("Terrasteel", liquid_terrasteel);
-    FoundryUtils.RegisterBasicMeltingRecipes("Elementium", liquid_elementium);
+    FoundryUtils.registerBasicMeltingRecipes("Manasteel", liquid_manasteel);
+    FoundryUtils.registerBasicMeltingRecipes("Terrasteel", liquid_terrasteel);
+    FoundryUtils.registerBasicMeltingRecipes("Elementium", liquid_elementium);
   }
 
   @Override
@@ -51,9 +51,9 @@ public class ModIntegrationBotania extends ModIntegration
   @Override
   public void OnClientPostInit()
   {
-    MaterialRegistry.instance.RegisterMaterialIcon("Manasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,0));
-    MaterialRegistry.instance.RegisterMaterialIcon("Terrasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,4));
-    MaterialRegistry.instance.RegisterMaterialIcon("Elementium", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,7));
+    MaterialRegistry.instance.registerMaterialIcon("Manasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,0));
+    MaterialRegistry.instance.registerMaterialIcon("Terrasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,4));
+    MaterialRegistry.instance.registerMaterialIcon("Elementium", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,7));
   }
   
   @Override
@@ -129,31 +129,31 @@ public class ModIntegrationBotania extends ModIntegration
         ItemStack mold_helmet = FoundryItems.Mold(ItemMold.MOLD_HELMET);
         ItemStack mold_boots = FoundryItems.Mold(ItemMold.MOLD_BOOTS);
 
-        CastingRecipeManager.instance.AddRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.AddRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(manasteel_axe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(manasteel_shovel, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        CastingRecipeManager.instance.AddRecipe(manasteel_sword, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        CastingRecipeManager.instance.AddRecipe(manasteel_leggings, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.AddRecipe(manasteel_helmet, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.AddRecipe(manasteel_boots, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+        CastingRecipeManager.instance.addRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        CastingRecipeManager.instance.addRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+        CastingRecipeManager.instance.addRecipe(manasteel_axe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+        CastingRecipeManager.instance.addRecipe(manasteel_shovel, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+        CastingRecipeManager.instance.addRecipe(manasteel_sword, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        CastingRecipeManager.instance.addRecipe(manasteel_leggings, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        CastingRecipeManager.instance.addRecipe(manasteel_helmet, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        CastingRecipeManager.instance.addRecipe(manasteel_boots, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
 
-        CastingRecipeManager.instance.AddRecipe(terrasteel_chestplate, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.AddRecipe(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        CastingRecipeManager.instance.AddRecipe(terrasteel_leggings, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.AddRecipe(terrasteel_helmet, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.AddRecipe(terrasteel_boots, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+        CastingRecipeManager.instance.addRecipe(terrasteel_chestplate, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        CastingRecipeManager.instance.addRecipe(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+        CastingRecipeManager.instance.addRecipe(terrasteel_leggings, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        CastingRecipeManager.instance.addRecipe(terrasteel_helmet, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        CastingRecipeManager.instance.addRecipe(terrasteel_boots, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
 
-        CastingRecipeManager.instance.AddRecipe(elementium_chestplate, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.AddRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_dreamsticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_dreamsticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_dreamsticks2);
-        CastingRecipeManager.instance.AddRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_dreamsticks1);
-        CastingRecipeManager.instance.AddRecipe(elementium_leggings, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.AddRecipe(elementium_helmet, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.AddRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+        CastingRecipeManager.instance.addRecipe(elementium_chestplate, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+        CastingRecipeManager.instance.addRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_dreamsticks2);
+        CastingRecipeManager.instance.addRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_dreamsticks2);
+        CastingRecipeManager.instance.addRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_dreamsticks2);
+        CastingRecipeManager.instance.addRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_dreamsticks1);
+        CastingRecipeManager.instance.addRecipe(elementium_leggings, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+        CastingRecipeManager.instance.addRecipe(elementium_helmet, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+        CastingRecipeManager.instance.addRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
         
         FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, manasteel_chestplate);
@@ -183,26 +183,26 @@ public class ModIntegrationBotania extends ModIntegration
       ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
-      MeltingRecipeManager.instance.AddRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
-      MeltingRecipeManager.instance.AddRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
-      MeltingRecipeManager.instance.AddRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.AddRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK));
+      MeltingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
+      MeltingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
+      MeltingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT));
+      MeltingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK));
 
-      CastingRecipeManager.instance.AddRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-      CastingRecipeManager.instance.AddRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-      CastingRecipeManager.instance.AddRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
       
-      MaterialRegistry.instance.RegisterItem(manasteel_ingot, "Manasteel", "Ingot");
-      MaterialRegistry.instance.RegisterItem(manasteel_block, "Manasteel", "Block");
-      MaterialRegistry.instance.RegisterItem(terrasteel_ingot, "Terrasteel", "Ingot");
-      MaterialRegistry.instance.RegisterItem(terrasteel_block, "Terrasteel", "Block");
-      MaterialRegistry.instance.RegisterItem(elementium_ingot, "Elementium", "Ingot");
-      MaterialRegistry.instance.RegisterItem(elementium_block, "Elementium", "Block");
+      MaterialRegistry.instance.registerItem(manasteel_ingot, "Manasteel", "Ingot");
+      MaterialRegistry.instance.registerItem(manasteel_block, "Manasteel", "Block");
+      MaterialRegistry.instance.registerItem(terrasteel_ingot, "Terrasteel", "Ingot");
+      MaterialRegistry.instance.registerItem(terrasteel_block, "Terrasteel", "Block");
+      MaterialRegistry.instance.registerItem(elementium_ingot, "Elementium", "Ingot");
+      MaterialRegistry.instance.registerItem(elementium_block, "Elementium", "Block");
     }
   }
 }

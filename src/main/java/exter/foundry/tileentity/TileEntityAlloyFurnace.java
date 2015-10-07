@@ -238,7 +238,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   private void DoSmelt(IAlloyFurnaceRecipe recipe,boolean reversed)
   {
-    ItemStack output = recipe.GetOutput();
+    ItemStack output = recipe.getOutput();
     ItemStack inv_output = inventory[SLOT_OUTPUT];
     if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
     {
@@ -251,12 +251,12 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       progress = 0;
       if(reversed)
       {
-        decrStackSize(SLOT_INPUT_B, FoundryUtils.GetStackSize(recipe.GetInputA()));
-        decrStackSize(SLOT_INPUT_A, FoundryUtils.GetStackSize(recipe.GetInputB()));
+        decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputA()));
+        decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputB()));
       } else
       {
-        decrStackSize(SLOT_INPUT_A, FoundryUtils.GetStackSize(recipe.GetInputA()));
-        decrStackSize(SLOT_INPUT_B, FoundryUtils.GetStackSize(recipe.GetInputB()));
+        decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputA()));
+        decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputB()));
       }
       UpdateInventoryItem(SLOT_INPUT_A);
       UpdateInventoryItem(SLOT_INPUT_B);
@@ -288,10 +288,10 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     IAlloyFurnaceRecipe recipe = null;
     if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
     {
-      recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
+      recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
       if(recipe == null)
       {
-        recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
+        recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
         if(recipe != null)
         {
           reversed = true;
@@ -371,16 +371,16 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   {
     if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
     {
-      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
+      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
       if(recipe == null)
       {
-        recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
+        recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
       }
       if(recipe == null)
       {
         return false;
       }
-      ItemStack output = recipe.GetOutput();
+      ItemStack output = recipe.getOutput();
       ItemStack inv_output = inventory[SLOT_OUTPUT];
       if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
       {

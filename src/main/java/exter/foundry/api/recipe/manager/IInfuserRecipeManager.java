@@ -3,8 +3,6 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 import java.util.Map;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
@@ -12,6 +10,8 @@ import exter.foundry.api.substance.InfuserSubstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IInfuserRecipeManager
 {

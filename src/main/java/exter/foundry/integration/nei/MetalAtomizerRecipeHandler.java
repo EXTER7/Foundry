@@ -39,9 +39,9 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
 
     public CachedAtomizerRecipe(IAtomizerRecipe recipe)
     {
-      tank = new FluidTank(recipe.GetInputFluid(), 6000, new Rectangle(34, 10, 16, 47));
+      tank = new FluidTank(recipe.getInput(), 6000, new Rectangle(34, 10, 16, 47));
       tank_water = new FluidTank(new FluidStack(FluidRegistry.WATER,50), 6000, new Rectangle(118, 10, 16, 47));
-      output = new PositionedStack(asItemStackOrList(recipe.GetOutput()), 81, 26, true);
+      output = new PositionedStack(asItemStackOrList(recipe.getOutput()), 81, 26, true);
       output.setPermutationToRender(0);
     }
 
@@ -117,7 +117,7 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.GetRecipes())
+    for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.getRecipes())
     {
       addRecipe(recipe);
     }
@@ -132,10 +132,10 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item"))
     {
-      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.GetRecipes())
+      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.getRecipes())
       {
         FluidStack fluid = getFluidStackFor((ItemStack) results[0]);
-        if(fluid != null && fluid.isFluidEqual(recipe.GetInputFluid()))
+        if(fluid != null && fluid.isFluidEqual(recipe.getInput()))
         {
           addRecipe(recipe);
         }
@@ -143,9 +143,9 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("liquid"))
     {
-      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.GetRecipes())
+      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.getRecipes())
       {
-        if(recipe.GetInputFluid().isFluidEqual((FluidStack) results[0]))
+        if(recipe.getInput().isFluidEqual((FluidStack) results[0]))
         {
           addRecipe(recipe);
         }
@@ -162,10 +162,10 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item"))
     {
-      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.GetRecipes())
+      for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.getRecipes())
       {
-        Object output = recipe.GetOutput();
-        if(output != null && FoundryUtils.IsItemMatch((ItemStack) results[0], output))
+        Object output = recipe.getOutput();
+        if(output != null && FoundryUtils.isItemMatch((ItemStack) results[0], output))
         {
           arecipes.add(new CachedAtomizerRecipe(recipe));
         }
@@ -175,11 +175,11 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(IAtomizerRecipe recipe)
   {
-    if(recipe.GetOutput() != null && recipe.GetInputFluid() != null)
+    if(recipe.getOutput() != null && recipe.getInput() != null)
     {
-      if(recipe.GetOutput() instanceof String)
+      if(recipe.getOutput() instanceof String)
       {
-        if(OreDictionary.getOres((String)recipe.GetOutput()).size() == 0)
+        if(OreDictionary.getOres((String)recipe.getOutput()).size() == 0)
         {
           return;
         }

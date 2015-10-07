@@ -33,7 +33,7 @@ public class ItemRoundNormal extends ItemRoundBase
   }
   
   @Override
-  public String GetRoundType(ItemStack round)
+  public String getRoundType(ItemStack round)
   {
     return ItemRevolver.AMMO_TYPE;
   }

@@ -27,7 +27,7 @@ public interface IFluidRegistry
     "Lead"
    * @return The fluid.
    */
-  public Fluid GetFluid(String name);
+  public Fluid getFluid(String name);
   /*
   */
 

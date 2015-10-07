@@ -25,7 +25,7 @@ public class OreStack
     amount = ore_amount;
   }
   
-  public boolean IsStackEqual(OreStack stack)
+  public boolean isStackEqual(OreStack stack)
   {
     return name.equals(stack.name);
   }

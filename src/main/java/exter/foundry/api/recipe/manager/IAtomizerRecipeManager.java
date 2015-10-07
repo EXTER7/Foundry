@@ -13,24 +13,24 @@ public interface IAtomizerRecipeManager
    * @param result Item produced. Can be an ItemStack, or a String.
    * @param in_fluid Fluid required (fluid type and amount).
    */
-  public void AddRecipe(Object result,FluidStack in_fluid);
+  public void addRecipe(Object result,FluidStack in_fluid);
   
   /**
    * Get a list of all the recipes.
    * @return List of all the recipes.
    */
-  public List<IAtomizerRecipe> GetRecipes();
+  public List<IAtomizerRecipe> getRecipes();
 
   /**
    * Find an atomizer recipe given a FluidStack.
    * @param fluid FluidStack that contains the recipe's required fluid.
    * @return The Atomizer recipe, or null if no matching recipe.
    */
-  public IAtomizerRecipe FindRecipe(FluidStack fluid);
+  public IAtomizerRecipe findRecipe(FluidStack fluid);
 
   /**
    * Removes a recipe.
    * @param The recipe to remove.
    */
-  public void RemoveRecipe(IAtomizerRecipe recipe);
+  public void removeRecipe(IAtomizerRecipe recipe);
 }

@@ -365,7 +365,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
       return;
     }
 
-    if(!current_recipe.MatchesRecipe(inventory[INVENTORY_MOLD], tank.getFluid(),inventory[INVENTORY_EXTRA]))
+    if(!current_recipe.matchesRecipe(inventory[INVENTORY_MOLD], tank.getFluid(),inventory[INVENTORY_EXTRA]))
     {
       progress = -1;
       current_recipe = null;
@@ -384,9 +384,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   
   private boolean CanCastCurrentRecipe()
   {
-    if(current_recipe.RequiresExtra())
+    if(current_recipe.requiresExtra())
     {
-      if(!current_recipe.ContainsExtra(inventory[INVENTORY_EXTRA]))
+      if(!current_recipe.containsExtra(inventory[INVENTORY_EXTRA]))
       {
         return false;
       }
@@ -413,7 +413,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     
     if(current_recipe == null)
     {
-      current_recipe = CastingRecipeManager.instance.FindRecipe(tank.getFluid(), inventory[INVENTORY_MOLD],inventory[INVENTORY_EXTRA]);
+      current_recipe = CastingRecipeManager.instance.findRecipe(tank.getFluid(), inventory[INVENTORY_MOLD],inventory[INVENTORY_EXTRA]);
       progress = -1;
     }
     
@@ -448,8 +448,8 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     {
       if(CanCastCurrentRecipe())
       {
-        FluidStack input_fluid = current_recipe.GetInputFluid();
-        int increment = 18000 * current_recipe.GetCastingSpeed() / input_fluid.amount;
+        FluidStack input_fluid = current_recipe.getInput();
+        int increment = 18000 * current_recipe.getCastingSpeed() / input_fluid.amount;
         if(increment > CAST_TIME / 4)
         {
           increment = CAST_TIME / 4;
@@ -464,9 +464,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
         {
           progress = -1;
           tank.drain(input_fluid.amount, true);
-          if(current_recipe.RequiresExtra())
+          if(current_recipe.requiresExtra())
           {
-            decrStackSize(INVENTORY_EXTRA, FoundryUtils.GetStackSize(current_recipe.GetInputExtra()));
+            decrStackSize(INVENTORY_EXTRA, FoundryUtils.getStackSize(current_recipe.getInputExtra()));
             UpdateInventoryItem(INVENTORY_EXTRA);
           }
           if(inventory[INVENTORY_OUTPUT] == null)

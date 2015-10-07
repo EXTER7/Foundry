@@ -21,14 +21,14 @@ public class AtomizerRecipeManager implements IAtomizerRecipeManager
   }
 
   @Override
-  public void AddRecipe(Object result,FluidStack in_fluid)
+  public void addRecipe(Object result,FluidStack in_fluid)
   {
     IAtomizerRecipe recipe = new AtomizerRecipe(result,in_fluid);
     recipes.add(recipe);
   }
 
   @Override
-  public IAtomizerRecipe FindRecipe(FluidStack fluid)
+  public IAtomizerRecipe findRecipe(FluidStack fluid)
   {
     if(fluid == null || fluid.amount == 0)
     {
@@ -36,7 +36,7 @@ public class AtomizerRecipeManager implements IAtomizerRecipeManager
     }
     for(IAtomizerRecipe ar:recipes)
     {
-      if(ar.MatchesRecipe(fluid))
+      if(ar.matchesRecipe(fluid))
       {
         return ar;
       }
@@ -45,13 +45,13 @@ public class AtomizerRecipeManager implements IAtomizerRecipeManager
   }
   
   @Override
-  public List<IAtomizerRecipe> GetRecipes()
+  public List<IAtomizerRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
   @Override
-  public void RemoveRecipe(IAtomizerRecipe recipe)
+  public void removeRecipe(IAtomizerRecipe recipe)
   {
     recipes.remove(recipe);
   }

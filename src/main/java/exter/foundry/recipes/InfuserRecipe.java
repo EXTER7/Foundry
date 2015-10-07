@@ -26,19 +26,19 @@ public class InfuserRecipe implements IInfuserRecipe
   public final FluidStack output;
   
   @Override
-  public FluidStack GetInputFluid()
+  public FluidStack getInputFluid()
   {
     return fluid.copy();
   }
   
   @Override
-  public InfuserSubstance GetInputSubstance()
+  public InfuserSubstance getInputSubstance()
   {
     return substance;
   }
   
   @Override
-  public FluidStack GetOutput()
+  public FluidStack getOutput()
   {
     return output.copy();
   }
@@ -51,7 +51,7 @@ public class InfuserRecipe implements IInfuserRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance)
+  public boolean matchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance)
   {
     if(substance == null || substance.amount <= 0)
     {

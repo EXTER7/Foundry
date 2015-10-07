@@ -44,9 +44,9 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
 
     public CachedMeltingRecipe(IMeltingRecipe recipe)
     {
-      input = new PositionedStack(asItemStackOrList(recipe.GetInput()), 50, 12, true);
-      tank = new FluidTank(recipe.GetOutput(), 6000, new Rectangle(102, 11, 16, 47));
-      meltingPoint = recipe.GetMeltingPoint();
+      input = new PositionedStack(asItemStackOrList(recipe.getInput()), 50, 12, true);
+      tank = new FluidTank(recipe.getOutput(), 6000, new Rectangle(102, 11, 16, 47));
+      meltingPoint = recipe.getMeltingPoint();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+    for(IMeltingRecipe recipe : MeltingRecipeManager.instance.getRecipes())
     {
       addRecipe(recipe);
     }
@@ -119,9 +119,9 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
     }
     if(outputId.equals("item") && results[0] instanceof ItemStack)
     {
-      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.getRecipes())
       {
-        if(recipe.MatchesRecipe((ItemStack) results[0]))
+        if(recipe.matchesRecipe((ItemStack) results[0]))
         {
           addRecipe(recipe);
         }
@@ -143,9 +143,9 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
       {
         return;
       }
-      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.GetRecipes())
+      for(IMeltingRecipe recipe : MeltingRecipeManager.instance.getRecipes())
       {
-        if(recipe.GetOutput().isFluidEqual(fluid))
+        if(recipe.getOutput().isFluidEqual(fluid))
         {
           addRecipe(recipe);
         }
@@ -155,7 +155,7 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
 
   public void addRecipe(IMeltingRecipe recipe)
   {
-    if(!isEmptyOre(recipe.GetInput()))
+    if(!isEmptyOre(recipe.getInput()))
     {
       arecipes.add(new CachedMeltingRecipe(recipe));
     }

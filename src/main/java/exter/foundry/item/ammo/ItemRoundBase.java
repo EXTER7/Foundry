@@ -48,31 +48,31 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
 
   @Override
-  public boolean BreakGlass(ItemStack round)
+  public boolean breaksGlass(ItemStack round)
   {
     return true;
   }
 
   @Override
-  public double GetBaseRange(ItemStack round)
+  public double getBaseRange(ItemStack round)
   {
     return base_range;
   }
 
   @Override
-  public double GetFalloffRange(ItemStack round)
+  public double getFalloffRange(ItemStack round)
   {
     return falloff_range;
   }
 
   @Override
-  public double GetBaseDamage(ItemStack round)
+  public double getBaseDamage(ItemStack round)
   {
     return base_damage;
   }
   
   @Override
-  public void OnBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
+  public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
     
   }
@@ -84,13 +84,13 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
   
   @Override
-  public ItemStack GetCasing(ItemStack round)
+  public ItemStack getCasing(ItemStack round)
   {
     return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING);
   }
   
   @Override
-  public boolean IgnoresArmor(ItemStack round)
+  public boolean ignoresArmor(ItemStack round)
   {
     return false;
   }

@@ -8,19 +8,19 @@ public interface IAlloyFurnaceRecipe
    * Get the recipe's input A by index.
    * @return Recipe's input A.
    */
-  public Object GetInputA();
+  public Object getInputA();
 
   /**
    * Get the recipe's input B by index.
    * @return Recipe's input B.
    */
-  public Object GetInputB();
+  public Object getInputB();
 
   /**
    * Get the recipe's output.
    * @return ItemStack containing recipe's output.
    */
-  public ItemStack GetOutput();
+  public ItemStack getOutput();
 
   /**
    * Check if the items matches this recipe.
@@ -28,5 +28,5 @@ public interface IAlloyFurnaceRecipe
    * @param input_b item to compare.
    * @return true if the items matches, false otherwise.
    */
-  public boolean MatchesRecipe(ItemStack input_a,ItemStack input_b);
+  public boolean matchesRecipe(ItemStack input_a,ItemStack input_b);
 }

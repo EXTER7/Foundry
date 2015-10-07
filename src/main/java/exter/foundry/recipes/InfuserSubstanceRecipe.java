@@ -28,7 +28,7 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   public final int extract_energy;
   
   @Override
-  public Object GetInputItem()
+  public Object getInput()
   {
     if(item instanceof ItemStack)
     {
@@ -38,13 +38,13 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   }
   
   @Override
-  public InfuserSubstance GetOutputSubstance()
+  public InfuserSubstance getOutput()
   {
     return substance;
   }
   
   @Override
-  public int GetEnergyNeeded()
+  public int getEnergyNeeded()
   {
     return extract_energy;
   }
@@ -67,8 +67,8 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
   }
   
   @Override
-  public boolean MatchesRecipe(ItemStack item_stack)
+  public boolean matchesRecipe(ItemStack item_stack)
   {
-    return FoundryUtils.IsItemMatch(item_stack, item);
+    return FoundryUtils.isItemMatch(item_stack, item);
   }
 }

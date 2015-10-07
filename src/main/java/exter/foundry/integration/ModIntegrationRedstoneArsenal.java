@@ -56,23 +56,23 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
     if(is_loaded)
     {
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
-      Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
-      Fluid liquid_electrumflux = LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
+      Fluid liquid_redstone = LiquidMetalRegistry.instance.getFluid("Redstone");
+      Fluid liquid_electrumflux = LiquidMetalRegistry.instance.getFluid("ElectrumFlux");
 
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_electrumflux, 27),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_electrum, 27),
             new FluidStack(destabilized_redstone, 50) });
 
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_electrumflux,5),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_electrum,5),
             new FluidStack(liquid_redstone,4)});
 
       
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_electrumflux, 54),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_gold, 27),
@@ -80,7 +80,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
             new FluidStack(destabilized_redstone, 100) });
 
       
-      AlloyMixerRecipeManager.instance.AddRecipe(
+      AlloyMixerRecipeManager.instance.addRecipe(
           new FluidStack(liquid_electrumflux, 10),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_gold, 5),
@@ -90,8 +90,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
       
-      CastingRecipeManager.instance.AddRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+      CastingRecipeManager.instance.addRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+      CastingRecipeManager.instance.addRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
       if(FoundryConfig.recipe_tools_armor)
       {
@@ -123,7 +123,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
           if(fluxplate != null && fluxgem2 != null)
           {
             int plate_amount = FoundryAPI.FLUID_AMOUNT_INGOT + FoundryAPI.FLUID_AMOUNT_NUGGET * 6;
-            CastingRecipeManager.instance.AddRecipe(
+            CastingRecipeManager.instance.addRecipe(
                 fluxplate,
                 new FluidStack(liquid_electrumflux, plate_amount),
                 FoundryItems.Mold(ItemMold.MOLD_FLUXPLATE),

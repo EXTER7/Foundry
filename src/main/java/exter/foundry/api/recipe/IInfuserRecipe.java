@@ -9,19 +9,19 @@ public interface IInfuserRecipe
    * Get the fluid required.
    * @return FluidStack containing the required fluid.
    */
-  public FluidStack GetInputFluid();
+  public FluidStack getInputFluid();
   
   /**
    * Get the substance required.
    * @return The substance required.
    */
-  public InfuserSubstance GetInputSubstance();
+  public InfuserSubstance getInputSubstance();
   
   /**
    * Get the produced fluid.
    * @return The fluid that the recipe produces.
    */
-  public FluidStack GetOutput();
+  public FluidStack getOutput();
   
   /**
    * Check if a fluid stack and substance stack matches this recipe
@@ -30,5 +30,5 @@ public interface IInfuserRecipe
    * @param substance_amount Substance amount to check.
    * @return true if the fluid and substance matches, false otherwise.
    */
-  public boolean MatchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance);
+  public boolean matchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance);
 }

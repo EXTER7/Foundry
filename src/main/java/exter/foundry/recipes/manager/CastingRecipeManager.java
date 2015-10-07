@@ -24,10 +24,10 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
+  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
   {
     ICastingRecipe recipe = new CastingRecipe(result,in_fluid,in_mold,in_extra,cast_speed);
-    if(recipe.RequiresExtra())
+    if(recipe.requiresExtra())
     {
       recipes.add(0,recipe);
     } else
@@ -37,13 +37,13 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
+  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
   {
-    AddRecipe(result,in_fluid,in_mold,in_extra,100);
+    addRecipe(result,in_fluid,in_mold,in_extra,100);
   }
 
   @Override
-  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold,ItemStack extra)
+  public ICastingRecipe findRecipe(FluidStack fluid,ItemStack mold,ItemStack extra)
   {
     if(mold == null || fluid == null || fluid.amount == 0)
     {
@@ -51,7 +51,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
     }
     for(ICastingRecipe cr:recipes)
     {
-      if(cr.MatchesRecipe(mold, fluid, extra))
+      if(cr.matchesRecipe(mold, fluid, extra))
       {
         return cr;
       }
@@ -60,13 +60,13 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
   
   @Override
-  public void AddMold(ItemStack mold)
+  public void addMold(ItemStack mold)
   {
     molds.add(mold.copy());
   }
 
   @Override
-  public boolean IsItemMold(ItemStack stack)
+  public boolean isItemMold(ItemStack stack)
   {
     if(stack == null)
     {
@@ -83,13 +83,13 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public List<ICastingRecipe> GetRecipes()
+  public List<ICastingRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
   @Override
-  public List<ItemStack> GetMolds()
+  public List<ItemStack> getMolds()
   {
     return Collections.unmodifiableList(molds);
   }

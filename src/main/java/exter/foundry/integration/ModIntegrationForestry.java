@@ -58,13 +58,13 @@ public class ModIntegrationForestry extends ModIntegration
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.addRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.addRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        MeltingRecipeManager.instance.addRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.AddRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.AddRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.addRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.addRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
+        CastingRecipeManager.instance.addRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
       }
     }
   }

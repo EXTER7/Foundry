@@ -100,10 +100,10 @@ public class ModIntegrationRailcraft extends ModIntegration
     }
 
 
-    MeltingRecipeManager.instance.AddRecipe("orePoorIron", new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
-    MeltingRecipeManager.instance.AddRecipe("orePoorCopper", new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
-    MeltingRecipeManager.instance.AddRecipe("orePoorTin", new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
-    MeltingRecipeManager.instance.AddRecipe("orePoorGold", new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.addRecipe("orePoorIron", new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.addRecipe("orePoorCopper", new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.addRecipe("orePoorTin", new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
+    MeltingRecipeManager.instance.addRecipe("orePoorGold", new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_NUGGET * 2));
     
     if(iron_gear != null)
     {
@@ -120,20 +120,20 @@ public class ModIntegrationRailcraft extends ModIntegration
       ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
       if(iron_gear != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
+        MeltingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        CastingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
       }
 
       if(steel_gear != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.AddRecipe(steel_gear, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
+        MeltingRecipeManager.instance.addRecipe(steel_gear, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+        CastingRecipeManager.instance.addRecipe(steel_gear, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, bushing);
       }
       
       if(goldplated_gear != null)
       {
-        MeltingRecipeManager.instance.AddRecipe(goldplated_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4));
-        CastingRecipeManager.instance.AddRecipe(goldplated_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4), mold_gear, bushing);
+        MeltingRecipeManager.instance.addRecipe(goldplated_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4));
+        CastingRecipeManager.instance.addRecipe(goldplated_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_NUGGET * 4), mold_gear, bushing);
       }
     }
 
@@ -143,10 +143,10 @@ public class ModIntegrationRailcraft extends ModIntegration
     {
       ItemStack mold_plate = FoundryItems.Mold(ItemMold.MOLD_PLATE);
 
-      CastingRecipeManager.instance.AddRecipe(copper_plate, new FluidStack(FoundryRecipes.liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.addRecipe(copper_plate, new FluidStack(FoundryRecipes.liquid_copper, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
       //CastingRecipeManager.instance.AddRecipe(tin_plate, new FluidStack(liquid_tin, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(iron_plate, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
-      CastingRecipeManager.instance.AddRecipe(steel_plate, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.addRecipe(iron_plate, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
+      CastingRecipeManager.instance.addRecipe(steel_plate, new FluidStack(FoundryRecipes.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_plate, null);
 
       RegisterPlateMoldRecipe(copper_plate, "plateCopper");
       //RegisterPlateMoldRecipe(tin_plate, "plateTin");

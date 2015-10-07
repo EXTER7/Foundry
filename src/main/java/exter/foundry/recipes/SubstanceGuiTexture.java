@@ -32,24 +32,24 @@ public class SubstanceGuiTexture implements ISubstanceGuiTexture
   public final int color;
   
   @Override
-  public ResourceLocation GetLocation()
+  public ResourceLocation getLocation()
   {
     return texture;
   }
   
   @Override
-  public int GetX()
+  public int getX()
   {
     return x;
   }
   
   @Override
-  public int GetY()
+  public int getY()
   {
     return y;
   }
   @Override
-  public int GetColor()
+  public int getColor()
   {
     return color;
   }

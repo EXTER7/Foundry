@@ -17,7 +17,7 @@ public interface ICastingRecipeManager
    * @param in_mold Mold required.
    * @param in_extra Extra item required (null, if no extra item is required), can be an {@link ItemStack}, or {@link OreStack}.
    */
-  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra);
+  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra);
 
   /**
    * Register a Metal Caster recipe.
@@ -27,26 +27,26 @@ public interface ICastingRecipeManager
    * @param in_mold Mold required.
    * @param in_extra Extra item required (null, if no extra item is required), can be an {@link ItemStack}, or {@link OreStack}.
    */
-  public void AddRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int speed);
+  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int speed);
 
   /**
    * Register an item as a mold. Only registered items are accepted in the Metal Caster's mold slot.
    * @param mold Item to be registered.
    */
-  public void AddMold(ItemStack mold);
+  public void addMold(ItemStack mold);
   
   /**
    * Get a list of all the recipes.
    * @return List of all the recipes.
    */
-  public List<ICastingRecipe> GetRecipes();
+  public List<ICastingRecipe> getRecipes();
   
   
   /**
    * Get a list of all registered molds.
    * @return List of all registered molds.
    */
-  public List<ItemStack> GetMolds();  
+  public List<ItemStack> getMolds();  
 
   /**
    * Find a casting recipe given a FluidStack and a mold.
@@ -54,14 +54,14 @@ public interface ICastingRecipeManager
    * @param mold Mold used by the recipe.
    * @return The casting recipe, or null if no matching recipe.
    */
-  public ICastingRecipe FindRecipe(FluidStack fluid,ItemStack mold,ItemStack extra);
+  public ICastingRecipe findRecipe(FluidStack fluid,ItemStack mold,ItemStack extra);
 
   /**
    * Check if an item is registered as a mold.
    * @param stack Item to check.
    * @return true if an item is registered, false if not.
    */
-  public boolean IsItemMold(ItemStack stack);
+  public boolean isItemMold(ItemStack stack);
 
   /**
    * Removes a recipe.

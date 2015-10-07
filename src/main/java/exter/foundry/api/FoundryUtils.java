@@ -20,15 +20,15 @@ public class FoundryUtils
    * @param partial_name The partial ore dictionary name e.g. "Copper" for "ingotCopper","oreCopper", etc.
    * @param fluid The liquid created by the smelter.
    */
-  static public void RegisterBasicMeltingRecipes(String partial_name,Fluid fluid)
+  static public void registerBasicMeltingRecipes(String partial_name,Fluid fluid)
   {
     if(FoundryAPI.recipes_melting != null)
     {
-      FoundryAPI.recipes_melting.AddRecipe("ingot" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
-      FoundryAPI.recipes_melting.AddRecipe("block" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK));
-      FoundryAPI.recipes_melting.AddRecipe("nugget" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_NUGGET));
-      FoundryAPI.recipes_melting.AddRecipe("dust" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
-      FoundryAPI.recipes_melting.AddRecipe("ore" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_ORE));
+      FoundryAPI.recipes_melting.addRecipe("ingot" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
+      FoundryAPI.recipes_melting.addRecipe("block" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK));
+      FoundryAPI.recipes_melting.addRecipe("nugget" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_NUGGET));
+      FoundryAPI.recipes_melting.addRecipe("dust" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
+      FoundryAPI.recipes_melting.addRecipe("ore" + partial_name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_ORE));
     }
   }
 
@@ -39,7 +39,7 @@ public class FoundryUtils
    * @param stack Item to check.
    * @return true if the item is registered, false otherwise.
    */
-  static public boolean IsItemInOreDictionary(String name,ItemStack stack)
+  static public boolean isItemInOreDictionary(String name,ItemStack stack)
   {
     List<ItemStack> ores = OreDictionary.getOres(name);
     for(ItemStack i:ores)
@@ -58,7 +58,7 @@ public class FoundryUtils
    * @param match object to compare. Can be of the following types: {@link String} (Ore Dictionary name), {@link ItemStack}, {@link Item}, {@link Block}.
    * @return true if the item matches, false otherwise.
    */
-  static public boolean IsItemMatch(ItemStack item,Object match)
+  static public boolean isItemMatch(ItemStack item,Object match)
   {
     if(item == null)
     {
@@ -70,11 +70,11 @@ public class FoundryUtils
     }
     if(match instanceof String )
     {
-      return IsItemInOreDictionary((String)match, item);
+      return isItemInOreDictionary((String)match, item);
     }
     if(match instanceof OreStack )
     {
-      return IsItemInOreDictionary(((OreStack)match).name, item);
+      return isItemInOreDictionary(((OreStack)match).name, item);
     }
     if(match instanceof ItemStack)
     {
@@ -87,7 +87,7 @@ public class FoundryUtils
     }
     if(match instanceof Block)
     {
-      return item.getItem() instanceof ItemBlock && ((ItemBlock)item.getItem()).field_150939_a == (Block)match;
+      return item.getItem() instanceof ItemBlock && ((ItemBlock)item.getItem()).block == (Block)match;
     }
     return false;
   }
@@ -97,7 +97,7 @@ public class FoundryUtils
    * @param stack to check. Can be of the following types: {@link String} (Ore Dictionary name), {@link ItemStack}, {@link Item}, {@link Block}.
    * @return the stack size
    */
-  static public int GetStackSize(Object stack)
+  static public int getStackSize(Object stack)
   {
     if(stack == null)
     {

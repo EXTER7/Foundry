@@ -32,16 +32,16 @@ public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
     {
       int maxSize = 0;
       int i;
-      for(i = 0; i < recipe.GetInputCount(); i++)
+      for(i = 0; i < recipe.getInputCount(); i++)
       {
-        if(recipe.GetInput(i) != null)
+        if(recipe.getInput(i) != null)
         {
-          allTanks.add(new FluidTank(recipe.GetInput(i), 2000, new Rectangle(21 + i * 21, 34, 16, 35)));
-          maxSize = Math.max(maxSize, recipe.GetInput(i).amount);
+          allTanks.add(new FluidTank(recipe.getInput(i), 2000, new Rectangle(21 + i * 21, 34, 16, 35)));
+          maxSize = Math.max(maxSize, recipe.getInput(i).amount);
         }
       }
-      output = new FluidTank(recipe.GetOutput(), 2000, new Rectangle(128, 34, 16, 35));
-      maxSize = Math.max(maxSize, recipe.GetOutput().amount);
+      output = new FluidTank(recipe.getOutput(), 2000, new Rectangle(128, 34, 16, 35));
+      maxSize = Math.max(maxSize, recipe.getOutput().amount);
       allTanks.add(output);
       for(FluidTank tank : allTanks)
       {
@@ -77,7 +77,7 @@ public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
 
   public void loadAllRecipes()
   {
-    for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
+    for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.getRecipes())
     {
       arecipes.add(new CachedAlloyRecipe(recipe));
     }
@@ -97,11 +97,11 @@ public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
       {
         return;
       }
-      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
+      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.getRecipes())
       {
-        for(int idx = 0; idx < recipe.GetInputCount(); idx++)
+        for(int idx = 0; idx < recipe.getInputCount(); idx++)
         {
-          if(recipe.GetInput(idx).isFluidEqual(fluid))
+          if(recipe.getInput(idx).isFluidEqual(fluid))
           {
             arecipes.add(new CachedAlloyRecipe(recipe));
           }
@@ -124,9 +124,9 @@ public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
       {
         return;
       }
-      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.GetRecipes())
+      for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.getRecipes())
       {
-        if(recipe.GetOutput().isFluidEqual(fluid))
+        if(recipe.getOutput().isFluidEqual(fluid))
         {
           arecipes.add(new CachedAlloyRecipe(recipe));
         }

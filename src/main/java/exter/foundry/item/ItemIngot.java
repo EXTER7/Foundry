@@ -2,14 +2,12 @@ package exter.foundry.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemIngot extends Item
 {
@@ -31,28 +29,6 @@ public class ItemIngot extends Item
   static public final int INGOT_TITANIUM = 15;
   static public final int INGOT_CUPRONICKEL = 16;
 
-
-  static private final String[] ICON_PATHS = 
-  {
-    "foundry:ingot_copper",
-    "foundry:ingot_tin",
-    "foundry:ingot_bronze",
-    "foundry:ingot_electrum",
-    "foundry:ingot_invar",
-    "foundry:ingot_nickel",
-    "foundry:ingot_zinc",
-    "foundry:ingot_brass",
-    "foundry:ingot_silver",
-    "foundry:ingot_steel",
-    "foundry:ingot_lead",
-    "foundry:ingot_aluminum",
-    "foundry:ingot_chromium",
-    "foundry:ingot_platinum",
-    "foundry:ingot_manganese",
-    "foundry:ingot_titanium",
-    "foundry:ingot_cupronickel"
-  };
-  
   static public final String[] METAL_NAMES = 
   {
     "Copper",
@@ -95,9 +71,6 @@ public class ItemIngot extends Item
     "ingotCupronickel"
   };
   
-  @SideOnly(Side.CLIENT)
-  private IIcon[] icons;
-
   public ItemIngot() {
     super();
     setCreativeTab(FoundryTabMaterials.tab);
@@ -109,34 +82,14 @@ public class ItemIngot extends Item
   public String getUnlocalizedName(ItemStack itemstack) {
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icons = new IIcon[ICON_PATHS.length];
 
-    int i;
-    for(i = 0; i < icons.length; i++)
-    {
-      icons[i] = register.registerIcon(ICON_PATHS[i]);
-    }
-  }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icons[dmg];
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
-    for (i = 0; i < ICON_PATHS.length; i++)
+    for (i = 0; i < METAL_NAMES.length; i++)
     {
       ItemStack itemstack = new ItemStack(this, 1, i);
       list.add(itemstack);

@@ -2,8 +2,6 @@ package exter.foundry.item.ammo;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.item.FoundryItems;
@@ -13,10 +11,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class ItemRoundBase extends Item implements IFirearmRound
 {
@@ -78,7 +79,7 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
 
   @Override
-  public void OnBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
+  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, BlockPos pos, EnumFacing side)
   {
     
   }

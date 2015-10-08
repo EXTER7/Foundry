@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IChatComponent;
 
 public class InventoryFirearm implements IInventory
 {
@@ -37,13 +38,6 @@ public class InventoryFirearm implements IInventory
   {
     return items[slot];
   }
-
-  @Override
-  public String getInventoryName()
-  {
-    return "Revolver.Ammo";
-  }
-
 
   @Override
   public ItemStack decrStackSize(int slot, int amount)
@@ -120,13 +114,13 @@ public class InventoryFirearm implements IInventory
   }
 
   @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
 
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
 
   }
@@ -137,12 +131,6 @@ public class InventoryFirearm implements IInventory
     return stack.getItem() instanceof IFirearmRound;
   }
 
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
-  }
-
   public void Save()
   {
     int i;
@@ -151,5 +139,47 @@ public class InventoryFirearm implements IInventory
       ((ItemFirearm)firearm.getItem()).SetAmmo(firearm,i,items[i]);
     }
     player_inv.setInventorySlotContents(player_inv.currentItem, firearm);
+  }
+
+  @Override
+  public String getCommandSenderName()
+  {
+    return null;
+  }
+
+  @Override
+  public boolean hasCustomName()
+  {
+    return false;
+  }
+
+  @Override
+  public IChatComponent getDisplayName()
+  {
+    return null;
+  }
+
+  @Override
+  public int getField(int id)
+  {
+    return 0;
+  }
+
+  @Override
+  public void setField(int id, int value)
+  {
+
+  }
+
+  @Override
+  public int getFieldCount()
+  {
+    return 0;
+  }
+
+  @Override
+  public void clear()
+  {
+
   }
 }

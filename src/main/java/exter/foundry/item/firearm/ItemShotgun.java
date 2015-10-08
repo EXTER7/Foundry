@@ -2,14 +2,11 @@ package exter.foundry.item.firearm;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,36 +14,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemShotgun extends ItemFirearm
 {
   static public final String AMMO_TYPE = "shotgun";
-  
-  public IIcon icon;
   
   public ItemShotgun()
   {
     setUnlocalizedName("shotgun");
   }
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icon = register.registerIcon("foundry:shotgun");
-  }
-  
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icon;
-  }
-  
   @Override
   public boolean getShareTag()
   {
@@ -99,7 +80,7 @@ public class ItemShotgun extends ItemFirearm
               player.posY + player.getEyeHeight() - 0.1,
               player.posZ,
               ((IFirearmRound)(round.getItem())).getCasing(round).copy());
-          casing.delayBeforeCanPickup = 10;
+          casing.setPickupDelay(10);
           casing.motionX = -look_z * 0.2;
           casing.motionY = look_y * 0.2;
           casing.motionZ = look_x * 0.2;

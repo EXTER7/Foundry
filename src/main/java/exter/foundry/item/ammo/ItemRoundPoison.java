@@ -2,42 +2,23 @@ package exter.foundry.item.ammo;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemRoundPoison extends ItemRoundBase
 {
-  public IIcon icon;
-  
   public ItemRoundPoison()
   {
     super(8, 50, 25);
     setUnlocalizedName("roundPoison");
-  }
-
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icon = register.registerIcon("foundry:round_poison");
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icon;
   }
 
   @SuppressWarnings("unchecked")

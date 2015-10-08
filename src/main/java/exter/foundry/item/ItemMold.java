@@ -2,14 +2,12 @@ package exter.foundry.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMolds;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMold extends Item
 {  
@@ -82,79 +80,6 @@ public class ItemMold extends Item
   static public final int MOLD_SHARD_TC = 66;
   static public final int MOLD_SHARD_TC_SOFT = 67;
   
-  static private final String[] ICON_PATHS = 
-  {
-    "foundry:mold_ingot",
-    "foundry:claymold_ingot",
-    "foundry:mold_chestplate",
-    "foundry:claymold_chestplate",
-    "foundry:mold_pickaxe",
-    "foundry:claymold_pickaxe",
-    "foundry:mold_block",
-    "foundry:claymold_block",
-    "foundry:mold_axe",
-    "foundry:claymold_axe",
-    "foundry:mold_sword",
-    "foundry:claymold_sword",
-    "foundry:mold_shovel",
-    "foundry:claymold_shovel",
-    "foundry:mold_hoe",
-    "foundry:claymold_hoe",
-    "foundry:mold_leggings",
-    "foundry:claymold_leggings",
-    "foundry:mold_helmet",
-    "foundry:claymold_helmet",
-    "foundry:mold_boots",
-    "foundry:claymold_boots",
-    "foundry:mold_gear",
-    "foundry:claymold_gear",
-    "foundry:mold_cable_ic2",
-    "foundry:claymold_cable_ic2",
-    "foundry:mold_casing_ic2",
-    "foundry:claymold_casing_ic2",
-    "foundry:mold_slab",
-    "foundry:claymold_slab",
-    "foundry:mold_stairs",
-    "foundry:claymold_stairs",
-    "foundry:mold_plate_ic2",
-    "foundry:claymold_plate_ic2",
-    "foundry:mold_cap_tc",
-    "foundry:claymold_cap_tc",
-    "foundry:mold_cable_insulated_ic2",
-    "foundry:claymold_cable_insulated_ic2",
-    "foundry:mold_sickle",
-    "foundry:claymold_sickle",
-    "foundry:mold_bow",
-    "foundry:claymold_bow",
-    "foundry:mold_fluxplate",
-    "foundry:claymold_fluxplate",
-    "foundry:mold_bullet",
-    "foundry:claymold_bullet",
-    "foundry:mold_bulletHollow",
-    "foundry:claymold_bulletHollow",
-    "foundry:mold_bulletCasing",
-    "foundry:claymold_bulletCasing",
-    "foundry:mold_gunBarrel",
-    "foundry:claymold_gunBarrel",
-    "foundry:mold_revolverDrum",
-    "foundry:claymold_revolverDrum",
-    "foundry:mold_revolverFrame",
-    "foundry:claymold_revolverFrame",
-    "foundry:mold_wire_pr",
-    "foundry:claymold_wire_pr",
-    "foundry:mold_pellet",
-    "foundry:claymold_pellet",
-    "foundry:mold_shellCasing",
-    "foundry:claymold_shellCasing",
-    "foundry:mold_shotgunPump",
-    "foundry:claymold_shotgunPump",
-    "foundry:mold_shotgunFrame",
-    "foundry:claymold_shotgunFrame",
-    "foundry:mold_shard_tc",
-    "foundry:claymold_shard_tc"
-  };
-  
-
   static public final String[] REGISTRY_NAMES = 
   {
     "moldIngot",
@@ -227,83 +152,6 @@ public class ItemMold extends Item
     "moldSoftShard"
   };
 
-  @Deprecated
-  static public final String[] REGISTRY_NAMES_LEGACY = 
-  {
-    "itemIngotMold",
-    "itemSoftIngotMold",
-    "itemChestplateMold",
-    "itemSoftChestplateMold",
-    "itemPickaxeMold",
-    "itemSoftPickaxeMold",
-    "itemBlockMold",
-    "itemSoftBlockMold",    
-    "itemAxeMold",
-    "itemSoftAxeMold",
-    "itemSwordMold",
-    "itemSoftSwordMold",
-    "itemShovelMold",
-    "itemSoftShovelMold",
-    "itemHoeMold",
-    "itemSoftHoeMold",
-    "itemLeggingsMold",
-    "itemSoftLeggingsMold",
-    "itemHelmetMold",
-    "itemSoftHelmetMold",
-    "itemBootsMold",
-    "itemSoftBootsMold",
-    "itemGearMold",
-    "itemSoftGearMold",
-    "itemCableMold",
-    "itemSoftCableMold",
-    "itemCasingMold",
-    "itemSoftCasingMold",
-    "itemSlabMold",
-    "itemSoftSlabMold",
-    "itemStairsMold",
-    "itemSoftStairsMold",
-    "itemPlateMold",
-    "itemSoftPlateMold",
-    "itemCapMold",
-    "itemSoftCapMold",
-    "itemInsulatedCableMold",
-    "itemSoftInsulatedCableMold",
-    "itemSickleMold",
-    "itemSoftSickleMold",
-    "itemBowMold",
-    "itemSoftBowMold",
-    "itemFluxPlateMold",
-    "itemSoftFluxPlateMold",
-    "ItemBulletMold",
-    "ItemSoftBulletMold",
-    "ItemBulletHollowMold",
-    "ItemSoftBulletHollowMold",
-    "ItemBulletCasingMold",
-    "ItemSoftBulletCasingMold",
-    "ItemGunBarrelMold",
-    "ItemSoftGunBarrelMold",
-    "ItemRevolverDrumMold",
-    "ItemSoftRevolverDrumMold",
-    "ItemRevolverFrameMold",
-    "ItemSoftRevolverFrameMold",
-    "itemWireMold",
-    "itemSoftWireMold",
-    "itemPelletMold",
-    "itemSoftPelletMold",
-    "ItemShellCasingMold",
-    "ItemSoftShellCasingMold",
-    "ItemShotgunPumpMold",
-    "ItemSoftShotgunPumpMold",
-    "ItemShotgunFrameMold",
-    "ItemSoftShotgunFrameMold",
-    "ItemShardMold",
-    "ItemSoftShardMold"
-  };
-
-  
-  @SideOnly(Side.CLIENT)
-  private IIcon[] icons;
-
   public ItemMold()
   {
     super();
@@ -319,33 +167,13 @@ public class ItemMold extends Item
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
   
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icons = new IIcon[ICON_PATHS.length];
-
-    int i;
-    for(i = 0; i < icons.length; i++)
-    {
-      icons[i] = register.registerIcon(ICON_PATHS[i]);
-    }
-  }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icons[dmg];
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
-    for (i = 0; i < ICON_PATHS.length; i++)
+    for (i = 0; i < REGISTRY_NAMES.length; i++)
     {
       ItemStack itemstack = new ItemStack(this, 1, i);
       list.add(itemstack);

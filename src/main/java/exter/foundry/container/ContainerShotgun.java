@@ -128,7 +128,7 @@ public class ContainerShotgun extends Container
   public void onContainerClosed(EntityPlayer entityPlayer)
   {
     super.onContainerClosed(entityPlayer);
-    shotgun_inv.closeInventory();
+    shotgun_inv.closeInventory(entityPlayer);
     if (!entityPlayer.worldObj.isRemote)
     {
       shotgun_inv.Save();

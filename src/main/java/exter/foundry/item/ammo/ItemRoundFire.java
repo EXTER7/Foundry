@@ -2,25 +2,23 @@ package exter.foundry.item.ammo;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.item.firearm.ItemRevolver;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemRoundFire extends ItemRoundBase
 {
-  public IIcon icon;
   
   public ItemRoundFire()
   {
@@ -31,29 +29,12 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
+  public void onBulletHitBlock(ItemStack ammo, EntityLivingBase shooter, Vec3 from, World world, BlockPos pos, EnumFacing side)
   {
-    icon = register.registerIcon("foundry:round_fire");
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icon;
-  }
-
-
-  @Override
-  public void OnBulletHitBlock(ItemStack ammo, EntityLivingBase shooter, Vec3 from, World world, int x, int y, int z, ForgeDirection side)
-  {
-    int xx = x + side.offsetX;
-    int yy = y + side.offsetY;
-    int zz = z + side.offsetZ;
-    if(world.isAirBlock(xx, yy, zz) && !world.isAirBlock(x, y, z))
+    BlockPos front = pos.add(side.getDirectionVec());
+    if(world.isAirBlock(front) && !world.isAirBlock(pos))
     {
-      world.setBlock(xx, yy, zz, Blocks.fire);
+      world.setBlockState(front, Blocks.fire.getDefaultState());
     }
   }
   
@@ -68,9 +49,6 @@ public class ItemRoundFire extends ItemRoundBase
       list.add(EnumChatFormatting.YELLOW + "Sets target on fire.");
     }
   }
-
-
-
 
   @Override
   public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)

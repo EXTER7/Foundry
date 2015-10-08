@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import exter.foundry.api.material.IMaterialRegistry;
 import exter.foundry.util.hashstack.HashableItem;

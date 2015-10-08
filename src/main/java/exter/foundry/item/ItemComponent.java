@@ -2,13 +2,11 @@ package exter.foundry.item;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
 public class ItemComponent extends Item
@@ -71,37 +69,6 @@ public class ItemComponent extends Item
     "foundry:ammo_pellet_steel"
   };
   
-  @Deprecated
-  static public final String[] REGISTRY_NAMES_LEGACY = 
-  {
-    "itemStoneGear",
-    "itemHeatingCoil",
-    "itemRefractoryClay",
-    "itemRefractoryBrick",
-    "itemBlankClayMold",
-    "itemGunBarrel",
-    "itemRevolverDrum",
-    "itemRevolverFrame",
-    "itemAmmoCasing",
-    "itemAmmoBullet",
-    "itemAmmoBulletHollow",
-    "itemAmmoBulletJacketed",
-    "itemGunpowderSmall",
-    "itemBlazePowderSmall",
-    "itemAmmoPellet",
-    "itemAmmoShellCasing",
-    "itemShotgunPump",
-    "itemShotgunFrame",
-    "itemZincDust",
-    "itemBrassDust",
-    "itemCupronickelDust",
-    "itemShardEnergy",
-    "itemShardLife",
-    "itemShardVoid",
-    "itemAmmoBulletSteel",
-    "itemAmmoPelletSteel"
-  };
-  
   static public final String[] REGISTRY_NAMES = 
   {
     "gearStone",
@@ -131,11 +98,10 @@ public class ItemComponent extends Item
     "ammoBulletSteel",
     "ammoPelletSteel"
   };
-  
-  @SideOnly(Side.CLIENT)
-  private IIcon[] icons;
 
-  public ItemComponent() {
+
+  public ItemComponent()
+  {
     super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
@@ -146,27 +112,7 @@ public class ItemComponent extends Item
   public String getUnlocalizedName(ItemStack itemstack) {
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icons = new IIcon[ICON_PATHS.length];
 
-    int i;
-    for(i = 0; i < icons.length; i++)
-    {
-      icons[i] = register.registerIcon(ICON_PATHS[i]);
-    }
-  }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icons[dmg];
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)

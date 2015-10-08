@@ -5,13 +5,6 @@ import io.netty.buffer.Unpooled;
 
 import java.util.List;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.FMLEventChannel;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
-import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
@@ -19,11 +12,20 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLEventChannel;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FoundryNetworkChannel
 {
@@ -37,17 +39,17 @@ public class FoundryNetworkChannel
     network_channel.register(this);
   }
 
-  static private void WriteTileEntityCoords(ByteBuf data,TileEntity sender)
+  static private void WriteTileEntityCoords(PacketBuffer data,TileEntity sender)
   {
-    data.writeInt(sender.xCoord);
-    data.writeInt(sender.yCoord);
-    data.writeInt(sender.zCoord);
-    data.writeInt(sender.getWorldObj().provider.dimensionId);
+    data.writeInt(sender.getPos().getX());
+    data.writeInt(sender.getPos().getY());
+    data.writeInt(sender.getPos().getZ());
+    data.writeInt(sender.getWorld().provider.getDimensionId());
   }
 
   static private FMLProxyPacket MakeCasterModePacket(TileEntityMetalCaster sender)
   {
-    ByteBuf data = Unpooled.buffer();
+    PacketBuffer data = new PacketBuffer(Unpooled.buffer());
     WriteTileEntityCoords(data,sender);
     data.writeByte(sender.GetMode().number);
 
@@ -56,7 +58,7 @@ public class FoundryNetworkChannel
 
   static private FMLProxyPacket MakeAtomizerModePacket(TileEntityMetalAtomizer sender)
   {
-    ByteBuf data = Unpooled.buffer();
+    PacketBuffer data = new PacketBuffer(Unpooled.buffer());
     WriteTileEntityCoords(data,sender);
     data.writeByte(sender.GetMode().number);
 
@@ -65,7 +67,7 @@ public class FoundryNetworkChannel
 
   static private FMLProxyPacket MakeICFModePacket(TileEntityInductionCrucibleFurnace sender)
   {
-    ByteBuf data = Unpooled.buffer();
+    PacketBuffer data = new PacketBuffer(Unpooled.buffer());
     WriteTileEntityCoords(data,sender);
     data.writeByte(sender.GetMode().number);
     return new FMLProxyPacket(data, CHANNEL_NAME);
@@ -74,7 +76,7 @@ public class FoundryNetworkChannel
 
   static private FMLProxyPacket MakeAlloyMixerModePacket(TileEntityAlloyMixer sender)
   {
-    ByteBuf data = Unpooled.buffer();
+    PacketBuffer data = new PacketBuffer(Unpooled.buffer());
     WriteTileEntityCoords(data,sender);
     data.writeByte(sender.GetMode().number);
     return new FMLProxyPacket(data, CHANNEL_NAME);
@@ -82,7 +84,7 @@ public class FoundryNetworkChannel
 
   private FMLProxyPacket MakeMateralRouterPacket(TileEntityMaterialRouter sender)
   {
-    ByteBuf data = Unpooled.buffer();
+    PacketBuffer data = new PacketBuffer(Unpooled.buffer());
     WriteTileEntityCoords(data,sender);
     data.writeInt(sender.gui_material_scroll);
     data.writeInt(sender.gui_type_scroll);
@@ -112,14 +114,14 @@ public class FoundryNetworkChannel
   {
     network_channel.sendToAllAround(
         MakeCasterModePacket(sender),
-        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+        new TargetPoint(sender.getWorld().provider.getDimensionId(), sender.getPos().getX(), sender.getPos().getY(), sender.getPos().getZ(), 192));
   }
 
   public void SendAtomizerModeToClients(TileEntityMetalAtomizer sender)
   {
     network_channel.sendToAllAround(
         MakeAtomizerModePacket(sender),
-        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+        new TargetPoint(sender.getWorld().provider.getDimensionId(), sender.getPos().getX(), sender.getPos().getY(), sender.getPos().getZ(), 192));
   }
 
   public void SendICFModeToServer(TileEntityInductionCrucibleFurnace sender)
@@ -131,7 +133,7 @@ public class FoundryNetworkChannel
   {
     network_channel.sendToAllAround(
         MakeICFModePacket(sender),
-        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+        new TargetPoint(sender.getWorld().provider.getDimensionId(), sender.getPos().getX(), sender.getPos().getY(), sender.getPos().getZ(), 192));
   }
 
   public void SendAlloyMixerModeToServer(TileEntityAlloyMixer sender)
@@ -143,7 +145,7 @@ public class FoundryNetworkChannel
   {
     network_channel.sendToAllAround(
         MakeAlloyMixerModePacket(sender),
-        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+        new TargetPoint(sender.getWorld().provider.getDimensionId(), sender.getPos().getX(), sender.getPos().getY(), sender.getPos().getZ(), 192));
   }
 
   
@@ -156,14 +158,14 @@ public class FoundryNetworkChannel
   {
     network_channel.sendToAllAround(
         MakeMateralRouterPacket(sender),
-        new TargetPoint(sender.getWorldObj().provider.dimensionId, sender.xCoord, sender.yCoord, sender.zCoord, 192));
+        new TargetPoint(sender.getWorld().provider.getDimensionId(), sender.getPos().getX(), sender.getPos().getY(), sender.getPos().getZ(), 192));
   }
 
-  private void OnTEPacketData(ByteBuf data, World world, int x, int y, int z)
+  private void OnTEPacketData(ByteBuf data, World world, BlockPos pos)
   {
     if(world != null)
     {
-      TileEntity tileEntity = world.getTileEntity(x, y, z);
+      TileEntity tileEntity = world.getTileEntity(pos);
 
       if(tileEntity != null)
       {
@@ -187,9 +189,9 @@ public class FoundryNetworkChannel
       int z = data.readInt();
       int d = data.readInt();
       World world = Minecraft.getMinecraft().theWorld;
-      if(d == world.provider.dimensionId)
+      if(d == world.provider.getDimensionId())
       {
-        OnTEPacketData(data, world, x, y, z);
+        OnTEPacketData(data, world, new BlockPos(x,y,z));
       }
     } catch(Exception e)
     {
@@ -208,7 +210,7 @@ public class FoundryNetworkChannel
       int z = data.readInt();
       int d = data.readInt();
       World world = DimensionManager.getWorld(d);
-      OnTEPacketData(data, world, x, y, z);
+      OnTEPacketData(data, world, new BlockPos(x,y,z));
     } catch(Exception e)
     {
       new RuntimeException(e);

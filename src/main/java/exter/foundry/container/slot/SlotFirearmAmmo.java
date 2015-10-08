@@ -1,10 +1,10 @@
 package exter.foundry.container.slot;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.inventory.InventoryFirearm;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class SlotFirearmAmmo extends Slot
 {

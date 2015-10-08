@@ -13,6 +13,7 @@ import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.item.FoundryItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
@@ -27,7 +28,6 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class ItemFirearm extends ItemTool
 {
@@ -57,11 +57,11 @@ public abstract class ItemFirearm extends ItemTool
 
   static private MovingObjectPosition Trace(World world, EntityLivingBase shooter,Entity target,float spread)
   {
-    Vec3 start = Vec3.createVectorHelper(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
+    Vec3 start = new Vec3(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
     Vec3 dir;
     if(target != null)
     {
-      dir = Vec3.createVectorHelper(target.posX - start.xCoord, target.posY - start.yCoord,target.posZ - start.zCoord).normalize();
+      dir = new Vec3(target.posX - start.xCoord, target.posY - start.yCoord,target.posZ - start.zCoord).normalize();
     } else
     {
       float pitch = -shooter.rotationPitch;
@@ -70,12 +70,12 @@ public abstract class ItemFirearm extends ItemTool
       float syaw = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI);
       float cpitch = -MathHelper.cos(pitch * 0.017453292F);
 
-      dir = Vec3.createVectorHelper(
+      dir = new Vec3(
           syaw * cpitch,
           MathHelper.sin(pitch * 0.017453292F),
           cyaw * cpitch);
     }
-    Vec3 vspread = Vec3.createVectorHelper(
+    Vec3 vspread = new Vec3(
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1)).normalize();
@@ -87,19 +87,19 @@ public abstract class ItemFirearm extends ItemTool
 
     Vec3 end = start.addVector(dir.xCoord * distance,dir.yCoord * distance,dir.zCoord * distance);
 
-    Vec3 tstart = Vec3.createVectorHelper(start.xCoord, start.yCoord, start.zCoord);
-    Vec3 tend = Vec3.createVectorHelper(end.xCoord, end.yCoord, end.zCoord);
-    MovingObjectPosition obj = world.func_147447_a(tstart, tend, false, true, false);
+    Vec3 tstart = new Vec3(start.xCoord, start.yCoord, start.zCoord);
+    Vec3 tend = new Vec3(end.xCoord, end.yCoord, end.zCoord);
+    MovingObjectPosition obj = world.rayTraceBlocks(tstart, tend, false, true, false);
     
     
     @SuppressWarnings("unchecked")
-    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.boundingBox.expand(150, 150, 100));
+    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.getBoundingBox().expand(150, 150, 100));
     double min_dist = obj != null?obj.hitVec.distanceTo(start):150;
     for(Entity ent:entities)
     {
-      if(ent.canBeCollidedWith() && ent.boundingBox != null)
+      if(ent.canBeCollidedWith() && ent.getBoundingBox() != null)
       {
-        MovingObjectPosition ent_obj = ent.boundingBox.expand(0.1, 0.1, 0.1).calculateIntercept(start, end);
+        MovingObjectPosition ent_obj = ent.getBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept(start, end);
         if(ent_obj != null)
         {
           if(ent_obj.typeOfHit == MovingObjectType.BLOCK)
@@ -137,24 +137,23 @@ public abstract class ItemFirearm extends ItemTool
         switch(obj.typeOfHit)
         {
           case BLOCK:
-            Block b = world.getBlock(obj.blockX, obj.blockY, obj.blockZ);
-            int m = world.getBlockMetadata(obj.blockX, obj.blockY, obj.blockZ);
-            if(round.breaksGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.blockX, obj.blockY, obj.blockZ) < 0.4)
+            IBlockState b = world.getBlockState(obj.getBlockPos());
+            if(round.breaksGlass(round_item) && b.getBlock().getMaterial() == Material.glass && b.getBlock().getBlockHardness(world, obj.getBlockPos()) < 0.4)
             {
-              world.playAuxSFXAtEntity(null, 2001, obj.blockX, obj.blockY, obj.blockZ, Block.getIdFromBlock(b)+(m<<12));
+              world.playAuxSFXAtEntity(null, 2001, obj.getBlockPos(), Block.getIdFromBlock(b.getBlock())+(b.getBlock().getMetaFromState(b)<<12));
               if(!world.isRemote)
               {
-                world.setBlockToAir(obj.blockX, obj.blockY, obj.blockZ);
+                world.setBlockToAir(obj.getBlockPos());
               }
             } else
             {
-              round.onBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.blockX, obj.blockY, obj.blockZ, ForgeDirection.getOrientation(obj.sideHit));
+              round.onBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.getBlockPos(), obj.sideHit);
             }
             break;
           case ENTITY:
             if(obj.entityHit instanceof EntityLivingBase)
             {
-              Vec3 end = Vec3.createVectorHelper(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
+              Vec3 end = new Vec3(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3)obj.hitInfo);
               double base_range = round.getBaseRange(round_item);
               double falloff_range = round.getFalloffRange(round_item);
@@ -220,7 +219,7 @@ public abstract class ItemFirearm extends ItemTool
   @Override
   public final EnumAction getItemUseAction(ItemStack p_77661_1_)
   {
-    return EnumAction.bow;
+    return EnumAction.BOW;
   }
   
   public abstract void SetAmmo(ItemStack stack,int slot,ItemStack ammo);

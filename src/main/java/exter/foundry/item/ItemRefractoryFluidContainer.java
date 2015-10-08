@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -13,12 +14,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -27,26 +27,15 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabFluids;
 
 public class ItemRefractoryFluidContainer extends Item implements IFluidContainerItem
 {
 
-  @SideOnly(Side.CLIENT)
-  public IIcon icon_fg;
-  @SideOnly(Side.CLIENT)
-  public IIcon icon_bg;
-
-  @SideOnly(Side.CLIENT)
-  public IIcon icon_def_empty;
-  @SideOnly(Side.CLIENT)
-  public IIcon icon_def_partial;
-  @SideOnly(Side.CLIENT)
-  public IIcon icon_def_full;
-  
+ 
   public final int capacity;
   
   public ItemRefractoryFluidContainer(int container_capacity)
@@ -72,41 +61,23 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icon_fg = register.registerIcon("foundry:container_foreground");
-    icon_bg = register.registerIcon("foundry:container_background");
-    icon_def_empty = register.registerIcon("foundry:container_def_empty");
-    icon_def_partial = register.registerIcon("foundry:container_def_partial");
-    icon_def_full = register.registerIcon("foundry:container_def_full");
-  }
-  
   private void SetFluid(ItemStack is, FluidStack fluid)
   {
     if(fluid != null)
     {
-      if(is.stackTagCompound == null)
+      NBTTagCompound tag = is.getTagCompound();
+      if(tag == null)
       {
-        is.stackTagCompound = new NBTTagCompound();
+        tag = new NBTTagCompound();
+        is.setTagCompound(tag);
       }
-      fluid.writeToNBT(is.stackTagCompound);
+      fluid.writeToNBT(tag);
     } else
     {
-      is.stackTagCompound = null;
+      is.setTagCompound(null);
     }
   }
 
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icon_def_empty;
-  }
-  
   private ItemStack FromFluidStack(FluidStack fluid)
   {
     ItemStack stack = new ItemStack(this, 1, 0);
@@ -191,16 +162,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
     if(obj.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
     {
-      int x = obj.blockX;
-      int y = obj.blockY;
-      int z = obj.blockZ;
-
-      TileEntity entity = world.getTileEntity(x, y, z);
+      TileEntity entity = world.getTileEntity(obj.getBlockPos());
       
       if(entity instanceof IFluidHandler)
       {
         IFluidHandler handler = (IFluidHandler)entity;
-        ForgeDirection side = ForgeDirection.getOrientation(obj.sideHit);
         if(player.isSneaking())
         {
           //Drain from container to the Tile Entity.
@@ -210,7 +176,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           {
             return stack;
           }
-          int filled = handler.fill(side, drained, false);
+          int filled = handler.fill(obj.sideHit, drained, false);
           if(filled == 0)
           {
             return stack;
@@ -218,12 +184,12 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           drained.amount = filled;
           
           drain(stack, filled, true);
-          handler.fill(side, drained, true);
+          handler.fill(obj.sideHit, drained, true);
         } else
         {
           //Fill container from the Tile Entity.
 
-          FluidStack drained = handler.drain(side, 50, false);
+          FluidStack drained = handler.drain(obj.sideHit, 50, false);
           if(drained == null || drained.amount == 0)
           {
             return stack;
@@ -238,50 +204,30 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
             return stack;
           }
           drained.amount = filled;
-          handler.drain(side, filled, true);
+          handler.drain(obj.sideHit, filled, true);
           fill(stack, drained, true, false);
         }
         
         return stack;
       }
       
-      if(!world.canMineBlock(player, x, y, z))
+      if(!world.canMineBlockBody(player, obj.getBlockPos()))
       {
         return stack;
       }
 
       if(player.isSneaking())
       {
-        switch(obj.sideHit)
-        {
-          case 0:
-            --y;
-            break;
-          case 1:
-            ++y;
-            break;
-          case 2:
-            --z;
-            break;
-          case 3:
-            ++z;
-            break;
-          case 4:
-            --x;
-            break;
-          case 5:
-            ++x;
-            break;
-        }
+        BlockPos pos = obj.getBlockPos().add(obj.sideHit.getDirectionVec());
 
-        if(!player.canPlayerEdit(x, y, z, obj.sideHit, stack))
+        if(!player.canPlayerEdit(pos, obj.sideHit, stack))
         {
           return stack;
         }
 
-        Material material = world.getBlock(x, y, z).getMaterial();
+        Material material = world.getBlockState(pos).getBlock().getMaterial();
         
-        if(world.isAirBlock(x, y, z) || !material.isSolid())
+        if(world.isAirBlock(pos) || !material.isSolid())
         {
           //Place fluid in the world.
           
@@ -291,7 +237,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
             drain(stack, FluidContainerRegistry.BUCKET_VOLUME, true);
             if(!world.isRemote && !material.isLiquid())
             {
-              world.func_147480_a/*destroyBlock*/(x, y, z, true);
+              world.destroyBlock(pos, true);
             }
             Block block = drained.getFluid().getBlock();
             if(block == Blocks.water)
@@ -302,30 +248,31 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
             {
               block = Blocks.flowing_lava;
             }
-            world.setBlock(x, y, z, block, 0, 3);
+            world.setBlockState(pos, block.getDefaultState());
           }
           return stack;
         }
 
       } else
       {
+        BlockPos pos = obj.getBlockPos();
         //Drain fluid from the world.
 
-        if(!player.canPlayerEdit(x, y, z, obj.sideHit, stack))
+        if(!player.canPlayerEdit(pos, obj.sideHit, stack))
         {
           return stack;
         }
         
-        Block block = world.getBlock(x, y, z);
+        IBlockState state = world.getBlockState(pos);
         
-        if(block instanceof IFluidBlock)
+        if(state.getBlock() instanceof IFluidBlock)
         {
-          IFluidBlock fluid_block = (IFluidBlock)block;
-          if(!fluid_block.canDrain(world, x, y, z))
+          IFluidBlock fluid_block = (IFluidBlock)state.getBlock();
+          if(!fluid_block.canDrain(world, pos))
           {
             return stack;
           }
-          FluidStack drained = fluid_block.drain(world, x, y, z, false);
+          FluidStack drained = fluid_block.drain(world, pos, false);
           if(drained == null)
           {
             return stack;
@@ -339,13 +286,13 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           {
             return stack;
           }
-          fluid_block.drain(world, x, y, z, true);
+          fluid_block.drain(world, pos, true);
           fill(stack, drained, true, false);
           
           return stack;
         }
 
-        if(block.getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0)
+        if(state.getBlock().getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
@@ -355,13 +302,13 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
               return stack;
             }
             fill(stack, fill, true, false);
-            world.setBlockToAir(x, y, z);
+            world.setBlockToAir(pos);
           }
 
           return stack;
         }
 
-        if(block.getMaterial() == Material.lava && world.getBlockMetadata(x, y, z) == 0)
+        if(state.getBlock().getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
@@ -371,7 +318,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
               return stack;
             }
             fill(stack, fill, true, false);
-            world.setBlockToAir(x, y, z);
+            world.setBlockToAir(pos);
           }
 
           return stack;
@@ -384,11 +331,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   @Override
   public FluidStack getFluid(ItemStack stack)
   {
-    if(stack.stackTagCompound == null)
+    if(stack.getTagCompound() == null)
     {
       return null;
     }
-    return FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
+    return FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
   }
 
   @Override

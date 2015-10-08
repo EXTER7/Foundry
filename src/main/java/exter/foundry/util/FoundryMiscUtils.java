@@ -2,20 +2,21 @@ package exter.foundry.util;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -42,14 +43,14 @@ public class FoundryMiscUtils
 
   static public void RegisterMoldSmelting(int clay,int mold)
   {
-    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+    GameRegistry.addSmelting(
         new ItemStack(FoundryItems.item_mold, 1, clay),
         new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
   }
 
   static public void RegisterOreSmelting(int ore,int ingot)
   {
-    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+    GameRegistry.addSmelting(
         new ItemStack(FoundryBlocks.block_ore, 1, ore),
         new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
@@ -101,33 +102,33 @@ public class FoundryMiscUtils
     }
   }
     
-  static public FluidStack DrainFluidFromWorld(World world,int x, int y, int z,boolean do_drain)
+  static public FluidStack DrainFluidFromWorld(World world,BlockPos pos,boolean do_drain)
   {
-    Block block = world.getBlock(x, y, z);
-    if(block instanceof IFluidBlock)
+    IBlockState state = world.getBlockState(pos);
+    if(state.getBlock() instanceof IFluidBlock)
     {
-      IFluidBlock fluid_block = (IFluidBlock)block;
-      if(!fluid_block.canDrain(world, x, y, z))
+      IFluidBlock fluid_block = (IFluidBlock)state;
+      if(!fluid_block.canDrain(world, pos))
       {
         return null;
       }
-      return fluid_block.drain(world, x, y, z, do_drain);
+      return fluid_block.drain(world, pos, do_drain);
     }
 
-    if(block.getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0)
+    if(state.getBlock().getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {
-        world.setBlockToAir(x, y, z);
+        world.setBlockToAir(pos);
       }
       return new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
     }
 
-    if(block.getMaterial() == Material.lava && world.getBlockMetadata(x, y, z) == 0)
+    if(state.getBlock().getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {
-        world.setBlockToAir(x, y, z);
+        world.setBlockToAir(pos);
       }
       return new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
     }

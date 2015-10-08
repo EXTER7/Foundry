@@ -3,6 +3,7 @@ package exter.foundry.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -14,7 +15,7 @@ public class InventoryShotgun extends InventoryFirearm
   }
   
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     int i;
     List<ItemStack> ammo = new ArrayList<ItemStack>();

@@ -9,12 +9,13 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -29,8 +30,8 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 
 import com.google.common.collect.Lists;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import exter.foundry.item.ItemRefractoryFluidContainer;
 
 public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
@@ -226,7 +227,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
       }
       if(stack_item instanceof ItemBlock)
       {
-        Block block = ((ItemBlock)stack_item)./*block*/field_150939_a;
+        Block block = ((ItemBlock)stack_item).block;
         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
         if(fluid != null)
         {
@@ -267,7 +268,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     return absoluteLoc.contains(GuiDraw.getMousePosition());
   }
 
-  public void drawRectWithIconAligned(Rectangle rect, IIcon icon, boolean alignLeft, boolean alignTop)
+  public void drawRectWithIconAligned(Rectangle rect, TextureAtlasSprite icon, boolean alignLeft, boolean alignTop)
   {
     float minU = alignLeft ? icon.getInterpolatedU(0) : icon.getInterpolatedU(16 - rect.width);
     float minV = alignTop ? icon.getInterpolatedV(0) : icon.getInterpolatedV(16 - rect.height);
@@ -275,13 +276,13 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     float maxV = alignTop ? icon.getInterpolatedV(rect.height) : icon.getInterpolatedV(16);
     double z = GuiDraw.gui.getZLevel();
 
-    Tessellator tessellator = Tessellator.instance;
+    WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
     tessellator.startDrawingQuads();
     tessellator.addVertexWithUV(rect.x, rect.y + rect.height, z, minU, maxV);
     tessellator.addVertexWithUV(rect.x + rect.width, rect.y + rect.height, z, maxU, maxV);
     tessellator.addVertexWithUV(rect.x + rect.width, rect.y, z, maxU, minV);
     tessellator.addVertexWithUV(rect.x, rect.y, z, minU, minV);
-    tessellator.draw();
+    tessellator.finishDrawing();
   }
 
   public void drawFluidVertical(int left, int bottom, int width, int height, Fluid fluid)

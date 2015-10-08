@@ -2,7 +2,7 @@ package exter.foundry.proxy;
 
 import java.util.List;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.item.FoundryItems;
@@ -12,6 +12,8 @@ import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.renderer.RendererItemContainer;
 import exter.foundry.renderer.RendererRefractoryHopper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -39,16 +41,17 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
     InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
-    for(i = 0; i < ItemDye.field_150921_b/* icon_names */.length; i++)
+    for(i = 0; i < 15; i++)
     {
-      InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + ItemDye.field_150921_b/* icon_names */[i], SUBSTANCES_TEXTURE, 8, 0, ItemDye.field_150922_c/* colors */[i]);
+      InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
     }
     
-    
+
+    /*
     hopper_renderer_id = RenderingRegistry.getNextAvailableRenderId();
     RenderingRegistry.registerBlockHandler(hopper_renderer_id,new RendererRefractoryHopper());
-   
-    RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton());
+    */
+    RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));
     
     ModIntegration.ClientInit();
   }

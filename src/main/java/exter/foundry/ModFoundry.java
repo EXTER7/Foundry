@@ -16,36 +16,35 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
-import exter.foundry.integration.ModIntegrationBotania;
-import exter.foundry.integration.ModIntegrationBuildcraft;
-import exter.foundry.integration.ModIntegrationForestry;
-import exter.foundry.integration.ModIntegrationGregtech;
-import exter.foundry.integration.ModIntegrationIC2;
-import exter.foundry.integration.ModIntegrationMetallurgy;
-import exter.foundry.integration.ModIntegrationProjectRed;
-import exter.foundry.integration.ModIntegrationRailcraft;
-import exter.foundry.integration.ModIntegrationRedstoneArsenal;
-import exter.foundry.integration.ModIntegrationTE4;
-import exter.foundry.integration.ModIntegrationTF;
-import exter.foundry.integration.ModIntegrationThaumcraft;
-import exter.foundry.integration.ModIntegrationTiCon;
-import exter.foundry.integration.ModIntegrationTwilightForest;
+//import exter.foundry.integration.ModIntegrationBotania;
+//import exter.foundry.integration.ModIntegrationBuildcraft;
+//import exter.foundry.integration.ModIntegrationForestry;
+//import exter.foundry.integration.ModIntegrationIC2;
+//import exter.foundry.integration.ModIntegrationMetallurgy;
+//import exter.foundry.integration.ModIntegrationProjectRed;
+//import exter.foundry.integration.ModIntegrationRailcraft;
+//import exter.foundry.integration.ModIntegrationRedstoneArsenal;
+//import exter.foundry.integration.ModIntegrationTE4;
+//import exter.foundry.integration.ModIntegrationTF;
+//import exter.foundry.integration.ModIntegrationThaumcraft;
+//import exter.foundry.integration.ModIntegrationTiCon;
+//import exter.foundry.integration.ModIntegrationTwilightForest;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.network.FoundryNetworkChannel;
@@ -57,7 +56,6 @@ import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.registry.ItemRegistry;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -114,23 +112,21 @@ public class ModFoundry
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegration.RegisterIntegration(config,ModIntegrationIC2.class,"ic2");
-    ModIntegration.RegisterIntegration(config,ModIntegrationBuildcraft.class,"buildcraft");
-    ModIntegration.RegisterIntegration(config,ModIntegrationForestry.class,"forestry");
-    ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
-    ModIntegration.RegisterIntegration(config,ModIntegrationTF.class,"tf");
-    ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
-    ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
-    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
-    ModIntegration.RegisterIntegration(config,ModIntegrationGregtech.class,"gregtech");
-    ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
-    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
-    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
-    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
-    ModIntegration.RegisterIntegration(config,ModIntegrationProjectRed.class,"projectred");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationIC2.class,"ic2");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationBuildcraft.class,"buildcraft");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationForestry.class,"forestry");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationTF.class,"tf");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
+//    ModIntegration.RegisterIntegration(config,ModIntegrationProjectRed.class,"projectred");
     
 
-    FoundryAPI.items = ItemRegistry.instance;
     FoundryAPI.fluids = LiquidMetalRegistry.instance;
     
     FoundryAPI.recipes_melting = MeltingRecipeManager.instance;
@@ -291,7 +287,7 @@ public class ModFoundry
     for(BiomeGenBase bio : biomes)
     {
       boolean remove = true;
-      for(BiomeGenBase.SpawnListEntry e : (List<BiomeGenBase.SpawnListEntry>)bio.getSpawnableList(EnumCreatureType.monster))
+      for(BiomeGenBase.SpawnListEntry e : (List<BiomeGenBase.SpawnListEntry>)bio.getSpawnableList(EnumCreatureType.MONSTER))
       {
         if(e.entityClass == EntitySkeleton.class)
         {
@@ -306,7 +302,7 @@ public class ModFoundry
     }
     biomes.removeAll(toremove);
 
-    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.monster, biomes.toArray(new BiomeGenBase[0]));
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, biomes.toArray(new BiomeGenBase[0]));
     
     proxy.Init();
   }

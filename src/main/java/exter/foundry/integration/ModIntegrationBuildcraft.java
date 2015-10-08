@@ -1,6 +1,5 @@
 package exter.foundry.integration;
 
-import cpw.mods.fml.common.Loader;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -14,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 
 public class ModIntegrationBuildcraft extends ModIntegration
 {

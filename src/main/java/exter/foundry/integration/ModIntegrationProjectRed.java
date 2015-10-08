@@ -1,7 +1,5 @@
 package exter.foundry.integration;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.item.ItemMold;
@@ -17,6 +15,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModIntegrationProjectRed extends ModIntegration
 {

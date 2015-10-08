@@ -1,12 +1,11 @@
 package exter.foundry.item;
 
-import exter.foundry.block.ISubBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
 public class ItemBlockSlab extends ItemBlockMulti
 {
-  public <T extends Block & ISubBlocks> ItemBlockSlab(T block)
+  public ItemBlockSlab(Block block)
   {
     super(block);
   }
@@ -18,7 +17,7 @@ public class ItemBlockSlab extends ItemBlockMulti
   }
   
   @Override
-  protected int GetSubIndex(ItemStack stack)
+  protected int getSubIndex(ItemStack stack)
   {
     return stack.getItemDamage() & 7;
   }  

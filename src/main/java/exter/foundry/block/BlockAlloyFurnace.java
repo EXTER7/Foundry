@@ -5,7 +5,10 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,11 +16,14 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -28,19 +34,94 @@ public class BlockAlloyFurnace extends BlockContainer
 {
   private final Random rand = new Random();
 
-  @SideOnly(Side.CLIENT)
-  private IIcon icon_top_bottom;
-  @SideOnly(Side.CLIENT)
-  private IIcon icon_sides;
-  @SideOnly(Side.CLIENT)
-  private IIcon icon_front_on;
-  @SideOnly(Side.CLIENT)
-  private IIcon icon_front_off;
+  public enum EnumState implements IStringSerializable
+  {
+    OFF(0, "off"),
+    ON(1, "on");
+
+    public final int id;
+    public final String name;
+
+    private EnumState(int id, String name)
+    {
+      this.id = id;
+      this.name = name;
+    }
+
+    @Override
+    public String getName()
+    {
+      return name;
+    }
+    
+    @Override
+    public String toString()
+    {
+      return getName();
+    }
+
+    static public EnumState fromID(int num)
+    {
+      for(EnumState m : values())
+      {
+        if(m.id == num)
+        {
+          return m;
+        }
+      }
+      return null;
+    }
+  }
+
+  public enum EnumFurnaceFacing implements IStringSerializable
+  {
+    NORTH(0, "north"),
+    SOUTH(1, "south"),
+    EAST(2, "east"),
+    WEST(3, "west");
+
+    public final int id;
+    public final String name;
+
+    private EnumFurnaceFacing(int id, String name)
+    {
+      this.id = id;
+      this.name = name;
+    }
+
+    @Override
+    public String getName()
+    {
+      return name;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getName();
+    }
+
+    static public EnumFurnaceFacing fromID(int num)
+    {
+      for(EnumFurnaceFacing m : values())
+      {
+        if(m.id == num)
+        {
+          return m;
+        }
+      }
+      return null;
+    }
+  }
+
+  public static final PropertyEnum STATE = PropertyEnum.create("state", EnumState.class);
+  public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumFurnaceFacing.class);
+
 
   public BlockAlloyFurnace()
   {
     super(Material.rock);
-    setBlockName("alloyFurnace");
+    setUnlocalizedName("alloyFurnace");
     setHardness(1.0F);
     setResistance(8.0F);
     setStepSound(Block.soundTypeStone);
@@ -48,88 +129,73 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
-  public void onBlockAdded(World world, int x, int y, int z)
+  protected BlockState createBlockState()
   {
-    super.onBlockAdded(world, x, y, z);
+    return new BlockState(this, new IProperty[] { STATE, FACING });
+  }
+
+  @Override
+  public IBlockState getStateFromMeta(int meta)
+  {
+    return getDefaultState().withProperty(FACING, EnumFurnaceFacing.fromID(meta & 3)).withProperty(STATE, EnumFurnaceFacing.fromID((meta >>> 2) & 1));
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state)
+  {
+    EnumState fstate = (EnumState) state.getValue(STATE);
+    EnumFurnaceFacing facing = (EnumFurnaceFacing) state.getValue(FACING);
+    return fstate.id << 2 | facing.id;
+  }
+
+  @Override
+  public void onBlockAdded(World world, BlockPos pos, IBlockState state)
+  {
+    super.onBlockAdded(world, pos, state);
     if(!world.isRemote)
     {
-      Block block = world.getBlock(x, y, z - 1);
-      Block block1 = world.getBlock(x, y, z + 1);
-      Block block2 = world.getBlock(x - 1, y, z);
-      Block block3 = world.getBlock(x + 1, y, z);
-      byte meta = 0;
+      Block block = world.getBlockState(pos.add(0, 0, -1)).getBlock();
+      Block block1 = world.getBlockState(pos.add(0, 0, 1)).getBlock();
+      Block block2 = world.getBlockState(pos.add(-1, 0, 0)).getBlock();
+      Block block3 = world.getBlockState(pos.add(1, 0, 0)).getBlock();
+      EnumFurnaceFacing facing = EnumFurnaceFacing.NORTH;
 
-      if(block.func_149730_j/* isOpaque */() && !block1.func_149730_j/* isOpaque */())
+      if(block.isOpaqueCube() && !block1.isOpaqueCube())
       {
-        meta = 2;
+        facing = EnumFurnaceFacing.NORTH;
       }
-
-      if(block1.func_149730_j/* isOpaque */() && !block.func_149730_j/* isOpaque */())
+      if(block1.isOpaqueCube() && !block.isOpaqueCube())
       {
-        meta = 3;
+        facing = EnumFurnaceFacing.SOUTH;
       }
-
-      if(block2.func_149730_j/* isOpaque */() && !block3.func_149730_j/* isOpaque */())
+      if(block2.isOpaqueCube() && !block3.isOpaqueCube())
       {
-        meta = 0;
+        facing = EnumFurnaceFacing.EAST;
       }
-      if(block3.func_149730_j/* isOpaque */() && !block2.func_149730_j/* isOpaque */())
+      if(block3.isOpaqueCube() && !block2.isOpaqueCube())
       {
-        meta = 1;
+        facing = EnumFurnaceFacing.WEST;
       }
-
-      world.setBlockMetadataWithNotify(x, y, z, meta, 2);
+      world.setBlockState(pos, state.withProperty(FACING, facing));
     }
   }
 
-  @SideOnly(Side.CLIENT)
   @Override
-  public IIcon getIcon(int side, int meta)
-  {
-    switch(side)
-    {
-      case 0:
-      case 1:
-        return icon_top_bottom;
-      default:
-        return (side == 5 - GetDirection(meta)) ? (IsFurnaceOn(meta) ? icon_front_on : icon_front_off) : icon_sides;
-    }
-  }
-
-  @SideOnly(Side.CLIENT)
-  public void registerBlockIcons(IIconRegister register)
-  {
-    icon_top_bottom = register.registerIcon("foundry:alloyfurnace_top_bottom");
-    icon_front_on = register.registerIcon("foundry:alloyfurnace_front_on");
-    icon_front_off = register.registerIcon("foundry:alloyfurnace_front_off");
-    icon_sides = register.registerIcon("foundry:alloyfurnace_side");
-  }
-
-  @Override
-  public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {
       return true;
     } else
     {
-      player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ALLOYFURNACE, world, x, y, z);
+      player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ALLOYFURNACE, world, pos.getX(), pos.getY(), pos.getZ());
       return true;
     }
   }
 
-  public void SetFurnaceState(World world, int x, int y, int z, boolean is_on)
+  public void setFurnaceState(World world, BlockPos pos, IBlockState state, boolean is_on)
   {
-    TileEntity tileentity = world.getTileEntity(x, y, z);
-
-    int meta = world.getBlockMetadata(x, y, z);
-    meta = (meta & 3) | (is_on ? 4 : 0);
-    world.setBlockMetadataWithNotify(x, y, z, meta, 2);
-    if(tileentity != null)
-    {
-      tileentity.validate();
-      world.setTileEntity(x, y, z, tileentity);
-    }
+    world.setBlockState(pos, state.withProperty(STATE, is_on ? EnumState.ON : EnumState.OFF));
   }
 
   @Override
@@ -139,35 +205,34 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
-  public void onBlockPlacedBy(World world_, int x, int y, int z, EntityLivingBase player, ItemStack item)
+  public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack item)
   {
     int dir = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
+    EnumFurnaceFacing facing = EnumFurnaceFacing.NORTH;
     if(dir == 0)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 3, 2);
+      facing = EnumFurnaceFacing.NORTH;
     }
-
     if(dir == 1)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 0, 2);
+      facing = EnumFurnaceFacing.EAST;
     }
-
     if(dir == 2)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 2, 2);
+      facing = EnumFurnaceFacing.SOUTH;
     }
-
     if(dir == 3)
     {
-      world_.setBlockMetadataWithNotify(x, y, z, 1, 2);
+      facing = EnumFurnaceFacing.WEST;
     }
+    world.setBlockState(pos, state.withProperty(FACING, facing));
   }
 
   @Override
-  public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+  public void breakBlock(World world, BlockPos pos, IBlockState state)
   {
-    TileEntity te = world.getTileEntity(x, y, z);
+    TileEntity te = world.getTileEntity(pos);
 
     if(te != null && (te instanceof TileEntityFoundryPowered) && !world.isRemote)
     {
@@ -182,57 +247,48 @@ public class BlockAlloyFurnace extends BlockContainer
           double drop_x = (rand.nextFloat() * 0.3) + 0.35;
           double drop_y = (rand.nextFloat() * 0.3) + 0.35;
           double drop_z = (rand.nextFloat() * 0.3) + 0.35;
-          EntityItem entityitem = new EntityItem(world, x + drop_x, y + drop_y, z + drop_z, is);
-          entityitem.delayBeforeCanPickup = 10;
+          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
+          entityitem.setPickupDelay(10);
 
           world.spawnEntityInWorld(entityitem);
         }
       }
     }
-    world.removeTileEntity(x, y, z);
-    super.breakBlock(world, x, y, z, block, meta);
-  }
-
-  public boolean IsFurnaceOn(int metadata)
-  {
-    return ((metadata >> 2) & 1) == 1;
-  }
-
-  public int GetDirection(int metadata)
-  {
-    return metadata & 3;
+    world.removeTileEntity(pos);
+    super.breakBlock(world, pos, state);
   }
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void randomDisplayTick(World world, int x, int y, int z, Random random)
+  public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random random)
   {
-    int meta = world.getBlockMetadata(x, y, z);
-    if(IsFurnaceOn(meta))
+    if(state.getValue(STATE) == EnumState.ON)
     {
-      int direction = GetDirection(meta);
-      float f = (float) x + 0.5F;
-      float f1 = (float) y + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-      float f2 = (float) z + 0.5F;
+      EnumFurnaceFacing facing = (EnumFurnaceFacing) state.getValue(FACING);
+      float f = (float) pos.getX() + 0.5F;
+      float f1 = (float) pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
+      float f2 = (float) pos.getZ() + 0.5F;
       float f3 = 0.52F;
       float f4 = random.nextFloat() * 0.6F - 0.3F;
 
-      if(direction == 1)
+      switch(facing)
       {
-        world.spawnParticle("smoke", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle("flame", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 0)
-      {
-        world.spawnParticle("smoke", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle("flame", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 3)
-      {
-        world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
-      } else if(direction == 2)
-      {
-        world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+        case EAST:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+          break;
+        case NORTH:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          break;
+        case SOUTH:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          break;
+        case WEST:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+          break;
       }
     }
   }
@@ -244,8 +300,8 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
-  public int getComparatorInputOverride(World world, int x, int y, int z, int p_149736_5_)
+  public int getComparatorInputOverride(World world, BlockPos pos)
   {
-    return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(x, y, z));
+    return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
   }
 }

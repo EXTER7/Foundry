@@ -4,57 +4,81 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.IStringSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
-public class BlockFoundryOre extends Block implements ISubBlocks
+public class BlockFoundryOre extends Block
 {
-  static public final int ORE_COPPER = 0;
-  static public final int ORE_TIN = 1;
-  static public final int ORE_NICKEL = 2;
-  static public final int ORE_ZINC = 3;
-  static public final int ORE_SILVER = 4;
-  static public final int ORE_LEAD = 5;
 
-
-  static private final String[] ICON_PATHS = 
+  public enum EnumOre implements IStringSerializable
   {
-    "foundry:ore_copper",
-    "foundry:ore_tin",
-    "foundry:ore_nickel",
-    "foundry:ore_zinc",
-    "foundry:ore_silver",
-    "foundry:ore_lead"
-  };
+    COPPER(0, "copper", "Copper", "oreCopper"),
+    TIN(1, "tin", "Tin", "oreTin"),
+    NICKEL(2, "nickel", "Nickel", "oreNickel"),
+    ZINC(3, "zinc", "Zinc", "oreZinc"),
+    SILVER(4, "silver", "Silver", "oreSilver"),
+    LEAD(5, "lead", "Lead", "oreLead");
 
-  static public final String[] ORE_NAMES = 
+    public final int id;
+    public final String name;
+    public final String material_name;
+    public final String oredict_name;
+
+    private EnumOre(int id, String name,String material_name,String oredict_name)
+    {
+      this.id = id;
+      this.name = name;
+      this.material_name = material_name;
+      this.oredict_name = oredict_name;
+      
+    }
+
+    @Override
+    public String getName()
+    {
+      return name;
+    }
+
+    public int getID()
+    {
+      return id;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getName();
+    }
+
+    static public EnumOre fromID(int num)
+    {
+      for(EnumOre m : values())
+      {
+        if(m.id == num)
+        {
+          return m;
+        }
+      }
+      return null;
+    }
+  }
+
+  public static final PropertyEnum VARIANT = PropertyEnum.create("ore", EnumOre.class);
+
+  @Override
+  protected BlockState createBlockState()
   {
-    "Copper",
-    "Tin",
-    "Nickel",
-    "Zinc",
-    "Silver",
-    "Lead"
-  };
-
-  static public final String[] OREDICT_NAMES = 
-  {
-    "oreCopper",
-    "oreTin",
-    "oreNickel",
-    "oreZinc",
-    "oreSilver",
-    "oreLead"
-  };
-
-  @SideOnly(Side.CLIENT)
-  private IIcon[] icons;
+    return new BlockState(this, new IProperty[] { VARIANT });
+  }
   
   public BlockFoundryOre()
   {
@@ -62,35 +86,15 @@ public class BlockFoundryOre extends Block implements ISubBlocks
     setHardness(3.0F);
     setResistance(5.0F);
     setStepSound(Block.soundTypeStone);
-    setBlockName("ore");
+    setUnlocalizedName("ore");
     setCreativeTab(FoundryTabMaterials.tab);
     setHarvestLevel("pickaxe", 1);
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
-  public void registerBlockIcons(IIconRegister register)
+  public int damageDropped(IBlockState state)
   {
-    icons = new IIcon[ICON_PATHS.length];
-
-    int i;
-    for(i = 0; i < icons.length; i++)
-    {
-      icons[i] = register.registerIcon(ICON_PATHS[i]);
-    }
-  }
-  
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIcon(int side, int meta)
-  {
-    return icons[meta];
-  }
-
-  @Override
-  public int damageDropped(int meta)
-  {
-    return meta;
+    return getMetaFromState(state);
   }
   
   @SuppressWarnings("unchecked")
@@ -98,16 +102,9 @@ public class BlockFoundryOre extends Block implements ISubBlocks
   @SideOnly(Side.CLIENT)
   public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
-    int i;
-    for(i = 0; i < ICON_PATHS.length; i++)
+    for(EnumOre ore:EnumOre.values())
     {
-      list.add(new ItemStack(item, 1, i));
+      list.add(new ItemStack(item, 1, ore.id));
     }
-  }
-
-  @Override
-  public String[] GetSubNames()
-  {
-    return ORE_NAMES;
   }
 }

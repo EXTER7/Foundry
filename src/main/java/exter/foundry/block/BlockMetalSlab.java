@@ -1,169 +1,176 @@
 package exter.foundry.block;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 
-public class BlockMetalSlab extends BlockSlab implements ISubBlocks
+public class BlockMetalSlab extends BlockSlab
 {
-  private final String[] metals;
-  private final String[] icons;
 
-  @SideOnly(Side.CLIENT)
-  private IIcon[] texture_icons;
-  private Block other;
-  
-  public BlockMetalSlab(boolean is_double, Block other_block, String[] metal_names,String[] icon_names)
+
+
+  static public class Variant implements IStringSerializable,Comparable<Variant>
   {
-    super(is_double, Material.iron);
-    other = other_block;
+    public final String state;
+    public final String metal;
+    public int id;
+    
+    public Variant(String state,String metal)
+    {
+      this.state = state;
+      this.metal = metal;
+      this.id = -1;
+    }
+
+    @Override
+    public String getName()
+    {
+      return state;
+    }
+
+    @Override
+    public String toString()
+    {
+      return state;
+    }
+
+    @Override
+    public int compareTo(Variant other)
+    {
+      return id - other.id;
+    }
+  }
+  
+  public static final PropertyEnum VARIANT = PropertyEnum.create("ore", Variant.class);
+
+  private final Variant[] variants;
+  
+  public BlockMetalSlab(Variant[] variants)
+  {
+    super(Material.iron);
     setCreativeTab(FoundryTabBlocks.tab);
-    metals = metal_names;
-    icons = icon_names;
+    this.variants = variants;
+    int i;
+    for(i = 0; i < variants.length; i++)
+    {
+      variants[i].id = i;
+    }
     setHardness(5.0F);
     setResistance(10.0F);
     setStepSound(Block.soundTypeMetal);
-    setBlockName("metalSlab");
-    if(!is_double)
-    {
-      useNeighborBrightness = true;
-    }
-  }
-
-  public void SetOtherBlock(Block block)
-  {
-    other = block;
+    setUnlocalizedName("metalSlab");
+    useNeighborBrightness = true;
   }
   
-  @SideOnly(Side.CLIENT)
-  @Override
-  public IIcon getIcon(int side, int meta)
-  {
-    return texture_icons[meta & 7];
-  }
-
-  @Override
-  public Item getItemDropped(int par1, Random random, int meta)
-  {
-    return field_150004_a ? Item.getItemFromBlock(other) : Item.getItemFromBlock(this);
-  }
-
 
   @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
   @Override
   public void getSubBlocks(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
   {
-    if(!field_150004_a)
+    for(Variant v:variants)
     {
-      int i;
-      for(i = 0; i < metals.length; i++)
-      {
-        items.add(new ItemStack(item, 1, i));
-      }
+      items.add(new ItemStack(item, 1, v.id));
     }
   }
 
   @SideOnly(Side.CLIENT)
-  @Override
-  public void registerBlockIcons(IIconRegister icon_register)
+  public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
   {
-    int i;
-    texture_icons = new IIcon[icons.length];
-    for(i = 0; i < icons.length; i++)
+    if(isDouble())
     {
-      texture_icons[i] = icon_register.registerIcon(icons[i]);
-    }
-  }
-  
-  
-  @Override
-  public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float px, float py, float pz)
-  {
-    if(field_150004_a)
+      return super.shouldSideBeRendered(worldIn, pos, side);
+    } else if(side != EnumFacing.UP && side != EnumFacing.DOWN && !super.shouldSideBeRendered(worldIn, pos, side))
     {
       return false;
-    }
-    ItemStack item = player.getCurrentEquippedItem();
-    int meta = world.getBlockMetadata(x, y, z);
-    int material = meta & 7;
-    boolean top = (meta & 8) == 0;
-    if( (side == 1 && top || side == 0 && !top) && item != null && (item.getItem() instanceof ItemBlock && ((ItemBlock)(item.getItem())).field_150939_a == this) && item.getItemDamage() == material)
+    } else
     {
-      //Turn single slab into double slab
-      world.setBlock(x, y, z, other,meta,3);
-      if(!player.capabilities.isCreativeMode)
-      {
-        item.stackSize--;
-      }
-      world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), stepSound.getBreakSound(), (stepSound.getVolume() + 1.0F) / 2.0F, stepSound.getPitch() * 0.8F);
-      return true;
+      BlockPos blockpos1 = pos.offset(side.getOpposite());
+      IBlockState iblockstate = worldIn.getBlockState(pos);
+      IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
+      boolean flag = isSlab(iblockstate.getBlock()) && iblockstate.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP;
+      boolean flag1 = isSlab(iblockstate1.getBlock()) && iblockstate1.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP;
+      return flag1 ? (side == EnumFacing.DOWN ? true : (side == EnumFacing.UP && super.shouldSideBeRendered(worldIn, pos, side) ? true : !isSlab(iblockstate.getBlock()) || !flag)) : (side == EnumFacing.UP ? true : (side == EnumFacing.DOWN && super.shouldSideBeRendered(worldIn, pos, side) ? true : !isSlab(iblockstate.getBlock()) || flag));
+    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  protected static boolean isSlab(Block b)
+  {
+    if(b instanceof BlockSlab)
+    {
+      return !((BlockSlab)b).isDouble();
     }
     return false;
   }
-  
+
   @Override
   public boolean canSilkHarvest()
   {
     return false;
   }
-  
-  private static boolean isBlockSingleSlab(Block b)
+    
+  @Override
+  public String getUnlocalizedName(int meta)
   {
-    if(b instanceof BlockSlab)
-    {
-      return !b.isOpaqueCube();
-    }
+    return this.getUnlocalizedName();
+  }
+
+  @Override
+  public boolean isDouble()
+  {
     return false;
   }
 
+  @Override
+  public IProperty getVariantProperty()
+  {
+    return VARIANT;
+  }
+
+  @Override
+  public Object getVariant(ItemStack stack)
+  {
+    return variants[stack.getMetadata()];
+  }
   
-  @SideOnly(Side.CLIENT)
   @Override
-  public boolean shouldSideBeRendered(IBlockAccess access, int x, int y, int z, int side)
+  protected BlockState createBlockState()
   {
-    if(field_150004_a)
-    {
-      return super.shouldSideBeRendered(access, x, y, z, side);
-    }
-    if(side != 1 && side != 0 && !super.shouldSideBeRendered(access, x, y, z, side))
-    {
-      return false;
-    }
-    {
-      int xx = x + Facing.offsetsXForSide[Facing.oppositeSide[side]];
-      int yy = y + Facing.offsetsYForSide[Facing.oppositeSide[side]];
-      int zz = z + Facing.offsetsZForSide[Facing.oppositeSide[side]];
-      boolean bottom = (access.getBlockMetadata(xx, yy, zz) & 8) != 0;
-      return bottom ? (side == 0 ? true : (side == 1 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlock(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) == 0)) : (side == 1 ? true : (side == 0 && super.shouldSideBeRendered(access, x, y, z, side) ? true : !isBlockSingleSlab(access.getBlock(x, y, z)) || (access.getBlockMetadata(x, y, z) & 8) != 0));
-    }
+    return new BlockState(this, new IProperty[] { HALF, VARIANT });
   }
 
   @Override
-  public String func_150002_b(int meta)
+  public IBlockState getStateFromMeta(int meta)
   {
-    return super.getUnlocalizedName() + "." + metals[meta];
+    return getDefaultState()
+        .withProperty(VARIANT, variants[meta & 7])
+        .withProperty(HALF, ((meta >>> 3) & 1) == 1 ? EnumHalf.TOP : EnumHalf.BOTTOM);
   }
 
   @Override
-  public String[] GetSubNames()
+  public int getMetaFromState(IBlockState state)
   {
-    return metals;
+    Variant var = (Variant) state.getValue(VARIANT);
+    EnumHalf half = (EnumHalf) state.getValue(HALF);
+    return var.id << 3 | (half == EnumHalf.TOP ? 1 : 0);
   }
+
 }

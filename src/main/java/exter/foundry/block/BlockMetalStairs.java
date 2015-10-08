@@ -1,16 +1,16 @@
 package exter.foundry.block;
 
 import exter.foundry.creativetab.FoundryTabBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.state.IBlockState;
 
 
-public class BlockStairsFoundry extends BlockStairs
+public class BlockMetalStairs extends BlockStairs
 {
   // Make BlockStairs's constructor accessible.
-  public BlockStairsFoundry( Block par2Block, int par3)
+  public BlockMetalStairs(IBlockState modelState)
   {
-    super( par2Block, par3);
+    super(modelState);
     setCreativeTab(FoundryTabBlocks.tab);
     useNeighborBrightness = true;
   }

@@ -97,37 +97,37 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_ICF:
       {
         TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getTileEntity(pos);
-        return new GuiInductionCrucibleFurnace(te,player.inventory);
+        return new GuiInductionCrucibleFurnace(te,player);
       }
       case GUI_CASTER:
       {
         TileEntityMetalCaster te = (TileEntityMetalCaster)world.getTileEntity(pos);
-        return new GuiMetalCaster(te,player.inventory);
+        return new GuiMetalCaster(te,player);
       }
       case GUI_ALLOYMIXER:
       {
         TileEntityAlloyMixer te = (TileEntityAlloyMixer)world.getTileEntity(pos);
-        return new GuiAlloyMixer(te,player.inventory);
+        return new GuiAlloyMixer(te,player);
       }
       case GUI_INFUSER:
       {
         TileEntityMetalInfuser te = (TileEntityMetalInfuser)world.getTileEntity(pos);
-        return new GuiMetalInfuser(te,player.inventory);
+        return new GuiMetalInfuser(te,player);
       }
       case GUI_ALLOYFURNACE:
       {
         TileEntityAlloyFurnace te = (TileEntityAlloyFurnace)world.getTileEntity(pos);
-        return new GuiAlloyFurnace(te,player.inventory);
+        return new GuiAlloyFurnace(te,player);
       }
       case GUI_MATERIALROUTER:
       {
         TileEntityMaterialRouter te = (TileEntityMaterialRouter)world.getTileEntity(pos);
-        return new GuiMaterialRouter(te,player.inventory);
+        return new GuiMaterialRouter(te,player);
       }
       case GUI_REFRACTORYHOPPER:
       {
         TileEntityRefractoryHopper te = (TileEntityRefractoryHopper)world.getTileEntity(pos);
-        return new GuiRefractoryHopper(te,player.inventory);
+        return new GuiRefractoryHopper(te,player);
       }
       case GUI_REVOLVER:
       {
@@ -140,7 +140,7 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_ATOMIZER:
       {
         TileEntityMetalAtomizer te = (TileEntityMetalAtomizer)world.getTileEntity(pos);
-        return new GuiMetalAtomizer(te,player.inventory);
+        return new GuiMetalAtomizer(te,player);
       }
     } 
     return null;

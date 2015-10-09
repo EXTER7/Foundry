@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
 
 @SideOnly(Side.CLIENT)
 public class GuiAlloyMixer extends GuiFoundry
@@ -35,9 +35,9 @@ public class GuiAlloyMixer extends GuiFoundry
   private TileEntityAlloyMixer te_alloymixer;
   private GuiButtonFoundry button_mode;
 
-  public GuiAlloyMixer(TileEntityAlloyMixer am, IInventory player_inv)
+  public GuiAlloyMixer(TileEntityAlloyMixer am, EntityPlayer player)
   {
-    super(new ContainerAlloyMixer(am, player_inv));
+    super(new ContainerAlloyMixer(am, player));
     allowUserInput = false;
     ySize = 209;
     te_alloymixer = am;
@@ -63,7 +63,7 @@ public class GuiAlloyMixer extends GuiFoundry
     int i;
     for(i = 0; i < 5; i++)
     {
-      if(func_146978_c/*isPointInRegion*/(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+      if(isPointInRegion(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
         List<String> currenttip = new ArrayList<String>();
         AddTankTooltip(currenttip,mousex, mousey, te_alloymixer.GetTank(i));
@@ -71,7 +71,7 @@ public class GuiAlloyMixer extends GuiFoundry
       }
     }
     
-    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       switch(te_alloymixer.GetMode())

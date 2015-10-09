@@ -1,5 +1,6 @@
 package exter.foundry.registry;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 
 public class ColoredFluid extends Fluid
@@ -7,9 +8,9 @@ public class ColoredFluid extends Fluid
   
   private int color;
 
-  public ColoredFluid(String fluidName)
+  public ColoredFluid(String fluidName,ResourceLocation still,ResourceLocation flowing)
   {
-    super(fluidName);
+    super(fluidName,still, flowing);
     color = 0xFFFFFF;
   }
 

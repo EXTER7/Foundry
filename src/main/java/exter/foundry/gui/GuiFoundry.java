@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -127,9 +128,9 @@ public abstract class GuiFoundry extends GuiContainer
 
     TextureAtlasSprite liquid_icon = null;
     Fluid fluid = liquid.getFluid();
-    if(fluid != null && fluid.getStillIcon() != null)
+    if(fluid != null && fluid.getStill() != null)
     {
-      liquid_icon = fluid.getStillIcon();
+      liquid_icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill(liquid).toString());
     }
 
     int h = liquid.amount * tank_height / tank.getCapacity();

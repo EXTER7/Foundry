@@ -4,20 +4,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
+import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
@@ -65,7 +66,6 @@ public class FoundryRecipes
 
   static public void PreInit()
   {
-    int i;
     liquid_iron = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Iron", 1850, 15);
     liquid_gold = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Gold", 1350, 15);
     liquid_copper = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Copper", 1400, 15);
@@ -364,19 +364,15 @@ public class FoundryRecipes
     }
 
     //Metal stairs casting recipes
-    for(i = 0; i < FoundryBlocks.block_metal_stairs.length; i++)
+    for(Map.Entry<String, BlockStairs> e:FoundryBlocks.block_metal_stairs.entrySet())
     {
-      if(FoundryBlocks.block_metal_stairs[i] != null)
-      {
-        FoundryBlocks.MetalStair mr = FoundryBlocks.STAIRS_BLOCKS[i];
-        ItemStack stack = new ItemStack(FoundryBlocks.block_metal_stairs[i]);
+        ItemStack stack = new ItemStack(e.getValue());
         FluidStack fluid = new FluidStack(
-            LiquidMetalRegistry.instance.getFluid(mr.metal),
+            LiquidMetalRegistry.instance.getFluid(e.getKey()),
             FoundryAPI.FLUID_AMOUNT_BLOCK * 3 / 4);
         
         CastingRecipeManager.instance.addRecipe(stack, fluid, mold_stairs, null);
         MeltingRecipeManager.instance.addRecipe(stack, fluid);
-      }
     }
     
     if(FoundryConfig.recipe_steel_enable)
@@ -411,10 +407,10 @@ public class FoundryRecipes
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
       CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),mold_block,null,400);
       
-      for(i = 0; i < ItemDye.field_150921_b/*icon_names*/.length; i++)
+      for(EnumDyeColor dye:EnumDyeColor.values())
       {
-        String name = ItemDye.field_150921_b/*icon_names*/[i];
-        int color = ItemDye.field_150922_c/*colors*/[i];
+        String name = dye.getName();
+        int color = ItemDye.dyeColors[dye.getDyeDamage()];
         int c1 = 63 + (color & 0xFF) * 3 / 4;
         int c2 = 63 + ((color >> 8 ) & 0xFF) * 3 / 4;
         int c3 = 63 + ((color >> 16) & 0xFF) * 3 / 4;
@@ -422,12 +418,12 @@ public class FoundryRecipes
         
         Fluid liquid_glass_colored = LiquidMetalRegistry.instance.RegisterLiquidMetal("Glass." + name, temp, 12,"liquidGlass",fluid_color);
 
-        int meta = ~i & 15;
+        int meta = dye.getMetadata();
         MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),temp,250);
         MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(liquid_glass_colored,375),temp,250);
         CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),mold_block,null,400);
         
-        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[i], 25000);
+        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
         InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
       }
     }
@@ -567,7 +563,7 @@ public class FoundryRecipes
 
     GameRegistry.addShapelessRecipe(foundryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
-    FurnaceRecipes.smelting().func_151394_a/*addSmelting*/(
+    GameRegistry.addSmelting(
         FoundryItems.Component(ItemComponent.COMPONENT_REFRACTORYCLAY),
         refbrick_stack, 0.0f);
 
@@ -917,11 +913,12 @@ public class FoundryRecipes
     }
 
     //Ore -> ingot furnace recipes
-    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_COPPER,ItemIngot.INGOT_COPPER);
-    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_TIN,ItemIngot.INGOT_TIN);
-    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_ZINC,ItemIngot.INGOT_ZINC);
-    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_NICKEL,ItemIngot.INGOT_NICKEL);
-    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.ORE_SILVER,ItemIngot.INGOT_SILVER);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.COPPER,ItemIngot.INGOT_COPPER);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.TIN,ItemIngot.INGOT_TIN);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.ZINC,ItemIngot.INGOT_ZINC);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.NICKEL,ItemIngot.INGOT_NICKEL);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.SILVER,ItemIngot.INGOT_SILVER);
+    FoundryMiscUtils.RegisterOreSmelting(BlockFoundryOre.EnumOre.LEAD,ItemIngot.INGOT_LEAD);
     
     //Clay mold furnace recipes
     FoundryMiscUtils.RegisterMoldSmelting(ItemMold.MOLD_BLOCK_SOFT,ItemMold.MOLD_BLOCK);
@@ -991,7 +988,7 @@ public class FoundryRecipes
       }
     }
     
-    for(Object obj:FurnaceRecipes.smelting().getSmeltingList().entrySet())
+    for(Object obj:FurnaceRecipes.instance().getSmeltingList().entrySet())
     {
       @SuppressWarnings("unchecked")
       Map.Entry<Object, ItemStack> entry = (Map.Entry<Object, ItemStack>)obj;

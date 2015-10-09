@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
@@ -58,9 +58,9 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   private TileEntityInductionCrucibleFurnace te_icf;
   private GuiButtonFoundry button_mode;
 
-  public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, IInventory player_inv)
+  public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, EntityPlayer player)
   {
-    super(new ContainerInductionCrucibleFurnace(ms, player_inv));
+    super(new ContainerInductionCrucibleFurnace(ms, player));
     allowUserInput = false;
     ySize = 166;
     te_icf = ms;
@@ -115,14 +115,14 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
 
     //Draw tool tips.
 
-    if(func_146978_c/*isPointInRegion*/(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_icf.GetTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
+    if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       int heat = te_icf.GetHeat() / 100;
@@ -134,7 +134,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       }
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
-    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       switch(te_icf.GetMode())

@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
 public class BlockFoundryOre extends Block
@@ -74,12 +75,6 @@ public class BlockFoundryOre extends Block
 
   public static final PropertyEnum VARIANT = PropertyEnum.create("ore", EnumOre.class);
 
-  @Override
-  protected BlockState createBlockState()
-  {
-    return new BlockState(this, new IProperty[] { VARIANT });
-  }
-  
   public BlockFoundryOre()
   {
     super(Material.rock);
@@ -89,6 +84,24 @@ public class BlockFoundryOre extends Block
     setUnlocalizedName("ore");
     setCreativeTab(FoundryTabMaterials.tab);
     setHarvestLevel("pickaxe", 1);
+  }
+
+  @Override
+  protected BlockState createBlockState()
+  {
+    return new BlockState(this, new IProperty[] { VARIANT });
+  }
+
+  @Override
+  public IBlockState getStateFromMeta(int meta)
+  {
+    return getDefaultState().withProperty(VARIANT, EnumMachine.fromID(meta));
+  }
+
+  @Override
+  public int getMetaFromState(IBlockState state)
+  {
+    return ((EnumMachine)state.getValue(VARIANT)).id;
   }
 
   @Override
@@ -106,5 +119,15 @@ public class BlockFoundryOre extends Block
     {
       list.add(new ItemStack(item, 1, ore.id));
     }
+  }
+  
+  public ItemStack asItemStack(EnumOre ore)
+  {
+    return new ItemStack(this,1,ore.id);
+  }
+
+  public IBlockState asState(EnumOre ore)
+  {
+    return getDefaultState().withProperty(VARIANT, ore);
   }
 }

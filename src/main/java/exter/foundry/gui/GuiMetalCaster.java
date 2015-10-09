@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
@@ -54,9 +54,9 @@ public class GuiMetalCaster extends GuiFoundry
   private TileEntityMetalCaster te_caster;
   private GuiButtonFoundry button_mode;
 
-  public GuiMetalCaster(TileEntityMetalCaster cs, IInventory player_inv)
+  public GuiMetalCaster(TileEntityMetalCaster cs, EntityPlayer player)
   {
-    super(new ContainerMetalCaster(cs, player_inv));
+    super(new ContainerMetalCaster(cs, player));
     allowUserInput = false;
     ySize = 166;
     te_caster = cs;
@@ -101,14 +101,14 @@ public class GuiMetalCaster extends GuiFoundry
   {
     super.drawScreen(mousex, mousey, par3);
 
-    if(func_146978_c/*isPointInRegion*/(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_caster.GetTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
     
-    if(func_146978_c/*isPointInRegion*/(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
+    if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       int power = te_caster.getStoredFoundryEnergy();
@@ -117,7 +117,7 @@ public class GuiMetalCaster extends GuiFoundry
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       switch(te_caster.GetMode())

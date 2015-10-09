@@ -1,8 +1,8 @@
 package exter.foundry.recipes;
 
 import net.minecraft.util.ResourceLocation;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 
 /**

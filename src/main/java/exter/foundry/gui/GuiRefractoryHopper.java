@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
@@ -27,9 +27,9 @@ public class GuiRefractoryHopper extends GuiFoundry
 
   private TileEntityRefractoryHopper te_hopper;
 
-  public GuiRefractoryHopper(TileEntityRefractoryHopper hopper, IInventory player_inv)
+  public GuiRefractoryHopper(TileEntityRefractoryHopper hopper, EntityPlayer player)
   {
-    super(new ContainerRefractoryHopper(hopper, player_inv));
+    super(new ContainerRefractoryHopper(hopper, player));
     allowUserInput = false;
     ySize = 165;
     te_hopper = hopper;
@@ -52,7 +52,7 @@ public class GuiRefractoryHopper extends GuiFoundry
     int i;
     for(i = 0; i < 5; i++)
     {
-      if(func_146978_c/*isPointInRegion*/(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+      if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
         List<String> currenttip = new ArrayList<String>();
         AddTankTooltip(currenttip,mousex, mousey, te_hopper.GetTank(i));

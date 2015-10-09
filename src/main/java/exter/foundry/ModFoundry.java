@@ -192,27 +192,27 @@ public class ModFoundry
 
     if(FoundryConfig.worldgen_copper)
     {
-      WordGenOre.RegisterOre(16, 80, 12, FoundryBlocks.block_ore, BlockFoundryOre.ORE_COPPER);
+      WordGenOre.RegisterOre(16, 80, 12, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.COPPER));
     }
     if(FoundryConfig.worldgen_tin)
     {
-      WordGenOre.RegisterOre(16, 52, 8, FoundryBlocks.block_ore, BlockFoundryOre.ORE_TIN);
+      WordGenOre.RegisterOre(16, 52, 8, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.TIN));
     }
     if(FoundryConfig.worldgen_zinc)
     {
-      WordGenOre.RegisterOre(8, 48, 6, FoundryBlocks.block_ore, BlockFoundryOre.ORE_ZINC);
+      WordGenOre.RegisterOre(8, 48, 6, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.ZINC));
     }
     if(FoundryConfig.worldgen_nickel)
     {
-      WordGenOre.RegisterOre(8, 36, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_NICKEL);
+      WordGenOre.RegisterOre(8, 36, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.NICKEL));
     }
     if(FoundryConfig.worldgen_silver)
     {
-      WordGenOre.RegisterOre(2, 30, 3, FoundryBlocks.block_ore, BlockFoundryOre.ORE_SILVER);
+      WordGenOre.RegisterOre(2, 30, 3, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.SILVER));
     }
     if(FoundryConfig.worldgen_lead)
     {
-      WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_LEAD);
+      WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.LEAD));
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
 

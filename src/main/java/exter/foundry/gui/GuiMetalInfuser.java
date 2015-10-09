@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
@@ -14,7 +14,7 @@ import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
@@ -48,9 +48,9 @@ public class GuiMetalInfuser extends GuiFoundry
 
   private TileEntityMetalInfuser te_infuser;
 
-  public GuiMetalInfuser(TileEntityMetalInfuser inf, IInventory player_inv)
+  public GuiMetalInfuser(TileEntityMetalInfuser inf, EntityPlayer player)
   {
-    super(new ContainerMetalInfuser(inf, player_inv));
+    super(new ContainerMetalInfuser(inf, player));
     allowUserInput = false;
     ySize = 209;
     te_infuser = inf;
@@ -103,21 +103,21 @@ public class GuiMetalInfuser extends GuiFoundry
   public void drawScreen(int mousex, int mousey, float par3)
   {
     super.drawScreen(mousex, mousey, par3);
-    if(func_146978_c/*isPointInRegion*/(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_infuser.GetTank(TileEntityMetalInfuser.TANK_INPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_infuser.GetTank(TileEntityMetalInfuser.TANK_OUTPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mousex, mousey))
+    if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mousex, mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       InfuserSubstance sub = te_infuser.GetSubstance();

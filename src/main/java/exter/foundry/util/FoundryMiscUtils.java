@@ -3,6 +3,7 @@ package exter.foundry.util;
 import java.util.List;
 
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
@@ -48,10 +49,10 @@ public class FoundryMiscUtils
         new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
   }
 
-  static public void RegisterOreSmelting(int ore,int ingot)
+  static public void RegisterOreSmelting(BlockFoundryOre.EnumOre ore,int ingot)
   {
     GameRegistry.addSmelting(
-        new ItemStack(FoundryBlocks.block_ore, 1, ore),
+        FoundryBlocks.block_ore.asItemStack(ore),
         new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 

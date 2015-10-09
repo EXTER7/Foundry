@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderGenerate;
@@ -15,45 +20,43 @@ public class WordGenOre
 {
   static private List<WordGenOre> ores = new ArrayList<WordGenOre>();
   
-  public final int MinY;
-  public final int MaxY;
+  public final int min_y;
+  public final int max_y;
 
-  public final int Frequency;
+  public final int frequency;
 
-  public final Block BlockObj;
-  public final int BlockMeta;
+  public final IBlockState block;
   
   
   private WorldGenMinable wgm;
   
-  private WordGenOre(int min_y,int max_y,int freq,Block block,int block_meta)
+  private WordGenOre(int min,int max,int freq,IBlockState state)
   {
-    if(min_y < max_y)
+    if(min < max)
     {
-      MinY = min_y;
-      MaxY = max_y;
+      min_y = min;
+      max_y = max;
     } else
     {
-      MinY = max_y;
-      MaxY = min_y;
+      min_y = max;
+      max_y = min;
     }
 
-    Frequency = freq;
+    frequency = freq;
 
-    BlockObj = block;
-    BlockMeta = block_meta;
-    wgm = new WorldGenMinable(BlockObj, BlockMeta, 7, Blocks.stone);
+    block = state;
+    wgm = new WorldGenMinable(state, 7);
   }
 
   private void GenerateOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
   {
     int i;
-    for(i = 0; i < Frequency; i++)
+    for(i = 0; i < frequency; i++)
     {
       int x = chunkX * 16 + random.nextInt(16);
-      int y = MinY + random.nextInt(MaxY - MinY);
+      int y = min_y + random.nextInt(max_y - min_y);
       int z = chunkZ * 16 + random.nextInt(16);
-      wgm.generate(world, random, x, y, z);
+      wgm.generate(world, random, new BlockPos(x,y,z));
     }
   }
   
@@ -69,8 +72,8 @@ public class WordGenOre
     }
   }
     
-  static public void RegisterOre(int min_y,int max_y,int freq,Block block,int block_meta)
+  static public void RegisterOre(int min_y,int max_y,int freq,IBlockState state)
   {
-    ores.add(new WordGenOre(min_y,max_y,freq,block,block_meta));
+    ores.add(new WordGenOre(min_y,max_y,freq,state));
   }
 }

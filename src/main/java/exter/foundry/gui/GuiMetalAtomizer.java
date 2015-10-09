@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
@@ -57,9 +57,9 @@ public class GuiMetalAtomizer extends GuiFoundry
   private TileEntityMetalAtomizer te_atomizer;
   private GuiButtonFoundry button_mode;
 
-  public GuiMetalAtomizer(TileEntityMetalAtomizer at, IInventory player_inv)
+  public GuiMetalAtomizer(TileEntityMetalAtomizer at, EntityPlayer player)
   {
-    super(new ContainerMetalAtomizer(at, player_inv));
+    super(new ContainerMetalAtomizer(at, player));
     allowUserInput = false;
     ySize = 166;
     te_atomizer = at;
@@ -105,21 +105,21 @@ public class GuiMetalAtomizer extends GuiFoundry
   {
     super.drawScreen(mousex, mousey, par3);
 
-    if(func_146978_c/*isPointInRegion*/(TANK_INPUT_X,TANK_INPUT_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(TANK_INPUT_X,TANK_INPUT_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_INPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(TANK_WATER_X,TANK_WATER_Y,16,TANK_HEIGHT,mousex,mousey))
+    if(isPointInRegion(TANK_WATER_X,TANK_WATER_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       AddTankTooltip(currenttip, mousex, mousey, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_WATER));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
+    if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       int power = te_atomizer.getStoredFoundryEnergy();
@@ -128,7 +128,7 @@ public class GuiMetalAtomizer extends GuiFoundry
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(func_146978_c/*isPointInRegion*/(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       switch(te_atomizer.GetMode())

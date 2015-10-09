@@ -1,19 +1,20 @@
 package exter.foundry.gui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMaterialRouter;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
@@ -144,9 +145,9 @@ public class GuiMaterialRouter extends GuiFoundry
     }
   }
 
-  public GuiMaterialRouter(TileEntityMaterialRouter router, IInventory player_inv)
+  public GuiMaterialRouter(TileEntityMaterialRouter router, EntityPlayer player)
   {
-    super(new ContainerMaterialRouter(router, player_inv));
+    super(new ContainerMaterialRouter(router, player));
     allowUserInput = false;
     xSize = 200;
     ySize = 229;
@@ -197,7 +198,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = material_slots.get(index);
-      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,mousex,mousey))
+      if(isPointInRegion(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,mousex,mousey))
       {
         slot.DrawTooltip(mousex,mousey);
       }
@@ -211,7 +212,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = type_slots.get(index);
-      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,mousex,mousey))
+      if(isPointInRegion(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,mousex,mousey))
       {
         slot.DrawTooltip(mousex,mousey);
       }
@@ -229,19 +230,19 @@ public class GuiMaterialRouter extends GuiFoundry
       
       TileEntityMaterialRouter.Route r = routes.get(index);
       int y = 49 + i * 17;
-      if(func_146978_c/*isPointInRegion*/(29,y,16,16,mousex,mousey))
+      if(isPointInRegion(29,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add(StatCollector.translateToLocal("router.material." + r.material));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
-      if(func_146978_c/*isPointInRegion*/(46,y,16,16,mousex,mousey))
+      if(isPointInRegion(46,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add(StatCollector.translateToLocal("router.type." + r.type));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
-      if(func_146978_c/*isPointInRegion*/(81,y + 4,8,8,mousex,mousey))
+      if(isPointInRegion(81,y + 4,8,8,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add("Remove");
@@ -343,7 +344,7 @@ public class GuiMaterialRouter extends GuiFoundry
 
   }
   @Override
-  protected void mouseClicked(int x, int y, int par3)
+  protected void mouseClicked(int x, int y, int par3) throws IOException
   {
     super.mouseClicked(x, y, par3);
 
@@ -356,7 +357,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = material_slots.get(index);
-      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,x,y))
+      if(isPointInRegion(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,x,y))
       {
         slot.OnClick();
         return;
@@ -371,7 +372,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = type_slots.get(index);
-      if(func_146978_c/*isPointInRegion*/(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,x,y))
+      if(isPointInRegion(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,x,y))
       {
         slot.OnClick();
         return;
@@ -387,7 +388,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       
-      if(func_146978_c/*isPointInRegion*/(81,49 + i * 17 + 4,8,8,x,y))
+      if(isPointInRegion(81,49 + i * 17 + 4,8,8,x,y))
       {
         routes.remove(index);
         te_router.SyncRoutes();

@@ -1,13 +1,16 @@
 package exter.foundry.gui;
 
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
 
 import org.lwjgl.opengl.GL11;
 
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 
+@SideOnly(Side.CLIENT)
 public class GuiAlloyFurnace extends GuiFoundry
 {
 
@@ -32,9 +35,9 @@ public class GuiAlloyFurnace extends GuiFoundry
 
   private TileEntityAlloyFurnace te_af;
 
-  public GuiAlloyFurnace(TileEntityAlloyFurnace af, IInventory player_inventory)
+  public GuiAlloyFurnace(TileEntityAlloyFurnace af, EntityPlayer player)
   {
-    super(new ContainerAlloyFurnace(af, player_inventory));
+    super(new ContainerAlloyFurnace(af, player));
     allowUserInput = false;
     ySize = 166;
     te_af = af;

@@ -5,15 +5,16 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import exter.foundry.ModFoundry;
 import exter.foundry.material.MaterialRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class TileEntityMaterialRouter extends TileEntityFoundry implements ISidedInventory
 {
@@ -204,31 +205,13 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  public String getInventoryName()
-  {
-    return "Material Router";
-  }
-
-  @Override
   public int getInventoryStackLimit()
   {
     return 64;
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
-  }
-
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return true;
-  }
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
     if(FMLCommonHandler.instance().getEffectiveSide().isServer())
     {
@@ -237,7 +220,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     if(FMLCommonHandler.instance().getEffectiveSide().isServer())
     {
@@ -412,21 +395,21 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   private static int[][] SIDE_SLOTS = { { 0, 1, 2, SLOT_OUTPUT }, { 0, 1, 2, SLOT_OUTPUT + 1 }, { 0, 1, 2, SLOT_OUTPUT + 2 }, { 0, 1, 2, SLOT_OUTPUT + 3 }, { 0, 1, 2, SLOT_OUTPUT + 4 }, { 0, 1, 2, SLOT_OUTPUT + 5 } };
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
-    return SIDE_SLOTS[side];
+    return SIDE_SLOTS[side.getIndex()];
   }
 
   @Override
-  public boolean canInsertItem(int slot, ItemStack item, int side)
+  public boolean canInsertItem(int slot, ItemStack item, EnumFacing side)
   {
     return slot < SLOT_OUTPUT;
   }
 
   @Override
-  public boolean canExtractItem(int slot, ItemStack item, int side)
+  public boolean canExtractItem(int slot, ItemStack item, EnumFacing side)
   {
-    return slot == SLOT_OUTPUT + side;
+    return slot == SLOT_OUTPUT + side.getIndex();
   }
 
   public List<Route> GetRoutes()

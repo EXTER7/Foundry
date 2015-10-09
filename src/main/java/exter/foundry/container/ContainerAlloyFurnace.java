@@ -2,7 +2,6 @@ package exter.foundry.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -28,10 +27,10 @@ public class ContainerAlloyFurnace extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 142;
 
-  public ContainerAlloyFurnace(TileEntityAlloyFurnace furnace, IInventory player_inventory)
+  public ContainerAlloyFurnace(TileEntityAlloyFurnace furnace, EntityPlayer player)
   {
     te_alloyfurnace = furnace;
-    te_alloyfurnace.openInventory();
+    te_alloyfurnace.openInventory(player);
     int i,j;
 
     
@@ -45,12 +44,12 @@ public class ContainerAlloyFurnace extends Container
     {
       for(j = 0; j < 9; ++j)
       {
-        addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
+        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
       }
     }
     for(i = 0; i < 9; ++i)
     {
-      addSlotToContainer(new Slot(player_inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
+      addSlotToContainer(new Slot(player.inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
     }
   }
 
@@ -113,9 +112,9 @@ public class ContainerAlloyFurnace extends Container
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer par1EntityPlayer)
+  public void onContainerClosed(EntityPlayer player)
   {
-    super.onContainerClosed(par1EntityPlayer);
-    te_alloyfurnace.closeInventory();
+    super.onContainerClosed(player);
+    te_alloyfurnace.closeInventory(player);
   }
 }

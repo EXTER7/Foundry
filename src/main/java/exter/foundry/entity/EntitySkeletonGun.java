@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntitySkeletonGun extends EntitySkeleton
@@ -62,7 +63,7 @@ public class EntitySkeletonGun extends EntitySkeleton
   @Override
   public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
   {
-    float damage = (float)this.worldObj.difficultySetting.getDifficultyId() * 0.1f + 0.7f;
+    float damage = (float)this.worldObj.getDifficulty().getDifficultyId() * 0.1f + 0.7f;
     if(getHeldItem().getItem() == FoundryItems.item_shotgun)
     {
       if(!worldObj.isRemote)
@@ -92,9 +93,9 @@ public class EntitySkeletonGun extends EntitySkeleton
   }
 
   @Override
-  protected void addRandomArmor()
+  protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
   {
-    super.addRandomArmor();
+    super.setEquipmentBasedOnDifficulty(difficulty);
     SetGun();
   }
 
@@ -138,12 +139,6 @@ public class EntitySkeletonGun extends EntitySkeleton
   }
 
   @Override
-  protected void dropRareDrop(int p_70600_1_)
-  {
-
-  }
-
-  @Override
   public void setSkeletonType(int type)
   {
     super.setSkeletonType(0);
@@ -156,14 +151,14 @@ public class EntitySkeletonGun extends EntitySkeleton
   }
 
   @Override
-  public IEntityLivingData onSpawnWithEgg(IEntityLivingData data)
+  public IEntityLivingData onSpawnFirstTime(DifficultyInstance difficulty, IEntityLivingData livingdata)
   {
     getEntityAttribute(SharedMonsterAttributes.followRange).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05D, 1));
 
-    addRandomArmor();
-    enchantEquipment();
+    setEquipmentBasedOnDifficulty(difficulty);
+    setEnchantmentBasedOnDifficulty(difficulty);
 
-    setCanPickUpLoot(this.rand.nextFloat() < 0.55F * worldObj.func_147462_b(posX, posY, posZ));
+    setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficulty.getClampedAdditionalDifficulty());
 
     if(getEquipmentInSlot(4) == null)
     {
@@ -175,6 +170,6 @@ public class EntitySkeletonGun extends EntitySkeleton
         equipmentDropChances[4] = 0.0F;
       }
     }
-    return data;
+    return livingdata;
   }
 }

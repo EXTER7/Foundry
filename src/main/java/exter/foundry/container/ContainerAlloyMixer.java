@@ -5,7 +5,6 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -28,10 +27,10 @@ public class ContainerAlloyMixer extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 185;
 
-  public ContainerAlloyMixer(TileEntityAlloyMixer mixer, IInventory player_inventory)
+  public ContainerAlloyMixer(TileEntityAlloyMixer mixer, EntityPlayer player)
   {
     te_alloymixer = mixer;
-    te_alloymixer.openInventory();
+    te_alloymixer.openInventory(player);
     int i,j;
 
     
@@ -51,12 +50,12 @@ public class ContainerAlloyMixer extends Container
     {
       for(j = 0; j < 9; ++j)
       {
-        addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
+        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
       }
     }
     for(i = 0; i < 9; ++i)
     {
-      addSlotToContainer(new Slot(player_inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
+      addSlotToContainer(new Slot(player.inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
     }
   }
 
@@ -112,10 +111,10 @@ public class ContainerAlloyMixer extends Container
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer par1EntityPlayer)
+  public void onContainerClosed(EntityPlayer player)
   {
-    super.onContainerClosed(par1EntityPlayer);
-    te_alloymixer.closeInventory();
+    super.onContainerClosed(player);
+    te_alloymixer.closeInventory(player);
   }
   
   @Override

@@ -1,6 +1,5 @@
 package exter.foundry.tileentity;
 
-import cpw.mods.fml.common.Optional;
 import io.netty.buffer.ByteBuf;
 import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
@@ -12,7 +11,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -257,26 +256,13 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
   
   @Override
-  public String getInventoryName()
-  {
-    return "Induction Crucible Furnace";
-  }
-
-  @Override
   public int getInventoryStackLimit()
   {
     return 64;
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
-  }
-
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -285,7 +271,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -307,12 +293,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   {
     return melt_point;
   }
-  
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
-  }
 
   static private final int[] INSERT_SLOTS = { INVENTORY_INPUT };
 
@@ -323,31 +303,31 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
     return INSERT_SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, int j)
+  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(i, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, int j)
+  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
   }
 
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     return 0;
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     if(resource.isFluidEqual(tank.getFluid()))
     {
@@ -357,25 +337,25 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return tank.drain(maxDrain, doDrain);
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
     return false;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -493,10 +473,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
     if(use_energy)
     {
-      if(GetStoredEnergy() > 0)
+      if(getStoredFoundryEnergy() > 0)
       {
         //Convert energy to heat
-        int energy = UseEnergy(ENERGY_USE, true);
+        int energy = useFoundryEnergy(ENERGY_USE, true);
         heat += energy * 6 / 25;
         if(heat > HEAT_MAX)
         {
@@ -545,10 +525,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     return 18000;
   }  
   
-  @Optional.Method(modid = "IC2")
-  @Override
-  public int getSinkTier()
-  {
-    return 2;
-  }
+//  @Optional.Method(modid = "IC2")
+//  @Override
+//  public int getSinkTier()
+//  {
+//    return 2;
+//  }
 }

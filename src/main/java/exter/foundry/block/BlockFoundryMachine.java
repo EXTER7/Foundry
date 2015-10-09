@@ -239,7 +239,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
 
     if(te != null)
     {
-      te.UpdateRedstone();
+      te.updateRedstone();
     }
   }
 

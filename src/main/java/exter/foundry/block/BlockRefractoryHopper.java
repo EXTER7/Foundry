@@ -35,19 +35,21 @@ public class BlockRefractoryHopper extends BlockContainer
 
   public enum EnumHopperFacing implements IStringSerializable
   {
-    NORTH(0, "north"),
-    SOUTH(1, "south"),
-    EAST(2, "east"),
-    WEST(3, "west"),
-    DOWN(4, "down");
+    NORTH(0, "north", EnumFacing.NORTH),
+    SOUTH(1, "south", EnumFacing.SOUTH),
+    EAST(2, "east", EnumFacing.WEST),
+    WEST(3, "west", EnumFacing.EAST),
+    DOWN(4, "down", EnumFacing.DOWN);
 
     public final int id;
     public final String name;
+    public final EnumFacing facing;
 
-    private EnumHopperFacing(int id, String name)
+    private EnumHopperFacing(int id, String name, EnumFacing target)
     {
       this.id = id;
       this.name = name;
+      this.facing = target;
     }
 
     @Override
@@ -173,7 +175,7 @@ public class BlockRefractoryHopper extends BlockContainer
 
     if(te != null)
     {
-      te.UpdateRedstone();
+      te.updateRedstone();
     }
   }
 

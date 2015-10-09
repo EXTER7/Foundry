@@ -1,26 +1,20 @@
 package exter.foundry.tileentity;
 
 
-import java.lang.reflect.InvocationTargetException;
 
 import cofh.api.energy.IEnergyReceiver;
-import ic2.api.energy.event.EnergyTileLoadEvent;
-import ic2.api.energy.event.EnergyTileUnloadEvent;
-import ic2.api.energy.tile.IEnergySink;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
+//import ic2.api.energy.event.EnergyTileLoadEvent;
+//import ic2.api.energy.event.EnergyTileUnloadEvent;
+//import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.common.Optional;
+import net.minecraft.util.EnumFacing;
 /**
  * Base class for all machines.
  */
-@Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2")
-public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyReceiver,IEnergySink
+//@Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2")
+public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyReceiver/*,IEnergySink*/
 {
-  private boolean added_enet;
+//  private boolean added_enet;
   protected boolean update_energy;
   protected boolean update_energy_tick;
   
@@ -32,7 +26,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     
     update_energy = false;
     update_energy_tick = true;
-    added_enet = false;
+//    added_enet = false;
   }
 
   static public int RATIO_RF = 10;
@@ -40,7 +34,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   
   private int energy_stored;
   
-  private int ReceiveEnergy(int en,boolean do_receive, boolean allow_overflow)
+  private int receiveFoundryEnergy(int en,boolean do_receive, boolean allow_overflow)
   {
     if(!allow_overflow)
     {
@@ -64,17 +58,17 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     return en;
   }
   
-  private int ReceiveRF(int rf,boolean do_receive)
+  private int receiveRF(int rf,boolean do_receive)
   {
-    return ReceiveEnergy(rf * RATIO_RF,do_receive,false) / RATIO_RF;
+    return receiveFoundryEnergy(rf * RATIO_RF,do_receive,false) / RATIO_RF;
   }
   
-  private double ReceiveEU(double eu,boolean do_receive)
-  {
-    return (double)ReceiveEnergy((int)(eu * RATIO_EU),do_receive,true) / RATIO_EU;
-  }
+//  private double receiveEU(double eu,boolean do_receive)
+//  {
+//    return (double)receiveFoundryEnergy((int)(eu * RATIO_EU),do_receive,true) / RATIO_EU;
+//  }
   
-  public int UseEnergy(int amount,boolean do_use)
+  public int useFoundryEnergy(int amount,boolean do_use)
   {
     if(amount > energy_stored)
     {
@@ -88,7 +82,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     return amount;
   }
   
-  public int GetStoredEnergy()
+  public int getStoredFoundryEnergy()
   {
     int capacity = GetEnergyCapacity();
     if(energy_stored > capacity)
@@ -123,36 +117,36 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     update_energy_tick = true;
   }
   
-  @Override
-  public void updateEntity()
-  {
-    if(!added_enet)
-    {
-      try
-      {
-        getClass().getMethod("LoadEnet").invoke(this);
-      } catch(IllegalAccessException e)
-      {
-        throw new RuntimeException(e);
-      } catch(IllegalArgumentException e)
-      {
-        throw new RuntimeException(e);
-      } catch(InvocationTargetException e)
-      {
-        throw new RuntimeException(e);
-      } catch(NoSuchMethodException e)
-      {
-        if(Loader.isModLoaded("IC2"))
-        {
-          throw new RuntimeException(e);
-        }
-      } catch(SecurityException e)
-      {
-        throw new RuntimeException(e);
-      }
-    }
-    super.updateEntity();
-  }
+//  @Override
+//  public void updateEntity()
+//  {
+//    if(!added_enet)
+//    {
+//      try
+//      {
+//        getClass().getMethod("LoadEnet").invoke(this);
+//      } catch(IllegalAccessException e)
+//      {
+//        throw new RuntimeException(e);
+//      } catch(IllegalArgumentException e)
+//      {
+//        throw new RuntimeException(e);
+//      } catch(InvocationTargetException e)
+//      {
+//        throw new RuntimeException(e);
+//      } catch(NoSuchMethodException e)
+//      {
+//        if(Loader.isModLoaded("IC2"))
+//        {
+//          throw new RuntimeException(e);
+//        }
+//      } catch(SecurityException e)
+//      {
+//        throw new RuntimeException(e);
+//      }
+//    }
+//    super.updateEntity();
+//  }
   
   private void UpdateEnergy()
   {
@@ -172,109 +166,109 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     }
   }
   
-  public void UpdateRedstone()
+  public void updateRedstone()
   {
-    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(getPos()) > 0;
   }
   
   @Override
-  public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
+  public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
   {
-    return ReceiveRF(maxReceive, !simulate);
+    return receiveRF(maxReceive, !simulate);
   }
 
   @Override
-  public boolean canConnectEnergy(ForgeDirection from)
+  public boolean canConnectEnergy(EnumFacing from)
   {
     return true;
   }
 
   @Override
-  public int getEnergyStored(ForgeDirection from)
+  public int getEnergyStored(EnumFacing from)
   {
-    return GetStoredEnergy() / RATIO_RF;
+    return getStoredFoundryEnergy() / RATIO_RF;
   }
 
   @Override
-  public int getMaxEnergyStored(ForgeDirection from)
+  public int getMaxEnergyStored(EnumFacing from)
   {
     return GetEnergyCapacity() / RATIO_RF;
   }
   
-  @Override
-  public void onChunkUnload()
-  {
-    try
-    {
-      getClass().getMethod("UnloadEnet").invoke(this);
-    } catch(IllegalAccessException e)
-    {
-      throw new RuntimeException(e);
-    } catch(IllegalArgumentException e)
-    {
-      throw new RuntimeException(e);
-    } catch(InvocationTargetException e)
-    {
-      throw new RuntimeException(e);
-    } catch(NoSuchMethodException e)
-    {
-      if(Loader.isModLoaded("IC2"))
-      {
-        throw new RuntimeException(e);
-      }
-    } catch(SecurityException e)
-    {
-      throw new RuntimeException(e);
-    }
-  }
+//  @Override
+//  public void onChunkUnload()
+//  {
+//    try
+//    {
+//      getClass().getMethod("UnloadEnet").invoke(this);
+//    } catch(IllegalAccessException e)
+//    {
+//      throw new RuntimeException(e);
+//    } catch(IllegalArgumentException e)
+//    {
+//      throw new RuntimeException(e);
+//    } catch(InvocationTargetException e)
+//    {
+//      throw new RuntimeException(e);
+//    } catch(NoSuchMethodException e)
+//    {
+//      if(Loader.isModLoaded("IC2"))
+//      {
+//        throw new RuntimeException(e);
+//      }
+//    } catch(SecurityException e)
+//    {
+//      throw new RuntimeException(e);
+//    }
+//  }
 
-  @Optional.Method(modid = "IC2")
-  public void UnloadEnet()
-  {
-    if(added_enet)
-    {
-      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
-      added_enet = false;
-    }
-  }
-  
-  @Optional.Method(modid = "IC2")
-  public void LoadEnet()
-  {
-    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient())
-    {
-      MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
-      added_enet = true;
-    }
-  }
-  
-  @Optional.Method(modid = "IC2")
-  @Override
-  public double getDemandedEnergy()
-  {
-    return (double)(GetEnergyCapacity() - GetStoredEnergy()) / RATIO_EU;
-  }
-
-  @Optional.Method(modid = "IC2")
-  @Override
-  public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage)
-  {
-    double use_amount = Math.max(Math.min(amount, getDemandedEnergy()), 0);
-
-    return amount - ReceiveEU(use_amount, true);
-  }
-
-  @Optional.Method(modid = "IC2")
-  @Override
-  public int getSinkTier()
-  {
-    return 1;
-  }
-  
-  @Optional.Method(modid = "IC2")
-  @Override
-  public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
-  {
-    return true;
-  }
+//  @Optional.Method(modid = "IC2")
+//  public void UnloadEnet()
+//  {
+//    if(added_enet)
+//    {
+//      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+//      added_enet = false;
+//    }
+//  }
+//  
+//  @Optional.Method(modid = "IC2")
+//  public void LoadEnet()
+//  {
+//    if(!added_enet && !FMLCommonHandler.instance().getEffectiveSide().isClient())
+//    {
+//      MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+//      added_enet = true;
+//    }
+//  }
+//  
+//  @Optional.Method(modid = "IC2")
+//  @Override
+//  public double getDemandedEnergy()
+//  {
+//    return (double)(GetEnergyCapacity() - GetStoredEnergy()) / RATIO_EU;
+//  }
+//
+//  @Optional.Method(modid = "IC2")
+//  @Override
+//  public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage)
+//  {
+//    double use_amount = Math.max(Math.min(amount, getDemandedEnergy()), 0);
+//
+//    return amount - ReceiveEU(use_amount, true);
+//  }
+//
+//  @Optional.Method(modid = "IC2")
+//  @Override
+//  public int getSinkTier()
+//  {
+//    return 1;
+//  }
+//  
+//  @Optional.Method(modid = "IC2")
+//  @Override
+//  public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction)
+//  {
+//    return true;
+//  }
 }

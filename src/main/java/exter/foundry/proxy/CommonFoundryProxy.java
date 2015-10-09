@@ -65,25 +65,25 @@ public class CommonFoundryProxy implements IGuiHandler
     switch(ID)
     {
       case GUI_ICF:
-        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getTileEntity(pos),player.inventory);
+        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getTileEntity(pos),player);
       case GUI_CASTER:
-        return new ContainerMetalCaster((TileEntityMetalCaster)world.getTileEntity(pos),player.inventory);
+        return new ContainerMetalCaster((TileEntityMetalCaster)world.getTileEntity(pos),player);
       case GUI_ALLOYMIXER:
-        return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getTileEntity(pos),player.inventory);
+        return new ContainerAlloyMixer((TileEntityAlloyMixer)world.getTileEntity(pos),player);
       case GUI_INFUSER:
-        return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getTileEntity(pos),player.inventory);
+        return new ContainerMetalInfuser((TileEntityMetalInfuser)world.getTileEntity(pos),player);
       case GUI_ALLOYFURNACE:
-        return new ContainerAlloyFurnace((TileEntityAlloyFurnace)world.getTileEntity(pos),player.inventory);
+        return new ContainerAlloyFurnace((TileEntityAlloyFurnace)world.getTileEntity(pos),player);
       case GUI_MATERIALROUTER:
-        return new ContainerMaterialRouter((TileEntityMaterialRouter)world.getTileEntity(pos),player.inventory);
+        return new ContainerMaterialRouter((TileEntityMaterialRouter)world.getTileEntity(pos),player);
       case GUI_REFRACTORYHOPPER:
-        return new ContainerRefractoryHopper((TileEntityRefractoryHopper)world.getTileEntity(pos),player.inventory);
+        return new ContainerRefractoryHopper((TileEntityRefractoryHopper)world.getTileEntity(pos),player);
       case GUI_REVOLVER:
         return new ContainerRevolver(player.getHeldItem(),player.inventory);
       case GUI_SHOTGUN:
         return new ContainerShotgun(player.getHeldItem(),player.inventory);
       case GUI_ATOMIZER:
-        return new ContainerMetalAtomizer((TileEntityMetalAtomizer)world.getTileEntity(pos),player.inventory);
+        return new ContainerMetalAtomizer((TileEntityMetalAtomizer)world.getTileEntity(pos),player);
     }
     return null;
   }
@@ -116,7 +116,7 @@ public class CommonFoundryProxy implements IGuiHandler
       }
       case GUI_ALLOYFURNACE:
       {
-        TileEntityAlloyFurnace te = (TileEntityAlloyFurnace)world.getTileEntity(x, y, z);
+        TileEntityAlloyFurnace te = (TileEntityAlloyFurnace)world.getTileEntity(pos);
         return new GuiAlloyFurnace(te,player.inventory);
       }
       case GUI_MATERIALROUTER:

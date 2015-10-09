@@ -1,6 +1,6 @@
 package exter.foundry.tileentity;
 
-import vazkii.botania.api.item.IExoflameHeatable;
+//import vazkii.botania.api.item.IExoflameHeatable;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
@@ -11,12 +11,12 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Optional;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
-@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
-public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory,IExoflameHeatable
+//@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
+public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory/*,IExoflameHeatable*/
 {
 
   public static final int SLOT_INPUT_A = 0;
@@ -113,18 +113,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  public String getInventoryName()
-  {
-    return "container.alloyfurnace";
-  }
-
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return true;
-  }
-
-  @Override
   public void readFromNBT(NBTTagCompound tag)
   {
     super.readFromNBT(tag);
@@ -146,7 +134,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockAlloyFurnace)getBlockType()).SetFurnaceState(worldObj, xCoord, yCoord, zCoord, burn_time > 0);
+        ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
       }
     }
   }
@@ -174,17 +162,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   @Override
   public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
   {
-    return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
+    return this.worldObj.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
   }
 
   @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
 
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
 
   }
@@ -203,31 +191,32 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
     switch(side)
     {
-      case 0:
+      case DOWN:
         return SLOTS_BOTTOM;
-      case 1:
+      case UP:
         return SLOTS_TOP;
+      default:
+        return SLOTS_SIDES;
     }
-    return SLOTS_SIDES;
   }
 
   /**
    * Returns true if automation can insert the given item in the given slot from
    * the given side. Args: Slot, item, side
    */
-  public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
+  public boolean canInsertItem(int par1, ItemStack par2ItemStack, EnumFacing side)
   {
     return this.isItemValidForSlot(par1, par2ItemStack);
   }
 
   @Override
-  public boolean canExtractItem(int slot, ItemStack stack, int side)
+  public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
   {
-    return side != 0 || slot != SLOT_INPUT_A || slot != SLOT_INPUT_B || stack.getItem() == Items.bucket;
+    return side != EnumFacing.UP || slot != SLOT_INPUT_A || slot != SLOT_INPUT_B || stack.getItem() == Items.bucket;
   }
 
   @Override
@@ -330,7 +319,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockAlloyFurnace)getBlockType()).SetFurnaceState(worldObj, xCoord, yCoord, zCoord, burn_time > 0);
+        ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
       }
       UpdateValue("BurnTime",burn_time);
     }
@@ -365,56 +354,57 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   }
 
-  @Optional.Method(modid = "Botania")
-  @Override
-  public boolean canSmelt()
-  {
-    if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
-    {
-      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
-      if(recipe == null)
-      {
-        recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
-      }
-      if(recipe == null)
-      {
-        return false;
-      }
-      ItemStack output = recipe.getOutput();
-      ItemStack inv_output = inventory[SLOT_OUTPUT];
-      if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
-      {
-        return false;
-      }
-      return true;
-    }
-    return false;
-  }
 
-  @Optional.Method(modid = "Botania")
-  @Override
-  public int getBurnTime()
-  {
-    return burn_time <= 1 ? 0 : burn_time - 1;
-  }
-
-  @Optional.Method(modid = "Botania")
-  @Override
-  public void boostBurnTime()
-  {
-    if(!worldObj.isRemote)
-    {
-      burn_time = 200;
-      item_burn_time = 199;
-      update_burn_times = true;
-      markDirty();
-    }
-  }
-
-  @Optional.Method(modid = "Botania")
-  @Override
-  public void boostCookTime()
-  {
-
-  }
+//  @Optional.Method(modid = "Botania")
+//  @Override
+//  public boolean canSmelt()
+//  {
+//    if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
+//    {
+//      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
+//      if(recipe == null)
+//      {
+//        recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
+//      }
+//      if(recipe == null)
+//      {
+//        return false;
+//      }
+//      ItemStack output = recipe.getOutput();
+//      ItemStack inv_output = inventory[SLOT_OUTPUT];
+//      if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
+//      {
+//        return false;
+//      }
+//      return true;
+//    }
+//    return false;
+//  }
+//
+//  @Optional.Method(modid = "Botania")
+//  @Override
+//  public int getBurnTime()
+//  {
+//    return burn_time <= 1 ? 0 : burn_time - 1;
+//  }
+//
+//  @Optional.Method(modid = "Botania")
+//  @Override
+//  public void boostBurnTime()
+//  {
+//    if(!worldObj.isRemote)
+//    {
+//      burn_time = 200;
+//      item_burn_time = 199;
+//      update_burn_times = true;
+//      markDirty();
+//    }
+//  }
+//
+//  @Optional.Method(modid = "Botania")
+//  @Override
+//  public void boostCookTime()
+//  {
+//
+//  }
 }

@@ -5,20 +5,15 @@ import java.util.List;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
-import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
-import exter.foundry.renderer.RendererItemContainer;
-import exter.foundry.renderer.RendererRefractoryHopper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ClientFoundryProxy extends CommonFoundryProxy
@@ -38,7 +33,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void Init()
   {
-    MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
+    //MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
     InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
     for(i = 0; i < 15; i++)

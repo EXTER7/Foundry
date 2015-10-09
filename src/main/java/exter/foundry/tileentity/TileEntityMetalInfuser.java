@@ -11,7 +11,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -224,32 +224,20 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public String getInventoryName()
-  {
-    return "Infuser";
-  }
-
-  @Override
   public int getInventoryStackLimit()
   {
     return 64;
   }
 
-  @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
-  }
-
 
   @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
 
   }  
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
 
   }
@@ -257,12 +245,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   public int GetProgress()
   {
     return progress;
-  }
-  
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
   }
 
   static private final int[] INSERT_SLOTS = { 0 };
@@ -275,31 +257,31 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
-    return side == 1?INSERT_SLOTS:EXTRACT_SLOTS;
+    return side == EnumFacing.UP?INSERT_SLOTS:EXTRACT_SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, int side)
+  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(slot, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, int side)
+  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == 0;
   }
 
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     return tanks[TANK_INPUT].fill(resource, doFill);
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     if(resource.isFluidEqual(tanks[TANK_OUTPUT].getFluid()))
     {
@@ -309,25 +291,25 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return tanks[TANK_OUTPUT].drain(maxDrain, doDrain);
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -376,9 +358,9 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       return;
     }
     extract_energy = current_substance_recipe.getEnergyNeeded();
-    if(GetStoredEnergy() > 0)
+    if(getStoredFoundryEnergy() > 0)
     {
-      int energy = UseEnergy(600, true);
+      int energy = useFoundryEnergy(600, true);
       progress += energy;
       if(progress >= extract_energy)
       {
@@ -406,7 +388,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     int last_progress = progress;
     int last_extract_time = extract_energy;
     
-    if(tanks[TANK_INPUT].getFluidAmount() > 0 && GetStoredEnergy() >= INFUSE_ENERGY_NEEDED)
+    if(tanks[TANK_INPUT].getFluidAmount() > 0 && getStoredFoundryEnergy() >= INFUSE_ENERGY_NEEDED)
     {
       IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
@@ -416,7 +398,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         {
           tanks[TANK_INPUT].drain(recipe.getInputFluid().amount, true);
           tanks[TANK_OUTPUT].fill(result,true);
-          UseEnergy(INFUSE_ENERGY_NEEDED, true);
+          useFoundryEnergy(INFUSE_ENERGY_NEEDED, true);
           substance.amount -= recipe.getInputSubstance().amount;
           if(substance.amount <= 0)
           {

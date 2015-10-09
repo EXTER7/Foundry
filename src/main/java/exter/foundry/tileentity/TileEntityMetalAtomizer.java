@@ -13,7 +13,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -254,13 +254,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     markDirty();
   }
 
-  
-  @Override
-  public String getInventoryName()
-  {
-    return "Atomizer";
-  }
-
   @Override
   public int getInventoryStackLimit()
   {
@@ -268,14 +261,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
-  }
-
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -284,7 +270,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -296,12 +282,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   {
     return progress;
   }
-  
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
-  }
 
   static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
 
@@ -312,25 +292,25 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
     return EXTRACT_SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, int side)
+  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(slot, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, int side)
+  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == INVENTORY_OUTPUT;
   }
 
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     if(resource != null && resource.getFluid() == FluidRegistry.WATER)
     {
@@ -340,7 +320,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     if(resource.isFluidEqual(tanks[TANK_INPUT].getFluid()))
     {
@@ -350,25 +330,25 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return tanks[TANK_INPUT].drain(maxDrain, doDrain);
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -397,9 +377,9 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   
   private void BeginAtomizing()
   {
-    if(current_recipe != null && CanAtomizeCurrentRecipe() && GetStoredEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && CanAtomizeCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
     {
-      UseEnergy(ENERGY_REQUIRED, true);
+      useFoundryEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }

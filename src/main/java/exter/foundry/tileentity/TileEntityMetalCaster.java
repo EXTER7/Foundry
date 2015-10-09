@@ -14,7 +14,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -235,13 +235,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     markDirty();
   }
 
-  
-  @Override
-  public String getInventoryName()
-  {
-    return "Caster";
-  }
-
   @Override
   public int getInventoryStackLimit()
   {
@@ -249,14 +242,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
-  }
-
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -265,7 +251,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -276,12 +262,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   public int GetProgress()
   {
     return progress;
-  }
-  
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
   }
 
   static private final int[] INSERT_SLOTS = { INVENTORY_EXTRA };
@@ -294,31 +274,31 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
-    return side == 1?INSERT_SLOTS:EXTRACT_SLOTS;
+    return side == EnumFacing.UP?INSERT_SLOTS:EXTRACT_SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, int side)
+  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(slot, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, int side)
+  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == INVENTORY_OUTPUT;
   }
 
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     return tank.fill(resource, doFill);
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     if(resource.isFluidEqual(tank.getFluid()))
     {
@@ -328,25 +308,25 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return tank.drain(maxDrain, doDrain);
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -375,9 +355,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   
   private void BeginCasting()
   {
-    if(current_recipe != null && CanCastCurrentRecipe() && GetStoredEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && CanCastCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
     {
-      UseEnergy(ENERGY_REQUIRED, true);
+      useFoundryEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }

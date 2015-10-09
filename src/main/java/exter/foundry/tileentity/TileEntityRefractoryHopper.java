@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import exter.foundry.block.BlockRefractoryHopper;
+import exter.foundry.block.BlockRefractoryHopper.EnumHopperFacing;
 import exter.foundry.container.ContainerRefractoryHopper;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +15,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -184,40 +185,23 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public String getInventoryName()
-  {
-    return "Refractory Hopper";
-  }
-
-  @Override
   public int getInventoryStackLimit()
   {
     return 64;
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
-  }
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
 
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
 
   }
 
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
-  }
 
   static private final int[] SLOTS = {};
 
@@ -228,27 +212,27 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
     return SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, int j)
+  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(i, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, int j)
+  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
   }
 
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
-    if(from != ForgeDirection.UP)
+    if(from != EnumFacing.UP)
     {
       return 0;
     }
@@ -260,31 +244,31 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     return null;
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return null;
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
-    return from == ForgeDirection.UP;
+    return from == EnumFacing.UP;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return false;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -305,7 +289,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       next_world_drain = 300;
 
 
-      FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord, yCoord + 1, zCoord, false);
+      FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add( 0, 1, 0), false);
 
       if(todrain != null && tank.fill(todrain, false) == todrain.amount)
       {
@@ -339,7 +323,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
               int y = (p / 41) % 20;
               int z = p / (41 * 20);
               
-              todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + y + 1, zCoord + z - 20, false);
+              todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add(x - 20, y + 1, z - 20), false);
               if(todrain != null && todrain.getFluid() == drainfluid && tank.fill(todrain, false) == todrain.amount)
               {
                 if(y > top_y)
@@ -379,7 +363,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
           int x = drainblock % 41;
           int z = drainblock / (41 * 20);
-          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, xCoord + x - 20, yCoord + top_y + 1, zCoord + z - 20, true);
+          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add(x - 20, top_y + 1, z - 20), true);
           tank.fill(todrain, true);
         }
       }
@@ -390,17 +374,17 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       next_drain = 12;
 
       // Drain from the top TileEntity
-      TileEntity source = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+      TileEntity source = worldObj.getTileEntity(getPos().add(0, 1, 0));
       if(source instanceof IFluidHandler)
       {
         IFluidHandler hsource = (IFluidHandler) source;
-        FluidStack drained = hsource.drain(ForgeDirection.DOWN, 40, false);
+        FluidStack drained = hsource.drain(EnumFacing.DOWN, 40, false);
         if(drained != null && !drained.getFluid().isGaseous(drained) && drained.getFluid().getDensity(drained) > 0)
         {
           drained.amount = tank.fill(drained, false);
           if(drained.amount > 0)
           {
-            hsource.drain(ForgeDirection.DOWN, drained, true);
+            hsource.drain(EnumFacing.DOWN, drained, true);
             tank.fill(drained, true);
             UpdateTank(0);
              markDirty();
@@ -416,11 +400,11 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       // Fill to the sides/bottom
       if(tank.getFluid() != null && tank.getFluid().amount > 0)
       {
-        ForgeDirection side = ForgeDirection.getOrientation(BlockRefractoryHopper.GetDirection(getBlockMetadata()));
-        TileEntity dest = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
-        side = side.getOpposite();
+        EnumFacing side = ((EnumHopperFacing)worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING)).facing;
+        TileEntity dest = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
         if(dest instanceof IFluidHandler)
         {
+          side = side.getOpposite();
           IFluidHandler hdest = (IFluidHandler) dest;
           if(hdest.canFill(side, tank.getFluid().getFluid()))
           {

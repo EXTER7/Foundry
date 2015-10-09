@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -14,17 +14,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IInventory
+public abstract class TileEntityFoundry extends TileEntity implements IUpdatePlayerListBox,IInventory
 {
   
   /**
@@ -143,7 +147,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
   {
     NBTTagCompound nbt = new NBTTagCompound();
     writeToNBT(nbt);    
-    return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbt);
+    return new S35PacketUpdateTileEntity(getPos(), 0, nbt);
   }
   
   
@@ -269,7 +273,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       {
         EntityPlayerMP player = (EntityPlayerMP) worldObj.playerEntities.get(j);
 
-        if(Math.abs(player.posX - xCoord) <= MAX_DISTANCE && Math.abs(player.posY - yCoord) <= MAX_DISTANCE && Math.abs(player.posZ - zCoord) <= MAX_DISTANCE && player.dimension == worldObj.provider.dimensionId)
+        BlockPos pos = getPos();
+        if(Math.abs(player.posX - pos.getX()) <= MAX_DISTANCE && Math.abs(player.posY - pos.getY()) <= MAX_DISTANCE && Math.abs(player.posZ - pos.getY()) <= MAX_DISTANCE && player.dimension == worldObj.provider.getDimensionId())
         {
           player.playerNetServerHandler.sendPacket(packet);
         }
@@ -325,11 +330,11 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
 
 
   @Override
-  public void updateEntity()
+  public void update()
   {
     if(!(initialized || isInvalid()))
     {
-      UpdateRedstone();
+      updateRedstone();
       OnInitialize();
       initialized = true;
     }
@@ -348,7 +353,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
       
       if(do_update)
       {
-        SendPacketToPlayers(new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, packet));
+        SendPacketToPlayers(new S35PacketUpdateTileEntity(getPos(), 0, packet));
       }
       packet = null;
     } else
@@ -364,18 +369,74 @@ public abstract class TileEntityFoundry extends TileEntity implements IInventory
     super.onDataPacket(net, pkt);
     if(FMLCommonHandler.instance().getEffectiveSide().isClient())
     {
-      readFromNBT(pkt.func_148857_g());
+      readFromNBT(pkt.getNbtCompound());
     }
     //worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
   }
     
-  public void UpdateRedstone()
+  public void updateRedstone()
   {
-    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(getPos()) > 0;
   }
     
   public void ReceivePacketData(ByteBuf data)
   {
     
   }
+  
+  @Override
+  public boolean isUseableByPlayer(EntityPlayer player)
+  {
+    return worldObj.getTileEntity(getPos()) != this ? false : player.getDistanceSq(getPos()) <= 64.0D;
+  }
+
+  @Override
+  public int getField(int id)
+  {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void setField(int id, int value)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public int getFieldCount()
+  {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void clear()
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public String getCommandSenderName()
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public boolean hasCustomName()
+  {
+    // TODO Auto-generated method stub
+    return false;
+  }
+
+  @Override
+  public IChatComponent getDisplayName()
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

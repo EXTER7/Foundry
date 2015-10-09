@@ -9,10 +9,11 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -49,8 +50,8 @@ public abstract class GuiFoundry extends GuiContainer
     {
       font = fontRendererObj;
     }
-    itemRender.renderItemAndEffectIntoGUI(font, mc.getTextureManager(), stack, x, y);
-    itemRender.renderItemOverlayIntoGUI(font, mc.getTextureManager(), stack, x, y, null);
+    itemRender.renderItemAndEffectIntoGUI(stack, x, y);
+    itemRender.renderItemOverlayIntoGUI(font, stack, x, y, null);
     zLevel = 0.0F;
     itemRender.zLevel = 0.0F;
     mc.renderEngine.bindTexture(this.GetGUITexture());
@@ -72,9 +73,9 @@ public abstract class GuiFoundry extends GuiContainer
    * @param icon_x X coordinate offset in the icon.
    * @param icon_y Y coordinate offset in the icon.
    */
-  private void drawTexturedModelRectFromIconPartial(int x, int y, IIcon icon, int width, int height,int icon_x,int icon_y, int color)
+  private void drawTexturedModelRectFromIconPartial(int x, int y, TextureAtlasSprite icon, int width, int height,int icon_x,int icon_y, int color)
   {
-      Tessellator tessellator = Tessellator.instance;
+    WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
       
       double min_u = icon.getInterpolatedU(icon_x);
       double min_v = icon.getInterpolatedV(icon_y);
@@ -87,7 +88,7 @@ public abstract class GuiFoundry extends GuiContainer
       tessellator.addVertexWithUV(x + width, y + height, zLevel, max_u, max_v);
       tessellator.addVertexWithUV(x + width, y, zLevel, max_u, min_v);
       tessellator.addVertexWithUV(x, y, zLevel, min_u, min_v);
-      tessellator.draw();
+      tessellator.finishDrawing();
   }
 
   protected void AddTankTooltip(List<String> tooltip, int x, int y, FluidTank tank)
@@ -124,7 +125,7 @@ public abstract class GuiFoundry extends GuiContainer
     }
     int start = 0;
 
-    IIcon liquid_icon = null;
+    TextureAtlasSprite liquid_icon = null;
     Fluid fluid = liquid.getFluid();
     if(fluid != null && fluid.getStillIcon() != null)
     {

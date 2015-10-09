@@ -8,7 +8,6 @@ import exter.foundry.tileentity.TileEntityMetalCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -35,10 +34,10 @@ public class ContainerMetalCaster extends Container
   private static final int SLOT_STORAGE_X = 116;
   private static final int SLOT_STORAGE_Y = 21;
 
-  public ContainerMetalCaster(TileEntityMetalCaster caster, IInventory player_inventory)
+  public ContainerMetalCaster(TileEntityMetalCaster caster, EntityPlayer player)
   {
     te_caster = caster;
-    te_caster.openInventory();
+    te_caster.openInventory(player);
     int i,j;
 
     addSlotToContainer(new SlotOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 86, 51));
@@ -59,12 +58,12 @@ public class ContainerMetalCaster extends Container
     {
       for(j = 0; j < 9; ++j)
       {
-        addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
+        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
       }
     }
     for(i = 0; i < 9; ++i)
     {
-      addSlotToContainer(new Slot(player_inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
+      addSlotToContainer(new Slot(player.inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
     }
   }
 
@@ -162,10 +161,10 @@ public class ContainerMetalCaster extends Container
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer par1EntityPlayer)
+  public void onContainerClosed(EntityPlayer player)
   {
-    super.onContainerClosed(par1EntityPlayer);
-    te_caster.closeInventory();
+    super.onContainerClosed(player);
+    te_caster.closeInventory(player);
   }
 
   @Override

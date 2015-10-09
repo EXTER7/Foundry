@@ -13,7 +13,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -284,26 +284,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   
   @Override
-  public String getInventoryName()
-  {
-    return "Alloy Mixer";
-  }
-
-  @Override
   public int getInventoryStackLimit()
   {
     return 64;
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer player)
-  {
-    return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64.0D;
-  }
-
-
-  @Override
-  public void openInventory()
+  public void openInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
@@ -312,18 +299,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public void closeInventory()
+  public void closeInventory(EntityPlayer player)
   {
     if(!worldObj.isRemote)
     {
       ModFoundry.network_channel.SendAlloyMixerModeToClients(this);
     }
-  }
-
-  @Override
-  public boolean hasCustomInventoryName()
-  {
-    return false;
   }
 
   static private final int[] SLOTS = { };
@@ -335,25 +316,25 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public int[] getAccessibleSlotsFromSide(int side)
+  public int[] getSlotsForFace(EnumFacing side)
   {
     return SLOTS;
   }
 
   @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, int j)
+  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing direction)
   {
     return isItemValidForSlot(i, itemstack);
   }
 
   @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, int j)
+  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing direction)
   {
     return false;
   }
   
   @Override
-  public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     int i;
     FluidTank empty = null;
@@ -391,7 +372,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
     if(resource.isFluidEqual(tanks[TANK_OUTPUT].getFluid()))
     {
@@ -401,25 +382,25 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
     return tanks[TANK_OUTPUT].drain(maxDrain, doDrain);
   }
 
   @Override
-  public boolean canFill(ForgeDirection from, Fluid fluid)
+  public boolean canFill(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public boolean canDrain(ForgeDirection from, Fluid fluid)
+  public boolean canDrain(EnumFacing from, Fluid fluid)
   {
     return true;
   }
 
   @Override
-  public FluidTankInfo[] getTankInfo(ForgeDirection from)
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
   {
     return tank_info;
   }
@@ -435,7 +416,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   private void MixAlloy()
   {
-    if(GetStoredEnergy() < 10)
+    if(getStoredFoundryEnergy() < 10)
     {
       return;
     }
@@ -492,11 +473,11 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         return;
       }
       int required_energy = 10 * output.amount;
-      if(UseEnergy(required_energy, false) < required_energy)
+      if(useFoundryEnergy(required_energy, false) < required_energy)
       {
         return;
       }
-      UseEnergy(required_energy, true);
+      useFoundryEnergy(required_energy, true);
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       UpdateTank(TANK_OUTPUT);

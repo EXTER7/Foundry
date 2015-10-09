@@ -91,7 +91,7 @@ public class GuiMetalAtomizer extends GuiFoundry
     }
 
     //Draw stored power bar.
-    int power = te_atomizer.GetStoredEnergy() * POWER_HEIGHT / te_atomizer.GetEnergyCapacity();
+    int power = te_atomizer.getStoredFoundryEnergy() * POWER_HEIGHT / te_atomizer.GetEnergyCapacity();
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
@@ -122,7 +122,7 @@ public class GuiMetalAtomizer extends GuiFoundry
     if(func_146978_c/*isPointInRegion*/(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      int power = te_atomizer.GetStoredEnergy();
+      int power = te_atomizer.getStoredFoundryEnergy();
       int  max_power = te_atomizer.GetEnergyCapacity();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);

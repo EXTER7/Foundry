@@ -5,7 +5,6 @@ import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -26,10 +25,10 @@ public class ContainerInductionCrucibleFurnace extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 142;
 
-  public ContainerInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace metalsmelter, IInventory player_inventory)
+  public ContainerInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace icf, EntityPlayer player)
   {
-    te_icf = metalsmelter;
-    te_icf.openInventory();
+    te_icf = icf;
+    te_icf.openInventory(player);
     int i,j;
 
     addSlotToContainer(new Slot(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_INPUT, 55, 23));
@@ -41,12 +40,12 @@ public class ContainerInductionCrucibleFurnace extends Container
     {
       for(j = 0; j < 9; ++j)
       {
-        addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
+        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, SLOT_INVENTORY_X + j * 18, SLOT_INVENTORY_Y + i * 18));
       }
     }
     for(i = 0; i < 9; ++i)
     {
-      addSlotToContainer(new Slot(player_inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
+      addSlotToContainer(new Slot(player.inventory, i, SLOT_HOTBAR_X + i * 18, SLOT_HOTBAR_Y));
     }
   }
 
@@ -102,10 +101,10 @@ public class ContainerInductionCrucibleFurnace extends Container
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer par1EntityPlayer)
+  public void onContainerClosed(EntityPlayer player)
   {
-    super.onContainerClosed(par1EntityPlayer);
-    te_icf.closeInventory();
+    super.onContainerClosed(player);
+    te_icf.closeInventory(player);
   }
   
 

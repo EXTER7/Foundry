@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures":
+  {
+    "bottom": "minecraft:blocks/gold_block",
+    "top": "minecraft:blocks/gold_block",
+    "side": "minecraft:blocks/gold_block"
+  }
+}

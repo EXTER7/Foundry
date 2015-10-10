@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockTin",
+    "top": "foundry:blocks/blockTin",
+    "side": "foundry:blocks/blockTin"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockZinc",
+    "top": "foundry:blocks/blockZinc",
+    "side": "foundry:blocks/blockZinc"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockInvar",
+    "top": "foundry:blocks/blockInvar",
+    "side": "foundry:blocks/blockInvar"
+  }
+}

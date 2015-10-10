@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockNickel",
+    "top": "foundry:blocks/blockNickel",
+    "side": "foundry:blocks/blockNickel"
+  }
+}

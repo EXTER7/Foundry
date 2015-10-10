@@ -1,6 +1,7 @@
 package exter.foundry.proxy;
 
 import java.util.List;
+import java.util.Map;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.block.BlockFoundryOre;
@@ -13,6 +14,7 @@ import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -20,6 +22,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -107,6 +110,16 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       ModelBakery.addVariantName(slab_item, name);
       Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
       .register(slab_item, FoundryBlocks.block_slab3.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+    }
+
+    for(Map.Entry<String, BlockStairs> e:FoundryBlocks.block_metal_stairs.entrySet())
+    {
+      BlockStairs block = e.getValue();
+      Item stairs_item = Item.getItemFromBlock(block);
+      String name = "foundry:stairs" + e.getKey();
+      ModelBakery.addVariantName(stairs_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(stairs_item, 0, new ModelResourceLocation(name, "inventory"));
     }
 
     ModIntegration.ClientInit();

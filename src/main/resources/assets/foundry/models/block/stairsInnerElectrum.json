@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockElectrum",
+    "top": "foundry:blocks/blockElectrum",
+    "side": "foundry:blocks/blockElectrum"
+  }
+}

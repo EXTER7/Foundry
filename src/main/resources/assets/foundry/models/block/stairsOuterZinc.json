@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockZinc",
+    "top": "foundry:blocks/blockZinc",
+    "side": "foundry:blocks/blockZinc"
+  }
+}

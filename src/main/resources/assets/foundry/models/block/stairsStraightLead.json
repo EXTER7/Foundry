@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures":
+  {
+    "bottom": "foundry:blocks/blockLead",
+    "top": "foundry:blocks/blockLead",
+    "side": "foundry:blocks/blockLead"
+  }
+}

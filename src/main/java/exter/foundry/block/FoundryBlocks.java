@@ -111,9 +111,9 @@ public class FoundryBlocks
 //    block_slab2.SetOtherBlock(block_slabdouble2);
 //    block_slab3.SetOtherBlock(block_slabdouble3);
 
-    GameRegistry.registerBlock(block_slab1, ItemBlockSlab.class, "slab1");
-    GameRegistry.registerBlock(block_slab2, ItemBlockSlab.class, "slab2");
-    GameRegistry.registerBlock(block_slab3, ItemBlockSlab.class, "slab3");
+    GameRegistry.registerBlock(block_slab1, ItemBlockSlab.class, "slabMetal1");
+    GameRegistry.registerBlock(block_slab2, ItemBlockSlab.class, "slabMetal2");
+    GameRegistry.registerBlock(block_slab3, ItemBlockSlab.class, "slabMetal3");
 //    GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
 //    GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
 //    GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
@@ -151,7 +151,7 @@ public class FoundryBlocks
 
     GameRegistry.registerBlock(block_refractory_casing, "casing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "machine");
-    GameRegistry.registerBlock(block_metal1, ItemBlockMulti.class, "blockMetal");
+    GameRegistry.registerBlock(block_metal1, ItemBlockMulti.class, "blockMetal1");
     GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "ore");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");

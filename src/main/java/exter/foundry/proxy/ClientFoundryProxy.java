@@ -3,6 +3,8 @@ package exter.foundry.proxy;
 import java.util.List;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import exter.foundry.block.BlockFoundryOre;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.material.MaterialRegistry;
@@ -11,6 +13,9 @@ import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -47,7 +52,15 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     RenderingRegistry.registerBlockHandler(hopper_renderer_id,new RendererRefractoryHopper());
     */
     RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));
-    
+
+    for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
+    {
+      Item ore_item = Item.getItemFromBlock(FoundryBlocks.block_ore);
+      String name = "foundry:" + ore.oredict_name;
+      ModelBakery.addVariantName(ore_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(ore_item, ore.id, new ModelResourceLocation(name, "inventory"));
+    }
     ModIntegration.ClientInit();
   }
 

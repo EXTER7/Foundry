@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/half_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockInvar",
+     "top": "foundry:blocks/blockInvar",
+     "side": "foundry:blocks/blockInvar"
+  }
+}

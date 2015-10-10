@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/upper_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockPlatinum",
+     "top": "foundry:blocks/blockPlatinum",
+     "side": "foundry:blocks/blockPlatinum"
+  }
+}

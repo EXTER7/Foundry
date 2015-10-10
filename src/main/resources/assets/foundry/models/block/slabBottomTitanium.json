@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/half_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockTitanium",
+     "top": "foundry:blocks/blockTitanium",
+     "side": "foundry:blocks/blockTitanium"
+  }
+}

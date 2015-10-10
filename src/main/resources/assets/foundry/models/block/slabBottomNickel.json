@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/half_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockNickel",
+     "top": "foundry:blocks/blockNickel",
+     "side": "foundry:blocks/blockNickel"
+  }
+}

@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/upper_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockElectrum",
+     "top": "foundry:blocks/blockElectrum",
+     "side": "foundry:blocks/blockElectrum"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants":
+  { 
+    "metal=cupronickel": { "model": "foundry:blockCupronickel"  }
+  }
+}
+

@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.block.BlockFoundryOre;
+import exter.foundry.block.BlockMetal;
+import exter.foundry.block.BlockMetalSlab;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
@@ -44,8 +46,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     for(i = 0; i < 15; i++)
     {
       InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
-    }
-    
+    }   
 
     /*
     hopper_renderer_id = RenderingRegistry.getNextAvailableRenderId();
@@ -61,6 +62,53 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
       .register(ore_item, ore.id, new ModelResourceLocation(name, "inventory"));
     }
+
+
+    for(BlockMetal.Variant v:FoundryBlocks.block_metal1.getVariants())
+    {
+      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_metal1);
+      String name = "foundry:block" + v.metal;
+      ModelBakery.addVariantName(slab_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
+    }
+
+    for(BlockMetal.Variant v:FoundryBlocks.block_metal2.getVariants())
+    {
+      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_metal2);
+      String name = "foundry:block" + v.metal;
+      ModelBakery.addVariantName(slab_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
+    }
+
+    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab1.getVariants())
+    {
+      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab1);
+      String name = "foundry:slab" + v.metal;
+      ModelBakery.addVariantName(slab_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(slab_item, FoundryBlocks.block_slab1.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+    }
+
+    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab2.getVariants())
+    {
+      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab2);
+      String name = "foundry:slab" + v.metal;
+      ModelBakery.addVariantName(slab_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(slab_item, FoundryBlocks.block_slab2.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+    }
+
+    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab3.getVariants())
+    {
+      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab3);
+      String name = "foundry:slab" + v.metal;
+      ModelBakery.addVariantName(slab_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(slab_item, FoundryBlocks.block_slab3.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+    }
+
     ModIntegration.ClientInit();
   }
 

@@ -1,0 +1,22 @@
+{
+  "variants":
+  {
+    "half=top,metal=iron": { "model": "foundry:slabTopIron" },
+    "half=top,metal=gold": { "model": "foundry:slabTopGold" },
+    "half=top,metal=copper": { "model": "foundry:slabTopCopper" },
+    "half=top,metal=tin": { "model": "foundry:slabTopTin" },
+    "half=top,metal=bronze": { "model": "foundry:slabTopBronze" },
+    "half=top,metal=electrum": { "model": "foundry:slabTopElectrum" },
+    "half=top,metal=invar": { "model": "foundry:slabTopInvar" },
+    "half=top,metal=nickel": { "model": "foundry:slabTopNickel" },
+    "half=bottom,metal=iron": { "model": "foundry:slabBottomIron" },
+    "half=bottom,metal=gold": { "model": "foundry:slabBottomGold" },
+    "half=bottom,metal=copper": { "model": "foundry:slabBottomCopper" },
+    "half=bottom,metal=tin": { "model": "foundry:slabBottomTin" },
+    "half=bottom,metal=bronze": { "model": "foundry:slabBottomBronze" },
+    "half=bottom,metal=electrum": { "model": "foundry:slabBottomElectrum" },
+    "half=bottom,metal=invar": { "model": "foundry:slabBottomInvar" },
+    "half=bottom,metal=nickel": { "model": "foundry:slabBottomNickel" }
+  }
+}
+

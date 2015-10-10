@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/upper_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockManganese",
+     "top": "foundry:blocks/blockManganese",
+     "side": "foundry:blocks/blockManganese"
+  }
+}

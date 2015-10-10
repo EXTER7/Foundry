@@ -20,24 +20,6 @@ import net.minecraft.util.IStringSerializable;
 
 public abstract class BlockMetal extends Block implements IBlockVariants
 {
-//  static public final int BLOCK_COPPER = 0;
-//  static public final int BLOCK_TIN = 1;
-//  static public final int BLOCK_BRONZE = 2;
-//  static public final int BLOCK_ELECTRUM = 3;
-//  static public final int BLOCK_INVAR = 4;
-//  static public final int BLOCK_NICKEL = 5;
-//  static public final int BLOCK_ZINC = 6;
-//  static public final int BLOCK_BRASS = 7;
-//  static public final int BLOCK_SILVER = 8;
-//  static public final int BLOCK_STEEL = 9;
-//  static public final int BLOCK_LEAD = 10;
-//  static public final int BLOCK_ALUMINUM = 11;
-//  static public final int BLOCK_CHROMIUM = 12;
-//  static public final int BLOCK_PLATINUM = 13;
-//  static public final int BLOCK_MANGANESE = 14;
-//  static public final int BLOCK_TITANIUM = 15;
-
-
   static public class Variant implements IStringSerializable,Comparable<Variant>
   {
     public final String state;
@@ -115,7 +97,7 @@ public abstract class BlockMetal extends Block implements IBlockVariants
   private PropertyVariant property_variant;
 
 
-  protected abstract Variant[] getVariants();
+  public abstract Variant[] getVariants();
   
   public BlockMetal()
   {

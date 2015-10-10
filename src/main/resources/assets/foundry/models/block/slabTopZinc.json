@@ -1,0 +1,9 @@
+{
+   "parent": "minecraft:block/upper_slab",
+   "textures":
+   {
+     "bottom": "foundry:blocks/blockZinc",
+     "top": "foundry:blocks/blockZinc",
+     "side": "foundry:blocks/blockZinc"
+  }
+}

@@ -98,7 +98,7 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
 
   private PropertyVariant property_variant;
 
-  protected abstract Variant[] getVariants();
+  public abstract Variant[] getVariants();
   
   public BlockMetalSlab()
   {
@@ -210,7 +210,18 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   {
     Variant var = (Variant) state.getValue(property_variant);
     EnumBlockHalf half = (EnumBlockHalf) state.getValue(HALF);
-    return var.id << 3 | (half == EnumBlockHalf.TOP ? 1 : 0);
+    return var.id & 7 | ((half == EnumBlockHalf.TOP ? 1 : 0) << 3);
   }
 
+  public IBlockState getBottomVariant(Variant v)
+  {
+    return this.getDefaultState()
+        .withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM)
+        .withProperty(property_variant, v);
+  }
+
+  public int getBottomVariantMeta(Variant v)
+  {
+    return getMetaFromState(getBottomVariant(v));
+  }
 }

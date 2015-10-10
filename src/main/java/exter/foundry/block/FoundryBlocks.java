@@ -30,6 +30,7 @@ public class FoundryBlocks
       new BlockMetal.Variant("steel", "Steel", "blockSteel"),
       new BlockMetal.Variant("lead", "Lead", "blockLead"),
       new BlockMetal.Variant("aluminum", "Aluminum", "blockAluminum"),
+      new BlockMetal.Variant("chromium", "Chromium", "blockChromium"),
       new BlockMetal.Variant("platinum", "Platinum", "blockPlatinum"),
       new BlockMetal.Variant("manganese", "Manganese", "blockManganese"),
       new BlockMetal.Variant("titanium", "Titanium", "blockTitanium")
@@ -101,9 +102,9 @@ public class FoundryBlocks
   
   static private void RegisterHalfSlabs(Configuration config)
   {
-    block_slab1 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB1_METALS; } };
-    block_slab2 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB2_METALS; } };
-    block_slab3 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB3_METALS; } };
+    block_slab1 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB1_METALS; } };
+    block_slab2 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB2_METALS; } };
+    block_slab3 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB3_METALS; } };
 //    block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab1, SLAB1_METALS,SLAB1_ICONS).setBlockName("metalSlabDouble1");
 //    block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab2, SLAB2_METALS,SLAB2_ICONS).setBlockName("metalSlabDouble2");
 //    block_slabdouble3 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab3, SLAB3_METALS,SLAB3_ICONS).setBlockName("metalSlabDouble3");
@@ -143,8 +144,8 @@ public class FoundryBlocks
    
     block_refractory_casing = new BlockRefractoryCasing();
     block_machine = new BlockFoundryMachine();
-    block_metal1 = new BlockMetal() { protected Variant[] getVariants() { return BLOCK1_METALS; } };
-    block_metal2 = new BlockMetal() { protected Variant[] getVariants() { return BLOCK2_METALS; } };
+    block_metal1 = new BlockMetal() { public Variant[] getVariants() { return BLOCK1_METALS; } };
+    block_metal2 = new BlockMetal() { public Variant[] getVariants() { return BLOCK2_METALS; } };
     block_ore = new BlockFoundryOre();
     block_alloy_furnace = new BlockAlloyFurnace();
     block_refractory_hopper = new BlockRefractoryHopper();

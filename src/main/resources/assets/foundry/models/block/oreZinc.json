@@ -1,7 +1,7 @@
 {
-    "parent": "minecraft:block/cube_all",
-    "textures": {
-        "all": "foundry:blocks/ore_zinc"
-    }
+  "parent": "minecraft:block/cube_all",
+  "textures":
+  {
+    "all": "foundry:blocks/oreZinc"
+  }
 }
-

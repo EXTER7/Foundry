@@ -101,9 +101,9 @@ public class FoundryBlocks
   
   static private void RegisterHalfSlabs(Configuration config)
   {
-    block_slab1 = (BlockMetalSlab)new BlockMetalSlab(SLAB1_METALS);
-    block_slab2 = (BlockMetalSlab)new BlockMetalSlab(SLAB2_METALS);
-    block_slab3 = (BlockMetalSlab)new BlockMetalSlab(SLAB3_METALS);
+    block_slab1 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB1_METALS; } };
+    block_slab2 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB2_METALS; } };
+    block_slab3 = new BlockMetalSlab() { protected Variant[] getVariants() { return SLAB3_METALS; } };
 //    block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab1, SLAB1_METALS,SLAB1_ICONS).setBlockName("metalSlabDouble1");
 //    block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab2, SLAB2_METALS,SLAB2_ICONS).setBlockName("metalSlabDouble2");
 //    block_slabdouble3 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab3, SLAB3_METALS,SLAB3_ICONS).setBlockName("metalSlabDouble3");
@@ -143,8 +143,8 @@ public class FoundryBlocks
    
     block_refractory_casing = new BlockRefractoryCasing();
     block_machine = new BlockFoundryMachine();
-    block_metal1 = new BlockMetal(BLOCK1_METALS);
-    block_metal2 = new BlockMetal(BLOCK2_METALS);
+    block_metal1 = new BlockMetal() { protected Variant[] getVariants() { return BLOCK1_METALS; } };
+    block_metal2 = new BlockMetal() { protected Variant[] getVariants() { return BLOCK2_METALS; } };
     block_ore = new BlockFoundryOre();
     block_alloy_furnace = new BlockAlloyFurnace();
     block_refractory_hopper = new BlockRefractoryHopper();
@@ -160,20 +160,20 @@ public class FoundryBlocks
     RegisterHalfSlabs(config);
     
     block_metal_stairs = new HashMap<String,BlockStairs>();
-    block_metal_stairs.put("Iron",new BlockMetalStairs(Blocks.iron_block.getDefaultState()));
-    block_metal_stairs.put("Gold",new BlockMetalStairs(Blocks.gold_block.getDefaultState()));
+    block_metal_stairs.put("Iron",new BlockMetalStairs(Blocks.iron_block.getDefaultState(),"Iron"));
+    block_metal_stairs.put("Gold",new BlockMetalStairs(Blocks.gold_block.getDefaultState(),"Gold"));
     for(BlockMetal.Variant v:BLOCK1_METALS)
     {
-      IBlockState state = block_metal1.getDefaultState().withProperty(BlockMetal.VARIANT, v);
-      block_metal_stairs.put(v.metal,new BlockMetalStairs(state));
+      IBlockState state = block_metal1.getVariantState(v);
+      block_metal_stairs.put(v.metal,new BlockMetalStairs(state,v.metal));
       ItemStack item = new ItemStack(block_metal1,1,block_metal1.getMetaFromState(state));
       block_stacks.put(v.metal, item);
       OreDictionary.registerOre(v.oredict, item);
     }
     for(BlockMetal.Variant v:BLOCK2_METALS)
     {
-      IBlockState state = block_metal2.getDefaultState().withProperty(BlockMetal.VARIANT, v);
-      block_metal_stairs.put(v.metal,new BlockMetalStairs(state));
+      IBlockState state = block_metal2.getVariantState(v);
+      block_metal_stairs.put(v.metal,new BlockMetalStairs(state,v.metal));
       ItemStack item = new ItemStack(block_metal2,1,block_metal2.getMetaFromState(state));
       block_stacks.put(v.metal, item);
       OreDictionary.registerOre(v.oredict, item);

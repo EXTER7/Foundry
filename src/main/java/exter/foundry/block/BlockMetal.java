@@ -1,5 +1,7 @@
 package exter.foundry.block;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
@@ -8,7 +10,6 @@ import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 
 
-public class BlockMetal extends Block
+public abstract class BlockMetal extends Block implements IBlockVariants
 {
 //  static public final int BLOCK_COPPER = 0;
 //  static public final int BLOCK_TIN = 1;
@@ -65,90 +66,93 @@ public class BlockMetal extends Block
     }
 
     @Override
-    public int compareTo(Variant other)
+    public int compareTo(Variant o)
     {
-      return id - other.id;
+      return id - o.id;
     }
   }
   
-
-//  static public final String[] METAL_NAMES = 
-//  {
-//    "Copper",
-//    "Tin",
-//    "Bronze",
-//    "Electrum",
-//    "Invar",
-//    "Nickel",
-//    "Zinc",
-//    "Brass",
-//    "Silver",
-//    "Steel",
-//    "Lead",
-//    "Aluminum",
-//    "Chromium",
-//    "Platinum",
-//    "Manganese",
-//    "Titanium"
-//  };
-//
-//  static public final String[] OREDICT_NAMES = 
-//  {
-//    "blockCopper",
-//    "blockTin",
-//    "blockBronze",
-//    "blockElectrum",
-//    "blockInvar",
-//    "blockNickel",
-//    "blockZinc",
-//    "blockBrass",
-//    "blockSilver",
-//    "blockSteel",
-//    "blockLead",
-//    "blockAluminum",
-//    "blockChromium",
-//    "blockPlatinum",
-//    "blockManganese",
-//    "blockTitanium"
-//  };
-
-  public static final PropertyEnum VARIANT = PropertyEnum.create("metal", Variant.class);
-
-  private final Variant[] variants;
-
-  public BlockMetal(Variant[] variants)
+  private class PropertyVariant implements IProperty
   {
-    super( Material.iron);
+    private List<Variant> variants;
+    
+    public PropertyVariant(Variant[] variants)
+    {
+      int i = 0;
+      this.variants = new ArrayList<Variant>();
+      for (Variant v : variants)
+      {
+        v.id = i++;
+        this.variants.add(v);
+      }
+    }
+    
+    @Override
+    public String getName()
+    {
+      return "metal";
+    }
+
+    @Override
+    public Collection<Variant> getAllowedValues()
+    {
+      return variants;
+    }
+
+    @Override
+    public Class<?> getValueClass()
+    {
+      return Variant.class;
+    }
+
+    @Override
+    public String getName(@SuppressWarnings("rawtypes") Comparable value)
+    {
+      return ((Variant)value).state;
+    }
+  }
+
+  private PropertyVariant property_variant;
+
+
+  protected abstract Variant[] getVariants();
+  
+  public BlockMetal()
+  {
+    super( Material.iron );
     setHardness(1.0F);
     setResistance(8.0F);
-    this.variants = variants;
-    int i;
-    for(i = 0; i < variants.length; i++)
-    {
-      variants[i].id = i;
-    }
     setUnlocalizedName("metalBlock");
     setStepSound(Block.soundTypeMetal);
     setCreativeTab(FoundryTabBlocks.tab);
   }
-
+  
   @Override
   protected BlockState createBlockState()
   {
-    return new BlockState(this, new IProperty[] { VARIANT });
+    if(property_variant == null)
+    {
+      property_variant = new PropertyVariant(getVariants());
+    }
+    return new BlockState(this, property_variant );
   }
 
+  public IBlockState getVariantState(Variant var)
+  {
+    return getDefaultState().withProperty(property_variant, var);
+  }
+  
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
     return getDefaultState()
-        .withProperty(VARIANT, variants[meta]);
+        .withProperty(property_variant, getVariants()[meta]);
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return ((Variant) state.getValue(VARIANT)).id;
+    return ((Variant) state.getValue(property_variant)).id;
   }
 
   @Override
@@ -162,9 +166,15 @@ public class BlockMetal extends Block
   @SideOnly(Side.CLIENT)
   public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
-    for(Variant v:variants)
+    for(Variant v:getVariants())
     {
       list.add(new ItemStack(item, 1, v.id));
     }
+  }
+  
+  @Override
+  public String getUnlocalizedName(int meta)
+  {
+    return getUnlocalizedName() + "." + ((Variant)getStateFromMeta(meta).getValue(property_variant)).metal;
   }
 }

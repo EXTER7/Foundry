@@ -3,20 +3,6 @@ package exter.foundry.integration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
-import exter.foundry.config.FoundryConfig;
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemMold;
-import exter.foundry.material.MaterialRegistry;
-import exter.foundry.recipes.FoundryRecipes;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
-import exter.foundry.util.FoundryMiscUtils;
 //import thaumcraft.api.ItemApi;
 //import thaumcraft.api.ThaumcraftApi;
 //import thaumcraft.api.aspects.Aspect;
@@ -25,18 +11,13 @@ import exter.foundry.util.FoundryMiscUtils;
 //import thaumcraft.api.research.ResearchCategories;
 //import thaumcraft.api.research.ResearchItem;
 //import thaumcraft.api.research.ResearchPage;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
+
 
 public class ModIntegrationThaumcraft extends ModIntegration
 {
-  private boolean enable_shards;
+//  private boolean enable_shards;
   
 //  private Fluid liquid_aer;
 //  private Fluid liquid_terra;

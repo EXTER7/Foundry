@@ -7,11 +7,9 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 

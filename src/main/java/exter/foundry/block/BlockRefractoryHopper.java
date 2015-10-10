@@ -13,7 +13,6 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -97,7 +96,7 @@ public class BlockRefractoryHopper extends BlockContainer
   @Override
   protected BlockState createBlockState()
   {
-    return new BlockState(this, new IProperty[] { FACING });
+    return new BlockState(this, FACING);
   }
 
   @Override

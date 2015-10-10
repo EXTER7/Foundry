@@ -352,12 +352,12 @@ tile.liquidVacous.name=Void Infused Liquid
 tile.liquidPrimal.name=Primal Liquid
 
 
-tile.machine.ICF.name=Induction Crucible Furnace
-tile.machine.Caster.name=Metal Caster
-tile.machine.AlloyMixer.name=Alloy Mixer
-tile.machine.Infuser.name=Metal Infuser
-tile.machine.MaterialRouter.name=Material Router
-tile.machine.Atomizer.name=Metal Atomizer
+tile.machine.icf.name=Induction Crucible Furnace
+tile.machine.caster.name=Metal Caster
+tile.machine.alloymixer.name=Alloy Mixer
+tile.machine.infuser.name=Metal Infuser
+tile.machine.router.name=Material Router
+tile.machine.atomizer.name=Metal Atomizer
 tile.alloyFurnace.name=Alloy Furnace
 tile.refractoryHopper.name=Refractory Hopper
 

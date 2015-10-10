@@ -1,32 +1,14 @@
 package exter.foundry.integration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 //import tconstruct.TConstruct;
 //import tconstruct.library.TConstructRegistry;
 //import tconstruct.library.crafting.AlloyMix;
 //import tconstruct.library.crafting.LiquidCasting;
 //import tconstruct.library.crafting.Smeltery;
 import net.minecraftforge.fml.common.Loader;
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.config.FoundryConfig;
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
 //import mantle.utils.ItemMetaWrapper;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
+
 public class ModIntegrationTiCon extends ModIntegration
 {
 //  private Map<String,String> liquid_map;

@@ -1,13 +1,13 @@
 package exter.foundry.block;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,10 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 
-public class BlockMetalSlab extends BlockSlab
+public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
 {
-
-
 
   static public class Variant implements IStringSerializable,Comparable<Variant>
   {
@@ -58,20 +56,54 @@ public class BlockMetalSlab extends BlockSlab
     }
   }
   
-  public static final PropertyEnum VARIANT = PropertyEnum.create("ore", Variant.class);
+  private class PropertyVariant implements IProperty
+  {
+    private List<Variant> variants;
+    
+    public PropertyVariant(Variant[] variants)
+    {
+      int i = 0;
+      this.variants = new ArrayList<Variant>();
+      for (Variant v : variants)
+      {
+        v.id = i++;
+        this.variants.add(v);
+      }
+    }
+    
+    @Override
+    public String getName()
+    {
+      return "metal";
+    }
 
-  private final Variant[] variants;
+    @Override
+    public Collection<Variant> getAllowedValues()
+    {
+      return variants;
+    }
+
+    @Override
+    public Class<?> getValueClass()
+    {
+      return Variant.class;
+    }
+
+    @Override
+    public String getName(@SuppressWarnings("rawtypes") Comparable value)
+    {
+      return ((Variant)value).state;
+    }
+  }
+
+  private PropertyVariant property_variant;
+
+  protected abstract Variant[] getVariants();
   
-  public BlockMetalSlab(Variant[] variants)
+  public BlockMetalSlab()
   {
     super(Material.iron);
     setCreativeTab(FoundryTabBlocks.tab);
-    this.variants = variants;
-    int i;
-    for(i = 0; i < variants.length; i++)
-    {
-      variants[i].id = i;
-    }
     setHardness(5.0F);
     setResistance(10.0F);
     setStepSound(Block.soundTypeMetal);
@@ -85,7 +117,7 @@ public class BlockMetalSlab extends BlockSlab
   @Override
   public void getSubBlocks(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
   {
-    for(Variant v:variants)
+    for(Variant v:getVariants())
     {
       items.add(new ItemStack(item, 1, v.id));
     }
@@ -130,7 +162,7 @@ public class BlockMetalSlab extends BlockSlab
   @Override
   public String getUnlocalizedName(int meta)
   {
-    return this.getUnlocalizedName();
+    return getUnlocalizedName() + "." + ((Variant)getStateFromMeta(meta).getValue(property_variant)).metal;
   }
 
   @Override
@@ -142,35 +174,43 @@ public class BlockMetalSlab extends BlockSlab
   @Override
   public IProperty getVariantProperty()
   {
-    return VARIANT;
+    if(property_variant == null)
+    {
+      property_variant = new PropertyVariant(getVariants());
+    }
+    return property_variant;
   }
 
   @Override
   public Object getVariant(ItemStack stack)
   {
-    return variants[stack.getMetadata()];
+    return getVariants()[stack.getMetadata()];
   }
   
   @Override
   protected BlockState createBlockState()
   {
-    return new BlockState(this, new IProperty[] { HALF, VARIANT });
+    if(property_variant == null)
+    {
+      property_variant = new PropertyVariant(getVariants());
+    }
+    return new BlockState(this, new IProperty[] { HALF, property_variant });
   }
 
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
     return getDefaultState()
-        .withProperty(VARIANT, variants[meta & 7])
-        .withProperty(HALF, ((meta >>> 3) & 1) == 1 ? EnumHalf.TOP : EnumHalf.BOTTOM);
+        .withProperty(property_variant, getVariants()[meta & 7])
+        .withProperty(HALF, ((meta >>> 3) & 1) == 1 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM);
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    Variant var = (Variant) state.getValue(VARIANT);
-    EnumHalf half = (EnumHalf) state.getValue(HALF);
-    return var.id << 3 | (half == EnumHalf.TOP ? 1 : 0);
+    Variant var = (Variant) state.getValue(property_variant);
+    EnumBlockHalf half = (EnumBlockHalf) state.getValue(HALF);
+    return var.id << 3 | (half == EnumBlockHalf.TOP ? 1 : 0);
   }
 
 }

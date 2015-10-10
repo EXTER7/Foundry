@@ -3,16 +3,7 @@ package exter.foundry.integration;
 //import com.teammetallurgy.metallurgy.api.IMetalSet;
 //import com.teammetallurgy.metallurgy.api.MetallurgyApi;
 
-import exter.foundry.config.FoundryConfig;
-import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
-import exter.foundry.util.FoundryMiscUtils;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 
 public class ModIntegrationMetallurgy extends ModIntegration

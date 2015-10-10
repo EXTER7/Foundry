@@ -1,5 +1,6 @@
 package exter.foundry.item;
 
+import exter.foundry.block.IBlockVariants;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -7,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class ItemBlockMulti extends ItemBlock
 {
   
-  public ItemBlockMulti(Block block)
+  public <T extends Block & IBlockVariants> ItemBlockMulti(T block)
   {
     super(block);
     setHasSubtypes(true);
@@ -27,7 +28,6 @@ public class ItemBlockMulti extends ItemBlock
   @Override
   public final String getUnlocalizedName(ItemStack stack)
   {
-    int index = getSubIndex(stack);
-    return getUnlocalizedName() + "." + index;
+    return ((IBlockVariants)block).getUnlocalizedName(getSubIndex(stack));
   }
 }

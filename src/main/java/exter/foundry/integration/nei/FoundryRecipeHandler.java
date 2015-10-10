@@ -7,6 +7,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -289,15 +290,17 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
   {
     FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
     int toDraw = height;
+    TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
+
     while(toDraw >= 16)
     {
-      drawRectWithIconAligned(new Rectangle(left, bottom - 16, width, 16), fluid.getIcon(), true, false);
+      drawRectWithIconAligned(new Rectangle(left, bottom - 16, width, 16), icon, true, false);
       bottom -= 16;
       toDraw -= 16;
     }
     if(toDraw > 0)
     {
-      drawRectWithIconAligned(new Rectangle(left, bottom - toDraw, width, toDraw), fluid.getIcon(), true, false);
+      drawRectWithIconAligned(new Rectangle(left, bottom - toDraw, width, toDraw), icon, true, false);
     }
   }
 }

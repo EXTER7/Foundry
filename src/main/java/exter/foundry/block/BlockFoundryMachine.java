@@ -6,7 +6,6 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -33,7 +32,7 @@ import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 
-public class BlockFoundryMachine extends Block implements ITileEntityProvider
+public class BlockFoundryMachine extends Block implements ITileEntityProvider,IBlockVariants
 {
   private Random rand = new Random();
 
@@ -102,7 +101,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   @Override
   protected BlockState createBlockState()
   {
-    return new BlockState(this, new IProperty[] { MACHINE });
+    return new BlockState(this, MACHINE);
   }
 
 
@@ -247,5 +246,11 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider
   public TileEntity createNewTileEntity(World world, int meta)
   {
     return this.createTileEntity(world, getStateFromMeta(meta));
+  }
+
+  @Override
+  public String getUnlocalizedName(int meta)
+  {
+    return getUnlocalizedName() + "." + ((EnumMachine)getStateFromMeta(meta).getValue(MACHINE)).name;
   }
 }

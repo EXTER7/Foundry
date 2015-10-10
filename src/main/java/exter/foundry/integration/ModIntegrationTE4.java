@@ -2,11 +2,6 @@ package exter.foundry.integration;
 
 //import cofh.api.modhelpers.ThermalExpansionHelper;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemIngot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 

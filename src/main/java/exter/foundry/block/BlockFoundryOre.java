@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -14,10 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
-public class BlockFoundryOre extends Block
+public class BlockFoundryOre extends Block implements IBlockVariants
 {
 
   public enum EnumOre implements IStringSerializable
@@ -89,19 +87,19 @@ public class BlockFoundryOre extends Block
   @Override
   protected BlockState createBlockState()
   {
-    return new BlockState(this, new IProperty[] { VARIANT });
+    return new BlockState(this, VARIANT);
   }
 
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    return getDefaultState().withProperty(VARIANT, EnumMachine.fromID(meta));
+    return getDefaultState().withProperty(VARIANT, EnumOre.fromID(meta));
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return ((EnumMachine)state.getValue(VARIANT)).id;
+    return ((EnumOre)state.getValue(VARIANT)).id;
   }
 
   @Override
@@ -129,5 +127,11 @@ public class BlockFoundryOre extends Block
   public IBlockState asState(EnumOre ore)
   {
     return getDefaultState().withProperty(VARIANT, ore);
+  }
+
+  @Override
+  public String getUnlocalizedName(int meta)
+  {
+    return getUnlocalizedName() + "." + ((EnumOre)getStateFromMeta(meta).getValue(VARIANT)).material_name;
   }
 }

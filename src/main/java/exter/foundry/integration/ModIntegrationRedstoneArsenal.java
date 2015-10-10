@@ -1,21 +1,7 @@
 package exter.foundry.integration;
 
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.config.FoundryConfig;
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.FoundryRecipes;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
-import exter.foundry.util.FoundryMiscUtils;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
 
 public class ModIntegrationRedstoneArsenal extends ModIntegration

@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -105,7 +106,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.GetTank(0));
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.getTank(0));
   }
 
   @Override
@@ -118,7 +119,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_icf.GetTank(0));
+      AddTankTooltip(currenttip, mousex, mousey, te_icf.getTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
@@ -137,18 +138,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      switch(te_icf.GetMode())
-      {
-        case RSMODE_IGNORE:
-          currenttip.add("Mode: Ignore Restone");
-          break;
-        case RSMODE_OFF:
-          currenttip.add("Mode: Redstone signal OFF");
-          break;
-        case RSMODE_ON:
-          currenttip.add("Mode: Redstone signal ON");
-          break;
-      }
+      currenttip.add(getRedstoenModeText(te_icf.getRedstoneMode()));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
@@ -180,7 +170,21 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   {
     if(button.id == button_mode.id)
     {
-      te_icf.SetMode(te_icf.GetMode().Next());
+      switch(te_icf.getRedstoneMode())
+      {
+        case RSMODE_IGNORE:
+          te_icf.setRedstoneMode(RedstoneMode.RSMODE_OFF);
+          break;
+        case RSMODE_OFF:
+          te_icf.setRedstoneMode(RedstoneMode.RSMODE_ON);
+          break;
+        case RSMODE_ON:
+          te_icf.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+        case RSMODE_PULSE:
+          te_icf.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+      }
     }
   }
 

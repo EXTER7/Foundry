@@ -7,6 +7,7 @@ import java.util.List;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.material.MaterialRegistry;
+import exter.foundry.network.MessageTileEntitySync;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -235,26 +236,6 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  public void ReceivePacketData(ByteBuf data)
-  {
-    routes.clear();
-
-    gui_material_scroll = data.readInt();
-    gui_type_scroll = data.readInt();
-    gui_route_scroll = data.readInt();
-    gui_material_selected = data.readInt();
-    gui_type_selected = data.readInt();
-
-    int size = data.readInt();
-    int i;
-    for(i = 0; i < size; i++)
-    {
-      routes.add(new Route(data));
-    }
-    markDirty();
-  }
-
-  @Override
   public void readFromNBT(NBTTagCompound compound)
   {
     super.readFromNBT(compound);
@@ -295,10 +276,8 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   }
 
-  @Override
-  public void writeToNBT(NBTTagCompound compound)
+  private void writeRoutesToNBT(NBTTagCompound compound)
   {
-    super.writeToNBT(compound);
     NBTTagCompound routes_tag = new NBTTagCompound();
     routes_tag.setInteger("size", routes.size());
     int i;
@@ -309,6 +288,13 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
       routes_tag.setTag("Route_" + String.valueOf(i), route_entry_tag);
     }
     compound.setTag("Routes", routes_tag);
+  }
+  
+  @Override
+  public void writeToNBT(NBTTagCompound compound)
+  {
+    super.writeToNBT(compound);
+    writeRoutesToNBT(compound);
     
     compound.setInteger("gui_material_scroll",gui_material_scroll);
     compound.setInteger("gui_type_scroll",gui_type_scroll);
@@ -326,8 +312,8 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     {
       inventory[out_slot] = input;
       inventory[in_slot] = null;
-      UpdateInventoryItem(in_slot);
-      UpdateInventoryItem(out_slot);
+      updateInventoryItem(in_slot);
+      updateInventoryItem(out_slot);
     } else
     {
       if(!output.isItemEqual(input) || !ItemStack.areItemStackTagsEqual(output, input))
@@ -341,19 +327,19 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
       }
       decrStackSize(in_slot, transfer);
       inventory[out_slot].stackSize += transfer;
-      UpdateInventoryItem(in_slot);
-      UpdateInventoryItem(out_slot);
+      updateInventoryItem(in_slot);
+      updateInventoryItem(out_slot);
     }
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
 
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
     if(input_index % 4 == 0)
     {
@@ -375,13 +361,13 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     return null;
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 0;
   }
@@ -419,12 +405,16 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   public void SyncRoutes()
   {
-    if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+    NBTTagCompound tag = new NBTTagCompound();
+    writeTileToNBT(tag);   
+    writeRoutesToNBT(tag);
+    if(worldObj.isRemote)
     {
-      ModFoundry.network_channel.SendMaterialRouterPacketToServer(this);
+      tag.setInteger("dim", worldObj.provider.getDimensionId());
+      ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
     } else
     {
-      ModFoundry.network_channel.SendMaterialRouterPacketToClients(this);
+      sendPacketToPlayers(tag);
     }
   }
 }

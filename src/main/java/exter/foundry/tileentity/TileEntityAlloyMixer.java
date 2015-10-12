@@ -1,18 +1,12 @@
 package exter.foundry.tileentity;
 
-
-import io.netty.buffer.ByteBuf;
-
-import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -22,38 +16,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  public enum RedstoneMode
-  {
-    RSMODE_IGNORE(0),
-    RSMODE_ON(1),
-    RSMODE_OFF(2);
-    
-    public final int number;
-    
-    private RedstoneMode(int num)
-    {
-      number = num;
-    }
-    
-    public RedstoneMode Next()
-    {
-      return FromNumber((number + 1) % 3);
-    }
-    
-    static public RedstoneMode FromNumber(int num)
-    {
-      for(RedstoneMode m:RedstoneMode.values())
-      {
-        if(m.number == num)
-        {
-          return m;
-        }
-      }
-      return RSMODE_IGNORE;
-    }
-  }
-
-  
   static private final int NETDATAID_TANK_INPUT_0_FLUID = 0;
   static private final int NETDATAID_TANK_INPUT_0_AMOUNT = 1;
   static private final int NETDATAID_TANK_INPUT_1_FLUID = 2;
@@ -86,7 +48,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
 
-  private RedstoneMode mode;
+  
 
   
   
@@ -104,8 +66,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       tanks[i] = new FluidTank(FoundryAPI.ALLOYMIXER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
-    mode = RedstoneMode.RSMODE_IGNORE;
-
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
     AddContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_DRAIN,false));
@@ -118,58 +78,39 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
   }
 
-  @Override
-  public void readFromNBT(NBTTagCompound compund)
-  {
-    super.readFromNBT(compund);
-    
-    if(compund.hasKey("mode"))
-    {
-      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
-    }
-  }
-
-  @Override
-  public void writeToNBT(NBTTagCompound compound)
-  {
-    super.writeToNBT(compound);
-    compound.setInteger("mode", mode.number);
-  }
-  
-  
   public void GetGUINetworkData(int id, int value)
   {
     switch(id)
     {
       case NETDATAID_TANK_INPUT_0_FLUID:
-        SetTankFluid(tanks[TANK_INPUT_0],value);
+        setTankFluid(tanks[TANK_INPUT_0],value);
         break;
       case NETDATAID_TANK_INPUT_0_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT_0],value);
+        setTankAmount(tanks[TANK_INPUT_0],value);
         break;
       case NETDATAID_TANK_INPUT_1_FLUID:
-        SetTankFluid(tanks[TANK_INPUT_1],value);
+        setTankFluid(tanks[TANK_INPUT_1],value);
         break;
       case NETDATAID_TANK_INPUT_1_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT_1],value);
+        setTankAmount(tanks[TANK_INPUT_1],value);
         break;
       case NETDATAID_TANK_INPUT_2_FLUID:
-        SetTankFluid(tanks[TANK_INPUT_2],value);
+        setTankFluid(tanks[TANK_INPUT_2],value);
         break;
       case NETDATAID_TANK_INPUT_2_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT_2],value);
+        setTankAmount(tanks[TANK_INPUT_2],value);
         break;
       case NETDATAID_TANK_INPUT_3_FLUID:
-        SetTankFluid(tanks[TANK_INPUT_3],value);
+        setTankFluid(tanks[TANK_INPUT_3],value);
         break;
       case NETDATAID_TANK_INPUT_3_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT_3],value);
+        setTankAmount(tanks[TANK_INPUT_3],value);
         break;
       case NETDATAID_TANK_OUTPUT_FLUID:
-        SetTankFluid(tanks[TANK_OUTPUT],value);
+        setTankFluid(tanks[TANK_OUTPUT],value);
         break;
       case NETDATAID_TANK_OUTPUT_AMOUNT:
-        SetTankAmount(tanks[TANK_OUTPUT],value);
+        setTankAmount(tanks[TANK_OUTPUT],value);
         break;
     }
   }
@@ -177,41 +118,18 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
 
   public void SendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_FLUID, GetTankFluid(tanks[TANK_INPUT_0]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_AMOUNT, GetTankAmount(tanks[TANK_INPUT_0]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_FLUID, GetTankFluid(tanks[TANK_INPUT_1]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_AMOUNT, GetTankAmount(tanks[TANK_INPUT_1]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_FLUID, GetTankFluid(tanks[TANK_INPUT_2]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_AMOUNT, GetTankAmount(tanks[TANK_INPUT_2]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_FLUID, GetTankFluid(tanks[TANK_INPUT_3]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_AMOUNT, GetTankAmount(tanks[TANK_INPUT_3]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, GetTankFluid(tanks[TANK_OUTPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, GetTankAmount(tanks[TANK_OUTPUT]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_FLUID, getTankFluid(tanks[TANK_INPUT_0]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_AMOUNT, getTankAmount(tanks[TANK_INPUT_0]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_FLUID, getTankFluid(tanks[TANK_INPUT_1]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_AMOUNT, getTankAmount(tanks[TANK_INPUT_1]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_FLUID, getTankFluid(tanks[TANK_INPUT_2]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_AMOUNT, getTankAmount(tanks[TANK_INPUT_2]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_FLUID, getTankFluid(tanks[TANK_INPUT_3]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_AMOUNT, getTankAmount(tanks[TANK_INPUT_3]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, getTankFluid(tanks[TANK_OUTPUT]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, getTankAmount(tanks[TANK_OUTPUT]));
   }
   
-  @Override
-  public void ReceivePacketData(ByteBuf data)
-  {
-    SetMode(RedstoneMode.FromNumber(data.readByte()));
-  }
-
-  public RedstoneMode GetMode()
-  {
-    return mode;
-  }
-
-  public void SetMode(RedstoneMode new_mode)
-  {
-    if(mode != new_mode)
-    {
-      mode = new_mode;
-      if(worldObj.isRemote)
-      {
-        ModFoundry.network_channel.SendAlloyMixerModeToServer(this);
-      }
-    }
-  }
-
   @Override
   public int getSizeInventory()
   {
@@ -289,23 +207,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     return 64;
   }
 
-  @Override
-  public void openInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendAlloyMixerModeToClients(this);
-    }
-  }
-
-  @Override
-  public void closeInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendAlloyMixerModeToClients(this);
-    }
-  }
 
   static private final int[] SLOTS = { };
 
@@ -406,7 +307,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
 
   }
@@ -421,7 +322,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       return;
     }
     boolean do_mix = false;
-    switch(mode)
+    switch(getRedstoneMode())
     {
       case RSMODE_IGNORE:
         do_mix = true;
@@ -437,6 +338,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         {
           do_mix = true;
         }
+        break;
+      default:
         break;
     }
     if(!do_mix)
@@ -480,19 +383,19 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       useFoundryEnergy(required_energy, true);
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
-      UpdateTank(TANK_OUTPUT);
+      updateTank(TANK_OUTPUT);
       for(i = 0; i < recipe.getInputCount(); i++)
       {
         tanks[recipe_order[i]].drain(recipe.getInput(i).amount, true);
-        UpdateTank(recipe_order[i]);
+        updateTank(recipe_order[i]);
       }
     }
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
-    super.UpdateEntityServer();
+    super.updateServer();
     if(tanks[TANK_OUTPUT].getFluidAmount() < tanks[TANK_OUTPUT].getCapacity()
         && (tanks[TANK_INPUT_0].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_1].getFluidAmount() > 0
@@ -504,19 +407,19 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     return tanks[slot];
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 5;
   }
 
   @Override
-  public int GetEnergyCapacity()
+  public int getFoundryEnergyCapacity()
   {
     return 3000;
   }

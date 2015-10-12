@@ -1,4 +1,5 @@
 package exter.foundry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
@@ -47,7 +50,7 @@ import exter.foundry.integration.ModIntegration;
 //import exter.foundry.integration.ModIntegrationTwilightForest;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
-import exter.foundry.network.FoundryNetworkChannel;
+import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
@@ -105,7 +108,7 @@ public class ModFoundry
 
   public CraftingEvents crafting_events;
   
-  public static FoundryNetworkChannel network_channel;
+  public static SimpleNetworkWrapper network_channel;
   
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
@@ -166,7 +169,10 @@ public class ModFoundry
 
     crafting_events = new CraftingEvents();
     
-    network_channel = new FoundryNetworkChannel();
+    network_channel = NetworkRegistry.INSTANCE.newSimpleChannel("EXTER.FOUNDRY");
+    network_channel.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.SERVER);
+    network_channel.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.CLIENT);
+    
     NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     proxy.PreInit();
   }

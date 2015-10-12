@@ -1,15 +1,10 @@
 package exter.foundry.tileentity;
 
-
-import io.netty.buffer.ByteBuf;
-
-import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -23,38 +18,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  public enum RedstoneMode
-  {
-    RSMODE_IGNORE(0),
-    RSMODE_ON(1),
-    RSMODE_OFF(2),
-    RSMODE_PULSE(3);
-    
-    public final int number;
-    
-    private RedstoneMode(int num)
-    {
-      number = num;
-    }
-    
-    public RedstoneMode Next()
-    {
-      return FromNumber((number + 1) % 4);
-    }
-    
-    static public RedstoneMode FromNumber(int num)
-    {
-      for(RedstoneMode m:RedstoneMode.values())
-      {
-        if(m.number == num)
-        {
-          return m;
-        }
-      }
-      return RSMODE_IGNORE;
-    }
-  }
-  
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
@@ -75,7 +38,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   ICastingRecipe current_recipe;
   
   
-  private RedstoneMode mode;
   private int progress;
 
   public TileEntityMetalCaster()
@@ -89,7 +51,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     progress = -1;
     inventory = new ItemStack[14];
     
-    mode = RedstoneMode.RSMODE_IGNORE;
     current_recipe = null;
     
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
@@ -108,10 +69,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     {
       progress = compund.getInteger("progress");
     }
-    if(compund.hasKey("mode"))
-    {
-      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
-    }
   }
 
 
@@ -120,7 +77,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   {
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
-    compound.setInteger("mode", mode.number);
   }
 
   public void GetGUINetworkData(int id, int value)
@@ -128,41 +84,18 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        SetTankFluid(tank,value);
+        setTankFluid(tank,value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        SetTankAmount(tank,value);
+        setTankAmount(tank,value);
         break;
     }
   }
 
   public void SendGUINetworkData(ContainerMetalCaster container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, GetTankFluid(tank));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, GetTankAmount(tank));
-  }
-
-  @Override
-  public void ReceivePacketData(ByteBuf data)
-  {
-    SetMode(RedstoneMode.FromNumber(data.readByte()));
-  }
-  
-  public RedstoneMode GetMode()
-  {
-    return mode;
-  }
-
-  public void SetMode(RedstoneMode new_mode)
-  {
-    if(mode != new_mode)
-    {
-      mode = new_mode;
-      if(worldObj.isRemote)
-      {
-        ModFoundry.network_channel.SendCasterModeToServer(this);
-      }
-    }
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
   }
 
   @Override
@@ -241,24 +174,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     return 64;
   }
 
-  @Override
-  public void openInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendCasterModeToClients(this);
-    }
-  }
-
-  @Override
-  public void closeInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendCasterModeToClients(this);
-    }
-  }
-
   public int GetProgress()
   {
     return progress;
@@ -332,7 +247,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
     
   }
@@ -384,9 +299,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
-    super.UpdateEntityServer();
+    super.updateServer();
     int last_progress = progress;
     
     CheckCurrentRecipe();
@@ -400,7 +315,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     
     if(progress < 0)
     {
-      switch(mode)
+      switch(getRedstoneMode())
       {
         case RSMODE_IGNORE:
           BeginCasting();
@@ -447,7 +362,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           if(current_recipe.requiresExtra())
           {
             decrStackSize(INVENTORY_EXTRA, FoundryUtils.getStackSize(current_recipe.getInputExtra()));
-            UpdateInventoryItem(INVENTORY_EXTRA);
+            updateInventoryItem(INVENTORY_EXTRA);
           }
           if(inventory[INVENTORY_OUTPUT] == null)
           {
@@ -457,8 +372,8 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           {
             inventory[INVENTORY_OUTPUT].stackSize++;
           }
-          UpdateInventoryItem(INVENTORY_OUTPUT);
-          UpdateTank(0);
+          updateInventoryItem(INVENTORY_OUTPUT);
+          updateTank(0);
           markDirty();
         }
       } else
@@ -469,12 +384,12 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     
     if(last_progress != progress)
     {
-      UpdateValue("progress",progress);
+      updateValue("progress",progress);
     }
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     if(slot != 0)
     {
@@ -484,13 +399,13 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 1;
   }
 
   @Override
-  public int GetEnergyCapacity()
+  public int getFoundryEnergyCapacity()
   {
     return 40000;
   }

@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
+import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -66,7 +67,7 @@ public class GuiAlloyMixer extends GuiFoundry
       if(isPointInRegion(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
         List<String> currenttip = new ArrayList<String>();
-        AddTankTooltip(currenttip,mousex, mousey, te_alloymixer.GetTank(i));
+        AddTankTooltip(currenttip,mousex, mousey, te_alloymixer.getTank(i));
         drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
       }
     }
@@ -74,18 +75,7 @@ public class GuiAlloyMixer extends GuiFoundry
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      switch(te_alloymixer.GetMode())
-      {
-        case RSMODE_IGNORE:
-          currenttip.add("Mode: Ignore Restone");
-          break;
-        case RSMODE_OFF:
-          currenttip.add("Mode: Redstone signal OFF");
-          break;
-        case RSMODE_ON:
-          currenttip.add("Mode: Redstone signal ON");
-          break;
-      }
+      currenttip.add(getRedstoenModeText(te_alloymixer.getRedstoneMode()));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
@@ -101,7 +91,7 @@ public class GuiAlloyMixer extends GuiFoundry
 
     for(i = 0; i < 5; i++)
     {
-      DisplayTank(window_x, window_y, TANK_X[i], TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.GetTank(i));
+      DisplayTank(window_x, window_y, TANK_X[i], TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.getTank(i));
     }
   }
 
@@ -132,7 +122,21 @@ public class GuiAlloyMixer extends GuiFoundry
   {
     if(button.id == button_mode.id)
     {
-      te_alloymixer.SetMode(te_alloymixer.GetMode().Next());
+      switch(te_alloymixer.getRedstoneMode())
+      {
+        case RSMODE_IGNORE:
+          te_alloymixer.setRedstoneMode(RedstoneMode.RSMODE_OFF);
+          break;
+        case RSMODE_OFF:
+          te_alloymixer.setRedstoneMode(RedstoneMode.RSMODE_ON);
+          break;
+        case RSMODE_ON:
+          te_alloymixer.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+        case RSMODE_PULSE:
+          te_alloymixer.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+      }
     }
   }
 }

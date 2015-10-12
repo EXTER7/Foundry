@@ -131,16 +131,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     switch(id)
     {
       case NETDATAID_INPUT_TANK_FLUID:
-        SetTankFluid(tanks[TANK_INPUT],value);
+        setTankFluid(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_INPUT_TANK_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT],value);
+        setTankAmount(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_OUTPUT_TANK_FLUID:
-        SetTankFluid(tanks[TANK_OUTPUT],value);
+        setTankFluid(tanks[TANK_OUTPUT],value);
         break;
       case NETDATAID_OUTPUT_TANK_AMOUNT:
-        SetTankAmount(tanks[TANK_OUTPUT],value);
+        setTankAmount(tanks[TANK_OUTPUT],value);
         break;
     }
   }
@@ -315,7 +315,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
     
   }
@@ -375,16 +375,16 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         decrStackSize(0, 1);
         NBTTagCompound tag = new NBTTagCompound();
         WriteSubstanceToNBT(tag);
-        UpdateNBTTag("Substance",tag);
-        UpdateInventoryItem(0);
+        updateNBTTag("Substance",tag);
+        updateInventoryItem(0);
       }
     }
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
-    super.UpdateEntityServer();
+    super.updateServer();
     int last_progress = progress;
     int last_extract_time = extract_energy;
     
@@ -406,10 +406,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
           }
           NBTTagCompound tag = new NBTTagCompound();
           WriteSubstanceToNBT(tag);
-          UpdateNBTTag("Substance",tag);
+          updateNBTTag("Substance",tag);
 
-          UpdateTank(TANK_INPUT);
-          UpdateTank(TANK_OUTPUT);
+          updateTank(TANK_INPUT);
+          updateTank(TANK_OUTPUT);
         }
       }
     }
@@ -427,13 +427,13 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
 
     if(last_extract_time != extract_energy)
     {
-      UpdateValue("extract_time",extract_energy);
+      updateValue("extract_time",extract_energy);
     }
 
 
     if(last_progress != progress)
     {
-      UpdateValue("progress",progress);
+      updateValue("progress",progress);
     }
   }
 
@@ -448,19 +448,19 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     return tanks[slot];
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 2;
   }
 
   @Override
-  public int GetEnergyCapacity()
+  public int getFoundryEnergyCapacity()
   {
     return 3000;
   }

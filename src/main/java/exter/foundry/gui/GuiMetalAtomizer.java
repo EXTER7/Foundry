@@ -11,6 +11,7 @@ import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
+import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -91,13 +92,13 @@ public class GuiMetalAtomizer extends GuiFoundry
     }
 
     //Draw stored power bar.
-    int power = te_atomizer.getStoredFoundryEnergy() * POWER_HEIGHT / te_atomizer.GetEnergyCapacity();
+    int power = te_atomizer.getStoredFoundryEnergy() * POWER_HEIGHT / te_atomizer.getFoundryEnergyCapacity();
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
     }
-    DisplayTank(window_x, window_y, TANK_INPUT_X, TANK_INPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_INPUT));
-    DisplayTank(window_x, window_y, TANK_WATER_X, TANK_WATER_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_WATER));
+    DisplayTank(window_x, window_y, TANK_INPUT_X, TANK_INPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
+    DisplayTank(window_x, window_y, TANK_WATER_X, TANK_WATER_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
   }
 
   @Override
@@ -108,14 +109,14 @@ public class GuiMetalAtomizer extends GuiFoundry
     if(isPointInRegion(TANK_INPUT_X,TANK_INPUT_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_INPUT));
+      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
     if(isPointInRegion(TANK_WATER_X,TANK_WATER_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.GetTank(TileEntityMetalAtomizer.TANK_WATER));
+      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
@@ -123,7 +124,7 @@ public class GuiMetalAtomizer extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       int power = te_atomizer.getStoredFoundryEnergy();
-      int  max_power = te_atomizer.GetEnergyCapacity();
+      int  max_power = te_atomizer.getFoundryEnergyCapacity();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
@@ -131,21 +132,7 @@ public class GuiMetalAtomizer extends GuiFoundry
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      switch(te_atomizer.GetMode())
-      {
-        case RSMODE_IGNORE:
-          currenttip.add("Mode: Ignore Restone");
-          break;
-        case RSMODE_OFF:
-          currenttip.add("Mode: Redstone signal OFF");
-          break;
-        case RSMODE_ON:
-          currenttip.add("Mode: Redstone signal ON");
-          break;
-        case RSMODE_PULSE:
-          currenttip.add("Mode: Redstone pulse");
-          break;
-      }
+      currenttip.add(getRedstoenModeText(te_atomizer.getRedstoneMode()));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
@@ -177,7 +164,21 @@ public class GuiMetalAtomizer extends GuiFoundry
   {
     if(button.id == button_mode.id)
     {
-      te_atomizer.SetMode(te_atomizer.GetMode().Next());
+      switch(te_atomizer.getRedstoneMode())
+      {
+        case RSMODE_IGNORE:
+          te_atomizer.setRedstoneMode(RedstoneMode.RSMODE_OFF);
+          break;
+        case RSMODE_OFF:
+          te_atomizer.setRedstoneMode(RedstoneMode.RSMODE_ON);
+          break;
+        case RSMODE_ON:
+          te_atomizer.setRedstoneMode(RedstoneMode.RSMODE_PULSE);
+          break;
+        case RSMODE_PULSE:
+          te_atomizer.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+      }
     }
   }
 }

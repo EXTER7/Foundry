@@ -1,12 +1,9 @@
 package exter.foundry.tileentity;
 
-import io.netty.buffer.ByteBuf;
-import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -20,37 +17,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  public enum RedstoneMode
-  {
-    RSMODE_IGNORE(0),
-    RSMODE_ON(1),
-    RSMODE_OFF(2);
-    
-    public final int number;
-    
-    private RedstoneMode(int num)
-    {
-      number = num;
-    }
-    
-    public RedstoneMode Next()
-    {
-      return FromNumber((number + 1) % 3);
-    }
-    
-    static public RedstoneMode FromNumber(int num)
-    {
-      for(RedstoneMode m:RedstoneMode.values())
-      {
-        if(m.number == num)
-        {
-          return m;
-        }
-      }
-      return RSMODE_IGNORE;
-    }
-  }
-  
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
 
@@ -72,8 +38,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   private int progress;
   private int heat;
   private int melt_point;
-
-  private RedstoneMode mode;
   private IMeltingRecipe current_recipe;
   
   
@@ -91,7 +55,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     melt_point = 0;
     
     current_recipe = null;
-    mode = RedstoneMode.RSMODE_IGNORE;
     
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
@@ -112,10 +75,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       melt_point = compund.getInteger("melt_point");
     }
 
-    if(compund.hasKey("mode"))
-    {
-      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
-    }
 
     if(compund.hasKey("heat"))
     {
@@ -138,7 +97,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     compound.setInteger("heat", heat);
     compound.setInteger("melt_point", melt_point);
     compound.setInteger("progress", progress);
-    compound.setInteger("mode", mode.number);
+
   }
 
 
@@ -147,41 +106,18 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        SetTankFluid(tank,value);
+        setTankFluid(tank,value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        SetTankAmount(tank,value);
+        setTankAmount(tank,value);
         break;
     }
   }
 
   public void SendGUINetworkData(ContainerInductionCrucibleFurnace container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, GetTankFluid(tank));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, GetTankAmount(tank));
-  }
-
-  @Override
-  public void ReceivePacketData(ByteBuf data)
-  {
-    SetMode(RedstoneMode.FromNumber(data.readByte()));
-  }
-
-  public RedstoneMode GetMode()
-  {
-    return mode;
-  }
-
-  public void SetMode(RedstoneMode new_mode)
-  {
-    if(mode != new_mode)
-    {
-      mode = new_mode;
-      if(worldObj.isRemote)
-      {
-        ModFoundry.network_channel.SendICFModeToServer(this);
-      }
-    }
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
   }
 
   @Override
@@ -261,24 +197,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     return 64;
   }
 
-  @Override
-  public void openInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendICFModeToClients(this);
-    }
-  }
-
-  @Override
-  public void closeInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendICFModeToClients(this);
-    }
-  }
-  
   public int GetHeat()
   {
     return heat;
@@ -361,7 +279,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
 
   }
@@ -413,8 +331,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       progress = 0;
       tank.fill(fs, true);
       decrStackSize(INVENTORY_INPUT,1);
-      UpdateTank(0);
-      UpdateInventoryItem(INVENTORY_INPUT);
+      updateTank(0);
+      updateInventoryItem(INVENTORY_INPUT);
     }
   }
 
@@ -424,9 +342,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
-    super.UpdateEntityServer();
+    super.updateServer();
     int last_progress = progress;
     int last_melt_point = melt_point;
     CheckCurrentRecipe();
@@ -437,12 +355,12 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     
     if(last_progress != progress)
     {
-      UpdateValue("progress",progress);
+      updateValue("progress",progress);
     }
 
     if(last_melt_point != melt_point)
     {
-      UpdateValue("melt_point",melt_point);
+      updateValue("melt_point",melt_point);
     }
 
     int last_heat = heat;
@@ -458,7 +376,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
 
     boolean use_energy = false;
-    switch(mode)
+    switch(getRedstoneMode())
     {
       case RSMODE_IGNORE:
         use_energy = true;
@@ -469,8 +387,10 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       case RSMODE_ON:
         use_energy = redstone_signal;
         break;
-      
+      default:
+        break;
     }
+    
     if(use_energy)
     {
       if(getStoredFoundryEnergy() > 0)
@@ -489,22 +409,22 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     
     if(last_progress != progress)
     {
-      UpdateValue("progress",progress);
+      updateValue("progress",progress);
     } 
     
     if(last_melt_point != melt_point)
     {
-      UpdateValue("melt_point",melt_point);
+      updateValue("melt_point",melt_point);
     }
 
     if(last_heat / 100 != heat / 100)
     {
-      UpdateValue("heat",heat);
+      updateValue("heat",heat);
     }
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     if(slot != 0)
     {
@@ -514,13 +434,13 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 1;
   }
 
   @Override
-  public int GetEnergyCapacity()
+  public int getFoundryEnergyCapacity()
   {
     return 18000;
   }  

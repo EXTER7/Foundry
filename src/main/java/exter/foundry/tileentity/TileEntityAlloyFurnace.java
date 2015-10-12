@@ -220,7 +220,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
 
   }
@@ -247,8 +247,8 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
         decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputA()));
         decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputB()));
       }
-      UpdateInventoryItem(SLOT_INPUT_A);
-      UpdateInventoryItem(SLOT_INPUT_B);
+      updateInventoryItem(SLOT_INPUT_A);
+      updateInventoryItem(SLOT_INPUT_B);
       if(inventory[SLOT_OUTPUT] == null)
       {
         inventory[SLOT_OUTPUT] = output.copy();
@@ -256,13 +256,13 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       {
         inventory[SLOT_OUTPUT].stackSize += output.stackSize;
       }
-      UpdateInventoryItem(SLOT_OUTPUT);
+      updateInventoryItem(SLOT_OUTPUT);
       markDirty();
     }
   }
   
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
     int last_burn_time = burn_time;
     int last_progress = progress;
@@ -299,7 +299,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
           {
             inventory[SLOT_FUEL] = inventory[SLOT_FUEL].getItem().getContainerItem(inventory[SLOT_FUEL]);
           }
-          UpdateInventoryItem(SLOT_FUEL);
+          updateInventoryItem(SLOT_FUEL);
         }
       }
     }
@@ -321,29 +321,29 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       {
         ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
       }
-      UpdateValue("BurnTime",burn_time);
+      updateValue("BurnTime",burn_time);
     }
 
     if(last_item_burn_time != item_burn_time || update_burn_times)
     {
-      UpdateValue("ItemBurnTime",item_burn_time);
+      updateValue("ItemBurnTime",item_burn_time);
     }
     update_burn_times = false;
 
     if(last_progress != progress)
     {
-      UpdateValue("CookTime",progress);
+      updateValue("CookTime",progress);
     }
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     return null;
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 0;
   }

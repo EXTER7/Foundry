@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import exter.foundry.tileentity.TileEntityFoundry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -184,5 +185,22 @@ public abstract class GuiFoundry extends GuiContainer
     float green = (float) (color >> 8 & 255) / 255.0F;
     float blue = (float) (color & 255) / 255.0F;
     GL11.glColor4f(red, green, blue, 1.0f);
+  }
+  
+  protected String getRedstoenModeText(TileEntityFoundry.RedstoneMode mode)
+  {
+    switch(mode)
+    {
+      case RSMODE_IGNORE:
+        return "Mode: Ignore Restone";
+      case RSMODE_OFF:
+        return "Mode: Redstone signal OFF";
+      case RSMODE_ON:
+        return "Mode: Redstone signal ON";
+      case RSMODE_PULSE:
+        return "Mode: Redstone pulse";
+      default:
+        return null;
+    }
   }
 }

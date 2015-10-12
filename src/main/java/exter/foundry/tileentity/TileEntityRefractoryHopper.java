@@ -90,10 +90,10 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        SetTankFluid(tank,value);
+        setTankFluid(tank,value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        SetTankAmount(tank,value);
+        setTankAmount(tank,value);
         break;
     }
   }
@@ -274,13 +274,13 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
 
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
 
     // Drain from the the world.
@@ -386,7 +386,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
           {
             hsource.drain(EnumFacing.DOWN, drained, true);
             tank.fill(drained, true);
-            UpdateTank(0);
+            updateTank(0);
              markDirty();
           }
         }
@@ -416,7 +416,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
               {
                 tank.drain(drained.amount, true);
                 hdest.fill(side, drained, true);
-                UpdateTank(0);
+                updateTank(0);
                 markDirty();
               }
             }
@@ -427,13 +427,13 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     return tank;
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 1;
   }

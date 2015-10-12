@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMetalCaster;
+import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -88,12 +89,12 @@ public class GuiMetalCaster extends GuiFoundry
     }
 
     //Draw stored power bar.
-    int power = te_caster.getStoredFoundryEnergy() * POWER_HEIGHT / te_caster.GetEnergyCapacity();
+    int power = te_caster.getStoredFoundryEnergy() * POWER_HEIGHT / te_caster.getFoundryEnergyCapacity();
     if(power > 0)
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
     }
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.GetTank(0));
+    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_caster.getTank(0));
   }
 
   @Override
@@ -104,7 +105,7 @@ public class GuiMetalCaster extends GuiFoundry
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_caster.GetTank(0));
+      AddTankTooltip(currenttip, mousex, mousey, te_caster.getTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
     
@@ -112,7 +113,7 @@ public class GuiMetalCaster extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       int power = te_caster.getStoredFoundryEnergy();
-      int  max_power = te_caster.GetEnergyCapacity();
+      int  max_power = te_caster.getFoundryEnergyCapacity();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
@@ -120,21 +121,7 @@ public class GuiMetalCaster extends GuiFoundry
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      switch(te_caster.GetMode())
-      {
-        case RSMODE_IGNORE:
-          currenttip.add("Mode: Ignore Restone");
-          break;
-        case RSMODE_OFF:
-          currenttip.add("Mode: Redstone signal OFF");
-          break;
-        case RSMODE_ON:
-          currenttip.add("Mode: Redstone signal ON");
-          break;
-        case RSMODE_PULSE:
-          currenttip.add("Mode: Redstone pulse");
-          break;
-      }
+      currenttip.add(getRedstoenModeText(te_caster.getRedstoneMode()));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
@@ -166,7 +153,21 @@ public class GuiMetalCaster extends GuiFoundry
   {
     if(button.id == button_mode.id)
     {
-      te_caster.SetMode(te_caster.GetMode().Next());
+      switch(te_caster.getRedstoneMode())
+      {
+        case RSMODE_IGNORE:
+          te_caster.setRedstoneMode(RedstoneMode.RSMODE_OFF);
+          break;
+        case RSMODE_OFF:
+          te_caster.setRedstoneMode(RedstoneMode.RSMODE_ON);
+          break;
+        case RSMODE_ON:
+          te_caster.setRedstoneMode(RedstoneMode.RSMODE_PULSE);
+          break;
+        case RSMODE_PULSE:
+          te_caster.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          break;
+      }
     }
   }
 }

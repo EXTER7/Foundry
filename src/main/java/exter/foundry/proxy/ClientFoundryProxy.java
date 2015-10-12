@@ -23,7 +23,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -132,7 +131,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       .register(machine_item, m.id, new ModelResourceLocation(name, "inventory"));
     }
 
-//    ModelBakery.addVariantName(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), "alloyFurnace");
     Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     .register(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), 0, new ModelResourceLocation("foundry:alloyFurnace", "inventory"));
 

@@ -1,14 +1,10 @@
 package exter.foundry.tileentity;
 
 
-import io.netty.buffer.ByteBuf;
-
-import exter.foundry.ModFoundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -23,37 +19,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  public enum RedstoneMode
-  {
-    RSMODE_IGNORE(0),
-    RSMODE_ON(1),
-    RSMODE_OFF(2),
-    RSMODE_PULSE(3);
-    
-    public final int number;
-    
-    private RedstoneMode(int num)
-    {
-      number = num;
-    }
-    
-    public RedstoneMode Next()
-    {
-      return FromNumber((number + 1) % 4);
-    }
-    
-    static public RedstoneMode FromNumber(int num)
-    {
-      for(RedstoneMode m:RedstoneMode.values())
-      {
-        if(m.number == num)
-        {
-          return m;
-        }
-      }
-      return RSMODE_IGNORE;
-    }
-  }
   
   static private final int NETDATAID_TANK_FLUID = 1;
   static private final int NETDATAID_TANK_AMOUNT = 2;
@@ -78,8 +43,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   private FluidTankInfo[] tank_info;
   IAtomizerRecipe current_recipe;
   
-  
-  private RedstoneMode mode;
   private int progress;
 
   private final FluidStack water_required = new FluidStack(FluidRegistry.WATER,50);
@@ -98,7 +61,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     progress = -1;
     inventory = new ItemStack[5];
     
-    mode = RedstoneMode.RSMODE_IGNORE;
     current_recipe = null;
     
     AddContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_DRAIN,false));
@@ -119,10 +81,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     {
       progress = compund.getInteger("progress");
     }
-    if(compund.hasKey("mode"))
-    {
-      mode = RedstoneMode.FromNumber(compund.getInteger("mode"));
-    }
   }
 
 
@@ -131,7 +89,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   {
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
-    compound.setInteger("mode", mode.number);
   }
 
   public void GetGUINetworkData(int id, int value)
@@ -139,51 +96,28 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     switch(id)
     {
       case NETDATAID_TANK_FLUID:
-        SetTankFluid(tanks[TANK_INPUT],value);
+        setTankFluid(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_TANK_AMOUNT:
-        SetTankAmount(tanks[TANK_INPUT],value);
+        setTankAmount(tanks[TANK_INPUT],value);
         break;
       case NETDATAID_WATER_TANK_FLUID:
-        SetTankFluid(tanks[TANK_WATER],value);
+        setTankFluid(tanks[TANK_WATER],value);
         break;
       case NETDATAID_WATER_TANK_AMOUNT:
-        SetTankAmount(tanks[TANK_WATER],value);
+        setTankAmount(tanks[TANK_WATER],value);
         break;
     }
   }
 
   public void SendGUINetworkData(ContainerMetalAtomizer container, ICrafting crafting)
   {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, GetTankFluid(tanks[TANK_INPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, GetTankAmount(tanks[TANK_INPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_FLUID, GetTankFluid(tanks[TANK_WATER]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_AMOUNT, GetTankAmount(tanks[TANK_WATER]));
-  }
-
-  @Override
-  public void ReceivePacketData(ByteBuf data)
-  {
-    SetMode(RedstoneMode.FromNumber(data.readByte()));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tanks[TANK_INPUT]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tanks[TANK_INPUT]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_FLUID, getTankFluid(tanks[TANK_WATER]));
+    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_AMOUNT, getTankAmount(tanks[TANK_WATER]));
   }
   
-  public RedstoneMode GetMode()
-  {
-    return mode;
-  }
-
-  public void SetMode(RedstoneMode new_mode)
-  {
-    if(mode != new_mode)
-    {
-      mode = new_mode;
-      if(worldObj.isRemote)
-      {
-        ModFoundry.network_channel.SendAtomizerModeToServer(this);
-      }
-    }
-  }
-
   @Override
   public int getSizeInventory()
   {
@@ -258,24 +192,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   public int getInventoryStackLimit()
   {
     return 64;
-  }
-
-  @Override
-  public void openInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendAtomizerModeToClients(this);
-    }
-  }
-
-  @Override
-  public void closeInventory(EntityPlayer player)
-  {
-    if(!worldObj.isRemote)
-    {
-      ModFoundry.network_channel.SendAtomizerModeToClients(this);
-    }
   }
 
   public int GetProgress()
@@ -354,7 +270,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  protected void UpdateEntityClient()
+  protected void updateClient()
   {
     
   }
@@ -402,9 +318,9 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
-    super.UpdateEntityServer();
+    super.updateServer();
     int last_progress = progress;
     
     CheckCurrentRecipe();
@@ -418,7 +334,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     
     if(progress < 0)
     {
-      switch(mode)
+      switch(getRedstoneMode())
       {
         case RSMODE_IGNORE:
           BeginAtomizing();
@@ -471,9 +387,9 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
           {
             inventory[INVENTORY_OUTPUT].stackSize++;
           }
-          UpdateInventoryItem(INVENTORY_OUTPUT);
-          UpdateTank(0);
-          UpdateTank(1);
+          updateInventoryItem(INVENTORY_OUTPUT);
+          updateTank(0);
+          updateTank(1);
           markDirty();
         }
       } else
@@ -484,12 +400,12 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     
     if(last_progress != progress)
     {
-      UpdateValue("progress",progress);
+      updateValue("progress",progress);
     }
   }
 
   @Override
-  public FluidTank GetTank(int slot)
+  public FluidTank getTank(int slot)
   {
     if(slot < 0 || slot > 1)
     {
@@ -499,13 +415,13 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public int GetTankCount()
+  public int getTankCount()
   {
     return 2;
   }
 
   @Override
-  public int GetEnergyCapacity()
+  public int getFoundryEnergyCapacity()
   {
     return 60000;
   }

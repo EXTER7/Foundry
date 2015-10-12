@@ -1,13 +1,11 @@
 package exter.foundry.tileentity;
 
-
-import io.netty.buffer.ByteBuf;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import exter.foundry.ModFoundry;
+import exter.foundry.network.MessageTileEntitySync;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,20 +14,47 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 /**
  * Base class for all machines.
  */
 public abstract class TileEntityFoundry extends TileEntity implements IUpdatePlayerListBox,IInventory
 {
+  public enum RedstoneMode
+  {
+    RSMODE_IGNORE(0),
+    RSMODE_ON(1),
+    RSMODE_OFF(2),
+    RSMODE_PULSE(3);
+    
+    public final int id;
+    
+    private RedstoneMode(int num)
+    {
+      id = num;
+    }
+    
+    static public RedstoneMode fromID(int num)
+    {
+      for(RedstoneMode m:RedstoneMode.values())
+      {
+        if(m.id == num)
+        {
+          return m;
+        }
+      }
+      return RSMODE_IGNORE;
+    }
+  }
+
+  private RedstoneMode mode;
   
   /**
    * Links an item slot to a tank for filling/draining containers.
@@ -55,7 +80,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
       fluid = container_fluid;
     }
     
-    public void Update()
+    public void update()
     {
       ItemStack stack = getStackInSlot(slot);
       if(stack == null || !(stack.getItem() instanceof IFluidContainerItem))
@@ -64,7 +89,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
       }
       IFluidContainerItem fluid_cont = (IFluidContainerItem)stack.getItem();
       
-      FluidTank tank = GetTank(tank_slot);
+      FluidTank tank = getTank(tank_slot);
       if(fill)
       {
         FluidStack drained = tank.drain(25, false);
@@ -79,8 +104,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
         }
         drained = tank.drain(filled, true);
         fluid_cont.fill(stack, drained, true);
-        UpdateTank(tank_slot);
-        UpdateInventoryItem(slot);
+        updateTank(tank_slot);
+        updateInventoryItem(slot);
       } else
       {
         FluidStack drained = fluid_cont.drain(stack, 25, false);
@@ -96,8 +121,8 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
         }
         drained = fluid_cont.drain(stack, filled, true);
         tank.fill(drained, true);
-        UpdateTank(tank_slot);
-        UpdateInventoryItem(slot);
+        updateTank(tank_slot);
+        updateInventoryItem(slot);
       }
     }
   }
@@ -115,13 +140,13 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     conatiner_slots.add(cs);
   }
 
-  protected abstract void UpdateEntityClient();
+  protected abstract void updateClient();
 
-  protected abstract void UpdateEntityServer();
+  protected abstract void updateServer();
 
-  public abstract FluidTank GetTank(int slot);
+  public abstract FluidTank getTank(int slot);
   
-  public abstract int GetTankCount();
+  public abstract int getTankCount();
   
   protected abstract void OnInitialize();
 
@@ -131,6 +156,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     last_redstone_signal = false;
     redstone_signal = false;
     initialized = false;
+    mode = RedstoneMode.RSMODE_IGNORE;
   }
   
   @Override
@@ -151,34 +177,34 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   }
   
   
-  protected final void UpdateTank(int slot)
+  protected final void updateTank(int slot)
   {
     if(packet == null)
     {
       return;
     }
-    WriteTankToNBT(packet,slot);
+    writeTankToNBT(packet,slot);
     do_update = true;
   }
   
-  protected final void UpdateInventoryItem(int slot)
+  protected final void updateInventoryItem(int slot)
   {
     if(packet == null)
     {
       return;
     }
-    WriteInventoryItemToNBT(packet,slot);
+    writeInventoryItemToNBT(packet,slot);
     do_update = true;
   }
 
-  protected final void WriteTankToNBT(NBTTagCompound compound,int slot)
+  protected final void writeTankToNBT(NBTTagCompound compound,int slot)
   {
     NBTTagCompound tag = new NBTTagCompound();
-    GetTank(slot).writeToNBT(tag);
+    getTank(slot).writeToNBT(tag);
     compound.setTag("Tank_" + String.valueOf(slot), tag);
   }
 
-  protected final void WriteInventoryItemToNBT(NBTTagCompound compound,int slot)
+  protected final void writeInventoryItemToNBT(NBTTagCompound compound,int slot)
   {
     ItemStack is = getStackInSlot(slot);
     NBTTagCompound tag = new NBTTagCompound();
@@ -200,12 +226,12 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     super.readFromNBT(compound);
 
     int i;
-    for(i = 0; i < GetTankCount(); i++)
+    for(i = 0; i < getTankCount(); i++)
     {
       NBTTagCompound tag = (NBTTagCompound)compound.getTag("Tank_" + String.valueOf(i));
       if(tag != null)
       {
-        FluidTank tank = GetTank(i);
+        FluidTank tank = getTank(i);
         tank.setFluid(null);
         tank.readFromNBT(tag);
       }
@@ -224,26 +250,35 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
         setInventorySlotContents(i, stack);
       }
     }
-    
+    if(compound.hasKey("rsmode"))
+    {
+      mode = RedstoneMode.fromID(compound.getInteger("rsmode"));
+    }
   }
   
+  protected void writeTileToNBT(NBTTagCompound compound)
+  {
+    super.writeToNBT(compound);
+  }
+
   
   @Override
   public void writeToNBT(NBTTagCompound compound)
   {
     int i;
     super.writeToNBT(compound);
-    for(i = 0; i < GetTankCount(); i++)
+    for(i = 0; i < getTankCount(); i++)
     {
-      WriteTankToNBT(compound,i);
+      writeTankToNBT(compound,i);
     }
     for(i = 0; i < getSizeInventory(); i++)
     {
-      WriteInventoryItemToNBT(compound,i);
+      writeInventoryItemToNBT(compound,i);
     }
+    compound.setInteger("rsmode", mode.id);
   }
 
-  protected final void UpdateValue(String name,int value)
+  protected final void updateValue(String name,int value)
   {
     if(packet == null)
     {
@@ -254,7 +289,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     do_update = true;
   }
 
-  protected final void UpdateNBTTag(String name,NBTTagCompound compound)
+  protected final void updateNBTTag(String name,NBTTagCompound compound)
   {
     if(packet == null)
     {
@@ -264,38 +299,27 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     do_update = true;
   }
 
-  private void sendPacketToPlayers(Packet packet)
+  protected void sendPacketToPlayers(NBTTagCompound data)
   {
-    final int MAX_DISTANCE = 192;
-    if(!worldObj.isRemote && packet != null)
-    {
-      BlockPos pos = getPos();
-      for(int j = 0; j < worldObj.playerEntities.size(); j++)
-      {
-        EntityPlayerMP player = (EntityPlayerMP) worldObj.playerEntities.get(j);
-
-        if(Math.abs(player.posX - pos.getX()) <= MAX_DISTANCE && Math.abs(player.posY - pos.getY()) <= MAX_DISTANCE && Math.abs(player.posZ - pos.getZ()) <= MAX_DISTANCE && player.dimension == worldObj.provider.getDimensionId())
-        {
-          player.playerNetServerHandler.sendPacket(packet);
-        }
-      }
-    }
+    data.setInteger("dim", worldObj.provider.getDimensionId());
+    ModFoundry.network_channel.sendToAllAround(new MessageTileEntitySync(data),
+        new TargetPoint(worldObj.provider.getDimensionId(),pos.getX(),pos.getY(),pos.getZ(),192));
   }
    
 
-  protected final int GetTankFluid(FluidTank tank)
+  protected final int getTankFluid(FluidTank tank)
   {
     FluidStack f = tank.getFluid();
     return f != null ? f.getFluidID() : 0;
   }
 
-  protected final int GetTankAmount(FluidTank tank)
+  protected final int getTankAmount(FluidTank tank)
   {
     FluidStack f = tank.getFluid();
     return f != null ? f.amount : 0;
   }
   
-  protected final void SetTankFluid(FluidTank tank,int value)
+  protected final void setTankFluid(FluidTank tank,int value)
   {
     Fluid f = FluidRegistry.getFluid(value);
     if(f == null)
@@ -312,7 +336,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     }
   }
 
-  protected final void SetTankAmount(FluidTank tank,int value)
+  protected final void setTankAmount(FluidTank tank,int value)
   {
     if(value == 0)
     {
@@ -347,18 +371,18 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
       do_update = false;
       for(ContainerSlot cs:conatiner_slots)
       {
-        cs.Update();
+        cs.update();
       }
-      UpdateEntityServer();
+      updateServer();
       
       if(do_update)
       {
-        sendPacketToPlayers(new S35PacketUpdateTileEntity(getPos(), 0, packet));
+        sendPacketToPlayers(packet);
       }
       packet = null;
     } else
     {
-      UpdateEntityClient();
+      updateClient();
     }
     last_redstone_signal = redstone_signal;
   }
@@ -379,11 +403,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     redstone_signal = worldObj.isBlockIndirectlyGettingPowered(getPos()) > 0;
   }
     
-  public void ReceivePacketData(ByteBuf data)
-  {
-    
-  }
-  
   @Override
   public boolean isUseableByPlayer(EntityPlayer player)
   {
@@ -393,50 +412,87 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   @Override
   public int getField(int id)
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public void setField(int id, int value)
   {
-    // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public int getFieldCount()
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public void clear()
   {
-    // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public String getCommandSenderName()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public boolean hasCustomName()
   {
-    // TODO Auto-generated method stub
     return false;
   }
 
   @Override
   public IChatComponent getDisplayName()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
+  public RedstoneMode getRedstoneMode()
+  {
+    return mode;
+  }
+  
+  public void setRedstoneMode(RedstoneMode new_mode)
+  {
+    if(mode != new_mode)
+    {
+      mode = new_mode;
+      if(worldObj.isRemote)
+      {
+        NBTTagCompound tag = new NBTTagCompound();
+        super.writeToNBT(tag);
+        tag.setInteger("rsmode", mode.id);
+        tag.setInteger("dim", worldObj.provider.getDimensionId());
+        ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
+      }
+    }
+  }
+
+  @Override
+  public void openInventory(EntityPlayer player)
+  {
+    if(!worldObj.isRemote)
+    {
+      NBTTagCompound tag = new NBTTagCompound();
+      super.writeToNBT(tag);
+      tag.setInteger("rsmode", mode.id);
+      sendPacketToPlayers(tag);
+    }
+  }
+
+  @Override
+  public void closeInventory(EntityPlayer player)
+  {
+    if(!worldObj.isRemote)
+    {
+      NBTTagCompound tag = new NBTTagCompound();
+      super.writeToNBT(tag);
+      tag.setInteger("rsmode", mode.id);
+      sendPacketToPlayers(tag);
+    }
+  }
 }

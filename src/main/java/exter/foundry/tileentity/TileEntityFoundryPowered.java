@@ -18,7 +18,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   protected boolean update_energy;
   protected boolean update_energy_tick;
   
-  public abstract int GetEnergyCapacity();
+  public abstract int getFoundryEnergyCapacity();
   
   public TileEntityFoundryPowered()
   {
@@ -38,7 +38,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     if(!allow_overflow)
     {
-      int needed = GetEnergyCapacity() - energy_stored;
+      int needed = getFoundryEnergyCapacity() - energy_stored;
       if(en > needed)
       {
         en = needed;
@@ -77,14 +77,14 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     if(do_use)
     {
       energy_stored -= amount;
-      UpdateEnergy();
+      updateFoundryEnergy();
     }
     return amount;
   }
   
   public int getStoredFoundryEnergy()
   {
-    int capacity = GetEnergyCapacity();
+    int capacity = getFoundryEnergyCapacity();
     if(energy_stored > capacity)
     {
       return capacity;
@@ -148,20 +148,20 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
 //    super.updateEntity();
 //  }
   
-  private void UpdateEnergy()
+  private void updateFoundryEnergy()
   {
     if(update_energy)
     {
-      UpdateValue("energy",energy_stored);
+      updateValue("energy",energy_stored);
     }
   }
   
   @Override
-  protected void UpdateEntityServer()
+  protected void updateServer()
   {
     if(update_energy_tick)
     {
-      UpdateEnergy();
+      updateFoundryEnergy();
       update_energy_tick = false;
     }
   }
@@ -192,7 +192,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Override
   public int getMaxEnergyStored(EnumFacing from)
   {
-    return GetEnergyCapacity() / RATIO_RF;
+    return getFoundryEnergyCapacity() / RATIO_RF;
   }
   
 //  @Override

@@ -15,8 +15,8 @@ import codechicken.nei.recipe.GuiRecipe;
 import com.google.common.collect.ImmutableList;
 
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.tileentity.TileEntityFoundryPowered;
@@ -165,7 +165,7 @@ public class InductionCrucibleFurnaceRecipeHandler extends FoundryRecipeHandler
   @Override
   public ItemStack getMachineItem()
   {
-    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ICF);
+    return FoundryBlocks.block_machine.asItemStack(EnumMachine.ICF);
   }
   
   @Override

@@ -18,8 +18,8 @@ import com.google.common.collect.Lists;
 
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAtomizerRecipe;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.gui.GuiMetalAtomizer;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 
@@ -192,7 +192,7 @@ public class MetalAtomizerRecipeHandler extends FoundryRecipeHandler
   @Override
   public ItemStack getMachineItem()
   {
-    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ATOMIZER);
+    return FoundryBlocks.block_machine.asItemStack(EnumMachine.ATOMIZER);
   }
   
   @Override

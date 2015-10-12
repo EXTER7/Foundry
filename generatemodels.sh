@@ -189,7 +189,7 @@ do
 	{
 	    "parent": "foundry:block/@@MODEL@@",
 	    "display": {
-	        "inventory": {
+	        "gui": {
 	            "rotation": [ 0, 180, 0 ]
             },
 	        "thirdperson": {

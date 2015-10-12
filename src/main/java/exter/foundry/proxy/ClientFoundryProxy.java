@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.BlockMetal;
 import exter.foundry.block.BlockMetalSlab;
@@ -121,6 +122,19 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
       .register(stairs_item, 0, new ModelResourceLocation(name, "inventory"));
     }
+
+    for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
+    {
+      Item machine_item = Item.getItemFromBlock(FoundryBlocks.block_machine);
+      String name = "foundry:" + m.model;
+      ModelBakery.addVariantName(machine_item, name);
+      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+      .register(machine_item, m.id, new ModelResourceLocation(name, "inventory"));
+    }
+
+//    ModelBakery.addVariantName(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), "alloyFurnace");
+    Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+    .register(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), 0, new ModelResourceLocation("foundry:alloyFurnace", "inventory"));
 
     ModIntegration.ClientInit();
   }

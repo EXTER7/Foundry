@@ -1,7 +1,7 @@
 {
     "parent": "foundry:block/stairsStraightInvar",
     "display": {
-        "inventory": {
+        "gui": {
             "rotation": [ 0, 180, 0 ]
             },
         "thirdperson": {

@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
-import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
@@ -137,7 +137,7 @@ public class AlloyMixerRecipeHandler extends FoundryRecipeHandler
   @Override
   public ItemStack getMachineItem()
   {
-    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER);
+    return FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYMIXER);
   }
   
   @Override

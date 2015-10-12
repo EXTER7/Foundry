@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/materialrouter_0",
+        "up": "foundry:blocks/materialrouter_1",
+        "down": "foundry:blocks/materialrouter_0",
+        "east": "foundry:blocks/materialrouter_5",
+        "west": "foundry:blocks/materialrouter_4",
+        "north": "foundry:blocks/materialrouter_2",
+        "south": "foundry:blocks/materialrouter_3"
+    }
+}
+

@@ -1,0 +1,12 @@
+{
+  "variants":
+  { 
+    "machine=icf": { "model": "foundry:machineICF" },
+    "machine=caster": { "model": "foundry:machineCaster" },
+    "machine=alloymixer": { "model": "foundry:machineAlloyMixer" },
+    "machine=infuser": { "model": "foundry:machineInfuser" },
+    "machine=router": { "model": "foundry:machineMaterialRouter" },
+    "machine=atomizer": { "model": "foundry:machineAtomizer" }
+  }
+}
+

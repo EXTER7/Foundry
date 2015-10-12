@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/alloymixer_sides",
+        "up": "foundry:blocks/alloymixer_top",
+        "down": "foundry:blocks/alloymixer_bottom",
+        "east": "foundry:blocks/alloymixer_sides",
+        "west": "foundry:blocks/alloymixer_sides",
+        "north": "foundry:blocks/alloymixer_sides",
+        "south": "foundry:blocks/alloymixer_sides"
+    }
+}
+

@@ -36,29 +36,24 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
 {
   private Random rand = new Random();
 
-  static public final int MACHINE_ICF = 0;
-  static public final int MACHINE_CASTER = 1;
-  static public final int MACHINE_ALLOYMIXER = 2;
-  static public final int MACHINE_INFUSER = 3;
-  static public final int MACHINE_MATERIALROUTER = 4;
-  static public final int MACHINE_ATOMIZER = 5;
-
-  public enum EnumMachine implements IStringSerializable
+  static public enum EnumMachine implements IStringSerializable
   {
-    ICF(0, "icf"),
-    CASTER(1, "caster"),
-    ALLOYMIXER(2, "alloymixer"),
-    INFUSER(3, "infuser"),
-    MATERIALROUTER(4, "router"),
-    ATOMIZER(5, "atomizer");
+    ICF(0, "icf", "machineICF"),
+    CASTER(1, "caster", "machineCaster"),
+    ALLOYMIXER(2, "alloymixer", "machineAlloyMixer"),
+    INFUSER(3, "infuser", "machineInfuser"),
+    MATERIALROUTER(4, "router", "machineMaterialRouter"),
+    ATOMIZER(5, "atomizer", "machineAtomizer");
 
     public final int id;
     public final String name;
+    public final String model;
 
-    private EnumMachine(int id, String name)
+    private EnumMachine(int id, String name,String model)
     {
       this.id = id;
       this.name = name;
+      this.model = model;
     }
 
     @Override
@@ -252,5 +247,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   public String getUnlocalizedName(int meta)
   {
     return getUnlocalizedName() + "." + ((EnumMachine)getStateFromMeta(meta).getValue(MACHINE)).name;
+  }
+  
+  public ItemStack asItemStack(EnumMachine machine)
+  {
+    return new ItemStack(this,1,getMetaFromState(getDefaultState().withProperty(MACHINE, machine)));
   }
 }

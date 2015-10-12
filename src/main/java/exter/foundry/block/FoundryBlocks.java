@@ -50,7 +50,7 @@ public class FoundryBlocks
     new BlockMetalSlab.Variant("bronze", "Bronze"),
     new BlockMetalSlab.Variant("electrum", "Electrum"),
     new BlockMetalSlab.Variant("invar", "Invar"),
-    new BlockMetalSlab.Variant("nuckel", "Nickel")
+    new BlockMetalSlab.Variant("nickel", "Nickel")
   };
   
   private static final BlockMetalSlab.Variant[] SLAB2_METALS = 

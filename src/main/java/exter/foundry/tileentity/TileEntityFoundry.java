@@ -264,17 +264,17 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     do_update = true;
   }
 
-  private void SendPacketToPlayers(Packet packet)
+  private void sendPacketToPlayers(Packet packet)
   {
     final int MAX_DISTANCE = 192;
     if(!worldObj.isRemote && packet != null)
     {
+      BlockPos pos = getPos();
       for(int j = 0; j < worldObj.playerEntities.size(); j++)
       {
         EntityPlayerMP player = (EntityPlayerMP) worldObj.playerEntities.get(j);
 
-        BlockPos pos = getPos();
-        if(Math.abs(player.posX - pos.getX()) <= MAX_DISTANCE && Math.abs(player.posY - pos.getY()) <= MAX_DISTANCE && Math.abs(player.posZ - pos.getY()) <= MAX_DISTANCE && player.dimension == worldObj.provider.getDimensionId())
+        if(Math.abs(player.posX - pos.getX()) <= MAX_DISTANCE && Math.abs(player.posY - pos.getY()) <= MAX_DISTANCE && Math.abs(player.posZ - pos.getZ()) <= MAX_DISTANCE && player.dimension == worldObj.provider.getDimensionId())
         {
           player.playerNetServerHandler.sendPacket(packet);
         }
@@ -353,7 +353,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
       
       if(do_update)
       {
-        SendPacketToPlayers(new S35PacketUpdateTileEntity(getPos(), 0, packet));
+        sendPacketToPlayers(new S35PacketUpdateTileEntity(getPos(), 0, packet));
       }
       packet = null;
     } else
@@ -367,7 +367,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   public final void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
   {
     super.onDataPacket(net, pkt);
-    if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+    if(worldObj.isRemote)
     {
       readFromNBT(pkt.getNbtCompound());
     }

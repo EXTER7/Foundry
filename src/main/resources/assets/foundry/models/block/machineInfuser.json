@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/infuser_sides",
+        "up": "foundry:blocks/infuser_top",
+        "down": "foundry:blocks/infuser_bottom",
+        "east": "foundry:blocks/infuser_sides",
+        "west": "foundry:blocks/infuser_sides",
+        "north": "foundry:blocks/infuser_sides",
+        "south": "foundry:blocks/infuser_sides"
+    }
+}
+

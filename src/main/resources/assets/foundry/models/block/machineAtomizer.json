@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/atomizer_sides",
+        "up": "foundry:blocks/atomizer_top",
+        "down": "foundry:blocks/atomizer_bottom",
+        "east": "foundry:blocks/atomizer_sides",
+        "west": "foundry:blocks/atomizer_sides",
+        "north": "foundry:blocks/atomizer_sides",
+        "south": "foundry:blocks/atomizer_sides"
+    }
+}
+

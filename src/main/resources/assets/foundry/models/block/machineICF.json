@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/icf_sides",
+        "up": "foundry:blocks/icf_top_bottom",
+        "down": "foundry:blocks/icf_top_bottom",
+        "east": "foundry:blocks/icf_sides",
+        "west": "foundry:blocks/icf_sides",
+        "north": "foundry:blocks/icf_sides",
+        "south": "foundry:blocks/icf_sides"
+    }
+}
+

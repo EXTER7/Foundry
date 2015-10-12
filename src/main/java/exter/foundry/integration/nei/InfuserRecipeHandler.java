@@ -17,8 +17,8 @@ import com.google.common.collect.Lists;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.recipes.SubstanceGuiTexture;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -164,7 +164,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
   @Override
   public ItemStack getMachineItem()
   {
-    return new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER);
+    return FoundryBlocks.block_machine.asItemStack(EnumMachine.INFUSER);
   }
   
   @Override

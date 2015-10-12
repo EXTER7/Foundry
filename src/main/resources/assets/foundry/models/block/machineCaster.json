@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/caster_sides",
+        "up": "foundry:blocks/caster_top",
+        "down": "foundry:blocks/caster_bottom",
+        "east": "foundry:blocks/caster_sides",
+        "west": "foundry:blocks/caster_sides",
+        "north": "foundry:blocks/caster_sides",
+        "south": "foundry:blocks/caster_sides"
+    }
+}
+

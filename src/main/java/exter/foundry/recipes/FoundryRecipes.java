@@ -26,9 +26,9 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
@@ -601,7 +601,7 @@ public class FoundryRecipes
         refbrick_stack);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine, 1, BlockFoundryMachine.MACHINE_ICF),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.ICF),
         "IFI",
         "HCH",
         "HRH",
@@ -612,7 +612,7 @@ public class FoundryRecipes
         'H', heatingcoil_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_INFUSER),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.INFUSER),
         "IRI",
         "GCG",
         "HRH",
@@ -640,7 +640,7 @@ public class FoundryRecipes
         'B', bucket_stack);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ATOMIZER),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.ATOMIZER),
         "GHG",
         "RCR",
         " B ",
@@ -651,7 +651,7 @@ public class FoundryRecipes
         'G', "gearStone"));
 
     GameRegistry.addRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_CASTER),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CASTER),
         " H ",
         "RCR",
         "IPI",
@@ -663,7 +663,7 @@ public class FoundryRecipes
 
     
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_ALLOYMIXER),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYMIXER),
         "GIG",
         "GCG",
         "IRI",
@@ -673,7 +673,7 @@ public class FoundryRecipes
         'G', "gearStone"));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.MATERIALROUTER),
         "GIG",
         "DRD",
         "GCG",

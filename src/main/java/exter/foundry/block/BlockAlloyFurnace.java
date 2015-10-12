@@ -117,6 +117,7 @@ public class BlockAlloyFurnace extends BlockContainer
   public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumFurnaceFacing.class);
 
 
+
   public BlockAlloyFurnace()
   {
     super(Material.rock);
@@ -128,6 +129,12 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
+  public int getRenderType()
+  {
+      return 3;
+  }
+
+  @Override
   protected BlockState createBlockState()
   {
     return new BlockState(this, STATE, FACING );
@@ -136,7 +143,7 @@ public class BlockAlloyFurnace extends BlockContainer
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    return getDefaultState().withProperty(FACING, EnumFurnaceFacing.fromID(meta & 3)).withProperty(STATE, EnumFurnaceFacing.fromID((meta >>> 2) & 1));
+    return getDefaultState().withProperty(FACING, EnumFurnaceFacing.fromID(meta & 3)).withProperty(STATE, EnumState.fromID((meta >>> 2) & 1));
   }
 
   @Override
@@ -194,7 +201,13 @@ public class BlockAlloyFurnace extends BlockContainer
 
   public void setFurnaceState(World world, BlockPos pos, IBlockState state, boolean is_on)
   {
+    TileEntity te = world.getTileEntity(pos);
     world.setBlockState(pos, state.withProperty(STATE, is_on ? EnumState.ON : EnumState.OFF));
+    if(te != null)
+    {
+      te.validate();
+      world.setTileEntity(pos, te);
+    }
   }
 
   @Override
@@ -272,19 +285,19 @@ public class BlockAlloyFurnace extends BlockContainer
 
       switch(facing)
       {
-        case EAST:
+        case NORTH:
           world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
           world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
           break;
-        case NORTH:
+        case EAST:
           world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
           world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
           break;
-        case SOUTH:
+        case WEST:
           world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
           world.spawnParticle(EnumParticleTypes.FLAME, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
           break;
-        case WEST:
+        case SOUTH:
           world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
           world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
           break;

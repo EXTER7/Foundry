@@ -34,7 +34,7 @@ public class SlotFirearmAmmo extends Slot
     super.onSlotChanged();
     if(FMLCommonHandler.instance().getEffectiveSide().isServer())
     {
-      ((InventoryFirearm)inventory).Save();
+      ((InventoryFirearm)inventory).save();
     }
   }
 }

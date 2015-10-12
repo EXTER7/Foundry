@@ -75,13 +75,10 @@ public class FoundryBlocks
   public static BlockRefractoryCasing block_refractory_casing;
   public static BlockFoundryMachine block_machine;
 
-  public static BlockMetal block_metal1;
-  public static BlockMetal block_metal2;
+  public static BlockMetal[] block_metal;
   public static BlockFoundryOre block_ore;
   
-  public static BlockMetalSlab block_slab1;
-  public static BlockMetalSlab block_slab2;
-  public static BlockMetalSlab block_slab3;
+  public static BlockMetalSlab[] block_slab;
 
 //  public static BlockMetalSlab block_slabdouble1;
 //  public static BlockMetalSlab block_slabdouble2;
@@ -100,85 +97,57 @@ public class FoundryBlocks
   public static Map<String,ItemStack> slab_stacks = new HashMap<String,ItemStack>();
   
   
-  static private void RegisterHalfSlabs(Configuration config)
+  static private void registerHalfSlabs(Configuration config)
   {
-    block_slab1 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB1_METALS; } };
-    block_slab2 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB2_METALS; } };
-    block_slab3 = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB3_METALS; } };
-//    block_slabdouble1 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab1, SLAB1_METALS,SLAB1_ICONS).setBlockName("metalSlabDouble1");
-//    block_slabdouble2 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab2, SLAB2_METALS,SLAB2_ICONS).setBlockName("metalSlabDouble2");
-//    block_slabdouble3 = (BlockMetalSlab)new BlockMetalSlab(true,block_slab3, SLAB3_METALS,SLAB3_ICONS).setBlockName("metalSlabDouble3");
-//    block_slab1.SetOtherBlock(block_slabdouble1);
-//    block_slab2.SetOtherBlock(block_slabdouble2);
-//    block_slab3.SetOtherBlock(block_slabdouble3);
+    int i;
+    block_slab = new BlockMetalSlab[3];
+    block_slab[0] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB1_METALS; } };
+    block_slab[1] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB2_METALS; } };
+    block_slab[2] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB3_METALS; } };
 
-    GameRegistry.registerBlock(block_slab1, ItemBlockSlab.class, "slabMetal1");
-    GameRegistry.registerBlock(block_slab2, ItemBlockSlab.class, "slabMetal2");
-    GameRegistry.registerBlock(block_slab3, ItemBlockSlab.class, "slabMetal3");
-//    GameRegistry.registerBlock(block_slabdouble1, ItemBlockMulti.class, "slabDouble1");
-//    GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
-//    GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
-
-//    for(i = 0; i < SLAB1_METALS.length; i++)
-//    {
-//      ItemStack stack = new ItemStack(block_slab1,  1, i);
-//      GameRegistry.registerCustomItemStack("blockSlab" + SLAB1_METALS[i], stack);
-//    }
-//
-//    for(i = 0; i < SLAB2_METALS.length; i++)
-//    {
-//      ItemStack stack = new ItemStack(block_slab2,  1, i);
-//      GameRegistry.registerCustomItemStack("blockSlab" + SLAB2_METALS[i], stack);
-//    }
-
-//    for(i = 0; i < SLAB3_METALS.length; i++)
-//    {
-//      ItemStack stack = new ItemStack(block_slab3,  1, i);
-//      slab_stacks.put(SLAB3_METALS[i], stack);
-//      GameRegistry.registerCustomItemStack("blockSlab" + SLAB3_METALS[i], stack);
-//    }
+    for(i = 0; i < block_slab.length; i++)
+    {
+      GameRegistry.registerBlock(block_slab[i], ItemBlockSlab.class, "slabMetal" + (i + 1));
+    }
   }
   
-  static public void RegisterBlocks(Configuration config)
+  static public void registerBlocks(Configuration config)
   {
-   
+    int i;
     block_refractory_casing = new BlockRefractoryCasing();
     block_machine = new BlockFoundryMachine();
-    block_metal1 = new BlockMetal() { public Variant[] getVariants() { return BLOCK1_METALS; } };
-    block_metal2 = new BlockMetal() { public Variant[] getVariants() { return BLOCK2_METALS; } };
+    block_metal = new BlockMetal[2];
+    block_metal[0] = new BlockMetal() { public Variant[] getVariants() { return BLOCK1_METALS; } };
+    block_metal[1] = new BlockMetal() { public Variant[] getVariants() { return BLOCK2_METALS; } };
     block_ore = new BlockFoundryOre();
     block_alloy_furnace = new BlockAlloyFurnace();
     block_refractory_hopper = new BlockRefractoryHopper();
 
+    block_metal_stairs = new HashMap<String,BlockStairs>();
+    for(i = 0; i < block_metal.length; i++)
+    {
+      GameRegistry.registerBlock(block_metal[i], ItemBlockMulti.class, "blockMetal" + (i + 1));
+      for(BlockMetal.Variant v:block_metal[i].getVariants())
+      {
+        IBlockState state = block_metal[i].getVariantState(v);
+        block_metal_stairs.put(v.metal,new BlockMetalStairs(state,v.metal));
+        ItemStack item = new ItemStack(block_metal[i],1,block_metal[i].getMetaFromState(state));
+        block_stacks.put(v.metal, item);
+        OreDictionary.registerOre(v.oredict, item);
+      }
+    }
+
     GameRegistry.registerBlock(block_refractory_casing, "casing");
     GameRegistry.registerBlock(block_machine, ItemBlockMulti.class, "machine");
-    GameRegistry.registerBlock(block_metal1, ItemBlockMulti.class, "blockMetal1");
-    GameRegistry.registerBlock(block_metal2, ItemBlockMulti.class, "blockMetal2");
     GameRegistry.registerBlock(block_ore, ItemBlockMulti.class, "ore");
     GameRegistry.registerBlock(block_alloy_furnace, "alloyFurnace");
     GameRegistry.registerBlock(block_refractory_hopper, "refractoryHopper");
 
-    RegisterHalfSlabs(config);
+    registerHalfSlabs(config);
     
-    block_metal_stairs = new HashMap<String,BlockStairs>();
     block_metal_stairs.put("Iron",new BlockMetalStairs(Blocks.iron_block.getDefaultState(),"Iron"));
     block_metal_stairs.put("Gold",new BlockMetalStairs(Blocks.gold_block.getDefaultState(),"Gold"));
-    for(BlockMetal.Variant v:BLOCK1_METALS)
-    {
-      IBlockState state = block_metal1.getVariantState(v);
-      block_metal_stairs.put(v.metal,new BlockMetalStairs(state,v.metal));
-      ItemStack item = new ItemStack(block_metal1,1,block_metal1.getMetaFromState(state));
-      block_stacks.put(v.metal, item);
-      OreDictionary.registerOre(v.oredict, item);
-    }
-    for(BlockMetal.Variant v:BLOCK2_METALS)
-    {
-      IBlockState state = block_metal2.getVariantState(v);
-      block_metal_stairs.put(v.metal,new BlockMetalStairs(state,v.metal));
-      ItemStack item = new ItemStack(block_metal2,1,block_metal2.getMetaFromState(state));
-      block_stacks.put(v.metal, item);
-      OreDictionary.registerOre(v.oredict, item);
-    }
+
     for(Map.Entry<String,BlockStairs> e:block_metal_stairs.entrySet())
     {
       GameRegistry.registerBlock(e.getValue(), "stairs" + e.getKey());
@@ -205,7 +174,6 @@ public class FoundryBlocks
 //    GameRegistry.registerCustomItemStack("machineMaterialRouter", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_MATERIALROUTER));
 //    GameRegistry.registerCustomItemStack("refractoryHopper", new ItemStack(block_refractory_hopper));
 //    GameRegistry.registerCustomItemStack("machineAtomizer", new ItemStack(block_machine,1,BlockFoundryMachine.MACHINE_ATOMIZER));
-
     
     for(BlockFoundryOre.EnumOre v:BlockFoundryOre.EnumOre.values())
     {

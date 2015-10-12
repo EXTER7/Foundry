@@ -18,7 +18,7 @@ public class FoundryConfig
   public static boolean recipe_tools_armor;
   public static boolean recipe_glass;
   
-  static public void Load(Configuration config)
+  static public void load(Configuration config)
   {
 	  
     recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);

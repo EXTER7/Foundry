@@ -106,7 +106,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.getTank(0));
+    displayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.getTank(0));
   }
 
   @Override
@@ -119,7 +119,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_icf.getTank(0));
+      addTankTooltip(currenttip, mousex, mousey, te_icf.getTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
@@ -135,7 +135,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
       }
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_icf.getRedstoneMode()));
@@ -144,7 +144,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   }
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

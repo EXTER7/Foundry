@@ -48,12 +48,12 @@ public class CommonFoundryProxy implements IGuiHandler
 
   static public int hopper_renderer_id = -1;
   
-  public void PreInit()
+  public void preInit()
   {
     
   }
 
-  public void Init()
+  public void init()
   {
 
   }
@@ -146,7 +146,7 @@ public class CommonFoundryProxy implements IGuiHandler
     return null;
   }
   
-  public void PostInit()
+  public void postInit()
   {
     
   }

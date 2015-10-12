@@ -75,27 +75,27 @@ public class GuiMetalInfuser extends GuiFoundry
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
     //Draw progress bar.
-    int progress = te_infuser.GetProgress() * PROGRESS_WIDTH / te_infuser.GetExtractTime();
+    int progress = te_infuser.GetProgress() * PROGRESS_WIDTH / te_infuser.getExtractTime();
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    DisplayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
-    DisplayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
+    displayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
+    displayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
     
     //Draw substance bar.
-    InfuserSubstance sub = te_infuser.GetSubstance();
+    InfuserSubstance sub = te_infuser.getSubstance();
     if(sub != null && sub.amount > 0)
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
       mc.renderEngine.bindTexture(tex.getLocation());
       int height = sub.amount * TANK_HEIGHT / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
-      SetColor(tex.getColor());
+      setGLColor(tex.getColor());
       drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.getX(), tex.getY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
       GL11.glColor4f(1.0f,1.0f,1.0f,1.0f);
-      mc.renderEngine.bindTexture(GetGUITexture());
+      mc.renderEngine.bindTexture(getGUITexture());
     }
   }
 
@@ -106,21 +106,21 @@ public class GuiMetalInfuser extends GuiFoundry
     if(isPointInRegion(INPUT_TANK_X,INPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
+      addTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
     if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
+      addTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
     if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mousex, mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      InfuserSubstance sub = te_infuser.GetSubstance();
+      InfuserSubstance sub = te_infuser.getSubstance();
       if(sub != null && sub.amount > 0)
       {
         currenttip.add(StatCollector.translateToLocal("substance." + sub.type));
@@ -134,7 +134,7 @@ public class GuiMetalInfuser extends GuiFoundry
   }
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

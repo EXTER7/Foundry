@@ -33,15 +33,15 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   
   
   @Override
-  public void PreInit()
+  public void preInit()
   {
     MaterialRegistry.instance.InitIcons();
     InfuserRecipeManager.instance.InitTextures();
-    ModIntegration.ClientPreInit();
+    ModIntegration.clientPreInit();
   }
 
   @Override
-  public void Init()
+  public void init()
   {
     //MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
     InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
@@ -67,49 +67,28 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     }
 
 
-    for(BlockMetal.Variant v:FoundryBlocks.block_metal1.getVariants())
+    for(BlockMetal block:FoundryBlocks.block_metal)
     {
-      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_metal1);
-      String name = "foundry:block" + v.metal;
-      ModelBakery.addVariantName(slab_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
+      for(BlockMetal.Variant v:block.getVariants())
+      {
+        Item slab_item = Item.getItemFromBlock(block);
+        String name = "foundry:block" + v.metal;
+        ModelBakery.addVariantName(slab_item, name);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+        .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
+      }
     }
 
-    for(BlockMetal.Variant v:FoundryBlocks.block_metal2.getVariants())
+    for(BlockMetalSlab block:FoundryBlocks.block_slab)
     {
-      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_metal2);
-      String name = "foundry:block" + v.metal;
-      ModelBakery.addVariantName(slab_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
-    }
-
-    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab1.getVariants())
-    {
-      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab1);
-      String name = "foundry:slab" + v.metal;
-      ModelBakery.addVariantName(slab_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(slab_item, FoundryBlocks.block_slab1.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
-    }
-
-    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab2.getVariants())
-    {
-      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab2);
-      String name = "foundry:slab" + v.metal;
-      ModelBakery.addVariantName(slab_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(slab_item, FoundryBlocks.block_slab2.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
-    }
-
-    for(BlockMetalSlab.Variant v:FoundryBlocks.block_slab3.getVariants())
-    {
-      Item slab_item = Item.getItemFromBlock(FoundryBlocks.block_slab3);
-      String name = "foundry:slab" + v.metal;
-      ModelBakery.addVariantName(slab_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(slab_item, FoundryBlocks.block_slab3.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+      for(BlockMetalSlab.Variant v:block.getVariants())
+      {
+        Item slab_item = Item.getItemFromBlock(block);
+        String name = "foundry:slab" + v.metal;
+        ModelBakery.addVariantName(slab_item, name);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+        .register(slab_item, block.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+      }
     }
 
     for(Map.Entry<String, BlockStairs> e:FoundryBlocks.block_metal_stairs.entrySet())
@@ -134,11 +113,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     .register(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), 0, new ModelResourceLocation("foundry:alloyFurnace", "inventory"));
 
-    ModIntegration.ClientInit();
+    ModIntegration.clientInit();
   }
 
   @Override
-  public void PostInit()
+  public void postInit()
   {
     for(OreDictMaterial material : OreDictMaterial.MATERIALS)
     {
@@ -179,7 +158,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
         }
       }
     }
-    ModIntegration.ClientPostInit();
+    ModIntegration.clientPostInit();
   }
 
 }

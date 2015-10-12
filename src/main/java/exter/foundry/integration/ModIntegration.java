@@ -32,23 +32,23 @@ public abstract class ModIntegration
     is_loaded = true;
   }
   
-  public abstract void OnPreInit(Configuration config);
-  public abstract void OnInit();
-  public abstract void OnPostInit();
+  public abstract void onPreInit(Configuration config);
+  public abstract void onInit();
+  public abstract void onPostInit();
 
-  public void OnAfterPostInit()
+  public void pnAfterPostInit()
   {
     
   }
 
   @SideOnly(Side.CLIENT)
-  public void OnClientPreInit()
+  public void onClientPreInit()
   {
     
   }
   
   @SideOnly(Side.CLIENT)
-  public void OnClientInit()
+  public void onClientInit()
   {
     
   }
@@ -59,17 +59,17 @@ public abstract class ModIntegration
     
   }
 
-  public final boolean IsLoaded()
+  public final boolean isLoaded()
   {
     return is_loaded;
   }
   
-  static final public ModIntegration GetIntegration(String name)
+  static final public ModIntegration getIntegration(String name)
   {
     return integrations.get(name);
   }
   
-  static final public void RegisterIntegration(Configuration config,Class<? extends ModIntegration> mod,String name)
+  static final public void registerIntegration(Configuration config,Class<? extends ModIntegration> mod,String name)
   {
     try
     {
@@ -102,71 +102,81 @@ public abstract class ModIntegration
     }
   }
   
-  static final public void PreInit(Configuration config)
+  static final public void preInit(Configuration config)
   {
     for(ModIntegration m:integrations.values())
     {
       if(m.is_loaded)
       {
         ModFoundry.log.info("PreInit integration: " + m.Name);
-        m.OnPreInit(config);
+        m.onPreInit(config);
       }
     }
   }
 
-  static final public void Init()
+  static final public void init()
   {
     for(ModIntegration m:integrations.values())
     {
       if(m.is_loaded)
       {
         ModFoundry.log.info("Init integration: " + m.Name);
-        m.OnInit();
+        m.onInit();
       }
     }
   }
 
-  static final public void PostInit()
+  static final public void postInit()
   {
     for(ModIntegration m:integrations.values())
     {
       if(m.is_loaded)
       {
         ModFoundry.log.info("PostInit integration: " + m.Name);
-        m.OnPostInit();
+        m.onPostInit();
       }
     }
   }
 
-  static final public void AfterPostInit()
+  static final public void afterPostInit()
   {
     for(ModIntegration m:integrations.values())
     {
       if(m.is_loaded)
       {
         ModFoundry.log.info("AfterPostInit integration: " + m.Name);
-        m.OnAfterPostInit();
+        m.pnAfterPostInit();
       }
     }
   }
 
 
   @SideOnly(Side.CLIENT)
-  static final public void ClientPreInit()
+  static final public void clientPreInit()
   {
     for(ModIntegration m:integrations.values())
     {
       if(m.is_loaded)
       {
-        m.OnClientPreInit();
+        m.onClientPreInit();
       }
     }
   }
 
-  
+  @SideOnly(Side.CLIENT)
+  static final public void clientInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        m.onClientInit();
+      }
+    }
+  }
 
   @SideOnly(Side.CLIENT)
-  static final public void ClientPostInit()
+  static final public void clientPostInit()
   {
     for(ModIntegration m:integrations.values())
     {
@@ -178,25 +188,12 @@ public abstract class ModIntegration
   }
 
   
-
-  @SideOnly(Side.CLIENT)
-  static final public void ClientInit()
+  static protected void registerCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
   {
-    for(ModIntegration m:integrations.values())
-    {
-      if(m.is_loaded)
-      {
-        m.OnClientInit();
-      }
-    }
-  }
-  
-  static protected void RegisterCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
-  {
-    RegisterCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,extra);
+    registerCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,extra);
   }
 
-  static protected void RegisterCasting(ItemStack item,FluidStack fluid,int mold_meta,ItemStack extra)
+  static protected void registerCasting(ItemStack item,FluidStack fluid,int mold_meta,ItemStack extra)
   {
     if(item != null)
     {
@@ -208,14 +205,14 @@ public abstract class ModIntegration
     }
   }
   
-  static protected void RegisterPlateMoldRecipe(ItemStack item,String oredict_name)
+  static protected void registerPlateMoldRecipe(ItemStack item,String oredict_name)
   {
     if(FoundryUtils.isItemInOreDictionary(oredict_name, item))
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
     } else
     {
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PLATE_SOFT, item);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, item);
     }
   }
   

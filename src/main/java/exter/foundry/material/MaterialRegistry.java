@@ -65,13 +65,13 @@ public final class MaterialRegistry implements IMaterialRegistry
   @Override
   public String getMaterial(ItemStack item)
   {
-    return materials.get(HashableItem.Cache(item));
+    return HashableItem.getFromMap(materials,item);
   }
 
   @Override
   public String getType(ItemStack item)
   {
-    return types.get(HashableItem.Cache(item));
+    return HashableItem.getFromMap(types,item);
   }
 
   @Override

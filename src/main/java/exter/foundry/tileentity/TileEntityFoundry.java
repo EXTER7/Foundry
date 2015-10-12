@@ -148,7 +148,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   
   public abstract int getTankCount();
   
-  protected abstract void OnInitialize();
+  protected abstract void onInitialize();
 
   public TileEntityFoundry()
   {
@@ -359,7 +359,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
     if(!(initialized || isInvalid()))
     {
       updateRedstone();
-      OnInitialize();
+      onInitialize();
       initialized = true;
     }
     

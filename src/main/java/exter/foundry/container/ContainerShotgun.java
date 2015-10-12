@@ -131,7 +131,7 @@ public class ContainerShotgun extends Container
     shotgun_inv.closeInventory(entityPlayer);
     if (!entityPlayer.worldObj.isRemote)
     {
-      shotgun_inv.Save();
+      shotgun_inv.save();
     }
   }
 }

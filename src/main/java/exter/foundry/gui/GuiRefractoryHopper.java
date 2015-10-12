@@ -55,7 +55,7 @@ public class GuiRefractoryHopper extends GuiFoundry
       if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
         List<String> currenttip = new ArrayList<String>();
-        AddTankTooltip(currenttip,mousex, mousey, te_hopper.getTank(i));
+        addTankTooltip(currenttip,mousex, mousey, te_hopper.getTank(i));
         drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
       }
     }
@@ -70,11 +70,11 @@ public class GuiRefractoryHopper extends GuiFoundry
     int window_y = (height - ySize) / 2;
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-    DisplayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_hopper.getTank(0));
+    displayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_hopper.getTank(0));
   }
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

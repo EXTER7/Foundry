@@ -25,18 +25,18 @@ public class ModIntegrationForestry extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("Forestry"))
     {
@@ -50,9 +50,9 @@ public class ModIntegrationForestry extends ModIntegration
 
     if(is_loaded)
     {
-      FoundryMiscUtils.RegisterInOreDictionary("gearCopper",copper_gear);
-      FoundryMiscUtils.RegisterInOreDictionary("gearTin",tin_gear);
-      FoundryMiscUtils.RegisterInOreDictionary("gearBronze",bronze_gear);
+      FoundryMiscUtils.registerInOreDictionary("gearCopper",copper_gear);
+      FoundryMiscUtils.registerInOreDictionary("gearTin",tin_gear);
+      FoundryMiscUtils.registerInOreDictionary("gearBronze",bronze_gear);
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
         ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);

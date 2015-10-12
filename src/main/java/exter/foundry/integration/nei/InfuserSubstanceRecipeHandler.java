@@ -57,7 +57,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     }
 
     @Override
-    public InfuserSubstance GetSubstance()
+    public InfuserSubstance getSubstance()
     {
       return substance;
     }
@@ -89,8 +89,8 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       drawProgressBar(PROGRESS, currentProgress);
     }
-    int times = FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX / foundryRecipe.GetSubstance().amount;
-    DrawSubstance(foundryRecipe.GetSubstance(), (foundryRecipe.getAgeTicks() / 30) % (times));
+    int times = FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX / foundryRecipe.getSubstance().amount;
+    DrawSubstance(foundryRecipe.getSubstance(), (foundryRecipe.getAgeTicks() / 30) % (times));
   }
   
   private void DrawSubstance(InfuserSubstance substance,int multiplier)
@@ -105,8 +105,8 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
         height = 47;
       }
 
-      Rectangle rect = GetSubstanceRect();
-      SetColor(tex.getColor());
+      Rectangle rect = getSubstanceRect();
+      setGLColor(tex.getColor());
       GuiDraw.drawTexturedModalRect(rect.x, rect.y + 47 - height, tex.getX(), tex.getY() + 47 - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
       GL11.glColor4f(1, 1, 1, 1);
       GuiDraw.changeTexture(getGuiTexture());
@@ -211,7 +211,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
   }
 
   @Override
-  protected Rectangle GetSubstanceRect()
+  protected Rectangle getSubstanceRect()
   {
     return SUBSTANCE_RECT;
   }

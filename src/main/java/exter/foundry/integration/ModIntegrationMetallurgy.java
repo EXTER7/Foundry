@@ -15,20 +15,20 @@ public class ModIntegrationMetallurgy extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
 
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
 
   }
   
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("Metallurgy"))
     {

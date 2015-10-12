@@ -49,7 +49,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
     }
 
     @Override
-    public InfuserSubstance GetSubstance()
+    public InfuserSubstance getSubstance()
     {
       return substance;
     }
@@ -81,8 +81,8 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
       GuiDraw.changeTexture(tex.getLocation());
-      Rectangle rect = GetSubstanceRect();
-      SetColor(tex.getColor());
+      Rectangle rect = getSubstanceRect();
+      setGLColor(tex.getColor());
       GuiDraw.drawTexturedModalRect(rect.x, rect.y, tex.getX(), tex.getY(), SubstanceGuiTexture.TEXTURE_WIDTH, 47);
       GL11.glColor4f(1, 1, 1, 1);
       GuiDraw.changeTexture(getGuiTexture());
@@ -200,7 +200,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
   }
 
   @Override
-  protected Rectangle GetSubstanceRect()
+  protected Rectangle getSubstanceRect()
   {
     return SUBSTANCE_RECT;
   }

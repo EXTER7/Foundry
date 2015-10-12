@@ -47,19 +47,19 @@ public class ModIntegrationTF extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
     override_redstone_melting = config.get("integration", Name + ".override_redstone_melting", true).getBoolean(true);
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("ThermalFoundation"))
     {

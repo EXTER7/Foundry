@@ -79,7 +79,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     compound.setInteger("progress", progress);
   }
 
-  public void GetGUINetworkData(int id, int value)
+  public void getGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -92,7 +92,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     }
   }
 
-  public void SendGUINetworkData(ContainerMetalCaster container, ICrafting crafting)
+  public void sendGUINetworkData(ContainerMetalCaster container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
@@ -252,7 +252,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     
   }
   
-  private void CheckCurrentRecipe()
+  private void checkCurrentRecipe()
   {
     if(current_recipe == null)
     {
@@ -268,16 +268,16 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     }
   }
   
-  private void BeginCasting()
+  private void beginCasting()
   {
-    if(current_recipe != null && CanCastCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && canCastCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
     {
       useFoundryEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }
   
-  private boolean CanCastCurrentRecipe()
+  private boolean canCastCurrentRecipe()
   {
     if(current_recipe.requiresExtra())
     {
@@ -304,7 +304,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     super.updateServer();
     int last_progress = progress;
     
-    CheckCurrentRecipe();
+    checkCurrentRecipe();
     
     if(current_recipe == null)
     {
@@ -318,30 +318,30 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
       switch(getRedstoneMode())
       {
         case RSMODE_IGNORE:
-          BeginCasting();
+          beginCasting();
           break;
         case RSMODE_OFF:
           if(!redstone_signal)
           {
-            BeginCasting();
+            beginCasting();
           }
           break;
         case RSMODE_ON:
           if(redstone_signal)
           {
-            BeginCasting();
+            beginCasting();
           }
           break;
         case RSMODE_PULSE:
           if(redstone_signal && !last_redstone_signal)
           {
-            BeginCasting();
+            beginCasting();
           }
           break;
       }
     } else
     {
-      if(CanCastCurrentRecipe())
+      if(canCastCurrentRecipe())
       {
         FluidStack input_fluid = current_recipe.getInput();
         int increment = 18000 * current_recipe.getCastingSpeed() / input_fluid.amount;

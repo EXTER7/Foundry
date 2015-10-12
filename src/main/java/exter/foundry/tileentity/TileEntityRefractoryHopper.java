@@ -85,7 +85,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     compound.setInteger("next_fill", next_fill);
   }
 
-  public void GetGUINetworkData(int id, int value)
+  public void setGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -98,20 +98,11 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     }
   }
 
-  private int GetTankFluid()
-  {
-    return tank.getFluid() != null ? tank.getFluid().getFluidID() : 0;
-  }
 
-  private int GetTankAmount()
+  public void sendGUINetworkData(ContainerRefractoryHopper container, ICrafting crafting)
   {
-    return tank.getFluid() != null ? tank.getFluid().amount : 0;
-  }
-
-  public void SendGUINetworkData(ContainerRefractoryHopper container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, GetTankFluid());
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, GetTankAmount());
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
+    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
   }
 
   @Override
@@ -289,7 +280,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       next_world_drain = 300;
 
 
-      FluidStack todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add( 0, 1, 0), false);
+      FluidStack todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add( 0, 1, 0), false);
 
       if(todrain != null && tank.fill(todrain, false) == todrain.amount)
       {
@@ -323,7 +314,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
               int y = (p / 41) % 20;
               int z = p / (41 * 20);
               
-              todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add(x - 20, y + 1, z - 20), false);
+              todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add(x - 20, y + 1, z - 20), false);
               if(todrain != null && todrain.getFluid() == drainfluid && tank.fill(todrain, false) == todrain.amount)
               {
                 if(y > top_y)
@@ -363,7 +354,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
           int x = drainblock % 41;
           int z = drainblock / (41 * 20);
-          todrain = FoundryMiscUtils.DrainFluidFromWorld(worldObj, getPos().add(x - 20, top_y + 1, z - 20), true);
+          todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add(x - 20, top_y + 1, z - 20), true);
           tank.fill(todrain, true);
         }
       }
@@ -439,7 +430,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  protected void OnInitialize()
+  protected void onInitialize()
   {
 
   }

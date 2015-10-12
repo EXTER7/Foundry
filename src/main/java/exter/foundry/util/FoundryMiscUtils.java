@@ -27,7 +27,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class FoundryMiscUtils
 {
-  static public void RegisterMoldRecipe(int dv,ItemStack pattern)
+  static public void registerMoldRecipe(int dv,ItemStack pattern)
   {
     if(pattern != null)
     {
@@ -36,27 +36,27 @@ public class FoundryMiscUtils
     }
   }
 
-  static public void RegisterMoldRecipe(int dv,String oredict_pattern)
+  static public void registerMoldRecipe(int dv,String oredict_pattern)
   {
     GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
       new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD), oredict_pattern));  
   }
 
-  static public void RegisterMoldSmelting(int clay,int mold)
+  static public void registerMoldSmelting(int clay,int mold)
   {
     GameRegistry.addSmelting(
         new ItemStack(FoundryItems.item_mold, 1, clay),
         new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
   }
 
-  static public void RegisterOreSmelting(BlockFoundryOre.EnumOre ore,int ingot)
+  static public void registerOreSmelting(BlockFoundryOre.EnumOre ore,int ingot)
   {
     GameRegistry.addSmelting(
         FoundryBlocks.block_ore.asItemStack(ore),
         new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
   }
 
-  static public String GetItemOreDictionaryName(ItemStack stack)
+  static public String getItemOreDictionaryName(ItemStack stack)
   {
     for(String name:OreDictionary.getOreNames())
     {
@@ -72,7 +72,7 @@ public class FoundryMiscUtils
     return null;
   }
 
-  static public ItemStack GetModItemFromOreDictionary(String modid,String orename)
+  static public ItemStack getModItemFromOreDictionary(String modid,String orename)
   {
     for(ItemStack is:OreDictionary.getOres(orename))
     {
@@ -91,7 +91,7 @@ public class FoundryMiscUtils
    * @param name Ore Dictionary name.
    * @param stack Item to register.
    */
-  static public void RegisterInOreDictionary(String name,ItemStack stack)
+  static public void registerInOreDictionary(String name,ItemStack stack)
   {
     if(stack == null)
     {
@@ -103,7 +103,7 @@ public class FoundryMiscUtils
     }
   }
     
-  static public FluidStack DrainFluidFromWorld(World world,BlockPos pos,boolean do_drain)
+  static public FluidStack drainFluidFromWorld(World world,BlockPos pos,boolean do_drain)
   {
     IBlockState state = world.getBlockState(pos);
     if(state.getBlock() instanceof IFluidBlock)

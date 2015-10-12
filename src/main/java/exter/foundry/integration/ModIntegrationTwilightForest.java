@@ -30,11 +30,11 @@ public class ModIntegrationTwilightForest extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
-    liquid_ironwood = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ironwood", 1850, 15);
-    liquid_steeleaf = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Steeleaf", 1850, 15);
-    liquid_knightmetal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Knightmetal", 1900, 15);
+    liquid_ironwood = LiquidMetalRegistry.instance.registerLiquidMetal( "Ironwood", 1850, 15);
+    liquid_steeleaf = LiquidMetalRegistry.instance.registerLiquidMetal( "Steeleaf", 1850, 15);
+    liquid_knightmetal = LiquidMetalRegistry.instance.registerLiquidMetal( "Knightmetal", 1900, 15);
     
     FoundryUtils.registerBasicMeltingRecipes("Ironwood", liquid_ironwood);
     FoundryUtils.registerBasicMeltingRecipes("Steeleaf", liquid_steeleaf);
@@ -42,7 +42,7 @@ public class ModIntegrationTwilightForest extends ModIntegration
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
 
   }
@@ -66,7 +66,7 @@ public class ModIntegrationTwilightForest extends ModIntegration
   }
   
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("TwilightForest"))
     {
@@ -79,10 +79,10 @@ public class ModIntegrationTwilightForest extends ModIntegration
     ItemStack steeleaf_ingot = new ItemStack(GameRegistry.findItem("TwilightForest", "item.steeleafIngot"));
     ItemStack knightmetal_ingot = new ItemStack(GameRegistry.findItem("TwilightForest", "item.knightMetal"));
     ItemStack knightmetal_block = new ItemStack(GameRegistry.findItem("TwilightForest", "tile.KnightmetalBlock"));
-    FoundryMiscUtils.RegisterInOreDictionary("ingotIronwood", ironwood_ingot);
-    FoundryMiscUtils.RegisterInOreDictionary("ingotSteeleaf", steeleaf_ingot);
-    FoundryMiscUtils.RegisterInOreDictionary("ingotKnightmetal", knightmetal_ingot);
-    FoundryMiscUtils.RegisterInOreDictionary("blockKnightmetal", knightmetal_block);
+    FoundryMiscUtils.registerInOreDictionary("ingotIronwood", ironwood_ingot);
+    FoundryMiscUtils.registerInOreDictionary("ingotSteeleaf", steeleaf_ingot);
+    FoundryMiscUtils.registerInOreDictionary("ingotKnightmetal", knightmetal_ingot);
+    FoundryMiscUtils.registerInOreDictionary("blockKnightmetal", knightmetal_block);
     
     ItemStack kightmetal_cluster = new ItemStack(GameRegistry.findItem("TwilightForest", "item.shardCluster"));
     ItemStack kightmetal_shard = new ItemStack(GameRegistry.findItem("TwilightForest", "item.armorShards"));
@@ -92,15 +92,15 @@ public class ModIntegrationTwilightForest extends ModIntegration
     MeltingRecipeManager.instance.addRecipe(kightmetal_cluster, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_INGOT));
     MeltingRecipeManager.instance.addRecipe(kightmetal_shard, new FluidStack(liquid_knightmetal,FoundryAPI.FLUID_AMOUNT_NUGGET));
 
-    RegisterCasting(ironwood_ingot, liquid_ironwood, 1, ItemMold.MOLD_INGOT, null);
-    RegisterCasting(steeleaf_ingot, liquid_steeleaf, 1, ItemMold.MOLD_INGOT, null);
-    RegisterCasting(knightmetal_ingot, liquid_knightmetal, 1, ItemMold.MOLD_INGOT, null);
-    RegisterCasting(knightmetal_block, liquid_knightmetal, 9, ItemMold.MOLD_BLOCK, null);
+    registerCasting(ironwood_ingot, liquid_ironwood, 1, ItemMold.MOLD_INGOT, null);
+    registerCasting(steeleaf_ingot, liquid_steeleaf, 1, ItemMold.MOLD_INGOT, null);
+    registerCasting(knightmetal_ingot, liquid_knightmetal, 1, ItemMold.MOLD_INGOT, null);
+    registerCasting(knightmetal_block, liquid_knightmetal, 9, ItemMold.MOLD_BLOCK, null);
 
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, ironwood_ingot);
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, steeleaf_ingot);
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_INGOT_SOFT, knightmetal_ingot);
-    FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, knightmetal_block);
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, ironwood_ingot);
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, steeleaf_ingot);
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, knightmetal_ingot);
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, knightmetal_block);
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -141,71 +141,71 @@ public class ModIntegrationTwilightForest extends ModIntegration
       ItemStack knightmetal_boots = FindEnchanted(GameRegistry.findItem("TwilightForest", "item.knightlyBoots"));
 
       
-      RegisterCasting(ironwood_axe, liquid_ironwood, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      RegisterCasting(ironwood_sword, liquid_ironwood, 2, ItemMold.MOLD_SWORD, extra_sticks1);
-      RegisterCasting(ironwood_pickaxe, liquid_ironwood, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      RegisterCasting(ironwood_shovel, liquid_ironwood, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      RegisterCasting(ironwood_hoe, liquid_ironwood, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      registerCasting(ironwood_axe, liquid_ironwood, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      registerCasting(ironwood_sword, liquid_ironwood, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      registerCasting(ironwood_pickaxe, liquid_ironwood, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      registerCasting(ironwood_shovel, liquid_ironwood, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      registerCasting(ironwood_hoe, liquid_ironwood, 2, ItemMold.MOLD_HOE, extra_sticks2);
 
-      RegisterCasting(ironwood_helmet, liquid_ironwood, 5, ItemMold.MOLD_HELMET, null);
-      RegisterCasting(ironwood_chestplate, liquid_ironwood, 8, ItemMold.MOLD_CHESTPLATE, null);
-      RegisterCasting(ironwood_leggings, liquid_ironwood, 7, ItemMold.MOLD_LEGGINGS, null);
-      RegisterCasting(ironwood_boots, liquid_ironwood, 4, ItemMold.MOLD_BOOTS, null);
+      registerCasting(ironwood_helmet, liquid_ironwood, 5, ItemMold.MOLD_HELMET, null);
+      registerCasting(ironwood_chestplate, liquid_ironwood, 8, ItemMold.MOLD_CHESTPLATE, null);
+      registerCasting(ironwood_leggings, liquid_ironwood, 7, ItemMold.MOLD_LEGGINGS, null);
+      registerCasting(ironwood_boots, liquid_ironwood, 4, ItemMold.MOLD_BOOTS, null);
 
-      RegisterCasting(steeleaf_axe, liquid_steeleaf, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      RegisterCasting(steeleaf_sword, liquid_steeleaf, 2, ItemMold.MOLD_SWORD, extra_sticks1);
-      RegisterCasting(steeleaf_pickaxe, liquid_steeleaf, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      RegisterCasting(steeleaf_shovel, liquid_steeleaf, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      RegisterCasting(steeleaf_hoe, liquid_steeleaf, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      registerCasting(steeleaf_axe, liquid_steeleaf, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      registerCasting(steeleaf_sword, liquid_steeleaf, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      registerCasting(steeleaf_pickaxe, liquid_steeleaf, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      registerCasting(steeleaf_shovel, liquid_steeleaf, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      registerCasting(steeleaf_hoe, liquid_steeleaf, 2, ItemMold.MOLD_HOE, extra_sticks2);
 
-      RegisterCasting(steeleaf_helmet, liquid_steeleaf, 5, ItemMold.MOLD_HELMET, null);
-      RegisterCasting(steeleaf_chestplate, liquid_steeleaf, 8, ItemMold.MOLD_CHESTPLATE, null);
-      RegisterCasting(steeleaf_leggings, liquid_steeleaf, 7, ItemMold.MOLD_LEGGINGS, null);
-      RegisterCasting(steeleaf_boots, liquid_steeleaf, 4, ItemMold.MOLD_BOOTS, null);
+      registerCasting(steeleaf_helmet, liquid_steeleaf, 5, ItemMold.MOLD_HELMET, null);
+      registerCasting(steeleaf_chestplate, liquid_steeleaf, 8, ItemMold.MOLD_CHESTPLATE, null);
+      registerCasting(steeleaf_leggings, liquid_steeleaf, 7, ItemMold.MOLD_LEGGINGS, null);
+      registerCasting(steeleaf_boots, liquid_steeleaf, 4, ItemMold.MOLD_BOOTS, null);
    
-      RegisterCasting(knightmetal_axe, liquid_knightmetal, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      RegisterCasting(knightmetal_sword, liquid_knightmetal, 2, ItemMold.MOLD_SWORD, extra_sticks1);
-      RegisterCasting(knightmetal_pickaxe, liquid_knightmetal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      RegisterCasting(knightmetal_shovel, liquid_knightmetal, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      RegisterCasting(knightmetal_hoe, liquid_knightmetal, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      registerCasting(knightmetal_axe, liquid_knightmetal, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      registerCasting(knightmetal_sword, liquid_knightmetal, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      registerCasting(knightmetal_pickaxe, liquid_knightmetal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      registerCasting(knightmetal_shovel, liquid_knightmetal, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      registerCasting(knightmetal_hoe, liquid_knightmetal, 2, ItemMold.MOLD_HOE, extra_sticks2);
 
-      RegisterCasting(knightmetal_helmet, liquid_knightmetal, 5, ItemMold.MOLD_HELMET, null);
-      RegisterCasting(knightmetal_chestplate, liquid_knightmetal, 8, ItemMold.MOLD_CHESTPLATE, null);
-      RegisterCasting(knightmetal_leggings, liquid_knightmetal, 7, ItemMold.MOLD_LEGGINGS, null);
-      RegisterCasting(knightmetal_boots, liquid_knightmetal, 4, ItemMold.MOLD_BOOTS, null);
+      registerCasting(knightmetal_helmet, liquid_knightmetal, 5, ItemMold.MOLD_HELMET, null);
+      registerCasting(knightmetal_chestplate, liquid_knightmetal, 8, ItemMold.MOLD_CHESTPLATE, null);
+      registerCasting(knightmetal_leggings, liquid_knightmetal, 7, ItemMold.MOLD_LEGGINGS, null);
+      registerCasting(knightmetal_boots, liquid_knightmetal, 4, ItemMold.MOLD_BOOTS, null);
       
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, ironwood_axe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, ironwood_sword);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, ironwood_pickaxe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, ironwood_shovel);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, ironwood_hoe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, ironwood_axe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, ironwood_sword);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, ironwood_pickaxe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, ironwood_shovel);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, ironwood_hoe);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, ironwood_helmet);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, ironwood_chestplate);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, ironwood_leggings);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, ironwood_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, ironwood_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, ironwood_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, ironwood_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, ironwood_boots);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, steeleaf_axe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, steeleaf_sword);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, steeleaf_pickaxe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, steeleaf_shovel);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, steeleaf_hoe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, steeleaf_axe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, steeleaf_sword);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, steeleaf_pickaxe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, steeleaf_shovel);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, steeleaf_hoe);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, steeleaf_helmet);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, steeleaf_chestplate);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, steeleaf_leggings);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, steeleaf_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, steeleaf_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, steeleaf_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, steeleaf_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, steeleaf_boots);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, knightmetal_axe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, knightmetal_sword);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, knightmetal_pickaxe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, knightmetal_shovel);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, knightmetal_hoe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, knightmetal_axe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, knightmetal_sword);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, knightmetal_pickaxe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, knightmetal_shovel);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, knightmetal_hoe);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, knightmetal_helmet);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, knightmetal_chestplate);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, knightmetal_leggings);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, knightmetal_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, knightmetal_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, knightmetal_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, knightmetal_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, knightmetal_boots);
     }
   }
 }

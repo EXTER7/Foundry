@@ -1,5 +1,7 @@
 package exter.foundry.util.hashstack;
 
+import java.util.Map;
+
 import net.minecraft.item.ItemStack;
 
 /**
@@ -17,16 +19,16 @@ public class HashableItem
     stack = null;
   }
   
-  private void SetStack(ItemStack is)
+  private void setStack(ItemStack is)
   {
     stack = is;
   }
   
-  //This should only be used as a key argument in HashMap.get or similar methods.
-  public static HashableItem Cache(ItemStack is)
+  //Get a value from a map with HashableItem key.
+  public static synchronized <T> T getFromMap(Map<HashableItem,T> map,ItemStack is)
   {
-    cache.SetStack(is);
-    return cache;
+    cache.setStack(is);
+    return map.get(cache);
   }
 
   public HashableItem(ItemStack item_stack)
@@ -39,7 +41,7 @@ public class HashableItem
     stack = item_stack.copy();
   }
   
-  public final ItemStack GetItemStack()
+  public final ItemStack getItemStack()
   {
     if(stack == null)
     {

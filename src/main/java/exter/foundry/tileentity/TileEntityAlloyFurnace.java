@@ -349,7 +349,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  protected void OnInitialize()
+  protected void onInitialize()
   {
 
   }

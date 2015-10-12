@@ -35,21 +35,21 @@ public class LiquidMetalRegistry implements IFluidRegistry
    * Helper method to register a metal's fluid, and block.
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
    */
-  public Fluid RegisterLiquidMetal(String metal_name,int temperature,int luminosity)
+  public Fluid registerLiquidMetal(String metal_name,int temperature,int luminosity)
   {
 
-    return RegisterLiquidMetal(metal_name,temperature,luminosity,"liquid" + metal_name,0xFFFFFF);
+    return registerLiquidMetal(metal_name,temperature,luminosity,"liquid" + metal_name,0xFFFFFF);
   }
 
   /**
    * Helper method to register a metal's fluid, and block.
    * @param metal_name Name of the metal e.g: "Copper" for "oreCopper" in the Ore Dictionary.
    */
-  public Fluid RegisterLiquidMetal(String metal_name,int temperature,int luminosity,String texture,int color)
+  public Fluid registerLiquidMetal(String metal_name,int temperature,int luminosity,String texture,int color)
   {
     Fluid fluid = new ColoredFluid("liquid" + metal_name,
         new ResourceLocation("foundry:blocks/liquid" + metal_name + "_still.ong"),
-            new ResourceLocation("foundry:blocks/liquid" + metal_name + "_flow.ong")).SetColor(color).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
+            new ResourceLocation("foundry:blocks/liquid" + metal_name + "_flow.ong")).setColor(color).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
     String block_name = "block" + metal_name;
@@ -74,7 +74,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     return registry.get(name);
   }
   
-  public Set<String> GetFluidNames()
+  public Set<String> getFluidNames()
   {
     return Collections.unmodifiableSet(registry.keySet());
   }

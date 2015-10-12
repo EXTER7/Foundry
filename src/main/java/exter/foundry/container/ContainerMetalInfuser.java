@@ -118,14 +118,14 @@ public class ContainerMetalInfuser extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_infuser.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_infuser.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
   
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_infuser.GetGUINetworkData(i, j);
+    te_infuser.getGUINetworkData(i, j);
   }
 
 }

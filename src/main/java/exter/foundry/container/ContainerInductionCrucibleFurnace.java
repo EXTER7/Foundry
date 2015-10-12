@@ -115,14 +115,14 @@ public class ContainerInductionCrucibleFurnace extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_icf.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_icf.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
 
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_icf.GetGUINetworkData(i, j);
+    te_icf.getGUINetworkData(i, j);
   }
 
 }

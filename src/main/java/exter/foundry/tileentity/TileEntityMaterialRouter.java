@@ -216,7 +216,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   {
     if(FMLCommonHandler.instance().getEffectiveSide().isServer())
     {
-      SyncRoutes();
+      syncRoutes();
     }
   }
 
@@ -225,7 +225,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   {
     if(FMLCommonHandler.instance().getEffectiveSide().isServer())
     {
-      SyncRoutes();
+      syncRoutes();
     }
   }
 
@@ -304,7 +304,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   }
 
-  private void RouteItem(int in_slot, int out_slot)
+  private void routeItem(int in_slot, int out_slot)
   {
     ItemStack input = inventory[in_slot];
     ItemStack output = inventory[out_slot];
@@ -351,7 +351,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
         {
           if(r.MatchesItem(input))
           {
-            RouteItem(i, SLOT_OUTPUT + r.side.index);
+            routeItem(i, SLOT_OUTPUT + r.side.index);
             break;
           }
         }
@@ -373,7 +373,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  protected void OnInitialize()
+  protected void onInitialize()
   {
 
   }
@@ -398,12 +398,12 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     return slot == SLOT_OUTPUT + side.getIndex();
   }
 
-  public List<Route> GetRoutes()
+  public List<Route> getRoutes()
   {
     return routes;
   }
 
-  public void SyncRoutes()
+  public void syncRoutes()
   {
     NBTTagCompound tag = new NBTTagCompound();
     writeTileToNBT(tag);   

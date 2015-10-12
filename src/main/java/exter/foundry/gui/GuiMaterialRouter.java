@@ -37,13 +37,13 @@ public class GuiMaterialRouter extends GuiFoundry
       name = filter_name;
     }
     
-    public abstract void Draw(int x,int y);
+    public abstract void draw(int x,int y);
 
-    public abstract void DrawTooltip(int x,int y);
+    public abstract void drawTooltip(int x,int y);
 
-    public abstract void OnClick();
+    public abstract void onClick();
     
-    public final String GetName()
+    public final String getName()
     {
       return name;
     }
@@ -58,13 +58,13 @@ public class GuiMaterialRouter extends GuiFoundry
     }
 
     @Override
-    public void Draw(int x, int y)
+    public void draw(int x, int y)
     {
-      DrawMaterialIcon(x,y,name);
+      drawMaterialIcon(x,y,name);
     }
 
     @Override
-    public void DrawTooltip(int x,int y)
+    public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
       tooltip.add(StatCollector.translateToLocal("router.material." + name));
@@ -72,10 +72,10 @@ public class GuiMaterialRouter extends GuiFoundry
     }
 
     @Override
-    public void OnClick()
+    public void onClick()
     {
       te_router.gui_material_selected = index;
-      te_router.SyncRoutes();
+      te_router.syncRoutes();
     }
   }
 
@@ -88,13 +88,13 @@ public class GuiMaterialRouter extends GuiFoundry
     }
 
     @Override
-    public void Draw(int x, int y)
+    public void draw(int x, int y)
     {
-      DrawTypeIcon(x,y,name);
+      drawTypeIcon(x,y,name);
     }
 
     @Override
-    public void DrawTooltip(int x,int y)
+    public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
       tooltip.add(StatCollector.translateToLocal("router.type." + name));
@@ -102,10 +102,10 @@ public class GuiMaterialRouter extends GuiFoundry
     }
 
     @Override
-    public void OnClick()
+    public void onClick()
     {
       te_router.gui_type_selected = index;
-      te_router.SyncRoutes();
+      te_router.syncRoutes();
     }
   }
   
@@ -121,7 +121,7 @@ public class GuiMaterialRouter extends GuiFoundry
   private GuiButtonFoundry route_scroll_down;
   private boolean do_scroll_sync;
   
-  private void DrawMaterialIcon(int x,int y,String name)
+  private void drawMaterialIcon(int x,int y,String name)
   {
     if(name.equals("_Any"))
     {
@@ -129,11 +129,11 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
-      DrawItemStack(x,y,MaterialRegistry.instance.getMaterialIcon(name));
+      drawItemStack(x,y,MaterialRegistry.instance.getMaterialIcon(name));
     }
   }
 
-  private void DrawTypeIcon(int x,int y,String name)
+  private void drawTypeIcon(int x,int y,String name)
   {
     if(name.equals("_Any"))
     {
@@ -141,7 +141,7 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTexturedModalRect(x, y, 216,193, 16, 16);
     } else
     {
-      DrawItemStack(x,y,MaterialRegistry.instance.getTypeIcon(name));
+      drawItemStack(x,y,MaterialRegistry.instance.getTypeIcon(name));
     }
   }
 
@@ -179,7 +179,7 @@ public class GuiMaterialRouter extends GuiFoundry
   public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/materialrouter.png");
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }
@@ -200,7 +200,7 @@ public class GuiMaterialRouter extends GuiFoundry
       FilterSlot slot = material_slots.get(index);
       if(isPointInRegion(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,mousex,mousey))
       {
-        slot.DrawTooltip(mousex,mousey);
+        slot.drawTooltip(mousex,mousey);
       }
     }
 
@@ -214,12 +214,12 @@ public class GuiMaterialRouter extends GuiFoundry
       FilterSlot slot = type_slots.get(index);
       if(isPointInRegion(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,mousex,mousey))
       {
-        slot.DrawTooltip(mousex,mousey);
+        slot.drawTooltip(mousex,mousey);
       }
       
     }
     
-    List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
+    List<TileEntityMaterialRouter.Route> routes = te_router.getRoutes();
     for(i = 0; i < 4; i++)
     {
       int index = i + te_router.gui_route_scroll;
@@ -270,7 +270,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = material_slots.get(index);
-      slot.Draw(window_x + 111 + 17 * (i % 4),window_y + 24 + 17 * (i / 4));
+      slot.draw(window_x + 111 + 17 * (i % 4),window_y + 24 + 17 * (i / 4));
     }
 
     for(i = 0; i < 8; i++)
@@ -281,7 +281,7 @@ public class GuiMaterialRouter extends GuiFoundry
         break;
       }
       FilterSlot slot = type_slots.get(index);
-      slot.Draw(window_x + 111 + 17 * (i % 4),window_y + 70 + 17 * (i / 4));
+      slot.draw(window_x + 111 + 17 * (i % 4),window_y + 70 + 17 * (i / 4));
     }
     
     int selected_material = te_router.gui_material_selected;
@@ -304,7 +304,7 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTexturedModalRect(window_x + 111 + 17 * (index % 4) , window_y + 70 + 17 * (index / 4), 200, 193, 16, 16);
     }
 
-    List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
+    List<TileEntityMaterialRouter.Route> routes = te_router.getRoutes();
     for(i = 0; i < 4; i++)
     {
       int index = i + te_router.gui_route_scroll;
@@ -315,8 +315,8 @@ public class GuiMaterialRouter extends GuiFoundry
       
       TileEntityMaterialRouter.Route r = routes.get(index);
       int y = 49 + i * 17;
-      DrawMaterialIcon(window_x + 29,window_y + y,r.material);
-      DrawTypeIcon(window_x + 46,window_y + y,r.type);
+      drawMaterialIcon(window_x + 29,window_y + y,r.material);
+      drawTypeIcon(window_x + 46,window_y + y,r.type);
       GL11.glEnable(GL11.GL_BLEND);
       
       drawTexturedModalRect(window_x + 63, window_y + y, 200, r.side.index * 16, 16, 16);
@@ -359,7 +359,7 @@ public class GuiMaterialRouter extends GuiFoundry
       FilterSlot slot = material_slots.get(index);
       if(isPointInRegion(111 + 17 * (i % 4),24 + 17 * (i / 4),16,16,x,y))
       {
-        slot.OnClick();
+        slot.onClick();
         return;
       }
     }
@@ -374,12 +374,12 @@ public class GuiMaterialRouter extends GuiFoundry
       FilterSlot slot = type_slots.get(index);
       if(isPointInRegion(111 + 17 * (i % 4),70 + 17 * (i / 4),16,16,x,y))
       {
-        slot.OnClick();
+        slot.onClick();
         return;
       }
     }
 
-    List<TileEntityMaterialRouter.Route> routes = te_router.GetRoutes();
+    List<TileEntityMaterialRouter.Route> routes = te_router.getRoutes();
     for(i = 0; i < 4; i++)
     {
       int index = i + te_router.gui_route_scroll;
@@ -391,7 +391,7 @@ public class GuiMaterialRouter extends GuiFoundry
       if(isPointInRegion(81,49 + i * 17 + 4,8,8,x,y))
       {
         routes.remove(index);
-        te_router.SyncRoutes();
+        te_router.syncRoutes();
         return;
       }
     }
@@ -403,12 +403,12 @@ public class GuiMaterialRouter extends GuiFoundry
   {
     if(button.id < 6)
     {
-      te_router.GetRoutes().add(
+      te_router.getRoutes().add(
           new TileEntityMaterialRouter.Route(
-              material_slots.get(te_router.gui_material_selected).GetName(),
-              type_slots.get(te_router.gui_type_selected).GetName(),
+              material_slots.get(te_router.gui_material_selected).getName(),
+              type_slots.get(te_router.gui_type_selected).getName(),
               TileEntityMaterialRouter.RouteSide.values()[button.id]));
-      te_router.SyncRoutes();
+      te_router.syncRoutes();
     } else if(button.id == material_scroll_left.id)
     {
       if(te_router.gui_material_scroll > 0)
@@ -446,7 +446,7 @@ public class GuiMaterialRouter extends GuiFoundry
       }
     } else if(button.id == route_scroll_down.id)
     {
-      if(te_router.gui_route_scroll < te_router.GetRoutes().size() - 4)
+      if(te_router.gui_route_scroll < te_router.getRoutes().size() - 4)
       {
         te_router.gui_route_scroll += 4;
         do_scroll_sync = true;
@@ -471,7 +471,7 @@ public class GuiMaterialRouter extends GuiFoundry
           16, 16,
           GUI_TEXTURE,
           200, 177,
-          216, 177).SetIconTexture(201, i * 16 + 1, 14, 14);
+          216, 177).setIconTexture(201, i * 16 + 1, 14, 14);
       buttonList.add(route_buttons[i]);
     }
     material_scroll_left = new GuiButtonFoundry(
@@ -529,7 +529,7 @@ public class GuiMaterialRouter extends GuiFoundry
   {
     if(do_scroll_sync)
     {
-      te_router.SyncRoutes();
+      te_router.syncRoutes();
     }
     super.onGuiClosed();
   }

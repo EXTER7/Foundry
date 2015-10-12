@@ -31,9 +31,9 @@ public abstract class GuiFoundry extends GuiContainer
   }
 
   
-  protected abstract ResourceLocation GetGUITexture();
+  protected abstract ResourceLocation getGUITexture();
 
-  protected void DrawItemStack(int x,int y, ItemStack stack)
+  protected void drawItemStack(int x,int y, ItemStack stack)
   {
     //GL11.glTranslatef(0.0F, 0.0F, 32.0F);
     GL11.glPushMatrix();
@@ -56,7 +56,7 @@ public abstract class GuiFoundry extends GuiContainer
     itemRender.renderItemOverlayIntoGUI(font, stack, x, y, null);
     zLevel = 0.0F;
     itemRender.zLevel = 0.0F;
-    mc.renderEngine.bindTexture(this.GetGUITexture());
+    mc.renderEngine.bindTexture(this.getGUITexture());
     GL11.glPopMatrix();
     RenderHelper.enableStandardItemLighting();
     GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -93,7 +93,7 @@ public abstract class GuiFoundry extends GuiContainer
       tessellator.finishDrawing();
   }
 
-  protected void AddTankTooltip(List<String> tooltip, int x, int y, FluidTank tank)
+  protected void addTankTooltip(List<String> tooltip, int x, int y, FluidTank tank)
   {
     FluidStack stack = tank.getFluid();
     if(stack != null && stack.amount > 0)
@@ -118,7 +118,7 @@ public abstract class GuiFoundry extends GuiContainer
    * @param overlay_y Y coordinate of overlay of the tank drawn in front of the fluid.
    * @param tank Tank to draw.
    */
-  protected void DisplayTank(int window_x,int window_y,int x, int y, int tank_height,int overlay_x,int overlay_y, FluidTank tank)
+  protected void displayTank(int window_x,int window_y,int x, int y, int tank_height,int overlay_x,int overlay_y, FluidTank tank)
   {
     FluidStack liquid = tank.getFluid();
     if(liquid == null)
@@ -140,7 +140,7 @@ public abstract class GuiFoundry extends GuiContainer
     {
       mc.renderEngine.bindTexture(BLOCK_TEXTURE);
       int color = fluid.getColor(liquid);
-      SetColor(color);
+      setGLColor(color);
       while(true)
       {
         int i;
@@ -172,14 +172,14 @@ public abstract class GuiFoundry extends GuiContainer
         }
       }
       GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-      mc.renderEngine.bindTexture(GetGUITexture());
+      mc.renderEngine.bindTexture(getGUITexture());
     }
 
     drawTexturedModalRect(window_x + x, window_y + y, overlay_x, overlay_y, 16, tank_height);
   }
 
 
-  protected void SetColor(int color)
+  protected void setGLColor(int color)
   {
     float red = (float) (color >> 16 & 255) / 255.0F;
     float green = (float) (color >> 8 & 255) / 255.0F;

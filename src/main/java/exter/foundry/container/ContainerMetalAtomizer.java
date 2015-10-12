@@ -111,13 +111,13 @@ public class ContainerMetalAtomizer extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_atomizer.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_atomizer.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
   
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_atomizer.GetGUINetworkData(i, j);
+    te_atomizer.getGUINetworkData(i, j);
   }
 }

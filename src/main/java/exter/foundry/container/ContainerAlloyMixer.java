@@ -124,13 +124,13 @@ public class ContainerAlloyMixer extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_alloymixer.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_alloymixer.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
 
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_alloymixer.GetGUINetworkData(i, j);
+    te_alloymixer.getGUINetworkData(i, j);
   }
 }

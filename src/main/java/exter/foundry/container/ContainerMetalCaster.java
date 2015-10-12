@@ -174,13 +174,13 @@ public class ContainerMetalCaster extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_caster.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_caster.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
   
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_caster.GetGUINetworkData(i, j);
+    te_caster.getGUINetworkData(i, j);
   }
 }

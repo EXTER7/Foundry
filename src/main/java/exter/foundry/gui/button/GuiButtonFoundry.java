@@ -33,7 +33,7 @@ public class GuiButtonFoundry extends GuiButton
     icon_height = 0;
   }
   
-  public GuiButtonFoundry SetIconTexture(int x, int y,int w,int h)
+  public GuiButtonFoundry setIconTexture(int x, int y,int w,int h)
   {
     icon_x = x;
     icon_y = y;
@@ -68,12 +68,12 @@ public class GuiButtonFoundry extends GuiButton
     }
   }
   
-  public int GetWidth()
+  public int getWidth()
   {
     return width;
   }
   
-  public int GetHeight()
+  public int getHeight()
   {
     return height;
   }

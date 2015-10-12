@@ -17,7 +17,7 @@ public class FoundryTabBlocks extends CreativeTabs
   @Override
   public ItemStack getIconItemStack()
   {
-    return new ItemStack(FoundryBlocks.block_metal1,1,2);
+    return new ItemStack(FoundryBlocks.block_metal[0],1,2);
   }
 
   @Override

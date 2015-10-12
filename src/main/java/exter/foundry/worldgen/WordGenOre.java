@@ -44,7 +44,7 @@ public class WordGenOre
     wgm = new WorldGenMinable(state, 7);
   }
 
-  private void GenerateOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+  private void generateOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
   {
     int i;
     for(i = 0; i < frequency; i++)
@@ -56,7 +56,7 @@ public class WordGenOre
     }
   }
   
-  static public void Generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+  static public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
   {
     if(!(chunkGenerator instanceof ChunkProviderGenerate))
     {
@@ -64,11 +64,11 @@ public class WordGenOre
     }
     for(WordGenOre wgo:ores)
     {
-      wgo.GenerateOre(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
+      wgo.generateOre(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
     }
   }
     
-  static public void RegisterOre(int min_y,int max_y,int freq,IBlockState state)
+  static public void registerOre(int min_y,int max_y,int freq,IBlockState state)
   {
     ores.add(new WordGenOre(min_y,max_y,freq,state));
   }

@@ -112,7 +112,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     compound.setInteger("energy", energy_stored);
   }
 
-  protected void OnInitialize()
+  protected void onInitialize()
   {
     update_energy_tick = true;
   }

@@ -150,9 +150,9 @@ public class ModFoundry
     OreDictionary.registerOre("blockRedstone", Blocks.redstone_block);
 
 
-    FoundryConfig.Load(config);
+    FoundryConfig.load(config);
     FoundryItems.RegisterItems(config);
-    FoundryBlocks.RegisterBlocks(config);
+    FoundryBlocks.registerBlocks(config);
 
     OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.Component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
     OreDictionary.registerOre("dustSmallBlaze", FoundryItems.Component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
@@ -162,7 +162,7 @@ public class ModFoundry
 
     FoundryRecipes.PreInit();
     
-    ModIntegration.PreInit(config);
+    ModIntegration.preInit(config);
 
     
     config.save();
@@ -174,7 +174,7 @@ public class ModFoundry
     network_channel.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.CLIENT);
     
     NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
-    proxy.PreInit();
+    proxy.preInit();
   }
   
  
@@ -182,7 +182,7 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
-    ModIntegration.Init();
+    ModIntegration.init();
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
@@ -198,27 +198,27 @@ public class ModFoundry
 
     if(FoundryConfig.worldgen_copper)
     {
-      WordGenOre.RegisterOre(16, 80, 12, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.COPPER));
+      WordGenOre.registerOre(16, 80, 12, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.COPPER));
     }
     if(FoundryConfig.worldgen_tin)
     {
-      WordGenOre.RegisterOre(16, 52, 8, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.TIN));
+      WordGenOre.registerOre(16, 52, 8, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.TIN));
     }
     if(FoundryConfig.worldgen_zinc)
     {
-      WordGenOre.RegisterOre(8, 48, 6, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.ZINC));
+      WordGenOre.registerOre(8, 48, 6, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.ZINC));
     }
     if(FoundryConfig.worldgen_nickel)
     {
-      WordGenOre.RegisterOre(8, 36, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.NICKEL));
+      WordGenOre.registerOre(8, 36, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.NICKEL));
     }
     if(FoundryConfig.worldgen_silver)
     {
-      WordGenOre.RegisterOre(2, 30, 3, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.SILVER));
+      WordGenOre.registerOre(2, 30, 3, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.SILVER));
     }
     if(FoundryConfig.worldgen_lead)
     {
-      WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.LEAD));
+      WordGenOre.registerOre(8, 48, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.LEAD));
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
 
@@ -310,15 +310,15 @@ public class ModFoundry
 
     EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, biomes.toArray(new BiomeGenBase[0]));
     
-    proxy.Init();
+    proxy.init();
   }
 
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
-    ModIntegration.PostInit();
+    ModIntegration.postInit();
     FoundryRecipes.PostInit();
-    proxy.PostInit();
-    ModIntegration.AfterPostInit();
+    proxy.postInit();
+    ModIntegration.afterPostInit();
   }
 }

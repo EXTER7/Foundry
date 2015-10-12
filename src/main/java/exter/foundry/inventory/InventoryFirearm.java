@@ -131,7 +131,7 @@ public class InventoryFirearm implements IInventory
     return stack.getItem() instanceof IFirearmRound;
   }
 
-  public void Save()
+  public void save()
   {
     int i;
     for(i = 0; i < items.length; i++)

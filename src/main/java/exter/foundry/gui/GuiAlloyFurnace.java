@@ -80,7 +80,7 @@ public class GuiAlloyFurnace extends GuiFoundry
   }
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

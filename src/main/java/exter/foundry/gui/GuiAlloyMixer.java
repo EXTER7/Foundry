@@ -67,12 +67,12 @@ public class GuiAlloyMixer extends GuiFoundry
       if(isPointInRegion(TANK_X[i],TANK_Y,16,TANK_HEIGHT,mousex,mousey))
       {
         List<String> currenttip = new ArrayList<String>();
-        AddTankTooltip(currenttip,mousex, mousey, te_alloymixer.getTank(i));
+        addTankTooltip(currenttip,mousex, mousey, te_alloymixer.getTank(i));
         drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
       }
     }
     
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_alloymixer.getRedstoneMode()));
@@ -91,7 +91,7 @@ public class GuiAlloyMixer extends GuiFoundry
 
     for(i = 0; i < 5; i++)
     {
-      DisplayTank(window_x, window_y, TANK_X[i], TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.getTank(i));
+      displayTank(window_x, window_y, TANK_X[i], TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_alloymixer.getTank(i));
     }
   }
 
@@ -112,7 +112,7 @@ public class GuiAlloyMixer extends GuiFoundry
   }
 
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

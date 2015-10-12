@@ -14,7 +14,7 @@ public class ColoredFluid extends Fluid
     color = 0xFFFFFF;
   }
 
-  public ColoredFluid SetColor(int fluid_color)
+  public ColoredFluid setColor(int fluid_color)
   {
     color = fluid_color;
     return this;

@@ -91,7 +91,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     compound.setInteger("progress", progress);
   }
 
-  public void GetGUINetworkData(int id, int value)
+  public void getGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -110,7 +110,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     }
   }
 
-  public void SendGUINetworkData(ContainerMetalAtomizer container, ICrafting crafting)
+  public void sendGUINetworkData(ContainerMetalAtomizer container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tanks[TANK_INPUT]));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tanks[TANK_INPUT]));
@@ -194,7 +194,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     return 64;
   }
 
-  public int GetProgress()
+  public int getProgress()
   {
     return progress;
   }
@@ -275,7 +275,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     
   }
   
-  private void CheckCurrentRecipe()
+  private void checkCurrentRecipe()
   {
     if(current_recipe == null)
     {
@@ -291,16 +291,16 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     }
   }
   
-  private void BeginAtomizing()
+  private void beginAtomizing()
   {
-    if(current_recipe != null && CanAtomizeCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
+    if(current_recipe != null && canAtomizeCurrentRecipe() && getStoredFoundryEnergy() >= ENERGY_REQUIRED)
     {
       useFoundryEnergy(ENERGY_REQUIRED, true);
       progress = 0;
     }
   }
   
-  private boolean CanAtomizeCurrentRecipe()
+  private boolean canAtomizeCurrentRecipe()
   {
     if(tanks[TANK_WATER].getFluid() == null || !tanks[TANK_WATER].getFluid().containsFluid(water_required))
     {
@@ -323,7 +323,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     super.updateServer();
     int last_progress = progress;
     
-    CheckCurrentRecipe();
+    checkCurrentRecipe();
     
     if(current_recipe == null)
     {
@@ -337,30 +337,30 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
       switch(getRedstoneMode())
       {
         case RSMODE_IGNORE:
-          BeginAtomizing();
+          beginAtomizing();
           break;
         case RSMODE_OFF:
           if(!redstone_signal)
           {
-            BeginAtomizing();
+            beginAtomizing();
           }
           break;
         case RSMODE_ON:
           if(redstone_signal)
           {
-            BeginAtomizing();
+            beginAtomizing();
           }
           break;
         case RSMODE_PULSE:
           if(redstone_signal && !last_redstone_signal)
           {
-            BeginAtomizing();
+            beginAtomizing();
           }
           break;
       }
     } else
     {
-      if(CanAtomizeCurrentRecipe())
+      if(canAtomizeCurrentRecipe())
       {
         FluidStack input_fluid = current_recipe.getInput();
         int increment = 1800000 / input_fluid.amount;

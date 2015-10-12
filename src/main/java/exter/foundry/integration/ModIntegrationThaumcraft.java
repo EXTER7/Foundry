@@ -41,7 +41,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
 //    liquid_thaumium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Thaumium", 1850, 14);
 //    liquid_voidmetal = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Void", 1700, 6);
@@ -70,7 +70,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
 
   }
@@ -99,7 +99,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("Thaumcraft"))
     {

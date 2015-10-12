@@ -26,23 +26,23 @@ public class ModIntegrationProjectRed extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
 
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
 
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(Loader.isModLoaded("ProjRed|Core"))
     {
-      ItemStack redalloy = FoundryMiscUtils.GetModItemFromOreDictionary("ProjRed|Core", "ingotRedAlloy");
+      ItemStack redalloy = FoundryMiscUtils.getModItemFromOreDictionary("ProjRed|Core", "ingotRedAlloy");
 
       Fluid liquid_redstone = LiquidMetalRegistry.instance.getFluid("Redstone");
       Fluid liquid_redalloy = LiquidMetalRegistry.instance.getFluid("RedAlloy");
@@ -70,7 +70,7 @@ public class ModIntegrationProjectRed extends ModIntegration
           new Object[] {
               new OreStack("dustRedstone",4)});
 
-      RegisterCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
+      registerCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
       
       if(Loader.isModLoaded("ProjRed|Transmission"))
       {
@@ -78,8 +78,8 @@ public class ModIntegrationProjectRed extends ModIntegration
         ItemStack redalloy_wire = new ItemStack(redalloy_wire_item,1,0);
         FluidStack wire_fluid = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4);
         FluidStack wire_fluid_bundled = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4 * 5);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_WIRE_PR_SOFT, redalloy_wire);
-        RegisterCasting(redalloy_wire, wire_fluid, ItemMold.MOLD_WIRE_PR, null);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_WIRE_PR_SOFT, redalloy_wire);
+        registerCasting(redalloy_wire, wire_fluid, ItemMold.MOLD_WIRE_PR, null);
         int i;
         for(i = 0; i < 17; i++)
         {

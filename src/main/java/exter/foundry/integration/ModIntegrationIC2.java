@@ -16,12 +16,12 @@ public class ModIntegrationIC2 extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
   
@@ -34,7 +34,7 @@ public class ModIntegrationIC2 extends ModIntegration
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("IC2"))
     {

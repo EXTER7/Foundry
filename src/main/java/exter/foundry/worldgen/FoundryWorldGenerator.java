@@ -11,6 +11,6 @@ public class FoundryWorldGenerator implements IWorldGenerator
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
   {
-    WordGenOre.Generate(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
+    WordGenOre.generate(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
   }
 }

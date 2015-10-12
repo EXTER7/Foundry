@@ -101,7 +101,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
 
-  public void GetGUINetworkData(int id, int value)
+  public void getGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -114,7 +114,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
   }
 
-  public void SendGUINetworkData(ContainerInductionCrucibleFurnace container, ICrafting crafting)
+  public void sendGUINetworkData(ContainerInductionCrucibleFurnace container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
@@ -284,7 +284,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
 
   }
   
-  private void CheckCurrentRecipe()
+  private void checkCurrentRecipe()
   {
     if(current_recipe == null)
     {
@@ -299,7 +299,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
   }
   
-  private void DoMeltingProgress()
+  private void doMeltingProgress()
   {
     if(current_recipe == null)
     {
@@ -336,7 +336,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     }
   }
 
-  static public int GetEnergyPerTickNeeded(int heat)
+  static public int getEnergyPerTickNeeded(int heat)
   {
     return heat * 3000 / HEAT_MAX + 25;
   }
@@ -347,7 +347,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     super.updateServer();
     int last_progress = progress;
     int last_melt_point = melt_point;
-    CheckCurrentRecipe();
+    checkCurrentRecipe();
     if(current_recipe == null)
     {
       current_recipe = MeltingRecipeManager.instance.findRecipe(inventory[INVENTORY_INPUT]);
@@ -405,7 +405,7 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
       }
     }
     
-    DoMeltingProgress();
+    doMeltingProgress();
     
     if(last_progress != progress)
     {

@@ -19,18 +19,18 @@ public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
 
   public abstract class CachedFoundryRecipeSubstance extends CachedFoundryRecipe
   {
-    public abstract InfuserSubstance GetSubstance();
+    public abstract InfuserSubstance getSubstance();
 
   }
 
-  protected abstract Rectangle GetSubstanceRect();
+  protected abstract Rectangle getSubstanceRect();
 
   @Override
   public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int recipe)
   {
     CachedFoundryRecipeSubstance foundryRecipe = (CachedFoundryRecipeSubstance) arecipes.get(recipe);
-    InfuserSubstance subs = foundryRecipe.GetSubstance();
-    if(isMouseOver(GetSubstanceRect(), gui, recipe))
+    InfuserSubstance subs = foundryRecipe.getSubstance();
+    if(isMouseOver(getSubstanceRect(), gui, recipe))
     {
       currenttip.add(StatCollector.translateToLocal("substance." + subs.type));
       currenttip.add(String.valueOf(EnumChatFormatting.GRAY) + subs.amount + " mL");
@@ -42,8 +42,8 @@ public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
   public boolean mouseClicked(GuiRecipe gui, int button, int recipe)
   {
     CachedFoundryRecipeSubstance foundryRecipe = (CachedFoundryRecipeSubstance) arecipes.get(recipe);
-    InfuserSubstance subs = foundryRecipe.GetSubstance();
-    if(isMouseOver(GetSubstanceRect(), gui, recipe))
+    InfuserSubstance subs = foundryRecipe.getSubstance();
+    if(isMouseOver(getSubstanceRect(), gui, recipe))
     {
       if(button == 0)
       {
@@ -57,7 +57,7 @@ public abstract class FoundryRecipeHandlerSubstance extends FoundryRecipeHandler
     return super.mouseClicked(gui, button, recipe);
   }
   
-  protected void SetColor(int color)
+  protected void setGLColor(int color)
   {
     float red = (float) (color >> 16 & 255) / 255.0F;
     float green = (float) (color >> 8 & 255) / 255.0F;

@@ -31,11 +31,11 @@ public class ModIntegrationBotania extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
-    liquid_manasteel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Manasteel", 1950, 15);
-    liquid_terrasteel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Terrasteel", 2100, 15);
-    liquid_elementium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Elementium", 2400, 15);
+    liquid_manasteel = LiquidMetalRegistry.instance.registerLiquidMetal( "Manasteel", 1950, 15);
+    liquid_terrasteel = LiquidMetalRegistry.instance.registerLiquidMetal( "Terrasteel", 2100, 15);
+    liquid_elementium = LiquidMetalRegistry.instance.registerLiquidMetal( "Elementium", 2400, 15);
 
     FoundryUtils.registerBasicMeltingRecipes("Manasteel", liquid_manasteel);
     FoundryUtils.registerBasicMeltingRecipes("Terrasteel", liquid_terrasteel);
@@ -43,7 +43,7 @@ public class ModIntegrationBotania extends ModIntegration
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
@@ -57,7 +57,7 @@ public class ModIntegrationBotania extends ModIntegration
   }
   
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("Botania"))
     {
@@ -156,29 +156,29 @@ public class ModIntegrationBotania extends ModIntegration
         CastingRecipeManager.instance.addRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
         
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, manasteel_chestplate);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, manasteel_leggings);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, manasteel_helmet);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, manasteel_boots);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, manasteel_pickaxe);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, manasteel_axe);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, manasteel_shovel);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, manasteel_sword);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, manasteel_chestplate);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, manasteel_leggings);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, manasteel_helmet);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, manasteel_boots);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, manasteel_pickaxe);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, manasteel_axe);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, manasteel_shovel);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, manasteel_sword);
 
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, terrasteel_chestplate);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, terrasteel_leggings);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, terrasteel_helmet);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, terrasteel_boots);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, terrasteel_sword);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, terrasteel_chestplate);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, terrasteel_leggings);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, terrasteel_helmet);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, terrasteel_boots);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, terrasteel_sword);
         
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, elementium_chestplate);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT,   elementium_leggings);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT,     elementium_helmet);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT,      elementium_boots);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT,    elementium_pickaxe);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT,        elementium_axe);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT,     elementium_shovel);
-        FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT,      elementium_sword);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, elementium_chestplate);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT,   elementium_leggings);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT,     elementium_helmet);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT,      elementium_boots);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT,    elementium_pickaxe);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT,        elementium_axe);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT,     elementium_shovel);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT,      elementium_sword);
       }
       ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);

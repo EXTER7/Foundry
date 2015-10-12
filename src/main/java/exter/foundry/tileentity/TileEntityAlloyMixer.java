@@ -78,7 +78,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
   }
 
-  public void GetGUINetworkData(int id, int value)
+  public void getGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -116,7 +116,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
 
-  public void SendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
+  public void sendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_FLUID, getTankFluid(tanks[TANK_INPUT_0]));
     crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_AMOUNT, getTankAmount(tanks[TANK_INPUT_0]));
@@ -315,7 +315,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   private int[] recipe_order = new int[4];
   private FluidStack[] input_tank_fluids = new FluidStack[4];
 
-  private void MixAlloy()
+  private void mixAlloy()
   {
     if(getStoredFoundryEnergy() < 10)
     {
@@ -402,7 +402,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         ||  tanks[TANK_INPUT_2].getFluidAmount() > 0
         ||  tanks[TANK_INPUT_3].getFluidAmount() > 0))
     {
-      MixAlloy();
+      mixAlloy();
     }
   }
 

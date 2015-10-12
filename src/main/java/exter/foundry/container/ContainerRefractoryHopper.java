@@ -114,13 +114,13 @@ public class ContainerRefractoryHopper extends Container
 
     for(int i = 0; i < crafters.size(); i++)
     {
-      te_hopper.SendGUINetworkData(this, (ICrafting) crafters.get(i));
+      te_hopper.sendGUINetworkData(this, (ICrafting) crafters.get(i));
     }
   }
 
   @Override
   public void updateProgressBar(int i, int j)
   {
-    te_hopper.GetGUINetworkData(i, j);
+    te_hopper.setGUINetworkData(i, j);
   }
 }

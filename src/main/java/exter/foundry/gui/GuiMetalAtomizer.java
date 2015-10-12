@@ -85,7 +85,7 @@ public class GuiMetalAtomizer extends GuiFoundry
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
     //Draw progress bar.
-    int progress = te_atomizer.GetProgress() * PROGRESS_WIDTH / TileEntityMetalCaster.CAST_TIME;
+    int progress = te_atomizer.getProgress() * PROGRESS_WIDTH / TileEntityMetalCaster.CAST_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
@@ -97,8 +97,8 @@ public class GuiMetalAtomizer extends GuiFoundry
     {
       drawTexturedModalRect(window_x + POWER_X, window_y + POWER_Y + POWER_HEIGHT - power, POWER_OVERLAY_X, POWER_OVERLAY_Y + POWER_HEIGHT - power, POWER_WIDTH, power);
     }
-    DisplayTank(window_x, window_y, TANK_INPUT_X, TANK_INPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
-    DisplayTank(window_x, window_y, TANK_WATER_X, TANK_WATER_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
+    displayTank(window_x, window_y, TANK_INPUT_X, TANK_INPUT_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
+    displayTank(window_x, window_y, TANK_WATER_X, TANK_WATER_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
   }
 
   @Override
@@ -109,14 +109,14 @@ public class GuiMetalAtomizer extends GuiFoundry
     if(isPointInRegion(TANK_INPUT_X,TANK_INPUT_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
+      addTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
     if(isPointInRegion(TANK_WATER_X,TANK_WATER_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      AddTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
+      addTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
@@ -129,7 +129,7 @@ public class GuiMetalAtomizer extends GuiFoundry
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
-    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.GetWidth(),button_mode.GetHeight(),mousex,mousey))
+    if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_atomizer.getRedstoneMode()));
@@ -138,7 +138,7 @@ public class GuiMetalAtomizer extends GuiFoundry
   }
   
   @Override
-  protected ResourceLocation GetGUITexture()
+  protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
   }

@@ -24,26 +24,26 @@ public class ModIntegrationBuildcraft extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     if(!Loader.isModLoaded("BuildCraft|Core"))
     {
       is_loaded = false;
       return;
     }
-    ItemStack iron_gear = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearIron");
-    ItemStack gold_gear = FoundryMiscUtils.GetModItemFromOreDictionary("BuildCraft|Core", "gearGold");
+    ItemStack iron_gear = FoundryMiscUtils.getModItemFromOreDictionary("BuildCraft|Core", "gearIron");
+    ItemStack gold_gear = FoundryMiscUtils.getModItemFromOreDictionary("BuildCraft|Core", "gearGold");
 
     if(is_loaded)
     {

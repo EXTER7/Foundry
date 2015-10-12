@@ -38,13 +38,13 @@ public class ModIntegrationTiCon extends ModIntegration
   }
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
 
   }
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
@@ -85,14 +85,14 @@ public class ModIntegrationTiCon extends ModIntegration
 //  }
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
     
   }
   
  
   @Override
-  public void OnAfterPostInit()
+  public void pnAfterPostInit()
   {
     if(!Loader.isModLoaded("TConstruct"))
     {

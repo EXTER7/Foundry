@@ -135,7 +135,7 @@ public class ContainerRevolver extends Container
     super.onContainerClosed(entityPlayer);
     if (!entityPlayer.worldObj.isRemote)
     {
-      rev_inv.Save();
+      rev_inv.save();
     }
   }
 }

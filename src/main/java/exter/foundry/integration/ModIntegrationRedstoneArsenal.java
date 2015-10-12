@@ -13,22 +13,22 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
 
 
   @Override
-  public void OnPreInit(Configuration config)
+  public void onPreInit(Configuration config)
   {
 
   }
 
 
   @Override
-  public void OnInit()
+  public void onInit()
   {
   }
 
 
   @Override
-  public void OnPostInit()
+  public void onPostInit()
   {
-    ModIntegration mod_tf = GetIntegration("tf");
+    ModIntegration mod_tf = getIntegration("tf");
     if(!Loader.isModLoaded("RedstoneArsenal") || mod_tf == null || !mod_tf.is_loaded)
     {
       is_loaded = false;

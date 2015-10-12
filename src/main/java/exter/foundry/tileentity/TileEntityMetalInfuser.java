@@ -126,7 +126,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     compound.setInteger("extract_time", extract_energy);
   }
 
-  public void GetGUINetworkData(int id, int value)
+  public void getGUINetworkData(int id, int value)
   {
     switch(id)
     {
@@ -145,7 +145,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     }
   }
 
-  public void SendGUINetworkData(ContainerMetalInfuser container, ICrafting crafting)
+  public void sendGUINetworkData(ContainerMetalInfuser container, ICrafting crafting)
   {
     crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().getFluidID() : 0);
     crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_AMOUNT, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().amount : 0);
@@ -321,7 +321,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   
-  private void CheckCurrentSubstanceRecipe()
+  private void checkCurrentSubstanceRecipe()
   {
     if(current_substance_recipe == null)
     {
@@ -339,7 +339,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     }
   }
   
-  private void DoSubstanceExtraction()
+  private void doSubstanceExtraction()
   {
     if(current_substance_recipe == null)
     {
@@ -415,7 +415,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     }
 
     
-    CheckCurrentSubstanceRecipe();
+    checkCurrentSubstanceRecipe();
     
     if(current_substance_recipe == null)
     {
@@ -423,7 +423,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       progress = 0;
     }
     
-    DoSubstanceExtraction();
+    doSubstanceExtraction();
 
     if(last_extract_time != extract_energy)
     {
@@ -437,12 +437,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     }
   }
 
-  public int GetExtractTime()
+  public int getExtractTime()
   {
     return extract_energy;
   }
   
-  public InfuserSubstance GetSubstance()
+  public InfuserSubstance getSubstance()
   {
     return substance;
   }

@@ -203,4 +203,29 @@ do
   ) | sed -e "s/@@MODEL@@/stairsStraight"$slab"/g" > $modeldir"/item/stairs"$slab".json"
 done
 
+for ingot in $(cat "ingots.list")
+do
+  ( # Item model
+  cat <<- EOF
+	{
+	    "parent": "builtin/generated",
+	    "textures": {
+	        "layer0": "foundry:items/@@TEXTURE@@"
+	    },
+	    "display": {
+	        "thirdperson": {
+	            "rotation": [ -90, 0, 0 ],
+	            "translation": [ 0, 1, -3 ],
+	            "scale": [ 0.55, 0.55, 0.55 ]
+	        },
+	        "firstperson": {
+	            "rotation": [ 0, -135, 25 ],
+	            "translation": [ 0, 4, 2 ],
+	            "scale": [ 1.7, 1.7, 1.7 ]
+	        }
+	    }
+	}
+	EOF
+  ) | sed -e "s/@@TEXTURE@@/"$ingot"/g" > $modeldir"/item/"$ingot".json"
+done
 

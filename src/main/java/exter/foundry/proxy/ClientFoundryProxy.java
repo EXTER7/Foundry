@@ -11,10 +11,13 @@ import exter.foundry.block.BlockMetalSlab;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
+import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemIngot;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
@@ -30,8 +33,31 @@ public class ClientFoundryProxy extends CommonFoundryProxy
 {
   static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
 
-  
-  
+  private void registerItemModel(Block block,String name)
+  {
+    registerItemModel(Item.getItemFromBlock(block), name);
+  }
+
+  private void registerItemModel(Block block,String name,int meta)
+  {
+    registerItemModel(Item.getItemFromBlock(block), name, meta);
+  }
+
+  private void registerItemModel(Item item,String name)
+  {
+    Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+    .register(item, 0,
+      new ModelResourceLocation("foundry:" + name, "inventory"));
+  }
+
+  private void registerItemModel(Item item,String name,int meta)
+  {
+    name = "foundry:" + name;
+    ModelBakery.addVariantName(item, name);
+    Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+    .register(item, meta, new ModelResourceLocation(name, "inventory"));
+  }
+
   @Override
   public void preInit()
   {
@@ -51,19 +77,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
     }   
 
-    /*
-    hopper_renderer_id = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(hopper_renderer_id,new RendererRefractoryHopper());
-    */
     RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));
 
     for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
     {
-      Item ore_item = Item.getItemFromBlock(FoundryBlocks.block_ore);
-      String name = "foundry:" + ore.oredict_name;
-      ModelBakery.addVariantName(ore_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(ore_item, ore.id, new ModelResourceLocation(name, "inventory"));
+      registerItemModel(FoundryBlocks.block_ore,ore.oredict_name, ore.id);
     }
 
 
@@ -71,11 +89,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       for(BlockMetal.Variant v:block.getVariants())
       {
-        Item slab_item = Item.getItemFromBlock(block);
-        String name = "foundry:block" + v.metal;
-        ModelBakery.addVariantName(slab_item, name);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-        .register(slab_item, v.id, new ModelResourceLocation(name, "inventory"));
+        registerItemModel(block,"block" + v.metal, v.id);
       }
     }
 
@@ -83,38 +97,32 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       for(BlockMetalSlab.Variant v:block.getVariants())
       {
-        Item slab_item = Item.getItemFromBlock(block);
-        String name = "foundry:slab" + v.metal;
-        ModelBakery.addVariantName(slab_item, name);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-        .register(slab_item, block.getBottomVariantMeta(v), new ModelResourceLocation(name, "inventory"));
+        registerItemModel(block,"slab" + v.metal, block.getBottomVariantMeta(v));
       }
     }
 
     for(Map.Entry<String, BlockStairs> e:FoundryBlocks.block_metal_stairs.entrySet())
     {
-      BlockStairs block = e.getValue();
-      Item stairs_item = Item.getItemFromBlock(block);
-      String name = "foundry:stairs" + e.getKey();
-      ModelBakery.addVariantName(stairs_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(stairs_item, 0, new ModelResourceLocation(name, "inventory"));
+      registerItemModel(e.getValue(),"stairs" + e.getKey());
     }
 
     for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
     {
-      Item machine_item = Item.getItemFromBlock(FoundryBlocks.block_machine);
-      String name = "foundry:" + m.model;
-      ModelBakery.addVariantName(machine_item, name);
-      Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-      .register(machine_item, m.id, new ModelResourceLocation(name, "inventory"));
+      registerItemModel(FoundryBlocks.block_machine,m.model,m.id);
     }
 
-    Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    .register(Item.getItemFromBlock(FoundryBlocks.block_alloy_furnace), 0, new ModelResourceLocation("foundry:alloyFurnace", "inventory"));
+    registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
+    registerItemModel(FoundryBlocks.block_refractory_casing,"casing");
+    registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
+
+    for(i = 0; i < ItemIngot.OREDICT_NAMES.length; i++)
+    {
+      registerItemModel(FoundryItems.item_ingot,ItemIngot.OREDICT_NAMES[i], i);
+    }
 
     ModIntegration.clientInit();
   }
+  
 
   @Override
   public void postInit()

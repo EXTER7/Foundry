@@ -45,8 +45,6 @@ public class CommonFoundryProxy implements IGuiHandler
   static public final int GUI_REVOLVER = 7;
   static public final int GUI_SHOTGUN = 8;
   static public final int GUI_ATOMIZER = 9;
-
-  static public int hopper_renderer_id = -1;
   
   public void preInit()
   {

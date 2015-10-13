@@ -25,6 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -79,7 +80,6 @@ public class BlockRefractoryHopper extends BlockContainer
   public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumHopperFacing.class);
 
 
-
   private Random rand = new Random();
   
   public BlockRefractoryHopper()
@@ -90,8 +90,9 @@ public class BlockRefractoryHopper extends BlockContainer
     setResistance(8.0F);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     setUnlocalizedName("refractoryHopper");
+    setDefaultState(blockState.getBaseState().withProperty(FACING, EnumHopperFacing.DOWN));
+    setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   }
-
 
   @Override
   protected BlockState createBlockState()
@@ -111,26 +112,24 @@ public class BlockRefractoryHopper extends BlockContainer
     return ((EnumHopperFacing) state.getValue(FACING)).id;
   }
 
-  @Override
-  public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos)
+  public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
   {
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   }
 
-  @Override
-  public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB bb, @SuppressWarnings("rawtypes") List blist, Entity entity)
+  public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, @SuppressWarnings("rawtypes") List list, Entity collidingEntity)
   {
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.625F, 1.0F);
-    super.addCollisionBoxesToList(world, pos, state, bb, blist, entity);
+    super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     float f = 0.125F;
     setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
-    super.addCollisionBoxesToList(world, pos, state, bb, blist, entity);
+    super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
-    super.addCollisionBoxesToList(world, pos, state, bb, blist, entity);
+    super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-    super.addCollisionBoxesToList(world, pos, state, bb, blist, entity);
+    super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
-    super.addCollisionBoxesToList(world, pos, state, bb, blist, entity);
+    super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   }
 
@@ -223,26 +222,28 @@ public class BlockRefractoryHopper extends BlockContainer
   @Override
   public int getRenderType()
   {
-    return CommonFoundryProxy.hopper_renderer_id;
+    return 3;
   }
 
-//  @Override
-//  public boolean renderAsNormalBlock()
-//  {
-//    return false;
-//  }
+  public boolean isFullCube()
+  {
+    return false;
+  }
 
-  @Override
   public boolean isOpaqueCube()
   {
     return false;
   }
 
   @SideOnly(Side.CLIENT)
-  @Override
+  public EnumWorldBlockLayer getBlockLayer()
+  {
+    return EnumWorldBlockLayer.CUTOUT_MIPPED;
+  }
+
+  @SideOnly(Side.CLIENT)
   public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
   {
     return true;
   }
-
 }

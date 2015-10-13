@@ -203,7 +203,7 @@ do
   ) | sed -e "s/@@MODEL@@/stairsStraight"$slab"/g" > $modeldir"/item/stairs"$slab".json"
 done
 
-for ingot in $(cat "ingots.list")
+for item in $(cat "items.list")
 do
   ( # Item model
   cat <<- EOF
@@ -226,6 +226,6 @@ do
 	    }
 	}
 	EOF
-  ) | sed -e "s/@@TEXTURE@@/"$ingot"/g" > $modeldir"/item/"$ingot".json"
+  ) | sed -e "s/@@TEXTURE@@/"$item"/g" > $modeldir"/item/"$item".json"
 done
 

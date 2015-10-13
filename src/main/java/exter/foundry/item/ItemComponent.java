@@ -38,65 +38,34 @@ public class ItemComponent extends Item
   static public final int COMPONENT_AMMO_BULLET_STEEL = 24;
   static public final int COMPONENT_AMMO_PELLET_STEEL = 25;
 
-
-  static private final String[] ICON_PATHS = 
-  {
-    "foundry:gear",
-    "foundry:heatingcoil",
-    "foundry:foundry_clay",
-    "foundry:foundry_brick",
-    "foundry:claymold_blank",
-    "foundry:gun_barrel",
-    "foundry:revolver_drum",
-    "foundry:revolver_frame",
-    "foundry:ammo_casing",
-    "foundry:ammo_bullet",
-    "foundry:ammo_bulletHollow",
-    "foundry:ammo_bulletJacketed",
-    "foundry:gunpowderSmall",
-    "foundry:blazePowderSmall",
-    "foundry:ammo_pellet",
-    "foundry:ammo_casingShell",
-    "foundry:shotgun_pump",
-    "foundry:shotgun_frame",
-    "foundry:dust_zinc",
-    "foundry:dust_brass",
-    "foundry:dust_cupronickel",
-    "foundry:shard_energy_tc",
-    "foundry:shard_life_tc",
-    "foundry:shard_void_tc",
-    "foundry:ammo_bullet_steel",
-    "foundry:ammo_pellet_steel"
-  };
-  
   static public final String[] REGISTRY_NAMES = 
   {
-    "gearStone",
-    "heatingCoil",
-    "refractoryClay",
-    "refractoryBrick",
-    "moldSoftBlank",
-    "gunBarrel",
-    "revolverDrum",
-    "revolverFrame",
-    "ammoCasing",
-    "ammoBullet",
-    "ammoBulletHollow",
-    "AmmoBulletJacketed",
-    "dustSmallGunpowder",
-    "dustSmallBlaze",
-    "ammoPellet",
-    "ammoShellCasing",
-    "shotgunPump",
-    "shotgunFrame",
-    "dustZinc",
-    "dustBrass",
-    "dustCupronickel",
-    "shardEnergy",
-    "shardLife",
-    "shardVoid",
-    "ammoBulletSteel",
-    "ammoPelletSteel"
+    "componentGearStone",
+    "componentHeatingCoil",
+    "componentRefractoryClay",
+    "componentRefractoryBrick",
+    "componentBlankMold",
+    "componentGunBarrel",
+    "componentRevolverDrum",
+    "componentRevolverFrame",
+    "componentRoundCasing",
+    "componentBullet",
+    "componentBulletHollow",
+    "componentBulletJacketed",
+    "componentDustSmallGunpowder",
+    "componentDustSmallBlaze",
+    "componentPellet",
+    "componentShellCasing",
+    "componentShotgunPump",
+    "componentShotgunFrame",
+    "componentDustZinc",
+    "componentDustBrass",
+    "componentDustCupronickel",
+    "componentShardEnergyTC",
+    "componentShardLifeTC",
+    "componentShardVoidTC",
+    "componentBulletSteel",
+    "componentPelletSteel"
   };
 
 
@@ -119,7 +88,7 @@ public class ItemComponent extends Item
   public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
     int i;
-    for (i = 0; i < ICON_PATHS.length; i++)
+    for (i = 0; i < REGISTRY_NAMES.length; i++)
     {
       ItemStack itemstack = new ItemStack(this, 1, i);
       list.add(itemstack);

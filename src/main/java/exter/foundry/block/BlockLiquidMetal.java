@@ -26,16 +26,14 @@ import net.minecraftforge.oredict.OreDictionary;
 public class BlockLiquidMetal extends BlockFluidClassic
 {
   private Object solid;
-  private int color;
 
-  public BlockLiquidMetal(Fluid fluid, Material material,Object solid_block)
+  public BlockLiquidMetal(Fluid fluid, String name, Material material,Object solid_block)
   {
     super(fluid, material);
     setLightOpacity(0);
     setLightLevel(1.0f);
     solid = solid_block;
-    color = fluid.getColor();
-    setUnlocalizedName(fluid.getUnlocalizedName()+"Block");
+    setUnlocalizedName(name);
     setCreativeTab(FoundryTabFluids.tab);
   }
 
@@ -214,12 +212,5 @@ public class BlockLiquidMetal extends BlockFluidClassic
       }
       entity.setFire(15);
     }
-  }
-  
-  @SideOnly(Side.CLIENT)
-  @Override
-  public int getRenderColor(IBlockState state)
-  {
-    return color;
   }
 }

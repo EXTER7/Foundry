@@ -48,8 +48,8 @@ public class LiquidMetalRegistry implements IFluidRegistry
   public Fluid registerLiquidMetal(String metal_name,int temperature,int luminosity,String texture,int color)
   {
     Fluid fluid = new ColoredFluid("liquid" + metal_name,
-        new ResourceLocation("foundry:blocks/liquid" + metal_name + "_still.ong"),
-            new ResourceLocation("foundry:blocks/liquid" + metal_name + "_flow.ong")).setColor(color).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
+        new ResourceLocation("foundry","blocks/" + texture + "_still"),
+        new ResourceLocation("foundry","blocks/" + texture + "_flow")).setColor(color).setTemperature(temperature).setLuminosity(luminosity).setDensity(2000);
     FluidRegistry.registerFluid(fluid);
 
     String block_name = "block" + metal_name;
@@ -58,8 +58,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     {
       solid = block_name;
     }
-    Block liquid_block = new BlockLiquidMetal(fluid, Material.lava,solid);
-    liquid_block.setUnlocalizedName("liquid" + metal_name);
+    Block liquid_block = new BlockLiquidMetal(fluid, "liquid" + metal_name, Material.lava,solid);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 
     fluid.setBlock(liquid_block);
@@ -73,7 +72,12 @@ public class LiquidMetalRegistry implements IFluidRegistry
   {
     return registry.get(name);
   }
-  
+
+  public Map<String,Fluid> getFluids()
+  {
+    return Collections.unmodifiableMap(registry);
+  }
+
   public Set<String> getFluidNames()
   {
     return Collections.unmodifiableSet(registry.keySet());

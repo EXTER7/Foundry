@@ -3,6 +3,9 @@ package exter.foundry.proxy;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
@@ -19,9 +22,12 @@ import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -33,8 +39,26 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ClientFoundryProxy extends CommonFoundryProxy
 {
+  static private class LiquidMetalItemMeshDefinition implements ItemMeshDefinition
+  {
+    private ModelResourceLocation model;
+    
+    LiquidMetalItemMeshDefinition(String name)
+    {
+      model = new ModelResourceLocation("foundry:liquid" + name);
+    }
+    
+    @Override
+    public ModelResourceLocation getModelLocation(ItemStack stack)
+    {
+      return model;
+    }
+    
+  }
+ 
   static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
-
+  
+  
   private void registerItemModel(Block block,String name)
   {
     registerItemModel(Item.getItemFromBlock(block), name);
@@ -65,6 +89,16 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   {
     MaterialRegistry.instance.InitIcons();
     InfuserRecipeManager.instance.InitTextures();
+    for(Map.Entry<String,Fluid> e:LiquidMetalRegistry.instance.getFluids().entrySet())
+    {
+      Fluid fluid = e.getValue();
+      Block block = fluid.getBlock();
+      Item item = Item.getItemFromBlock(block);
+      String name = e.getKey();
+      ModelBakery.addVariantName(item);
+      ModelLoader.setCustomMeshDefinition( item, new LiquidMetalItemMeshDefinition(name));
+      ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(BlockFluidBase.LEVEL).build());
+    }
     ModIntegration.clientPreInit();
   }
 
@@ -85,7 +119,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       registerItemModel(FoundryBlocks.block_ore,ore.oredict_name, ore.id);
     }
-
 
     for(BlockMetal block:FoundryBlocks.block_metal)
     {

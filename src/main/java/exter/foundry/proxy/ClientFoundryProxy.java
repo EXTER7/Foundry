@@ -165,6 +165,17 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       registerItemModel(FoundryItems.item_mold,ItemMold.REGISTRY_NAMES[i], i);
     }
 
+    registerItemModel(FoundryItems.item_revolver,"revolver",0);
+    registerItemModel(FoundryItems.item_shotgun,"shotgun",0);
+    registerItemModel(FoundryItems.item_round,"roundNormal",0);
+    registerItemModel(FoundryItems.item_round_hollow,"roundHollow",0);
+    registerItemModel(FoundryItems.item_round_jacketed,"roundJacketed",0);
+    registerItemModel(FoundryItems.item_round_fire,"roundFire",0);
+    registerItemModel(FoundryItems.item_round_poison,"roundPoison",0);
+    registerItemModel(FoundryItems.item_round_ap,"roundAP",0);
+    registerItemModel(FoundryItems.item_shell,"shellNormal",0);
+    registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
+
     ModIntegration.clientInit();
   }
   

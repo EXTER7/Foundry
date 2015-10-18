@@ -283,7 +283,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     tessellator.addVertexWithUV(rect.x + rect.width, rect.y + rect.height, z, maxU, maxV);
     tessellator.addVertexWithUV(rect.x + rect.width, rect.y, z, maxU, minV);
     tessellator.addVertexWithUV(rect.x, rect.y, z, minU, minV);
-    tessellator.finishDrawing();
+    Tessellator.getInstance().draw();
   }
 
   public void drawFluidVertical(int left, int bottom, int width, int height, Fluid fluid)

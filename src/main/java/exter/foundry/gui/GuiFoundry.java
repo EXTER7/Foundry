@@ -90,7 +90,7 @@ public abstract class GuiFoundry extends GuiContainer
       tessellator.addVertexWithUV(x + width, y + height, zLevel, max_u, max_v);
       tessellator.addVertexWithUV(x + width, y, zLevel, max_u, min_v);
       tessellator.addVertexWithUV(x, y, zLevel, min_u, min_v);
-      tessellator.finishDrawing();
+      Tessellator.getInstance().draw();
   }
 
   protected void addTankTooltip(List<String> tooltip, int x, int y, FluidTank tank)
@@ -126,6 +126,7 @@ public abstract class GuiFoundry extends GuiContainer
       return;
     }
     int start = 0;
+    GL11.glDisable(GL11.GL_DEPTH_TEST);
 
     TextureAtlasSprite liquid_icon = null;
     Fluid fluid = liquid.getFluid();
@@ -140,7 +141,7 @@ public abstract class GuiFoundry extends GuiContainer
     {
       mc.renderEngine.bindTexture(BLOCK_TEXTURE);
       int color = fluid.getColor(liquid);
-      setGLColor(color);
+      //setGLColor(color);
       while(true)
       {
         int i;
@@ -176,6 +177,7 @@ public abstract class GuiFoundry extends GuiContainer
     }
 
     drawTexturedModalRect(window_x + x, window_y + y, overlay_x, overlay_y, 16, tank_height);
+    GL11.glEnable(GL11.GL_DEPTH_TEST);
   }
 
 

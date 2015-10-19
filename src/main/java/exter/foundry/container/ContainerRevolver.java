@@ -30,7 +30,7 @@ public class ContainerRevolver extends Container
 
 
     rev_inv = new InventoryFirearm(revolver,inventory_player,8);
-    int position = FoundryItems.item_revolver.GetPosition(revolver);
+    int position = FoundryItems.item_revolver.getPosition(revolver);
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, position,            80,  30, ItemRevolver.AMMO_TYPE));
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 1) % 8, 106,  39, ItemRevolver.AMMO_TYPE));
     addSlotToContainer(new SlotFirearmAmmo(rev_inv, (position + 2) % 8, 115,  65, ItemRevolver.AMMO_TYPE));

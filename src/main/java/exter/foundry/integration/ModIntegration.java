@@ -36,7 +36,7 @@ public abstract class ModIntegration
   public abstract void onInit();
   public abstract void onPostInit();
 
-  public void pnAfterPostInit()
+  public void onAfterPostInit()
   {
     
   }
@@ -54,7 +54,7 @@ public abstract class ModIntegration
   }
 
   @SideOnly(Side.CLIENT)
-  public void OnClientPostInit()
+  public void onClientPostInit()
   {
     
   }
@@ -145,7 +145,7 @@ public abstract class ModIntegration
       if(m.is_loaded)
       {
         ModFoundry.log.info("AfterPostInit integration: " + m.Name);
-        m.pnAfterPostInit();
+        m.onAfterPostInit();
       }
     }
   }
@@ -182,7 +182,7 @@ public abstract class ModIntegration
     {
       if(m.is_loaded)
       {
-        m.OnClientPostInit();
+        m.onClientPostInit();
       }
     }
   }

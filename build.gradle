@@ -1,7 +1,22 @@
+/*
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.1"
 }
+*/
 
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.0-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 def mod_version = "2.0.0.0"
 
@@ -14,7 +29,7 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.8-11.14.3.1512"
+    version = "1.8-11.14.3.1521"
     runDir = "eclipse"
     mappings = "stable_16"
 }

@@ -55,7 +55,7 @@ public class ModIntegrationForestry extends ModIntegration
       FoundryMiscUtils.registerInOreDictionary("gearBronze",bronze_gear);
       if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
       {
-        ItemStack mold_gear = FoundryItems.Mold(ItemMold.MOLD_GEAR);
+        ItemStack mold_gear = FoundryItems.mold(ItemMold.MOLD_GEAR);
         MeltingRecipeManager.instance.addRecipe(copper_gear, new FluidStack(FoundryRecipes.liquid_copper,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.addRecipe(tin_gear, new FluidStack(FoundryRecipes.liquid_tin,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
         MeltingRecipeManager.instance.addRecipe(bronze_gear, new FluidStack(FoundryRecipes.liquid_bronze,FoundryAPI.FLUID_AMOUNT_INGOT * 4));

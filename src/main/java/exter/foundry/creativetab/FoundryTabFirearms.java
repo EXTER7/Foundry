@@ -17,7 +17,7 @@ public class FoundryTabFirearms extends CreativeTabs
   @Override
   public ItemStack getIconItemStack()
   {
-    return FoundryItems.item_revolver.Empty();
+    return FoundryItems.item_revolver.empty();
   }
 
   @Override

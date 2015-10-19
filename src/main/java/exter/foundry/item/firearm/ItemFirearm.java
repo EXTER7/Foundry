@@ -55,7 +55,7 @@ public abstract class ItemFirearm extends ItemTool
     return false;
   }
 
-  static private MovingObjectPosition Trace(World world, EntityLivingBase shooter,Entity target,float spread)
+  static private MovingObjectPosition trace(World world, EntityLivingBase shooter,Entity target,float spread)
   {
     Vec3 start = new Vec3(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
     Vec3 dir;
@@ -124,14 +124,14 @@ public abstract class ItemFirearm extends ItemTool
     return obj;
   }
   
-  static public final void Shoot(ItemStack round_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
+  static public final void shoot(ItemStack round_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
   {
     Map<EntityLivingBase,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLivingBase,MutablePair<Float,Integer>>();
     IFirearmRound round = (IFirearmRound) round_item.getItem();
     int i;
     for(i = 0; i < times; i++)
     {
-      MovingObjectPosition obj = Trace(world, shooter, target, spread);
+      MovingObjectPosition obj = trace(world, shooter, target, spread);
       if(obj != null)
       {
         switch(obj.typeOfHit)
@@ -222,12 +222,12 @@ public abstract class ItemFirearm extends ItemTool
     return EnumAction.BOW;
   }
   
-  public abstract void SetAmmo(ItemStack stack,int slot,ItemStack ammo);
+  public abstract void setAmmo(ItemStack stack,int slot,ItemStack ammo);
   
-  public abstract ItemStack GetAmmo(ItemStack stack,int slot);
+  public abstract ItemStack getAmmo(ItemStack stack,int slot);
 
   
-  static public boolean RoundMatches(ItemStack stack,String type)
+  static public boolean roundMatches(ItemStack stack,String type)
   {
     if(stack == null)
     {

@@ -288,7 +288,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     }
     
     
-    ItemStack recipe_output = current_recipe.GetOutputItem();
+    ItemStack recipe_output = current_recipe.getOutputItem();
 
     ItemStack inv_output = inventory[INVENTORY_OUTPUT];
     if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize >= inv_output.getMaxStackSize()))
@@ -366,7 +366,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           }
           if(inventory[INVENTORY_OUTPUT] == null)
           {
-            inventory[INVENTORY_OUTPUT] = current_recipe.GetOutputItem();
+            inventory[INVENTORY_OUTPUT] = current_recipe.getOutputItem();
             inventory[INVENTORY_OUTPUT].stackSize = 1;
           } else
           {

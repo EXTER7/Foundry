@@ -19,6 +19,11 @@ public interface IAtomizerRecipe
    */
   public Object getOutput();
 
+  /**
+   * Check if a fluid stack and mold matches this recipe.
+   * @param fluid_stack fluid to check (must contain the fluid in the recipe).
+   * @return true if the fluid matches, false otherwise.
+   */
   public boolean matchesRecipe(FluidStack fluid_stack);
   
   /**

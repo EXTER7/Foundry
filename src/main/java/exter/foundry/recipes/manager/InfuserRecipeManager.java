@@ -46,13 +46,13 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @SideOnly(Side.CLIENT)
-  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y)
+  public void registerSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y)
   {
-    RegisterSubstanceTexture(substance_type,texture_path,pos_x,pos_y,0xFFFFFF);
+    registerSubstanceTexture(substance_type,texture_path,pos_x,pos_y,0xFFFFFF);
   }
 
   @SideOnly(Side.CLIENT)
-  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color)
+  public void registerSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color)
   {
     substance_textures.put(substance_type, new SubstanceGuiTexture(texture_path,pos_x,pos_y,texture_color));
   }
@@ -69,13 +69,13 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddRecipe(FluidStack result,FluidStack in_fluid,InfuserSubstance substance)
+  public void addRecipe(FluidStack result,FluidStack in_fluid,InfuserSubstance substance)
   {
     recipes.add(new InfuserRecipe(result,in_fluid,substance));
   }
   
   @Override
-  public IInfuserRecipe FindRecipe(FluidStack fluid,InfuserSubstance substance)
+  public IInfuserRecipe findRecipe(FluidStack fluid,InfuserSubstance substance)
   {
     if(fluid == null || substance == null)
     {
@@ -92,13 +92,13 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   }
   
   @Override
-  public void AddSubstanceRecipe(InfuserSubstance substance,Object itm, int energy)
+  public void addSubstanceRecipe(InfuserSubstance substance,Object itm, int energy)
   {
     substance_recipes.add(new InfuserSubstanceRecipe(substance,itm,energy));
   }
 
   @Override
-  public IInfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item)
+  public IInfuserSubstanceRecipe findSubstanceRecipe(ItemStack item)
   {
     if(item == null)
     {
@@ -116,14 +116,14 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
 
 
   @Override
-  public List<IInfuserRecipe> GetRecipes()
+  public List<IInfuserRecipe> getRecipes()
   {
     return Collections.unmodifiableList(recipes);
   }
 
 
   @Override
-  public List<IInfuserSubstanceRecipe> GetSubstanceRecipes()
+  public List<IInfuserSubstanceRecipe> getSubstanceRecipes()
   {
     return Collections.unmodifiableList(substance_recipes);
   }
@@ -131,21 +131,21 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
 
   @Override
   @SideOnly(Side.CLIENT)
-  public Map<String, ISubstanceGuiTexture> GetSubstanceGuiTextures()
+  public Map<String, ISubstanceGuiTexture> getSubstanceGuiTextures()
   {
     return Collections.unmodifiableMap(substance_textures);
   }
 
 
   @Override
-  public void RemoveRecipe(IInfuserRecipe recipe)
+  public void removeRecipe(IInfuserRecipe recipe)
   {
     recipes.remove(recipe);
   }
 
 
   @Override
-  public void RemoveSubstanceRecipe(IInfuserSubstanceRecipe recipe)
+  public void removeSubstanceRecipe(IInfuserSubstanceRecipe recipe)
   {
     substance_recipes.remove(recipe);
   }

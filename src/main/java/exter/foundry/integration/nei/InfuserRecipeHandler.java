@@ -92,7 +92,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
   
   public void loadAllRecipes()
   {
-    for(IInfuserRecipe recipe : InfuserRecipeManager.instance.GetRecipes())
+    for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
     {
       arecipes.add(new CachedInfuserRecipe(recipe));
     }
@@ -112,7 +112,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
       {
         return;
       }
-      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.GetRecipes())
+      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
       {
         if(recipe.getInputFluid().isFluidEqual(fluid))
         {
@@ -127,7 +127,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
         return;
       }
       InfuserSubstance sub = (InfuserSubstance)results[0];
-      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.GetRecipes())
+      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
       {
         if(recipe.getInputSubstance().type.equals(sub.type))
         {
@@ -151,7 +151,7 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
       {
         return;
       }
-      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.GetRecipes())
+      for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
       {
         if(recipe.getOutput().isFluidEqual(fluid))
         {

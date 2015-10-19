@@ -57,6 +57,6 @@ public class InfuserRecipe implements IInfuserRecipe
     {
       return false;
     }
-    return in_fluid.containsFluid(fluid) && in_substance.Contains(substance);
+    return in_fluid.containsFluid(fluid) && in_substance.contains(substance);
   }
 }

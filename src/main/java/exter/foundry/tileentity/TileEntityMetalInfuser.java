@@ -97,7 +97,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
         substance = null;
       } else
       {
-        substance = InfuserSubstance.ReadFromNBT(substance_tag);
+        substance = InfuserSubstance.readFromNBT(substance_tag);
       }
     }
   }
@@ -107,7 +107,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     if(substance != null)
     {
       compound.setBoolean("empty", false);
-      substance.WriteToNBT(compound);
+      substance.writeToNBT(compound);
     } else
     {
       compound.setBoolean("empty", true);
@@ -350,7 +350,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       
     InfuserSubstance recipe_sub = current_substance_recipe.getOutput();
     if(substance != null
-        && (!recipe_sub.IsSubstanceEqual(substance)
+        && (!recipe_sub.isSubstanceEqual(substance)
         || FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX - substance.amount < recipe_sub.amount))
     {
       progress = 0;
@@ -390,7 +390,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     
     if(tanks[TANK_INPUT].getFluidAmount() > 0 && getStoredFoundryEnergy() >= INFUSE_ENERGY_NEEDED)
     {
-      IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(tanks[TANK_INPUT].getFluid(), substance);
+      IInfuserRecipe recipe = InfuserRecipeManager.instance.findRecipe(tanks[TANK_INPUT].getFluid(), substance);
       if(recipe != null)
       {
         FluidStack result = recipe.getOutput();
@@ -419,7 +419,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     
     if(current_substance_recipe == null)
     {
-      current_substance_recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
+      current_substance_recipe = InfuserRecipeManager.instance.findSubstanceRecipe(inventory[INVENTORY_SUBSTANCE_INPUT]);
       progress = 0;
     }
     

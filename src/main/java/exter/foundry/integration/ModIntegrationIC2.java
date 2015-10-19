@@ -27,7 +27,7 @@ public class ModIntegrationIC2 extends ModIntegration
   
   @SideOnly(Side.CLIENT)
   @Override
-  public void OnClientPostInit()
+  public void onClientPostInit()
   {
 //    MaterialRegistry.instance.registerTypeIcon("Casing", ItemStack.copyItemStack(IC2Items.getItem("casingcopper")));  
 //    MaterialRegistry.instance.registerTypeIcon("Cable", ItemStack.copyItemStack(IC2Items.getItem("copperCableItem")));

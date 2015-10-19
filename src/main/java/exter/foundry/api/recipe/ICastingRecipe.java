@@ -46,14 +46,22 @@ public interface ICastingRecipe
    */
   public boolean matchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack extra);
   
+  /**
+   * Check if the item stack contains the necessary extra items for this recipe.
+   * @param stack the stack to check.
+   * @return true if the stack contains the recipe's extra item requirement.
+   */
   public boolean containsExtra(ItemStack stack);
   
+  /**
+   * Return true if the recipe requires an extra item.
+   */
   public boolean requiresExtra();
 
   /**
    * Get the actual item produced by casting.
    * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
    */
-  public ItemStack GetOutputItem();
+  public ItemStack getOutputItem();
 
 }

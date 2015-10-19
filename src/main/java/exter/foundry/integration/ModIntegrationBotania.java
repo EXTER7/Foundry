@@ -49,7 +49,7 @@ public class ModIntegrationBotania extends ModIntegration
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void OnClientPostInit()
+  public void onClientPostInit()
   {
     MaterialRegistry.instance.registerMaterialIcon("Manasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,0));
     MaterialRegistry.instance.registerMaterialIcon("Terrasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,4));
@@ -120,14 +120,14 @@ public class ModIntegrationBotania extends ModIntegration
         ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
         extra_dreamsticks2.stackSize = 2;
 
-        ItemStack mold_chestplate = FoundryItems.Mold(ItemMold.MOLD_CHESTPLATE);
-        ItemStack mold_pickaxe = FoundryItems.Mold(ItemMold.MOLD_PICKAXE);
-        ItemStack mold_axe = FoundryItems.Mold(ItemMold.MOLD_AXE);
-        ItemStack mold_shovel = FoundryItems.Mold(ItemMold.MOLD_SHOVEL);
-        ItemStack mold_sword = FoundryItems.Mold(ItemMold.MOLD_SWORD);
-        ItemStack mold_leggings = FoundryItems.Mold(ItemMold.MOLD_LEGGINGS);
-        ItemStack mold_helmet = FoundryItems.Mold(ItemMold.MOLD_HELMET);
-        ItemStack mold_boots = FoundryItems.Mold(ItemMold.MOLD_BOOTS);
+        ItemStack mold_chestplate = FoundryItems.mold(ItemMold.MOLD_CHESTPLATE);
+        ItemStack mold_pickaxe = FoundryItems.mold(ItemMold.MOLD_PICKAXE);
+        ItemStack mold_axe = FoundryItems.mold(ItemMold.MOLD_AXE);
+        ItemStack mold_shovel = FoundryItems.mold(ItemMold.MOLD_SHOVEL);
+        ItemStack mold_sword = FoundryItems.mold(ItemMold.MOLD_SWORD);
+        ItemStack mold_leggings = FoundryItems.mold(ItemMold.MOLD_LEGGINGS);
+        ItemStack mold_helmet = FoundryItems.mold(ItemMold.MOLD_HELMET);
+        ItemStack mold_boots = FoundryItems.mold(ItemMold.MOLD_BOOTS);
 
         CastingRecipeManager.instance.addRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
         CastingRecipeManager.instance.addRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
@@ -180,8 +180,8 @@ public class ModIntegrationBotania extends ModIntegration
         FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT,     elementium_shovel);
         FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT,      elementium_sword);
       }
-      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
-      ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
+      ItemStack mold_ingot = FoundryItems.mold(ItemMold.MOLD_INGOT);
+      ItemStack mold_block = FoundryItems.mold(ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
       MeltingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));

@@ -33,7 +33,7 @@ public class ItemRevolver extends ItemFirearm
     return true;
   }
 
-  public int GetPosition(ItemStack stack)
+  public int getPosition(ItemStack stack)
   {
     if(stack.getItem() != this)
     {
@@ -52,7 +52,7 @@ public class ItemRevolver extends ItemFirearm
     return tag.getInteger("position");
   }
   
-  public void SetPosition(ItemStack stack,int position)
+  public void setPosition(ItemStack stack,int position)
   {
     if(stack.getItem() != this)
     {
@@ -76,16 +76,16 @@ public class ItemRevolver extends ItemFirearm
   {
     if(!player.isSneaking())
     {      
-      int position = GetPosition(stack);
-      ItemStack round = GetAmmo(stack,position);
-      if(RoundMatches(round,AMMO_TYPE))
+      int position = getPosition(stack);
+      ItemStack round = getAmmo(stack,position);
+      if(roundMatches(round,AMMO_TYPE))
       {
         if(!world.isRemote)
         {
           world.playSoundAtEntity(player, "foundry:revolver_fire", 1F, 1F);
         }
-        Shoot(round,world,player,null,1,0.01f,1.0f);
-        SetAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
+        shoot(round,world,player,null,1,0.01f,1.0f);
+        setAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
         if(world.isRemote)
         {
           player.rotationPitch -= 3;
@@ -104,7 +104,7 @@ public class ItemRevolver extends ItemFirearm
           world.playSoundAtEntity(player, "random.click", 0.3F, 1.5F);
         }        
       }
-      SetPosition(stack,(position + 1) % 8);
+      setPosition(stack,(position + 1) % 8);
     }    
   }
 
@@ -130,8 +130,8 @@ public class ItemRevolver extends ItemFirearm
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item,CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
-    list.add(Empty());
-    list.add(Loaded());
+    list.add(empty());
+    list.add(loaded());
   }
 
   @SuppressWarnings("unchecked")
@@ -165,7 +165,7 @@ public class ItemRevolver extends ItemFirearm
     return true;
   }
   
-  public void SetAmmo(ItemStack stack,int slot,ItemStack ammo)
+  public void setAmmo(ItemStack stack,int slot,ItemStack ammo)
   {
     if(stack.getItem() != this)
     {
@@ -195,7 +195,7 @@ public class ItemRevolver extends ItemFirearm
   }
   
 
-  public ItemStack GetAmmo(ItemStack stack,int slot)
+  public ItemStack getAmmo(ItemStack stack,int slot)
   {
     if(stack.getItem() != this)
     {
@@ -220,7 +220,7 @@ public class ItemRevolver extends ItemFirearm
     }
   }
 
-  public ItemStack Empty()
+  public ItemStack empty()
   {
     ItemStack stack = new ItemStack(this);
     NBTTagCompound nbt = new NBTTagCompound();
@@ -236,7 +236,7 @@ public class ItemRevolver extends ItemFirearm
     return stack;
   }
 
-  public ItemStack Loaded()
+  public ItemStack loaded()
   {
     ItemStack stack = new ItemStack(this);
     NBTTagCompound nbt = new NBTTagCompound();

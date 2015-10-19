@@ -23,20 +23,20 @@ public class EntitySkeletonGun extends EntitySkeleton
 
   static private final ItemStack[] LOOT_COMMON =
   {
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),
-    FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET)
+    FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET),
+    FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),
+    FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING),
+    FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),
+    FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET)
   };
 
   static private final ItemStack[] LOOT_RARE =
   {
-    FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),
-    FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),
-    FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),
-    FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP),
-    FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME)
+    FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL),
+    FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_DRUM),
+    FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_FRAME),
+    FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP),
+    FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME)
   };
 
   public EntitySkeletonGun(World p_i1741_1_)
@@ -70,14 +70,14 @@ public class EntitySkeletonGun extends EntitySkeleton
       {
         worldObj.playSoundAtEntity(this, "foundry:shotgun_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.4f,damage);
+      ItemFirearm.shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.4f,damage);
     } else
     {
       if(!worldObj.isRemote)
       {
         worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
       }
-      ItemFirearm.Shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.015f,damage);
+      ItemFirearm.shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.015f,damage);
     }
   }
   
@@ -85,10 +85,10 @@ public class EntitySkeletonGun extends EntitySkeleton
   {
     if(rand.nextInt(100) < 10)
     {
-      super.setCurrentItemOrArmor(0, FoundryItems.item_shotgun.Empty());
+      super.setCurrentItemOrArmor(0, FoundryItems.item_shotgun.empty());
     } else
     {
-      super.setCurrentItemOrArmor(0, FoundryItems.item_revolver.Empty());
+      super.setCurrentItemOrArmor(0, FoundryItems.item_revolver.empty());
     }
   }
 

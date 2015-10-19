@@ -45,20 +45,20 @@ public class ItemShotgun extends ItemFirearm
       int shot = -1;
       for(i = 4; i >= 0; i--)
       {
-        round = GetAmmo(stack,i);
+        round = getAmmo(stack,i);
         if(round != null)
         {
           shot = i;
           break;
         }
       }
-      if(RoundMatches(round,AMMO_TYPE))
+      if(roundMatches(round,AMMO_TYPE))
       {
         if(!world.isRemote)
         {
           world.playSoundAtEntity(player, "foundry:shotgun_fire", 1F, 1F);
         }
-        Shoot(round,world,player,null,6,0.35f,1.0f);
+        shoot(round,world,player,null,6,0.35f,1.0f);
         float pitch = -player.rotationPitch;
         float yaw = -player.rotationYaw;
         float cpitch = -MathHelper.cos(pitch * 0.017453292F);          
@@ -86,7 +86,7 @@ public class ItemShotgun extends ItemFirearm
           casing.motionZ = look_x * 0.2;
           world.spawnEntityInWorld(casing);          
         }
-        SetAmmo(stack,shot,null);
+        setAmmo(stack,shot,null);
         stack.damageItem(1, player);
       } else
       {
@@ -124,8 +124,8 @@ public class ItemShotgun extends ItemFirearm
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item,CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
-    list.add(Empty());
-    list.add(Loaded());
+    list.add(empty());
+    list.add(loaded());
   }
 
   @SuppressWarnings("unchecked")
@@ -160,7 +160,7 @@ public class ItemShotgun extends ItemFirearm
   }
   
   @Override
-  public void SetAmmo(ItemStack stack,int slot,ItemStack ammo)
+  public void setAmmo(ItemStack stack,int slot,ItemStack ammo)
   {
     if(stack.getItem() != this)
     {
@@ -190,7 +190,7 @@ public class ItemShotgun extends ItemFirearm
   }
 
   @Override
-  public ItemStack GetAmmo(ItemStack stack,int slot)
+  public ItemStack getAmmo(ItemStack stack,int slot)
   {
     if(stack.getItem() != this)
     {
@@ -215,7 +215,7 @@ public class ItemShotgun extends ItemFirearm
     }
   }
 
-  public ItemStack Empty()
+  public ItemStack empty()
   {
     ItemStack stack = new ItemStack(this);
     NBTTagCompound nbt = new NBTTagCompound();
@@ -230,7 +230,7 @@ public class ItemShotgun extends ItemFirearm
     return stack;
   }
 
-  public ItemStack Loaded()
+  public ItemStack loaded()
   {
     ItemStack stack = new ItemStack(this);
     NBTTagCompound nbt = new NBTTagCompound();

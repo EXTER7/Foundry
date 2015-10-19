@@ -74,7 +74,7 @@ public class CastingRecipe implements ICastingRecipe
   }
 
   @Override
-  public ItemStack GetOutputItem()
+  public ItemStack getOutputItem()
   {
     if(output instanceof String)
     {
@@ -132,7 +132,7 @@ public class CastingRecipe implements ICastingRecipe
   @Override
   public boolean matchesRecipe(ItemStack mold_stack,FluidStack fluid_stack,ItemStack in_extra)
   {
-    if(GetOutputItem() == null)
+    if(getOutputItem() == null)
     {
       return false;
     }

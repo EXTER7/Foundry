@@ -92,7 +92,7 @@ public class ModIntegrationTiCon extends ModIntegration
   
  
   @Override
-  public void pnAfterPostInit()
+  public void onAfterPostInit()
   {
     if(!Loader.isModLoaded("TConstruct"))
     {

@@ -43,7 +43,7 @@ public class InfuserSubstance
    * Write the substance stack to NBT
    * @param tag NBT tag to write.
    */
-  public void WriteToNBT(NBTTagCompound tag)
+  public void writeToNBT(NBTTagCompound tag)
   {
     tag.setString("type", type);
     tag.setInteger("amount", (int)amount);
@@ -54,7 +54,7 @@ public class InfuserSubstance
    * @param tag NBT tag to read from.
    * @return Substance stack read from the tag.
    */
-  public static InfuserSubstance ReadFromNBT(NBTTagCompound tag)
+  public static InfuserSubstance readFromNBT(NBTTagCompound tag)
   {
     if(!(tag.hasKey("type") && tag.hasKey("amount")))
     {
@@ -74,7 +74,7 @@ public class InfuserSubstance
    * @param is Stack to compare.
    * @return true if the stack's substance type are equal, false otherwise.
    */
-  public boolean IsSubstanceEqual(InfuserSubstance is)
+  public boolean isSubstanceEqual(InfuserSubstance is)
   {
     if(is == null)
     {
@@ -88,8 +88,8 @@ public class InfuserSubstance
    * @param is Stack to compare.
    * @return true this stack contains the substance, false otherwise.
    */
-  public boolean Contains(InfuserSubstance is)
+  public boolean contains(InfuserSubstance is)
   {
-    return IsSubstanceEqual(is) && amount >= is.amount;
+    return isSubstanceEqual(is) && amount >= is.amount;
   }
 }

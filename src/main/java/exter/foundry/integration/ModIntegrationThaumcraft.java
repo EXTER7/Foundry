@@ -77,7 +77,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
   
   @SideOnly(Side.CLIENT)
   @Override
-  public void OnClientPostInit()
+  public void onClientPostInit()
   {
 //    Item shard = ItemApi.getItem("itemShard",6).getItem();
 //

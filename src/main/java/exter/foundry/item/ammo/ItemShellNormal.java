@@ -22,6 +22,6 @@ public class ItemShellNormal extends ItemRoundBase
   @Override
   public ItemStack getCasing(ItemStack round)
   {
-    return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
+    return FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
   }
 }

@@ -67,5 +67,5 @@ public interface ICastingRecipeManager
    * Removes a recipe.
    * @param The recipe to remove.
    */
-  public void RemoveRecipe(ICastingRecipe recipe);
+  public void removeRecipe(ICastingRecipe recipe);
 }

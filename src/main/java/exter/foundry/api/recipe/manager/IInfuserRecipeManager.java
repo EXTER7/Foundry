@@ -21,13 +21,13 @@ public interface IInfuserRecipeManager
    * @param in_fluid Fluid required (fluid type and amount).
    * @param in_substance Substance required (substance type and amount).
    */
-  public void AddRecipe(FluidStack result,FluidStack fluid,InfuserSubstance substance);
+  public void addRecipe(FluidStack result,FluidStack fluid,InfuserSubstance substance);
 
   /**
    * Get a list of all the recipes
    * @return List of all the recipes
    */
-  public List<IInfuserRecipe> GetRecipes();
+  public List<IInfuserRecipe> getRecipes();
   
 
   /**
@@ -36,13 +36,13 @@ public interface IInfuserRecipeManager
    * @param item Item required.
    * @param energy Energy required (100 Energy = 1 MJ, 10 Energy = 1 RF, 40 Energy = 1 EU).
    */
-  public void AddSubstanceRecipe(InfuserSubstance subs,Object item, int energy);
+  public void addSubstanceRecipe(InfuserSubstance subs,Object item, int energy);
 
   /**
    * Get a list of all the substance recipes
    * @return List of all the substance recipes
    */
-  public List<IInfuserSubstanceRecipe> GetSubstanceRecipes();
+  public List<IInfuserSubstanceRecipe> getSubstanceRecipes();
 
   /**
    * Register a texture for a substance
@@ -52,7 +52,7 @@ public interface IInfuserRecipeManager
    * @param pos_y Y coordinate in the texture
    */
   @SideOnly(Side.CLIENT)
-  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y);
+  public void registerSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y);
 
   /**
    * Register a texture for a substance
@@ -63,14 +63,14 @@ public interface IInfuserRecipeManager
    * @param texture_color color of the texture
    */
   @SideOnly(Side.CLIENT)
-  public void RegisterSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color);
+  public void registerSubstanceTexture(String substance_type,ResourceLocation texture_path,int pos_x,int pos_y,int texture_color);
 
   /**
    * Get the substance GUI textures mapped by the type.
    * @return Substance type -> texture map.
    */
   @SideOnly(Side.CLIENT)
-  public Map<String,ISubstanceGuiTexture> GetSubstanceGuiTextures();
+  public Map<String,ISubstanceGuiTexture> getSubstanceGuiTextures();
 
   /**
    * Find a infusing recipe given a FluidStack and a substance.
@@ -78,24 +78,24 @@ public interface IInfuserRecipeManager
    * @param substance Substance that contains the recipe's required substance.
    * @return The infusing recipe, or null if no matching recipe.
    */
-  public IInfuserRecipe FindRecipe(FluidStack fluid,InfuserSubstance substance);
+  public IInfuserRecipe findRecipe(FluidStack fluid,InfuserSubstance substance);
 
   /**
    * Find a substance recipe given a Item.
    * @param item The item required in the recipe
    * @return The substance recipe, or null if no matching recipe.
    */
-  public IInfuserSubstanceRecipe FindSubstanceRecipe(ItemStack item);
+  public IInfuserSubstanceRecipe findSubstanceRecipe(ItemStack item);
 
   /**
    * Removes a recipe.
    * @param The recipe to remove.
    */
-  public void RemoveRecipe(IInfuserRecipe recipe);
+  public void removeRecipe(IInfuserRecipe recipe);
 
   /**
    * Removes a substance recipe.
    * @param The recipe to remove.
    */
-  public void RemoveSubstanceRecipe(IInfuserSubstanceRecipe recipe);
+  public void removeSubstanceRecipe(IInfuserSubstanceRecipe recipe);
 }

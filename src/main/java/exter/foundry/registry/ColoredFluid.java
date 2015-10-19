@@ -11,7 +11,7 @@ public class ColoredFluid extends Fluid
   public ColoredFluid(String fluidName,ResourceLocation still,ResourceLocation flowing)
   {
     super(fluidName,still, flowing);
-    color = 0xFFFFFF;
+    color = 0xFFFFFFFF;
   }
 
   public ColoredFluid setColor(int fluid_color)

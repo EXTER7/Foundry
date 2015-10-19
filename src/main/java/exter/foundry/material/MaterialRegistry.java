@@ -37,7 +37,7 @@ public final class MaterialRegistry implements IMaterialRegistry
     type_names = new HashSet<String>();
   }
   
-  public void InitIcons()
+  public void initIcons()
   {
     material_icons = new HashMap<String,ItemStack>();
     type_icons = new HashMap<String,ItemStack>();

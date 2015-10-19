@@ -90,7 +90,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   public void preInit()
   {
     ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
-    MaterialRegistry.instance.InitIcons();
+    MaterialRegistry.instance.initIcons();
     InfuserRecipeManager.instance.InitTextures();
     for(Map.Entry<String,Fluid> e:LiquidMetalRegistry.instance.getFluids().entrySet())
     {
@@ -109,11 +109,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   public void init()
   {
     //MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
-    InfuserRecipeManager.instance.RegisterSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
+    InfuserRecipeManager.instance.registerSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
     for(i = 0; i < 15; i++)
     {
-      InfuserRecipeManager.instance.RegisterSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
+      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
     }   
 
     RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));

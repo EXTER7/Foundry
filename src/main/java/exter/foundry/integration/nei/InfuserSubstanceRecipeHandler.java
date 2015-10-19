@@ -115,7 +115,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
 
   public void loadAllRecipes()
   {
-    for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
+    for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.getSubstanceRecipes())
     {
       addRecipe(recipe);
     }
@@ -130,7 +130,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
     }
     if(outputId.equals("item") && results[0] instanceof ItemStack)
     {
-      for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
+      for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.getSubstanceRecipes())
       {
         if(recipe.matchesRecipe((ItemStack) results[0]))
         {
@@ -154,7 +154,7 @@ public class InfuserSubstanceRecipeHandler extends FoundryRecipeHandlerSubstance
         return;
       }
       InfuserSubstance sub = (InfuserSubstance)results[0];
-      for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.GetSubstanceRecipes())
+      for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.getSubstanceRecipes())
       {
         if(recipe.getOutput().type.equals(sub.type))
         {

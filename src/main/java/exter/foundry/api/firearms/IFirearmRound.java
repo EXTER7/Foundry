@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /**
- * API for a firearm round. this interface is implemented in the item's class.
+ * API for a firearm round. This interface is implemented in the item's class.
  */
 public interface IFirearmRound
 {

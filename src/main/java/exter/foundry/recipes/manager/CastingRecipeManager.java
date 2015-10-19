@@ -95,7 +95,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void RemoveRecipe(ICastingRecipe recipe)
+  public void removeRecipe(ICastingRecipe recipe)
   {
     recipes.remove(recipe);
   }

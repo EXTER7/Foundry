@@ -51,7 +51,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   }
 
   @SubscribeEvent
-  public void PlayerInteract(PlayerInteractEvent event)
+  public void playerInteract(PlayerInteractEvent event)
   {
     //Prevent Blocks from activating when right clicking with a container in hand.
     ItemStack stack = event.entityPlayer.getHeldItem();
@@ -61,7 +61,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
-  private void SetFluid(ItemStack is, FluidStack fluid)
+  private void setFluid(ItemStack is, FluidStack fluid)
   {
     if(fluid != null)
     {
@@ -78,7 +78,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
-  private ItemStack FromFluidStack(FluidStack fluid)
+  private ItemStack fromFluidStack(FluidStack fluid)
   {
     ItemStack stack = new ItemStack(this, 1, 0);
     if(fluid == null)
@@ -98,13 +98,13 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item,CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
   {
-    list.add(FromFluidStack(null));
+    list.add(fromFluidStack(null));
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
     for(Fluid f : fluids.values())
     {
       if(f != null)
       {
-        list.add(FromFluidStack(new FluidStack(f, capacity)));
+        list.add(fromFluidStack(new FluidStack(f, capacity)));
       }
     }
   }
@@ -125,7 +125,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
-  private boolean SplitStack(ItemStack stack,EntityPlayer player)
+  private boolean splitStack(ItemStack stack,EntityPlayer player)
   {
     if(stack.stackSize == 1)
     {
@@ -199,7 +199,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           {
             return stack;
           }
-          if(!SplitStack(stack,player))
+          if(!splitStack(stack,player))
           {
             return stack;
           }
@@ -282,7 +282,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           {
             return stack;
           }
-          if(!SplitStack(stack,player))
+          if(!splitStack(stack,player))
           {
             return stack;
           }
@@ -297,7 +297,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            if(!SplitStack(stack,player))
+            if(!splitStack(stack,player))
             {
               return stack;
             }
@@ -313,7 +313,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
-            if(!SplitStack(stack,player))
+            if(!splitStack(stack,player))
             {
               return stack;
             }
@@ -371,7 +371,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       container_fluid = new FluidStack(fluid, Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount));
 
-      SetFluid(stack, container_fluid);
+      setFluid(stack, container_fluid);
       return container_fluid.amount;
     }
 
@@ -389,7 +389,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       container_fluid.amount = FluidContainerRegistry.BUCKET_VOLUME;
     }
-    SetFluid(stack, container_fluid);
+    setFluid(stack, container_fluid);
     return filled;
   }
 
@@ -427,7 +427,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
       {
         fluid = null;
       }
-      SetFluid(stack, fluid);
+      setFluid(stack, fluid);
 
     }
     return drain_fluid;
@@ -444,10 +444,10 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return 1;
   }
   
-  public ItemStack EmptyContainer(int stack_size)
+  public ItemStack empty(int stack_size)
   {
     ItemStack stack = new ItemStack(this,stack_size,0);
-    SetFluid(stack, null);
+    setFluid(stack, null);
     return stack;
   }
 }

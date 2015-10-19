@@ -41,7 +41,7 @@ public class FoundryItems
   
   static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
 
-  static public void RegisterItems(Configuration config)
+  static public void registerItems(Configuration config)
   {
     item_component = new ItemComponent();
     item_mold = new ItemMold();
@@ -96,32 +96,32 @@ public class FoundryItems
 //    GameRegistry.registerCustomItemStack("refractoryFluidContainer", item_container.EmptyContainer(1));
   }
 
-  static public ItemStack Ingot(int dv)
+  static public ItemStack ingot(int dv)
   {
-    return Ingot(dv,1);
+    return ingot(dv,1);
   }
 
-  static public ItemStack Ingot(int dv,int amount)
+  static public ItemStack ingot(int dv,int amount)
   {
     return new ItemStack(item_ingot,amount,dv);
   }
 
-  static public ItemStack Component(int dv)
+  static public ItemStack component(int dv)
   {
-    return Component(dv,1);
+    return component(dv,1);
   }
 
-  static public ItemStack Component(int dv,int amount)
+  static public ItemStack component(int dv,int amount)
   {
     return new ItemStack(item_component,amount,dv);
   }
 
-  static public ItemStack Mold(int dv)
+  static public ItemStack mold(int dv)
   {
-    return Mold(dv,1);
+    return mold(dv,1);
   }
 
-  static public ItemStack Mold(int dv,int amount)
+  static public ItemStack mold(int dv,int amount)
   {
     return new ItemStack(item_mold,amount,dv);
   }

@@ -23,7 +23,7 @@ public class InventoryFirearm implements IInventory
     int i;
     for(i = 0; i < items.length; i++)
     {
-      items[i] = ((ItemFirearm)firearm.getItem()).GetAmmo(firearm,i);
+      items[i] = ((ItemFirearm)firearm.getItem()).getAmmo(firearm,i);
     }      
   }
 
@@ -136,7 +136,7 @@ public class InventoryFirearm implements IInventory
     int i;
     for(i = 0; i < items.length; i++)
     {
-      ((ItemFirearm)firearm.getItem()).SetAmmo(firearm,i,items[i]);
+      ((ItemFirearm)firearm.getItem()).setAmmo(firearm,i,items[i]);
     }
     player_inv.setInventorySlotContents(player_inv.currentItem, firearm);
   }

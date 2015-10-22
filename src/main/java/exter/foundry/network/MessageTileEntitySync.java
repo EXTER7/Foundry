@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageTileEntitySync implements IMessage
 {
@@ -62,12 +63,18 @@ public class MessageTileEntitySync implements IMessage
         main_thread = (WorldServer)world;
       } else
       {
-        world = Minecraft.getMinecraft().theWorld;
+        world = getClientWorld();
         main_thread = Minecraft.getMinecraft();
       }
       main_thread.addScheduledTask(new SyncRunnable(message.data,world));
       return null;
     }
+  }
+  
+  @SideOnly(Side.CLIENT)
+  static private World getClientWorld()
+  {
+    return Minecraft.getMinecraft().theWorld;
   }
   
   NBTTagCompound data;

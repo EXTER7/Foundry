@@ -93,7 +93,7 @@ public abstract class ItemFirearm extends ItemTool
     
     
     @SuppressWarnings("unchecked")
-    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.boundingBox.expand(150, 150, 100));
+    List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.boundingBox.expand(150, 150, 150));
     double min_dist = obj != null?obj.hitVec.distanceTo(start):150;
     for(Entity ent:entities)
     {

@@ -3,6 +3,7 @@ package exter.foundry.block;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -17,6 +18,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
@@ -97,29 +99,66 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   }
 
   private PropertyVariant property_variant;
+  private BlockSlab single;
 
   public abstract Variant[] getVariants();
   
-  public BlockMetalSlab()
+  
+  public BlockMetalSlab(BlockSlab single)
   {
     super(Material.iron);
+    this.single = single;
     setCreativeTab(FoundryTabBlocks.tab);
     setHardness(5.0F);
     setResistance(10.0F);
     setStepSound(Block.soundTypeMetal);
-    setUnlocalizedName("metalSlab");
+    setUnlocalizedName("metalSlab" + (single != null?"Double":""));
     useNeighborBrightness = true;
   }
   
+
+  @Override
+  public final int damageDropped(IBlockState state)
+  {
+    return ((Variant)state.getValue(getVariantProperty())).id;
+  }
+
+  @Override
+  public final Item getItemDropped(IBlockState blockState, Random random, int unused)
+  {
+    if(single != null)
+    {
+      return Item.getItemFromBlock(single);
+    } else
+    {
+      return Item.getItemFromBlock(this);
+    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public final Item getItem(World world, BlockPos pos)
+  {
+    if(single != null)
+    {
+      return Item.getItemFromBlock(single);
+    } else
+    {
+      return Item.getItemFromBlock(this);
+    }
+  }
 
   @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
   @Override
   public void getSubBlocks(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
   {
-    for(Variant v:getVariants())
+    if(!isDouble())
     {
-      items.add(new ItemStack(item, 1, v.id));
+      for(Variant v:getVariants())
+      {
+        items.add(new ItemStack(item, 1, v.id));
+      }
     }
   }
 
@@ -162,13 +201,13 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   @Override
   public String getUnlocalizedName(int meta)
   {
-    return getUnlocalizedName() + "." + ((Variant)getStateFromMeta(meta).getValue(property_variant)).metal;
+    return getUnlocalizedName() + "." + ((Variant)getStateFromMeta(meta).getValue(getVariantProperty())).metal;
   }
 
   @Override
   public boolean isDouble()
   {
-    return false;
+    return single != null;
   }
 
   @Override
@@ -190,25 +229,21 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   @Override
   protected BlockState createBlockState()
   {
-    if(property_variant == null)
-    {
-      property_variant = new PropertyVariant(getVariants());
-    }
-    return new BlockState(this, new IProperty[] { HALF, property_variant });
+    return new BlockState(this, new IProperty[] { HALF, getVariantProperty() });
   }
 
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
     return getDefaultState()
-        .withProperty(property_variant, getVariants()[meta & 7])
+        .withProperty(getVariantProperty(), getVariants()[meta & 7])
         .withProperty(HALF, ((meta >>> 3) & 1) == 1 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM);
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    Variant var = (Variant) state.getValue(property_variant);
+    Variant var = (Variant) state.getValue(getVariantProperty());
     EnumBlockHalf half = (EnumBlockHalf) state.getValue(HALF);
     return var.id & 7 | ((half == EnumBlockHalf.TOP ? 1 : 0) << 3);
   }
@@ -217,7 +252,7 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   {
     return this.getDefaultState()
         .withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM)
-        .withProperty(property_variant, v);
+        .withProperty(getVariantProperty(), v);
   }
 
   public int getBottomVariantMeta(Variant v)

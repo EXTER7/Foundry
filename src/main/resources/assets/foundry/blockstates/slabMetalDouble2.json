@@ -1,0 +1,22 @@
+{
+  "variants":
+  {
+    "half=top,metal=zinc": { "model": "foundry:blockZinc" },
+    "half=top,metal=brass": { "model": "foundry:blockBrass" },
+    "half=top,metal=silver": { "model": "foundry:blockSilver" },
+    "half=top,metal=steel": { "model": "foundry:blockSteel" },
+    "half=top,metal=lead": { "model": "foundry:blockLead" },
+    "half=top,metal=aluminum": { "model": "foundry:blockAluminum" },
+    "half=top,metal=chromium": { "model": "foundry:blockChromium" },
+    "half=top,metal=platinum": { "model": "foundry:blockPlatinum" },
+    "half=bottom,metal=zinc": { "model": "foundry:blockZinc" },
+    "half=bottom,metal=brass": { "model": "foundry:blockBrass" },
+    "half=bottom,metal=silver": { "model": "foundry:blockSilver" },
+    "half=bottom,metal=steel": { "model": "foundry:blockSteel" },
+    "half=bottom,metal=lead": { "model": "foundry:blockLead" },
+    "half=bottom,metal=aluminum": { "model": "foundry:blockAluminum" },
+    "half=bottom,metal=chromium": { "model": "foundry:blockChromium" },
+    "half=bottom,metal=platinum": { "model": "foundry:blockPlatinum" }
+  }
+}
+

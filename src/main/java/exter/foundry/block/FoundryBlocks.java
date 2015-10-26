@@ -3,9 +3,13 @@ package exter.foundry.block;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import exter.foundry.item.ItemBlockMulti;
 import exter.foundry.item.ItemBlockSlab;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -80,9 +84,7 @@ public class FoundryBlocks
   
   public static BlockMetalSlab[] block_slab;
 
-//  public static BlockMetalSlab block_slabdouble1;
-//  public static BlockMetalSlab block_slabdouble2;
-//  public static BlockMetalSlab block_slabdouble3;
+  public static BlockMetalSlab[] block_slabdouble;
   
   public static Map<String,BlockStairs> block_metal_stairs;
   
@@ -101,13 +103,27 @@ public class FoundryBlocks
   {
     int i;
     block_slab = new BlockMetalSlab[3];
-    block_slab[0] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB1_METALS; } };
-    block_slab[1] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB2_METALS; } };
-    block_slab[2] = new BlockMetalSlab() { public Variant[] getVariants() { return SLAB3_METALS; } };
+    block_slab[0] = new BlockMetalSlab(null) { @Override public Variant[] getVariants() { return SLAB1_METALS; } };
+    block_slab[1] = new BlockMetalSlab(null) { @Override public Variant[] getVariants() { return SLAB2_METALS; } };
+    block_slab[2] = new BlockMetalSlab(null) { @Override public Variant[] getVariants() { return SLAB3_METALS; } };
+
+    block_slabdouble = new BlockMetalSlab[3];
+    block_slabdouble[0] = new BlockMetalSlab(block_slab[0]) {
+      @Override public Variant[] getVariants() { return SLAB1_METALS; }
+      @Override public IProperty getVariantProperty() { return block_slab[0].getVariantProperty(); } };
+    block_slabdouble[1] = new BlockMetalSlab(block_slab[1]) {
+      @Override public Variant[] getVariants() { return SLAB2_METALS; }
+      @Override public IProperty getVariantProperty() { return block_slab[1].getVariantProperty(); } };
+    block_slabdouble[2] = new BlockMetalSlab(block_slab[2]) {
+      @Override public Variant[] getVariants() { return SLAB3_METALS; }
+      @Override public IProperty getVariantProperty() { return block_slab[2].getVariantProperty(); } };
 
     for(i = 0; i < block_slab.length; i++)
     {
-      GameRegistry.registerBlock(block_slab[i], ItemBlockSlab.class, "slabMetal" + (i + 1));
+      BlockSlab slab = block_slab[i];
+      ImmutablePair<BlockSlab,Object> slabdouble = new ImmutablePair<BlockSlab,Object>(block_slabdouble[i],null);
+      GameRegistry.registerBlock(slab, ItemBlockSlab.class, "slabMetal" + (i + 1), slabdouble);
+      GameRegistry.registerBlock(slabdouble.left, ItemBlockSlab.class, "slabMetalDouble" + (i + 1), slabdouble);
     }
   }
   
@@ -126,6 +142,7 @@ public class FoundryBlocks
     block_metal_stairs = new HashMap<String,BlockStairs>();
     for(i = 0; i < block_metal.length; i++)
     {
+      
       GameRegistry.registerBlock(block_metal[i], ItemBlockMulti.class, "blockMetal" + (i + 1));
       for(BlockMetal.Variant v:block_metal[i].getVariants())
       {

@@ -1,25 +1,16 @@
 package exter.foundry.item;
 
-import exter.foundry.block.IBlockVariants;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.item.ItemSlab;
 
-public class ItemBlockSlab extends ItemBlockMulti
+public class ItemBlockSlab extends ItemSlab
 {
-  public <T extends Block & IBlockVariants> ItemBlockSlab(T block)
+  public ItemBlockSlab(final Block block, final ImmutablePair<BlockSlab,Object> slabdouble)
   {
-    super(block);
+    super((BlockSlab) block, (BlockSlab) block, slabdouble.left);
   }
 
-  @Override
-  public int getMetadata(int dmg)
-  {
-    return dmg;
-  }
-  
-  @Override
-  protected int getSubIndex(ItemStack stack)
-  {
-    return stack.getItemDamage() & 7;
-  }  
 }

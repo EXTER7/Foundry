@@ -406,6 +406,26 @@ tile.metalSlab.Manganese.name=Manganese Slab
 tile.metalSlab.Titanium.name=Titanium Slab
 tile.metalSlab.Cupronickel.name=Cupronickel Slab
 
+tile.metalSlabDouble.Iron.name=Double Iron Slab
+tile.metalSlabDouble.Gold.name=Double Gold Slab
+tile.metalSlabDouble.Copper.name=Double Copper Slab
+tile.metalSlabDouble.Tin.name=Double Tin Slab
+tile.metalSlabDouble.Bronze.name=Double Bronze Slab
+tile.metalSlabDouble.Electrum.name=Double Electrum Slab
+tile.metalSlabDouble.Invar.name=Double Invar Slab
+tile.metalSlabDouble.Nickel.name=Double Nickel Slab
+tile.metalSlabDouble.Zinc.name=Double Zinc Slab
+tile.metalSlabDouble.Brass.name=Double Brass Slab
+tile.metalSlabDouble.Silver.name=Double Silver Slab
+tile.metalSlabDouble.Steel.name=Double Steel Slab
+tile.metalSlabDouble.Lead.name=Double Lead Slab
+tile.metalSlabDouble.Aluminum.name=Double Aluminum Slab
+tile.metalSlabDouble.Chromium.name=Double Chromium Slab
+tile.metalSlabDouble.Platinum.name=Double Platinum Slab
+tile.metalSlabDouble.Manganese.name=Double Manganese Slab
+tile.metalSlabDouble.Titanium.name=Double Titanium Slab
+tile.metalSlabDouble.Cupronickel.name=Double Cupronickel Slab
+
 tile.metalStairs.Iron.name=Iron Stairs
 tile.metalStairs.Gold.name=Gold Stairs
 tile.metalStairs.Copper.name=Copper Stairs

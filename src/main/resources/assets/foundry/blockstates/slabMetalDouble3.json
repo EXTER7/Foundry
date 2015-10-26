@@ -1,0 +1,12 @@
+{
+  "variants":
+  {
+    "half=top,metal=manganese": { "model": "foundry:blockManganese" },
+    "half=top,metal=titanium": { "model": "foundry:blockTitanium"  },
+    "half=top,metal=cupronickel": { "model": "foundry:blockCupronickel"  },
+    "half=bottom,metal=manganese": { "model": "foundry:blockManganese" },
+    "half=bottom,metal=titanium": { "model": "foundry:blockTitanium"  },
+    "half=bottom,metal=cupronickel": { "model": "foundry:blockCupronickel"  }
+  }
+}
+

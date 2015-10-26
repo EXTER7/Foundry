@@ -1,0 +1,22 @@
+{
+  "variants":
+  {
+    "half=top,metal=iron": { "model": "minecraft:iron_block" },
+    "half=top,metal=gold": { "model": "minecraft:gold_block" },
+    "half=top,metal=copper": { "model": "foundry:blockCopper" },
+    "half=top,metal=tin": { "model": "foundry:blockTin" },
+    "half=top,metal=bronze": { "model": "foundry:blockBronze" },
+    "half=top,metal=electrum": { "model": "foundry:blockElectrum" },
+    "half=top,metal=invar": { "model": "foundry:blockInvar" },
+    "half=top,metal=nickel": { "model": "foundry:blockNickel" },
+    "half=bottom,metal=iron": { "model": "minecraft:iron_block" },
+    "half=bottom,metal=gold": { "model": "minecraft:gold_block" },
+    "half=bottom,metal=copper": { "model": "foundry:blockCopper" },
+    "half=bottom,metal=tin": { "model": "foundry:blockTin" },
+    "half=bottom,metal=bronze": { "model": "foundry:blockBronze" },
+    "half=bottom,metal=electrum": { "model": "foundry:blockElectrum" },
+    "half=bottom,metal=invar": { "model": "foundry:blockInvar" },
+    "half=bottom,metal=nickel": { "model": "foundry:blockNickel" }
+  }
+}
+

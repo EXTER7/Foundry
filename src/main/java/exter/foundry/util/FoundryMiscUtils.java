@@ -3,6 +3,7 @@ package exter.foundry.util;
 import java.util.List;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
@@ -132,6 +133,5 @@ public class FoundryMiscUtils
       return new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
     }
     return null;
-  }
-  
+  }  
 }

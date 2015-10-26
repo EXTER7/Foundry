@@ -26,7 +26,40 @@ public class ModIntegrationMetallurgy extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Adamantine", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Atlarus", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Rubracium", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Haderoth", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Tartarite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Midasium", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "DamascusSteel", 1850, 13);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Angmallen", 1850, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Quicksilver", 2050, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Orichalcum", 2000, 10);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Celenegil", 2050, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Vyroxeres", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Sanguinite", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Carmot", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Infuscolium", 1900, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Meutoite", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Hepatizon", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Eximite", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Desichalkos", 2200, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "DeepIron", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ceruclase", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "BlackSteel", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "AstralSilver", 1500, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Amordrine", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Alduorite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kalendrite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lemurite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Inolashite", 2000, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ShadowIron", 2000, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ShadowSteel", 2000, 12);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Oureclase", 1900, 14);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Ignatius", 2100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Vulcanite", 2100, 15);
+    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Prometheum", 1900, 14);
   }
 
   @Override
@@ -50,6 +83,10 @@ public class ModIntegrationMetallurgy extends ModIntegration
     for(String setname:MetallurgyApi.getSetNames())
     {
       IMetalSet metalset = MetallurgyApi.getMetalSet(setname);
+      if(metalset == null)
+      {
+        continue;
+      }
       for(String metalname:metalset.getMetalNames())
       {
         Fluid liquid_metal = LiquidMetalRegistry.instance.GetFluid(metalname.replace(" ", ""));
@@ -238,7 +275,6 @@ public class ModIntegrationMetallurgy extends ModIntegration
               LiquidMetalRegistry.instance.GetFluid("Lemurite"),
               1)
         });
-
     
     AlloyMixerRecipeManager.instance.AddRecipe(
         new FluidStack(
@@ -250,6 +286,19 @@ public class ModIntegrationMetallurgy extends ModIntegration
               1),
           new FluidStack(
               LiquidMetalRegistry.instance.GetFluid("DeepIron"),
+              1)
+        });
+    
+    AlloyMixerRecipeManager.instance.AddRecipe(
+        new FluidStack(
+            LiquidMetalRegistry.instance.GetFluid("Hepatizon"),
+            2),
+        new FluidStack[] {
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Bronze"),
+              1),
+          new FluidStack(
+              LiquidMetalRegistry.instance.GetFluid("Gold"),
               1)
         });
   }

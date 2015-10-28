@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -183,7 +184,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
       float green = (float) (color >> 8 & 255) / 255.0F;
       float blue = (float) (color & 255) / 255.0F;
       GL11.glColor4f(red, green, blue, 1.0f);
-      drawFluidVertical(tank.position.x, tank.position.y + tank.position.height, tank.position.width, drawHeight, tank.fluid.getFluid());
+      drawFluidVertical(tank.position.x, tank.position.y + tank.position.height, tank.position.width, drawHeight, tank.fluid);
       GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
       GuiDraw.changeTexture(getGuiTexture());
       GuiDraw.drawTexturedModalRect(tank.position.x, tank.position.y, overlayLocation.x, overlayLocation.y, tank.position.width, tank.position.height);
@@ -286,11 +287,16 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     Tessellator.getInstance().draw();
   }
 
-  public void drawFluidVertical(int left, int bottom, int width, int height, Fluid fluid)
+  public void drawFluidVertical(int left, int bottom, int width, int height, FluidStack fluid)
   {
     FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
     int toDraw = height;
-    TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill().toString());
+    ResourceLocation texture = fluid.getFluid().getStill(fluid);
+    if(texture == null)
+    {
+      texture = TextureMap.LOCATION_MISSING_TEXTURE;
+    }
+    TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 
     while(toDraw >= 16)
     {

@@ -132,7 +132,12 @@ public abstract class GuiFoundry extends GuiContainer
     Fluid fluid = liquid.getFluid();
     if(fluid != null && fluid.getStill() != null)
     {
-      liquid_icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getStill(liquid).toString());
+      ResourceLocation texture = fluid.getStill(liquid);
+      if(texture == null)
+      {
+        texture = TextureMap.LOCATION_MISSING_TEXTURE;
+      }
+      liquid_icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
     }
 
     int h = liquid.amount * tank_height / tank.getCapacity();

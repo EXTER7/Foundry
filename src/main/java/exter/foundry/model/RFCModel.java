@@ -21,6 +21,8 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.resources.IResourceManager;
@@ -76,8 +78,13 @@ public class RFCModel implements IModel
       {
         return this;
       }
+      ResourceLocation texture = fluid.getFluid().getStill();
+      if(texture == null)
+      {
+        texture = TextureMap.LOCATION_MISSING_TEXTURE;
+      }
       ImmutableList<BakedQuad> fluid_model = getQuadsForSpriteSlice(
-          1, bakedTextureGetter.apply(fluid.getFluid().getStill()), format,
+          1, bakedTextureGetter.apply(texture), format,
           4, 3,
           12, 3 + y,
           fluid.getFluid().getColor());

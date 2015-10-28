@@ -1,5 +1,7 @@
 package exter.foundry.integration;
 
+import exter.foundry.registry.LiquidMetalRegistry;
+
 //import com.teammetallurgy.metallurgy.api.IMetalSet;
 //import com.teammetallurgy.metallurgy.api.MetallurgyApi;
 
@@ -17,7 +19,40 @@ public class ModIntegrationMetallurgy extends ModIntegration
   @Override
   public void onPreInit(Configuration config)
   {
-
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Adamantine", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Atlarus", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Rubracium", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Haderoth", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Tartarite", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Midasium", 1900, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "DamascusSteel", 1850, 13);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Angmallen", 1850, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Quicksilver", 2050, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Orichalcum", 2000, 10);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Celenegil", 2050, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Vyroxeres", 1900, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Sanguinite", 1900, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Carmot", 1900, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Infuscolium", 1900, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Meutoite", 2200, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Hepatizon", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Eximite", 2200, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Desichalkos", 2200, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "DeepIron", 1900, 14);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Ceruclase", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "BlackSteel", 1900, 14);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "AstralSilver", 1500, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Amordrine", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Alduorite", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Kalendrite", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Lemurite", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Inolashite", 2000, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "ShadowIron", 2000, 12);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "ShadowSteel", 2000, 12);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Oureclase", 1900, 14);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Ignatius", 2100, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Vulcanite", 2100, 15);
+    LiquidMetalRegistry.instance.registerLiquidMetal( "Prometheum", 1900, 14);
   }
 
   @Override

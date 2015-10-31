@@ -74,6 +74,7 @@ public class FoundryMiscUtils
 
   static public ItemStack getModItemFromOreDictionary(String modid,String orename)
   {
+    modid = modid.toLowerCase();
     for(ItemStack is:OreDictionary.getOres(orename))
     {
       if(GameRegistry.findUniqueIdentifierFor(is.getItem()).modId.equals(modid))

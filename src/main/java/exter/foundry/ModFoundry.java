@@ -35,6 +35,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
+import exter.foundry.integration.ModIntegrationThaumcraft;
 //import exter.foundry.integration.ModIntegrationBotania;
 //import exter.foundry.integration.ModIntegrationBuildcraft;
 //import exter.foundry.integration.ModIntegrationForestry;
@@ -75,7 +76,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.14.3.1521,);"
+  dependencies = "required-after:Forge@[11.14.3.1543,);"
       + "after:TConstruct;"
       + "after:BuildCraft|Core;"
       + "after:Railcraft;"
@@ -123,7 +124,7 @@ public class ModFoundry
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
+    ModIntegration.registerIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");

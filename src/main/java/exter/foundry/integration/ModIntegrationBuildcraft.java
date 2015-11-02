@@ -12,26 +12,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ModIntegrationBuildcraft extends ModIntegration
+public class ModIntegrationBuildcraft implements IModIntegration
 {
  
   public boolean gear_recipes;
-  
-  public ModIntegrationBuildcraft(String mod_name)
-  {
-    super(mod_name);
-  }
 
   @Override
   public void onPreInit(Configuration config)
   {
-    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
+    gear_recipes = config.get("integration", getName() + ".gears", true).getBoolean(true);
   }
 
   @Override
   public void onInit()
   {
+    
   }
 
   @Override
@@ -39,23 +37,52 @@ public class ModIntegrationBuildcraft extends ModIntegration
   {
     if(!Loader.isModLoaded("BuildCraft|Core"))
     {
-      is_loaded = false;
       return;
     }
     ItemStack iron_gear = FoundryMiscUtils.getModItemFromOreDictionary("BuildCraft|Core", "gearIron");
     ItemStack gold_gear = FoundryMiscUtils.getModItemFromOreDictionary("BuildCraft|Core", "gearGold");
 
-    if(is_loaded)
+    if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
     {
-      if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
-      {
-        ItemStack mold_gear = FoundryItems.mold(ItemMold.MOLD_GEAR);
-        MeltingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        MeltingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+      ItemStack mold_gear = FoundryItems.mold(ItemMold.MOLD_GEAR);
+      MeltingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
+      MeltingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4));
 
-        CastingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-        CastingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold,FoundryAPI.FLUID_AMOUNT_INGOT * 4),mold_gear,null);
-      }
+      CastingRecipeManager.instance.addRecipe(iron_gear, new FluidStack(FoundryRecipes.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
+      CastingRecipeManager.instance.addRecipe(gold_gear, new FluidStack(FoundryRecipes.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
     }
+  }
+
+  @Override
+  public String getName()
+  {
+    return "buildcraft";
+  }
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

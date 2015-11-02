@@ -2,16 +2,13 @@ package exter.foundry.integration;
 
 //import cofh.api.modhelpers.ThermalExpansionHelper;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.config.Configuration;
 
 
-public class ModIntegrationTE4 extends ModIntegration
+public class ModIntegrationTE implements IModIntegration
 {
-
-  public ModIntegrationTE4(String mod_name)
-  {
-    super(mod_name);
-  }
 
   @Override
   public void onPreInit(Configuration config)
@@ -29,7 +26,6 @@ public class ModIntegrationTE4 extends ModIntegration
   {
     if(!Loader.isModLoaded("ThermalExpansion") || !Loader.isModLoaded("ThermalFoundation"))
     {
-      is_loaded = false;
       return;
     }
 //    ItemStack copper_dust = GameRegistry.findItemStack("ThermalFoundation", "dustCopper", 1);
@@ -43,5 +39,38 @@ public class ModIntegrationTE4 extends ModIntegration
 //
 //    ThermalExpansionHelper.addSmelterRecipe(2400, FoundryItems.Ingot(ItemIngot.INGOT_COPPER,3), FoundryItems.Ingot(ItemIngot.INGOT_ZINC,1), FoundryItems.Ingot(ItemIngot.INGOT_BRASS,4));
 //    ThermalExpansionHelper.addSmelterRecipe(2400, FoundryItems.Ingot(ItemIngot.INGOT_COPPER,1), FoundryItems.Ingot(ItemIngot.INGOT_NICKEL,1), FoundryItems.Ingot(ItemIngot.INGOT_CUPRONICKEL,2));
+  }
+
+  @Override
+  public String getName()
+  {
+    return "thermal_expansion";
+  }
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

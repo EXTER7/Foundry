@@ -2,17 +2,21 @@ package exter.foundry.util;
 
 import java.util.List;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
+import exter.foundry.item.ItemMold;
+import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -136,5 +140,32 @@ public class FoundryMiscUtils
     }
     return null;
   }
+
+  static public void registerCasting(ItemStack item,Fluid liquid_metal,int ingots,int mold_meta,ItemStack extra)
+  {
+    registerCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,extra);
+  }
+
+  static public void registerCasting(ItemStack item,FluidStack fluid,int mold_meta,ItemStack extra)
+  {
+    if(item != null)
+    {
+      ItemStack mold = new ItemStack(FoundryItems.item_mold, 1, mold_meta);
+      if(CastingRecipeManager.instance.findRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
+      {
+        CastingRecipeManager.instance.addRecipe(item, fluid, mold, extra);
+      }
+    }
+  }
   
+  static public void registerPlateMoldRecipe(ItemStack item,String oredict_name)
+  {
+    if(FoundryUtils.isItemInOreDictionary(oredict_name, item))
+    {
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
+    } else
+    {
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, item);
+    }
+  }
 }

@@ -17,14 +17,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ModIntegrationProjectRed extends ModIntegration
+public class ModIntegrationProjectRed implements IModIntegration
 {
-  public ModIntegrationProjectRed(String mod_name)
-  {
-    super(mod_name);
-  }
-
   @Override
   public void onPreInit(Configuration config)
   {
@@ -70,7 +67,7 @@ public class ModIntegrationProjectRed extends ModIntegration
           new Object[] {
               new OreStack("dustRedstone",4)});
 
-      registerCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
+      FoundryMiscUtils.registerCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
       
       if(Loader.isModLoaded("ProjRed|Transmission"))
       {
@@ -79,7 +76,7 @@ public class ModIntegrationProjectRed extends ModIntegration
         FluidStack wire_fluid = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4);
         FluidStack wire_fluid_bundled = new FluidStack(liquid_redalloy,FoundryAPI.FLUID_AMOUNT_INGOT / 4 * 5);
         FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_WIRE_PR_SOFT, redalloy_wire);
-        registerCasting(redalloy_wire, wire_fluid, ItemMold.MOLD_WIRE_PR, null);
+        FoundryMiscUtils.registerCasting(redalloy_wire, wire_fluid, ItemMold.MOLD_WIRE_PR, null);
         int i;
         for(i = 0; i < 17; i++)
         {
@@ -91,5 +88,38 @@ public class ModIntegrationProjectRed extends ModIntegration
         }
       }
     }
+  }
+
+  @Override
+  public String getName()
+  {
+    return "projectred";
+  }
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

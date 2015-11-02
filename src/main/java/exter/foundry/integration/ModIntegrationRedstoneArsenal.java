@@ -1,15 +1,13 @@
 package exter.foundry.integration;
 
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.config.Configuration;
 
 
-public class ModIntegrationRedstoneArsenal extends ModIntegration
+public class ModIntegrationRedstoneArsenal implements IModIntegration
 {
-  public ModIntegrationRedstoneArsenal(String mod_name)
-  {
-    super(mod_name);
-  }
 
 
   @Override
@@ -28,10 +26,8 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void onPostInit()
   {
-    ModIntegration mod_tf = getIntegration("tf");
-    if(!Loader.isModLoaded("RedstoneArsenal") || mod_tf == null || !mod_tf.is_loaded)
+    if(!Loader.isModLoaded("RedstoneArsenal"))
     {
-      is_loaded = false;
       return;
     }
 //
@@ -125,5 +121,43 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
 //        }
 //      }
 //    }
+  }
+
+
+  @Override
+  public String getName()
+  {
+    return "redstone_arsenal";
+  }
+
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

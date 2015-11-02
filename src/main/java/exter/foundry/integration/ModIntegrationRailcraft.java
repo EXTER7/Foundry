@@ -2,22 +2,18 @@ package exter.foundry.integration;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ModIntegrationRailcraft extends ModIntegration
+public class ModIntegrationRailcraft implements IModIntegration
 {
 
   public boolean gear_recipes;
 
-  public ModIntegrationRailcraft(String mod_name)
-  {
-    super(mod_name);
-  }
-
-
   @Override
   public void onPreInit(Configuration config)
   {
-    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
+    gear_recipes = config.get("integration", getName() + ".gears", true).getBoolean(true);
   }
 
 
@@ -33,7 +29,6 @@ public class ModIntegrationRailcraft extends ModIntegration
   {
     if(!Loader.isModLoaded("Railcraft"))
     {
-      is_loaded = false;
       return;
     }
 //    ItemStack steel_pickaxe = GameRegistry.findItemStack("Railcraft", "tool.steel.pickaxe", 1);
@@ -159,5 +154,43 @@ public class ModIntegrationRailcraft extends ModIntegration
 //        InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon", 324), coal_coke_block, 880000);
 //      }
 //    }
+  }
+
+
+  @Override
+  public String getName()
+  {
+    return "railcraft";
+  }
+
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

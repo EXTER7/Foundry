@@ -32,9 +32,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Optional;
 
-
-public class ModIntegrationThaumcraft extends ModIntegration
+@Optional.Interface(iface = "exter.foundry.integration.IModIntegration", modid = "Thaumcraft")
+public class ModIntegrationThaumcraft implements IModIntegration
 {
   private boolean enable_shards;
   
@@ -54,11 +55,8 @@ public class ModIntegrationThaumcraft extends ModIntegration
   private Fluid liquid_thaumium;
   private Fluid liquid_voidmetal;
 
-  public ModIntegrationThaumcraft(String mod_name)
-  {
-    super(mod_name);
-  }
 
+  @Optional.Method(modid = "Thaumcraft")
   @Override
   public void onPreInit(Configuration config)
   {
@@ -88,12 +86,14 @@ public class ModIntegrationThaumcraft extends ModIntegration
     }
   }
 
+  @Optional.Method(modid = "Thaumcraft")
   @Override
   public void onInit()
   {
 
   }
   
+  @Optional.Method(modid = "Thaumcraft")
   @SideOnly(Side.CLIENT)
   @Override
   public void onClientPostInit()
@@ -115,12 +115,12 @@ public class ModIntegrationThaumcraft extends ModIntegration
     MaterialRegistry.instance.registerMaterialIcon("Balanced",FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "shardBalanced"));
   }
 
+  @Optional.Method(modid = "Thaumcraft")
   @Override
   public void onPostInit()
   {
     if(!Loader.isModLoaded("Thaumcraft"))
     {
-      is_loaded = false;
       return;
     }
     ItemStack cap_iron = new ItemStack(GameRegistry.findItem("Thaumcraft", "wand_cap"),1,0);
@@ -171,19 +171,19 @@ public class ModIntegrationThaumcraft extends ModIntegration
       ItemStack gear_thaumium = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearThaumium");
       ItemStack gear_void = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearVoid");
 
-      registerCasting(gear_brass, FoundryRecipes.liquid_brass, 4, ItemMold.MOLD_GEAR, null);
-      registerCasting(gear_thaumium, liquid_thaumium, 4, ItemMold.MOLD_GEAR, null);
-      registerCasting(gear_void, liquid_voidmetal, 4, ItemMold.MOLD_GEAR, null);
+      FoundryMiscUtils.registerCasting(gear_brass, FoundryRecipes.liquid_brass, 4, ItemMold.MOLD_GEAR, null);
+      FoundryMiscUtils.registerCasting(gear_thaumium, liquid_thaumium, 4, ItemMold.MOLD_GEAR, null);
+      FoundryMiscUtils.registerCasting(gear_void, liquid_voidmetal, 4, ItemMold.MOLD_GEAR, null);
       
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearBrass");
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearThaumium");
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearVoid");
     }
     
-    registerCasting(plate_iron, FoundryRecipes.liquid_iron, 1, ItemMold.MOLD_PLATE, null);
-    registerCasting(plate_brass, FoundryRecipes.liquid_brass, 1, ItemMold.MOLD_PLATE, null);
-    registerCasting(plate_thaumium, liquid_thaumium, 1, ItemMold.MOLD_PLATE, null);
-    registerCasting(plate_void, liquid_voidmetal, 1, ItemMold.MOLD_PLATE, null);
+    FoundryMiscUtils.registerCasting(plate_iron, FoundryRecipes.liquid_iron, 1, ItemMold.MOLD_PLATE, null);
+    FoundryMiscUtils.registerCasting(plate_brass, FoundryRecipes.liquid_brass, 1, ItemMold.MOLD_PLATE, null);
+    FoundryMiscUtils.registerCasting(plate_thaumium, liquid_thaumium, 1, ItemMold.MOLD_PLATE, null);
+    FoundryMiscUtils.registerCasting(plate_void, liquid_voidmetal, 1, ItemMold.MOLD_PLATE, null);
     
     FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateIron");
     FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateBrass");
@@ -195,27 +195,27 @@ public class ModIntegrationThaumcraft extends ModIntegration
       ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
 
-      registerCasting(thaumium_chestplate, liquid_thaumium, 8, ItemMold.MOLD_CHESTPLATE, null);
-      registerCasting(thaumium_helmet, liquid_thaumium, 5, ItemMold.MOLD_HELMET, null);
-      registerCasting(thaumium_leggings, liquid_thaumium, 7, ItemMold.MOLD_LEGGINGS, null);
-      registerCasting(thaumium_boots, liquid_thaumium, 4, ItemMold.MOLD_BOOTS, null);
+      FoundryMiscUtils.registerCasting(thaumium_chestplate, liquid_thaumium, 8, ItemMold.MOLD_CHESTPLATE, null);
+      FoundryMiscUtils.registerCasting(thaumium_helmet, liquid_thaumium, 5, ItemMold.MOLD_HELMET, null);
+      FoundryMiscUtils.registerCasting(thaumium_leggings, liquid_thaumium, 7, ItemMold.MOLD_LEGGINGS, null);
+      FoundryMiscUtils.registerCasting(thaumium_boots, liquid_thaumium, 4, ItemMold.MOLD_BOOTS, null);
 
-      registerCasting(thaumium_pickaxe, liquid_thaumium, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      registerCasting(thaumium_axe, liquid_thaumium, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      registerCasting(thaumium_hoe, liquid_thaumium, 2, ItemMold.MOLD_HOE, extra_sticks2);
-      registerCasting(thaumium_shovel, liquid_thaumium, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      registerCasting(thaumium_sword, liquid_thaumium, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      FoundryMiscUtils.registerCasting(thaumium_pickaxe, liquid_thaumium, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(thaumium_axe, liquid_thaumium, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(thaumium_hoe, liquid_thaumium, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(thaumium_shovel, liquid_thaumium, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      FoundryMiscUtils.registerCasting(thaumium_sword, liquid_thaumium, 2, ItemMold.MOLD_SWORD, extra_sticks1);
 
-      registerCasting(void_chestplate, liquid_voidmetal, 8, ItemMold.MOLD_CHESTPLATE, null);
-      registerCasting(void_helmet, liquid_voidmetal, 5, ItemMold.MOLD_HELMET, null);
-      registerCasting(void_leggings, liquid_voidmetal, 7, ItemMold.MOLD_LEGGINGS, null);
-      registerCasting(void_boots, liquid_voidmetal, 4, ItemMold.MOLD_BOOTS, null);
+      FoundryMiscUtils.registerCasting(void_chestplate, liquid_voidmetal, 8, ItemMold.MOLD_CHESTPLATE, null);
+      FoundryMiscUtils.registerCasting(void_helmet, liquid_voidmetal, 5, ItemMold.MOLD_HELMET, null);
+      FoundryMiscUtils.registerCasting(void_leggings, liquid_voidmetal, 7, ItemMold.MOLD_LEGGINGS, null);
+      FoundryMiscUtils.registerCasting(void_boots, liquid_voidmetal, 4, ItemMold.MOLD_BOOTS, null);
 
-      registerCasting(void_pickaxe, liquid_voidmetal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      registerCasting(void_axe, liquid_voidmetal, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      registerCasting(void_hoe, liquid_voidmetal, 2, ItemMold.MOLD_HOE, extra_sticks2);
-      registerCasting(void_shovel, liquid_voidmetal, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      registerCasting(void_sword, liquid_voidmetal, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      FoundryMiscUtils.registerCasting(void_pickaxe, liquid_voidmetal, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(void_axe, liquid_voidmetal, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(void_hoe, liquid_voidmetal, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(void_shovel, liquid_voidmetal, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      FoundryMiscUtils.registerCasting(void_sword, liquid_voidmetal, 2, ItemMold.MOLD_SWORD, extra_sticks1);
       
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, thaumium_leggings);
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, thaumium_helmet);
@@ -434,5 +434,35 @@ public class ModIntegrationThaumcraft extends ModIntegration
       
       AtomizerRecipeManager.instance.addRecipe(new ItemStack(GameRegistry.findItem("Thaumcraft", "salis_mundus")), new FluidStack(liquid_primal,FoundryAPI.FLUID_AMOUNT_INGOT));
     }
+  }
+
+  @Optional.Method(modid = "Thaumcraft")
+  @Override
+  public String getName()
+  {
+    return "thaumcraft";
+  }
+
+  @Optional.Method(modid = "Thaumcraft")
+  @Override
+  public void onAfterPostInit()
+  {
+
+  }
+
+  @Optional.Method(modid = "Thaumcraft")
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+
+  }
+
+  @Optional.Method(modid = "Thaumcraft")
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+
   }
 }

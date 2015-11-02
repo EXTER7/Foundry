@@ -7,23 +7,9 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ModIntegrationIC2 extends ModIntegration
+public class ModIntegrationIC2 implements IModIntegration
 {
 
-  public ModIntegrationIC2(String mod_name)
-  {
-    super(mod_name);
-  }
-
-  @Override
-  public void onPreInit(Configuration config)
-  {
-  }
-
-  @Override
-  public void onInit()
-  {
-  }
   
   @SideOnly(Side.CLIENT)
   @Override
@@ -38,7 +24,6 @@ public class ModIntegrationIC2 extends ModIntegration
   {
     if(!Loader.isModLoaded("IC2"))
     {
-      is_loaded = false;
       return;
     }
 
@@ -225,5 +210,44 @@ public class ModIntegrationIC2 extends ModIntegration
 //        RegisterPlateMoldRecipe(steel_plate, "plateSteel");
 //      }
 //    }
+  }
+
+  @Override
+  public String getName()
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void onPreInit(Configuration config)
+  {
+    
+  }
+
+  @Override
+  public void onInit()
+  {
+    
+  }
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
   }
 }

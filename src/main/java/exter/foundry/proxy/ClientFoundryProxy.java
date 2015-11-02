@@ -14,7 +14,7 @@ import exter.foundry.block.BlockMetal;
 import exter.foundry.block.BlockMetalSlab;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.entity.EntitySkeletonGun;
-import exter.foundry.integration.ModIntegration;
+import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemIngot;
@@ -102,7 +102,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       ModelLoader.setCustomMeshDefinition( item, new LiquidMetalItemMeshDefinition(name));
       ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(BlockFluidBase.LEVEL).build());
     }
-    ModIntegration.clientPreInit();
+    ModIntegrationManager.clientPreInit();
   }
 
   @Override
@@ -181,7 +181,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
 
     registerItemModel(FoundryItems.item_container,"container",0);
 
-    ModIntegration.clientInit();
+    ModIntegrationManager.clientInit();
   }
   
 
@@ -227,7 +227,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
         }
       }
     }
-    ModIntegration.clientPostInit();
+    ModIntegrationManager.clientPostInit();
   }
 
 }

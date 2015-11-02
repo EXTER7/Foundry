@@ -1,9 +1,11 @@
 package exter.foundry.integration;
 
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.config.Configuration;
 
-public class ModIntegrationTF extends ModIntegration
+public class ModIntegrationTF implements IModIntegration
 {
 //  
 //  static private final String[] TOOL_METALS = 
@@ -41,16 +43,11 @@ public class ModIntegrationTF extends ModIntegration
   public boolean gear_recipes;
   public boolean override_redstone_melting;
   
-  public ModIntegrationTF(String mod_name)
-  {
-    super(mod_name);
-  }
-
   @Override
   public void onPreInit(Configuration config)
   {
-    gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
-    override_redstone_melting = config.get("integration", Name + ".override_redstone_melting", true).getBoolean(true);
+    gear_recipes = config.get("integration", getName() + ".gears", true).getBoolean(true);
+    override_redstone_melting = config.get("integration", getName() + ".override_redstone_melting", true).getBoolean(true);
   }
 
   @Override
@@ -63,7 +60,6 @@ public class ModIntegrationTF extends ModIntegration
   {
     if(!Loader.isModLoaded("ThermalFoundation"))
     {
-      is_loaded = false;
       return;
     }
 //
@@ -256,5 +252,40 @@ public class ModIntegrationTF extends ModIntegration
 //        }
 //      }
 //    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public String getName()
+  {
+    return "thermal_foundation";
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

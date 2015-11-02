@@ -6,10 +6,12 @@ package exter.foundry.integration;
 //import tconstruct.library.crafting.LiquidCasting;
 //import tconstruct.library.crafting.Smeltery;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 //import mantle.utils.ItemMetaWrapper;
 import net.minecraftforge.common.config.Configuration;
 
-public class ModIntegrationTiCon extends ModIntegration
+public class ModIntegrationTiCon implements IModIntegration
 {
 //  private Map<String,String> liquid_map;
 //  private Map<String,String> reverse_liquid_map;
@@ -31,11 +33,6 @@ public class ModIntegrationTiCon extends ModIntegration
 //
 //
 //  static private final int INGOT_GCD = GCD(TConstruct.ingotLiquidValue,FoundryAPI.FLUID_AMOUNT_INGOT);
-
-  public ModIntegrationTiCon(String mod_name)
-  {
-    super(mod_name);
-  }
 
   @Override
   public void onPreInit(Configuration config)
@@ -96,7 +93,6 @@ public class ModIntegrationTiCon extends ModIntegration
   {
     if(!Loader.isModLoaded("TConstruct"))
     {
-      is_loaded = false;
       return;
     }
 
@@ -327,5 +323,32 @@ public class ModIntegrationTiCon extends ModIntegration
 //        AtomizerRecipeManager.instance.addRecipe("dust" + entry.getValue(), new FluidStack(FluidRegistry.getFluid(name),TConstruct.ingotLiquidValue));
 //      }
 //    }
+  }
+
+  @Override
+  public String getName()
+  {
+    return "ticon";
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPostInit()
+  {
+    
   }
 }

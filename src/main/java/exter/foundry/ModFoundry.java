@@ -34,7 +34,7 @@ import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
-import exter.foundry.integration.ModIntegration;
+import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.integration.ModIntegrationThaumcraft;
 //import exter.foundry.integration.ModIntegrationBotania;
 //import exter.foundry.integration.ModIntegrationBuildcraft;
@@ -124,7 +124,7 @@ public class ModFoundry
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
-    ModIntegration.registerIntegration(config,ModIntegrationThaumcraft.class,"thaumcraft");
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationThaumcraft());
 //    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
@@ -163,7 +163,7 @@ public class ModFoundry
 
     FoundryRecipes.PreInit();
     
-    ModIntegration.preInit(config);
+    ModIntegrationManager.preInit(config);
 
     
     config.save();
@@ -183,7 +183,7 @@ public class ModFoundry
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
-    ModIntegration.init();
+    ModIntegrationManager.init();
     
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
@@ -317,9 +317,9 @@ public class ModFoundry
   @EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
-    ModIntegration.postInit();
+    ModIntegrationManager.postInit();
     FoundryRecipes.PostInit();
     proxy.postInit();
-    ModIntegration.afterPostInit();
+    ModIntegrationManager.afterPostInit();
   }
 }

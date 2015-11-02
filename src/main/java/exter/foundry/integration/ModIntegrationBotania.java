@@ -19,60 +19,49 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ModIntegrationBotania extends ModIntegration
+public class ModIntegrationBotania implements IModIntegration
 {
   private Fluid liquid_manasteel;
   private Fluid liquid_terrasteel;
   private Fluid liquid_elementium;
-  
-  public ModIntegrationBotania(String mod_name)
-  {
-    super(mod_name);
-  }
 
   @Override
   public void onPreInit(Configuration config)
   {
-    liquid_manasteel = LiquidMetalRegistry.instance.registerLiquidMetal( "Manasteel", 1950, 15);
-    liquid_terrasteel = LiquidMetalRegistry.instance.registerLiquidMetal( "Terrasteel", 2100, 15);
-    liquid_elementium = LiquidMetalRegistry.instance.registerLiquidMetal( "Elementium", 2400, 15);
+    liquid_manasteel = LiquidMetalRegistry.instance.registerLiquidMetal("Manasteel", 1950, 15);
+    liquid_terrasteel = LiquidMetalRegistry.instance.registerLiquidMetal("Terrasteel", 2100, 15);
+    liquid_elementium = LiquidMetalRegistry.instance.registerLiquidMetal("Elementium", 2400, 15);
 
     FoundryUtils.registerBasicMeltingRecipes("Manasteel", liquid_manasteel);
     FoundryUtils.registerBasicMeltingRecipes("Terrasteel", liquid_terrasteel);
     FoundryUtils.registerBasicMeltingRecipes("Elementium", liquid_elementium);
   }
 
-  @Override
-  public void onInit()
-  {
-  }
-
   @SideOnly(Side.CLIENT)
   @Override
   public void onClientPostInit()
   {
-    MaterialRegistry.instance.registerMaterialIcon("Manasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,0));
-    MaterialRegistry.instance.registerMaterialIcon("Terrasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,4));
-    MaterialRegistry.instance.registerMaterialIcon("Elementium", new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,7));
+    MaterialRegistry.instance.registerMaterialIcon("Manasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 0));
+    MaterialRegistry.instance.registerMaterialIcon("Terrasteel", new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 4));
+    MaterialRegistry.instance.registerMaterialIcon("Elementium", new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 7));
   }
-  
+
   @Override
   public void onPostInit()
   {
     if(!Loader.isModLoaded("Botania"))
     {
-      is_loaded = false;
       return;
     }
 
-    ItemStack manasteel_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,0);
-    ItemStack manasteel_block = new ItemStack(GameRegistry.findItem("Botania", "storage"),1,0);
+    ItemStack manasteel_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 0);
+    ItemStack manasteel_block = new ItemStack(GameRegistry.findItem("Botania", "storage"), 1, 0);
 
-    ItemStack terrasteel_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,4);
-    ItemStack terrasteel_block = new ItemStack(GameRegistry.findItem("Botania", "storage"),1,1);
+    ItemStack terrasteel_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 4);
+    ItemStack terrasteel_block = new ItemStack(GameRegistry.findItem("Botania", "storage"), 1, 1);
 
-    ItemStack elementium_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,7);
-    ItemStack elementium_block = new ItemStack(GameRegistry.findItem("Botania", "storage"),1,2);
+    ItemStack elementium_ingot = new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 7);
+    ItemStack elementium_block = new ItemStack(GameRegistry.findItem("Botania", "storage"), 1, 2);
 
     ItemStack manasteel_pickaxe = new ItemStack(GameRegistry.findItem("Botania", "manasteelPick"), 1);
     ItemStack manasteel_axe = new ItemStack(GameRegistry.findItem("Botania", "manasteelAxe"), 1);
@@ -84,7 +73,6 @@ public class ModIntegrationBotania extends ModIntegration
     ItemStack manasteel_leggings = new ItemStack(GameRegistry.findItem("Botania", "manasteelLegs"), 1);
     ItemStack manasteel_boots = new ItemStack(GameRegistry.findItem("Botania", "manasteelBoots"), 1);
 
-
     ItemStack terrasteel_sword = new ItemStack(GameRegistry.findItem("Botania", "terraSword"), 1);
 
     ItemStack terrasteel_helmet = new ItemStack(GameRegistry.findItem("Botania", "terrasteelHelm"), 1);
@@ -92,7 +80,6 @@ public class ModIntegrationBotania extends ModIntegration
     ItemStack terrasteel_leggings = new ItemStack(GameRegistry.findItem("Botania", "terrasteelLegs"), 1);
     ItemStack terrasteel_boots = new ItemStack(GameRegistry.findItem("Botania", "terrasteelBoots"), 1);
 
-    
     ItemStack elementium_pickaxe = new ItemStack(GameRegistry.findItem("Botania", "elementiumPick"), 1);
     ItemStack elementium_axe = new ItemStack(GameRegistry.findItem("Botania", "elementiumAxe"), 1);
     ItemStack elementium_shovel = new ItemStack(GameRegistry.findItem("Botania", "elementiumShovel"), 1);
@@ -103,106 +90,130 @@ public class ModIntegrationBotania extends ModIntegration
     ItemStack elementium_leggings = new ItemStack(GameRegistry.findItem("Botania", "elementiumLegs"), 1);
     ItemStack elementium_boots = new ItemStack(GameRegistry.findItem("Botania", "elementiumBoots"), 1);
 
-    
-    ItemStack livingwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,3);
-    ItemStack dreamwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"),1,13);
-    
-    
-    if(is_loaded)
+    ItemStack livingwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 3);
+    ItemStack dreamwood_twig = new ItemStack(GameRegistry.findItem("Botania", "manaResource"), 1, 13);
+
+    if(FoundryConfig.recipe_tools_armor)
     {
-      if(FoundryConfig.recipe_tools_armor)
-      {
-        ItemStack extra_sticks1 = livingwood_twig.copy();
-        ItemStack extra_sticks2 = livingwood_twig.copy();
-        extra_sticks2.stackSize = 2;
+      ItemStack extra_sticks1 = livingwood_twig.copy();
+      ItemStack extra_sticks2 = livingwood_twig.copy();
+      extra_sticks2.stackSize = 2;
 
-        ItemStack extra_dreamsticks1 = dreamwood_twig.copy();
-        ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
-        extra_dreamsticks2.stackSize = 2;
+      ItemStack extra_dreamsticks1 = dreamwood_twig.copy();
+      ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
+      extra_dreamsticks2.stackSize = 2;
 
-        ItemStack mold_chestplate = FoundryItems.mold(ItemMold.MOLD_CHESTPLATE);
-        ItemStack mold_pickaxe = FoundryItems.mold(ItemMold.MOLD_PICKAXE);
-        ItemStack mold_axe = FoundryItems.mold(ItemMold.MOLD_AXE);
-        ItemStack mold_shovel = FoundryItems.mold(ItemMold.MOLD_SHOVEL);
-        ItemStack mold_sword = FoundryItems.mold(ItemMold.MOLD_SWORD);
-        ItemStack mold_leggings = FoundryItems.mold(ItemMold.MOLD_LEGGINGS);
-        ItemStack mold_helmet = FoundryItems.mold(ItemMold.MOLD_HELMET);
-        ItemStack mold_boots = FoundryItems.mold(ItemMold.MOLD_BOOTS);
+      ItemStack mold_chestplate = FoundryItems.mold(ItemMold.MOLD_CHESTPLATE);
+      ItemStack mold_pickaxe = FoundryItems.mold(ItemMold.MOLD_PICKAXE);
+      ItemStack mold_axe = FoundryItems.mold(ItemMold.MOLD_AXE);
+      ItemStack mold_shovel = FoundryItems.mold(ItemMold.MOLD_SHOVEL);
+      ItemStack mold_sword = FoundryItems.mold(ItemMold.MOLD_SWORD);
+      ItemStack mold_leggings = FoundryItems.mold(ItemMold.MOLD_LEGGINGS);
+      ItemStack mold_helmet = FoundryItems.mold(ItemMold.MOLD_HELMET);
+      ItemStack mold_boots = FoundryItems.mold(ItemMold.MOLD_BOOTS);
 
-        CastingRecipeManager.instance.addRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.addRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
-        CastingRecipeManager.instance.addRecipe(manasteel_axe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
-        CastingRecipeManager.instance.addRecipe(manasteel_shovel, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
-        CastingRecipeManager.instance.addRecipe(manasteel_sword, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        CastingRecipeManager.instance.addRecipe(manasteel_leggings, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.addRecipe(manasteel_helmet, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.addRecipe(manasteel_boots, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_chestplate, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_pickaxe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_sticks2);
+      CastingRecipeManager.instance.addRecipe(manasteel_axe, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_sticks2);
+      CastingRecipeManager.instance.addRecipe(manasteel_shovel, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_sticks2);
+      CastingRecipeManager.instance.addRecipe(manasteel_sword, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+      CastingRecipeManager.instance.addRecipe(manasteel_leggings, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_helmet, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.addRecipe(manasteel_boots, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
+      CastingRecipeManager.instance.addRecipe(terrasteel_chestplate, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.addRecipe(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
+      CastingRecipeManager.instance.addRecipe(terrasteel_leggings, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.addRecipe(terrasteel_helmet, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.addRecipe(terrasteel_boots, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
-        CastingRecipeManager.instance.addRecipe(terrasteel_chestplate, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.addRecipe(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_sticks1);
-        CastingRecipeManager.instance.addRecipe(terrasteel_leggings, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.addRecipe(terrasteel_helmet, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.addRecipe(terrasteel_boots, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.addRecipe(elementium_chestplate, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.addRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_dreamsticks2);
+      CastingRecipeManager.instance.addRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_dreamsticks2);
+      CastingRecipeManager.instance.addRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_dreamsticks2);
+      CastingRecipeManager.instance.addRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_dreamsticks1);
+      CastingRecipeManager.instance.addRecipe(elementium_leggings, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.addRecipe(elementium_helmet, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.addRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, manasteel_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, manasteel_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, manasteel_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, manasteel_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, manasteel_pickaxe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, manasteel_axe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, manasteel_shovel);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, manasteel_sword);
 
-        CastingRecipeManager.instance.addRecipe(elementium_chestplate, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-        CastingRecipeManager.instance.addRecipe(elementium_pickaxe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, extra_dreamsticks2);
-        CastingRecipeManager.instance.addRecipe(elementium_axe, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, extra_dreamsticks2);
-        CastingRecipeManager.instance.addRecipe(elementium_shovel, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, extra_dreamsticks2);
-        CastingRecipeManager.instance.addRecipe(elementium_sword, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, extra_dreamsticks1);
-        CastingRecipeManager.instance.addRecipe(elementium_leggings, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-        CastingRecipeManager.instance.addRecipe(elementium_helmet, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-        CastingRecipeManager.instance.addRecipe(elementium_boots, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, terrasteel_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, terrasteel_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, terrasteel_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, terrasteel_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, terrasteel_sword);
 
-        
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, manasteel_chestplate);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, manasteel_leggings);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, manasteel_helmet);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, manasteel_boots);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, manasteel_pickaxe);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, manasteel_axe);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, manasteel_shovel);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, manasteel_sword);
-
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, terrasteel_chestplate);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, terrasteel_leggings);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, terrasteel_helmet);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, terrasteel_boots);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, terrasteel_sword);
-        
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, elementium_chestplate);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT,   elementium_leggings);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT,     elementium_helmet);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT,      elementium_boots);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT,    elementium_pickaxe);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT,        elementium_axe);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT,     elementium_shovel);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT,      elementium_sword);
-      }
-      ItemStack mold_ingot = FoundryItems.mold(ItemMold.MOLD_INGOT);
-      ItemStack mold_block = FoundryItems.mold(ItemMold.MOLD_BLOCK);
-
-      MeltingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
-      MeltingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
-      MeltingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT));
-      MeltingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK));
-
-      CastingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-      CastingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-      CastingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-      
-      MaterialRegistry.instance.registerItem(manasteel_ingot, "Manasteel", "Ingot");
-      MaterialRegistry.instance.registerItem(manasteel_block, "Manasteel", "Block");
-      MaterialRegistry.instance.registerItem(terrasteel_ingot, "Terrasteel", "Ingot");
-      MaterialRegistry.instance.registerItem(terrasteel_block, "Terrasteel", "Block");
-      MaterialRegistry.instance.registerItem(elementium_ingot, "Elementium", "Ingot");
-      MaterialRegistry.instance.registerItem(elementium_block, "Elementium", "Block");
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, elementium_chestplate);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, elementium_leggings);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, elementium_helmet);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, elementium_boots);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, elementium_pickaxe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, elementium_axe);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, elementium_shovel);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, elementium_sword);
     }
+    ItemStack mold_ingot = FoundryItems.mold(ItemMold.MOLD_INGOT);
+    ItemStack mold_block = FoundryItems.mold(ItemMold.MOLD_BLOCK);
+
+    MeltingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
+    MeltingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK));
+    MeltingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT));
+    MeltingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK));
+
+    CastingRecipeManager.instance.addRecipe(manasteel_ingot, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+    CastingRecipeManager.instance.addRecipe(manasteel_block, new FluidStack(liquid_manasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+    CastingRecipeManager.instance.addRecipe(terrasteel_ingot, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+    CastingRecipeManager.instance.addRecipe(terrasteel_block, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+    CastingRecipeManager.instance.addRecipe(elementium_ingot, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+    CastingRecipeManager.instance.addRecipe(elementium_block, new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+
+    MaterialRegistry.instance.registerItem(manasteel_ingot, "Manasteel", "Ingot");
+    MaterialRegistry.instance.registerItem(manasteel_block, "Manasteel", "Block");
+    MaterialRegistry.instance.registerItem(terrasteel_ingot, "Terrasteel", "Ingot");
+    MaterialRegistry.instance.registerItem(terrasteel_block, "Terrasteel", "Block");
+    MaterialRegistry.instance.registerItem(elementium_ingot, "Elementium", "Ingot");
+    MaterialRegistry.instance.registerItem(elementium_block, "Elementium", "Block");
+  }
+
+  @Override
+  public String getName()
+  {
+    return "botania";
+  }
+
+  @Override
+  public void onInit()
+  {
+    
+  }
+
+  @Override
+  public void onAfterPostInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientPreInit()
+  {
+    
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void onClientInit()
+  {
+    
   }
 }

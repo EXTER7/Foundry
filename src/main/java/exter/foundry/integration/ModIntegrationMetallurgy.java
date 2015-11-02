@@ -8,15 +8,9 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 
-public class ModIntegrationMetallurgy extends ModIntegration
+public class ModIntegrationMetallurgy// extends ModIntegrationManager
 {
-
-  public ModIntegrationMetallurgy(String mod_name)
-  {
-    super(mod_name);
-  }
-
-  @Override
+  //@Override
   public void onPreInit(Configuration config)
   {
     LiquidMetalRegistry.instance.registerLiquidMetal( "Adamantine", 2000, 15);
@@ -55,19 +49,18 @@ public class ModIntegrationMetallurgy extends ModIntegration
     LiquidMetalRegistry.instance.registerLiquidMetal( "Prometheum", 1900, 14);
   }
 
-  @Override
+  //@Override
   public void onInit()
   {
 
   }
   
 
-  @Override
+  //@Override
   public void onPostInit()
   {
     if(!Loader.isModLoaded("Metallurgy"))
     {
-      is_loaded = false;
       return;
     }
 //

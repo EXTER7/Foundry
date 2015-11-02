@@ -215,8 +215,7 @@ public class ModIntegrationIC2 implements IModIntegration
   @Override
   public String getName()
   {
-    // TODO Auto-generated method stub
-    return null;
+    return "ic2";
   }
 
   @Override

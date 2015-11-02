@@ -38,6 +38,8 @@ import net.minecraftforge.fml.common.Optional;
 public class ModIntegrationThaumcraft implements IModIntegration
 {
   private boolean enable_shards;
+  private boolean gear_recipes;
+  private boolean plate_recipes;
   
   private Fluid liquid_aer;
   private Fluid liquid_terra;
@@ -67,8 +69,10 @@ public class ModIntegrationThaumcraft implements IModIntegration
     FoundryUtils.registerBasicMeltingRecipes("Void", liquid_voidmetal);
 
     
-    enable_shards = config.get("thaumcraft.liquidshards", "integration", true).getBoolean(true);
-    
+    enable_shards = config.get(getName() + ".liquidshards", "integration", true).getBoolean(true);
+    gear_recipes = config.get("integration", getName() + ".gears", true).getBoolean(true);
+    plate_recipes = config.get("integration", getName() + ".plates", true).getBoolean(true);
+
     if(enable_shards)
     {
       liquid_aer = LiquidMetalRegistry.instance.registerLiquidMetal( "Aer", 1200, 13);
@@ -150,10 +154,6 @@ public class ModIntegrationThaumcraft implements IModIntegration
     ItemStack void_leggings = new ItemStack(GameRegistry.findItem("Thaumcraft", "void_legs"));
     ItemStack void_boots = new ItemStack(GameRegistry.findItem("Thaumcraft", "void_boots"));
 
-    ItemStack plate_iron = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateIron");
-    ItemStack plate_brass = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateBrass");
-    ItemStack plate_thaumium = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateThaumium");
-    ItemStack plate_void = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateVoid");
     
     
     
@@ -165,7 +165,7 @@ public class ModIntegrationThaumcraft implements IModIntegration
       MaterialRegistry.instance.registerItem(oredict_name, metal, "NativeCluster");
     }
     
-    if(!FoundryConfig.recipe_gear_useoredict)
+    if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
     {
       ItemStack gear_brass = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearBrass");
       ItemStack gear_thaumium = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearThaumium");
@@ -180,15 +180,23 @@ public class ModIntegrationThaumcraft implements IModIntegration
       FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearVoid");
     }
     
-    FoundryMiscUtils.registerCasting(plate_iron, FoundryRecipes.liquid_iron, 1, ItemMold.MOLD_PLATE, null);
-    FoundryMiscUtils.registerCasting(plate_brass, FoundryRecipes.liquid_brass, 1, ItemMold.MOLD_PLATE, null);
-    FoundryMiscUtils.registerCasting(plate_thaumium, liquid_thaumium, 1, ItemMold.MOLD_PLATE, null);
-    FoundryMiscUtils.registerCasting(plate_void, liquid_voidmetal, 1, ItemMold.MOLD_PLATE, null);
-    
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateIron");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateBrass");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateThaumium");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateVoid");
+    if(plate_recipes)
+    {
+      ItemStack plate_iron = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateIron");
+      ItemStack plate_brass = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateBrass");
+      ItemStack plate_thaumium = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateThaumium");
+      ItemStack plate_void = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "plateVoid");
+
+      FoundryMiscUtils.registerCasting(plate_iron, FoundryRecipes.liquid_iron, 1, ItemMold.MOLD_PLATE, null);
+      FoundryMiscUtils.registerCasting(plate_brass, FoundryRecipes.liquid_brass, 1, ItemMold.MOLD_PLATE, null);
+      FoundryMiscUtils.registerCasting(plate_thaumium, liquid_thaumium, 1, ItemMold.MOLD_PLATE, null);
+      FoundryMiscUtils.registerCasting(plate_void, liquid_voidmetal, 1, ItemMold.MOLD_PLATE, null);
+
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateIron");
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateBrass");
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateThaumium");
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plateVoid");
+    }
     
     if(FoundryConfig.recipe_tools_armor)
     {

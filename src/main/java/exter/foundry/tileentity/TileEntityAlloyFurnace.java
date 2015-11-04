@@ -5,15 +5,17 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 //@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
 public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory/*,IExoflameHeatable*/
@@ -116,8 +118,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   public void readFromNBT(NBTTagCompound tag)
   {
     super.readFromNBT(tag);
-    int last_burn_time = burn_time;
-
     if(tag.hasKey("BurnTime"))
     {
       burn_time = tag.getInteger("BurnTime");
@@ -130,13 +130,16 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       item_burn_time = tag.getInteger("ItemBurnTime");
     }
-    if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+    if(worldObj != null && !worldObj.isRemote)
     {
-      if(last_burn_time*burn_time == 0)
-      {
-        ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
-      }
+      ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
     }
+  }
+
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+  {
+    return oldState.getBlock() != newSate.getBlock();
   }
 
   @Override
@@ -224,12 +227,18 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   {
 
   }
-
-  private void DoSmelt(IAlloyFurnaceRecipe recipe,boolean reversed)
+  
+  private boolean canOutput(IAlloyFurnaceRecipe recipe)
   {
     ItemStack output = recipe.getOutput();
     ItemStack inv_output = inventory[SLOT_OUTPUT];
-    if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
+    return inv_output == null || (inv_output.isItemEqual(output) && inv_output.stackSize - output.stackSize <= inv_output.getMaxStackSize());
+  }
+
+  private void doSmelt(IAlloyFurnaceRecipe recipe,boolean reversed)
+  {
+    ItemStack output = recipe.getOutput();
+    if(!canOutput(recipe))
     {
       progress = 0;
       return;
@@ -288,7 +297,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       }
     }
 
-    if(burn_time == 0 && recipe != null)
+    if(burn_time == 0 && recipe != null && canOutput(recipe))
     {
       item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(inventory[SLOT_FUEL]);
       if(burn_time > 0)
@@ -308,7 +317,10 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       if(recipe != null)
       {
-        DoSmelt(recipe,reversed);
+        doSmelt(recipe,reversed);
+      } else
+      {
+        progress = 0;
       }
     } else
     {

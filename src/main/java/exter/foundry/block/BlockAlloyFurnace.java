@@ -201,13 +201,7 @@ public class BlockAlloyFurnace extends BlockContainer
 
   public void setFurnaceState(World world, BlockPos pos, IBlockState state, boolean is_on)
   {
-    TileEntity te = world.getTileEntity(pos);
     world.setBlockState(pos, state.withProperty(STATE, is_on ? EnumState.ON : EnumState.OFF));
-    if(te != null)
-    {
-      te.validate();
-      world.setTileEntity(pos, te);
-    }
   }
 
   @Override

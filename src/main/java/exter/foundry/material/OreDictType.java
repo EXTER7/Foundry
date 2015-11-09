@@ -29,6 +29,10 @@ public class OreDictType
     new OreDictType("planks","Wood", "Planks"),
     new OreDictType("crushed","Iron", "CrushedOre"),
     new OreDictType("crushedPurified","Iron", "PurfiedCrushedOre"),
-    new OreDictType("orePoor","Iron", "PoorOre")
+    new OreDictType("orePoor","Iron", "PoorOre"),
+    new OreDictType("crystal","Iron", "Crystal"),
+    new OreDictType("shard","Iron", "Shard"),
+    new OreDictType("clump","Iron", "Clump"),
+    new OreDictType("dustDirty","Iron", "DirtyDust")
   };
 }

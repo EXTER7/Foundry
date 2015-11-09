@@ -1,5 +1,8 @@
 package exter.foundry.material;
 
+import exter.foundry.registry.LiquidMetalRegistry;
+import net.minecraftforge.fluids.Fluid;
+
 public class OreDictMaterial
 {
   
@@ -97,6 +100,13 @@ public class OreDictMaterial
     new OreDictMaterial("Prometheum", "ingot"),
     new OreDictMaterial("Ironwood", "ingot"),
     new OreDictMaterial("Steeleaf", "ingot"),
-    new OreDictMaterial("Knightmetal", "ingot")
+    new OreDictMaterial("Knightmetal", "ingot"),
+    new OreDictMaterial("Tritanium", "ingot"), 
+    new OreDictMaterial("Osmium", "ingot"),
+    new OreDictMaterial("RedstoneAlloy", "ingot"),
+    new OreDictMaterial("EnergeticAlloy", "ingot"),    
+    new OreDictMaterial("VibrantAlloy", "ingot"),
+    new OreDictMaterial("DarkSteel", "ingot"),
+    new OreDictMaterial("Refined Glowstone", "ingot")
   };
 }

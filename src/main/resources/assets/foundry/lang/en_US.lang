@@ -97,7 +97,13 @@ fluid.liquidPotentia=Energy Infused Liquid
 fluid.liquidVictus=Life Infused Liquid
 fluid.liquidVacous=Void Infused Liquid
 fluid.liquidPrimal=Primal Liquid
-
+fluid.liquidTritanium=Liquid Tritanium
+fluid.liquidOsmium=Liquid Osmium
+fluid.liquidRefinedGlowstone=Liquid Refined Glowstone
+fluid.liquidRedstoneAlloy=Liquid Redstone Alloy
+fluid.liquidEnergeticAlloy=Liquid Energetic Alloy
+fluid.liquidVibrantAlloy=Liquid Vibrant Alloy
+fluid.liquidDarkSteel=Liquid Dark Steel
 
 router.material._Any=All
 router.material.Aluminum=Aluminum
@@ -201,6 +207,13 @@ router.material.Potentia=Potentia
 router.material.Victus=Victus
 router.material.Vacous=Vacous
 router.material.Primal=Primal
+router.material.Tritanium=Tritanium
+router.material.Osmium=Osmium
+router.material.RefinedGlowstone=Refined Glowstone
+router.material.RedstoneAlloy=Redstone Alloy
+router.material.EnergeticAlloy=Energetic Alloy
+router.material.VibrantAlloy=Vibrant Alloy
+router.material.DarkSteel=Dark Steel
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -221,9 +234,14 @@ router.type.Casing=Casing
 router.type.Cable=Cable
 router.type.NativeCluster=Native Cluster
 router.type.PoorOre=Poor Ore
+router.type.InfusedShard=Infused Shard
+router.type.Crystal=Crystal
 router.type.Shard=Shard
+router.type.Clump=Clump
+router.type.DirtyDust=Dirty Dust
 
 substance.carbon=Carbon
+substance.silicon=Silicon
 substance.dye.black=Black Dye
 substance.dye.red=Red Dye
 substance.dye.green=Green Dye
@@ -350,7 +368,13 @@ tile.liquidPotentia.name=Energy Infused Liquid
 tile.liquidVictus.name=Life Infused Liquid
 tile.liquidVacous.name=Void Infused Liquid
 tile.liquidPrimal.name=Primal Liquid
-
+tile.liquidTritanium.name=Liquid Tritanium
+tile.liquidOsmium.name=Liquid Osmium
+tile.liquidRefinedGlowstone.name=Liquid Refined Glowstone
+tile.liquidRedstoneAlloy.name=Liquid Redstone Alloy
+tile.liquidEnergeticAlloy.name=Liquid Energetic Alloy
+tile.liquidVibrantAlloy.name=Liquid Vibrant Alloy
+tile.liquidDarkSteel.name=Liquid Dark Steel
 
 tile.machine.ICF.name=Induction Crucible Furnace
 tile.machine.Caster.name=Metal Caster

@@ -34,9 +34,12 @@ import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegration;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationBuildcraft;
+import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationForestry;
 import exter.foundry.integration.ModIntegrationGregtech;
 import exter.foundry.integration.ModIntegrationIC2;
+import exter.foundry.integration.ModIntegrationMatterOverdrive;
+import exter.foundry.integration.ModIntegrationMekanism;
 import exter.foundry.integration.ModIntegrationMetallurgy;
 import exter.foundry.integration.ModIntegrationProjectRed;
 import exter.foundry.integration.ModIntegrationRailcraft;
@@ -128,6 +131,9 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
     ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
     ModIntegration.RegisterIntegration(config,ModIntegrationProjectRed.class,"projectred");
+    ModIntegration.RegisterIntegration(config,ModIntegrationMekanism.class,"mekanism");
+    ModIntegration.RegisterIntegration(config,ModIntegrationEnderIO.class,"enderio");
+    ModIntegration.RegisterIntegration(config,ModIntegrationMatterOverdrive.class,"matter_overdrive");
     
 
     FoundryAPI.items = ItemRegistry.instance;

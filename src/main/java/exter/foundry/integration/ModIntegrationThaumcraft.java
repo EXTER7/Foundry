@@ -101,7 +101,7 @@ public class ModIntegrationThaumcraft extends ModIntegration
     Item shard = ItemApi.getItem("itemShard",6).getItem();
 
     MaterialRegistry.instance.RegisterTypeIcon("NativeCluster", ItemStack.copyItemStack(ItemApi.getItem("itemNugget",16)));
-    MaterialRegistry.instance.RegisterTypeIcon("Shard", ItemStack.copyItemStack(ItemApi.getItem("itemShard",7)));
+    MaterialRegistry.instance.RegisterTypeIcon("InfusedShard", ItemStack.copyItemStack(ItemApi.getItem("itemShard",6)));
 
     MaterialRegistry.instance.RegisterMaterialIcon("Aer",new ItemStack(shard,1,0));
     MaterialRegistry.instance.RegisterMaterialIcon("Ignis",new ItemStack(shard,1,1));
@@ -110,11 +110,11 @@ public class ModIntegrationThaumcraft extends ModIntegration
     MaterialRegistry.instance.RegisterMaterialIcon("Ordo",new ItemStack(shard,1,4));
     MaterialRegistry.instance.RegisterMaterialIcon("Perditio",new ItemStack(shard,1,5));
 
-    MaterialRegistry.instance.RegisterMaterialIcon("Energy",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC));
-    MaterialRegistry.instance.RegisterMaterialIcon("Life",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC));
-    MaterialRegistry.instance.RegisterMaterialIcon("Void",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC));
+    MaterialRegistry.instance.RegisterMaterialIcon("Potentia",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC));
+    MaterialRegistry.instance.RegisterMaterialIcon("Victus",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC));
+    MaterialRegistry.instance.RegisterMaterialIcon("Vacous",FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC));
     
-    MaterialRegistry.instance.RegisterMaterialIcon("Balanced",new ItemStack(shard,1,6));
+    MaterialRegistry.instance.RegisterMaterialIcon("Primal",new ItemStack(shard,1,6));
   }
 
   @Override
@@ -405,18 +405,18 @@ public class ModIntegrationThaumcraft extends ModIntegration
           });
       
       
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,0),"Aer","Shard");
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,1),"Ignis","Shard");
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,2),"Aqua","Shard");
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,3),"Terra","Shard");
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,4),"Ordo","Shard");
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,5),"Perditio","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,0),"Aer","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,1),"Ignis","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,2),"Aqua","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,3),"Terra","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,4),"Ordo","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,5),"Perditio","InfusedShard");
 
-      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC),"Energy","Shard");
-      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC),"Life","Shard");
-      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),"Void","Shard");
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_ENERGY_TC),"Potentia","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_LIFE_TC),"Victus","InfusedShard");
+      MaterialRegistry.instance.RegisterItem(FoundryItems.Component(ItemComponent.COMPONENT_SHARD_VOID_TC),"Vacous","InfusedShard");
       
-      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,6),"Balanced","Shard");
+      MaterialRegistry.instance.RegisterItem(new ItemStack(shard,1,6),"Primal","InfusedShard");
       
       AtomizerRecipeManager.instance.AddRecipe(ItemApi.getItem("itemResource", 14)/* salis mundus */, new FluidStack(liquid_primal,FoundryAPI.FLUID_AMOUNT_INGOT));
     }

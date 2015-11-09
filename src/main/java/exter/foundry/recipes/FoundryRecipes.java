@@ -1019,7 +1019,7 @@ public class FoundryRecipes
         {
           if(CastingRecipeManager.instance.FindRecipe(fluid, block_mold, null) == null)
           {
-            CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, block_mold, null);
+            CastingRecipeManager.instance.AddRecipe("block" + name, fluid, block_mold, null);
           }
         }
 

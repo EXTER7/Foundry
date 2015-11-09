@@ -87,7 +87,8 @@ import exter.foundry.worldgen.WordGenOre;
       + "after:Forestry;"
       + "after:gregtech;"
       + "after:Thaumcraft;"
-      + "after:Botania"
+      + "after:Botania;"
+      + "after:EnderIO"
 )
 public class ModFoundry
 {

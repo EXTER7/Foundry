@@ -13,6 +13,7 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.util.FoundryMiscUtils;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -219,4 +220,13 @@ public abstract class ModIntegration
     }
   }
   
+  static protected ItemStack newItemStack(Item item)
+  {
+    if(item == null)
+    {
+      return null;
+    }
+    return new ItemStack(item);
+  }
+
 }

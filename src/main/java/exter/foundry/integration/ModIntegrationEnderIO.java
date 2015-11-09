@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.substance.InfuserSubstance;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.FoundryRecipes;
@@ -12,7 +13,10 @@ import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
@@ -51,6 +55,7 @@ public class ModIntegrationEnderIO extends ModIntegration
   {
     
   }
+  
 
   @Override
   public void OnPostInit()
@@ -60,6 +65,46 @@ public class ModIntegrationEnderIO extends ModIntegration
       is_loaded = false;
       return;
     }
+    
+
+
+    if(FoundryConfig.recipe_tools_armor)
+    {
+      ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
+      ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
+
+
+      ItemStack dark_steel_pickaxe = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_pickaxe"));
+      ItemStack dark_steel_axe = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_axe"));
+      ItemStack dark_steel_shovel = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_shovel"));
+      ItemStack dark_steel_sword = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_sword"));
+
+      ItemStack dark_steel_helmet = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_helmet"));
+      ItemStack dark_steel_chestplate = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_chestplate"));
+      ItemStack dark_steel_leggings = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_leggings"));
+      ItemStack dark_steel_boots = newItemStack(GameRegistry.findItem("EnderIO", "item.darkSteel_boots"));
+
+      RegisterCasting(dark_steel_chestplate, liquid_dark_steel, 8, ItemMold.MOLD_CHESTPLATE, null);
+      RegisterCasting(dark_steel_helmet, liquid_dark_steel, 5, ItemMold.MOLD_HELMET, null);
+      RegisterCasting(dark_steel_leggings, liquid_dark_steel, 7, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(dark_steel_boots, liquid_dark_steel, 4, ItemMold.MOLD_BOOTS, null);
+
+      RegisterCasting(dark_steel_pickaxe, liquid_dark_steel, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      RegisterCasting(dark_steel_axe, liquid_dark_steel, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      RegisterCasting(dark_steel_shovel, liquid_dark_steel, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      RegisterCasting(dark_steel_sword, liquid_dark_steel, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, dark_steel_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, dark_steel_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, dark_steel_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, dark_steel_boots);
+
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, dark_steel_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, dark_steel_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, dark_steel_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, dark_steel_sword);
+    }
+    
     Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
     Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
     Fluid liquid_ender = FluidRegistry.getFluid("ender");

@@ -998,6 +998,7 @@ public class FoundryRecipes
     }
     
     ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
+    ItemStack block_mold = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       if(!name.startsWith("Glass"))
@@ -1011,7 +1012,17 @@ public class FoundryRecipes
             CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, ingot_mold, null);
           }
         }
-        
+
+        ores = OreDictionary.getOres("block" + name);
+        fluid = new FluidStack(LiquidMetalRegistry.instance.GetFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);
+        if(ores != null && ores.size() > 0)
+        {
+          if(CastingRecipeManager.instance.FindRecipe(fluid, block_mold, null) == null)
+          {
+            CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, block_mold, null);
+          }
+        }
+
         AtomizerRecipeManager.instance.AddRecipe("dust" + name, fluid);
       }
     }

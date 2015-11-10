@@ -104,6 +104,9 @@ fluid.liquidRedstoneAlloy=Liquid Redstone Alloy
 fluid.liquidEnergeticAlloy=Liquid Energetic Alloy
 fluid.liquidVibrantAlloy=Liquid Vibrant Alloy
 fluid.liquidDarkSteel=Liquid Dark Steel
+fluid.liquidPhasedIron=Liquid Pulsating Iron
+fluid.liquidElectricalSteel=Liquid Electrical Steel
+fluid.liquidSoularium=Liquid Soularium
 
 router.material._Any=All
 router.material.Aluminum=Aluminum
@@ -214,6 +217,9 @@ router.material.RedstoneAlloy=Redstone Alloy
 router.material.EnergeticAlloy=Energetic Alloy
 router.material.VibrantAlloy=Vibrant Alloy
 router.material.DarkSteel=Dark Steel
+router.material.PhasedIron=Pulsating Iron
+router.material.ElectricalSteel=Electrical Steel
+router.material.Soularium=Soularium
 
 router.type._Any=All
 router.type.Ore=Ore
@@ -375,6 +381,9 @@ tile.liquidRedstoneAlloy.name=Liquid Redstone Alloy
 tile.liquidEnergeticAlloy.name=Liquid Energetic Alloy
 tile.liquidVibrantAlloy.name=Liquid Vibrant Alloy
 tile.liquidDarkSteel.name=Liquid Dark Steel
+tile.liquidPhasedIron.name=Liquid Pulsating Iron
+tile.liquidElectricalSteel.name=Liquid Electrical Steel
+tile.liquidSoularium.name=Liquid Soularium
 
 tile.machine.ICF.name=Induction Crucible Furnace
 tile.machine.Caster.name=Metal Caster

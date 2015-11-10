@@ -103,10 +103,13 @@ public class OreDictMaterial
     new OreDictMaterial("Knightmetal", "ingot"),
     new OreDictMaterial("Tritanium", "ingot"), 
     new OreDictMaterial("Osmium", "ingot"),
+    new OreDictMaterial("RefinedGlowstone", "ingot"),
     new OreDictMaterial("RedstoneAlloy", "ingot"),
     new OreDictMaterial("EnergeticAlloy", "ingot"),    
     new OreDictMaterial("VibrantAlloy", "ingot"),
     new OreDictMaterial("DarkSteel", "ingot"),
-    new OreDictMaterial("Refined Glowstone", "ingot")
+    new OreDictMaterial("ElectricalSteel", "ingot"),
+    new OreDictMaterial("PhasedIron", "ingot"),
+    new OreDictMaterial("Soularium", "ingot")
   };
 }

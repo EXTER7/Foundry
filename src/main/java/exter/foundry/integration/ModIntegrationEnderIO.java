@@ -29,6 +29,8 @@ public class ModIntegrationEnderIO extends ModIntegration
   private Fluid liquid_energetic_alloy;
   private Fluid liquid_vibrant_alloy;
   private Fluid liquid_dark_steel;
+  private Fluid liquid_electrical_steel;
+  private Fluid liquid_phased_iron;
   
   public ModIntegrationEnderIO(String mod_name)
   {
@@ -38,16 +40,22 @@ public class ModIntegrationEnderIO extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-    liquid_redstone_alloy = LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedstoneAlloy", 1000, 14);    
+    liquid_redstone_alloy = LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedstoneAlloy", 1000, 14);
     liquid_energetic_alloy = LiquidMetalRegistry.instance.RegisterLiquidMetal( "EnergeticAlloy", 2500, 15);    
     liquid_vibrant_alloy = LiquidMetalRegistry.instance.RegisterLiquidMetal( "VibrantAlloy", 2500, 15);    
-    liquid_dark_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "DarkSteel", 1850, 12);    
+    liquid_dark_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "DarkSteel", 1850, 12);
+    liquid_electrical_steel = LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectricalSteel", 1850, 15);    
+    liquid_phased_iron = LiquidMetalRegistry.instance.RegisterLiquidMetal( "PhasedIron", 1850, 15);
+    Fluid liquid_soularium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Soularium", 1350, 12);
     
     FoundryUtils.RegisterBasicMeltingRecipes( "RedstoneAlloy", liquid_redstone_alloy);    
     FoundryUtils.RegisterBasicMeltingRecipes( "EnergeticAlloy", liquid_energetic_alloy);    
     FoundryUtils.RegisterBasicMeltingRecipes( "VibrantAlloy", liquid_vibrant_alloy);    
     FoundryUtils.RegisterBasicMeltingRecipes( "PhasedGold", liquid_vibrant_alloy);    
     FoundryUtils.RegisterBasicMeltingRecipes( "DarkSteel", liquid_dark_steel);    
+    FoundryUtils.RegisterBasicMeltingRecipes( "PhasedIron", liquid_phased_iron);
+    FoundryUtils.RegisterBasicMeltingRecipes( "ElectricalSteel", liquid_electrical_steel);    
+    FoundryUtils.RegisterBasicMeltingRecipes( "Soularium", liquid_soularium);    
   }
 
   @Override
@@ -112,7 +120,7 @@ public class ModIntegrationEnderIO extends ModIntegration
     
     InfuserRecipeManager.instance.AddSubstanceRecipe(
         new InfuserSubstance("silicon",36),
-        new ItemStack(GameRegistry.findItem("EnderIO","itemMaterial"),1,0), 2400);
+        new ItemStack(GameRegistry.findItem("EnderIO","itemMaterial"),1,0), 6000);
     InfuserRecipeManager.instance.AddSubstanceRecipe(
         new InfuserSubstance("silicon",36),
         new ItemStack(Blocks.sand,1,0), 240000);
@@ -120,6 +128,11 @@ public class ModIntegrationEnderIO extends ModIntegration
     InfuserRecipeManager.instance.AddRecipe(
         new FluidStack(liquid_redstone_alloy,3),
         new FluidStack(liquid_redstone,3),
+        new InfuserSubstance("silicon", 1));
+
+    InfuserRecipeManager.instance.AddRecipe(
+        new FluidStack(liquid_electrical_steel,3),
+        new FluidStack(FoundryRecipes.liquid_steel,3),
         new InfuserSubstance("silicon", 1));
 
     if(destabilized_redstone != null)
@@ -158,6 +171,13 @@ public class ModIntegrationEnderIO extends ModIntegration
           new FluidStack(liquid_vibrant_alloy, 54),
           new FluidStack[] {
             new FluidStack(liquid_energetic_alloy, 54),
+            new FluidStack(liquid_ender, 125)
+          });
+
+      AlloyMixerRecipeManager.instance.AddRecipe(
+          new FluidStack(liquid_phased_iron, 54),
+          new FluidStack[] {
+            new FluidStack(FoundryRecipes.liquid_iron, 54),
             new FluidStack(liquid_ender, 125)
           });
     }

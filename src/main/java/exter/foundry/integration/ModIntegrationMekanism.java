@@ -55,39 +55,72 @@ public class ModIntegrationMekanism extends ModIntegration
       ItemStack extra_sticks1 = new ItemStack(Items.stick, 1);
       ItemStack extra_sticks2 = new ItemStack(Items.stick, 2);
 
+      ItemStack osmium_pickaxe = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumPickaxe"));
+      ItemStack osmium_axe = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumAxe"));
+      ItemStack osmium_shovel = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumShovel"));
+      ItemStack osmium_sword = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumSword"));
+      ItemStack osmium_hoe = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumHoe"));
 
-      ItemStack dark_steel_pickaxe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstonePickaxe"));
-      ItemStack dark_steel_axe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneAxe"));
-      ItemStack dark_steel_shovel = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneShovel"));
-      ItemStack dark_steel_sword = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneSword"));
-      ItemStack dark_steel_hoe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneHoe"));
+      ItemStack osmium_helmet = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumHelmet"));
+      ItemStack osmium_chestplate = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumChestplate"));
+      ItemStack osmium_leggings = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumLeggings"));
+      ItemStack osmium_boots = newItemStack(GameRegistry.findItem("MekanismTools", "OsmiumBoots"));
 
-      ItemStack dark_steel_helmet = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneHelmet"));
-      ItemStack dark_steel_chestplate = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneChestplate"));
-      ItemStack dark_steel_leggings = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneLeggings"));
-      ItemStack dark_steel_boots = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneBoots"));
+      ItemStack glowstone_pickaxe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstonePickaxe"));
+      ItemStack glowstone_axe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneAxe"));
+      ItemStack glowstone_shovel = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneShovel"));
+      ItemStack glowstone_sword = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneSword"));
+      ItemStack glowstone_hoe = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneHoe"));
 
-      RegisterCasting(dark_steel_chestplate, liquid_refined_glowstone, 8, ItemMold.MOLD_CHESTPLATE, null);
-      RegisterCasting(dark_steel_helmet, liquid_refined_glowstone, 5, ItemMold.MOLD_HELMET, null);
-      RegisterCasting(dark_steel_leggings, liquid_refined_glowstone, 7, ItemMold.MOLD_LEGGINGS, null);
-      RegisterCasting(dark_steel_boots, liquid_refined_glowstone, 4, ItemMold.MOLD_BOOTS, null);
+      ItemStack glowstone_helmet = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneHelmet"));
+      ItemStack glowstone_chestplate = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneChestplate"));
+      ItemStack glowstone_leggings = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneLeggings"));
+      ItemStack glowstone_boots = newItemStack(GameRegistry.findItem("MekanismTools", "GlowstoneBoots"));
 
-      RegisterCasting(dark_steel_pickaxe, liquid_refined_glowstone, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
-      RegisterCasting(dark_steel_axe, liquid_refined_glowstone, 3, ItemMold.MOLD_AXE, extra_sticks2);
-      RegisterCasting(dark_steel_shovel, liquid_refined_glowstone, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
-      RegisterCasting(dark_steel_sword, liquid_refined_glowstone, 2, ItemMold.MOLD_SWORD, extra_sticks1);
-      RegisterCasting(dark_steel_hoe, liquid_refined_glowstone, 2, ItemMold.MOLD_HOE, extra_sticks2);
+      RegisterCasting(osmium_chestplate, liquid_osmium, 8, ItemMold.MOLD_CHESTPLATE, null);
+      RegisterCasting(osmium_helmet, liquid_osmium, 5, ItemMold.MOLD_HELMET, null);
+      RegisterCasting(osmium_leggings, liquid_osmium, 7, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(osmium_boots, liquid_osmium, 4, ItemMold.MOLD_BOOTS, null);
+
+      RegisterCasting(osmium_pickaxe, liquid_osmium, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      RegisterCasting(osmium_axe, liquid_osmium, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      RegisterCasting(osmium_shovel, liquid_osmium, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      RegisterCasting(osmium_sword, liquid_osmium, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      RegisterCasting(osmium_hoe, liquid_osmium, 2, ItemMold.MOLD_HOE, extra_sticks2);
       
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, dark_steel_leggings);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, dark_steel_helmet);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, dark_steel_leggings);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, dark_steel_boots);
+      RegisterCasting(glowstone_chestplate, liquid_refined_glowstone, 8, ItemMold.MOLD_CHESTPLATE, null);
+      RegisterCasting(glowstone_helmet, liquid_refined_glowstone, 5, ItemMold.MOLD_HELMET, null);
+      RegisterCasting(glowstone_leggings, liquid_refined_glowstone, 7, ItemMold.MOLD_LEGGINGS, null);
+      RegisterCasting(glowstone_boots, liquid_refined_glowstone, 4, ItemMold.MOLD_BOOTS, null);
 
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, dark_steel_pickaxe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, dark_steel_axe);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, dark_steel_shovel);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, dark_steel_sword);
-      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, dark_steel_hoe);
+      RegisterCasting(glowstone_pickaxe, liquid_refined_glowstone, 3, ItemMold.MOLD_PICKAXE, extra_sticks2);
+      RegisterCasting(glowstone_axe, liquid_refined_glowstone, 3, ItemMold.MOLD_AXE, extra_sticks2);
+      RegisterCasting(glowstone_shovel, liquid_refined_glowstone, 1, ItemMold.MOLD_SHOVEL, extra_sticks2);
+      RegisterCasting(glowstone_sword, liquid_refined_glowstone, 2, ItemMold.MOLD_SWORD, extra_sticks1);
+      RegisterCasting(glowstone_hoe, liquid_refined_glowstone, 2, ItemMold.MOLD_HOE, extra_sticks2);
+
+      
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, osmium_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, osmium_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, osmium_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, osmium_boots);
+
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, osmium_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, osmium_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, osmium_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, osmium_sword);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, osmium_hoe);
+      
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, glowstone_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HELMET_SOFT, glowstone_helmet);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, glowstone_leggings);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, glowstone_boots);
+
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, glowstone_pickaxe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_AXE_SOFT, glowstone_axe);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, glowstone_shovel);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_SWORD_SOFT, glowstone_sword);
+      FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, glowstone_hoe);
     }
 
     

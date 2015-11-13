@@ -41,7 +41,9 @@ import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationMatterOverdrive;
 import exter.foundry.integration.ModIntegrationMekanism;
 import exter.foundry.integration.ModIntegrationMetallurgy;
+import exter.foundry.integration.ModIntegrationMystcraft;
 import exter.foundry.integration.ModIntegrationProjectRed;
+import exter.foundry.integration.ModIntegrationRFTools;
 import exter.foundry.integration.ModIntegrationRailcraft;
 import exter.foundry.integration.ModIntegrationRedstoneArsenal;
 import exter.foundry.integration.ModIntegrationTE4;
@@ -135,6 +137,8 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationMekanism.class,"mekanism");
     ModIntegration.RegisterIntegration(config,ModIntegrationEnderIO.class,"enderio");
     ModIntegration.RegisterIntegration(config,ModIntegrationMatterOverdrive.class,"matter_overdrive");
+    ModIntegration.RegisterIntegration(config,ModIntegrationMystcraft.class,"mystcraft");
+    ModIntegration.RegisterIntegration(config,ModIntegrationRFTools.class,"rftools");
     
 
     FoundryAPI.items = ItemRegistry.instance;
@@ -180,6 +184,7 @@ public class ModFoundry
     network_channel = new FoundryNetworkChannel();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     proxy.PreInit();
+    ModIntegration.AfterPreInit();
   }
   
  

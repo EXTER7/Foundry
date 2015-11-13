@@ -1,5 +1,6 @@
 package exter.foundry.registry;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,5 +93,10 @@ public class LiquidMetalRegistry implements IFluidRegistry
   public Set<String> GetFluidNames()
   {
     return Collections.unmodifiableSet(registry.keySet());
+  }
+
+  public Collection<Fluid> GetFluids()
+  {
+    return Collections.unmodifiableCollection(registry.values());
   }
 }

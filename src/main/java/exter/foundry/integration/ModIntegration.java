@@ -37,6 +37,11 @@ public abstract class ModIntegration
   public abstract void OnInit();
   public abstract void OnPostInit();
 
+  public void OnAfterPreInit()
+  {
+    
+  }
+
   public void OnAfterPostInit()
   {
     
@@ -111,6 +116,18 @@ public abstract class ModIntegration
       {
         ModFoundry.log.info("PreInit integration: " + m.Name);
         m.OnPreInit(config);
+      }
+    }
+  }
+
+  static final public void AfterPreInit()
+  {
+    for(ModIntegration m:integrations.values())
+    {
+      if(m.is_loaded)
+      {
+        ModFoundry.log.info("AfterPreInit integration: " + m.Name);
+        m.OnAfterPreInit();
       }
     }
   }

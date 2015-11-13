@@ -90,11 +90,7 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "StainlessSteel", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Kanthal", 1900, 15);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Nichrome", 1950, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Mithril", 1950, 12);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Signalum", 1400, 12);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lumium", 2500, 15);
-    LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 1500, 14);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Redstone", 1000, 8);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1350, 10);    
     

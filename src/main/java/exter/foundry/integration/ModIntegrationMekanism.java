@@ -5,7 +5,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
@@ -135,5 +134,4 @@ public class ModIntegrationMekanism extends ModIntegration
           });
     }
   }
-
 }

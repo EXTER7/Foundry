@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -59,6 +60,10 @@ public class ModIntegrationTF extends ModIntegration
   public boolean gear_recipes;
   public boolean override_redstone_melting;
   
+  private Fluid liquid_enderium;
+  private Fluid liquid_lumium;
+  private Fluid liquid_signalum;
+  
   public ModIntegrationTF(String mod_name)
   {
     super(mod_name);
@@ -69,6 +74,13 @@ public class ModIntegrationTF extends ModIntegration
   {
     gear_recipes = config.get("integration", Name + ".gears", true).getBoolean(true);
     override_redstone_melting = config.get("integration", Name + ".override_redstone_melting", true).getBoolean(true);
+    liquid_signalum = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Signalum", 1400, 12);
+    liquid_lumium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Lumium", 2500, 15);
+    liquid_enderium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Enderium", 1900, 12);
+    
+    FoundryUtils.RegisterBasicMeltingRecipes("Signalum", liquid_signalum);
+    FoundryUtils.RegisterBasicMeltingRecipes("Lumium", liquid_lumium);
+    FoundryUtils.RegisterBasicMeltingRecipes("Enderium", liquid_enderium);
   }
 
   @Override
@@ -84,18 +96,6 @@ public class ModIntegrationTF extends ModIntegration
       is_loaded = false;
       return;
     }
-
-    ItemStack mithril_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotMithril", 1);
-    ItemStack mithril_block = GameRegistry.findItemStack("ThermalFoundation", "blockMithril", 1);
-
-    ItemStack enderium_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotEnderium", 1);
-    ItemStack enderium_block = GameRegistry.findItemStack("ThermalFoundation", "blockEnderium", 1);
-
-    ItemStack signalum_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotSignalum", 1);
-    ItemStack signalum_block = GameRegistry.findItemStack("ThermalFoundation", "blockSignalum", 1);
-
-    ItemStack lumium_ingot = GameRegistry.findItemStack("ThermalFoundation", "ingotLumium", 1);
-    ItemStack lumium_block = GameRegistry.findItemStack("ThermalFoundation", "blockLumium", 1);
 
     ItemStack pyrotheum = GameRegistry.findItemStack("ThermalFoundation", "dustPyrotheum", 1);
     ItemStack cryotheum = GameRegistry.findItemStack("ThermalFoundation", "dustCryotheum", 1);
@@ -116,12 +116,6 @@ public class ModIntegrationTF extends ModIntegration
       Fluid liquid_aerotheum = FluidRegistry.getFluid("aerotheum");
       Fluid liquid_petrotheum = FluidRegistry.getFluid("petrotheum");
 
-      Fluid liquid_mithril = LiquidMetalRegistry.instance.GetFluid("Mithril");
-      Fluid liquid_enderium = LiquidMetalRegistry.instance.GetFluid("Enderium");
-      Fluid liquid_signalum = LiquidMetalRegistry.instance.GetFluid("Signalum");
-      Fluid liquid_lumium = LiquidMetalRegistry.instance.GetFluid("Lumium");
-
-      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
       ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
 
       MeltingRecipeManager.instance.AddRecipe("dustCoal", new FluidStack(liquid_coal, 100), 1000);
@@ -198,19 +192,6 @@ public class ModIntegrationTF extends ModIntegration
             });
 
       CastingRecipeManager.instance.AddRecipe(new ItemStack(Blocks.redstone_block), new FluidStack(destabilized_redstone, 900), mold_block, null);
-
-      CastingRecipeManager.instance.AddRecipe(mithril_ingot, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(mithril_block, new FluidStack(liquid_mithril, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-
-      CastingRecipeManager.instance.AddRecipe(enderium_ingot, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(enderium_block, new FluidStack(liquid_enderium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-
-      CastingRecipeManager.instance.AddRecipe(signalum_ingot, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(signalum_block, new FluidStack(liquid_signalum, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-
-      CastingRecipeManager.instance.AddRecipe(lumium_ingot, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(lumium_block, new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-
 
       if(FoundryConfig.recipe_tools_armor)
       {

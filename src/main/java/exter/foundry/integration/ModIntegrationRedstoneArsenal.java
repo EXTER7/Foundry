@@ -20,6 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationRedstoneArsenal extends ModIntegration
 {
+  private Fluid liquid_electrumflux;
+  
   public ModIntegrationRedstoneArsenal(String mod_name)
   {
     super(mod_name);
@@ -29,15 +31,14 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   @Override
   public void OnPreInit(Configuration config)
   {
-
+    liquid_electrumflux = LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 2000, 14);
   }
-
 
   @Override
   public void OnInit()
   {
+    
   }
-
 
   @Override
   public void OnPostInit()
@@ -49,15 +50,11 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
       return;
     }
 
-
-    ItemStack electrumflux_ingot = GameRegistry.findItemStack("RedstoneArsenal", "ingotElectrumFlux", 1);
-    ItemStack electrumflux_block = GameRegistry.findItemStack("RedstoneArsenal", "blockElectrumFlux", 1);
-
     if(is_loaded)
     {
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       Fluid liquid_redstone = LiquidMetalRegistry.instance.GetFluid("Redstone");
-      Fluid liquid_electrumflux = LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
+      LiquidMetalRegistry.instance.GetFluid("ElectrumFlux");
 
       AlloyMixerRecipeManager.instance.AddRecipe(
           new FluidStack(liquid_electrumflux, 27),
@@ -86,13 +83,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
             new FluidStack(FoundryRecipes.liquid_gold, 5),
             new FluidStack(FoundryRecipes.liquid_silver, 5),
             new FluidStack(liquid_redstone, 8) });
-    
-      ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
-      ItemStack mold_block = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
-      
-      CastingRecipeManager.instance.AddRecipe(electrumflux_ingot, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
-      CastingRecipeManager.instance.AddRecipe(electrumflux_block, new FluidStack(liquid_electrumflux, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
-
+          
       if(FoundryConfig.recipe_tools_armor)
       {
         ItemStack extra_sticks1 = GameRegistry.findItemStack("RedstoneArsenal", "rodObsidianFlux", 1);

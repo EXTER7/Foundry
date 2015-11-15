@@ -41,6 +41,7 @@ import exter.foundry.integration.ModIntegrationIC2;
 import exter.foundry.integration.ModIntegrationMatterOverdrive;
 import exter.foundry.integration.ModIntegrationMekanism;
 import exter.foundry.integration.ModIntegrationMetallurgy;
+import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationMystcraft;
 import exter.foundry.integration.ModIntegrationProjectRed;
 import exter.foundry.integration.ModIntegrationRFTools;
@@ -139,6 +140,7 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationMatterOverdrive.class,"matter_overdrive");
     ModIntegration.RegisterIntegration(config,ModIntegrationMystcraft.class,"mystcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationRFTools.class,"rftools");
+    ModIntegration.RegisterIntegration(config,ModIntegrationMinetweaker.class,"minetweaker");
     
 
     FoundryAPI.items = ItemRegistry.instance;

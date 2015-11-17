@@ -11,7 +11,7 @@ import exter.foundry.recipes.AlloyFurnaceRecipe;
 
 public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
 {
-  private List<IAlloyFurnaceRecipe> recipes;
+  public List<IAlloyFurnaceRecipe> recipes;
 
   public static final AlloyFurnaceRecipeManager instance = new AlloyFurnaceRecipeManager();
   

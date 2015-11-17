@@ -11,7 +11,7 @@ import exter.foundry.recipes.AlloyMixerRecipe;
 
 public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
 {
-  private List<IAlloyMixerRecipe> recipes;
+  public List<IAlloyMixerRecipe> recipes;
 
   public static final AlloyMixerRecipeManager instance = new AlloyMixerRecipeManager();
 

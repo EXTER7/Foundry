@@ -1,8 +1,5 @@
 package exter.foundry.integration.minetweaker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.recipes.AlloyFurnaceRecipe;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
@@ -53,48 +50,31 @@ public class MTAlloyFurnaceHandler
           MTHelper.getDescription(recipe.GetOutput()));
     }
   }
-
-  static private List<ItemStack> getItemList(IIngredient input)
-  {
-    List<ItemStack> list = new ArrayList<ItemStack>();
-    for(IItemStack item:input.getItems())
-    {
-      list.add((ItemStack)item.getInternal());
-    }
-    return list;
-  }
-
   
   @ZenMethod
   static public void addRecipe(IItemStack output,IIngredient input_a,IIngredient input_b)
   {
-    List<ItemStack> in_a = getItemList(input_a);
-    List<ItemStack> in_b = getItemList(input_b);
+    Object in_a = MTHelper.getIngredient(input_a);
+    Object in_b = MTHelper.getIngredient(input_b);
     ItemStack out = (ItemStack)output.getInternal();
 
     IAlloyFurnaceRecipe recipe = null;
-    for(ItemStack a:in_a)
+    try
     {
-      for(ItemStack b:in_b)
-      {
-        try
-        {
-          recipe = new AlloyFurnaceRecipe(out,a,b);
-        } catch(IllegalArgumentException e)
-        {
-          MineTweakerAPI.logError("Invalid alloy furnace recipe: " + e.getMessage());
-          return;
-        }
-        MineTweakerAPI.apply((new AlloyFurnaceAction(recipe).action_add));
-      }
+      recipe = new AlloyFurnaceRecipe(out, in_a, in_b);
+    } catch(IllegalArgumentException e)
+    {
+      MineTweakerAPI.logError("Invalid alloy furnace recipe: " + e.getMessage());
+      return;
     }
+    MineTweakerAPI.apply((new AlloyFurnaceAction(recipe).action_add));
   }
 
   @ZenMethod
-  static public void removeRecipe(IItemStack input_a,IIngredient input_b)
+  static public void removeRecipe(IIngredient input_a,IIngredient input_b)
   {
-    ItemStack in_a = (ItemStack)input_a.getInternal();
-    ItemStack in_b = (ItemStack)input_b.getInternal();
+    ItemStack in_a = (ItemStack)input_a.getItems().get(0).getInternal();
+    ItemStack in_b = (ItemStack)input_b.getItems().get(0).getInternal();
     
     IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(in_a,in_b);
     if(recipe == null)

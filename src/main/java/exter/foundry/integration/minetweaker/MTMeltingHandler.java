@@ -6,7 +6,6 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.liquid.ILiquidStack;
-import minetweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.Optional;
@@ -86,16 +85,8 @@ public class MTMeltingHandler
   @ZenMethod
   static public void removeRecipe(IIngredient input)
   {
-    Object in = MTHelper.getIngredient(input);
-    
-    IMeltingRecipe recipe = null;
-    if(in instanceof String)
-    {
-      recipe = MeltingRecipeManager.instance.FindRecipe((String)in);
-    } else if(in instanceof ItemStack)
-    {
-      recipe = MeltingRecipeManager.instance.FindRecipe((ItemStack)in);
-    }
+    IMeltingRecipe recipe = MeltingRecipeManager.instance.FindRecipe(
+        (ItemStack)input.getItems().get(0).getInternal());
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Melting recipe not found.");

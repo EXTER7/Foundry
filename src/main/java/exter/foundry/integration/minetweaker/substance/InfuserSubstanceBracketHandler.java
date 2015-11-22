@@ -43,7 +43,7 @@ public class InfuserSubstanceBracketHandler implements IBracketHandler
 
     if(tokens.size() > 2)
     {
-      if(tokens.get(0).getValue().equals("infusersubsance") && tokens.get(1).getValue().equals(":"))
+      if(tokens.get(0).getValue().equals("infusersubstance") && tokens.get(1).getValue().equals(":"))
       {
         StringBuilder substance_builder = new StringBuilder();
         int i;

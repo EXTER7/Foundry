@@ -97,7 +97,7 @@ public class MTAlloyMixerHandler
     int i;
     for(i = 0; i < inputs.length; i++)
     {
-      in[i] = (FluidStack)inputs[i].getInternal();;
+      in[i] = (FluidStack)inputs[i].getInternal();
     }
 
     

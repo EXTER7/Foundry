@@ -5,6 +5,7 @@ import exter.foundry.recipes.CastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
+import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
 import net.minecraft.item.ItemStack;
@@ -86,12 +87,12 @@ public class MTCastingHandler
   }
 
   @ZenMethod
-  static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IItemStack extra)
+  static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IIngredient extra)
   {
     ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe((
         FluidStack)input.getInternal(),
         (ItemStack)mold.getInternal(),
-        extra == null?null:((ItemStack)extra.getInternal()));
+        extra == null?null:((ItemStack)extra.getItems().get(0).getInternal()));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Casting recipe not found.");

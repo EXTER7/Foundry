@@ -3,9 +3,7 @@ package exter.foundry.integration.minetweaker;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import exter.foundry.api.orestack.OreStack;
-import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.oredict.IOreDictEntry;
 import net.minecraft.block.Block;
@@ -44,11 +42,11 @@ public class MTHelper
     } else if(obj instanceof FluidStack)
     {
       FluidStack stack = (FluidStack) obj;
-      return String.format("F(%s:%s)", stack.getFluid().getName(), stack.amount);
+      return String.format("F(%s,%s)", stack.getFluid().getName(), stack.amount);
     } else if(obj instanceof InfuserSubstance)
     {
       InfuserSubstance stack = (InfuserSubstance) obj;
-      return String.format("S(%s:%s)", stack.type, stack.amount);
+      return String.format("S(%s,%s)", stack.type, stack.amount);
     } else
     {
       throw new IllegalArgumentException("Invalid object class.");
@@ -60,6 +58,10 @@ public class MTHelper
     Object obj = input.getInternal();
     if((obj instanceof String) && (input instanceof IOreDictEntry))
     {
+      if(input.getAmount() > 1)
+      {
+        return new OreStack((String)obj,input.getAmount());
+      }
       return obj;
     }
     if(obj instanceof ItemStack)

@@ -125,7 +125,7 @@ public class MTInfuserHandler
   }
   
   @ZenMethod
-  static public void addSubstamceRecipe(IInfuserSubstance output,IIngredient input,int energy)
+  static public void addSubstanceRecipe(IInfuserSubstance output,IIngredient input,int energy)
   {
     IInfuserSubstanceRecipe recipe = null;
     Object in = MTHelper.getIngredient(input);
@@ -150,17 +150,11 @@ public class MTInfuserHandler
   }
 
   @ZenMethod
-  static public void removeSubstamceRecipe(IIngredient input)
+  static public void removeSubstanceRecipe(IIngredient input)
   {
-    Object in = MTHelper.getIngredient(input);
-    IInfuserSubstanceRecipe recipe = null;
-    if(in instanceof String)
-    {
-      recipe = InfuserRecipeManager.instance.FindSubstanceRecipe((String)in);
-    } else if(in instanceof ItemStack)
-    {
-      recipe = InfuserRecipeManager.instance.FindSubstanceRecipe((ItemStack)in);
-    }    if(recipe == null)
+    IInfuserSubstanceRecipe recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(
+        (ItemStack)input.getItems().get(0).getInternal());
+    if(recipe == null)
     {
       MineTweakerAPI.logWarning("Infuser substance recipe not found.");
       return;

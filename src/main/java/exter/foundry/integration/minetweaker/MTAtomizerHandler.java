@@ -5,6 +5,7 @@ import exter.foundry.recipes.AtomizerRecipe;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
+import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
 import net.minecraft.item.ItemStack;
@@ -52,13 +53,13 @@ public class MTAtomizerHandler
   }
 
   @ZenMethod
-  static public void addRecipe(IItemStack output,ILiquidStack input)
+  static public void addRecipe(IIngredient output,ILiquidStack input)
   {
     IAtomizerRecipe recipe = null;
     try
     {
       recipe = new AtomizerRecipe(
-        (ItemStack)output.getInternal(),
+        MTHelper.getIngredient(output),
         (FluidStack)input.getInternal());
     } catch(IllegalArgumentException e)
     {

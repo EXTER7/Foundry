@@ -22,7 +22,7 @@ import exter.foundry.recipes.SubstanceGuiTexture;
 
 public class InfuserRecipeManager implements IInfuserRecipeManager
 {
-  private List<IInfuserRecipe> recipes;
+  public List<IInfuserRecipe> recipes;
 
   public static final InfuserRecipeManager instance = new InfuserRecipeManager();
 
@@ -30,7 +30,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   @SideOnly(Side.CLIENT)
   private Map<String,ISubstanceGuiTexture> substance_textures;
 
-  private List<IInfuserSubstanceRecipe> substance_recipes;
+  public List<IInfuserSubstanceRecipe> substance_recipes;
 
   private InfuserRecipeManager()
   {
@@ -59,7 +59,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
 
   /**
    * Get a substance's texture from it's name.
-   * @param name Substance name. e.g: "Carbon".
+   * @param name Substance name. e.g: "carbon".
    * @return The substance's texture.
    */
   @SideOnly(Side.CLIENT)
@@ -114,6 +114,21 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     return null;
   }
 
+  public IInfuserSubstanceRecipe FindSubstanceRecipe(String input)
+  {
+    if(input == null)
+    {
+      return null;
+    }
+    for (IInfuserSubstanceRecipe r : substance_recipes)
+    {
+      if(r.GetInputItem() instanceof String && r.GetInputItem().equals(input))
+      {
+        return r;
+      }
+    }
+    return null;
+  }
 
   @Override
   public List<IInfuserRecipe> GetRecipes()

@@ -45,7 +45,7 @@ public class MTAtomizerHandler
     @Override
     public String getDescription()
     {
-      return String.format("( %s, %s, %s ) -> %s",
+      return String.format("%s -> %s",
           MTHelper.getDescription(recipe.GetInputFluid()),
           MTHelper.getDescription(recipe.GetOutput()));
     }

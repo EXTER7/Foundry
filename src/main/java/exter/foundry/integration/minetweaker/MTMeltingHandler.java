@@ -56,11 +56,7 @@ public class MTMeltingHandler
   @ZenMethod
   static public void addRecipe(ILiquidStack output,IIngredient input,@Optional int melting_point,@Optional int speed)
   {
-    Object obj = input.getInternal();
-    if(!((obj instanceof String) && (input instanceof IOreDictEntry)) && !(obj instanceof ItemStack))
-    {
-      return;
-    }
+    Object in = MTHelper.getIngredient(input);
     
     if(melting_point == 0)
     {
@@ -70,10 +66,15 @@ public class MTMeltingHandler
     {
       speed = 100;
     }
+    if(in == null)
+    {
+      MineTweakerAPI.logError("Invalid melting recipe input.");
+      return;
+    }
     IMeltingRecipe recipe = null;
     try
     {
-      recipe = new MeltingRecipe(obj,(FluidStack)output.getInternal(), melting_point, speed);
+      recipe = new MeltingRecipe(in,(FluidStack)output.getInternal(), melting_point, speed);
     } catch(IllegalArgumentException e)
     {
       MineTweakerAPI.logError("Invalid melting recipe.");
@@ -85,19 +86,15 @@ public class MTMeltingHandler
   @ZenMethod
   static public void removeRecipe(IIngredient input)
   {
-    Object obj = input.getInternal();
-    if(!((obj instanceof String) && (input instanceof IOreDictEntry)) && !(obj instanceof ItemStack))
-    {
-      return;
-    }
+    Object in = MTHelper.getIngredient(input);
     
     IMeltingRecipe recipe = null;
-    if(obj instanceof String)
+    if(in instanceof String)
     {
-      recipe = MeltingRecipeManager.instance.FindRecipe((String)obj);
-    } else if(obj instanceof ItemStack)
+      recipe = MeltingRecipeManager.instance.FindRecipe((String)in);
+    } else if(in instanceof ItemStack)
     {
-      recipe = MeltingRecipeManager.instance.FindRecipe((ItemStack)obj);
+      recipe = MeltingRecipeManager.instance.FindRecipe((ItemStack)in);
     }
     if(recipe == null)
     {

@@ -29,6 +29,10 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
   @Override
   public IAlloyFurnaceRecipe FindRecipe(ItemStack in_a,ItemStack in_b)
   {
+    if(in_a == null || in_b == null)
+    {
+      return null;
+    }
     for(IAlloyFurnaceRecipe r:recipes)
     {
       if(r.MatchesRecipe(in_a,in_b))

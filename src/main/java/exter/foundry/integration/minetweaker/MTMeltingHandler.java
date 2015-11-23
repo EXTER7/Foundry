@@ -6,6 +6,7 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.Optional;
@@ -55,7 +56,7 @@ public class MTMeltingHandler
   @ZenMethod
   static public void addRecipe(ILiquidStack output,IIngredient input,@Optional int melting_point,@Optional int speed)
   {
-    Object in = MTHelper.getIngredient(input);
+    ItemStack in = MineTweakerMC.getItemStack(input);
     
     if(melting_point == 0)
     {
@@ -64,11 +65,6 @@ public class MTMeltingHandler
     if(speed == 0)
     {
       speed = 100;
-    }
-    if(in == null)
-    {
-      MineTweakerAPI.logError("Invalid melting recipe input.");
-      return;
     }
     IMeltingRecipe recipe = null;
     try

@@ -6,6 +6,7 @@ import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -54,14 +55,13 @@ public class MTAlloyFurnaceHandler
   @ZenMethod
   static public void addRecipe(IItemStack output,IIngredient input_a,IIngredient input_b)
   {
-    Object in_a = MTHelper.getIngredient(input_a);
-    Object in_b = MTHelper.getIngredient(input_b);
-    ItemStack out = (ItemStack)output.getInternal();
-
     IAlloyFurnaceRecipe recipe = null;
     try
     {
-      recipe = new AlloyFurnaceRecipe(out, in_a, in_b);
+      recipe = new AlloyFurnaceRecipe(
+          MineTweakerMC.getItemStack(output),
+          MTHelper.getIngredient(input_a),
+          MTHelper.getIngredient(input_b));
     } catch(IllegalArgumentException e)
     {
       MineTweakerAPI.logError("Invalid alloy furnace recipe: " + e.getMessage());
@@ -71,12 +71,12 @@ public class MTAlloyFurnaceHandler
   }
 
   @ZenMethod
-  static public void removeRecipe(IIngredient input_a,IIngredient input_b)
+  static public void removeRecipe(IItemStack input_a,IItemStack input_b)
   {
-    ItemStack in_a = (ItemStack)input_a.getItems().get(0).getInternal();
-    ItemStack in_b = (ItemStack)input_b.getItems().get(0).getInternal();
     
-    IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(in_a,in_b);
+    IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.FindRecipe(
+        MineTweakerMC.getItemStack(input_a),
+        MineTweakerMC.getItemStack(input_b));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Alloy furnace recipe not found.");

@@ -34,8 +34,12 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
   public IAlloyMixerRecipe FindRecipe(FluidStack[] in,int[] order)
   {
     int inputs = 0;
+    if(in == null || in.length > 4)
+    {
+      return null;
+    }
     IAlloyMixerRecipe result = null;
-    if(order.length < 4)
+    if(order != null && order.length < 4)
     {
       order = null;
     }

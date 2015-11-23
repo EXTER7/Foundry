@@ -43,6 +43,10 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   
   public AlloyFurnaceRecipe(ItemStack out,Object in_a,Object in_b)
   {
+    if(out == null)
+    {
+      throw new IllegalArgumentException("Alloy recipe output cannot be null");
+    }
     output = out.copy();
 
     if(in_a instanceof ItemStack)
@@ -51,6 +55,9 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
     } else if(in_a instanceof OreStack)
     {
       input_a = new OreStack((OreStack)in_a);
+    } else if(in_a instanceof String)
+    {
+      input_a = new OreStack((String)in_a);
     } else
     {
       throw new IllegalArgumentException("Alloy recipe input must be an ItemStack, or an OreStack");
@@ -62,6 +69,9 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
     } else if(in_b instanceof OreStack)
     {
       input_b = new OreStack((OreStack)in_b);
+    } else if(in_b instanceof String)
+    {
+      input_b = new OreStack((String)in_b);
     } else
     {
       throw new IllegalArgumentException("Alloy recipe input must be an ItemStack, or an OreStack");

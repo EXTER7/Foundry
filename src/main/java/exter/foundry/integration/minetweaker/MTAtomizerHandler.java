@@ -8,6 +8,7 @@ import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -53,13 +54,14 @@ public class MTAtomizerHandler
   }
 
   @ZenMethod
-  static public void addRecipe(IIngredient output,ILiquidStack input)
+  static public void addRecipe(IItemStack output,ILiquidStack input)
   {
+    Object out = MineTweakerMC.getItemStack(output);
     IAtomizerRecipe recipe = null;
     try
     {
       recipe = new AtomizerRecipe(
-        MTHelper.getIngredient(output),
+        out,
         (FluidStack)input.getInternal());
     } catch(IllegalArgumentException e)
     {

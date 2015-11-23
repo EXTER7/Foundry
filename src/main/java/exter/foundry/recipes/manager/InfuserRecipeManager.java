@@ -114,22 +114,6 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
     return null;
   }
 
-  public IInfuserSubstanceRecipe FindSubstanceRecipe(String input)
-  {
-    if(input == null)
-    {
-      return null;
-    }
-    for (IInfuserSubstanceRecipe r : substance_recipes)
-    {
-      if(r.GetInputItem() instanceof String && r.GetInputItem().equals(input))
-      {
-        return r;
-      }
-    }
-    return null;
-  }
-
   @Override
   public List<IInfuserRecipe> GetRecipes()
   {

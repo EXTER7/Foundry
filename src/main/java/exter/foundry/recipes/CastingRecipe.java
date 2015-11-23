@@ -106,11 +106,22 @@ public class CastingRecipe implements ICastingRecipe
     {
       throw new IllegalArgumentException("Casting recipe result is not of a valid class.");
     }
+    if(in_fluid == null)
+    {
+      throw new IllegalArgumentException("Casting recipe fluid cannot be null.");
+    }
     fluid = in_fluid.copy();
+    if(in_mold == null)
+    {
+      throw new IllegalArgumentException("Casting recipe mold cannot be null.");
+    }
     mold = in_mold.copy();
     if(in_extra instanceof OreStack)
     {
       extra = new OreStack((OreStack)in_extra);
+    } else if(in_extra instanceof String)
+    {
+      extra = new OreStack((String)in_extra);
     } else if(in_extra instanceof ItemStack)
     {
       extra = ((ItemStack)in_extra).copy();

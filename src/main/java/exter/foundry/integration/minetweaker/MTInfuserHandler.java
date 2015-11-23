@@ -8,7 +8,9 @@ import exter.foundry.recipes.InfuserSubstanceRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
+import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -150,10 +152,10 @@ public class MTInfuserHandler
   }
 
   @ZenMethod
-  static public void removeSubstanceRecipe(IIngredient input)
+  static public void removeSubstanceRecipe(IItemStack input)
   {
     IInfuserSubstanceRecipe recipe = InfuserRecipeManager.instance.FindSubstanceRecipe(
-        (ItemStack)input.getItems().get(0).getInternal());
+        MineTweakerMC.getItemStack(input));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Infuser substance recipe not found.");

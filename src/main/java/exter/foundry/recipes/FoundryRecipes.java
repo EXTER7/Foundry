@@ -1008,6 +1008,7 @@ public class FoundryRecipes
             CastingRecipeManager.instance.AddRecipe("ingot" + name, fluid, ingot_mold, null);
           }
         }
+        AtomizerRecipeManager.instance.AddRecipe("dust" + name, fluid);
 
         ores = OreDictionary.getOres("block" + name);
         fluid = new FluidStack(LiquidMetalRegistry.instance.GetFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);
@@ -1019,7 +1020,6 @@ public class FoundryRecipes
           }
         }
 
-        AtomizerRecipeManager.instance.AddRecipe("dust" + name, fluid);
       }
     }
   }

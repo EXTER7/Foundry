@@ -38,22 +38,6 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
     return null;
   }
   
-  public IMeltingRecipe FindRecipe(String input)
-  {
-    if(input == null)
-    {
-      return null;
-    }
-    for (IMeltingRecipe r : recipes)
-    {
-      if(r.GetInput() instanceof String && r.GetInput().equals(input))
-      {
-        return r;
-      }
-    }
-    return null;
-  }
-
   @Override
   public void AddRecipe(Object solid,FluidStack fluid_stack)
   {

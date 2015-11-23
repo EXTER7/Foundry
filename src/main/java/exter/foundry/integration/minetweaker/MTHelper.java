@@ -1,15 +1,22 @@
 package exter.foundry.integration.minetweaker;
 
+import java.util.List;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.InfuserSubstance;
+import exter.foundry.integration.minetweaker.orestack.IOreStack;
 import minetweaker.api.item.IIngredient;
+import minetweaker.api.item.IItemStack;
+import minetweaker.api.item.IngredientStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class MTHelper
 {
@@ -53,20 +60,19 @@ public class MTHelper
     }
   }
   
-  static public Object getIngredient(IIngredient input)
+  static public Object getIngredient(IIngredient ingr)
   {
-    Object obj = input.getInternal();
-    if((obj instanceof String) && (input instanceof IOreDictEntry))
+    if(ingr instanceof IItemStack)
     {
-      if(input.getAmount() > 1)
-      {
-        return new OreStack((String)obj,input.getAmount());
-      }
-      return obj;
+      return MineTweakerMC.getItemStack((IItemStack)ingr);
     }
-    if(obj instanceof ItemStack)
+    if(ingr instanceof IOreDictEntry)
     {
-      return obj;
+      return (String)ingr.getInternal();
+    }
+    if(ingr instanceof IOreStack)
+    {
+      return ((IOreStack)ingr).getOreStack();
     }
     return null;
   }

@@ -8,6 +8,7 @@ import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.Optional;
@@ -63,7 +64,7 @@ public class MTCastingHandler
   }
 
   @ZenMethod
-  static public void addRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IItemStack extra,@Optional int speed)
+  static public void addRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
   {
     if(speed == 0)
     {
@@ -76,7 +77,7 @@ public class MTCastingHandler
         (ItemStack)output.getInternal(),
         (FluidStack)input.getInternal(),
         (ItemStack)mold.getInternal(),
-        extra == null?null:((ItemStack)extra.getInternal()),
+        extra == null?null:MTHelper.getIngredient(extra),
         speed);
     } catch(IllegalArgumentException e)
     {
@@ -87,12 +88,12 @@ public class MTCastingHandler
   }
 
   @ZenMethod
-  static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IIngredient extra)
+  static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IItemStack extra)
   {
-    ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe((
-        FluidStack)input.getInternal(),
+    ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(
+        (FluidStack)input.getInternal(),
         (ItemStack)mold.getInternal(),
-        extra == null?null:((ItemStack)extra.getItems().get(0).getInternal()));
+        extra == null?null:MineTweakerMC.getItemStack(extra));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Casting recipe not found.");

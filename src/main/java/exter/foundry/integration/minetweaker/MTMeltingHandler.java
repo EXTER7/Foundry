@@ -5,6 +5,7 @@ import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
+import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
@@ -56,7 +57,6 @@ public class MTMeltingHandler
   @ZenMethod
   static public void addRecipe(ILiquidStack output,IIngredient input,@Optional int melting_point,@Optional int speed)
   {
-    ItemStack in = MineTweakerMC.getItemStack(input);
     
     if(melting_point == 0)
     {
@@ -69,7 +69,10 @@ public class MTMeltingHandler
     IMeltingRecipe recipe = null;
     try
     {
-      recipe = new MeltingRecipe(in,(FluidStack)output.getInternal(), melting_point, speed);
+      recipe = new MeltingRecipe(
+          MTHelper.getIngredient(input),
+          MineTweakerMC.getLiquidStack(output),
+          melting_point, speed);
     } catch(IllegalArgumentException e)
     {
       MineTweakerAPI.logError("Invalid melting recipe.");
@@ -79,10 +82,10 @@ public class MTMeltingHandler
   }
 
   @ZenMethod
-  static public void removeRecipe(IIngredient input)
+  static public void removeRecipe(IItemStack input)
   {
     IMeltingRecipe recipe = MeltingRecipeManager.instance.FindRecipe(
-        (ItemStack)input.getItems().get(0).getInternal());
+        MineTweakerMC.getItemStack(input));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Melting recipe not found.");

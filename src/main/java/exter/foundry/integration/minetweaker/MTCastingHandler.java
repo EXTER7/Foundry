@@ -43,7 +43,7 @@ public class MTCastingHandler
     @Override
     protected void remove()
     {
-      MeltingRecipeManager.instance.recipes.remove(recipe);
+      CastingRecipeManager.instance.recipes.remove(recipe);
     }
 
     @Override
@@ -63,6 +63,42 @@ public class MTCastingHandler
     }
   }
 
+  public static class MoldAction extends AddRemoveAction
+  {
+    
+    ItemStack mold;
+    
+    public MoldAction(ItemStack mold)
+    {
+      this.mold = mold;
+    }
+    
+    @Override
+    protected void add()
+    {
+      CastingRecipeManager.instance.molds.add(mold);
+    }
+
+    @Override
+    protected void remove()
+    {
+      CastingRecipeManager.instance.molds.remove(mold);
+    }
+
+    @Override
+    public String getRecipeType()
+    {
+      return "casting mold";
+    }
+
+    @Override
+    public String getDescription()
+    {
+      return String.format("%s",
+          MTHelper.getDescription(mold));
+    }
+  }
+
   @ZenMethod
   static public void addRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
   {
@@ -74,10 +110,10 @@ public class MTCastingHandler
     try
     {
       recipe = new CastingRecipe(
-        (ItemStack)output.getInternal(),
-        (FluidStack)input.getInternal(),
-        (ItemStack)mold.getInternal(),
-        extra == null?null:MTHelper.getIngredient(extra),
+        MineTweakerMC.getItemStack(output),
+        MineTweakerMC.getLiquidStack(input),
+        MineTweakerMC.getItemStack(mold),
+        MTHelper.getIngredient(extra),
         speed);
     } catch(IllegalArgumentException e)
     {
@@ -87,18 +123,51 @@ public class MTCastingHandler
     MineTweakerAPI.apply((new CastingAction(recipe).action_add));
   }
 
+  
   @ZenMethod
   static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IItemStack extra)
   {
     ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(
-        (FluidStack)input.getInternal(),
-        (ItemStack)mold.getInternal(),
-        extra == null?null:MineTweakerMC.getItemStack(extra));
+        MineTweakerMC.getLiquidStack(input),
+        MineTweakerMC.getItemStack(mold),
+        MineTweakerMC.getItemStack(extra));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Casting recipe not found.");
       return;
     }
     MineTweakerAPI.apply((new CastingAction(recipe)).action_remove);
+  }
+  
+  @ZenMethod
+  static public void addMold(IItemStack mold)
+  {
+    ItemStack molditem = MineTweakerMC.getItemStack(mold);
+    if(molditem == null)
+    {
+      MineTweakerAPI.logError("Invalid mold item");
+      return;
+    }
+    MineTweakerAPI.apply((new MoldAction(molditem).action_add));
+  }
+
+  @ZenMethod
+  static public void removeMold(IItemStack mold)
+  {
+    ItemStack molditem = MineTweakerMC.getItemStack(mold);
+    if(molditem == null)
+    {
+      MineTweakerAPI.logWarning("Invalid mold item");
+      return;
+    }
+    for(ItemStack m : CastingRecipeManager.instance.molds)
+    {
+      if(m.isItemEqual(molditem) && ItemStack.areItemStacksEqual(m, molditem))
+      {
+        MineTweakerAPI.apply((new MoldAction(m)).action_remove);
+        return;
+      }
+    }
+    MineTweakerAPI.logWarning("Mold not found.");
   }
 }

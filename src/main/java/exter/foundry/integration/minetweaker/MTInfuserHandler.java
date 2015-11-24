@@ -101,9 +101,9 @@ public class MTInfuserHandler
     try
     {
       recipe = new InfuserRecipe(
-        (FluidStack)output.getInternal(),
-        (FluidStack)input.getInternal(),
-        substance.getSubstance());
+          MineTweakerMC.getLiquidStack(output),
+          MineTweakerMC.getLiquidStack(input),
+          substance.getSubstance());
     } catch(IllegalArgumentException e)
     {
       MineTweakerAPI.logError("Invalid infuser recipe: " + e.getMessage());
@@ -116,7 +116,7 @@ public class MTInfuserHandler
   static public void removeRecipe(ILiquidStack input, IInfuserSubstance substance)
   {
     IInfuserRecipe recipe = InfuserRecipeManager.instance.FindRecipe(
-        (FluidStack)input.getInternal(),
+        MineTweakerMC.getLiquidStack(input),
         substance.getSubstance());
     if(recipe == null)
     {
@@ -130,18 +130,12 @@ public class MTInfuserHandler
   static public void addSubstanceRecipe(IInfuserSubstance output,IIngredient input,int energy)
   {
     IInfuserSubstanceRecipe recipe = null;
-    Object in = MTHelper.getIngredient(input);
-    if(in == null)
-    {
-      MineTweakerAPI.logError("Invalid infuser substance recipe input.");
-      return;
-    }
 
     try
     {
       recipe = new InfuserSubstanceRecipe(
         output.getSubstance(),
-        in,
+        MTHelper.getIngredient(input),
         energy);
     } catch(IllegalArgumentException e)
     {

@@ -35,7 +35,7 @@ public class MTAtomizerHandler
     @Override
     protected void remove()
     {
-      MeltingRecipeManager.instance.recipes.remove(recipe);
+      AtomizerRecipeManager.instance.recipes.remove(recipe);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MTAtomizerHandler
     {
       recipe = new AtomizerRecipe(
         out,
-        (FluidStack)input.getInternal());
+        MineTweakerMC.getLiquidStack(input));
     } catch(IllegalArgumentException e)
     {
       MineTweakerAPI.logError("Invalid atomizer recipe: " + e.getMessage());
@@ -74,8 +74,8 @@ public class MTAtomizerHandler
   @ZenMethod
   static public void removeRecipe(ILiquidStack input)
   {
-    IAtomizerRecipe recipe = AtomizerRecipeManager.instance.FindRecipe((
-        FluidStack)input.getInternal());
+    IAtomizerRecipe recipe = AtomizerRecipeManager.instance.FindRecipe(
+        MineTweakerMC.getLiquidStack(input));
     if(recipe == null)
     {
       MineTweakerAPI.logWarning("Atomizer recipe not found.");

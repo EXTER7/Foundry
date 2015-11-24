@@ -6,6 +6,7 @@ import exter.foundry.recipes.AlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -74,7 +75,7 @@ public class MTAlloyMixerHandler
     int i;
     for(i = 0; i < inputs.length; i++)
     {
-      in[i] = (FluidStack)inputs[i].getInternal();;
+      in[i] = MineTweakerMC.getLiquidStack(inputs[i]);
     }
 
     IAlloyMixerRecipe recipe = null;
@@ -97,7 +98,7 @@ public class MTAlloyMixerHandler
     int i;
     for(i = 0; i < inputs.length; i++)
     {
-      in[i] = (FluidStack)inputs[i].getInternal();
+      in[i] = MineTweakerMC.getLiquidStack(inputs[i]);
     }
 
     

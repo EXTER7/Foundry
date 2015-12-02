@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-def mod_version = "1.2.1.0"
+def mod_version = "1.2.2.0"
 
 def mc_version = "1.7.10"
 

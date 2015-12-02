@@ -115,6 +115,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       InfuserRecipeManager.instance.registerSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
     }   
+    InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
 
     RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));
 

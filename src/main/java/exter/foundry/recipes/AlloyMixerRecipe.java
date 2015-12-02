@@ -34,14 +34,22 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
   public AlloyMixerRecipe(FluidStack out,FluidStack[] in)
   {
     output = out.copy();
-    int i;
+    if(in == null)
+    {
+      throw new IllegalArgumentException("Alloy mixer recipe inputs cannot be null");
+    }
     if(in.length > 4)
     {
-      throw new IllegalArgumentException("Alloy recipe cannot have more the 4 inputs");
+      throw new IllegalArgumentException("Alloy mixer recipe cannot have more the 4 inputs");
     }
     inputs = new FluidStack[in.length];
+    int i;
     for(i = 0; i < in.length; i++)
     {
+      if(in[i] == null)
+      {
+        throw new IllegalArgumentException("Alloy mixer recipe input cannot be null");
+      }
       inputs[i] = in[i].copy();
     }
   }

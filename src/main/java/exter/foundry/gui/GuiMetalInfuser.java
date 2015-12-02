@@ -89,13 +89,16 @@ public class GuiMetalInfuser extends GuiFoundry
     if(sub != null && sub.amount > 0)
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
-      mc.renderEngine.bindTexture(tex.getLocation());
-      int height = sub.amount * TANK_HEIGHT / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
+      if(tex != null)
+      {
+        mc.renderEngine.bindTexture(tex.getLocation());
+        int height = sub.amount * TANK_HEIGHT / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
 
-      setGLColor(tex.getColor());
-      drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.getX(), tex.getY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
-      GL11.glColor4f(1.0f,1.0f,1.0f,1.0f);
-      mc.renderEngine.bindTexture(getGUITexture());
+        setGLColor(tex.getColor());
+        drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.getX(), tex.getY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        mc.renderEngine.bindTexture(getGUITexture());
+      }
     }
   }
 

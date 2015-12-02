@@ -6,6 +6,7 @@ import exter.foundry.api.orestack.OreStack;
 import minetweaker.IBracketHandler;
 import minetweaker.MineTweakerAPI;
 import minetweaker.annotations.BracketHandler;
+import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IngredientAny;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.expression.ExpressionCallStatic;
@@ -28,7 +29,7 @@ public class OreStackBracketHandler implements IBracketHandler
     method = MineTweakerAPI.getJavaMethod(OreStackBracketHandler.class, "getOreStack", String.class);
   }
   
-  public static IOreStack getOreStack(String name)
+  public static IIngredient getOreStack(String name)
   {
     return new MTOreStack(new OreStack(name,1));
   }

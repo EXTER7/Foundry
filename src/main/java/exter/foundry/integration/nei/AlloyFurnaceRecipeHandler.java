@@ -168,7 +168,7 @@ public class AlloyFurnaceRecipeHandler extends FoundryRecipeHandler
         Object output = recipe.getOutput();
         if(output != null && FoundryUtils.isItemMatch((ItemStack) results[0], output))
         {
-          arecipes.add(new CachedAlloyFurnaceRecipe(recipe));
+          addRecipe(recipe);
         }
       }
     }

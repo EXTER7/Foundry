@@ -2,7 +2,7 @@ package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.integration.minetweaker.orestack.IOreStack;
+import exter.foundry.integration.minetweaker.orestack.MTOreStack;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
@@ -66,9 +66,9 @@ public class MTHelper
     {
       return (String)ingr.getInternal();
     }
-    if(ingr instanceof IOreStack)
+    if(ingr instanceof MTOreStack)
     {
-      return ((IOreStack)ingr).getOreStack();
+      return (OreStack)ingr.getInternal();
     }
     return null;
   }

@@ -80,12 +80,15 @@ public class InfuserRecipeHandler extends FoundryRecipeHandlerSubstance
     if(substance != null && substance.amount > 0)
     {
       ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(substance.type);
-      GuiDraw.changeTexture(tex.getLocation());
-      Rectangle rect = getSubstanceRect();
-      setGLColor(tex.getColor());
-      GuiDraw.drawTexturedModalRect(rect.x, rect.y, tex.getX(), tex.getY(), SubstanceGuiTexture.TEXTURE_WIDTH, 47);
-      GL11.glColor4f(1, 1, 1, 1);
-      GuiDraw.changeTexture(getGuiTexture());
+      if(tex != null)
+      {
+        GuiDraw.changeTexture(tex.getLocation());
+        Rectangle rect = getSubstanceRect();
+        setGLColor(tex.getColor());
+        GuiDraw.drawTexturedModalRect(rect.x, rect.y, tex.getX(), tex.getY(), SubstanceGuiTexture.TEXTURE_WIDTH, 47);
+        GL11.glColor4f(1, 1, 1, 1);
+        GuiDraw.changeTexture(getGuiTexture());
+      }
     }    
   }
   

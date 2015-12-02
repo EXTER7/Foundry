@@ -2,6 +2,7 @@ package exter.foundry.integration.nei;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -34,6 +35,8 @@ import com.google.common.collect.Lists;
 
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import exter.foundry.ModFoundry;
+import exter.foundry.api.orestack.OreStack;
 import exter.foundry.item.ItemRefractoryFluidContainer;
 
 public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
@@ -199,18 +202,37 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
   
   protected Object asItemStackOrList(Object item)
   {
+    if(item instanceof Item)
+    {
+      return new ItemStack((Item)item,1,OreDictionary.WILDCARD_VALUE);
+    }
+    if(item instanceof Block)
+    {
+      return new ItemStack((Block)item,1,OreDictionary.WILDCARD_VALUE);
+    }
     if(item instanceof String)
     {
-      for(String oreName : OreDictionary.getOreNames())
-      {
-        if(oreName.equals(item))
-        {
-          return OreDictionary.getOres(oreName);
-        }
-      }
-      return null;
+      return OreDictionary.getOres((String)item);
     }
-    return item;
+    if(item instanceof OreStack)
+    {
+      OreStack stack = (OreStack)item;
+      List<ItemStack> list = new ArrayList<ItemStack>();
+      for(ItemStack i:OreDictionary.getOres(stack.name))
+      {
+        i = i.copy();
+        i.stackSize = stack.amount;
+        list.add(i);
+      }
+      return list;
+    }
+    if(item instanceof ItemStack)
+    {
+      return item;
+    }
+    ModFoundry.log.warn(item.getClass().getName());
+    
+    return null;
   }
 
   protected FluidStack getFluidStackFor(Object input)
@@ -245,14 +267,7 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
   {
     if(item instanceof String)
     {
-      for(String oreName : OreDictionary.getOreNames())
-      {
-        if(oreName.equals(item))
-        {
-          return OreDictionary.getOres(oreName).size() == 0;
-        }
-      }
-      return true;
+      return OreDictionary.getOres((String)item).size() == 0;
     }
     return false;
   }

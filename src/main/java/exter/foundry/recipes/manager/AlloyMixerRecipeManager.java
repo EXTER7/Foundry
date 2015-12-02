@@ -35,7 +35,7 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
   {
     int inputs = 0;
     IAlloyMixerRecipe result = null;
-    if(order.length < 4)
+    if(order != null && order.length < 4)
     {
       order = null;
     }

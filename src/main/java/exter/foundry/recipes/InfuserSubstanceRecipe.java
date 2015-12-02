@@ -59,6 +59,10 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
     {
       throw new IllegalArgumentException("Infuser substance recipe energy nust be > 0.");
     }
+    if(subs == null)
+    {
+      throw new IllegalArgumentException("Infuser substance recipe output cannot be null");
+    }
       
     substance = new InfuserSubstance(subs);
     if(itm instanceof ItemStack)

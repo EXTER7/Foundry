@@ -64,7 +64,11 @@ public class AtomizerRecipe implements IAtomizerRecipe
       output = result;
     } else
     {
-      throw new IllegalArgumentException("Atomizer recipe result is not of a valid class.");
+      throw new IllegalArgumentException("Atomizer recipe output is not of a valid class.");
+    }
+    if(in_fluid == null)
+    {
+      throw new IllegalArgumentException("Atomizer recipe input cannot be null");
     }
     fluid = in_fluid.copy();
   }

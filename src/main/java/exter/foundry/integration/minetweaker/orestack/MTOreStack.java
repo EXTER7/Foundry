@@ -16,7 +16,7 @@ import minetweaker.api.player.IPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class MTOreStack implements IOreStack
+public class MTOreStack implements IIngredient
 {
   private final OreStack stack;
 
@@ -26,13 +26,7 @@ public class MTOreStack implements IOreStack
   }
   
   @Override
-  public OreStack getOreStack()
-  {
-    return stack;
-  }
-
-  @Override
-  public IOreStack amount(int amount)
+  public IIngredient amount(int amount)
   {
     return new MTOreStack(new OreStack(stack.name,stack.amount * amount));
   }
@@ -63,7 +57,7 @@ public class MTOreStack implements IOreStack
   @Override
   public Object getInternal()
   {
-    return null;
+    return stack;
   }
 
   @Override

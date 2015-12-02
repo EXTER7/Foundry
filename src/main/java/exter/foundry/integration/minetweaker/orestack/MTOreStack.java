@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import exter.foundry.api.orestack.OreStack;
-import exter.foundry.api.substance.InfuserSubstance;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemCondition;
 import minetweaker.api.item.IItemStack;

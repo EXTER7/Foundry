@@ -12,8 +12,8 @@ import exter.foundry.recipes.CastingRecipe;
 
 public class CastingRecipeManager implements ICastingRecipeManager
 {
-  private List<ICastingRecipe> recipes;
-  private List<ItemStack> molds;
+  public List<ICastingRecipe> recipes;
+  public List<ItemStack> molds;
 
   public static final CastingRecipeManager instance = new CastingRecipeManager();
 

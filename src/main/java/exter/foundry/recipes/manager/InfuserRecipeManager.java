@@ -22,7 +22,7 @@ import exter.foundry.recipes.SubstanceGuiTexture;
 
 public class InfuserRecipeManager implements IInfuserRecipeManager
 {
-  private List<IInfuserRecipe> recipes;
+  public List<IInfuserRecipe> recipes;
 
   public static final InfuserRecipeManager instance = new InfuserRecipeManager();
 
@@ -30,7 +30,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   @SideOnly(Side.CLIENT)
   private Map<String,ISubstanceGuiTexture> substance_textures;
 
-  private List<IInfuserSubstanceRecipe> substance_recipes;
+  public List<IInfuserSubstanceRecipe> substance_recipes;
 
   private InfuserRecipeManager()
   {

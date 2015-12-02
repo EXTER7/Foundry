@@ -55,6 +55,11 @@ public class InfuserSubstanceRecipe implements IInfuserSubstanceRecipe
     {
       throw new IllegalArgumentException("Infuser substance recipe item is not of a valid class.");
     }
+    if(energy < 1)
+    {
+      throw new IllegalArgumentException("Infuser substance recipe energy nust be > 0.");
+    }
+      
     substance = new InfuserSubstance(subs);
     if(itm instanceof ItemStack)
     {

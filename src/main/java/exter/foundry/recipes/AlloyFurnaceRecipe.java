@@ -43,6 +43,10 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   
   public AlloyFurnaceRecipe(ItemStack out,Object in_a,Object in_b)
   {
+    if(out == null)
+    {
+      throw new IllegalArgumentException("Alloy recipe output cannot be null");
+    }
     output = out.copy();
 
     if(in_a instanceof ItemStack)

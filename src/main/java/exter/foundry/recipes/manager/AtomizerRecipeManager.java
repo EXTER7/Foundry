@@ -11,7 +11,7 @@ import exter.foundry.recipes.AtomizerRecipe;
 
 public class AtomizerRecipeManager implements IAtomizerRecipeManager
 {
-  private List<IAtomizerRecipe> recipes;
+  public List<IAtomizerRecipe> recipes;
 
   public static final AtomizerRecipeManager instance = new AtomizerRecipeManager();
 

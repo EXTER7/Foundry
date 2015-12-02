@@ -35,6 +35,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
+import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationThaumcraft;
 //import exter.foundry.integration.ModIntegrationBotania;
 //import exter.foundry.integration.ModIntegrationBuildcraft;
@@ -129,6 +130,7 @@ public class ModFoundry
 //    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
 //    ModIntegration.RegisterIntegration(config,ModIntegrationProjectRed.class,"projectred");
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
     
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;

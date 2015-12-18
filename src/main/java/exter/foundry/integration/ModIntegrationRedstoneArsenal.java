@@ -3,6 +3,7 @@ package exter.foundry.integration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.FoundryUtils;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -32,6 +33,7 @@ public class ModIntegrationRedstoneArsenal extends ModIntegration
   public void OnPreInit(Configuration config)
   {
     liquid_electrumflux = LiquidMetalRegistry.instance.RegisterLiquidMetal( "ElectrumFlux", 2000, 14);
+    FoundryUtils.RegisterBasicMeltingRecipes("ElectrumFlux", liquid_electrumflux);
   }
 
   @Override

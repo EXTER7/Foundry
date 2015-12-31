@@ -310,7 +310,7 @@ public class ThaumcraftApi {
 		int[] key = new int[] {Item.getIdFromItem(stack.getItem()),stack.getItemDamage()};
 		if (keyCache.containsKey(key)) {
 			if (keyCache.get(key)==null) return null;
-			if (ResearchHelper.isResearchComplete(player.getCommandSenderName(), (String)(keyCache.get(key))[0]))
+			if (ResearchHelper.isResearchComplete(player.getName(), (String)(keyCache.get(key))[0]))
 				return keyCache.get(key);
 			else 
 				return null;
@@ -325,7 +325,7 @@ public class ThaumcraftApi {
 						for (CrucibleRecipe cr:crs) {
 							if (cr.getRecipeOutput().isItemEqual(stack)) {
 								keyCache.put(key,new Object[] {ri.key,a});
-								if (ResearchHelper.isResearchComplete(player.getCommandSenderName(), ri.key))
+								if (ResearchHelper.isResearchComplete(player.getName(), ri.key))
 									return new Object[] {ri.key,a};
 							}
 						}
@@ -335,7 +335,7 @@ public class ThaumcraftApi {
 						for (InfusionRecipe cr:crs) {
 							if (cr.getRecipeOutput() instanceof ItemStack && ((ItemStack) cr.getRecipeOutput()).isItemEqual(stack)) {
 								keyCache.put(key,new Object[] {ri.key,a});
-								if (ResearchHelper.isResearchComplete(player.getCommandSenderName(), ri.key))
+								if (ResearchHelper.isResearchComplete(player.getName(), ri.key))
 									return new Object[] {ri.key,a};
 							}
 						}
@@ -345,7 +345,7 @@ public class ThaumcraftApi {
 						for (IRecipe cr:crs) {
 							if ( cr.getRecipeOutput().isItemEqual(stack)) {
 								keyCache.put(key,new Object[] {ri.key,a});
-								if (ResearchHelper.isResearchComplete(player.getCommandSenderName(), ri.key))
+								if (ResearchHelper.isResearchComplete(player.getName(), ri.key))
 									return new Object[] {ri.key,a};
 							}
 						}
@@ -359,7 +359,7 @@ public class ThaumcraftApi {
 								
 							)) {
 						keyCache.put(key,new Object[] {ri.key,a});
-						if (ResearchHelper.isResearchComplete(player.getCommandSenderName(), ri.key))
+						if (ResearchHelper.isResearchComplete(player.getName(), ri.key))
 							return new Object[] {ri.key,a};
 						else 
 							return null;

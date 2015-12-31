@@ -54,7 +54,7 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     }
   }
   
-  private class PropertyVariant implements IProperty
+  private class PropertyVariant implements IProperty<Variant>
   {
     private List<Variant> variants;
     
@@ -82,15 +82,15 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     }
 
     @Override
-    public Class<?> getValueClass()
+    public Class<Variant> getValueClass()
     {
       return Variant.class;
     }
 
     @Override
-    public String getName(@SuppressWarnings("rawtypes") Comparable value)
+    public String getName(Variant value)
     {
-      return ((Variant)value).state;
+      return value.state;
     }
   }
 
@@ -134,7 +134,7 @@ public abstract class BlockMetal extends Block implements IBlockVariants
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return ((Variant) state.getValue(property_variant)).id;
+    return state.getValue(property_variant).id;
   }
 
   @Override

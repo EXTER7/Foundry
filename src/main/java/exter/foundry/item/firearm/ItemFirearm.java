@@ -34,10 +34,9 @@ public abstract class ItemFirearm extends ItemTool
  
   static private Random random = new Random();
   
-  @SuppressWarnings("rawtypes")
   public ItemFirearm()
   {
-    super(2,ToolMaterial.IRON,new HashSet());
+    super(2,ToolMaterial.IRON,new HashSet<Block>());
     setMaxDamage(800);
     setCreativeTab(FoundryTabFirearms.tab);
     setMaxStackSize(1);
@@ -92,7 +91,6 @@ public abstract class ItemFirearm extends ItemTool
     MovingObjectPosition obj = world.rayTraceBlocks(tstart, tend, false, true, false);
     
     
-    @SuppressWarnings("unchecked")
     List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.getEntityBoundingBox().expand(150, 150, 150));
     double min_dist = obj != null?obj.hitVec.distanceTo(start):150;
     for(Entity ent:entities)

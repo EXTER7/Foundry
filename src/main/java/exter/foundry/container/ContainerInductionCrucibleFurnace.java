@@ -4,7 +4,6 @@ import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -106,23 +105,4 @@ public class ContainerInductionCrucibleFurnace extends Container
     super.onContainerClosed(player);
     te_icf.closeInventory(player);
   }
-  
-
-  @Override
-  public void detectAndSendChanges()
-  {
-    super.detectAndSendChanges();
-
-    for(int i = 0; i < crafters.size(); i++)
-    {
-      te_icf.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-    }
-  }
-
-  @Override
-  public void updateProgressBar(int i, int j)
-  {
-    te_icf.getGUINetworkData(i, j);
-  }
-
 }

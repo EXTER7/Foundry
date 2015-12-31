@@ -76,6 +76,7 @@ public class FoundryMiscUtils
     return null;
   }
 
+  @SuppressWarnings("deprecation")
   static public ItemStack getModItemFromOreDictionary(String modid,String orename)
   {
     modid = modid.toLowerCase();

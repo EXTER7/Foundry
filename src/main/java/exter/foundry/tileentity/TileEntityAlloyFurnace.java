@@ -90,7 +90,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

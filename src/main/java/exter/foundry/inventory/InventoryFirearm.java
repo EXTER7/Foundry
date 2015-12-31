@@ -71,7 +71,7 @@ public class InventoryFirearm implements IInventory
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     ItemStack ammo = items[slot];
     if(ammo != null)
@@ -142,7 +142,7 @@ public class InventoryFirearm implements IInventory
   }
 
   @Override
-  public String getCommandSenderName()
+  public String getName()
   {
     return null;
   }

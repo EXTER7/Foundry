@@ -110,13 +110,13 @@ public class FoundryBlocks
     block_slabdouble = new BlockMetalSlab[3];
     block_slabdouble[0] = new BlockMetalSlab(block_slab[0]) {
       @Override public Variant[] getVariants() { return SLAB1_METALS; }
-      @Override public IProperty getVariantProperty() { return block_slab[0].getVariantProperty(); } };
+      @Override public IProperty<BlockMetalSlab.Variant> getVariantProperty() { return block_slab[0].getVariantProperty(); } };
     block_slabdouble[1] = new BlockMetalSlab(block_slab[1]) {
       @Override public Variant[] getVariants() { return SLAB2_METALS; }
-      @Override public IProperty getVariantProperty() { return block_slab[1].getVariantProperty(); } };
+      @Override public IProperty<BlockMetalSlab.Variant> getVariantProperty() { return block_slab[1].getVariantProperty(); } };
     block_slabdouble[2] = new BlockMetalSlab(block_slab[2]) {
       @Override public Variant[] getVariants() { return SLAB3_METALS; }
-      @Override public IProperty getVariantProperty() { return block_slab[2].getVariantProperty(); } };
+      @Override public IProperty<BlockMetalSlab.Variant> getVariantProperty() { return block_slab[2].getVariantProperty(); } };
 
     for(i = 0; i < block_slab.length; i++)
     {

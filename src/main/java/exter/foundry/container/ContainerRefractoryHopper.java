@@ -2,7 +2,6 @@ package exter.foundry.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import exter.foundry.container.slot.SlotContainer;
@@ -105,22 +104,5 @@ public class ContainerRefractoryHopper extends Container
   {
     super.onContainerClosed(player);
     te_hopper.closeInventory(player);
-  }
-  
-  @Override
-  public void detectAndSendChanges()
-  {
-    super.detectAndSendChanges();
-
-    for(int i = 0; i < crafters.size(); i++)
-    {
-      te_hopper.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-    }
-  }
-
-  @Override
-  public void updateProgressBar(int i, int j)
-  {
-    te_hopper.setGUINetworkData(i, j);
   }
 }

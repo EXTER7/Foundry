@@ -77,7 +77,7 @@ public class BlockRefractoryHopper extends BlockContainer
     }
   }
 
-  public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumHopperFacing.class);
+  public static final PropertyEnum<EnumHopperFacing> FACING = PropertyEnum.create("facing", EnumHopperFacing.class);
 
 
   private Random rand = new Random();
@@ -117,7 +117,7 @@ public class BlockRefractoryHopper extends BlockContainer
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
   }
 
-  public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, @SuppressWarnings("rawtypes") List list, Entity collidingEntity)
+  public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
   {
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.625F, 1.0F);
     super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);

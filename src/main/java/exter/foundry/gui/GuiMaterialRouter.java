@@ -454,7 +454,6 @@ public class GuiMaterialRouter extends GuiFoundry
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {

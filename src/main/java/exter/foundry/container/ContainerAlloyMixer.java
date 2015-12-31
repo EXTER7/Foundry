@@ -4,7 +4,6 @@ import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -115,22 +114,5 @@ public class ContainerAlloyMixer extends Container
   {
     super.onContainerClosed(player);
     te_alloymixer.closeInventory(player);
-  }
-  
-  @Override
-  public void detectAndSendChanges()
-  {
-    super.detectAndSendChanges();
-
-    for(int i = 0; i < crafters.size(); i++)
-    {
-      te_alloymixer.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-    }
-  }
-
-  @Override
-  public void updateProgressBar(int i, int j)
-  {
-    te_alloymixer.getGUINetworkData(i, j);
   }
 }

@@ -39,7 +39,7 @@ public class InfusionRecipe
 	public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player) {
 		if (getRecipeInput()==null) return false;
 			
-		if (research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+		if (research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getName(), research)) {
     		return false;
     	}
 		

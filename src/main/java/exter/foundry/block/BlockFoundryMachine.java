@@ -81,7 +81,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     }
   }
 
-  public static final PropertyEnum MACHINE = PropertyEnum.create("machine", EnumMachine.class);
+  public static final PropertyEnum<EnumMachine> MACHINE = PropertyEnum.create("machine", EnumMachine.class);
 
   public BlockFoundryMachine()
   {

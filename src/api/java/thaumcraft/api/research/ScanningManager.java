@@ -47,7 +47,7 @@ public class ScanningManager {
 	public static boolean isThingStillScannable(EntityPlayer player, Object object) {		
 		for (IScanThing thing:things) {
 			if (thing.checkThing(player, object)) {				
-				if (!ResearchHelper.isResearchComplete(player.getCommandSenderName(), thing.getResearchKey())) {					
+				if (!ResearchHelper.isResearchComplete(player.getName(), thing.getResearchKey())) {					
 					return true;
 				}
 			}			

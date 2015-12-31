@@ -81,7 +81,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   private void registerItemModel(Item item,String name,int meta)
   {
     name = "foundry:" + name;
-    ModelBakery.addVariantName(item, name);
+    ModelBakery.registerItemVariants(item, new ResourceLocation(name));
     Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     .register(item, meta, new ModelResourceLocation(name, "inventory"));
   }
@@ -98,9 +98,9 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       Block block = fluid.getBlock();
       Item item = Item.getItemFromBlock(block);
       String name = e.getKey();
-      ModelBakery.addVariantName(item);
+      ModelBakery.registerItemVariants(item);
       ModelLoader.setCustomMeshDefinition( item, new LiquidMetalItemMeshDefinition(name));
-      ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(BlockFluidBase.LEVEL).build());
+      ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).ignore(BlockFluidBase.LEVEL).build());
     }
     ModIntegrationManager.clientPreInit();
   }

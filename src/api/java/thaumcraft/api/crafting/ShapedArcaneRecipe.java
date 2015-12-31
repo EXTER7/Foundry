@@ -149,7 +149,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
     @Override
     public boolean matches(InventoryCrafting inv, World world, EntityPlayer player)
     {
-    	if (player!=null && ( research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getCommandSenderName(), research))) {
+    	if (player!=null && ( research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getName(), research))) {
     		return false;
     	}
         for (int x = 0; x <= MAX_CRAFT_GRID_WIDTH - width; x++)

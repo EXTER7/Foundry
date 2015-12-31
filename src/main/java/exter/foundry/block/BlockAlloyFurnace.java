@@ -113,8 +113,8 @@ public class BlockAlloyFurnace extends BlockContainer
     }
   }
 
-  public static final PropertyEnum STATE = PropertyEnum.create("state", EnumState.class);
-  public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumFurnaceFacing.class);
+  public static final PropertyEnum<EnumState> STATE = PropertyEnum.create("state", EnumState.class);
+  public static final PropertyEnum<EnumFurnaceFacing> FACING = PropertyEnum.create("facing", EnumFurnaceFacing.class);
 
 
 

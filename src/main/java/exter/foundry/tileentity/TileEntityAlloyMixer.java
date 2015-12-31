@@ -2,9 +2,7 @@ package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
-import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -16,17 +14,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  static private final int NETDATAID_TANK_INPUT_0_FLUID = 0;
-  static private final int NETDATAID_TANK_INPUT_0_AMOUNT = 1;
-  static private final int NETDATAID_TANK_INPUT_1_FLUID = 2;
-  static private final int NETDATAID_TANK_INPUT_1_AMOUNT = 3;
-  static private final int NETDATAID_TANK_INPUT_2_FLUID = 4;
-  static private final int NETDATAID_TANK_INPUT_2_AMOUNT = 5;
-  static private final int NETDATAID_TANK_INPUT_3_FLUID = 6;
-  static private final int NETDATAID_TANK_INPUT_3_AMOUNT = 7;
-  static private final int NETDATAID_TANK_OUTPUT_FLUID = 8;
-  static private final int NETDATAID_TANK_OUTPUT_AMOUNT = 9;
-
   static public final int INVENTORY_CONTAINER_INPUT_0_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_INPUT_0_FILL = 1;
   static public final int INVENTORY_CONTAINER_INPUT_1_DRAIN = 2;
@@ -77,58 +64,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
     AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
   }
-
-  public void getGUINetworkData(int id, int value)
-  {
-    switch(id)
-    {
-      case NETDATAID_TANK_INPUT_0_FLUID:
-        setTankFluid(tanks[TANK_INPUT_0],value);
-        break;
-      case NETDATAID_TANK_INPUT_0_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT_0],value);
-        break;
-      case NETDATAID_TANK_INPUT_1_FLUID:
-        setTankFluid(tanks[TANK_INPUT_1],value);
-        break;
-      case NETDATAID_TANK_INPUT_1_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT_1],value);
-        break;
-      case NETDATAID_TANK_INPUT_2_FLUID:
-        setTankFluid(tanks[TANK_INPUT_2],value);
-        break;
-      case NETDATAID_TANK_INPUT_2_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT_2],value);
-        break;
-      case NETDATAID_TANK_INPUT_3_FLUID:
-        setTankFluid(tanks[TANK_INPUT_3],value);
-        break;
-      case NETDATAID_TANK_INPUT_3_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT_3],value);
-        break;
-      case NETDATAID_TANK_OUTPUT_FLUID:
-        setTankFluid(tanks[TANK_OUTPUT],value);
-        break;
-      case NETDATAID_TANK_OUTPUT_AMOUNT:
-        setTankAmount(tanks[TANK_OUTPUT],value);
-        break;
-    }
-  }
-
-
-  public void sendGUINetworkData(ContainerAlloyMixer container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_FLUID, getTankFluid(tanks[TANK_INPUT_0]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_0_AMOUNT, getTankAmount(tanks[TANK_INPUT_0]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_FLUID, getTankFluid(tanks[TANK_INPUT_1]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_1_AMOUNT, getTankAmount(tanks[TANK_INPUT_1]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_FLUID, getTankFluid(tanks[TANK_INPUT_2]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_2_AMOUNT, getTankAmount(tanks[TANK_INPUT_2]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_FLUID, getTankFluid(tanks[TANK_INPUT_3]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_INPUT_3_AMOUNT, getTankAmount(tanks[TANK_INPUT_3]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_FLUID, getTankFluid(tanks[TANK_OUTPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_OUTPUT_AMOUNT, getTankAmount(tanks[TANK_OUTPUT]));
-  }
   
   @Override
   public int getSizeInventory()
@@ -174,7 +109,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

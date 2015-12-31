@@ -27,7 +27,6 @@ public class GuiRevolver extends GuiContainer
     ySize = 222;
   }
 
-  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {
@@ -60,7 +59,6 @@ public class GuiRevolver extends GuiContainer
     drawTexturedModalRect(center_x, center_y, 0, 0, xSize, ySize);
   }
   
-  @SuppressWarnings("unchecked")
   @Override
   protected void actionPerformed(GuiButton button)
   {

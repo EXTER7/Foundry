@@ -4,7 +4,6 @@ import exter.foundry.container.slot.SlotContainer;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -110,22 +109,4 @@ public class ContainerMetalInfuser extends Container
     super.onContainerClosed(player);
     te_infuser.closeInventory(player);
   }
-
-  @Override
-  public void detectAndSendChanges()
-  {
-    super.detectAndSendChanges();
-
-    for(int i = 0; i < crafters.size(); i++)
-    {
-      te_infuser.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-    }
-  }
-  
-  @Override
-  public void updateProgressBar(int i, int j)
-  {
-    te_infuser.getGUINetworkData(i, j);
-  }
-
 }

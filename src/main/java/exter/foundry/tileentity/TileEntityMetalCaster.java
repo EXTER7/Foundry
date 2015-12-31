@@ -3,9 +3,7 @@ package exter.foundry.tileentity;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,9 +16,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  static private final int NETDATAID_TANK_FLUID = 1;
-  static private final int NETDATAID_TANK_AMOUNT = 2;
-
   static public final int CAST_TIME = 400000;
   
   static public final int ENERGY_REQUIRED = 10000;
@@ -79,24 +74,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     compound.setInteger("progress", progress);
   }
 
-  public void getGUINetworkData(int id, int value)
-  {
-    switch(id)
-    {
-      case NETDATAID_TANK_FLUID:
-        setTankFluid(tank,value);
-        break;
-      case NETDATAID_TANK_AMOUNT:
-        setTankAmount(tank,value);
-        break;
-    }
-  }
-
-  public void sendGUINetworkData(ContainerMetalCaster container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
-  }
 
   @Override
   public int getSizeInventory()
@@ -142,7 +119,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

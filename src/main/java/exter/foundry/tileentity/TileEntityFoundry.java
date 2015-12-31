@@ -12,11 +12,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
@@ -25,7 +24,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 /**
  * Base class for all machines.
  */
-public abstract class TileEntityFoundry extends TileEntity implements IUpdatePlayerListBox,IInventory
+public abstract class TileEntityFoundry extends TileEntity implements ITickable,IInventory
 {
   public enum RedstoneMode
   {
@@ -169,7 +168,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
 
 
   @Override
-  public final Packet getDescriptionPacket()
+  public final Packet<?> getDescriptionPacket()
   {
     NBTTagCompound nbt = new NBTTagCompound();
     writeToNBT(nbt);    
@@ -307,52 +306,6 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   }
    
 
-  protected final int getTankFluid(FluidTank tank)
-  {
-    FluidStack f = tank.getFluid();
-    return f != null ? f.getFluidID() : 0;
-  }
-
-  protected final int getTankAmount(FluidTank tank)
-  {
-    FluidStack f = tank.getFluid();
-    return f != null ? f.amount : 0;
-  }
-  
-  protected final void setTankFluid(FluidTank tank,int value)
-  {
-    Fluid f = FluidRegistry.getFluid(value);
-    if(f == null)
-    {
-      tank.setFluid(null);
-      return;
-    }
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(f, 0));
-    } else
-    {
-      tank.setFluid(new FluidStack(f, tank.getFluidAmount()));
-    }
-  }
-
-  protected final void setTankAmount(FluidTank tank,int value)
-  {
-    if(value == 0)
-    {
-      tank.setFluid(null);
-      return;
-    }
-    if(tank.getFluid() == null)
-    {
-      tank.setFluid(new FluidStack(FluidRegistry.getFluid(value), value));
-    } else
-    {
-      tank.getFluid().amount = value;
-    }
-  }
-
-
   @Override
   public void update()
   {
@@ -434,7 +387,7 @@ public abstract class TileEntityFoundry extends TileEntity implements IUpdatePla
   }
 
   @Override
-  public String getCommandSenderName()
+  public String getName()
   {
     return null;
   }

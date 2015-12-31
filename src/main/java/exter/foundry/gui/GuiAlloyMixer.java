@@ -95,7 +95,6 @@ public class GuiAlloyMixer extends GuiFoundry
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {

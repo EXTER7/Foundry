@@ -7,10 +7,8 @@ import java.util.Set;
 
 import exter.foundry.block.BlockRefractoryHopper;
 import exter.foundry.block.BlockRefractoryHopper.EnumHopperFacing;
-import exter.foundry.container.ContainerRefractoryHopper;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,10 +22,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISidedInventory, IFluidHandler
 {
-
-  static private final int NETDATAID_TANK_FLUID = 0;
-  static private final int NETDATAID_TANK_AMOUNT = 1;
-
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
   private ItemStack[] inventory;
@@ -85,26 +79,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     compound.setInteger("next_fill", next_fill);
   }
 
-  public void setGUINetworkData(int id, int value)
-  {
-    switch(id)
-    {
-      case NETDATAID_TANK_FLUID:
-        setTankFluid(tank,value);
-        break;
-      case NETDATAID_TANK_AMOUNT:
-        setTankAmount(tank,value);
-        break;
-    }
-  }
-
-
-  public void sendGUINetworkData(ContainerRefractoryHopper container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tank));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tank));
-  }
-
   @Override
   public int getSizeInventory()
   {
@@ -149,7 +123,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

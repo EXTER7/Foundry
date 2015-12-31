@@ -79,7 +79,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
     @Override
     public boolean matches(InventoryCrafting var1, World world, EntityPlayer player)
     {
-    	if (player!=null && ( research != null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getCommandSenderName(), research))) {
+    	if (player!=null && ( research != null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getName(), research))) {
     		return false;
     	}
     	

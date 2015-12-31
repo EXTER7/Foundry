@@ -132,7 +132,6 @@ public class GuiMetalCaster extends GuiFoundry
     return GUI_TEXTURE;
   }
 
-  @SuppressWarnings("unchecked")
   @Override 
   public void initGui()
   {

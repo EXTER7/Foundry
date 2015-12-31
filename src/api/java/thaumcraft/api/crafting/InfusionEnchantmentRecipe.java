@@ -42,7 +42,7 @@ public class InfusionEnchantmentRecipe
      * @param player 
      */
 	public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player) {
-		if (research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getCommandSenderName(), research)) {
+		if (research!=null && research[0].length()>0 && !ResearchHelper.isResearchComplete(player.getName(), research)) {
     		return false;
     	}
 		

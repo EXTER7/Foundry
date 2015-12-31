@@ -5,7 +5,6 @@ import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -102,22 +101,5 @@ public class ContainerMetalAtomizer extends Container
   {
     super.onContainerClosed(player);
     te_atomizer.closeInventory(player);
-  }
-
-  @Override
-  public void detectAndSendChanges()
-  {
-    super.detectAndSendChanges();
-
-    for(int i = 0; i < crafters.size(); i++)
-    {
-      te_atomizer.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-    }
-  }
-  
-  @Override
-  public void updateProgressBar(int i, int j)
-  {
-    te_atomizer.getGUINetworkData(i, j);
   }
 }

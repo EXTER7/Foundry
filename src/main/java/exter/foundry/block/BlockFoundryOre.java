@@ -71,7 +71,7 @@ public class BlockFoundryOre extends Block implements IBlockVariants
     }
   }
 
-  public static final PropertyEnum VARIANT = PropertyEnum.create("ore", EnumOre.class);
+  public static final PropertyEnum<EnumOre> VARIANT = PropertyEnum.create("ore", EnumOre.class);
 
   public BlockFoundryOre()
   {

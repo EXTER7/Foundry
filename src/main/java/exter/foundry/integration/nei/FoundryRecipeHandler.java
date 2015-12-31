@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -294,11 +295,11 @@ public abstract class FoundryRecipeHandler  extends TemplateRecipeHandler
     double z = GuiDraw.gui.getZLevel();
 
     WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
-    tessellator.startDrawingQuads();
-    tessellator.addVertexWithUV(rect.x, rect.y + rect.height, z, minU, maxV);
-    tessellator.addVertexWithUV(rect.x + rect.width, rect.y + rect.height, z, maxU, maxV);
-    tessellator.addVertexWithUV(rect.x + rect.width, rect.y, z, maxU, minV);
-    tessellator.addVertexWithUV(rect.x, rect.y, z, minU, minV);
+    tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+    tessellator.pos(rect.x, rect.y + rect.height, z).tex( minU, maxV).endVertex();
+    tessellator.pos(rect.x + rect.width, rect.y + rect.height, z).tex( maxU, maxV).endVertex();
+    tessellator.pos(rect.x + rect.width, rect.y, z).tex( maxU, minV).endVertex();
+    tessellator.pos(rect.x, rect.y, z).tex( minU, minV).endVertex();
     Tessellator.getInstance().draw();
   }
 

@@ -181,7 +181,6 @@ public class ModFoundry
   }
   
  
-  @SuppressWarnings("unchecked")
   @EventHandler
   public void load(FMLInitializationEvent event)
   {

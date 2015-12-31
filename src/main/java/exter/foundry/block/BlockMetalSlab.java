@@ -58,7 +58,7 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
     }
   }
   
-  private class PropertyVariant implements IProperty
+  private class PropertyVariant implements IProperty<Variant>
   {
     private List<Variant> variants;
     
@@ -86,15 +86,15 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
     }
 
     @Override
-    public Class<?> getValueClass()
+    public Class<Variant> getValueClass()
     {
       return Variant.class;
     }
 
     @Override
-    public String getName(@SuppressWarnings("rawtypes") Comparable value)
+    public String getName(Variant value)
     {
-      return ((Variant)value).state;
+      return value.state;
     }
   }
 
@@ -120,7 +120,7 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   @Override
   public final int damageDropped(IBlockState state)
   {
-    return ((Variant)state.getValue(getVariantProperty())).id;
+    return state.getValue(getVariantProperty()).id;
   }
 
   @Override
@@ -211,7 +211,7 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   }
 
   @Override
-  public IProperty getVariantProperty()
+  public IProperty<Variant> getVariantProperty()
   {
     if(property_variant == null)
     {

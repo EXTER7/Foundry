@@ -4,10 +4,8 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,12 +18,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  static private final int NETDATAID_INPUT_TANK_FLUID = 1;
-  static private final int NETDATAID_INPUT_TANK_AMOUNT = 2;
 
-  static private final int NETDATAID_OUTPUT_TANK_FLUID = 3;
-  static private final int NETDATAID_OUTPUT_TANK_AMOUNT = 4;
-  
   
   static public final int INVENTORY_SUBSTANCE_INPUT = 0;
   static public final int INVENTORY_CONTAINER_INPUT_DRAIN = 1;
@@ -126,33 +119,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     compound.setInteger("extract_time", extract_energy);
   }
 
-  public void getGUINetworkData(int id, int value)
-  {
-    switch(id)
-    {
-      case NETDATAID_INPUT_TANK_FLUID:
-        setTankFluid(tanks[TANK_INPUT],value);
-        break;
-      case NETDATAID_INPUT_TANK_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT],value);
-        break;
-      case NETDATAID_OUTPUT_TANK_FLUID:
-        setTankFluid(tanks[TANK_OUTPUT],value);
-        break;
-      case NETDATAID_OUTPUT_TANK_AMOUNT:
-        setTankAmount(tanks[TANK_OUTPUT],value);
-        break;
-    }
-  }
-
-  public void sendGUINetworkData(ContainerMetalInfuser container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_FLUID, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().getFluidID() : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_INPUT_TANK_AMOUNT, tanks[TANK_INPUT].getFluid() != null ? tanks[TANK_INPUT].getFluid().amount : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_FLUID, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().getFluidID() : 0);
-    crafting.sendProgressBarUpdate(container, NETDATAID_OUTPUT_TANK_AMOUNT, tanks[TANK_OUTPUT].getFluid() != null ? tanks[TANK_OUTPUT].getFluid().amount : 0);
-  }
-  
   @Override
   public int getSizeInventory()
   {
@@ -197,7 +163,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

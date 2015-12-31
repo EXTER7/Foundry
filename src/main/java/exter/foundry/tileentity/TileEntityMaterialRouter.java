@@ -179,7 +179,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

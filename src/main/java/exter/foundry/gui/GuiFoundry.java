@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -83,13 +84,15 @@ public abstract class GuiFoundry extends GuiContainer
       double min_v = icon.getInterpolatedV(icon_y);
       double max_u = icon.getInterpolatedU(icon_x + width);
       double max_v = icon.getInterpolatedV(icon_y + height);
+      int red = color >>> 16 & 255;
+      int green = color >>> 8 & 255;
+      int blue = color & 255;
       
-      tessellator.startDrawingQuads();
-      tessellator.setColorOpaque_I(color);
-      tessellator.addVertexWithUV(x, y + height, zLevel, min_u, max_v);
-      tessellator.addVertexWithUV(x + width, y + height, zLevel, max_u, max_v);
-      tessellator.addVertexWithUV(x + width, y, zLevel, max_u, min_v);
-      tessellator.addVertexWithUV(x, y, zLevel, min_u, min_v);
+      tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+      tessellator.pos(x, y + height, zLevel).tex(min_u, max_v).color(red, green, blue, 255).endVertex();
+      tessellator.pos(x + width, y + height, zLevel).tex( max_u, max_v).color(red, green, blue, 255).endVertex();
+      tessellator.pos(x + width, y, zLevel).tex( max_u, min_v).color(red, green, blue, 255).endVertex();
+      tessellator.pos(x, y, zLevel).tex( min_u, min_v).color(red, green, blue, 255).endVertex();
       Tessellator.getInstance().draw();
   }
 

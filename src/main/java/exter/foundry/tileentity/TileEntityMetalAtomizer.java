@@ -3,9 +3,7 @@ package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
-import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,12 +17,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
 {
-  
-  static private final int NETDATAID_TANK_FLUID = 1;
-  static private final int NETDATAID_TANK_AMOUNT = 2;
-  static private final int NETDATAID_WATER_TANK_FLUID = 3;
-  static private final int NETDATAID_WATER_TANK_AMOUNT = 4;
-
   static public final int ATOMIZE_TIME = 500000;
   
   static public final int ENERGY_REQUIRED = 15000;
@@ -91,33 +83,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     compound.setInteger("progress", progress);
   }
 
-  public void getGUINetworkData(int id, int value)
-  {
-    switch(id)
-    {
-      case NETDATAID_TANK_FLUID:
-        setTankFluid(tanks[TANK_INPUT],value);
-        break;
-      case NETDATAID_TANK_AMOUNT:
-        setTankAmount(tanks[TANK_INPUT],value);
-        break;
-      case NETDATAID_WATER_TANK_FLUID:
-        setTankFluid(tanks[TANK_WATER],value);
-        break;
-      case NETDATAID_WATER_TANK_AMOUNT:
-        setTankAmount(tanks[TANK_WATER],value);
-        break;
-    }
-  }
-
-  public void sendGUINetworkData(ContainerMetalAtomizer container, ICrafting crafting)
-  {
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_FLUID, getTankFluid(tanks[TANK_INPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_TANK_AMOUNT, getTankAmount(tanks[TANK_INPUT]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_FLUID, getTankFluid(tanks[TANK_WATER]));
-    crafting.sendProgressBarUpdate(container, NETDATAID_WATER_TANK_AMOUNT, getTankAmount(tanks[TANK_WATER]));
-  }
-  
   @Override
   public int getSizeInventory()
   {
@@ -162,7 +127,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   }
 
   @Override
-  public ItemStack getStackInSlotOnClosing(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

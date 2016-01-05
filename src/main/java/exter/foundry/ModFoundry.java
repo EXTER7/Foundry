@@ -35,21 +35,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
-import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationThaumcraft;
-//import exter.foundry.integration.ModIntegrationBotania;
-//import exter.foundry.integration.ModIntegrationBuildcraft;
-//import exter.foundry.integration.ModIntegrationForestry;
-//import exter.foundry.integration.ModIntegrationIC2;
-//import exter.foundry.integration.ModIntegrationMetallurgy;
-//import exter.foundry.integration.ModIntegrationProjectRed;
-//import exter.foundry.integration.ModIntegrationRailcraft;
-//import exter.foundry.integration.ModIntegrationRedstoneArsenal;
-//import exter.foundry.integration.ModIntegrationTE4;
-//import exter.foundry.integration.ModIntegrationTF;
-//import exter.foundry.integration.ModIntegrationThaumcraft;
-//import exter.foundry.integration.ModIntegrationTiCon;
-//import exter.foundry.integration.ModIntegrationTwilightForest;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.network.MessageTileEntitySync;
@@ -77,17 +63,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.14.3.1543,);"
-      + "after:TConstruct;"
-      + "after:BuildCraft|Core;"
-      + "after:Railcraft;"
-      + "after:ThermalExpansion;"
-      + "after:RedstoneArsenal;"
-      + "after:IC2;"
-      + "after:Forestry;"
-      + "after:gregtech;"
-      + "after:Thaumcraft;"
-      + "after:Botania"
+  dependencies = "required-after:Forge@[11.15.0.1684,)"
 )
 public class ModFoundry
 {
@@ -117,20 +93,7 @@ public class ModFoundry
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-//    ModIntegration.RegisterIntegration(config,ModIntegrationIC2.class,"ic2");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationBuildcraft.class,"buildcraft");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationForestry.class,"forestry");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationRailcraft.class,"railcraft");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationTF.class,"tf");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationTE4.class,"te4");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationRedstoneArsenal.class,"redarsenal");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationTiCon.class,"ticon");
     ModIntegrationManager.registerIntegration(config,new ModIntegrationThaumcraft());
-//    ModIntegration.RegisterIntegration(config,ModIntegrationBotania.class,"botania");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationMetallurgy.class,"metallurgy");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationTwilightForest.class,"twf");
-//    ModIntegration.RegisterIntegration(config,ModIntegrationProjectRed.class,"projectred");
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
     
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;

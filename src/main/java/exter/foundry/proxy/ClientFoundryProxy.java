@@ -7,6 +7,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.BlockFoundryOre;
@@ -30,9 +31,12 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -102,6 +106,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       ModelLoader.setCustomMeshDefinition( item, new LiquidMetalItemMeshDefinition(name));
       ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).ignore(BlockFluidBase.LEVEL).build());
     }
+    RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, 
+        new IRenderFactory<EntitySkeleton>() { @Override public Render<EntitySkeleton> createRenderFor(RenderManager manager) { return new RenderSkeleton(manager); }});
     ModIntegrationManager.clientPreInit();
   }
 
@@ -117,7 +123,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     }   
     InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
 
-    RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, new RenderSkeleton(Minecraft.getMinecraft().getRenderManager()));
 
     for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
     {
@@ -179,7 +184,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryItems.item_round_ap,"roundAP",0);
     registerItemModel(FoundryItems.item_shell,"shellNormal",0);
     registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
-
     registerItemModel(FoundryItems.item_container,"container",0);
 
     ModIntegrationManager.clientInit();

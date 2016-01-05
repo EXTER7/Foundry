@@ -3,14 +3,19 @@ package exter.foundry.model;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.vecmath.Vector4f;
+import javax.vecmath.Matrix4f;
+import javax.vecmath.Vector3f;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import exter.foundry.item.FoundryItems;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -22,26 +27,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IFlexibleBakedModel;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IModelPart;
 import net.minecraftforge.client.model.IModelState;
+import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.client.model.ISmartItemModel;
 import net.minecraftforge.client.model.ItemLayerModel;
+import net.minecraftforge.client.model.SimpleModelState;
 import net.minecraftforge.client.model.TRSRTransformation;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.fluids.FluidStack;
 
+@SuppressWarnings("deprecation")
 public class RFCModel implements IModel
 {
-  public static class BakedModel extends ItemLayerModel.BakedModel implements IFlexibleBakedModel, ISmartItemModel
+  public static class BakedModel extends ItemLayerModel.BakedModel implements IFlexibleBakedModel, ISmartItemModel,IPerspectiveAwareModel
   {
     private ImmutableList<BakedQuad> bg_quads;
     private ImmutableList<BakedQuad> fg_quads;
     private Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
     private VertexFormat format;
     private TextureAtlasSprite particle;
-    private IModelState state;
-
-    public BakedModel(ImmutableList<BakedQuad> bg_quads, ImmutableList<BakedQuad> fg_quads, TextureAtlasSprite particle, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, IModelState state)
+    private ImmutableMap<TransformType, TRSRTransformation> transforms;
+    
+    public BakedModel(ImmutableList<BakedQuad> bg_quads, ImmutableList<BakedQuad> fg_quads, TextureAtlasSprite particle, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, ImmutableMap<TransformType, TRSRTransformation> transforms)
     {
       super(ImmutableList.<BakedQuad> builder().addAll(fg_quads).addAll(bg_quads).build(), particle, format);
       this.bg_quads = bg_quads;
@@ -49,7 +56,7 @@ public class RFCModel implements IModel
       this.format = format;
       this.bakedTextureGetter = bakedTextureGetter;
       this.particle = particle;
-      this.state = state;
+      this.transforms = transforms;
     }
 
     @Override
@@ -71,11 +78,19 @@ public class RFCModel implements IModel
         texture = TextureMap.LOCATION_MISSING_TEXTURE;
       }
       ImmutableList<BakedQuad> fluid_model = getQuadsForSpriteSlice(
-          1, bakedTextureGetter.apply(texture), format, state.apply(Optional.<IModelPart>absent()),
+          1, bakedTextureGetter.apply(texture), format, 
           4, 3,
           12, 3 + y,
           fluid.getFluid().getColor());
-      return new ItemLayerModel.BakedModel(ImmutableList.<BakedQuad> builder().addAll(bg_quads).addAll(fluid_model).addAll(fg_quads).build(), particle, format);
+      return new IPerspectiveAwareModel.MapWrapper(
+          new ItemLayerModel.BakedModel(ImmutableList.<BakedQuad> builder().addAll(bg_quads).addAll(fluid_model).addAll(fg_quads).build(),
+              particle, format),transforms);
+    }
+
+    @Override
+    public Pair<? extends IFlexibleBakedModel, Matrix4f> handlePerspective(TransformType cameraTransformType)
+    {
+      return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, cameraTransformType);
     }
   }
 
@@ -131,29 +146,30 @@ public class RFCModel implements IModel
   @Override
   public IModelState getDefaultState()
   {
-    return TRSRTransformation.identity();
+    return DEFAULT_STATE;
   }
 
-  private ImmutableList<BakedQuad> bakeLayer(TextureAtlasSprite sprite, int tint, final VertexFormat format,Optional<TRSRTransformation> transform)
+  private ImmutableList<BakedQuad> bakeLayer(TextureAtlasSprite sprite, int tint, final VertexFormat format)
   {
     ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-    builder.addAll(getQuadsForSprite(tint, sprite, format, transform));
+    builder.addAll(getQuadsForSprite(tint, sprite, format));
     return builder.build();
   }
 
   @Override
   public IFlexibleBakedModel bake(IModelState state, final VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
   {
-    Optional<TRSRTransformation> transform = state.apply(Optional.<IModelPart>absent());
-    ImmutableList<BakedQuad> model_bg = bakeLayer(bakedTextureGetter.apply(texture_bg), 0, format, transform);
-    ImmutableList<BakedQuad> model_fg = bakeLayer(bakedTextureGetter.apply(texture_fg), 2, format, transform);
+    ImmutableMap<TransformType, TRSRTransformation> transforms = IPerspectiveAwareModel.MapWrapper.getTransforms(state);
+
+    ImmutableList<BakedQuad> model_bg = bakeLayer(bakedTextureGetter.apply(texture_bg), 0, format);
+    ImmutableList<BakedQuad> model_fg = bakeLayer(bakedTextureGetter.apply(texture_fg), 2, format);
 
     TextureAtlasSprite particle = bakedTextureGetter.apply(texture_fg);
-    return new BakedModel(model_bg, model_fg, particle, format, bakedTextureGetter, state);
+    return new BakedModel(model_bg, model_fg, particle, format, bakedTextureGetter, transforms);
   }
 
 
-  public ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
+  public ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite sprite, VertexFormat format)
   {
     ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -175,26 +191,26 @@ public class RFCModel implements IModel
           boolean t = isTransparent(pixels, uMax, vMax, u, v);
           if(ptu && !t) // left - transparent, right - opaque
           {
-            builder.add(buildSideQuad(format, transform, EnumFacing.WEST, tint, sprite, u, v));
+            builder.add(buildSideQuad(format, EnumFacing.WEST, tint, sprite, u, v));
           }
           if(!ptu && t) // left - opaque, right - transparent
           {
-            builder.add(buildSideQuad(format, transform, EnumFacing.EAST, tint, sprite, u, v));
+            builder.add(buildSideQuad(format, EnumFacing.EAST, tint, sprite, u, v));
           }
           if(ptv[u] && !t) // up - transparent, down - opaque
           {
-            builder.add(buildSideQuad(format, transform, EnumFacing.UP, tint, sprite, u, v));
+            builder.add(buildSideQuad(format, EnumFacing.UP, tint, sprite, u, v));
           }
           if(!ptv[u] && t) // up - opaque, down - transparent
           {
-            builder.add(buildSideQuad(format, transform, EnumFacing.DOWN, tint, sprite, u, v));
+            builder.add(buildSideQuad(format, EnumFacing.DOWN, tint, sprite, u, v));
           }
           ptu = t;
           ptv[u] = t;
         }
         if(!ptu) // last - opaque
         {
-          builder.add(buildSideQuad(format, transform, EnumFacing.EAST, tint, sprite, uMax, v));
+          builder.add(buildSideQuad(format, EnumFacing.EAST, tint, sprite, uMax, v));
         }
       }
       // last line
@@ -202,7 +218,7 @@ public class RFCModel implements IModel
       {
         if(!ptv[u])
         {
-          builder.add(buildSideQuad(format, transform, EnumFacing.DOWN, tint, sprite, u, vMax));
+          builder.add(buildSideQuad(format, EnumFacing.DOWN, tint, sprite, u, vMax));
         }
       }
     }
@@ -210,13 +226,13 @@ public class RFCModel implements IModel
     float z2 = 8.5f / 16f + 0.0002f * tint;
 
     // front
-    builder.add(buildQuad(format, transform, EnumFacing.SOUTH, tint,
+    builder.add(buildQuad(format, EnumFacing.SOUTH, tint,
         0, 0, z1, sprite.getMinU(), sprite.getMaxV(),
         0, 1, z1, sprite.getMinU(), sprite.getMinV(),
         1, 1, z1, sprite.getMaxU(), sprite.getMinV(),
         1, 0, z1, sprite.getMaxU(), sprite.getMaxV()));
     // back
-    builder.add(buildQuad(format, transform, EnumFacing.NORTH, tint,
+    builder.add(buildQuad(format, EnumFacing.NORTH, tint,
         0, 0, z2, sprite.getMinU(), sprite.getMaxV(),
         1, 0, z2, sprite.getMaxU(), sprite.getMaxV(),
         1, 1, z2, sprite.getMaxU(), sprite.getMinV(),
@@ -224,7 +240,7 @@ public class RFCModel implements IModel
     return builder.build();
   }
 
-  static public ImmutableList<BakedQuad> getQuadsForSpriteSlice(int tint, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform, int min_x, int min_y, int max_x, int max_y, int color)
+  static public ImmutableList<BakedQuad> getQuadsForSpriteSlice(int tint, TextureAtlasSprite sprite, VertexFormat format, int min_x, int min_y, int max_x, int max_y, int color)
   {
     ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -242,13 +258,13 @@ public class RFCModel implements IModel
     float z2 = 8.5f / 16f + 0.0002f * tint;
 
     
-    builder.add(buildQuad(format, transform, EnumFacing.SOUTH, tint,
+    builder.add(buildQuad(format, EnumFacing.SOUTH, tint,
         x1, y1, z1, min_u, max_v,
         x1, y2, z1, min_u, min_v,
         x2, y2, z1, max_u, min_v,
         x2, y1, z1, max_u, max_v, color));
 
-    builder.add(buildQuad(format, transform, EnumFacing.NORTH, tint,
+    builder.add(buildQuad(format, EnumFacing.NORTH, tint,
         x1, y1, z2, min_u, max_v,
         x2, y1, z2, max_u, max_v,
         x2, y2, z2, max_u, min_v,
@@ -261,7 +277,7 @@ public class RFCModel implements IModel
     return (pixels[u + (vMax - 1 - v) * uMax] >> 24 & 0xFF) == 0;
   }
 
-  private static BakedQuad buildSideQuad(VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, int tint, TextureAtlasSprite sprite, int u, int v)
+  private static BakedQuad buildSideQuad(VertexFormat format, EnumFacing side, int tint, TextureAtlasSprite sprite, int u, int v)
   {
     float x0 = (float) u / sprite.getIconWidth();
     float y0 = (float) v / sprite.getIconHeight();
@@ -292,16 +308,16 @@ public class RFCModel implements IModel
     
     z1 += 0.0002f * tint;
     z2 -= 0.0002f * tint;
-    return buildQuad(format, transform, side.getOpposite(), tint, x0, y0, z1, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0), x1, y1, z1, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1), x1, y1, z2, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1), x0, y0, z2, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0));
+    return buildQuad(format, side.getOpposite(), tint, x0, y0, z1, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0), x1, y1, z1, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1), x1, y1, z2, sprite.getInterpolatedU(u1), sprite.getInterpolatedV(v1), x0, y0, z2, sprite.getInterpolatedU(u0), sprite.getInterpolatedV(v0));
   }
 
-  private static final BakedQuad buildQuad(VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, int tint, float x0, float y0, float z0, float u0, float v0, float x1, float y1, float z1, float u1, float v1, float x2, float y2, float z2, float u2, float v2, float x3, float y3, float z3, float u3, float v3)
+  private static final BakedQuad buildQuad(VertexFormat format, EnumFacing side, int tint, float x0, float y0, float z0, float u0, float v0, float x1, float y1, float z1, float u1, float v1, float x2, float y2, float z2, float u2, float v2, float x3, float y3, float z3, float u3, float v3)
   {
-    return buildQuad(format, transform, side, tint, x0, y0, z0, u0, v0, x1, y1, z1, u1, v1, x2, y2, z2, u2, v2, x3, y3, z3, u3, v3, 0xFFFFFFFF);
+    return buildQuad(format, side, tint, x0, y0, z0, u0, v0, x1, y1, z1, u1, v1, x2, y2, z2, u2, v2, x3, y3, z3, u3, v3, 0xFFFFFFFF);
   }
   
   private static final BakedQuad buildQuad(
-      VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, int tint,
+      VertexFormat format, EnumFacing side, int tint,
       float x0, float y0, float z0, float u0, float v0,
       float x1, float y1, float z1, float u1, float v1,
       float x2, float y2, float z2, float u2, float v2,
@@ -311,35 +327,22 @@ public class RFCModel implements IModel
       UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
       builder.setQuadTint(tint);
       builder.setQuadOrientation(side);
-      putVertex(builder, format, transform, side, x0, y0, z0, u0, v0,color);
-      putVertex(builder, format, transform, side, x1, y1, z1, u1, v1,color);
-      putVertex(builder, format, transform, side, x2, y2, z2, u2, v2,color);
-      putVertex(builder, format, transform, side, x3, y3, z3, u3, v3,color);
+      putVertex(builder, format, side, x0, y0, z0, u0, v0,color);
+      putVertex(builder, format, side, x1, y1, z1, u1, v1,color);
+      putVertex(builder, format, side, x2, y2, z2, u2, v2,color);
+      putVertex(builder, format, side, x3, y3, z3, u3, v3,color);
       return builder.build();
   }
 
 
-  private static void putVertex(UnpackedBakedQuad.Builder builder, VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, float x, float y, float z, float u, float v, int color)
+  private static void putVertex(UnpackedBakedQuad.Builder builder, VertexFormat format, EnumFacing side, float x, float y, float z, float u, float v, int color)
   {
-      Vector4f vec = new Vector4f();
       for(int e = 0; e < format.getElementCount(); e++)
       {
           switch(format.getElement(e).getUsage())
           {
           case POSITION:
-              if(transform.isPresent())
-              {
-                  vec.x = x;
-                  vec.y = y;
-                  vec.z = z;
-                  vec.w = 1;
-                  transform.get().getMatrix().transform(vec);
-                  builder.put(e, vec.x, vec.y, vec.z, vec.w);
-              }
-              else
-              {
-                  builder.put(e, x, y, z, 1);
-              }
+              builder.put(e, x, y, z, 1);
               break;
           case COLOR:
               float red = (float) (color >>> 16 & 255) / 255.0F;
@@ -361,5 +364,23 @@ public class RFCModel implements IModel
               break;
           }
       }
+  }
+  static private final IModelState DEFAULT_STATE;
+  
+  static {
+    TRSRTransformation tp = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(0, 1.25f / 16, -3.5f / 16),
+        TRSRTransformation.quatFromYXZDegrees(new Vector3f(90, 0, 0)),
+        new Vector3f(0.55f, -0.55f, 0.55f),
+        null));
+    
+    TRSRTransformation fp = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(0, 4f / 16, 2f / 16),
+        TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, -135, 25)),
+        new Vector3f(1.7f, 1.7f, 1.7f),
+        null));
+    DEFAULT_STATE = new SimpleModelState(ImmutableMap
+        .of(ItemCameraTransforms.TransformType.THIRD_PERSON, tp,
+            ItemCameraTransforms.TransformType.FIRST_PERSON, fp));
   }
 }

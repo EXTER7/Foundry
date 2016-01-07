@@ -589,3 +589,5 @@ tc.research_text.FOUNDRY_capmold=[Foundry] Wand caps out of liquid metal.
 entity.foundry.gunSkeleton.name=Gun Skeleton
 
 death.attack.bullet=%1$s was gunned down by %2$s
+
+gui.jei.alloyfurnace=Alloy Furnace

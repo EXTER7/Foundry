@@ -39,10 +39,6 @@ repositories {
         name "DVS1 Maven FS'"
         url 'http://dvs1.progwml6.com/files/maven'
     }
-    maven {
-        name = "ChickenBones"
-        url = "http://chickenbones.net/maven"
-    }
     ivy {
         name "MineTweaker3"
         artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-([classifier]-)[revision].[ext]"
@@ -51,6 +47,7 @@ repositories {
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
+    deobfCompile "mezz.jei:jei_1.8.8:2.8.3.39"
 }
 
 

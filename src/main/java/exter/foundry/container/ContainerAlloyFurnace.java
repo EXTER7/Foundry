@@ -15,11 +15,11 @@ public class ContainerAlloyFurnace extends Container
   private TileEntityAlloyFurnace te_alloyfurnace;
   
   // Slot numbers
-  private static final int SLOTS_TE = 0;
-  //private static final int SLOTS_TE_SIZE = 4;
+  public static final int SLOTS_TE = 0;
+  public static final int SLOTS_TE_SIZE = 4;
   
-  private static final int SLOTS_INVENTORY = 4;
-  private static final int SLOTS_HOTBAR = 4 + 3 * 9;
+  public static final int SLOTS_INVENTORY = 4;
+  public static final int SLOTS_HOTBAR = 4 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;
   private static final int SLOT_INVENTORY_Y = 84;

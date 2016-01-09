@@ -591,3 +591,5 @@ entity.foundry.gunSkeleton.name=Gun Skeleton
 death.attack.bullet=%1$s was gunned down by %2$s
 
 gui.jei.alloyfurnace=Alloy Furnace
+gui.jei.melting=ICF Melting
+gui.jei.casting=Metal Caster

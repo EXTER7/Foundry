@@ -17,11 +17,11 @@ public class ContainerMetalCaster extends Container
   private TileEntityMetalCaster te_caster;
   
   // Slot numbers
-  private static final int SLOTS_TE = 0;
-  //private static final int SLOTS_TE_SIZE = 14;
+  public static final int SLOTS_TE = 0;
+  public static final int SLOTS_TE_SIZE = 14;
   private static final int SLOTS_TE_MOLD_STORAGE = 5;
   private static final int SLOTS_TE_MOLD_STORAGE_SIZE = 9;
-  private static final int SLOTS_INVENTORY = 14;
+  public static final int SLOTS_INVENTORY = 14;
   private static final int SLOTS_HOTBAR = 14 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;

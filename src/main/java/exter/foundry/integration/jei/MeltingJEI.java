@@ -6,15 +6,17 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
 
-import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
-import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
+import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.recipe.IMeltingRecipe;
+import exter.foundry.gui.GuiInductionCrucibleFurnace;
+import exter.foundry.recipes.manager.MeltingRecipeManager;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
+import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
@@ -27,26 +29,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
-public class AlloyFurnaceJEI
+public class MeltingJEI
 {
 
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    protected final IDrawableStatic flame_drawable;
-    @Nonnull
     private final List<List<ItemStack>> input;
     @Nonnull
-    private final List<ItemStack> output;
+    private final List<FluidStack> output;
+    
+    private final int melting_point;
 
-    public Wrapper(IJeiHelpers helpers,@Nonnull List<List<ItemStack>> input, List<ItemStack> output)
+    public Wrapper(@Nonnull List<ItemStack> input, FluidStack output, int melting_point)
     {
-      IGuiHelper guiHelper = helpers.getGuiHelper();
-      ResourceLocation furnaceBackgroundLocation = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
-
-      flame_drawable = guiHelper.createDrawable(furnaceBackgroundLocation, 176, 0, 14, 14);
-      this.input = input;
-      this.output = output;
+      this.input = Collections.singletonList(input);
+      this.output = Collections.singletonList(output);
+      this.melting_point = melting_point;
     }
 
     @Nonnull
@@ -58,7 +57,7 @@ public class AlloyFurnaceJEI
     @Nonnull
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return Collections.emptyList();
     }
 
     @Override
@@ -70,13 +69,13 @@ public class AlloyFurnaceJEI
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return output;
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
-
+      minecraft.fontRendererObj.drawString(melting_point + " K", 14, 28, 0);
     }
 
     @Override
@@ -95,30 +94,30 @@ public class AlloyFurnaceJEI
   static public class Category implements IRecipeCategory
   {
 
-    protected final ResourceLocation background_location;
-    @Nonnull
-    protected final IDrawableAnimated flame;
+    protected final ResourceLocation backgroundLocation;
     @Nonnull
     protected final IDrawableAnimated arrow;
     @Nonnull
     private final IDrawable background;
     @Nonnull
-    private final String localized_name;
+    private final String localizedName;
+    @Nonnull
+    private final IDrawable tank_overlay;
 
     public Category(IJeiHelpers helpers)
     {
       IGuiHelper guiHelper = helpers.getGuiHelper();
-      background_location = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
+      backgroundLocation = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
 
-      IDrawableStatic flameDrawable = guiHelper.createDrawable(background_location, 176, 0, 14, 14);
-      flame = guiHelper.createAnimatedDrawable(flameDrawable, 300, IDrawableAnimated.StartDirection.TOP, true);
 
-      IDrawableStatic arrowDrawable = guiHelper.createDrawable(background_location, 176, 14, 24, 17);
-      arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
+      IDrawableStatic arrowDrawable = guiHelper.createDrawable(backgroundLocation, 176, 78, 24, 17);
+      this.arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
-      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
-      background = guiHelper.createDrawable(location, 30, 16, 110, 54);
-      localized_name = Translator.translateToLocal("gui.jei.alloyfurnace");
+      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
+      background = guiHelper.createDrawable(location, 30, 16, 94, 54);
+      tank_overlay = guiHelper.createDrawable(location, 176, 0, 16, 47);
+      localizedName = Translator.translateToLocal("gui.jei.melting");
+
     }
 
     @Override
@@ -137,36 +136,33 @@ public class AlloyFurnaceJEI
     @Override
     public void drawAnimations(Minecraft minecraft)
     {
-      flame.draw(minecraft, 18, 20);
-      arrow.draw(minecraft, 50, 19);
+      arrow.draw(minecraft, 49, 7);
     }
 
     @Nonnull
     @Override
     public String getTitle()
     {
-      return localized_name;
+      return localizedName;
     }
 
     @Nonnull
     @Override
     public String getUid()
     {
-      return "foundry.alloyfurnace";
+      return "foundry.melting";
     }
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      guiItemStacks.init(0, true, 7, 0);
-      guiItemStacks.init(1, true, 25, 0);
-      guiItemStacks.init(2, false, 85, 18);
-
+      guiItemStacks.init(0, true, 24, 6);
+      guiFluidStacks.init(1, false, 77, 6, 16, GuiInductionCrucibleFurnace.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
-      guiItemStacks.setFromRecipe(1, StackUtil.toItemStackList(recipeWrapper.getInputs().get(1)));
-      guiItemStacks.setFromRecipe(2, recipeWrapper.getOutputs());
+      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }
   }
 
@@ -183,7 +179,7 @@ public class AlloyFurnaceJEI
     @Override
     public String getRecipeCategoryUid()
     {
-      return "foundry.alloyfurnace";
+      return "foundry.melting";
     }
 
     @Override
@@ -200,23 +196,18 @@ public class AlloyFurnaceJEI
     }
   }
 
-  @SuppressWarnings("unchecked")
-  static public List<Wrapper> getRecipes(IJeiHelpers helpers)
+  static public List<Wrapper> getRecipes()
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
-    for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.getRecipes())
+    for(IMeltingRecipe recipe : MeltingRecipeManager.instance.getRecipes())
     {
-      List<ItemStack> input_a = JEIHelper.toItemStackList(recipe.getInputA());
-      List<ItemStack> input_b = JEIHelper.toItemStackList(recipe.getInputB());
+      List<ItemStack> input = JEIHelper.toItemStackList(recipe.getInput());
 
-      if(!(input_a.isEmpty() || input_b.isEmpty()))
+      if(!input.isEmpty())
       {
-        recipes.add(new Wrapper(helpers,
-            Lists.newArrayList(input_a, input_b),
-            Collections.singletonList(recipe.getOutput())));
+        recipes.add(new Wrapper(input, recipe.getOutput(), recipe.getMeltingPoint()));
       }
-
     }
 
     return recipes;

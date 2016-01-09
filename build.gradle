@@ -47,7 +47,7 @@ repositories {
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
-    deobfCompile "mezz.jei:jei_1.8.8:2.8.3.39"
+    deobfCompile "mezz.jei:jei_1.8.9:2.15.1.71"
 }
 
 

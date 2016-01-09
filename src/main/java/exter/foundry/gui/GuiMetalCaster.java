@@ -21,7 +21,7 @@ public class GuiMetalCaster extends GuiFoundry
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/caster.png");
 
-  private static final int TANK_HEIGHT = 47;
+  public static final int TANK_HEIGHT = 47;
   private static final int TANK_X = 39;
   private static final int TANK_Y = 21;
   

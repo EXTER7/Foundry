@@ -13,9 +13,9 @@ public class ContainerInductionCrucibleFurnace extends Container
   private TileEntityInductionCrucibleFurnace te_icf;
   
   // Slot numbers
-  private static final int SLOTS_TE = 0;
-  //private static final int SLOTS_TE_SIZE = 3;
-  private static final int SLOTS_INVENTORY = 3;
+  public static final int SLOTS_TE = 0;
+  public static final int SLOTS_TE_SIZE = 3;
+  public static final int SLOTS_INVENTORY = 3;
   private static final int SLOTS_HOTBAR = 3 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;

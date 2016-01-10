@@ -593,3 +593,7 @@ death.attack.bullet=%1$s was gunned down by %2$s
 gui.jei.alloyfurnace=Alloy Furnace
 gui.jei.melting=ICF Melting
 gui.jei.casting=Metal Caster
+gui.jei.alloymixer=Alloy Mixer
+gui.jei.infuser=Metal Infuser
+gui.jei.infuser.substance=Metal Infuser
+gui.jei.atomizer=Metal Atomizer

@@ -1,5 +1,7 @@
 package exter.foundry.tileentity;
 
+import java.util.List;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
@@ -319,9 +321,10 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       energy_used += required_energy;
       tanks[TANK_OUTPUT].fill(output, true);
       updateTank(TANK_OUTPUT);
-      for(i = 0; i < recipe.getInputCount(); i++)
+      List<FluidStack> inputs = recipe.getInputs();
+      for(i = 0; i < inputs.size(); i++)
       {
-        tanks[recipe_order[i]].drain(recipe.getInput(i).amount, true);
+        tanks[recipe_order[i]].drain(inputs.get(i).amount, true);
         updateTank(recipe_order[i]);
       }
     }

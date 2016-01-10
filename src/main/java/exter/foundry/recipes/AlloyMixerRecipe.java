@@ -1,5 +1,9 @@
 package exter.foundry.recipes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -9,19 +13,21 @@ import net.minecraftforge.fluids.FluidStack;
 public class AlloyMixerRecipe implements IAlloyMixerRecipe
 {
   
-  public FluidStack[] inputs;
+  public List<FluidStack> inputs;
   public FluidStack output;
 
   @Override
+  @Deprecated
   public FluidStack getInput(int in)
   {
-    return inputs[in].copy();
+    return inputs.get(in).copy();
   }
   
   @Override
+  @Deprecated
   public int getInputCount()
   {
-    return inputs.length;
+    return inputs.size();
   }
 
 
@@ -42,7 +48,7 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
     {
       throw new IllegalArgumentException("Alloy mixer recipe cannot have more the 4 inputs");
     }
-    inputs = new FluidStack[in.length];
+    inputs = new ArrayList<FluidStack>();
     int i;
     for(i = 0; i < in.length; i++)
     {
@@ -50,10 +56,17 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
       {
         throw new IllegalArgumentException("Alloy mixer recipe input cannot be null");
       }
-      inputs[i] = in[i].copy();
+      inputs.add(in[i].copy());
     }
+    inputs = Collections.unmodifiableList(inputs);
   }
 
+  @Override
+  public List<FluidStack> getInputs()
+  {
+    return inputs;
+  }
+  
   static private final boolean[] matched = new boolean[4];
   
   @Override
@@ -61,12 +74,12 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
   {
     int matches = 0;
     int i;
-    if(order != null && order.length < inputs.length)
+    if(order != null && order.length < inputs.size())
     {
       order = null;
     }
     
-    if(in.length < inputs.length)
+    if(in.length < inputs.size())
     {
       return false;
     }
@@ -81,9 +94,9 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
       if(in[i] != null)
       {
         int j;
-        for(j = 0; j < inputs.length; j++)
+        for(j = 0; j < inputs.size(); j++)
         {
-          if(!matched[j] && in[i].containsFluid(inputs[j]))
+          if(!matched[j] && in[i].containsFluid(inputs.get(j)))
           {
             matched[j] = true;
             matches++;
@@ -96,6 +109,8 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
         }
       }
     }
-    return matches == inputs.length;
+    return matches == inputs.size();
   }
+
+
 }

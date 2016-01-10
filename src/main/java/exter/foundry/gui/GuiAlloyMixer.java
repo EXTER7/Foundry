@@ -20,7 +20,7 @@ public class GuiAlloyMixer extends GuiFoundry
 {
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/alloymixer.png");
 
-  private static final int TANK_HEIGHT = 35;
+  public static final int TANK_HEIGHT = 35;
   
   private static final int[] TANK_X = new int[] {26, 47, 68, 89, 133};
   private static final int TANK_Y = 45;

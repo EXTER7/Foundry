@@ -41,13 +41,14 @@ public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager
     }
     for(IAlloyMixerRecipe r:recipes)
     {
-      if(r.matchesRecipe(in,recipe_order) && r.getInputCount() > inputs)
+      List<FluidStack> rinputs = r.getInputs();
+      if(r.matchesRecipe(in,recipe_order) && rinputs.size() > inputs)
       {
         if(order != null)
         {
           System.arraycopy(recipe_order, 0, order, 0, recipe_order.length);
         }
-        inputs = r.getInputCount();
+        inputs = rinputs.size();
         result = r;
       }
     }

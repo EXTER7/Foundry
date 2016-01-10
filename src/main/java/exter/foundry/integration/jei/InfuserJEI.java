@@ -9,77 +9,82 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.substance.InfuserSubstance;
+import exter.foundry.gui.GuiMetalInfuser;
+import exter.foundry.recipes.manager.InfuserRecipeManager;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableAnimated;
-import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
-import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 
-public class CastingJEI
+public class InfuserJEI
 {
 
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<FluidStack> input_fluid;
+    private final List<FluidStack> input;
     @Nonnull
-    private final List<ItemStack> output;
+    private final List<FluidStack> output;
     @Nonnull
-    private final List<List<ItemStack>> input;
-
-    @SuppressWarnings("unchecked")
-    public Wrapper(@Nonnull ItemStack output, FluidStack input, ItemStack mold, List<ItemStack> extra)
+    private final InfuserSubstance substance;
+    @Nonnull
+    private final IDrawable substance_drawable;
+    
+    public Wrapper(IJeiHelpers helpers,@Nonnull FluidStack output, @Nonnull FluidStack input, @Nonnull InfuserSubstance substance)
     {
-      this.input_fluid = Collections.singletonList(input);
-      this.input = Lists.newArrayList(Collections.singletonList(mold),extra);
-          Collections.singletonList(input);
+      this.input = Collections.singletonList(input);
       this.output = Collections.singletonList(output);
+      this.substance = substance;
+      this.substance_drawable = JEIHelper.getSubstanceDrawable(helpers, substance);
     }
 
     @Nonnull
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return Collections.emptyList();
     }
 
     @Nonnull
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return Collections.emptyList();
     }
 
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input_fluid;
+      return input;
     }
 
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return output;
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
-
+      if(substance_drawable != null)
+      {
+        JEIHelper.setSubstanceGLColor(substance);
+        substance_drawable.draw(minecraft, 56, 2 + 47 - substance_drawable.getHeight());
+        GlStateManager.resetColor();
+      }
     }
 
     @Override
@@ -89,8 +94,14 @@ public class CastingJEI
     }
 
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    public List<String> getTooltipStrings(int x, int y)
     {
+      if(x >= 56 && x <= 66 && y >= 2 && y <= 49)
+      {
+        return Lists.newArrayList(
+            StatCollector.translateToLocal("substance." + substance.type),
+            substance.amount + " mL");
+      }
       return null;
     }
   }
@@ -99,8 +110,6 @@ public class CastingJEI
   {
 
     protected final ResourceLocation backgroundLocation;
-    @Nonnull
-    protected final IDrawableAnimated arrow;
     @Nonnull
     private final IDrawable background;
     @Nonnull
@@ -111,16 +120,12 @@ public class CastingJEI
     public Category(IJeiHelpers helpers)
     {
       IGuiHelper guiHelper = helpers.getGuiHelper();
-      backgroundLocation = new ResourceLocation("foundry", "textures/gui/caster.png");
+      backgroundLocation = new ResourceLocation("foundry", "textures/gui/infuser.png");
 
-
-      IDrawableStatic arrowDrawable = guiHelper.createDrawable(backgroundLocation, 176, 53, 24, 17);
-      arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
-
-      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/caster.png");
-      background = guiHelper.createDrawable(location, 38, 16, 68, 54);
+      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/infuser.png");
+      background = guiHelper.createDrawable(location, 15, 41, 137, 51);
       tank_overlay = guiHelper.createDrawable(location, 176, 0, 16, 47);
-      localizedName = Translator.translateToLocal("gui.jei.casting");
+      localizedName = Translator.translateToLocal("gui.jei.infuser");
 
     }
 
@@ -134,13 +139,11 @@ public class CastingJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft)
     {
-      arrow.draw(minecraft, 22, 35);
     }
 
     @Nonnull
@@ -154,23 +157,18 @@ public class CastingJEI
     @Override
     public String getUid()
     {
-      return "foundry.casting";
+      return "foundry.infuser";
     }
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      guiItemStacks.init(0, true, 47, 34);
-      guiItemStacks.init(1, false, 27, 4);
-      guiItemStacks.init(2, false, 47, 4);
-      guiFluidStacks.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      guiItemStacks.setFromRecipe(1, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
-      guiItemStacks.setFromRecipe(2, StackUtil.toItemStackList(recipeWrapper.getInputs().get(1)));
-      guiFluidStacks.set(3, recipeWrapper.getFluidInputs().get(0));
+      guiFluidStacks.init(0, true, 70, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 119, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
+      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }
   }
 
@@ -187,7 +185,7 @@ public class CastingJEI
     @Override
     public String getRecipeCategoryUid()
     {
-      return "foundry.casting";
+      return "foundry.infuser";
     }
 
     @Override
@@ -204,21 +202,16 @@ public class CastingJEI
     }
   }
 
-  static public List<Wrapper> getRecipes()
+  static public List<Wrapper> getRecipes(IJeiHelpers helpers)
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
-    for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
+    for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
     {
-      ItemStack output = recipe.getOutputItem();
-
-      if(output != null)
-      {
-        recipes.add(new Wrapper(
-            output,recipe.getInput(),
-            recipe.getMold(),
-            JEIHelper.toItemStackList(recipe.getInputExtra())));
-      }
+      recipes.add(new Wrapper(helpers,
+          recipe.getOutput(),
+          recipe.getInputFluid(),
+          recipe.getInputSubstance()));
     }
 
     return recipes;

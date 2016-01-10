@@ -14,10 +14,10 @@ public class ContainerAlloyMixer extends Container
   private TileEntityAlloyMixer te_alloymixer;
   
   // Slot numbers
-  private static final int SLOTS_TE = 0;
-  private static final int SLOTS_TE_SIZE = 10;
+  public static final int SLOTS_TE = 0;
+  public static final int SLOTS_TE_SIZE = 10;
   
-  private static final int SLOTS_INVENTORY = 10;
+  public static final int SLOTS_INVENTORY = 10;
   private static final int SLOTS_HOTBAR = 10 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;

@@ -31,6 +31,11 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class FoundryMiscUtils
 {
+  static public int divCeil(int a,int b)
+  {
+    return a / b + ((a % b == 0) ? 0 : 1);
+  }
+
   static public void registerMoldRecipe(int dv,ItemStack pattern)
   {
     if(pattern != null)

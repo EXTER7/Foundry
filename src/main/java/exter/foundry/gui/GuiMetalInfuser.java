@@ -24,7 +24,7 @@ public class GuiMetalInfuser extends GuiFoundry
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser.png");
 
-  private static final int TANK_HEIGHT = 47;
+  public static final int TANK_HEIGHT = 47;
   private static final int INPUT_TANK_X = 85;
   private static final int INPUT_TANK_Y = 43;
 

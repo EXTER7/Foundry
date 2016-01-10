@@ -11,6 +11,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.gui.GuiInductionCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -25,6 +26,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -38,14 +40,22 @@ public class MeltingJEI
     private final List<List<ItemStack>> input;
     @Nonnull
     private final List<FluidStack> output;
+    @Nonnull
+    private final IDrawable heat;
+    
     
     private final int melting_point;
 
-    public Wrapper(@Nonnull List<ItemStack> input, FluidStack output, int melting_point)
+    public Wrapper(IJeiHelpers helpers,@Nonnull List<ItemStack> input, FluidStack output, int melting_point)
     {
       this.input = Collections.singletonList(input);
       this.output = Collections.singletonList(output);
       this.melting_point = melting_point;
+      ResourceLocation background_location = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
+
+      heat = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
+          (melting_point * 100 - TileEntityInductionCrucibleFurnace.HEAT_MIN) * 54 / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN), 12);
+
     }
 
     @Nonnull
@@ -75,13 +85,13 @@ public class MeltingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
+      heat.draw(minecraft,11,41);
       minecraft.fontRendererObj.drawString(melting_point + " K", 14, 28, 0);
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
-
     }
 
     @Override
@@ -196,7 +206,7 @@ public class MeltingJEI
     }
   }
 
-  static public List<Wrapper> getRecipes()
+  static public List<Wrapper> getRecipes(IJeiHelpers helpers)
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
@@ -206,7 +216,7 @@ public class MeltingJEI
 
       if(!input.isEmpty())
       {
-        recipes.add(new Wrapper(input, recipe.getOutput(), recipe.getMeltingPoint()));
+        recipes.add(new Wrapper(helpers,input, recipe.getOutput(), recipe.getMeltingPoint()));
       }
     }
 

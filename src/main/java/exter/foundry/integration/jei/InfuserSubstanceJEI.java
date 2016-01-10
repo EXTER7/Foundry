@@ -8,19 +8,21 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
 
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.IInfuserSubstanceRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IGuiFluidStackGroup;
+import mezz.jei.api.gui.IDrawableAnimated;
+import mezz.jei.api.gui.IDrawableStatic;
+import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -30,32 +32,32 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 
-public class InfuserJEI
+public class InfuserSubstanceJEI
 {
 
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<FluidStack> input;
+    private final List<List<ItemStack>> input;
     @Nonnull
-    private final List<FluidStack> output;
-    @Nonnull
-    private final InfuserSubstance substance;
+    private final InfuserSubstance output;
     @Nonnull
     private final IDrawable substance_drawable;
     
-    public Wrapper(IJeiHelpers helpers,@Nonnull FluidStack output, @Nonnull FluidStack input, @Nonnull InfuserSubstance substance)
+    private final int energy;
+    
+    public Wrapper(IJeiHelpers helpers,@Nonnull InfuserSubstance output, @Nonnull List<ItemStack> input, int energy)
     {
       this.input = Collections.singletonList(input);
-      this.output = Collections.singletonList(output);
-      this.substance = substance;
-      this.substance_drawable = JEIHelper.getSubstanceDrawable(helpers, substance);
+      this.output = output;
+      this.substance_drawable = JEIHelper.getSubstanceDrawable(helpers, output);
+      this.energy = energy;
     }
 
     @Nonnull
     public List<List<ItemStack>> getInputs()
     {
-      return Collections.emptyList();
+      return input;
     }
 
     @Nonnull
@@ -67,13 +69,13 @@ public class InfuserJEI
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input;
+      return Collections.emptyList();
     }
 
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return output;
+      return Collections.emptyList();
     }
 
     @Override
@@ -81,10 +83,11 @@ public class InfuserJEI
     {
       if(substance_drawable != null)
       {
-        JEIHelper.setSubstanceGLColor(substance);
+        JEIHelper.setSubstanceGLColor(output);
         substance_drawable.draw(minecraft, 56, 2);
         GlStateManager.resetColor();
       }
+      minecraft.fontRendererObj.drawString(energy / TileEntityFoundryPowered.RATIO_RF + " RF", 0, 38, 0);
     }
 
     @Override
@@ -99,8 +102,8 @@ public class InfuserJEI
       if(x >= 56 && x <= 66 && y >= 2 && y <= 49)
       {
         return Lists.newArrayList(
-            StatCollector.translateToLocal("substance." + substance.type),
-            substance.amount + " mL");
+            StatCollector.translateToLocal("substance." + output.type),
+            output.amount + " mL");
       }
       return null;
     }
@@ -109,24 +112,28 @@ public class InfuserJEI
   static public class Category implements IRecipeCategory
   {
 
-    protected final ResourceLocation backgroundLocation;
+    protected final ResourceLocation background_location;
     @Nonnull
     private final IDrawable background;
     @Nonnull
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
-
+    @Nonnull
+    protected final IDrawableAnimated arrow;
+    
     public Category(IJeiHelpers helpers)
     {
       IGuiHelper guiHelper = helpers.getGuiHelper();
-      backgroundLocation = new ResourceLocation("foundry", "textures/gui/infuser.png");
+      background_location = new ResourceLocation("foundry", "textures/gui/infuser.png");
+
+      IDrawableStatic arrowDrawable = guiHelper.createDrawable(background_location, 176, 53, 24, 17);
+      arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
       ResourceLocation location = new ResourceLocation("foundry", "textures/gui/infuser.png");
       background = guiHelper.createDrawable(location, 15, 41, 137, 51);
       tank_overlay = guiHelper.createDrawable(location, 176, 0, 16, 47);
-      localizedName = Translator.translateToLocal("gui.jei.infuser");
-
+      localizedName = Translator.translateToLocal("gui.jei.infuser.substance");
     }
 
     @Override
@@ -144,6 +151,7 @@ public class InfuserJEI
     @Override
     public void drawAnimations(Minecraft minecraft)
     {
+      arrow.draw(minecraft, 27, 18);
     }
 
     @Nonnull
@@ -157,18 +165,16 @@ public class InfuserJEI
     @Override
     public String getUid()
     {
-      return "foundry.infuser";
+      return "foundry.infuser.substance";
     }
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-      guiFluidStacks.init(0, true, 70, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
-      guiFluidStacks.init(1, false, 119, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
-      guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
-      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
+      guiItemStacks.init(0, true, 3, 17);
+      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
     }
   }
 
@@ -185,7 +191,7 @@ public class InfuserJEI
     @Override
     public String getRecipeCategoryUid()
     {
-      return "foundry.infuser";
+      return "foundry.infuser.substance";
     }
 
     @Override
@@ -206,12 +212,16 @@ public class InfuserJEI
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
-    for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
+    for(IInfuserSubstanceRecipe recipe : InfuserRecipeManager.instance.getSubstanceRecipes())
     {
-      recipes.add(new Wrapper(helpers,
-          recipe.getOutput(),
-          recipe.getInputFluid(),
-          recipe.getInputSubstance()));
+      List<ItemStack> input = JEIHelper.toItemStackList(recipe.getInput());
+      if(input.size() > 0)
+      {
+        recipes.add(new Wrapper(helpers,
+            recipe.getOutput(),
+            input,
+            recipe.getEnergyNeeded()));
+      }
     }
 
     return recipes;

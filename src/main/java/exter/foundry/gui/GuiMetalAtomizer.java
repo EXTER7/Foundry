@@ -22,7 +22,7 @@ public class GuiMetalAtomizer extends GuiFoundry
 
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/atomizer.png");
 
-  private static final int TANK_HEIGHT = 47;
+  public static final int TANK_HEIGHT = 47;
   private static final int TANK_INPUT_X = 39;
   private static final int TANK_INPUT_Y = 21;
   private static final int TANK_WATER_X = 123;

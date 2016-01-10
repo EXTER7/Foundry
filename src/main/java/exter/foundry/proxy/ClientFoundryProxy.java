@@ -37,6 +37,7 @@ import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -117,9 +118,9 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     //MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
     InfuserRecipeManager.instance.registerSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
-    for(i = 0; i < 15; i++)
+    for(EnumDyeColor dye:EnumDyeColor.values())
     {
-      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + i, SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[i]);
+      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + dye.getName(), SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[dye.getDyeDamage()]);
     }   
     InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
 

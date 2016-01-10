@@ -15,7 +15,10 @@ public class ContainerMetalAtomizer extends Container
   private TileEntityMetalAtomizer te_atomizer;
   
   // Slot numbers
-  private static final int SLOTS_INVENTORY = 5;
+  public static final int SLOTS_TE = 0;
+  public static final int SLOTS_TE_SIZE = 5;
+
+  public static final int SLOTS_INVENTORY = 5;
   private static final int SLOTS_HOTBAR = 5 + 3 * 9;
 
   private static final int SLOT_INVENTORY_X = 8;

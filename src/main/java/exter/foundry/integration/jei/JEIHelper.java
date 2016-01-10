@@ -53,11 +53,9 @@ public class JEIHelper
     {
       return null;
     }
-    int height = FoundryMiscUtils.divCeil(substance.amount * 47,FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX);
     return helpers.getGuiHelper().createDrawable(
         texture.getLocation(),
-        texture.getX(), texture.getY() + 47 - height,
-        8, height);
+        texture.getX(), texture.getY(), 8, 47);
   }
   
   public static void setSubstanceGLColor(InfuserSubstance substance)
@@ -66,6 +64,6 @@ public class JEIHelper
     float red = (float) (color >> 16 & 255) / 255.0F;
     float green = (float) (color >> 8 & 255) / 255.0F;
     float blue = (float) (color & 255) / 255.0F;
-    GlStateManager.color(red, green, blue);
+    GlStateManager.color(red, green, blue,1.0f);
   }
 }

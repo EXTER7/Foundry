@@ -3,6 +3,7 @@ package exter.foundry.integration.jei;
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerMetalInfuser;
 import mezz.jei.api.IItemRegistry;
@@ -26,7 +27,9 @@ public class JEIFoundryPlugin implements IModPlugin
         new MeltingJEI.Category(helpers),
         new CastingJEI.Category(helpers),
         new AlloyMixerJEI.Category(helpers),
-        new InfuserJEI.Category(helpers)
+        new InfuserJEI.Category(helpers),
+        new InfuserSubstanceJEI.Category(helpers),
+        new AtomizerJEI.Category(helpers)
     );
 
     registry.addRecipeHandlers(
@@ -34,7 +37,9 @@ public class JEIFoundryPlugin implements IModPlugin
         new MeltingJEI.Handler(),
         new CastingJEI.Handler(),
         new AlloyMixerJEI.Handler(),
-        new InfuserJEI.Handler()
+        new InfuserJEI.Handler(),
+        new InfuserSubstanceJEI.Handler(),
+        new AtomizerJEI.Handler()
     );
     IRecipeTransferRegistry transfer_registry = registry.getRecipeTransferRegistry();
 
@@ -58,12 +63,22 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerMetalInfuser.SLOTS_TE,
         ContainerMetalInfuser.SLOTS_TE_SIZE, 
         ContainerMetalInfuser.SLOTS_INVENTORY, 36);
+    transfer_registry.addRecipeTransferHandler(ContainerMetalInfuser.class, "foundry.infuser.substance",
+        ContainerMetalInfuser.SLOTS_TE,
+        ContainerMetalInfuser.SLOTS_TE_SIZE, 
+        ContainerMetalInfuser.SLOTS_INVENTORY, 36);
+    transfer_registry.addRecipeTransferHandler(ContainerMetalInfuser.class, "foundry.atomizer",
+        ContainerMetalAtomizer.SLOTS_TE,
+        ContainerMetalAtomizer.SLOTS_TE_SIZE, 
+        ContainerMetalAtomizer.SLOTS_INVENTORY, 36);
 
     registry.addRecipes(AlloyFurnaceJEI.getRecipes(helpers));
-    registry.addRecipes(MeltingJEI.getRecipes());
+    registry.addRecipes(MeltingJEI.getRecipes(helpers));
     registry.addRecipes(CastingJEI.getRecipes());
     registry.addRecipes(AlloyMixerJEI.getRecipes());
     registry.addRecipes(InfuserJEI.getRecipes(helpers));
+    registry.addRecipes(InfuserSubstanceJEI.getRecipes(helpers));
+    registry.addRecipes(AtomizerJEI.getRecipes());
   }
 
   @Override

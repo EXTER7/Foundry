@@ -36,6 +36,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationManager;
+import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationThaumcraft;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
@@ -96,6 +97,7 @@ public class ModFoundry
     config.load();
     ModIntegrationManager.registerIntegration(config,new ModIntegrationThaumcraft());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationBotania());
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
     
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;

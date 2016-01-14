@@ -50,7 +50,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   @Override
   public int getSizeInventory()
   {
-    return inventory.length;
+    return 4;
   }
 
   @Override

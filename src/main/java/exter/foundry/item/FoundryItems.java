@@ -25,6 +25,7 @@ public class FoundryItems
   static public ItemComponent item_component;
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
+  static public ItemDust item_dust;
   static public ItemRevolver item_revolver;
   static public ItemShotgun item_shotgun;
   static public ItemRoundNormal item_round;
@@ -40,12 +41,14 @@ public class FoundryItems
   static public ItemRefractoryFluidContainer item_container;
   
   static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
+  static public Map<String,ItemStack> dust_stacks = new HashMap<String,ItemStack>();
 
   static public void registerItems(Configuration config)
   {
     item_component = new ItemComponent();
     item_mold = new ItemMold();
     item_ingot = new ItemIngot();
+    item_dust = new ItemDust();
     item_revolver = new ItemRevolver();
     item_shotgun = new ItemShotgun();
     item_round = new ItemRoundNormal();
@@ -60,6 +63,7 @@ public class FoundryItems
     GameRegistry.registerItem(item_component, "foundryComponent");
     GameRegistry.registerItem(item_mold, "foundryMold");
     GameRegistry.registerItem(item_ingot, "foundryIngot");
+    GameRegistry.registerItem(item_dust, "foundryDust");
     GameRegistry.registerItem(item_revolver, "foundryRevolver");
     GameRegistry.registerItem(item_shotgun, "foundryShotgun");
     GameRegistry.registerItem(item_round, "foundryRound");
@@ -71,29 +75,25 @@ public class FoundryItems
     GameRegistry.registerItem(item_round_ap, "foundryRoundAP");
     GameRegistry.registerItem(item_shell_ap, "foundryShellAP");
     
-//    for (i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
-//    {
-//      ItemStack stack = new ItemStack(item_component,  1, i);
-//      GameRegistry.registerCustomItemStack(ItemComponent.REGISTRY_NAMES[i], stack);
-//    }
-//    for (i = 0; i < ItemMold.REGISTRY_NAMES.length; i++)
-//    {
-//      ItemStack stack = new ItemStack(item_mold,  1, i);
-//      GameRegistry.registerCustomItemStack(ItemMold.REGISTRY_NAMES[i], stack);
-//    }
     int i;
     for (i = 0; i < ItemIngot.METAL_NAMES.length; i++)
     {
       ItemStack is = new ItemStack(item_ingot,  1, i);
       OreDictionary.registerOre(ItemIngot.OREDICT_NAMES[i], is);
-//      ingot_stacks.put(ItemIngot.METAL_NAMES[i], is);
+      ingot_stacks.put(ItemIngot.METAL_NAMES[i], is);
     }
     ingot_stacks.put("Iron", new ItemStack(Items.iron_ingot));
     ingot_stacks.put("Gold", new ItemStack(Items.gold_ingot));
-    
+
+    for (i = 0; i < ItemDust.METAL_NAMES.length; i++)
+    {
+      ItemStack is = new ItemStack(item_dust,  1, i);
+      OreDictionary.registerOre(ItemDust.OREDICT_NAMES[i], is);
+      dust_stacks.put(ItemDust.METAL_NAMES[i], is);
+    }
+
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
     GameRegistry.registerItem(item_container, "foundryContainer");
-//    GameRegistry.registerCustomItemStack("refractoryFluidContainer", item_container.EmptyContainer(1));
   }
 
   static public ItemStack ingot(int dv)
@@ -104,6 +104,16 @@ public class FoundryItems
   static public ItemStack ingot(int dv,int amount)
   {
     return new ItemStack(item_ingot,amount,dv);
+  }
+
+  static public ItemStack dust(int dv)
+  {
+    return dust(dv,1);
+  }
+
+  static public ItemStack dust(int dv,int amount)
+  {
+    return new ItemStack(item_dust,amount,dv);
   }
 
   static public ItemStack component(int dv)

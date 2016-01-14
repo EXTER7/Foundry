@@ -109,10 +109,9 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean par4)
   {
     FluidStack fluid = getFluid(stack);
     if(fluid == null)

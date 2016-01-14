@@ -83,10 +83,9 @@ public class ItemIngot extends Item
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
+  public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
   {
     int i;
     for (i = 0; i < METAL_NAMES.length; i++)

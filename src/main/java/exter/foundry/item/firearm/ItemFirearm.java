@@ -11,6 +11,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import exter.foundry.item.FoundryItems;
+import exter.foundry.item.ItemIngot;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -46,7 +47,7 @@ public abstract class ItemFirearm extends ItemTool
   @Override
   public final boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
   {
-    ItemStack mat = FoundryItems.ingot_stacks.get("Steel");
+    ItemStack mat = FoundryItems.ingot(ItemIngot.INGOT_STEEL);
     if(mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, p_82789_2_, false))
     {
       return true;

@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "foundry:items/revolver"
+        "layer0": "foundry:items/dustLead"
     },
     "display": {
         "thirdperson": {

@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
@@ -32,6 +33,7 @@ import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
+import exter.foundry.item.ItemDust;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
@@ -341,7 +343,17 @@ public class FoundryRecipes
         CastingRecipeManager.instance.addRecipe(stack, fluid, mold_stairs, null);
         MeltingRecipeManager.instance.addRecipe(stack, fluid);
     }
-    
+
+    //Dust atomizing recipes.
+    for(Entry<String,ItemStack> entry:FoundryItems.dust_stacks.entrySet())
+    {
+      AtomizerRecipeManager.instance.addRecipe(
+          entry.getValue(),
+          new FluidStack(
+              LiquidMetalRegistry.instance.getFluid(entry.getKey()),
+              FoundryAPI.FLUID_AMOUNT_INGOT));
+    }
+
     if(FoundryConfig.recipe_steel_enable)
     {
       InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",36), new ItemStack(Items.coal,1,0), 240000);
@@ -759,33 +771,55 @@ public class FoundryRecipes
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS,4),
-        "CC",
-        "CZ",
-        'C', "dustCopper", 
-        'Z', "dustZinc"));
+    GameRegistry.addRecipe(new ShapelessOreRecipe(
+        FoundryItems.dust(ItemDust.DUST_BRONZE,4),
+        "dustCopper", 
+        "dustCopper", 
+        "dustCopper", 
+        "dustTin"));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL,2),
-        "CN",
-        'C', "dustCopper", 
-        'N', "dustNickel"));
+    GameRegistry.addRecipe(new ShapelessOreRecipe(
+        FoundryItems.dust(ItemDust.DUST_BRASS,4),
+        "dustCopper", 
+        "dustCopper", 
+        "dustCopper", 
+        "dustZinc"));
 
-    GameRegistry.addSmelting(
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC),
-        FoundryItems.ingot(ItemIngot.INGOT_ZINC),
-        0);
+    GameRegistry.addRecipe(new ShapelessOreRecipe(
+        FoundryItems.dust(ItemDust.DUST_CUPRONICKEL,2),
+        "dustCopper",
+        "dustNickel"));
 
-    GameRegistry.addSmelting(
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS),
-        FoundryItems.ingot(ItemIngot.INGOT_BRASS),
-        0);
+    GameRegistry.addRecipe(new ShapelessOreRecipe(
+        FoundryItems.dust(ItemDust.DUST_INVAR,3),
+        "dustIron", 
+        "dustIron", 
+        "dustNickel"));
 
-    GameRegistry.addSmelting(
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL),
-        FoundryItems.ingot(ItemIngot.INGOT_CUPRONICKEL),
-        0);
+    GameRegistry.addRecipe(new ShapelessOreRecipe(
+        FoundryItems.dust(ItemDust.DUST_ELECTRUM,2),
+        "dustGold", 
+        "dustSilver"));
+
+    for(Map.Entry<String, ItemStack> metal:FoundryItems.dust_stacks.entrySet())
+    {
+      GameRegistry.addSmelting(
+          metal.getValue(),
+          FoundryItems.ingot_stacks.get(metal.getKey()),
+          0);
+    }
+
+    
+    //Convert old dusts into the new dust item.
+    GameRegistry.addShapelessRecipe(
+        FoundryItems.dust(ItemDust.DUST_ZINC),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
+    GameRegistry.addShapelessRecipe(
+        FoundryItems.dust(ItemDust.DUST_BRASS),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
+    GameRegistry.addShapelessRecipe(
+        FoundryItems.dust(ItemDust.DUST_CUPRONICKEL),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
     
     //Mold crafting with vanilla items
     FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
@@ -1010,7 +1044,14 @@ public class FoundryRecipes
             CastingRecipeManager.instance.addRecipe("ingot" + name, fluid, ingot_mold, null);
           }
         }
-        AtomizerRecipeManager.instance.addRecipe("dust" + name, fluid);
+        ores = OreDictionary.getOres("dust" + name);
+        if(ores != null && ores.size() > 0)
+        {
+          if(AtomizerRecipeManager.instance.findRecipe(fluid) == null)
+          {
+            AtomizerRecipeManager.instance.addRecipe("dust" + name, fluid);
+          }
+        }
 
         ores = OreDictionary.getOres("block" + name);
         fluid = new FluidStack(LiquidMetalRegistry.instance.getFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);

@@ -18,6 +18,7 @@ import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
+import exter.foundry.item.ItemDust;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
@@ -163,6 +164,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     for(i = 0; i < ItemIngot.OREDICT_NAMES.length; i++)
     {
       registerItemModel(FoundryItems.item_ingot,ItemIngot.OREDICT_NAMES[i], i);
+    }
+
+    for(i = 0; i < ItemDust.OREDICT_NAMES.length; i++)
+    {
+      registerItemModel(FoundryItems.item_dust,ItemDust.OREDICT_NAMES[i], i);
     }
 
     for(i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)

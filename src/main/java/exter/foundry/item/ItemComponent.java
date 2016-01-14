@@ -29,9 +29,9 @@ public class ItemComponent extends Item
   static public final int COMPONENT_AMMO_CASING_SHELL = 15;
   static public final int COMPONENT_SHOTGUN_PUMP = 16;
   static public final int COMPONENT_SHOTGUN_FRAME = 17;
-  static public final int COMPONENT_DUST_ZINC = 18;
-  static public final int COMPONENT_DUST_BRASS = 19;
-  static public final int COMPONENT_DUST_CUPRONICKEL = 20;
+  @Deprecated static public final int COMPONENT_DUST_ZINC = 18;
+  @Deprecated static public final int COMPONENT_DUST_BRASS = 19;
+  @Deprecated static public final int COMPONENT_DUST_CUPRONICKEL = 20;
   static public final int COMPONENT_SHARD_ENERGY_TC = 21;
   static public final int COMPONENT_SHARD_LIFE_TC = 22;
   static public final int COMPONENT_SHARD_VOID_TC = 23;
@@ -82,10 +82,9 @@ public class ItemComponent extends Item
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
+  public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
   {
     int i;
     for (i = 0; i < REGISTRY_NAMES.length; i++)

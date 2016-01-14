@@ -27,7 +27,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   static public final int INVENTORY_CONTAINER_FILL = 4;
   static public final int INVENTORY_MOLD_STORAGE = 5;
   static public final int INVENTORY_MOLD_STORAGE_SIZE = 9;
-  private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
   ICastingRecipe current_recipe;
@@ -44,12 +43,11 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = -1;
-    inventory = new ItemStack[14];
     
     current_recipe = null;
     
-    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
+    addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
+    addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
    
     update_energy = true;
   }
@@ -81,77 +79,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     return 14;
   }
 
-  @Override
-  public ItemStack getStackInSlot(int slot)
-  {
-    return inventory[slot];
-  }
-
-  @Override
-  public ItemStack decrStackSize(int slot, int amount)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is;
-
-      if(inventory[slot].stackSize <= amount)
-      {
-        is = inventory[slot];
-        inventory[slot] = null;
-        markDirty();
-        return is;
-      } else
-      {
-        is = inventory[slot].splitStack(amount);
-
-        if(inventory[slot].stackSize == 0)
-        {
-          inventory[slot] = null;
-        }
-
-        markDirty();
-        return is;
-      }
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public ItemStack removeStackFromSlot(int slot)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is = inventory[slot];
-      inventory[slot] = null;
-      return is;
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public void setInventorySlotContents(int slot, ItemStack stack)
-  {
-    inventory[slot] = stack;
-
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-    {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
-
-    markDirty();
-  }
-
-  @Override
-  public int getInventoryStackLimit()
-  {
-    return 64;
-  }
-
-  public int GetProgress()
+  public int getProgress()
   {
     return progress;
   }
@@ -186,23 +114,19 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   @Override
   public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
-    return tank.fill(resource, doFill);
+    return fillTank(0, resource, doFill);
   }
 
   @Override
   public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
-    if(resource.isFluidEqual(tank.getFluid()))
-    {
-      return tank.drain(resource.amount, doDrain);
-    }
-    return null;
+    return drainTank(0, resource, doDrain);
   }
 
   @Override
   public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
-    return tank.drain(maxDrain, doDrain);
+    return drainTank(0, maxDrain, doDrain);
   }
 
   @Override

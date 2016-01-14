@@ -26,7 +26,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   public static final int SLOT_INPUT_B = 1;
   public static final int SLOT_OUTPUT = 2;
   public static final int SLOT_FUEL = 3;
-  private ItemStack[] inventory;
 
   public int burn_time;
 
@@ -42,7 +41,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   public TileEntityAlloyFurnace()
   {
-    inventory = new ItemStack[4];
     burn_time = 0;
     item_burn_time = 0;
     progress = 0;
@@ -53,66 +51,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   public int getSizeInventory()
   {
     return inventory.length;
-  }
-
-  @Override
-  public ItemStack getStackInSlot(int slot)
-  {
-    return inventory[slot];
-  }
-
-  @Override
-  public ItemStack decrStackSize(int slot, int amount)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack stack;
-
-      if(inventory[slot].stackSize <= amount)
-      {
-        stack = inventory[slot];
-        inventory[slot] = null;
-        return stack;
-      } else
-      {
-        stack = inventory[slot].splitStack(amount);
-
-        if(inventory[slot].stackSize == 0)
-        {
-          inventory[slot] = null;
-        }
-
-        return stack;
-      }
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public ItemStack removeStackFromSlot(int slot)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack itemstack = inventory[slot];
-      inventory[slot] = null;
-      return itemstack;
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public void setInventorySlotContents(int slot, ItemStack stack)
-  {
-    inventory[slot] = stack;
-
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-    {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
   }
 
   @Override
@@ -257,8 +195,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
         decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputA()));
         decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputB()));
       }
-      updateInventoryItem(SLOT_INPUT_A);
-      updateInventoryItem(SLOT_INPUT_B);
       if(inventory[SLOT_OUTPUT] == null)
       {
         inventory[SLOT_OUTPUT] = output.copy();

@@ -24,7 +24,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 {
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
-  private ItemStack[] inventory;
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
 
@@ -38,7 +37,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   public TileEntityRefractoryHopper()
   {
     visited = new boolean[41 * 20 * 41];
-    inventory = new ItemStack[2];
 
     next_drain = 12;
     next_world_drain = 300;
@@ -47,8 +45,8 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     tank = new FluidTank(2000);
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
-    AddContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_DRAIN, false));
-    AddContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_FILL, true));
+    addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_DRAIN, false));
+    addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_FILL, true));
   }
 
   @Override
@@ -83,76 +81,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   public int getSizeInventory()
   {
     return 2;
-  }
-
-  @Override
-  public ItemStack getStackInSlot(int slot)
-  {
-    return inventory[slot];
-  }
-
-  @Override
-  public ItemStack decrStackSize(int slot, int amount)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is;
-
-      if(inventory[slot].stackSize <= amount)
-      {
-        is = inventory[slot];
-        inventory[slot] = null;
-        markDirty();
-        return is;
-      } else
-      {
-        is = inventory[slot].splitStack(amount);
-
-        if(inventory[slot].stackSize == 0)
-        {
-          inventory[slot] = null;
-        }
-
-        markDirty();
-        return is;
-      }
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public ItemStack removeStackFromSlot(int slot)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is = inventory[slot];
-      inventory[slot] = null;
-      return is;
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public void setInventorySlotContents(int slot, ItemStack stack)
-  {
-    inventory[slot] = stack;
-
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-    {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
-
-    markDirty();
-  }
-
-  @Override
-  public int getInventoryStackLimit()
-  {
-    return 64;
   }
 
   @Override
@@ -205,7 +133,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     {
       next_drain = 12;
     }
-    return tank.fill(resource, doFill);
+    return fillTank(0, resource, doFill);
   }
 
   @Override
@@ -330,6 +258,8 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
           int z = drainblock / (41 * 20);
           todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add(x - 20, top_y + 1, z - 20), true);
           tank.fill(todrain, true);
+          updateTank(0);
+          markDirty();
         }
       }
     }
@@ -352,7 +282,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
             hsource.drain(EnumFacing.DOWN, drained, true);
             tank.fill(drained, true);
             updateTank(0);
-             markDirty();
+            markDirty();
           }
         }
       }

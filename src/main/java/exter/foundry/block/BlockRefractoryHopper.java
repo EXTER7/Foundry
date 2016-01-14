@@ -37,8 +37,8 @@ public class BlockRefractoryHopper extends BlockContainer
   {
     NORTH(0, "north", EnumFacing.NORTH),
     SOUTH(1, "south", EnumFacing.SOUTH),
-    EAST(2, "east", EnumFacing.WEST),
-    WEST(3, "west", EnumFacing.EAST),
+    EAST(2, "east", EnumFacing.EAST),
+    WEST(3, "west", EnumFacing.WEST),
     DOWN(4, "down", EnumFacing.DOWN);
 
     public final int id;

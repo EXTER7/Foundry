@@ -88,8 +88,8 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
 
     
     //Draw heat bar.
-    int heat = (te_icf.GetHeat() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
-    int melt_point = (te_icf.GetMeltingPoint() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
+    int heat = (te_icf.getHeat() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
+    int melt_point = (te_icf.getMeltingPoint() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
     if(heat > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
@@ -100,7 +100,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     }
 
     //Draw progress bar.
-    int progress = te_icf.GetProgress() * PROGRESS_WIDTH / TileEntityInductionCrucibleFurnace.SMELT_TIME;
+    int progress = te_icf.getProgress() * PROGRESS_WIDTH / TileEntityInductionCrucibleFurnace.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
@@ -126,8 +126,8 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      int heat = te_icf.GetHeat() / 100;
-      int melt_point = te_icf.GetMeltingPoint() / 100;
+      int heat = te_icf.getHeat() / 100;
+      int melt_point = te_icf.getMeltingPoint() / 100;
       currenttip.add("Heat: " + String.valueOf(heat) + " K");
       if(melt_point > 0)
       {

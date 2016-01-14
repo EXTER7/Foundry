@@ -75,7 +75,7 @@ public class GuiMetalInfuser extends GuiFoundry
     drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
     //Draw progress bar.
-    int progress = te_infuser.GetProgress() * PROGRESS_WIDTH / te_infuser.getExtractTime();
+    int progress = te_infuser.getProgress() * PROGRESS_WIDTH / te_infuser.getExtractTime();
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);

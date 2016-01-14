@@ -113,7 +113,6 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   public static final int SLOT_OUTPUT = 3;
 
-  private ItemStack[] inventory;
   private List<Route> routes;
   private int input_index;
 
@@ -125,7 +124,6 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   public TileEntityMaterialRouter()
   {
-    inventory = new ItemStack[SLOT_OUTPUT + 6];
     routes = new ArrayList<Route>();
     input_index = 0;
     gui_material_scroll = 0;
@@ -138,71 +136,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   @Override
   public int getSizeInventory()
   {
-    return inventory.length;
-  }
-
-  @Override
-  public ItemStack getStackInSlot(int slot)
-  {
-    return inventory[slot];
-  }
-
-  @Override
-  public ItemStack decrStackSize(int slot, int amount)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is;
-
-      if(inventory[slot].stackSize <= amount)
-      {
-        is = inventory[slot];
-        inventory[slot] = null;
-        markDirty();
-        return is;
-      } else
-      {
-        is = inventory[slot].splitStack(amount);
-
-        if(inventory[slot].stackSize == 0)
-        {
-          inventory[slot] = null;
-        }
-
-        markDirty();
-        return is;
-      }
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public ItemStack removeStackFromSlot(int slot)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is = inventory[slot];
-      inventory[slot] = null;
-      return is;
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public void setInventorySlotContents(int slot, ItemStack stack)
-  {
-    inventory[slot] = stack;
-
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-    {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
-
-    markDirty();
+    return SLOT_OUTPUT + 6;
   }
 
   @Override

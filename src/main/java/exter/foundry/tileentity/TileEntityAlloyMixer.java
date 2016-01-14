@@ -26,7 +26,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   static public final int INVENTORY_CONTAINER_INPUT_3_FILL = 7;
   static public final int INVENTORY_CONTAINER_OUTPUT_DRAIN = 8;
   static public final int INVENTORY_CONTAINER_OUTPUT_FILL = 9;
-  private ItemStack[] inventory;
 
   
   static public final int TANK_INPUT_0 = 0;
@@ -37,16 +36,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   private FluidTank[] tanks;
   private FluidTankInfo[] tank_info;
 
-  
-
-  
-  
+   
  
   public TileEntityAlloyMixer()
   {
     super();
     int i;
-    inventory = new ItemStack[10];
     
     tanks = new FluidTank[5];
     tank_info = new FluidTankInfo[5];
@@ -55,16 +50,16 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
       tanks[i] = new FluidTank(FoundryAPI.ALLOYMIXER_TANK_CAPACITY);
       tank_info[i] = new FluidTankInfo(tanks[i]);
     }
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_FILL,true));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_2,INVENTORY_CONTAINER_INPUT_2_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_2,INVENTORY_CONTAINER_INPUT_2_FILL,true));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_3,INVENTORY_CONTAINER_INPUT_3_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(TANK_INPUT_3,INVENTORY_CONTAINER_INPUT_3_FILL,true));
-    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
-    AddContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_DRAIN,false));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_FILL,true));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_2,INVENTORY_CONTAINER_INPUT_2_DRAIN,false));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_2,INVENTORY_CONTAINER_INPUT_2_FILL,true));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_3,INVENTORY_CONTAINER_INPUT_3_DRAIN,false));
+    addContainerSlot(new ContainerSlot(TANK_INPUT_3,INVENTORY_CONTAINER_INPUT_3_FILL,true));
+    addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
+    addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
   }
   
   @Override
@@ -72,78 +67,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   {
     return 10;
   }
-
-  @Override
-  public ItemStack getStackInSlot(int slot)
-  {
-    return inventory[slot];
-  }
-
-  @Override
-  public ItemStack decrStackSize(int slot, int amount)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is;
-
-      if(inventory[slot].stackSize <= amount)
-      {
-        is = inventory[slot];
-        inventory[slot] = null;
-        markDirty();
-        return is;
-      } else
-      {
-        is = inventory[slot].splitStack(amount);
-
-        if(inventory[slot].stackSize == 0)
-        {
-          inventory[slot] = null;
-        }
-
-        markDirty();
-        return is;
-      }
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public ItemStack removeStackFromSlot(int slot)
-  {
-    if(inventory[slot] != null)
-    {
-      ItemStack is = inventory[slot];
-      inventory[slot] = null;
-      return is;
-    } else
-    {
-      return null;
-    }
-  }
-
-  @Override
-  public void setInventorySlotContents(int slot, ItemStack stack)
-  {
-    inventory[slot] = stack;
-
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-    {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
-    
-    markDirty();
-  }
-
-  
-  @Override
-  public int getInventoryStackLimit()
-  {
-    return 64;
-  }
-
 
   static private final int[] SLOTS = { };
 
@@ -175,8 +98,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
     int i;
-    FluidTank empty = null;
-    FluidTank partial = null;
+    int empty = -1;
+    int partial = -1;
     for(i = 0; i < 4; i++)
     {
       FluidTank ft = tanks[i];
@@ -186,7 +109,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         {
           if(ft.getFluidAmount() < ft.getCapacity())
           {
-            partial = ft;
+            partial = i;
           } else
           {
             return 0;
@@ -194,17 +117,17 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
         }
       } else
       {
-        empty = ft;
+        empty = i;
       }
     }
 
-    if(partial != null)
+    if(partial != -1)
     {
-      return partial.fill(resource, doFill);
+      return fillTank(partial, resource, doFill);
     }
-    if(empty != null)
+    if(empty != -1)
     {
-      return empty.fill(resource, doFill);
+      return fillTank(empty, resource, doFill);
     }
     return 0;
   }
@@ -212,17 +135,13 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   @Override
   public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
   {
-    if(resource.isFluidEqual(tanks[TANK_OUTPUT].getFluid()))
-    {
-      return tanks[TANK_OUTPUT].drain(resource.amount, doDrain);
-    }
-    return null;
+    return drainTank(TANK_OUTPUT, resource, doDrain);
   }
 
   @Override
   public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
   {
-    return tanks[TANK_OUTPUT].drain(maxDrain, doDrain);
+    return drainTank(TANK_OUTPUT, maxDrain, doDrain);
   }
 
   @Override

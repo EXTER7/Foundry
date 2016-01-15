@@ -801,12 +801,29 @@ public class FoundryRecipes
         "dustGold", 
         "dustSilver"));
 
+    //Dust -> Ingot smelting recipes.
     for(Map.Entry<String, ItemStack> metal:FoundryItems.dust_stacks.entrySet())
     {
       GameRegistry.addSmelting(
           metal.getValue(),
           FoundryItems.ingot_stacks.get(metal.getKey()),
           0);
+    }
+
+    //Nugget <-> Ingot crafting recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryItems.nugget_stacks.entrySet())
+    {
+      ItemStack nuggets = metal.getValue().copy();
+      nuggets.stackSize = 9;
+      GameRegistry.addShapelessRecipe(
+          nuggets,
+          FoundryItems.ingot_stacks.get(metal.getKey()));
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          FoundryItems.ingot_stacks.get(metal.getKey()),
+          "NNN",
+          "NNN",
+          "NNN",
+          'N', metal.getValue())); 
     }
 
     

@@ -21,6 +21,7 @@ import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemDust;
 import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
+import exter.foundry.item.ItemNugget;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
@@ -169,6 +170,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     for(i = 0; i < ItemDust.OREDICT_NAMES.length; i++)
     {
       registerItemModel(FoundryItems.item_dust,ItemDust.OREDICT_NAMES[i], i);
+    }
+
+    for(i = 0; i < ItemNugget.OREDICT_NAMES.length; i++)
+    {
+      registerItemModel(FoundryItems.item_nugget,ItemNugget.OREDICT_NAMES[i], i);
     }
 
     for(i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)

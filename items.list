@@ -34,6 +34,24 @@ dustSteel
 dustTin
 dustTitanium
 dustZinc
+nuggetAluminum
+nuggetBrass
+nuggetBronze
+nuggetChromium
+nuggetCopper
+nuggetCupronickel
+nuggetElectrum
+nuggetInvar
+nuggetIron
+nuggetLead
+nuggetManganese
+nuggetNickel
+nuggetPlatinum
+nuggetSilver
+nuggetSteel
+nuggetTin
+nuggetTitanium
+nuggetZinc
 componentBlankMold
 componentBullet
 componentBulletHollow
@@ -137,6 +155,4 @@ roundPoison
 roundAP
 shellAP
 shellNormal
-revolver
-shotgun
 

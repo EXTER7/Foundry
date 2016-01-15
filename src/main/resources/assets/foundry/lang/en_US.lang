@@ -581,6 +581,25 @@ item.dust16.name=Cupronickel Dust
 item.dust17.name=Iron Dust
 item.dust18.name=Gold Dust
 
+item.nugget0.name=Copper Nugget
+item.nugget1.name=Tin Nugget
+item.nugget2.name=Bronze Nugget
+item.nugget3.name=Electrum Nugget
+item.nugget4.name=Invar Nugget
+item.nugget5.name=Nickel Nugget
+item.nugget6.name=Zinc Nugget
+item.nugget7.name=Brass Nugget
+item.nugget8.name=Silver Nugget
+item.nugget9.name=Steel Nugget
+item.nugget10.name=Lead Nugget
+item.nugget11.name=Aluminum Nugget
+item.nugget12.name=Chromium Nugget
+item.nugget13.name=Platinum Nugget
+item.nugget14.name=Manganese Nugget
+item.nugget15.name=Titanium Nugget
+item.nugget16.name=Cupronickel Nugget
+item.nugget17.name=Iron Nugget
+
 item.foundryContainer.name=Refractory Fluid Container
 
 item.revolver.name=Revolver

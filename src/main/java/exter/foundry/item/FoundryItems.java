@@ -26,6 +26,7 @@ public class FoundryItems
   static public ItemMold item_mold;
   static public ItemIngot item_ingot;
   static public ItemDust item_dust;
+  static public ItemNugget item_nugget;
   static public ItemRevolver item_revolver;
   static public ItemShotgun item_shotgun;
   static public ItemRoundNormal item_round;
@@ -40,8 +41,9 @@ public class FoundryItems
   
   static public ItemRefractoryFluidContainer item_container;
   
-  static public Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
-  static public Map<String,ItemStack> dust_stacks = new HashMap<String,ItemStack>();
+  static public final Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
+  static public final Map<String,ItemStack> dust_stacks = new HashMap<String,ItemStack>();
+  static public final Map<String,ItemStack> nugget_stacks = new HashMap<String,ItemStack>();
 
   static public void registerItems(Configuration config)
   {
@@ -49,6 +51,7 @@ public class FoundryItems
     item_mold = new ItemMold();
     item_ingot = new ItemIngot();
     item_dust = new ItemDust();
+    item_nugget = new ItemNugget();
     item_revolver = new ItemRevolver();
     item_shotgun = new ItemShotgun();
     item_round = new ItemRoundNormal();
@@ -64,6 +67,7 @@ public class FoundryItems
     GameRegistry.registerItem(item_mold, "foundryMold");
     GameRegistry.registerItem(item_ingot, "foundryIngot");
     GameRegistry.registerItem(item_dust, "foundryDust");
+    GameRegistry.registerItem(item_nugget, "foundryNugget");
     GameRegistry.registerItem(item_revolver, "foundryRevolver");
     GameRegistry.registerItem(item_shotgun, "foundryShotgun");
     GameRegistry.registerItem(item_round, "foundryRound");
@@ -92,6 +96,13 @@ public class FoundryItems
       dust_stacks.put(ItemDust.METAL_NAMES[i], is);
     }
 
+    for (i = 0; i < ItemNugget.METAL_NAMES.length; i++)
+    {
+      ItemStack is = new ItemStack(item_nugget,  1, i);
+      OreDictionary.registerOre(ItemNugget.OREDICT_NAMES[i], is);
+      nugget_stacks.put(ItemNugget.METAL_NAMES[i], is);
+    }
+
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
     GameRegistry.registerItem(item_container, "foundryContainer");
   }
@@ -114,6 +125,16 @@ public class FoundryItems
   static public ItemStack dust(int dv,int amount)
   {
     return new ItemStack(item_dust,amount,dv);
+  }
+
+  static public ItemStack nugget(int dv)
+  {
+    return nugget(dv,1);
+  }
+
+  static public ItemStack nugget(int dv,int amount)
+  {
+    return new ItemStack(item_nugget,amount,dv);
   }
 
   static public ItemStack component(int dv)

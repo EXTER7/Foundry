@@ -90,7 +90,7 @@ public class JEIFoundryPlugin implements IModPlugin
   @Override
   public void onItemRegistryAvailable(IItemRegistry itemRegistry)
   {
-    
+
   }
 
   @Override

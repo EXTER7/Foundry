@@ -89,8 +89,11 @@ public class ItemComponent extends Item
     int i;
     for (i = 0; i < REGISTRY_NAMES.length; i++)
     {
-      ItemStack itemstack = new ItemStack(this, 1, i);
-      list.add(itemstack);
+      if(i == COMPONENT_DUST_ZINC || i == COMPONENT_DUST_BRASS || i == COMPONENT_DUST_CUPRONICKEL)
+      {
+        continue;
+      }
+      list.add(new ItemStack(this, 1, i));
     }
   }
 }

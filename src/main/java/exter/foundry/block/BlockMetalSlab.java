@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyHelper;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -58,12 +59,13 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
     }
   }
   
-  private class PropertyVariant implements IProperty<Variant>
+  private class PropertyVariant extends PropertyHelper<Variant>
   {
     private List<Variant> variants;
     
     public PropertyVariant(Variant[] variants)
     {
+      super("metal",Variant.class);
       int i = 0;
       this.variants = new ArrayList<Variant>();
       for (Variant v : variants)
@@ -72,23 +74,11 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
         this.variants.add(v);
       }
     }
-    
-    @Override
-    public String getName()
-    {
-      return "metal";
-    }
 
     @Override
     public Collection<Variant> getAllowedValues()
     {
       return variants;
-    }
-
-    @Override
-    public Class<Variant> getValueClass()
-    {
-      return Variant.class;
     }
 
     @Override

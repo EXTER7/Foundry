@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyHelper;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -54,12 +54,13 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     }
   }
   
-  private class PropertyVariant implements IProperty<Variant>
+  private class PropertyVariant extends PropertyHelper<Variant>
   {
     private List<Variant> variants;
     
     public PropertyVariant(Variant[] variants)
     {
+      super("metal",Variant.class);
       int i = 0;
       this.variants = new ArrayList<Variant>();
       for (Variant v : variants)
@@ -70,21 +71,9 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     }
     
     @Override
-    public String getName()
-    {
-      return "metal";
-    }
-
-    @Override
     public Collection<Variant> getAllowedValues()
     {
       return variants;
-    }
-
-    @Override
-    public Class<Variant> getValueClass()
-    {
-      return Variant.class;
     }
 
     @Override

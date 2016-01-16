@@ -8,9 +8,10 @@ import net.minecraft.block.state.IBlockState;
 
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class WordGenOre
 {
@@ -52,16 +53,28 @@ public class WordGenOre
       int x = chunkX * 16 + random.nextInt(16);
       int y = min_y + random.nextInt(max_y - min_y);
       int z = chunkZ * 16 + random.nextInt(16);
-      wgm.generate(world, random, new BlockPos(x,y,z));
+      BlockPos pos = new BlockPos(x,y,z);
+      BiomeGenBase biome = world.getBiomeGenForCoords(pos);
+      for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END))
+      {
+        if(bio == biome)
+        {
+          continue;
+        }
+      }
+      for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER))
+      {
+        if(bio == biome)
+        {
+          continue;
+        }
+      }
+      wgm.generate(world, random, pos);
     }
   }
   
   static public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
   {
-    if(!(chunkGenerator instanceof ChunkProviderGenerate))
-    {
-      return;
-    }
     for(WordGenOre wgo:ores)
     {
       wgo.generateOre(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);

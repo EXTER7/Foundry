@@ -65,7 +65,7 @@ import exter.foundry.worldgen.WordGenOre;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.15.0.1684,)"
+  dependencies = "required-after:Forge@[11.15.0.1699,)"
 )
 public class ModFoundry
 {

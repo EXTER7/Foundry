@@ -58,14 +58,12 @@ import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.worldgen.FoundryWorldGenerator;
-import exter.foundry.worldgen.WordGenOre;
 
 @Mod(
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.15.0.1699,)"
+  dependencies = "required-after:Forge@[11.15.0.1699,);required-after:substratum"
 )
 public class ModFoundry
 {
@@ -164,32 +162,6 @@ public class ModFoundry
 
 
     FoundryRecipes.Init();
-
-    if(FoundryConfig.worldgen_copper)
-    {
-      WordGenOre.registerOre(16, 80, 12, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.COPPER));
-    }
-    if(FoundryConfig.worldgen_tin)
-    {
-      WordGenOre.registerOre(16, 52, 8, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.TIN));
-    }
-    if(FoundryConfig.worldgen_zinc)
-    {
-      WordGenOre.registerOre(8, 48, 6, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.ZINC));
-    }
-    if(FoundryConfig.worldgen_nickel)
-    {
-      WordGenOre.registerOre(8, 36, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.NICKEL));
-    }
-    if(FoundryConfig.worldgen_silver)
-    {
-      WordGenOre.registerOre(2, 30, 3, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.SILVER));
-    }
-    if(FoundryConfig.worldgen_lead)
-    {
-      WordGenOre.registerOre(8, 48, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.LEAD));
-    }
-    GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
 
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET),1,3,8));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,7));

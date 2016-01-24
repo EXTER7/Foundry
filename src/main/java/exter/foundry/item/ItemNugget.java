@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated // Moved to substratum
 public class ItemNugget extends Item
 {
   static public final int NUGGET_COPPER = 0;

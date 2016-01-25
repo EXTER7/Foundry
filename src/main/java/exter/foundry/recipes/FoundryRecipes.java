@@ -42,6 +42,7 @@ import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 
@@ -90,20 +91,55 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.registerLiquidMetal( "Kanthal", 1900, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Nichrome", 1950, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Mithril", 1950, 12);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "ElectrumFlux", 1500, 14);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Redstone", 1000, 8);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "RedAlloy", 1350, 10);    
+    LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Redstone", 1000, 8, null);
 
     
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
     {
-      FoundryUtils.registerBasicMeltingRecipes(name,LiquidMetalRegistry.instance.getFluid(name));
+      FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(name);
+      if(!fluid.special)
+      {
+        FoundryUtils.registerBasicMeltingRecipes(name,fluid);
+      }
     }
     FoundryUtils.registerBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.getFluid("Chromium"));
     FoundryUtils.registerBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.getFluid("Aluminum"));
+    
+    if(FoundryConfig.recipe_glass)
+    {
+      final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
+
+      int temp = 1550;
+      Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.glass));
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
+      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
+      CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.MOLD_BLOCK),null,400);
+      
+      for(EnumDyeColor dye:EnumDyeColor.values())
+      {
+        String name = dye.getName();
+        int color = ItemDye.dyeColors[dye.getDyeDamage()];
+        int c1 = 63 + (color & 0xFF) * 3 / 4;
+        int c2 = 63 + ((color >> 8 ) & 0xFF) * 3 / 4;
+        int c3 = 63 + ((color >> 16) & 0xFF) * 3 / 4;
+        int fluid_color = c1 | (c2 << 8) | (c3 << 16);
+        
+        int meta = dye.getMetadata();
+        ItemStack stained_glass = new ItemStack(Blocks.stained_glass,1,meta);
+
+        Fluid liquid_glass_colored = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass." + name, temp, 12, "liquidGlass", fluid_color, stained_glass);
+
+        MeltingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(liquid_glass_colored,1000),temp,250);
+        MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(liquid_glass_colored,375),temp,250);
+        CastingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(liquid_glass_colored,1000),FoundryItems.mold(ItemMold.MOLD_BLOCK),null,400);
+        
+        InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
+        InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
+      }
+    }
   }
 
   static private ItemStack getNewItem(String oredict)
@@ -165,8 +201,40 @@ public class FoundryRecipes
       }
     }
 
-    
+    // Block conversion recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryBlocks.block_stacks.entrySet())
+    {
+      ItemStack block = getNewItem("block" + metal.getKey());
+      if(block != null)
+      {
+        GameRegistry.addShapelessRecipe(block, metal.getValue()); 
+      }
+    }
+
+    // Slab conversion recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryBlocks.slab_stacks.entrySet())
+    {
+      ItemStack slab = getNewItem("slab" + metal.getKey());
+      if(slab != null)
+      {
+        GameRegistry.addShapelessRecipe(slab, metal.getValue()); 
+      }
+    }
+
+    // stairs conversion recipes.
+    for(Map.Entry<String, BlockStairs> metal:FoundryBlocks.block_metal_stairs.entrySet())
+    {
+      ItemStack stairs = getNewItem("stairs" + metal.getKey());
+      if(stairs != null)
+      {
+        GameRegistry.addShapelessRecipe(stairs, new ItemStack(metal.getValue())); 
+      }
+    }
+
     //Convert old dusts into the new dust item.
+    GameRegistry.addShapelessRecipe(
+        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "gearStone"),
+        FoundryItems.component(ItemComponent.COMPONENT_GEAR));
     GameRegistry.addShapelessRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustZinc"),
         FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
@@ -195,7 +263,7 @@ public class FoundryRecipes
           FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotSilver"),0);
     GameRegistry.addSmelting(
           new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.LEAD.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotLead"),0);;
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotLead"),0);
   }
   
   static public void init()
@@ -480,37 +548,6 @@ public class FoundryRecipes
       }
     }
            
-    if(FoundryConfig.recipe_glass)
-    {
-      final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
-
-      int temp = 1550;
-      Fluid liquid_glass = LiquidMetalRegistry.instance.registerLiquidMetal("Glass", temp, 12);
-      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);
-      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
-      MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
-      CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),mold_block,null,400);
-      
-      for(EnumDyeColor dye:EnumDyeColor.values())
-      {
-        String name = dye.getName();
-        int color = ItemDye.dyeColors[dye.getDyeDamage()];
-        int c1 = 63 + (color & 0xFF) * 3 / 4;
-        int c2 = 63 + ((color >> 8 ) & 0xFF) * 3 / 4;
-        int c3 = 63 + ((color >> 16) & 0xFF) * 3 / 4;
-        int fluid_color = c1 | (c2 << 8) | (c3 << 16);
-        
-        Fluid liquid_glass_colored = LiquidMetalRegistry.instance.registerLiquidMetal("Glass." + name, temp, 12,"liquidGlass",fluid_color);
-
-        int meta = dye.getMetadata();
-        MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),temp,250);
-        MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(liquid_glass_colored,375),temp,250);
-        CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass,1,meta), new FluidStack(liquid_glass_colored,1000),mold_block,null,400);
-        
-        InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
-        InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
-      }
-    }
     
     ItemStack bullet = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET);
     ItemStack bullet_hollow = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW);
@@ -1057,33 +1094,34 @@ public class FoundryRecipes
     ItemStack block_mold = FoundryItems.mold(ItemMold.MOLD_BLOCK);
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
     {
-      if(!name.startsWith("Glass"))
+      FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(name);
+      if(!fluid.special)
       {
-        FluidStack fluid = new FluidStack(LiquidMetalRegistry.instance.getFluid(name), FoundryAPI.FLUID_AMOUNT_INGOT);
+        FluidStack fluidstack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
         List<ItemStack> ores = OreDictionary.getOres("ingot" + name);
         if(ores != null && ores.size() > 0)
         {
-          if(CastingRecipeManager.instance.findRecipe(fluid, ingot_mold, null) == null)
+          if(CastingRecipeManager.instance.findRecipe(fluidstack, ingot_mold, null) == null)
           {
-            CastingRecipeManager.instance.addRecipe("ingot" + name, fluid, ingot_mold, null);
+            CastingRecipeManager.instance.addRecipe("ingot" + name, fluidstack, ingot_mold, null);
           }
         }
         ores = OreDictionary.getOres("dust" + name);
         if(ores != null && ores.size() > 0)
         {
-          if(AtomizerRecipeManager.instance.findRecipe(fluid) == null)
+          if(AtomizerRecipeManager.instance.findRecipe(fluidstack) == null)
           {
-            AtomizerRecipeManager.instance.addRecipe("dust" + name, fluid);
+            AtomizerRecipeManager.instance.addRecipe("dust" + name, fluidstack);
           }
         }
 
         ores = OreDictionary.getOres("block" + name);
-        fluid = new FluidStack(LiquidMetalRegistry.instance.getFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);
+        fluidstack = new FluidStack(LiquidMetalRegistry.instance.getFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);
         if(ores != null && ores.size() > 0)
         {
-          if(CastingRecipeManager.instance.findRecipe(fluid, block_mold, null) == null)
+          if(CastingRecipeManager.instance.findRecipe(fluidstack, block_mold, null) == null)
           {
-            CastingRecipeManager.instance.addRecipe("block" + name, fluid, block_mold, null);
+            CastingRecipeManager.instance.addRecipe("block" + name, fluidstack, block_mold, null);
           }
         }
       }

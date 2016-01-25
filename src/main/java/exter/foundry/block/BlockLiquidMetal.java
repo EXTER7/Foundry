@@ -29,9 +29,9 @@ public class BlockLiquidMetal extends BlockFluidClassic
   
   private IBlockState solid_state = null;
 
-  public BlockLiquidMetal(Fluid fluid, String name, Material material,Object solid_block)
+  public BlockLiquidMetal(Fluid fluid, String name, Object solid_block)
   {
-    super(fluid, material);
+    super(fluid, Material.lava);
     setLightOpacity(0);
     setLightLevel(1.0f);
     solid = solid_block;

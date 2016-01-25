@@ -135,10 +135,20 @@ public class FoundryBlocks
 
     for(i = 0; i < block_slab.length; i++)
     {
-      BlockSlab slab = block_slab[i];
+      BlockMetalSlab slab = block_slab[i];
       ImmutablePair<BlockSlab,Object> slabdouble = new ImmutablePair<BlockSlab,Object>(block_slabdouble[i],null);
       GameRegistry.registerBlock(slab, ItemBlockSlab.class, "slabMetal" + (i + 1), slabdouble);
       GameRegistry.registerBlock(slabdouble.left, ItemBlockSlab.class, "slabMetalDouble" + (i + 1), slabdouble);
+      for(BlockMetalSlab.Variant v:slab.getVariantProperty().getAllowedValues())
+      {
+        IBlockState state = slab.getBottomVariant(v);
+        ItemStack item = new ItemStack(slab,1,slab.getMetaFromState(state));
+        slab_stacks.put(v.metal, item);
+        if(FoundryConfig.legacy_register_oredict)
+        {
+          OreDictionary.registerOre("slab" + v.metal, item);
+        }
+      }
     }
   }
   

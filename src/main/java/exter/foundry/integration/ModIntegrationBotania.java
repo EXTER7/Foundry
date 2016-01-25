@@ -12,18 +12,18 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ModIntegrationBotania implements IModIntegration
 {
-  private Fluid liquid_manasteel;
-  private Fluid liquid_terrasteel;
-  private Fluid liquid_elementium;
+  private FluidLiquidMetal liquid_manasteel;
+  private FluidLiquidMetal liquid_terrasteel;
+  private FluidLiquidMetal liquid_elementium;
 
   @Override
   public void onPreInit(Configuration config)

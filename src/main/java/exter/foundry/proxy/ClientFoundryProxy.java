@@ -28,6 +28,7 @@ import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.model.RFCModel;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
+import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
@@ -100,7 +101,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
     MaterialRegistry.instance.initIcons();
     InfuserRecipeManager.instance.InitTextures();
-    for(Map.Entry<String,Fluid> e:LiquidMetalRegistry.instance.getFluids().entrySet())
+    for(Map.Entry<String,FluidLiquidMetal> e:LiquidMetalRegistry.instance.getFluids().entrySet())
     {
       Fluid fluid = e.getValue();
       Block block = fluid.getBlock();

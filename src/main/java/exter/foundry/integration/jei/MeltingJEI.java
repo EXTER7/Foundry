@@ -26,7 +26,6 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;

@@ -11,7 +11,8 @@ import exter.foundry.creativetab.FoundryTabMaterials;
 
 public class ItemComponent extends Item
 {
-  static public final int COMPONENT_GEAR = 0;
+  
+  @Deprecated static public final int COMPONENT_GEAR = 0;// Moved to substratum
   static public final int COMPONENT_HEATINGCOIL = 1;
   static public final int COMPONENT_REFRACTORYCLAY = 2;
   static public final int COMPONENT_REFRACTORYBRICK = 3;
@@ -29,9 +30,9 @@ public class ItemComponent extends Item
   static public final int COMPONENT_AMMO_CASING_SHELL = 15;
   static public final int COMPONENT_SHOTGUN_PUMP = 16;
   static public final int COMPONENT_SHOTGUN_FRAME = 17;
-  @Deprecated static public final int COMPONENT_DUST_ZINC = 18;
-  @Deprecated static public final int COMPONENT_DUST_BRASS = 19;
-  @Deprecated static public final int COMPONENT_DUST_CUPRONICKEL = 20;
+  @Deprecated static public final int COMPONENT_DUST_ZINC = 18;// Moved to substratum
+  @Deprecated static public final int COMPONENT_DUST_BRASS = 19;// Moved to substratum
+  @Deprecated static public final int COMPONENT_DUST_CUPRONICKEL = 20;// Moved to substratum
   static public final int COMPONENT_SHARD_ENERGY_TC = 21;
   static public final int COMPONENT_SHARD_LIFE_TC = 22;
   static public final int COMPONENT_SHARD_VOID_TC = 23;
@@ -78,7 +79,8 @@ public class ItemComponent extends Item
   }
   
   @Override
-  public String getUnlocalizedName(ItemStack itemstack) {
+  public String getUnlocalizedName(ItemStack itemstack)
+  {
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
 
@@ -89,7 +91,7 @@ public class ItemComponent extends Item
     int i;
     for (i = 0; i < REGISTRY_NAMES.length; i++)
     {
-      if(i == COMPONENT_DUST_ZINC || i == COMPONENT_DUST_BRASS || i == COMPONENT_DUST_CUPRONICKEL)
+      if(i == COMPONENT_GEAR || i == COMPONENT_DUST_ZINC || i == COMPONENT_DUST_BRASS || i == COMPONENT_DUST_CUPRONICKEL)
       {
         continue;
       }

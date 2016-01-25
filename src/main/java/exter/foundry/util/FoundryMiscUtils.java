@@ -4,8 +4,6 @@ import java.util.List;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.block.BlockFoundryOre;
-import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.ItemMold;
@@ -58,13 +56,6 @@ public class FoundryMiscUtils
         new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
   }
 
-  static public void registerOreSmelting(BlockFoundryOre.EnumOre ore,int ingot)
-  {
-    GameRegistry.addSmelting(
-        FoundryBlocks.block_ore.asItemStack(ore),
-        new ItemStack(FoundryItems.item_ingot, 1, ingot), 0.0f);
-  }
-
   static public String getItemOreDictionaryName(ItemStack stack)
   {
     for(String name:OreDictionary.getOreNames())
@@ -81,8 +72,13 @@ public class FoundryMiscUtils
     return null;
   }
 
-  @SuppressWarnings("deprecation")
   static public ItemStack getModItemFromOreDictionary(String modid,String orename)
+  {
+    return getModItemFromOreDictionary(modid, orename, 1);
+  }
+
+  @SuppressWarnings("deprecation")
+  static public ItemStack getModItemFromOreDictionary(String modid,String orename, int amount)
   {
     modid = modid.toLowerCase();
     for(ItemStack is:OreDictionary.getOres(orename))
@@ -90,7 +86,7 @@ public class FoundryMiscUtils
       if(GameRegistry.findUniqueIdentifierFor(is.getItem()).modId.equals(modid))
       {
         is = is.copy();
-        is.stackSize = 1;
+        is.stackSize = amount;
         return is;
       }
     }

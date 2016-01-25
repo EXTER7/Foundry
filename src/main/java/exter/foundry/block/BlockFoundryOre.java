@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
+@Deprecated // Moved to substratum
 public class BlockFoundryOre extends Block implements IBlockVariants
 {
 
@@ -108,15 +109,11 @@ public class BlockFoundryOre extends Block implements IBlockVariants
     return getMetaFromState(state);
   }
   
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
   {
-    for(EnumOre ore:EnumOre.values())
-    {
-      list.add(new ItemStack(item, 1, ore.id));
-    }
+
   }
   
   public ItemStack asItemStack(EnumOre ore)

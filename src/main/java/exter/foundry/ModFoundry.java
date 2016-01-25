@@ -30,7 +30,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
@@ -58,14 +57,12 @@ import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.worldgen.FoundryWorldGenerator;
-import exter.foundry.worldgen.WordGenOre;
 
 @Mod(
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.15.0.1699,)"
+  dependencies = "required-after:Forge@[11.15.0.1699,);required-after:substratum"
 )
 public class ModFoundry
 {
@@ -90,6 +87,17 @@ public class ModFoundry
   
   public static SimpleNetworkWrapper network_channel;
   
+  @SuppressWarnings("deprecation")
+  private static void initLegacy()
+  {
+    if(FoundryConfig.legacy_register_oredict && FoundryConfig.legacy_items_enable)
+    {
+      OreDictionary.registerOre("dustZinc", FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
+      OreDictionary.registerOre("dustBrass", FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
+      OreDictionary.registerOre("dustCupronickel", FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
+    }
+  }
+  
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
@@ -109,28 +117,16 @@ public class ModFoundry
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
 
-
-    
-    OreDictionary.registerOre("ingotIron", Items.iron_ingot);
-    OreDictionary.registerOre("blockIron", Blocks.iron_block);
-    OreDictionary.registerOre("ingotGold", Items.gold_ingot);
-    OreDictionary.registerOre("blockGold", Blocks.gold_block);
-    OreDictionary.registerOre("nuggetGold", Items.gold_nugget);
-    OreDictionary.registerOre("dustRedstone", Items.redstone);
-    OreDictionary.registerOre("blockRedstone", Blocks.redstone_block);
-
-
     FoundryConfig.load(config);
     FoundryItems.registerItems(config);
     FoundryBlocks.registerBlocks(config);
 
     OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
     OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
-    OreDictionary.registerOre("dustZinc", FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
-    OreDictionary.registerOre("dustBrass", FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
-    OreDictionary.registerOre("dustCupronickel", FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
+    
+    initLegacy();
 
-    FoundryRecipes.PreInit();
+    FoundryRecipes.preInit();
     
     ModIntegrationManager.preInit(config);
 
@@ -163,33 +159,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, "Foundry_MetalAtomizer");
 
 
-    FoundryRecipes.Init();
-
-    if(FoundryConfig.worldgen_copper)
-    {
-      WordGenOre.registerOre(16, 80, 12, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.COPPER));
-    }
-    if(FoundryConfig.worldgen_tin)
-    {
-      WordGenOre.registerOre(16, 52, 8, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.TIN));
-    }
-    if(FoundryConfig.worldgen_zinc)
-    {
-      WordGenOre.registerOre(8, 48, 6, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.ZINC));
-    }
-    if(FoundryConfig.worldgen_nickel)
-    {
-      WordGenOre.registerOre(8, 36, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.NICKEL));
-    }
-    if(FoundryConfig.worldgen_silver)
-    {
-      WordGenOre.registerOre(2, 30, 3, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.SILVER));
-    }
-    if(FoundryConfig.worldgen_lead)
-    {
-      WordGenOre.registerOre(8, 48, 5, FoundryBlocks.block_ore.asState(BlockFoundryOre.EnumOre.LEAD));
-    }
-    GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
+    FoundryRecipes.init();
 
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET),1,3,8));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,7));
@@ -286,7 +256,7 @@ public class ModFoundry
   public void postInit(FMLPostInitializationEvent event)
   {
     ModIntegrationManager.postInit();
-    FoundryRecipes.PostInit();
+    FoundryRecipes.postInit();
     proxy.postInit();
     ModIntegrationManager.afterPostInit();
   }

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated // Moved to substratum
 public class ItemNugget extends Item
 {
   static public final int NUGGET_COPPER = 0;
@@ -74,7 +75,8 @@ public class ItemNugget extends Item
     "nuggetIron"
   };
   
-  public ItemNugget() {
+  public ItemNugget()
+  {
     super();
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
@@ -82,7 +84,8 @@ public class ItemNugget extends Item
   }
   
   @Override
-  public String getUnlocalizedName(ItemStack itemstack) {
+  public String getUnlocalizedName(ItemStack itemstack)
+  {
     return getUnlocalizedName() + itemstack.getItemDamage();
   }
 
@@ -90,11 +93,6 @@ public class ItemNugget extends Item
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
   {
-    int i;
-    for (i = 0; i < METAL_NAMES.length; i++)
-    {
-      ItemStack itemstack = new ItemStack(this, 1, i);
-      list.add(itemstack);
-    }
+    
   }
 }

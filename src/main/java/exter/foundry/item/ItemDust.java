@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated // Moved to substratum
 public class ItemDust extends Item
 {
   static public final int DUST_COPPER = 0;
@@ -93,11 +94,6 @@ public class ItemDust extends Item
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
   {
-    int i;
-    for (i = 0; i < METAL_NAMES.length; i++)
-    {
-      ItemStack itemstack = new ItemStack(this, 1, i);
-      list.add(itemstack);
-    }
+
   }
 }

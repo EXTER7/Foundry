@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyHelper;
@@ -17,7 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 
-
+@Deprecated // Moved to substratum
 public abstract class BlockMetal extends Block implements IBlockVariants
 {
   static public class Variant implements IStringSerializable,Comparable<Variant>
@@ -95,7 +94,6 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     setResistance(8.0F);
     setUnlocalizedName("metalBlock");
     setStepSound(Block.soundTypeMetal);
-    setCreativeTab(FoundryTabBlocks.tab);
   }
   
   @Override
@@ -132,15 +130,11 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     return getMetaFromState(state);
   }
     
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
   {
-    for(Variant v:getVariants())
-    {
-      list.add(new ItemStack(item, 1, v.id));
-    }
+
   }
   
   @Override

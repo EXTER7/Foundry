@@ -22,8 +22,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.creativetab.FoundryTabBlocks;
 
+@Deprecated // Moved to substratum
 public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
 {
 
@@ -98,7 +98,6 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
   {
     super(Material.iron);
     this.single = single;
-    setCreativeTab(FoundryTabBlocks.tab);
     setHardness(5.0F);
     setResistance(10.0F);
     setStepSound(Block.soundTypeMetal);
@@ -138,18 +137,11 @@ public abstract class BlockMetalSlab extends BlockSlab implements IBlockVariants
     }
   }
 
-  @SuppressWarnings("unchecked")
-  @SideOnly(Side.CLIENT)
   @Override
-  public void getSubBlocks(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List items)
+  @SideOnly(Side.CLIENT)
+  public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
   {
-    if(!isDouble())
-    {
-      for(Variant v:getVariants())
-      {
-        items.add(new ItemStack(item, 1, v.id));
-      }
-    }
+
   }
 
   @SideOnly(Side.CLIENT)

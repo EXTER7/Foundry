@@ -24,13 +24,13 @@ import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Optional;
 
@@ -41,21 +41,21 @@ public class ModIntegrationThaumcraft implements IModIntegration
   private boolean gear_recipes;
   private boolean plate_recipes;
   
-  private Fluid liquid_aer;
-  private Fluid liquid_terra;
-  private Fluid liquid_aqua;
-  private Fluid liquid_ignis;
-  private Fluid liquid_ordo;
-  private Fluid liquid_perditio;
+  private FluidLiquidMetal liquid_aer;
+  private FluidLiquidMetal liquid_terra;
+  private FluidLiquidMetal liquid_aqua;
+  private FluidLiquidMetal liquid_ignis;
+  private FluidLiquidMetal liquid_ordo;
+  private FluidLiquidMetal liquid_perditio;
 
-  private Fluid liquid_potentia;
-  private Fluid liquid_victus;
-  private Fluid liquid_vacous;
+  private FluidLiquidMetal liquid_potentia;
+  private FluidLiquidMetal liquid_victus;
+  private FluidLiquidMetal liquid_vacous;
 
-  private Fluid liquid_primal;
+  private FluidLiquidMetal liquid_primal;
   
-  private Fluid liquid_thaumium;
-  private Fluid liquid_voidmetal;
+  private FluidLiquidMetal liquid_thaumium;
+  private FluidLiquidMetal liquid_voidmetal;
 
 
   @Optional.Method(modid = "Thaumcraft")

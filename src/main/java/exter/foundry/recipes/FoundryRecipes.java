@@ -2,7 +2,6 @@ package exter.foundry.recipes;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -10,7 +9,6 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -21,7 +19,6 @@ import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
@@ -66,7 +63,7 @@ public class FoundryRecipes
   static public Fluid liquid_lead;
   static public Fluid liquid_rubber;
 
-  static public void PreInit()
+  static public void preInit()
   {
     liquid_iron = LiquidMetalRegistry.instance.registerLiquidMetal( "Iron", 1850, 15);
     liquid_gold = LiquidMetalRegistry.instance.registerLiquidMetal( "Gold", 1350, 15);
@@ -109,7 +106,99 @@ public class FoundryRecipes
     FoundryUtils.registerBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.getFluid("Aluminum"));
   }
 
-  static public void Init()
+  static private ItemStack getNewItem(String oredict)
+  {
+    ItemStack result = FoundryMiscUtils.getModItemFromOreDictionary("substratum", oredict);
+    if(result == null && OreDictionary.getOres(oredict).size() > 0)
+    {
+      return OreDictionary.getOres(oredict).get(0);
+    }
+    return result;
+  }
+  
+  @SuppressWarnings("deprecation")
+  static private void addLegacyRecipes()
+  {
+    // Dust conversion recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryItems.dust_stacks.entrySet())
+    {
+
+      ItemStack ingot = getNewItem("ingot" + metal.getKey());
+      ItemStack dust = getNewItem("dust" + metal.getKey());
+      if(ingot != null)
+      {
+        GameRegistry.addSmelting(metal.getValue(), ingot, 0);
+      }
+      if(dust != null)
+      {
+        GameRegistry.addShapelessRecipe(dust, metal.getValue()); 
+      }
+    }
+
+    // Nugget conversion recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryItems.nugget_stacks.entrySet())
+    {
+      ItemStack ingot = getNewItem("ingot" + metal.getKey());
+      ItemStack nugget = getNewItem("nugget" + metal.getKey());
+      if(ingot != null)
+      {
+        GameRegistry.addRecipe(new ShapedOreRecipe(
+            ingot,
+            "NNN",
+            "NNN",
+            "NNN",
+            'N', metal.getValue())); 
+      }
+      if(nugget != null)
+      {
+        GameRegistry.addShapelessRecipe(nugget, metal.getValue()); 
+      }
+    }
+
+    // Ingot conversion recipes.
+    for(Map.Entry<String, ItemStack> metal:FoundryItems.ingot_stacks.entrySet())
+    {
+      ItemStack ingot = getNewItem("ingot" + metal.getKey());
+      if(ingot != null)
+      {
+        GameRegistry.addShapelessRecipe(ingot, metal.getValue()); 
+      }
+    }
+
+    
+    //Convert old dusts into the new dust item.
+    GameRegistry.addShapelessRecipe(
+        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustZinc"),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
+    GameRegistry.addShapelessRecipe(
+        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustBrass"),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
+    GameRegistry.addShapelessRecipe(
+        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustCupronickel"),
+        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
+
+    //Ore -> ingot furnace recipes.
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.COPPER.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotCopper"),0);
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.TIN.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotTin"),0);
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.ZINC.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotZinc"),0);
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.NICKEL.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotNickel"),0);
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.SILVER.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotSilver"),0);
+    GameRegistry.addSmelting(
+          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.LEAD.id),
+          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotLead"),0);;
+  }
+  
+  static public void init()
   {
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),
@@ -784,43 +873,8 @@ public class FoundryRecipes
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
     
-// TODO: Add convertion into new items.
-//    //Dust -> Ingot smelting recipes.
-//    for(Map.Entry<String, ItemStack> metal:FoundryItems.dust_stacks.entrySet())
-//    {
-//      GameRegistry.addSmelting(
-//          metal.getValue(),
-//          FoundryItems.ingot_stacks.get(metal.getKey()),
-//          0);
-//    }
-//
-//    //Nugget <-> Ingot crafting recipes.
-//    for(Map.Entry<String, ItemStack> metal:FoundryItems.nugget_stacks.entrySet())
-//    {
-//      ItemStack nuggets = metal.getValue().copy();
-//      nuggets.stackSize = 9;
-//      GameRegistry.addShapelessRecipe(
-//          nuggets,
-//          FoundryItems.ingot_stacks.get(metal.getKey()));
-//      GameRegistry.addRecipe(new ShapedOreRecipe(
-//          FoundryItems.ingot_stacks.get(metal.getKey()),
-//          "NNN",
-//          "NNN",
-//          "NNN",
-//          'N', metal.getValue())); 
-//    }
-//
-//    
-    //Convert old dusts into the new dust item.
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustZinc"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustBrass"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustCupronickel"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
+
+
     
     //Mold crafting with vanilla items
     FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
@@ -914,13 +968,6 @@ public class FoundryRecipes
       }
     }
 
-//    //Ore -> ingot furnace recipes TODO: Make ores output Substratum ingots.
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.COPPER,ItemIngot.INGOT_COPPER);
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.TIN,ItemIngot.INGOT_TIN);
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.ZINC,ItemIngot.INGOT_ZINC);
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.NICKEL,ItemIngot.INGOT_NICKEL);
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.SILVER,ItemIngot.INGOT_SILVER);
-//    FoundryMiscUtils.registerOreSmelting(BlockFoundryOre.EnumOre.LEAD,ItemIngot.INGOT_LEAD);
     
     //Clay mold furnace recipes
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BLOCK_SOFT,ItemMold.MOLD_BLOCK);
@@ -961,8 +1008,12 @@ public class FoundryRecipes
     }
   }
 
-  static public void PostInit()
+  static public void postInit()
   {
+    if(FoundryConfig.legacy_items_enable)
+    {
+      addLegacyRecipes();
+    }
     for(OreDictType type:OreDictType.TYPES)
     {
       for(OreDictMaterial material:OreDictMaterial.MATERIALS)

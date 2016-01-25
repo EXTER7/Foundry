@@ -26,6 +26,8 @@ import net.minecraftforge.oredict.OreDictionary;
 public class BlockLiquidMetal extends BlockFluidClassic
 {
   private Object solid;
+  
+  private IBlockState solid_state = null;
 
   public BlockLiquidMetal(Fluid fluid, String name, Material material,Object solid_block)
   {
@@ -122,64 +124,91 @@ public class BlockLiquidMetal extends BlockFluidClassic
     checkForHarden(world, pos, state);
   }
  
+  private IBlockState getBlockStateFromItemStack(ItemStack stack)
+  {
+    Block block = ((ItemBlock)(stack.getItem())).block;
+    int meta = stack.getMetadata();
+    int i;
+    for(i = 0; i < 16; i++)
+    {
+      try
+      {
+        IBlockState state = block.getStateFromMeta(i);
+        if(state != null && block.damageDropped(state) == meta)
+        {
+          return state;
+        }
+      } catch(Exception e)
+      {
+        
+      }
+    }
+    return null;
+  }
 
   public void checkForHarden(World world, BlockPos pos, IBlockState state)
   {
     if(isSourceBlock(world, pos))
     {
-      ItemStack item = null;
-      if(solid instanceof ItemStack)
+      if(solid_state == null && solid != null)
       {
-        item = (ItemStack)solid;
-      } else if(solid instanceof String)
-      {
-        for(ItemStack i:OreDictionary.getOres((String)solid))
+        ItemStack item = null;
+        if(solid instanceof ItemStack)
         {
-          if(i.getItem() instanceof ItemBlock)
+          item = (ItemStack)solid;
+        } else if(solid instanceof String)
+        {
+          for(ItemStack i:OreDictionary.getOres((String)solid))
           {
-            item = i;
-            break;
+            if(i.getItem() instanceof ItemBlock)
+            {
+              item = i;
+              break;
+            }
           }
+        } else
+        {
+          solid = null;
         }
-      } else
-      {
-        return;
-      }
         
-      if(item == null)
+        if(item == null)
+        {
+          solid = null;
+        }
+        solid_state = getBlockStateFromItemStack(item);
+      }
+      if(solid_state == null)
       {
         return;
       }
-      Block block = ((ItemBlock)(item.getItem())).block;
-      int meta = item.getMetadata();
-      if(tryToHarden(world, pos, pos.add(-1, 0, 0), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(-1, 0, 0)))
       {
         return;
       }
-      if(tryToHarden(world, pos, pos.add(1, 0, 0), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(1, 0, 0)))
       {
         return;
       }
-      if(tryToHarden(world, pos, pos.add(0, -1, 0), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(0, -1, 0)))
       {
         return;
       }
-      if(tryToHarden(world, pos, pos.add(0, 1, 0), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(0, 1, 0)))
       {
         return;
       }
-      if(tryToHarden(world, pos, pos.add(0, 0, -1), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(0, 0, -1)))
       {
         return;
       }
-      if(tryToHarden(world, pos, pos.add(0, 0, 1), block.getStateFromMeta(meta)))
+      if(tryToHarden(world, pos, pos.add(0, 0, 1)))
       {
         return;
       }
     }
   }
 
-  private boolean tryToHarden(World world, BlockPos pos, BlockPos npos, IBlockState solid_state)
+  private boolean tryToHarden(World world, BlockPos pos, BlockPos npos)
   {
     //Check if block is in contact with water.
     if(world.getBlockState(npos).getBlock().getMaterial() == Material.water)

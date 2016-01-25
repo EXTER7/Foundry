@@ -1,6 +1,5 @@
 package exter.foundry.block;
 
-import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;

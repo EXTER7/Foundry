@@ -6,12 +6,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.substance.ISubstanceGuiTexture;
 import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
-import exter.foundry.util.FoundryMiscUtils;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.renderer.GlStateManager;

@@ -91,7 +91,7 @@ public class ItemComponent extends Item
     int i;
     for (i = 0; i < REGISTRY_NAMES.length; i++)
     {
-      if(i == COMPONENT_DUST_ZINC || i == COMPONENT_DUST_BRASS || i == COMPONENT_DUST_CUPRONICKEL)
+      if(i == COMPONENT_GEAR || i == COMPONENT_DUST_ZINC || i == COMPONENT_DUST_BRASS || i == COMPONENT_DUST_CUPRONICKEL)
       {
         continue;
       }

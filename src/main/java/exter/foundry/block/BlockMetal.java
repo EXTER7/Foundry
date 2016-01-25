@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyHelper;
@@ -95,7 +94,6 @@ public abstract class BlockMetal extends Block implements IBlockVariants
     setResistance(8.0F);
     setUnlocalizedName("metalBlock");
     setStepSound(Block.soundTypeMetal);
-    setCreativeTab(FoundryTabBlocks.tab);
   }
   
   @Override

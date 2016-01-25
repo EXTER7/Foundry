@@ -2,7 +2,6 @@ package exter.foundry.block;
 
 import java.util.List;
 
-import exter.foundry.creativetab.FoundryTabBlocks;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +17,6 @@ public class BlockMetalStairs extends BlockStairs
   public BlockMetalStairs(IBlockState modelState,String metal)
   {
     super(modelState);
-    setCreativeTab(FoundryTabBlocks.tab);
     setUnlocalizedName("metalStairs." + metal);
     useNeighborBrightness = true;
   }

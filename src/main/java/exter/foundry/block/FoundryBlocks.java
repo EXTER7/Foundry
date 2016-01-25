@@ -171,14 +171,13 @@ public class FoundryBlocks
 
     registerHalfSlabs(config);
     
+    block_metal_stairs.put("Iron",new BlockMetalStairs(Blocks.iron_block.getDefaultState(),"Iron"));
+    block_metal_stairs.put("Gold",new BlockMetalStairs(Blocks.gold_block.getDefaultState(),"Gold"));
 
     for(Map.Entry<String,BlockStairs> e:block_metal_stairs.entrySet())
     {
       GameRegistry.registerBlock(e.getValue(), "stairs" + e.getKey());
     }
-
-    block_metal_stairs.put("Iron",new BlockMetalStairs(Blocks.iron_block.getDefaultState(),"Iron"));
-    block_metal_stairs.put("Gold",new BlockMetalStairs(Blocks.gold_block.getDefaultState(),"Gold"));
   }
   
   @SuppressWarnings("deprecation")

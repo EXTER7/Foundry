@@ -9,8 +9,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import exter.foundry.api.registry.IFluidRegistry;
 import exter.foundry.block.BlockLiquidMetal;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
@@ -53,11 +55,8 @@ public class LiquidMetalRegistry implements IFluidRegistry
     FluidRegistry.registerFluid(fluid);
 
     String block_name = "block" + metal_name;
-    Object solid = FoundryBlocks.block_stacks.get(metal_name);
-    if(solid == null)
-    {
-      solid = block_name;
-    }
+    Object solid = FoundryMiscUtils.getModItemFromOreDictionary("substratum", block_name);
+
     Block liquid_block = new BlockLiquidMetal(fluid, "liquid" + metal_name, Material.lava,solid);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
 

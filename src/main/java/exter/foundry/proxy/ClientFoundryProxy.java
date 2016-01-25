@@ -14,6 +14,7 @@ import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.BlockMetal;
 import exter.foundry.block.BlockMetalSlab;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
@@ -114,19 +115,11 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ModIntegrationManager.clientPreInit();
   }
 
-  @Override
-  public void init()
+  
+  @SuppressWarnings("deprecation")
+  private void registerLegacy()
   {
-    //MinecraftForgeClient.registerItemRenderer(FoundryItems.item_container, new RendererItemContainer());
-    InfuserRecipeManager.instance.registerSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
-    int i;
-    for(EnumDyeColor dye:EnumDyeColor.values())
-    {
-      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + dye.getName(), SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[dye.getDyeDamage()]);
-    }   
-    InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
-
-
+    
     for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
     {
       registerItemModel(FoundryBlocks.block_ore,ore.oredict_name, ore.id);
@@ -152,15 +145,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       registerItemModel(e.getValue(),"stairs" + e.getKey());
     }
-
-    for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
-    {
-      registerItemModel(FoundryBlocks.block_machine,m.model,m.id);
-    }
-
-    registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
-    registerItemModel(FoundryBlocks.block_refractory_casing,"casing");
-    registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
+    
+    int i;
 
     for(i = 0; i < ItemIngot.OREDICT_NAMES.length; i++)
     {
@@ -176,6 +162,33 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       registerItemModel(FoundryItems.item_nugget,ItemNugget.OREDICT_NAMES[i], i);
     }
+  }
+  
+  @Override
+  public void init()
+  {
+    InfuserRecipeManager.instance.registerSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
+    int i;
+    for(EnumDyeColor dye:EnumDyeColor.values())
+    {
+      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + dye.getName(), SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[dye.getDyeDamage()]);
+    }   
+    InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
+
+    if(FoundryConfig.legacy_items_enable)
+    {
+      registerLegacy();
+    }
+
+    for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
+    {
+      registerItemModel(FoundryBlocks.block_machine,m.model,m.id);
+    }
+
+    registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
+    registerItemModel(FoundryBlocks.block_refractory_casing,"casing");
+    registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
+
 
     for(i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
     {

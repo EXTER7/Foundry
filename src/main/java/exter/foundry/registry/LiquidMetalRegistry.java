@@ -8,14 +8,11 @@ import java.util.Set;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import exter.foundry.api.registry.IFluidRegistry;
 import exter.foundry.block.BlockLiquidMetal;
-import exter.foundry.block.FoundryBlocks;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 /**

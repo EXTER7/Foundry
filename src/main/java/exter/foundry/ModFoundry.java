@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -62,7 +60,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.15.0.1699,);required-after:substratum"
+  dependencies = "required-after:Forge@[11.15.1.1724,);required-after:substratum"
 )
 public class ModFoundry
 {

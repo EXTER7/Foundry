@@ -325,6 +325,7 @@ public class RFCModel implements IModel
       int color)
   {
       UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
+      builder.setQuadColored();
       builder.setQuadTint(tint);
       builder.setQuadOrientation(side);
       putVertex(builder, format, side, x0, y0, z0, u0, v0,color);

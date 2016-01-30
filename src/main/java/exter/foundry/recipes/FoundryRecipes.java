@@ -650,7 +650,6 @@ public class FoundryRecipes
         new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2), mold_shotgun_frame, null);
 
 
-    ItemStack iron_stack = new ItemStack(Items.iron_ingot);
     ItemStack redstone_stack = new ItemStack(Items.redstone);
     ItemStack furnace_stack = new ItemStack(Blocks.furnace);
     ItemStack clay_stack = new ItemStack(Items.clay_ball);
@@ -662,24 +661,24 @@ public class FoundryRecipes
     ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack paper_stack = new ItemStack(Items.paper);
     ItemStack foundryclay_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY);
-    ItemStack foundryclay8_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY,8);
+    ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY,8);
     ItemStack refbrick_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYBRICK);
     ItemStack blankmold_stack = FoundryItems.component(ItemComponent.COMPONENT_BLANKMOLD);
     ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.COMPONENT_HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.empty(2);
     ItemStack comparator_stack = new ItemStack(Items.comparator);
-    ItemStack diamond_stack = new ItemStack(Items.diamond);
+    ItemStack repeater_stack = new ItemStack(Items.repeater);
     ItemStack bucket_stack = new ItemStack(Items.bucket);
 
-    GameRegistry.addRecipe(foundryclay8_stack,
+    GameRegistry.addRecipe(refractoryclay8_stack,
         "CCC",
         "CSC",
         "CCC",
         'C', clay_stack,
         'S', sand_stack);
 
-    GameRegistry.addShapelessRecipe(foundryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
+    GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
     GameRegistry.addSmelting(
         FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY),
@@ -690,33 +689,32 @@ public class FoundryRecipes
         'C', foundryclay_stack);
 
 
-    ItemStack heatingcoil2_stack = FoundryItems.component(ItemComponent.COMPONENT_HEATINGCOIL,2);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         emptycontainer2_stack,
         " T ",
         "BGB",
         " T ",
-        'T', "ingotTin",
+        'T', "plateTin",
         'B', refbrick_stack,
         'G', glasspane_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        heatingcoil2_stack,
-        "RCR",
-        "CGC",
-        "RCR",
-        'C', "ingotCupronickel",
+        FoundryItems.component(ItemComponent.COMPONENT_HEATINGCOIL,2),
+        "CCC",
+        "CRC",
+        "CCC",
+        'C', "rodCupronickel",
         'G', goldnugget_stack,
         'R', redstone_stack));
 
-    GameRegistry.addRecipe(
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         casing_stack,
         "IBI",
         "B B",
         "IBI",
-        'I', iron_stack, 'B',
-        refbrick_stack);
+        'I', "plateIron",
+        'B', refbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.ICF),
@@ -724,21 +722,20 @@ public class FoundryRecipes
         "HCH",
         "HRH",
         'F', furnace_stack,
-        'I', "ingotCopper",
+        'I', "plateCopper",
         'C', casing_stack,
         'R', redstone_stack,
         'H', heatingcoil_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INFUSER),
-        "IRI",
+        " R ",
         "GCG",
         "HRH",
-        'I', iron_stack, 
         'R', redstone_stack, 
         'B', refbrick_stack,
         'C', casing_stack,
-        'G', "gearStone",
+        'G', "gearInvar",
         'H', heatingcoil_stack));
     
     GameRegistry.addRecipe(
@@ -766,40 +763,40 @@ public class FoundryRecipes
         'B', Items.bucket, 
         'R', Items.redstone,
         'C', casing_stack,
-        'G', "gearStone"));
+        'G', "gearBronze"));
 
-    GameRegistry.addRecipe(
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.CASTER),
         " H ",
         "RCR",
-        "IPI",
+        "GPG",
         'H', chest_stack, 
-        'I', iron_stack, 
+        'G', "gearIron", 
         'P', piston_stack,
         'C', casing_stack,
-        'R', redstone_stack);
+        'R', redstone_stack));
 
     
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYMIXER),
-        "GIG",
+        " P ",
         "GCG",
-        "IRI",
-        'I', iron_stack, 
+        " R ",
         'C', casing_stack,
         'R', redstone_stack,
-        'G', "gearStone"));
+        'G', "gearInvar",
+        'P', "plateInvar"));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.MATERIALROUTER),
-        "GIG",
-        "DRD",
+        "GEG",
+        "PRP",
         "GCG",
-        'I', diamond_stack, 
         'R', casing_stack,
-        'D', redstone_stack,
+        'P', "plateSignalum",
         'C', comparator_stack,
-        'G', "gearStone"));
+        'E', repeater_stack,
+        'G', "gearBrass"));
 
     GameRegistry.addRecipe(
         FoundryItems.item_revolver.empty(),
@@ -811,8 +808,8 @@ public class FoundryRecipes
 
     GameRegistry.addRecipe(
         FoundryItems.item_shotgun.empty(),
-        "BB",
-        "PF",
+        "BB ",
+        " PF",
         'B', FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL), 
         'P', FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP),
         'F', FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME));

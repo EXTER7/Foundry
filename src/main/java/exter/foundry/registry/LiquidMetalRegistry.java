@@ -53,6 +53,10 @@ public class LiquidMetalRegistry implements IFluidRegistry
 
     String block_name = "block" + metal_name;
     Object solid = FoundryMiscUtils.getModItemFromOreDictionary("substratum", block_name);
+    if(solid == null)
+    {
+      solid = block_name;
+    }
 
     Block liquid_block = new BlockLiquidMetal(fluid, "liquid" + metal_name, solid);
     GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);

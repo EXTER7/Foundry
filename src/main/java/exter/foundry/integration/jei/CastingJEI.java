@@ -23,7 +23,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
+import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -93,6 +93,18 @@ public class CastingJEI
     {
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory
@@ -107,9 +119,12 @@ public class CastingJEI
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
+    
+    private IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
+      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/caster.png");
 
@@ -160,17 +175,18 @@ public class CastingJEI
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
+      IStackHelper stack_helper = helpers.getStackHelper();
 
-      guiItemStacks.init(0, true, 47, 34);
-      guiItemStacks.init(1, false, 27, 4);
-      guiItemStacks.init(2, false, 47, 4);
-      guiFluidStacks.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      guiItemStacks.setFromRecipe(1, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
-      guiItemStacks.setFromRecipe(2, StackUtil.toItemStackList(recipeWrapper.getInputs().get(1)));
-      guiFluidStacks.set(3, recipeWrapper.getFluidInputs().get(0));
+      gui_items.init(0, true, 47, 34);
+      gui_items.init(1, false, 27, 4);
+      gui_items.init(2, false, 47, 4);
+      gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
+      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
+      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
+      gui_items.setFromRecipe(2, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
+      gui_fluids.set(3, recipeWrapper.getFluidInputs().get(0));
     }
   }
 

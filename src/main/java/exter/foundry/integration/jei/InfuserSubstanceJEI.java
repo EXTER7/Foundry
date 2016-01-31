@@ -22,7 +22,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -107,6 +106,18 @@ public class InfuserSubstanceJEI
       }
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      drawInfo(minecraft, recipeWidth, recipeHeight);
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory
@@ -122,8 +133,11 @@ public class InfuserSubstanceJEI
     @Nonnull
     protected final IDrawableAnimated arrow;
     
+    private final IJeiHelpers helpers;
+    
     public Category(IJeiHelpers helpers)
     {
+      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       background_location = new ResourceLocation("foundry", "textures/gui/infuser.png");
 
@@ -174,7 +188,7 @@ public class InfuserSubstanceJEI
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
       guiItemStacks.init(0, true, 3, 17);
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
+      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
     }
   }
 

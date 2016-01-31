@@ -81,6 +81,18 @@ public class AlloyMixerJEI
     {
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory

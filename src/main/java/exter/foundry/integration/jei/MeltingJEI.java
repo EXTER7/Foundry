@@ -23,7 +23,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -42,8 +41,8 @@ public class MeltingJEI
     @Nonnull
     private final IDrawable heat;
     
-    
     private final int melting_point;
+    
 
     public Wrapper(IJeiHelpers helpers,@Nonnull List<ItemStack> input, FluidStack output, int melting_point)
     {
@@ -98,6 +97,18 @@ public class MeltingJEI
     {
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      drawInfo(minecraft, recipeWidth, recipeHeight);
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory
@@ -113,8 +124,11 @@ public class MeltingJEI
     @Nonnull
     private final IDrawable tank_overlay;
 
+    private final IJeiHelpers helpers;
+
     public Category(IJeiHelpers helpers)
     {
+      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
 
@@ -170,7 +184,7 @@ public class MeltingJEI
 
       guiItemStacks.init(0, true, 24, 6);
       guiFluidStacks.init(1, false, 77, 6, 16, GuiInductionCrucibleFurnace.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
+      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }
   }

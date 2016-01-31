@@ -20,7 +20,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
+import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -90,6 +90,18 @@ public class AlloyFurnaceJEI
     {
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory
@@ -104,9 +116,12 @@ public class AlloyFurnaceJEI
     private final IDrawable background;
     @Nonnull
     private final String localized_name;
+    
+    private final IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
+      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       background_location = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
 
@@ -158,15 +173,16 @@ public class AlloyFurnaceJEI
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+      IStackHelper stack_helper = helpers.getStackHelper();
 
-      guiItemStacks.init(0, true, 7, 0);
-      guiItemStacks.init(1, true, 25, 0);
-      guiItemStacks.init(2, false, 85, 18);
+      gui_items.init(0, true, 7, 0);
+      gui_items.init(1, true, 25, 0);
+      gui_items.init(2, false, 85, 18);
 
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getInputs().get(0)));
-      guiItemStacks.setFromRecipe(1, StackUtil.toItemStackList(recipeWrapper.getInputs().get(1)));
-      guiItemStacks.setFromRecipe(2, recipeWrapper.getOutputs());
+      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
+      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
+      gui_items.setFromRecipe(2, recipeWrapper.getOutputs());
     }
   }
 

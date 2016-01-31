@@ -8,6 +8,7 @@ import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerMetalInfuser;
 import mezz.jei.api.IItemRegistry;
 import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.IRecipeRegistry;
@@ -95,6 +96,12 @@ public class JEIFoundryPlugin implements IModPlugin
 
   @Override
   public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry)
+  {
+    
+  }
+
+  @Override
+  public void onRuntimeAvailable(IJeiRuntime jeiRuntime)
   {
     
   }

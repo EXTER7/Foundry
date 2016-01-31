@@ -23,7 +23,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.util.StackUtil;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -91,6 +90,18 @@ public class AtomizerJEI
     {
       return null;
     }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
+    {
+      
+    }
+
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
+    {
+      return false;
+    }
   }
 
   static public class Category implements IRecipeCategory
@@ -105,9 +116,12 @@ public class AtomizerJEI
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
+    
+    private final IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
+      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/atomizer.png");
 
@@ -163,7 +177,7 @@ public class AtomizerJEI
       guiItemStacks.init(0, false, 77, 17);
       guiFluidStacks.init(1, true, 31, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY,false,tank_overlay);
       guiFluidStacks.init(2, true, 115, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, StackUtil.toItemStackList(recipeWrapper.getOutputs().get(0)));
+      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getOutputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidInputs().get(0));
       guiFluidStacks.set(2, recipeWrapper.getFluidInputs().get(1));
     }

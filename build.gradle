@@ -18,7 +18,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-def mod_version = "1.4.0.0-alpha1"
+def mod_version = "1.4.0.0-alpha2"
 
 def mc_version = "1.8.9"
 
@@ -75,19 +75,8 @@ task apiZip(type: Zip) {
     destinationDir = file 'output'
 }
 
-
-task devJar(type: Jar) {
-    from sourceSets.main.output
-    classifier ='dev'
-    destinationDir = file 'output'
-}
-
 jar {
     apiZip.execute()
     destinationDir = file 'output'
-}
-
-artifacts {
-    archives devJar
 }
 

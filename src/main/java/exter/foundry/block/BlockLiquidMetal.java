@@ -38,6 +38,18 @@ public class BlockLiquidMetal extends BlockFluidClassic
     setUnlocalizedName(name);
     setCreativeTab(FoundryTabFluids.tab);
   }
+  
+  @Override
+  public String getUnlocalizedName()
+  {
+    return stack.getUnlocalizedName();
+  }
+
+  @Override
+  public String getLocalizedName()
+  {
+    return stack.getLocalizedName();
+  }
 
   @Override
   public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)

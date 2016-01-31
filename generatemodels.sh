@@ -3,9 +3,6 @@
 modeldir="src/main/resources/assets/foundry/models"
 blockstatedir="src/main/resources/assets/foundry/blockstates"
 
-rm -f $texturedir/liquid*_still.png.mcmeta
-rm -f $texturedir/liquid*_flow.png.mcmeta
-
 for block in $(cat "blocks.list")
 do
   ( # Block model

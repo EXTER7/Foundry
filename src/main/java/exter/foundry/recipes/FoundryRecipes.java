@@ -62,7 +62,13 @@ public class FoundryRecipes
   static public Fluid liquid_steel;
   static public Fluid liquid_cupronickel;
   static public Fluid liquid_lead;
-  static public Fluid liquid_rubber;
+  static public Fluid liquid_platinum;
+  static public Fluid liquid_redstone;
+  static public Fluid liquid_glowstone;
+  static public Fluid liquid_enderpearl;
+  static public Fluid liquid_signalum;
+  static public Fluid liquid_lumium;
+  static public Fluid liquid_enderium;
 
   static public void preInit()
   {
@@ -80,20 +86,22 @@ public class FoundryRecipes
     liquid_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Cupronickel", 1750, 15);
     liquid_lead = LiquidMetalRegistry.instance.registerLiquidMetal( "Lead", 650, 1);  
+    liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2050, 15);
+    liquid_redstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Redstone", 800, 4, null);
+    liquid_glowstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Glowstone", 1200, 15, null);
+    liquid_enderpearl = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Enderpearl", 1600, 4, null);
+    liquid_signalum = LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
+    liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
+    liquid_enderium = LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
 
     LiquidMetalRegistry.instance.registerLiquidMetal( "Aluminum", 1100, 15);  
     LiquidMetalRegistry.instance.registerLiquidMetal( "Chromium", 2200, 8);   
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2050, 15);  
     LiquidMetalRegistry.instance.registerLiquidMetal( "Manganese", 1550, 15);   
     LiquidMetalRegistry.instance.registerLiquidMetal( "Titanium", 2000, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Rubber", 460, 0);
     LiquidMetalRegistry.instance.registerLiquidMetal( "StainlessSteel", 1900, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Kanthal", 1900, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Nichrome", 1950, 15);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
-    LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Redstone", 1000, 8, null);
 
     
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
@@ -268,6 +276,14 @@ public class FoundryRecipes
   
   static public void init()
   {
+    MeltingRecipeManager.instance.addRecipe("dustRedstone", new FluidStack(liquid_redstone,100));
+    MeltingRecipeManager.instance.addRecipe("dustGlowstone", new FluidStack(liquid_glowstone,250));
+    MeltingRecipeManager.instance.addRecipe("dustEnderpearl", new FluidStack(liquid_enderpearl,250));
+    MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_enderpearl,250));
+
+    MeltingRecipeManager.instance.addRecipe("blockRedstone", new FluidStack(liquid_redstone,900));
+    MeltingRecipeManager.instance.addRecipe("blockGlowstone", new FluidStack(liquid_glowstone,1000));
+
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),
         new Object[] {
@@ -353,6 +369,32 @@ public class FoundryRecipes
           new FluidStack(liquid_copper, 1),
           new FluidStack(liquid_nickel, 1)
         });
+
+    AlloyMixerRecipeManager.instance.addRecipe(
+        new FluidStack(liquid_signalum, 108),
+        new FluidStack[] {
+          new FluidStack(FoundryRecipes.liquid_copper, 81),
+          new FluidStack(FoundryRecipes.liquid_silver, 27),
+          new FluidStack(liquid_redstone, 250)
+          });
+    
+    AlloyMixerRecipeManager.instance.addRecipe(
+        new FluidStack(liquid_lumium, 108),
+        new FluidStack[] {
+          new FluidStack(FoundryRecipes.liquid_tin, 81),
+          new FluidStack(FoundryRecipes.liquid_silver, 27),
+          new FluidStack(liquid_glowstone, 250)
+          });
+    
+    AlloyMixerRecipeManager.instance.addRecipe(
+        new FluidStack(liquid_enderium, 108),
+        new FluidStack[] {
+          new FluidStack(FoundryRecipes.liquid_tin, 54),
+          new FluidStack(FoundryRecipes.liquid_silver, 27),
+          new FluidStack(liquid_platinum, 27),
+          new FluidStack(liquid_enderpearl, 250)
+          });
+
 
     ItemStack mold_ingot = FoundryItems.mold(ItemMold.MOLD_INGOT);
     ItemStack mold_cable_ic2 = FoundryItems.mold(ItemMold.MOLD_CABLE_IC2);

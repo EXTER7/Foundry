@@ -13,6 +13,7 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import net.minecraftforge.fml.common.registry.GameData;
@@ -88,8 +89,8 @@ public class FoundryRecipes
     liquid_lead = LiquidMetalRegistry.instance.registerLiquidMetal( "Lead", 650, 1);  
     liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2050, 15);
     liquid_redstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Redstone", 800, 4, null);
-    liquid_glowstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Glowstone", 1200, 15, null);
-    liquid_enderpearl = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Enderpearl", 1600, 4, null);
+    liquid_glowstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Glowstone", 1100, 15, null);
+    liquid_enderpearl = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Enderpearl", 1400, 2, null);
     liquid_signalum = LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
     liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
     liquid_enderium = LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
@@ -276,13 +277,18 @@ public class FoundryRecipes
   
   static public void init()
   {
+    ItemStack bucket = new ItemStack(Items.bucket);
+    FluidContainerRegistry.registerFluidContainer(liquid_redstone, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidRedstone"), bucket);
+    FluidContainerRegistry.registerFluidContainer(liquid_glowstone, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidGlowstone"), bucket);
+    FluidContainerRegistry.registerFluidContainer(liquid_enderpearl, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidEnderpearl"), bucket);
+    
     MeltingRecipeManager.instance.addRecipe("dustRedstone", new FluidStack(liquid_redstone,100));
-    MeltingRecipeManager.instance.addRecipe("dustGlowstone", new FluidStack(liquid_glowstone,250));
-    MeltingRecipeManager.instance.addRecipe("dustEnderpearl", new FluidStack(liquid_enderpearl,250));
-    MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_enderpearl,250));
+    MeltingRecipeManager.instance.addRecipe("dustGlowstone", new FluidStack(liquid_glowstone,250),liquid_glowstone.getTemperature(),90);
+    MeltingRecipeManager.instance.addRecipe("dustEnderpearl", new FluidStack(liquid_enderpearl,250),liquid_enderpearl.getTemperature(),75);
+    MeltingRecipeManager.instance.addRecipe(new ItemStack(Items.ender_pearl), new FluidStack(liquid_enderpearl,250),liquid_enderpearl.getTemperature(),75);
 
     MeltingRecipeManager.instance.addRecipe("blockRedstone", new FluidStack(liquid_redstone,900));
-    MeltingRecipeManager.instance.addRecipe("blockGlowstone", new FluidStack(liquid_glowstone,1000));
+    MeltingRecipeManager.instance.addRecipe("blockGlowstone", new FluidStack(liquid_glowstone,1000),liquid_glowstone.getTemperature(),90);
 
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),

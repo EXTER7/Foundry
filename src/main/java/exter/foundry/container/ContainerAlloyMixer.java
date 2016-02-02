@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -33,16 +33,16 @@ public class ContainerAlloyMixer extends Container
     int i,j;
 
     
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_0_DRAIN,26,17));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_0_FILL,26,92));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_1_DRAIN,47,17));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_1_FILL,47,92));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_2_DRAIN,68,17));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_2_FILL,68,92));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_3_DRAIN,89,17));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_3_FILL,89,92));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_DRAIN,133,17));
-    addSlotToContainer(new SlotContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_FILL,133,92));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_0_DRAIN,26,17));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_0_FILL,26,92));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_1_DRAIN,47,17));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_1_FILL,47,92));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_2_DRAIN,68,17));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_2_FILL,68,92));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_3_DRAIN,89,17));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_INPUT_3_FILL,89,92));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_DRAIN,133,17));
+    addSlotToContainer(new SlotFluidContainer(te_alloymixer,TileEntityAlloyMixer.INVENTORY_CONTAINER_OUTPUT_FILL,133,92));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

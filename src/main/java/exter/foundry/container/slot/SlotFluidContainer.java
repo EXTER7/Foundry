@@ -3,11 +3,12 @@ package exter.foundry.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
-public class SlotContainer extends Slot
+public class SlotFluidContainer extends Slot
 {
-  public SlotContainer(IInventory inventory, int par2, int par3, int par4)
+  public SlotFluidContainer(IInventory inventory, int par2, int par3, int par4)
   {
     super(inventory, par2, par3, par4);
   }
@@ -16,7 +17,8 @@ public class SlotContainer extends Slot
   public boolean isItemValid(ItemStack stack)
   {
     ItemStack slot_stack = getStack();
-    return (stack.getItem() instanceof IFluidContainerItem) && (slot_stack == null || slot_stack.stackSize == 0);
+    return (stack.getItem() instanceof IFluidContainerItem || FluidContainerRegistry.isContainer(stack))
+        && (slot_stack == null || slot_stack.stackSize == 0);
   }
 
   @Override

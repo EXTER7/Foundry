@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -33,10 +33,10 @@ public class ContainerMetalInfuser extends Container
     int i,j;
 
     addSlotToContainer(new Slot(te_infuser, TileEntityMetalInfuser.INVENTORY_SUBSTANCE_INPUT, 19, 59));
-    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_DRAIN, 85, 15));
-    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_FILL, 85, 102));
-    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_DRAIN, 134, 15));
-    addSlotToContainer(new SlotContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_FILL, 134, 102));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_DRAIN, 85, 15));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_FILL, 85, 102));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_DRAIN, 134, 15));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_FILL, 134, 102));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

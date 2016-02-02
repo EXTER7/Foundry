@@ -1,7 +1,7 @@
 package exter.foundry.container;
 
 import exter.foundry.container.slot.SlotCasterMold;
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -42,8 +42,8 @@ public class ContainerMetalCaster extends Container
     addSlotToContainer(new SlotOutput(te_caster, TileEntityMetalCaster.INVENTORY_OUTPUT, 86, 51));
     addSlotToContainer(new SlotCasterMold(te_caster, TileEntityMetalCaster.INVENTORY_MOLD, 66, 21));
     addSlotToContainer(new Slot(te_caster, TileEntityMetalCaster.INVENTORY_EXTRA, 86, 21));
-    addSlotToContainer(new SlotContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_DRAIN, 11, 21));
-    addSlotToContainer(new SlotContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_FILL, 11, 51));
+    addSlotToContainer(new SlotFluidContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_DRAIN, 11, 21));
+    addSlotToContainer(new SlotFluidContainer(te_caster, TileEntityMetalCaster.INVENTORY_CONTAINER_FILL, 11, 51));
     for(i = 0; i < 3; ++i)
     {
       for(j = 0; j < 3; ++j)

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 
 public class ContainerRefractoryHopper extends Container
@@ -31,8 +31,8 @@ public class ContainerRefractoryHopper extends Container
     int i,j;
 
     
-    addSlotToContainer(new SlotContainer(te_hopper,TileEntityRefractoryHopper.INVENTORY_CONTAINER_DRAIN,94,20));
-    addSlotToContainer(new SlotContainer(te_hopper,TileEntityRefractoryHopper.INVENTORY_CONTAINER_FILL,94,48));
+    addSlotToContainer(new SlotFluidContainer(te_hopper,TileEntityRefractoryHopper.INVENTORY_CONTAINER_DRAIN,94,20));
+    addSlotToContainer(new SlotFluidContainer(te_hopper,TileEntityRefractoryHopper.INVENTORY_CONTAINER_FILL,94,48));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.container.slot.SlotOutput;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,10 +34,10 @@ public class ContainerMetalAtomizer extends Container
     int i,j;
 
     addSlotToContainer(new SlotOutput(te_atomizer, TileEntityMetalAtomizer.INVENTORY_OUTPUT, 86, 37));
-    addSlotToContainer(new SlotContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_DRAIN, 11, 21));
-    addSlotToContainer(new SlotContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_FILL, 11, 51));
-    addSlotToContainer(new SlotContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_WATER_DRAIN, 151, 21));
-    addSlotToContainer(new SlotContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_WATER_FILL, 151, 51));
+    addSlotToContainer(new SlotFluidContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_DRAIN, 11, 21));
+    addSlotToContainer(new SlotFluidContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_FILL, 11, 51));
+    addSlotToContainer(new SlotFluidContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_WATER_DRAIN, 151, 21));
+    addSlotToContainer(new SlotFluidContainer(te_atomizer, TileEntityMetalAtomizer.INVENTORY_CONTAINER_WATER_FILL, 151, 51));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

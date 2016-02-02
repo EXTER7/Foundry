@@ -1,6 +1,6 @@
 package exter.foundry.container;
 
-import exter.foundry.container.slot.SlotContainer;
+import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -31,8 +31,8 @@ public class ContainerInductionCrucibleFurnace extends Container
     int i,j;
 
     addSlotToContainer(new Slot(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_INPUT, 55, 23));
-    addSlotToContainer(new SlotContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_DRAIN, 135, 22));
-    addSlotToContainer(new SlotContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_FILL, 135, 53));
+    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_DRAIN, 135, 22));
+    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityInductionCrucibleFurnace.INVENTORY_CONTAINER_FILL, 135, 53));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

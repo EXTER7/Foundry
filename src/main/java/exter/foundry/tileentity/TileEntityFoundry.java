@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidContainerItem;
@@ -54,6 +55,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
 
   private RedstoneMode mode;
+  private int bucket_timer;
   
   /**
    * Links an item slot to a tank for filling/draining containers.
@@ -82,46 +84,81 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     public void update()
     {
       ItemStack stack = getStackInSlot(slot);
-      if(stack == null || !(stack.getItem() instanceof IFluidContainerItem))
+      if(stack == null || stack.stackSize > 1)
       {
         return;
       }
-      IFluidContainerItem fluid_cont = (IFluidContainerItem)stack.getItem();
       
       FluidTank tank = getTank(tank_slot);
       if(fill)
       {
-        FluidStack drained = tank.drain(25, false);
-        if(drained == null || drained.amount == 0)
+        if(stack.getItem() instanceof IFluidContainerItem)
         {
-          return;
-        }
-        int filled = fluid_cont.fill(stack, drained, false);
-        if(filled == 0)
+          IFluidContainerItem fluid_cont = (IFluidContainerItem)stack.getItem();
+          FluidStack drained = tank.drain(25, false);
+          if(drained == null || drained.amount == 0)
+          {
+            return;
+          }
+          int filled = fluid_cont.fill(stack, drained, false);
+          if(filled == 0)
+          {
+            return;
+          }
+          drained = tank.drain(filled, true);
+          fluid_cont.fill(stack, drained, true);
+          updateTank(tank_slot);
+          updateInventoryItem(slot);
+        } else if(bucket_timer == 0)
         {
-          return;
+          ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(),stack);
+          if(filled != null)
+          {
+            setInventorySlotContents(slot,filled);
+            int drain = FluidContainerRegistry.getContainerCapacity(filled);
+            tank.drain(drain, true);
+            bucket_timer = drain / 25;
+            updateTank(tank_slot);
+            updateInventoryItem(slot);
+          }
         }
-        drained = tank.drain(filled, true);
-        fluid_cont.fill(stack, drained, true);
-        updateTank(tank_slot);
-        updateInventoryItem(slot);
       } else
       {
-        FluidStack drained = fluid_cont.drain(stack, 25, false);
-        if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
+        if(stack.getItem() instanceof IFluidContainerItem)
         {
-          return;
-        }
-        
-        int filled = tank.fill(drained, false);
-        if(filled == 0)
+          IFluidContainerItem fluid_cont = (IFluidContainerItem) stack.getItem();
+          FluidStack drained = fluid_cont.drain(stack, 25, false);
+          if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
+          {
+            return;
+          }
+
+          int filled = tank.fill(drained, false);
+          if(filled == 0)
+          {
+            return;
+          }
+          drained = fluid_cont.drain(stack, filled, true);
+          tank.fill(drained, true);
+          updateTank(tank_slot);
+          updateInventoryItem(slot);
+        } else if(bucket_timer == 0)
         {
-          return;
+          FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+          ItemStack empty = FluidContainerRegistry.drainFluidContainer(stack);
+          if(fluid != null && empty != null)
+          {
+            int filled = tank.fill(fluid, false);
+            if(filled == fluid.amount)
+            {
+              setInventorySlotContents(slot,empty);
+              tank.fill(fluid, true);
+              bucket_timer = fluid.amount / 25;
+              updateTank(tank_slot);
+              updateInventoryItem(slot);
+            }
+          }
         }
-        drained = fluid_cont.drain(stack, filled, true);
-        tank.fill(drained, true);
-        updateTank(tank_slot);
-        updateInventoryItem(slot);
       }
     }
   }
@@ -157,6 +194,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     initialized = false;
     mode = RedstoneMode.RSMODE_IGNORE;
     inventory = new ItemStack[getSizeInventory()];
+    bucket_timer = 0;
   }
   
 
@@ -336,6 +374,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     {
       mode = RedstoneMode.fromID(compound.getInteger("rsmode"));
     }
+    if(compound.hasKey("bucket_timer"))
+    {
+      bucket_timer = compound.getInteger("bucket_timer");
+    }
   }
   
   protected void writeTileToNBT(NBTTagCompound compound)
@@ -358,6 +400,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       writeInventoryItemToNBT(compound,i);
     }
     compound.setInteger("rsmode", mode.id);
+    compound.setInteger("bucket_timer", bucket_timer);
   }
 
   protected final void updateValue(String name,int value)
@@ -412,6 +455,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       {
         update_packet = new NBTTagCompound();
         super.writeToNBT(update_packet);
+      }
+      if(bucket_timer > 0)
+      {
+        bucket_timer = 0;
       }
       for(ContainerSlot cs:conatiner_slots)
       {

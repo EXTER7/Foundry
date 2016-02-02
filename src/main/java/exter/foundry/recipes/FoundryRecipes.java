@@ -402,10 +402,11 @@ public class FoundryRecipes
     ItemStack mold_casing_ic2 = FoundryItems.mold(ItemMold.MOLD_CASING_IC2);
     ItemStack mold_slab = FoundryItems.mold(ItemMold.MOLD_SLAB);
     ItemStack mold_stairs = FoundryItems.mold(ItemMold.MOLD_STAIRS);
-    ItemStack mold_plate_ic2 = FoundryItems.mold(ItemMold.MOLD_PLATE);
+    ItemStack mold_plate = FoundryItems.mold(ItemMold.MOLD_PLATE);
     ItemStack mold_wire_pr = FoundryItems.mold(ItemMold.MOLD_WIRE_PR);
     ItemStack mold_block = FoundryItems.mold(ItemMold.MOLD_BLOCK);
     ItemStack mold_gear = FoundryItems.mold(ItemMold.MOLD_GEAR);
+    ItemStack mold_rod = FoundryItems.mold(ItemMold.MOLD_ROD);
     ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
 
@@ -427,7 +428,7 @@ public class FoundryRecipes
     CastingRecipeManager.instance.addMold(mold_casing_ic2);
     CastingRecipeManager.instance.addMold(mold_slab);
     CastingRecipeManager.instance.addMold(mold_stairs);
-    CastingRecipeManager.instance.addMold(mold_plate_ic2);
+    CastingRecipeManager.instance.addMold(mold_plate);
     CastingRecipeManager.instance.addMold(mold_wire_pr);
     CastingRecipeManager.instance.addMold(mold_block);
     CastingRecipeManager.instance.addMold(mold_gear);
@@ -441,6 +442,7 @@ public class FoundryRecipes
     CastingRecipeManager.instance.addMold(mold_shell_casing);
     CastingRecipeManager.instance.addMold(mold_shotgun_pump);
     CastingRecipeManager.instance.addMold(mold_shotgun_frame);
+    CastingRecipeManager.instance.addMold(mold_rod);
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -493,81 +495,91 @@ public class FoundryRecipes
 
     }
     
-    //Ingot casting recipes.
+    //Base casting recipes.
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
     {
-      Fluid fluid = LiquidMetalRegistry.instance.getFluid(name);
+      FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(name);
+
+      if(fluid.special)
+      {
+        continue;
+      }
+      
+      // Ingot
       ItemStack ingot = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingot" + name);
       if(ingot != null)
       {
-        CastingRecipeManager.instance.addRecipe(
-            ingot,
-            new FluidStack(
-                fluid, FoundryAPI.FLUID_AMOUNT_INGOT),
-            mold_ingot, null);
+        CastingRecipeManager.instance.addRecipe(ingot, new FluidStack( fluid, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
       }
-    }
-    
-    
-    //Metal block casting recipes.
-    for(String name:LiquidMetalRegistry.instance.getFluidNames())
-    {
-      Fluid fluid = LiquidMetalRegistry.instance.getFluid(name);
+
+      // Block
       ItemStack block = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "block" + name);
       if(block != null)
       {
-        CastingRecipeManager.instance.addRecipe(
-            block,
-            new FluidStack(
-                fluid,
-                FoundryAPI.FLUID_AMOUNT_BLOCK),
-            mold_block, null);
+        CastingRecipeManager.instance.addRecipe(block, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
       }
-    }
-    
-    //Metal slab casting recipes
-    for(String name:LiquidMetalRegistry.instance.getFluidNames())
-    {
+
+      // Slab
       ItemStack slab = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "slab" + name);
       if(slab != null)
       {
-        FluidStack fluid = new FluidStack(
-            LiquidMetalRegistry.instance.getFluid(name),
-            FoundryAPI.FLUID_AMOUNT_BLOCK / 2);
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK / 2);
 
-        CastingRecipeManager.instance.addRecipe(slab, fluid, mold_slab, null);
-        MeltingRecipeManager.instance.addRecipe(slab, fluid);
+        CastingRecipeManager.instance.addRecipe(slab, fluid_stack, mold_slab, null);
+        MeltingRecipeManager.instance.addRecipe(slab, fluid_stack);
       }
-    }
-
-    //Metal stairs casting recipes
-    for(String name:LiquidMetalRegistry.instance.getFluidNames())
-    {
+      
+      // Stairs
       ItemStack stairs = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "stairs" + name);
       if(stairs != null)
       {
-        FluidStack fluid = new FluidStack(
-            LiquidMetalRegistry.instance.getFluid(name),
-            FoundryAPI.FLUID_AMOUNT_BLOCK * 3 / 4);
-        
-        CastingRecipeManager.instance.addRecipe(stairs, fluid, mold_stairs, null);
-        MeltingRecipeManager.instance.addRecipe(stairs, fluid);
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK * 3 / 4);
+        CastingRecipeManager.instance.addRecipe(stairs, fluid_stack, mold_stairs, null);
+        MeltingRecipeManager.instance.addRecipe(stairs, fluid_stack);
       }
-    }
 
-    //Dust atomizing recipes.
-    for(String name:LiquidMetalRegistry.instance.getFluidNames())
-    {
+      // Dust
       ItemStack dust = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dust" + name);
       if(dust != null)
       {
-        AtomizerRecipeManager.instance.addRecipe(
-            dust,
-            new FluidStack(
-                LiquidMetalRegistry.instance.getFluid(name),
-                FoundryAPI.FLUID_AMOUNT_INGOT));
+        AtomizerRecipeManager.instance.addRecipe(dust, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
+      }
+      
+      // Gear
+      ItemStack gear = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "gear" + name);
+      if(gear != null)
+      {
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT * 4);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gear" + name);
+        CastingRecipeManager.instance.addRecipe(gear, fluid_stack, mold_gear, null);
+        MeltingRecipeManager.instance.addRecipe(gear, fluid_stack);
+      }
+
+      // Plate
+      ItemStack plate = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "plate" + name);
+      if(plate != null)
+      {
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
+
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plate" + name);
+        CastingRecipeManager.instance.addRecipe(plate, fluid_stack, mold_plate, null);
+        MeltingRecipeManager.instance.addRecipe(plate, fluid_stack);
+      }
+
+      // Plate
+      ItemStack rod = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "rod" + name);
+      if(rod != null)
+      {
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 2);
+
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_ROD_SOFT, "rod" + name);
+        CastingRecipeManager.instance.addRecipe(rod, fluid_stack, mold_rod, null);
+        MeltingRecipeManager.instance.addRecipe(rod, fluid_stack);
       }
     }
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearWood");
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearDiamond");
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearStone");
 
     if(FoundryConfig.recipe_steel_enable)
     {
@@ -948,8 +960,6 @@ public class FoundryRecipes
         Items.spider_eye, 
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
-    
-
 
     
     //Mold crafting with vanilla items
@@ -1011,26 +1021,16 @@ public class FoundryRecipes
     FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOTGUN_FRAME_SOFT, FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME));
 
     FMLControlledNamespacedRegistry<Block> reg = GameData.getBlockRegistry();
-    for(Object obj:reg)
+    for(Block block:reg)
     {
-      Block block = (Block)obj;
       if(block instanceof BlockStairs)
       {
-
         FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_STAIRS_SOFT, new ItemStack(block, 1, -1));
-      } else if(block instanceof BlockSlab && !block.isOpaqueCube())
+      } else if(block instanceof BlockSlab && !((BlockSlab)block).isDouble())
       {
         FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SLAB_SOFT, new ItemStack(block, 1, -1));
       }
     }
-    
-    for(String name:LiquidMetalRegistry.instance.getFluidNames())
-    {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gear" + name);
-    }
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearWood");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearDiamond");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearStone");
 
     //Ingot and block mold crafting recipes
     for(String name:OreDictionary.getOreNames())
@@ -1053,6 +1053,7 @@ public class FoundryRecipes
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SLAB_SOFT,ItemMold.MOLD_SLAB);
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_STAIRS_SOFT,ItemMold.MOLD_STAIRS);
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_PLATE_SOFT,ItemMold.MOLD_PLATE);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_ROD_SOFT, ItemMold.MOLD_ROD);
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_INSULATED_CABLE_IC2_SOFT,ItemMold.MOLD_INSULATED_CABLE_IC2);
     FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_WIRE_PR_SOFT,ItemMold.MOLD_WIRE_PR);

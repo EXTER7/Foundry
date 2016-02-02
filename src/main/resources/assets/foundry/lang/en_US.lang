@@ -443,6 +443,8 @@ item.mold64.name=Shotgun Frame Mold
 item.mold65.name=Soft Shotgun Frame Mold
 item.mold66.name=Shard Mold
 item.mold67.name=Soft Shard Mold
+item.mold68.name=Rod Mold
+item.mold69.name=Soft Rod Mold
   
 item.ingot0.name=Copper Ingot (Deprecated)
 item.ingot1.name=Tin Ingot (Deprecated)

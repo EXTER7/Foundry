@@ -98,9 +98,10 @@ moldIngot
 moldLeggings
 moldPellet
 moldPickaxe
-moldPlateIC2
+moldPlate
 moldRevolverDrum
 moldRevolverFrame
+moldRod
 moldRoundCasing
 moldShardTC
 moldShellCasing
@@ -128,9 +129,10 @@ moldSoftIngot
 moldSoftLeggings
 moldSoftPellet
 moldSoftPickaxe
-moldSoftPlateIC2
+moldSoftPlate
 moldSoftRevolverDrum
 moldSoftRevolverFrame
+moldSoftRod
 moldSoftRoundCasing
 moldSoftShardTC
 moldSoftShellCasing

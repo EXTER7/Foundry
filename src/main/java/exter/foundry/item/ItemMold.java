@@ -79,6 +79,8 @@ public class ItemMold extends Item
   static public final int MOLD_SHOTGUN_FRAME_SOFT = 65;
   static public final int MOLD_SHARD_TC = 66;
   static public final int MOLD_SHARD_TC_SOFT = 67;
+  static public final int MOLD_ROD = 68;
+  static public final int MOLD_ROD_SOFT = 69;
   
   static public final String[] REGISTRY_NAMES = 
   {
@@ -114,8 +116,8 @@ public class ItemMold extends Item
     "moldSoftSlab",
     "moldStairs",
     "moldSoftStairs",
-    "moldPlateIC2",
-    "moldSoftPlateIC2",
+    "moldPlate",
+    "moldSoftPlate",
     "moldWandCapTC",
     "moldSoftWandCapTC",
     "moldCableInsulatedIC2",
@@ -149,7 +151,9 @@ public class ItemMold extends Item
     "moldShotgunFrame",
     "moldSoftShotgunFrame",
     "moldShardTC",
-    "moldSoftShardTC"
+    "moldSoftShardTC",
+    "moldRod",
+    "moldSoftRod"
   };
 
   public ItemMold()

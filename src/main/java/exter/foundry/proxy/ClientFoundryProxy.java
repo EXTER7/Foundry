@@ -116,16 +116,18 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ModIntegrationManager.clientPreInit();
   }
 
-  
   @SuppressWarnings("deprecation")
-  private void registerLegacy()
+  private void registerOres()
   {
-    
     for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
     {
       registerItemModel(FoundryBlocks.block_ore,ore.oredict_name, ore.id);
     }
-
+  }
+  
+  @SuppressWarnings("deprecation")
+  private void registerLegacy()
+  {
     for(BlockMetal block:FoundryBlocks.block_metal)
     {
       for(BlockMetal.Variant v:block.getVariants())
@@ -176,6 +178,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     }   
     InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
 
+    registerOres();
+    
     if(FoundryConfig.legacy_items_enable)
     {
       registerLegacy();

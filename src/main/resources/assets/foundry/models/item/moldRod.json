@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "foundry:items/moldPlateIC2"
+        "layer0": "foundry:items/moldRod"
     },
     "display": {
         "thirdperson": {

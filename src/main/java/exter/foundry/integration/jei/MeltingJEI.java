@@ -83,8 +83,7 @@ public class MeltingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
-      heat.draw(minecraft,11,41);
-      minecraft.fontRendererObj.drawString(melting_point + " K", 14, 28, 0);
+
     }
 
     @Override
@@ -101,7 +100,8 @@ public class MeltingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      drawInfo(minecraft, recipeWidth, recipeHeight);
+      heat.draw(minecraft,11,41);
+      minecraft.fontRendererObj.drawString(melting_point + " K", 14, 28, 0);
     }
 
     @Override

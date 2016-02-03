@@ -66,7 +66,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "1.4.0.0-alpha2";
+  public static final String MODVERSION = "1.4.0.0-beta1";
 
   @Instance(MODID)
   public static ModFoundry instance;

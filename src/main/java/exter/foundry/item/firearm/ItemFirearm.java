@@ -1,7 +1,6 @@
 package exter.foundry.item.firearm;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -10,7 +9,6 @@ import org.apache.commons.lang3.tuple.MutablePair;
 
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
-import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +17,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
@@ -29,30 +26,19 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-public abstract class ItemFirearm extends ItemTool
+public abstract class ItemFirearm extends Item
 {
  
   static private Random random = new Random();
   
   public ItemFirearm()
   {
-    super(2,ToolMaterial.IRON,new HashSet<Block>());
     setMaxDamage(800);
     setCreativeTab(FoundryTabFirearms.tab);
     setMaxStackSize(1);
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  @Override
-  public final boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
-  {
-    ItemStack mat = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotSteel");
-    if(mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, p_82789_2_, false))
-    {
-      return true;
-    }
-    return false;
-  }
 
   static private MovingObjectPosition trace(World world, EntityLivingBase shooter,Entity target,float spread)
   {

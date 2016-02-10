@@ -17,21 +17,6 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
   public FluidStack output;
 
   @Override
-  @Deprecated
-  public FluidStack getInput(int in)
-  {
-    return inputs.get(in).copy();
-  }
-  
-  @Override
-  @Deprecated
-  public int getInputCount()
-  {
-    return inputs.size();
-  }
-
-
-  @Override
   public FluidStack getOutput()
   {
     return output.copy();

@@ -598,16 +598,6 @@ public class FoundryRecipes
       InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon", 2));
     }
     
-    if(FoundryConfig.recipe_gear_useoredict)
-    {
-      for(String name:LiquidMetalRegistry.instance.getFluidNames())
-      {
-        Fluid fluid = LiquidMetalRegistry.instance.getFluid(name);
-        MeltingRecipeManager.instance.addRecipe("gear" + name, new FluidStack(fluid,FoundryAPI.FLUID_AMOUNT_INGOT * 4));
-        CastingRecipeManager.instance.addRecipe("gear" + name, new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_gear, null);
-      }
-    }
-           
     
     ItemStack bullet = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET);
     ItemStack bullet_hollow = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW);

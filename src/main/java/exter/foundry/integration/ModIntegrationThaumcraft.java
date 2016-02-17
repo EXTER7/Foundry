@@ -165,7 +165,7 @@ public class ModIntegrationThaumcraft implements IModIntegration
       MaterialRegistry.instance.registerItem(oredict_name, metal, "NativeCluster");
     }
     
-    if(!FoundryConfig.recipe_gear_useoredict && gear_recipes)
+    if(gear_recipes)
     {
       ItemStack gear_brass = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearBrass");
       ItemStack gear_thaumium = FoundryMiscUtils.getModItemFromOreDictionary("Thaumcraft", "gearThaumium");

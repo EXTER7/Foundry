@@ -7,7 +7,6 @@ public class FoundryConfig
 {
   public static boolean debug;
 
-  public static boolean recipe_gear_useoredict;
   public static boolean recipe_steel_enable;
   
   public static boolean recipe_tools_armor;

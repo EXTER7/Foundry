@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import exter.foundry.ModFoundry;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.tileentity.TileEntityFoundry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -40,10 +42,16 @@ public class MessageTileEntitySync implements IMessage
       if(dim == world.provider.getDimensionId())
       {
         TileEntityFoundry tile = (TileEntityFoundry)world.getTileEntity(new BlockPos(x,y,z));
-        tile.readFromNBT(data);
-        if(!world.isRemote)
+        if(tile != null)
         {
-          tile.markDirty();
+          tile.readFromNBT(data);
+          if(!world.isRemote)
+          {
+            tile.markDirty();
+          }
+        } else if(FoundryConfig.debug)
+        {
+          ModFoundry.log.debug("TileEntitySync: Unexpected null tile at " + x + ", " + y + ", " + z + ", " + dim);
         }
       }
     }

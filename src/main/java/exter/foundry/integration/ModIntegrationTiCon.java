@@ -15,6 +15,7 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -34,7 +35,8 @@ public class ModIntegrationTiCon implements IModIntegration
 {
   private Map<String,String> liquid_map;
   private Map<String,String> reverse_liquid_map;
-  static private final int GCD(int a, int b)
+  
+  static private final int gcd(int a, int b)
   {
     while(b != 0)
     {
@@ -44,15 +46,10 @@ public class ModIntegrationTiCon implements IModIntegration
     }
     return a;
   }
-  
-  static private int DivCeil(int a,int b)
-  {
-    return a / b + ((a % b == 0) ? 0 : 1);
-  }
 
   static private final int TICON_INGOT_AMOUNT = 144;
 
-  static private final int INGOT_GCD = GCD(TICON_INGOT_AMOUNT,FoundryAPI.FLUID_AMOUNT_INGOT);
+  static private final int INGOT_GCD = gcd(TICON_INGOT_AMOUNT,FoundryAPI.FLUID_AMOUNT_INGOT);
 
   @Optional.Method(modid = "tconstruct")
   @Override
@@ -65,6 +62,7 @@ public class ModIntegrationTiCon implements IModIntegration
   @Override
   public void onInit()
   {
+    
   }
 
   @Optional.Method(modid = "tconstruct")
@@ -74,7 +72,19 @@ public class ModIntegrationTiCon implements IModIntegration
     {
       FluidStack[] in = new FluidStack[mix.getFluids().size()];
       in = inputs.toArray(in);
-      FluidStack result = new FluidStack(mix.getResult().getFluid(),mix.getResult().amount * 9 / INGOT_GCD);
+      FluidStack result = mix.getResult().copy();
+      result.amount *= TICON_INGOT_AMOUNT / INGOT_GCD;
+      int div = mix.getResult().amount;
+      for(FluidStack f:in)
+      {
+        div = gcd(div,f.amount);
+      }
+      for(FluidStack f:in)
+      {
+        f.amount /= div;
+      }
+      result.amount /= div;
+      
       AlloyMixerRecipeManager.instance.addRecipe(result, in);
       return;
     }
@@ -86,12 +96,12 @@ public class ModIntegrationTiCon implements IModIntegration
       List<FluidStack> in = new ArrayList<FluidStack>(inputs);
       in.add(new FluidStack( // Convert TiCon Fluid Stack to Foundry Fluid Stack
           LiquidMetalRegistry.instance.getFluid(mapped),
-          ing.amount * 9 * TICON_INGOT_AMOUNT / (FoundryAPI.FLUID_AMOUNT_INGOT * INGOT_GCD)));
+          ing.amount * FoundryAPI.FLUID_AMOUNT_INGOT / INGOT_GCD));
       createAlloyRecipe(mix,index + 1,in);
     }
     List<FluidStack> in = new ArrayList<FluidStack>(inputs);
     FluidStack fl = ing;
-    in.add(new FluidStack(fl.getFluid(),fl.amount * 9 / INGOT_GCD));
+    in.add(new FluidStack(fl.getFluid(),fl.amount * TICON_INGOT_AMOUNT / INGOT_GCD));
     createAlloyRecipe(mix,index + 1,in);
   }
   
@@ -163,7 +173,7 @@ public class ModIntegrationTiCon implements IModIntegration
               casting.getOutput(),
               new FluidStack(
                   mapped_fluid,
-                  DivCeil(casting.getInput().amount * TICON_INGOT_AMOUNT, FoundryAPI.FLUID_AMOUNT_INGOT)),
+                  FoundryMiscUtils.divCeil(casting.getInput().amount * TICON_INGOT_AMOUNT, FoundryAPI.FLUID_AMOUNT_INGOT)),
               casting.getMold(),
               casting.getInputExtra());
         }
@@ -194,7 +204,7 @@ public class ModIntegrationTiCon implements IModIntegration
             {
               mapped_liquid = new FluidStack(
                   LiquidMetalRegistry.instance.getFluid(mapped),
-                  DivCeil(result.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
+                  FoundryMiscUtils.divCeil(result.amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
             }
             if(mapped_liquid.amount <= 6000)
             {
@@ -230,7 +240,7 @@ public class ModIntegrationTiCon implements IModIntegration
     //Convert TiCon table casting recipes to Foundry Metal Caster recipes.
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting:TinkerRegistry.getAllTableCastingRecipes())
     {
-      if(casting.cast != null && !casting.consumesCast())
+      if(casting.cast != null && !casting.consumesCast() && casting.getResult() != null)
       {
         String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
         FluidStack mapped_liquid = null;
@@ -238,7 +248,7 @@ public class ModIntegrationTiCon implements IModIntegration
         {
           mapped_liquid = new FluidStack(
               LiquidMetalRegistry.instance.getFluid(mapped),
-              DivCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
+              FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
         }
         for(ItemStack cast:casting.cast.getInputs())
         {
@@ -283,6 +293,10 @@ public class ModIntegrationTiCon implements IModIntegration
     List<slimeknights.tconstruct.library.smeltery.CastingRecipe> recipes = new ArrayList<slimeknights.tconstruct.library.smeltery.CastingRecipe>();
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting : TinkerRegistry.getAllTableCastingRecipes())
     {
+      if(casting.getResult() == null)
+      {
+        continue;
+      }
       if(casting.cast != null)
       {
         Match bucket_match = casting.cast.matches(new ItemStack[] {new ItemStack(Items.bucket)});
@@ -301,7 +315,7 @@ public class ModIntegrationTiCon implements IModIntegration
           fluid,
           mapped.equals("Glass") ?
               casting.getFluid().amount :
-              DivCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
+              FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
       slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
           casting.getResult(),
           casting.cast,
@@ -334,7 +348,7 @@ public class ModIntegrationTiCon implements IModIntegration
           fluid,
         mapped.equals("Glass") ?
             casting.getFluid().amount :
-            DivCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
+            FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
       slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
           casting.getResult(),
           null,

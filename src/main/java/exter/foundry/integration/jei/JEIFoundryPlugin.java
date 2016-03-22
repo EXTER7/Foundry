@@ -18,18 +18,16 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 @JEIPlugin
 public class JEIFoundryPlugin implements IModPlugin
 {
-  public IJeiHelpers helpers;
   
   @Override
   public void register(IModRegistry registry)
   {
+    IJeiHelpers helpers = registry.getJeiHelpers();
     registry.addRecipeCategories(
         new AlloyFurnaceJEI.Category(helpers),
         new MeltingJEI.Category(helpers),
         new CastingJEI.Category(helpers),
         new AlloyMixerJEI.Category(helpers),
-        new InfuserJEI.Category(helpers),
-        new InfuserSubstanceJEI.Category(helpers),
         new AtomizerJEI.Category(helpers)
     );
 
@@ -38,8 +36,6 @@ public class JEIFoundryPlugin implements IModPlugin
         new MeltingJEI.Handler(),
         new CastingJEI.Handler(),
         new AlloyMixerJEI.Handler(),
-        new InfuserJEI.Handler(),
-        new InfuserSubstanceJEI.Handler(),
         new AtomizerJEI.Handler()
     );
     IRecipeTransferRegistry transfer_registry = registry.getRecipeTransferRegistry();
@@ -60,6 +56,7 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerAlloyMixer.SLOTS_TE,
         ContainerAlloyMixer.SLOTS_TE_SIZE, 
         ContainerAlloyMixer.SLOTS_INVENTORY, 36);
+    /*
     transfer_registry.addRecipeTransferHandler(ContainerMetalInfuser.class, "foundry.infuser",
         ContainerMetalInfuser.SLOTS_TE,
         ContainerMetalInfuser.SLOTS_TE_SIZE, 
@@ -68,7 +65,8 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerMetalInfuser.SLOTS_TE,
         ContainerMetalInfuser.SLOTS_TE_SIZE, 
         ContainerMetalInfuser.SLOTS_INVENTORY, 36);
-    transfer_registry.addRecipeTransferHandler(ContainerMetalInfuser.class, "foundry.atomizer",
+        */
+    transfer_registry.addRecipeTransferHandler(ContainerMetalAtomizer.class, "foundry.atomizer",
         ContainerMetalAtomizer.SLOTS_TE,
         ContainerMetalAtomizer.SLOTS_TE_SIZE, 
         ContainerMetalAtomizer.SLOTS_INVENTORY, 36);
@@ -77,27 +75,7 @@ public class JEIFoundryPlugin implements IModPlugin
     registry.addRecipes(MeltingJEI.getRecipes(helpers));
     registry.addRecipes(CastingJEI.getRecipes());
     registry.addRecipes(AlloyMixerJEI.getRecipes());
-    registry.addRecipes(InfuserJEI.getRecipes(helpers));
-    registry.addRecipes(InfuserSubstanceJEI.getRecipes(helpers));
     registry.addRecipes(AtomizerJEI.getRecipes());
-  }
-
-  @Override
-  public void onJeiHelpersAvailable(IJeiHelpers helpers)
-  {
-    this.helpers = helpers;
-  }
-
-  @Override
-  public void onItemRegistryAvailable(IItemRegistry itemRegistry)
-  {
-
-  }
-
-  @Override
-  public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry)
-  {
-    
   }
 
   @Override

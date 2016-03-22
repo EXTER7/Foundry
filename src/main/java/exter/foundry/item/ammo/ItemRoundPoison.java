@@ -9,7 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,7 +30,7 @@ public class ItemRoundPoison extends ItemRoundBase
     super.addInformation(stack, player, list, par4);
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(EnumChatFormatting.YELLOW + "Inflicts poison on target.");
+      list.add(TextFormatting.YELLOW + "Inflicts poison on target.");
     }
   }
 
@@ -37,7 +38,7 @@ public class ItemRoundPoison extends ItemRoundBase
   @Override
   public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
-    entity.addPotionEffect(new PotionEffect(Potion.poison.id, 400));    
+    entity.addPotionEffect(new PotionEffect(Potion.potionRegistry.getObject(new ResourceLocation("poison")), 400));
   }
   
   @Override

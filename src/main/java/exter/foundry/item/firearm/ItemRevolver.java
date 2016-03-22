@@ -8,12 +8,19 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,9 +29,13 @@ public class ItemRevolver extends ItemFirearm
 {
   static public final String AMMO_TYPE = "revolver";
   
+  private SoundEvent sound_fire;
+  
+  
   public ItemRevolver()
   {
     setUnlocalizedName("revolver");
+    sound_fire = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:revolver_fire"));
   }
 
   @Override
@@ -72,7 +83,7 @@ public class ItemRevolver extends ItemFirearm
   }
   
   @Override
-  public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int count)
+  public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase player, int count)
   {
     if(!player.isSneaking())
     {      
@@ -82,7 +93,7 @@ public class ItemRevolver extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSoundAtEntity(player, "foundry:revolver_fire", 1F, 1F);
+          player.playSound(sound_fire, 1F, 1F);
         }
         shoot(round,world,player,null,1,0.01f,1.0f);
         setAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
@@ -101,7 +112,7 @@ public class ItemRevolver extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSoundAtEntity(player, "random.click", 0.3F, 1.5F);
+          player.playSound(SoundEvents.ui_button_click, 0.3F, 1.5F);
         }        
       }
       setPosition(stack,(position + 1) % 8);
@@ -110,7 +121,7 @@ public class ItemRevolver extends ItemFirearm
 
   
   @Override
-  public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
   {
     if(player.isSneaking())
     {
@@ -120,9 +131,9 @@ public class ItemRevolver extends ItemFirearm
       }
     } else
     {
-       player.setItemInUse(stack, getMaxItemUseDuration(stack));
+       player.setActiveHand(hand);
     }
-    return stack;
+    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
   }
 
   @SuppressWarnings("unchecked")
@@ -149,11 +160,11 @@ public class ItemRevolver extends ItemFirearm
         NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Slot_" + j);
         if(tag.getBoolean("Empty"))
         {
-          list.add(EnumChatFormatting.BLUE + "< Empty >");
+          list.add(TextFormatting.BLUE + "< Empty >");
         } else
         {
           ItemStack ammo = ItemStack.loadItemStackFromNBT(tag);
-          list.add(EnumChatFormatting.BLUE + ammo.getDisplayName());
+          list.add(TextFormatting.BLUE + ammo.getDisplayName());
         }
       }
     }

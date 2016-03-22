@@ -10,10 +10,11 @@ import exter.foundry.gui.button.GuiButtonFoundry;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class GuiRevolver extends GuiContainer
 {
@@ -46,7 +47,7 @@ public class GuiRevolver extends GuiContainer
   protected void drawGuiContainerForegroundLayer(int par1, int par2)
   {
     fontRendererObj.drawString("Revolver Ammo", 23, 6, 4210752);
-    fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+    fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
   }
 
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
@@ -68,7 +69,7 @@ public class GuiRevolver extends GuiContainer
       {
         if(slot instanceof SlotFirearmAmmo)
         {
-          this.handleMouseClick(slot, slot.slotNumber, 0, 1);
+          this.handleMouseClick(slot, slot.slotNumber, 0, ClickType.QUICK_MOVE);
         }
       }
     }

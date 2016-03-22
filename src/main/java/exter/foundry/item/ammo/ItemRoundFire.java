@@ -9,10 +9,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -29,7 +29,7 @@ public class ItemRoundFire extends ItemRoundBase
 
 
   @Override
-  public void onBulletHitBlock(ItemStack ammo, EntityLivingBase shooter, Vec3 from, World world, BlockPos pos, EnumFacing side)
+  public void onBulletHitBlock(ItemStack ammo, EntityLivingBase shooter, Vec3d from, World world, BlockPos pos, EnumFacing side)
   {
     BlockPos front = pos.add(side.getDirectionVec());
     if(world.isAirBlock(front) && !world.isAirBlock(pos))
@@ -46,7 +46,7 @@ public class ItemRoundFire extends ItemRoundBase
     super.addInformation(stack, player, list, par4);
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(EnumChatFormatting.YELLOW + "Sets target on fire.");
+      list.add(TextFormatting.YELLOW + "Sets target on fire.");
     }
   }
 

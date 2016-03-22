@@ -77,12 +77,6 @@ public class CastingJEI
     }
 
     @Override
-    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
-    }
-
-    @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
 

@@ -16,7 +16,7 @@ import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 @SideOnly(Side.CLIENT)
 public class GuiMetalInfuser extends GuiFoundry
@@ -126,7 +126,7 @@ public class GuiMetalInfuser extends GuiFoundry
       InfuserSubstance sub = te_infuser.getSubstance();
       if(sub != null && sub.amount > 0)
       {
-        currenttip.add(StatCollector.translateToLocal("substance." + sub.type));
+        currenttip.add(I18n.translateToLocal("substance." + sub.type));
         currenttip.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
       } else
       {

@@ -11,8 +11,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -39,7 +39,7 @@ public class MessageTileEntitySync implements IMessage
       int y = data.getInteger("y");
       int z = data.getInteger("z");
       int dim = data.getInteger("dim");
-      if(dim == world.provider.getDimensionId())
+      if(dim == world.provider.getDimension())
       {
         TileEntityFoundry tile = (TileEntityFoundry)world.getTileEntity(new BlockPos(x,y,z));
         if(tile != null)

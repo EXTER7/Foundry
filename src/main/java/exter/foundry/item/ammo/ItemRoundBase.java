@@ -11,10 +11,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -42,9 +42,9 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   {
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(EnumChatFormatting.BLUE + "Base Damage: " + base_damage);
-      list.add(EnumChatFormatting.BLUE + "Base Range: " + base_range);
-      list.add(EnumChatFormatting.BLUE + "Fallof Range: " + falloff_range);
+      list.add(TextFormatting.BLUE + "Base Damage: " + base_damage);
+      list.add(TextFormatting.BLUE + "Base Range: " + base_range);
+      list.add(TextFormatting.BLUE + "Fallof Range: " + falloff_range);
     }
   }
 
@@ -79,7 +79,7 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
 
   @Override
-  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, BlockPos pos, EnumFacing side)
+  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3d from, World world, BlockPos pos, EnumFacing side)
   {
     
   }

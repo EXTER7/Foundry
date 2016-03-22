@@ -12,13 +12,9 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -110,6 +106,7 @@ public class FoundryMiscUtils
     }
   }
     
+  @SuppressWarnings("deprecation")
   static public FluidStack drainFluidFromWorld(World world,BlockPos pos,boolean do_drain)
   {
     IBlockState state = world.getBlockState(pos);
@@ -123,7 +120,7 @@ public class FoundryMiscUtils
       return fluid_block.drain(world, pos, do_drain);
     }
 
-    if(state.getBlock().getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+    if(state.getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {
@@ -132,7 +129,7 @@ public class FoundryMiscUtils
       return new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
     }
 
-    if(state.getBlock().getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+    if(state.getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {

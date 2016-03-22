@@ -9,12 +9,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -65,7 +67,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand)
+  public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
   {
     if(temperature < 1200)
     {
@@ -75,24 +77,25 @@ public class BlockLiquidMetal extends BlockFluidClassic
     double dy;
     double dz;
 
-    if(world.getBlockState(pos.add(0,1,0)).getBlock().getMaterial() == Material.air && !world.getBlockState(pos.add(0,1,0)).getBlock().isOpaqueCube())
+    if(world.getBlockState(pos.add(0,1,0)).getMaterial() == Material.air && !world.getBlockState(pos.add(0,1,0)).isOpaqueCube())
     {
       if(rand.nextInt(100) == 0)
       {
         dx = (double) ((float) pos.getX() + rand.nextFloat());
-        dy = (double) pos.getY() + this.maxY;
+        dy = (double) pos.getY() +  state.getBoundingBox(world, pos).maxY;
         dz = (double) ((float) pos.getZ() + rand.nextFloat());
         world.spawnParticle(EnumParticleTypes.LAVA, dx, dy, dz, 0.0D, 0.0D, 0.0D);
-        world.playSound(dx, dy, dz, "liquid.lavapop", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+        world.playSound(dx, dy, dz, SoundEvents.block_lava_pop, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
 
       if(rand.nextInt(200) == 0)
       {
-        world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), "liquid.lava", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+        world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.block_lava_ambient, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
     }
 
-    if(rand.nextInt(10) == 0 && World.doesBlockHaveSolidTopSurface(world, pos.add(0, -1, 0)) && !world.getBlockState(pos.add(0, -1, 0)).getBlock().getMaterial().blocksMovement())
+    BlockPos down = pos.down();
+    if(rand.nextInt(10) == 0 && world.getBlockState(down).isSideSolid(world, down, EnumFacing.UP) && !world.getBlockState(pos.add(0, -1, 0)).getMaterial().blocksMovement())
     {
       dx = (double) ((float) pos.getX() + rand.nextFloat());
       dy = (double) pos.getY() - 1.05D;
@@ -105,7 +108,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
   @Override
   public boolean canDisplace(IBlockAccess world, BlockPos pos)
   {
-    if(world.getBlockState(pos).getBlock().getMaterial().isLiquid())
+    if(world.getBlockState(pos).getMaterial().isLiquid())
     {
       return false;
     }
@@ -115,7 +118,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
   @Override
   public boolean displaceIfPossible(World world, BlockPos pos)
   {
-    if(world.getBlockState(pos).getBlock().getMaterial().isLiquid())
+    if(world.getBlockState(pos).getMaterial().isLiquid())
     {
       return false;
     }
@@ -215,11 +218,11 @@ public class BlockLiquidMetal extends BlockFluidClassic
   private boolean tryToHarden(World world, BlockPos pos, BlockPos npos)
   {
     //Check if block is in contact with water.
-    if(world.getBlockState(npos).getBlock().getMaterial() == Material.water)
+    if(world.getBlockState(npos).getMaterial() == Material.water)
     {
       int i;
       world.setBlockState(pos, solid_state);
-      world.playSoundEffect((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+      world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.block_lava_extinguish, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f, false);
       for (i = 0; i < 8; i++)
       {
         world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)pos.getX() + Math.random(), (double)pos.getY() + 1.2D, (double)pos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);

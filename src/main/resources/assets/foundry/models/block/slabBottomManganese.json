@@ -1,9 +1,0 @@
-{
-   "parent": "minecraft:block/half_slab",
-   "textures":
-   {
-     "bottom": "foundry:blocks/blockManganese",
-     "top": "foundry:blocks/blockManganese",
-     "side": "foundry:blocks/blockManganese"
-  }
-}

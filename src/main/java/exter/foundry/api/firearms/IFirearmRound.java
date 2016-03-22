@@ -2,9 +2,9 @@ package exter.foundry.api.firearms;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 /**
@@ -28,7 +28,7 @@ public interface IFirearmRound
    * @param pos coordinates of the block hit.
    * @param side Side of the block hit.
    */
-  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3 from, World world, BlockPos pos, EnumFacing side);
+  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3d from, World world, BlockPos pos, EnumFacing side);
 
   /**
    * Called after a shot hit and damaged an entity

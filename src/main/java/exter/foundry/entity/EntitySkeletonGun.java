@@ -1,20 +1,21 @@
 package exter.foundry.entity;
 
-import java.util.Calendar;
-
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.firearm.ItemFirearm;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackRangedBow;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -42,15 +43,15 @@ public class EntitySkeletonGun extends EntitySkeleton
   public EntitySkeletonGun(World p_i1741_1_)
   {
     super(p_i1741_1_);
-    tasks.addTask(4, new EntityAIArrowAttack(this, 1.0D, 20, 180, 15.0F));
+    tasks.addTask(4, new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F));
   }
 
   @Override
-  public void setCurrentItemOrArmor(int slot, ItemStack item)
+  public void setItemStackToSlot(EntityEquipmentSlot slot, ItemStack item)
   {
-    if(slot != 0 || worldObj.isRemote)
+    if(slot != EntityEquipmentSlot.MAINHAND || worldObj.isRemote)
     {
-      super.setCurrentItemOrArmor(slot, item);
+      super.setItemStackToSlot(slot, item);
     }
   }
   
@@ -64,18 +65,18 @@ public class EntitySkeletonGun extends EntitySkeleton
   public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
   {
     float damage = (float)this.worldObj.getDifficulty().getDifficultyId() * 0.1f + 0.7f;
-    if(getHeldItem().getItem() == FoundryItems.item_shotgun)
+    if(getHeldItem(EnumHand.MAIN_HAND).getItem() == FoundryItems.item_shotgun)
     {
       if(!worldObj.isRemote)
       {
-        worldObj.playSoundAtEntity(this, "foundry:shotgun_fire", 0.9F, 1F);
+        playSound(SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_fire")), 0.9F, 1F);
       }
       ItemFirearm.shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.4f,damage);
     } else
     {
       if(!worldObj.isRemote)
       {
-        worldObj.playSoundAtEntity(this, "foundry:revolver_fire", 0.9F, 1F);
+        playSound(SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:revolver_fire")), 0.9F, 1F);
       }
       ItemFirearm.shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.015f,damage);
     }
@@ -85,10 +86,10 @@ public class EntitySkeletonGun extends EntitySkeleton
   {
     if(rand.nextInt(100) < 10)
     {
-      super.setCurrentItemOrArmor(0, FoundryItems.item_shotgun.empty());
+      super.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, FoundryItems.item_shotgun.empty());
     } else
     {
-      super.setCurrentItemOrArmor(0, FoundryItems.item_revolver.empty());
+      super.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, FoundryItems.item_revolver.empty());
     }
   }
 
@@ -153,23 +154,13 @@ public class EntitySkeletonGun extends EntitySkeleton
   @Override
   public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
   {
-    getEntityAttribute(SharedMonsterAttributes.followRange).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05D, 1));
+    getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05D, 1));
 
     setEquipmentBasedOnDifficulty(difficulty);
     setEnchantmentBasedOnDifficulty(difficulty);
 
     setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficulty.getClampedAdditionalDifficulty());
 
-    if(getEquipmentInSlot(4) == null)
-    {
-      Calendar calendar = worldObj.getCurrentDate();
-
-      if(calendar.get(2) + 1 == 10 && calendar.get(5) == 31 && rand.nextFloat() < 0.25F)
-      {
-        setCurrentItemOrArmor(4, new ItemStack(rand.nextFloat() < 0.1F ? Blocks.lit_pumpkin : Blocks.pumpkin));
-        equipmentDropChances[4] = 0.0F;
-      }
-    }
     return livingdata;
   }
 }

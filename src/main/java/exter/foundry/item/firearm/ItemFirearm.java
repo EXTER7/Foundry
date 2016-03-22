@@ -19,10 +19,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -40,13 +39,13 @@ public abstract class ItemFirearm extends Item
   }
 
 
-  static private MovingObjectPosition trace(World world, EntityLivingBase shooter,Entity target,float spread)
+  static private RayTraceResult trace(World world, EntityLivingBase shooter,Entity target,float spread)
   {
-    Vec3 start = new Vec3(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
-    Vec3 dir;
+    Vec3d start = new Vec3d(shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
+    Vec3d dir;
     if(target != null)
     {
-      dir = new Vec3(target.posX - start.xCoord, target.posY - start.yCoord,target.posZ - start.zCoord).normalize();
+      dir = new Vec3d(target.posX - start.xCoord, target.posY - start.yCoord,target.posZ - start.zCoord).normalize();
     } else
     {
       float pitch = -shooter.rotationPitch;
@@ -55,12 +54,12 @@ public abstract class ItemFirearm extends Item
       float syaw = MathHelper.sin(yaw * 0.017453292F - (float) Math.PI);
       float cpitch = -MathHelper.cos(pitch * 0.017453292F);
 
-      dir = new Vec3(
+      dir = new Vec3d(
           syaw * cpitch,
           MathHelper.sin(pitch * 0.017453292F),
           cyaw * cpitch);
     }
-    Vec3 vspread = new Vec3(
+    Vec3d vspread = new Vec3d(
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1),
         (random.nextFloat() * 2 - 1)).normalize();
@@ -70,11 +69,11 @@ public abstract class ItemFirearm extends Item
 
     double distance = 150.0D;
 
-    Vec3 end = start.addVector(dir.xCoord * distance,dir.yCoord * distance,dir.zCoord * distance);
+    Vec3d end = start.addVector(dir.xCoord * distance,dir.yCoord * distance,dir.zCoord * distance);
 
-    Vec3 tstart = new Vec3(start.xCoord, start.yCoord, start.zCoord);
-    Vec3 tend = new Vec3(end.xCoord, end.yCoord, end.zCoord);
-    MovingObjectPosition obj = world.rayTraceBlocks(tstart, tend, false, true, false);
+    Vec3d tstart = new Vec3d(start.xCoord, start.yCoord, start.zCoord);
+    Vec3d tend = new Vec3d(end.xCoord, end.yCoord, end.zCoord);
+    RayTraceResult obj = world.rayTraceBlocks(tstart, tend, false, true, false);
     
     
     List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(shooter, shooter.getEntityBoundingBox().expand(150, 150, 150));
@@ -83,12 +82,12 @@ public abstract class ItemFirearm extends Item
     {
       if(ent.canBeCollidedWith() && ent.getEntityBoundingBox() != null)
       {
-        MovingObjectPosition ent_obj = ent.getEntityBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept(start, end);
+        RayTraceResult ent_obj = ent.getEntityBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept(start, end);
         if(ent_obj != null)
         {
-          if(ent_obj.typeOfHit == MovingObjectType.BLOCK)
+          if(ent_obj.typeOfHit == RayTraceResult.Type.BLOCK)
           {
-            ent_obj.typeOfHit = MovingObjectType.ENTITY;
+            ent_obj.typeOfHit = RayTraceResult.Type.ENTITY;
             ent_obj.entityHit = ent;
           }
           double d = ent_obj.hitVec.distanceTo(start);
@@ -115,14 +114,14 @@ public abstract class ItemFirearm extends Item
     int i;
     for(i = 0; i < times; i++)
     {
-      MovingObjectPosition obj = trace(world, shooter, target, spread);
+      RayTraceResult obj = trace(world, shooter, target, spread);
       if(obj != null)
       {
         switch(obj.typeOfHit)
         {
           case BLOCK:
             IBlockState b = world.getBlockState(obj.getBlockPos());
-            if(round.breaksGlass(round_item) && b.getBlock().getMaterial() == Material.glass && b.getBlock().getBlockHardness(world, obj.getBlockPos()) < 0.4)
+            if(round.breaksGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.getBlockPos()) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.getBlockPos(), Block.getIdFromBlock(b.getBlock())+(b.getBlock().getMetaFromState(b)<<12));
               if(!world.isRemote)
@@ -131,14 +130,14 @@ public abstract class ItemFirearm extends Item
               }
             } else
             {
-              round.onBulletHitBlock(round_item, shooter, (Vec3)obj.hitInfo, world, obj.getBlockPos(), obj.sideHit);
+              round.onBulletHitBlock(round_item, shooter, (Vec3d)obj.hitInfo, world, obj.getBlockPos(), obj.sideHit);
             }
             break;
           case ENTITY:
             if(obj.entityHit instanceof EntityLivingBase)
             {
-              Vec3 end = new Vec3(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
-              double distance = end.distanceTo((Vec3)obj.hitInfo);
+              Vec3d end = new Vec3d(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
+              double distance = end.distanceTo((Vec3d)obj.hitInfo);
               double base_range = round.getBaseRange(round_item);
               double falloff_range = round.getFalloffRange(round_item);
               double base_damage = round.getBaseDamage(round_item);

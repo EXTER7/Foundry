@@ -2,11 +2,11 @@ package exter.foundry.block;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -15,11 +15,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -124,20 +126,20 @@ public class BlockAlloyFurnace extends BlockContainer
     setUnlocalizedName("alloyFurnace");
     setHardness(1.0F);
     setResistance(8.0F);
-    setStepSound(Block.soundTypeStone);
+    setSoundType(SoundType.STONE);
     setCreativeTab(FoundryTabMachines.tab);
   }
 
   @Override
-  public int getRenderType()
+  public EnumBlockRenderType getRenderType(IBlockState state)
   {
-      return 3;
+      return EnumBlockRenderType.MODEL;
   }
 
   @Override
-  protected BlockState createBlockState()
+  protected BlockStateContainer createBlockState()
   {
-    return new BlockState(this, STATE, FACING );
+    return new BlockStateContainer(this, STATE, FACING );
   }
 
   @Override
@@ -160,10 +162,10 @@ public class BlockAlloyFurnace extends BlockContainer
     super.onBlockAdded(world, pos, state);
     if(!world.isRemote)
     {
-      Block block = world.getBlockState(pos.add(0, 0, -1)).getBlock();
-      Block block1 = world.getBlockState(pos.add(0, 0, 1)).getBlock();
-      Block block2 = world.getBlockState(pos.add(-1, 0, 0)).getBlock();
-      Block block3 = world.getBlockState(pos.add(1, 0, 0)).getBlock();
+      IBlockState block = world.getBlockState(pos.add(0, 0, -1));
+      IBlockState block1 = world.getBlockState(pos.add(0, 0, 1));
+      IBlockState block2 = world.getBlockState(pos.add(-1, 0, 0));
+      IBlockState block3 = world.getBlockState(pos.add(1, 0, 0));
       EnumFurnaceFacing facing = EnumFurnaceFacing.NORTH;
 
       if(block.isOpaqueCube() && !block1.isOpaqueCube())
@@ -187,7 +189,7 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hit_x, float hit_y, float hit_z)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {
@@ -266,7 +268,7 @@ public class BlockAlloyFurnace extends BlockContainer
 
   @SideOnly(Side.CLIENT)
   @Override
-  public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random random)
+  public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
   {
     if(state.getValue(STATE) == EnumState.ON)
     {
@@ -300,13 +302,13 @@ public class BlockAlloyFurnace extends BlockContainer
   }
 
   @Override
-  public boolean hasComparatorInputOverride()
+  public boolean hasComparatorInputOverride(IBlockState state)
   {
     return true;
   }
 
   @Override
-  public int getComparatorInputOverride(World world, BlockPos pos)
+  public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos)
   {
     return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
   }

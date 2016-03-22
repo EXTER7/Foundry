@@ -14,9 +14,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -54,7 +57,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   public void playerInteract(PlayerInteractEvent event)
   {
     //Prevent Blocks from activating when right clicking with a container in hand.
-    ItemStack stack = event.entityPlayer.getHeldItem();
+    ItemStack stack = event.entityPlayer.getHeldItem(EnumHand.MAIN_HAND);
     if(stack != null && stack.getItem() == this && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
     {
       event.setCanceled(true);
@@ -116,11 +119,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     FluidStack fluid = getFluid(stack);
     if(fluid == null)
     {
-      list.add(EnumChatFormatting.BLUE + "Empty");
+      list.add(TextFormatting.BLUE + "Empty");
     } else
     {
-      list.add(EnumChatFormatting.BLUE + fluid.getLocalizedName());
-      list.add(EnumChatFormatting.BLUE + String.valueOf(fluid.amount) + " / " + String.valueOf(capacity) + " mB");
+      list.add(TextFormatting.BLUE + fluid.getLocalizedName());
+      list.add(TextFormatting.BLUE + String.valueOf(fluid.amount) + " / " + String.valueOf(capacity) + " mB");
     }
   }
 
@@ -149,17 +152,17 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   }
   
   @Override
-  public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
   {
     FluidStack fluid = getFluid(stack);
-    MovingObjectPosition obj = getMovingObjectPositionFromPlayer(world, player, fluid == null || fluid.amount == 0);
+    RayTraceResult obj = getMovingObjectPositionFromPlayer(world, player, fluid == null || fluid.amount == 0);
 
     
     if(obj == null)
     {
-      return stack;
+      return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
     }
-    if(obj.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+    if(obj.typeOfHit == RayTraceResult.Type.BLOCK)
     {
       TileEntity entity = world.getTileEntity(obj.getBlockPos());
       
@@ -173,12 +176,12 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           FluidStack drained = drain(stack, 50, false);
           if(drained == null || drained.amount == 0)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           int filled = handler.fill(obj.sideHit, drained, false);
           if(filled == 0)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           drained.amount = filled;
           
@@ -191,28 +194,28 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           FluidStack drained = handler.drain(obj.sideHit, 50, false);
           if(drained == null || drained.amount == 0)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           int filled = fill(stack, drained, false, true);
           if(filled == 0)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           if(!splitStack(stack,player))
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           drained.amount = filled;
           handler.drain(obj.sideHit, filled, true);
           fill(stack, drained, true, false);
         }
         
-        return stack;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
       
       if(!world.canMineBlockBody(player, obj.getBlockPos()))
       {
-        return stack;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
 
       if(player.isSneaking())
@@ -221,10 +224,10 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
 
         if(!player.canPlayerEdit(pos, obj.sideHit, stack))
         {
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
-        Material material = world.getBlockState(pos).getBlock().getMaterial();
+        Material material = world.getBlockState(pos).getMaterial();
         
         if(world.isAirBlock(pos) || !material.isSolid())
         {
@@ -249,7 +252,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
             }
             world.setBlockState(pos, block.getDefaultState());
           }
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
       } else
@@ -259,7 +262,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
 
         if(!player.canPlayerEdit(pos, obj.sideHit, stack))
         {
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
         
         IBlockState state = world.getBlockState(pos);
@@ -269,62 +272,62 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           IFluidBlock fluid_block = (IFluidBlock)state.getBlock();
           if(!fluid_block.canDrain(world, pos))
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           FluidStack drained = fluid_block.drain(world, pos, false);
           if(drained == null)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           int filled = fill(stack, drained, false, true);
           if(filled != drained.amount)
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           if(!splitStack(stack,player))
           {
-            return stack;
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           fluid_block.drain(world, pos, true);
           fill(stack, drained, true, false);
           
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
-        if(state.getBlock().getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+        if(state.getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
             if(!splitStack(stack,player))
             {
-              return stack;
+              return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
             }
             fill(stack, fill, true, false);
             world.setBlockToAir(pos);
           }
 
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
-        if(state.getBlock().getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+        if(state.getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
           {
             if(!splitStack(stack,player))
             {
-              return stack;
+              return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
             }
             fill(stack, fill, true, false);
             world.setBlockToAir(pos);
           }
 
-          return stack;
+          return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
       }
     }
-    return stack;
+    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
   }
   
   @Override

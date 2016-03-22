@@ -13,7 +13,7 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import net.minecraftforge.fml.common.registry.GameData;
@@ -25,14 +25,11 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.substance.InfuserSubstance;
-import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemDust;
-import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
@@ -64,9 +61,6 @@ public class FoundryRecipes
   static public Fluid liquid_cupronickel;
   static public Fluid liquid_lead;
   static public Fluid liquid_platinum;
-  static public Fluid liquid_redstone;
-  static public Fluid liquid_glowstone;
-  static public Fluid liquid_enderpearl;
   static public Fluid liquid_signalum;
   static public Fluid liquid_lumium;
   static public Fluid liquid_enderium;
@@ -88,9 +82,6 @@ public class FoundryRecipes
     liquid_cupronickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Cupronickel", 1750, 15);
     liquid_lead = LiquidMetalRegistry.instance.registerLiquidMetal( "Lead", 650, 1);  
     liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2050, 15);
-    liquid_redstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Redstone", 800, 4, null);
-    liquid_glowstone = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Glowstone", 1100, 15, null);
-    liquid_enderpearl = LiquidMetalRegistry.instance.registerSpecialLiquidMetal( "Enderpearl", 1400, 2, null);
     liquid_signalum = LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
     liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
     liquid_enderium = LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
@@ -151,136 +142,12 @@ public class FoundryRecipes
     }
   }
 
-  static private ItemStack getNewItem(String oredict)
-  {
-    ItemStack result = FoundryMiscUtils.getModItemFromOreDictionary("substratum", oredict);
-    if(result == null && OreDictionary.getOres(oredict).size() > 0)
-    {
-      return OreDictionary.getOres(oredict).get(0);
-    }
-    return result;
-  }
-  
-  @SuppressWarnings("deprecation")
-  static private void addLegacyRecipes()
-  {
-    // Dust conversion recipes.
-    for(Map.Entry<String, ItemStack> metal:FoundryItems.dust_stacks.entrySet())
-    {
-
-      ItemStack ingot = getNewItem("ingot" + metal.getKey());
-      ItemStack dust = getNewItem("dust" + metal.getKey());
-      if(ingot != null)
-      {
-        GameRegistry.addSmelting(metal.getValue(), ingot, 0);
-      }
-      if(dust != null)
-      {
-        GameRegistry.addShapelessRecipe(dust, metal.getValue()); 
-      }
-    }
-
-    // Nugget conversion recipes.
-    for(Map.Entry<String, ItemStack> metal:FoundryItems.nugget_stacks.entrySet())
-    {
-      ItemStack ingot = getNewItem("ingot" + metal.getKey());
-      ItemStack nugget = getNewItem("nugget" + metal.getKey());
-      if(ingot != null)
-      {
-        GameRegistry.addRecipe(new ShapedOreRecipe(
-            ingot,
-            "NNN",
-            "NNN",
-            "NNN",
-            'N', metal.getValue())); 
-      }
-      if(nugget != null)
-      {
-        GameRegistry.addShapelessRecipe(nugget, metal.getValue()); 
-      }
-    }
-
-    // Ingot conversion recipes.
-    for(Map.Entry<String, ItemStack> metal:FoundryItems.ingot_stacks.entrySet())
-    {
-      ItemStack ingot = getNewItem("ingot" + metal.getKey());
-      if(ingot != null)
-      {
-        GameRegistry.addShapelessRecipe(ingot, metal.getValue()); 
-      }
-    }
-
-    // Block conversion recipes.
-    for(Map.Entry<String, ItemStack> metal:FoundryBlocks.block_stacks.entrySet())
-    {
-      ItemStack block = getNewItem("block" + metal.getKey());
-      if(block != null)
-      {
-        GameRegistry.addShapelessRecipe(block, metal.getValue()); 
-      }
-    }
-
-    // Slab conversion recipes.
-    for(Map.Entry<String, ItemStack> metal:FoundryBlocks.slab_stacks.entrySet())
-    {
-      ItemStack slab = getNewItem("slab" + metal.getKey());
-      if(slab != null)
-      {
-        GameRegistry.addShapelessRecipe(slab, metal.getValue()); 
-      }
-    }
-
-    // stairs conversion recipes.
-    for(Map.Entry<String, BlockStairs> metal:FoundryBlocks.block_metal_stairs.entrySet())
-    {
-      ItemStack stairs = getNewItem("stairs" + metal.getKey());
-      if(stairs != null)
-      {
-        GameRegistry.addShapelessRecipe(stairs, new ItemStack(metal.getValue())); 
-      }
-    }
-
-    //Convert old dusts into the new dust item.
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "gearStone"),
-        FoundryItems.component(ItemComponent.COMPONENT_GEAR));
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustZinc"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustBrass"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
-    GameRegistry.addShapelessRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dustCupronickel"),
-        FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
-
-    //Ore -> ingot furnace recipes.
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.COPPER.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotCopper"),0);
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.TIN.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotTin"),0);
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.ZINC.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotZinc"),0);
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.NICKEL.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotNickel"),0);
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.SILVER.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotSilver"),0);
-    GameRegistry.addSmelting(
-          new ItemStack(FoundryBlocks.block_ore,1,BlockFoundryOre.EnumOre.LEAD.id),
-          FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotLead"),0);
-  }
-  
   static public void init()
   {
-    ItemStack bucket = new ItemStack(Items.bucket);
-    FluidContainerRegistry.registerFluidContainer(liquid_redstone, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidRedstone"), bucket);
-    FluidContainerRegistry.registerFluidContainer(liquid_glowstone, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidGlowstone"), bucket);
-    FluidContainerRegistry.registerFluidContainer(liquid_enderpearl, FoundryMiscUtils.getModItemFromOreDictionary("substratum", "bucketLiquidEnderpearl"), bucket);
+    Fluid liquid_redstone = FluidRegistry.getFluid("liquidredstone");
+    Fluid liquid_glowstone = FluidRegistry.getFluid("liquidglowstone");
+    Fluid liquid_enderpearl = FluidRegistry.getFluid("liquidenderpearl");
+    
     
     MeltingRecipeManager.instance.addRecipe("dustRedstone", new FluidStack(liquid_redstone,100));
     MeltingRecipeManager.instance.addRecipe("dustGlowstone", new FluidStack(liquid_glowstone,250),liquid_glowstone.getTemperature(),90);
@@ -1083,10 +950,6 @@ public class FoundryRecipes
 
   static public void postInit()
   {
-    if(FoundryConfig.legacy_items_enable)
-    {
-      addLegacyRecipes();
-    }
     for(OreDictType type:OreDictType.TYPES)
     {
       for(OreDictMaterial material:OreDictMaterial.MATERIALS)

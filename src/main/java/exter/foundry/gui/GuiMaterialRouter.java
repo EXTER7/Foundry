@@ -16,7 +16,7 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 @SideOnly(Side.CLIENT)
 public class GuiMaterialRouter extends GuiFoundry
@@ -67,7 +67,7 @@ public class GuiMaterialRouter extends GuiFoundry
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(StatCollector.translateToLocal("router.material." + name));
+      tooltip.add(I18n.translateToLocal("router.material." + name));
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -97,7 +97,7 @@ public class GuiMaterialRouter extends GuiFoundry
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(StatCollector.translateToLocal("router.type." + name));
+      tooltip.add(I18n.translateToLocal("router.type." + name));
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -233,13 +233,13 @@ public class GuiMaterialRouter extends GuiFoundry
       if(isPointInRegion(29,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(StatCollector.translateToLocal("router.material." + r.material));
+        tooltip.add(I18n.translateToLocal("router.material." + r.material));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(46,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(StatCollector.translateToLocal("router.type." + r.type));
+        tooltip.add(I18n.translateToLocal("router.type." + r.type));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(81,y + 4,8,8,mousex,mousey))

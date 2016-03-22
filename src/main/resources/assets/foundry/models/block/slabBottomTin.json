@@ -1,9 +1,0 @@
-{
-   "parent": "minecraft:block/half_slab",
-   "textures":
-   {
-     "bottom": "foundry:blocks/blockTin",
-     "top": "foundry:blocks/blockTin",
-     "side": "foundry:blocks/blockTin"
-  }
-}

@@ -11,7 +11,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -78,7 +78,7 @@ public abstract class GuiFoundry extends GuiContainer
    */
   private void drawTexturedModelRectFromIconPartial(int x, int y, TextureAtlasSprite icon, int width, int height,int icon_x,int icon_y, int color)
   {
-    WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
+    VertexBuffer tessellator = Tessellator.getInstance().getBuffer();
       
       double min_u = icon.getInterpolatedU(icon_x);
       double min_v = icon.getInterpolatedV(icon_y);

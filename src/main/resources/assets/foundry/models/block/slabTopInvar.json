@@ -1,9 +1,0 @@
-{
-   "parent": "minecraft:block/upper_slab",
-   "textures":
-   {
-     "bottom": "foundry:blocks/blockInvar",
-     "top": "foundry:blocks/blockInvar",
-     "side": "foundry:blocks/blockInvar"
-  }
-}

@@ -8,11 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.fml.common.Mod;
@@ -31,11 +28,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
-import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationManager;
-import exter.foundry.integration.ModIntegrationMinetweaker;
-import exter.foundry.integration.ModIntegrationThaumcraft;
-import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.network.MessageTileEntitySync;
@@ -61,13 +54,13 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[11.15.1.1764,);required-after:substratum@[1.1.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1782,);required-after:substratum@[1.2.0.0,)"
 )
 public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "1.4.0.0";
+  public static final String MODVERSION = "2.0.0.0";
 
   @Instance(MODID)
   public static ModFoundry instance;
@@ -86,26 +79,12 @@ public class ModFoundry
   
   public static SimpleNetworkWrapper network_channel;
   
-  @SuppressWarnings("deprecation")
-  private static void initLegacy()
-  {
-    if(FoundryConfig.legacy_register_oredict && FoundryConfig.legacy_items_enable)
-    {
-      OreDictionary.registerOre("dustZinc", FoundryItems.component(ItemComponent.COMPONENT_DUST_ZINC));
-      OreDictionary.registerOre("dustBrass", FoundryItems.component(ItemComponent.COMPONENT_DUST_BRASS));
-      OreDictionary.registerOre("dustCupronickel", FoundryItems.component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
-    }
-  }
   
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationThaumcraft());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationBotania());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
     
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;
@@ -124,8 +103,6 @@ public class ModFoundry
     OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
     OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
     
-    initLegacy();
-
     FoundryRecipes.preInit();
     
     ModIntegrationManager.preInit(config);
@@ -160,7 +137,7 @@ public class ModFoundry
 
 
     FoundryRecipes.init();
-
+/* TODO: Implement this once the loot API is added to Forge
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET),1,3,8));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,7));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING),1,5,8));
@@ -199,7 +176,7 @@ public class ModFoundry
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME),1,2,10));
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.item_revolver.empty(),1,1,2));
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
-
+*/
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
 
     List<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();

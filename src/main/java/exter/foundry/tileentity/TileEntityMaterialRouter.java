@@ -344,7 +344,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     writeRoutesToNBT(tag);
     if(worldObj.isRemote)
     {
-      tag.setInteger("dim", worldObj.provider.getDimensionId());
+      tag.setInteger("dim", worldObj.provider.getDimension());
       ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
     } else
     {

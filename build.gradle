@@ -18,9 +18,9 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-def mod_version = "1.4.0.0"
+def mod_version = "2.0.0.0"
 
-def mc_version = "1.8.9"
+def mc_version = "1.9"
 
 def build_number = System.getenv("DRONE_BUILD_NUMBER")
 
@@ -29,9 +29,9 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.8.9-11.15.1.1764"
+    version = "1.9-12.16.0.1782-1.9"
     runDir = "eclipse"
-    mappings = "stable_20"
+    mappings = "snapshot_20160320"
 }
 
 repositories {
@@ -47,8 +47,7 @@ repositories {
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
-    deobfCompile "mezz.jei:jei_1.8.9:2.24.0.109"
-	deobfCompile "slimeknights.mantle:Mantle:1.8.9-0.9.1.jenkins99:deobf"
+    deobfCompile "mezz.jei:jei_1.9:3.0.2.164"
 }
 
 

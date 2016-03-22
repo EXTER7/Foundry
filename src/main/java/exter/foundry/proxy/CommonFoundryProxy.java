@@ -1,7 +1,8 @@
 package exter.foundry.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import exter.foundry.container.ContainerAlloyFurnace;
@@ -77,9 +78,9 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_REFRACTORYHOPPER:
         return new ContainerRefractoryHopper((TileEntityRefractoryHopper)world.getTileEntity(pos),player);
       case GUI_REVOLVER:
-        return new ContainerRevolver(player.getHeldItem(),player.inventory);
+        return new ContainerRevolver(player.getHeldItem(EnumHand.MAIN_HAND),player.inventory);
       case GUI_SHOTGUN:
-        return new ContainerShotgun(player.getHeldItem(),player.inventory);
+        return new ContainerShotgun(player.getHeldItem(EnumHand.MAIN_HAND),player.inventory);
       case GUI_ATOMIZER:
         return new ContainerMetalAtomizer((TileEntityMetalAtomizer)world.getTileEntity(pos),player);
     }
@@ -129,11 +130,11 @@ public class CommonFoundryProxy implements IGuiHandler
       }
       case GUI_REVOLVER:
       {
-        return new GuiRevolver(player.getHeldItem(),player.inventory);
+        return new GuiRevolver(player.getHeldItem(EnumHand.MAIN_HAND),player.inventory);
       }
       case GUI_SHOTGUN:
       {
-        return new GuiShotgun(player.getHeldItem(),player.inventory);
+        return new GuiShotgun(player.getHeldItem(EnumHand.MAIN_HAND),player.inventory);
       }
       case GUI_ATOMIZER:
       {

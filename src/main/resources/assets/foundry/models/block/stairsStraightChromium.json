@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures":
-  {
-    "bottom": "foundry:blocks/blockChromium",
-    "top": "foundry:blocks/blockChromium",
-    "side": "foundry:blocks/blockChromium"
-  }
-}

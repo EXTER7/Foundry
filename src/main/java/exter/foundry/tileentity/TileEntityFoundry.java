@@ -11,15 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.IFluidContainerItem;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 /**
@@ -285,7 +281,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   {
     NBTTagCompound nbt = new NBTTagCompound();
     writeToNBT(nbt);    
-    return new S35PacketUpdateTileEntity(getPos(), 0, nbt);
+    return new SPacketUpdateTileEntity(getPos(), 0, nbt);
   }
   
   
@@ -433,9 +429,9 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
 
   protected void sendPacketToPlayers(NBTTagCompound data)
   {
-    data.setInteger("dim", worldObj.provider.getDimensionId());
+    data.setInteger("dim", worldObj.provider.getDimension());
     ModFoundry.network_channel.sendToAllAround(new MessageTileEntitySync(data),
-        new TargetPoint(worldObj.provider.getDimensionId(),pos.getX(),pos.getY(),pos.getZ(),192));
+        new TargetPoint(worldObj.provider.getDimension(),pos.getX(),pos.getY(),pos.getZ(),192));
   }
    
 
@@ -479,7 +475,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
 
   @Override
-  public final void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+  public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
   {
     super.onDataPacket(net, pkt);
     if(worldObj.isRemote)
@@ -537,7 +533,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
 
   @Override
-  public IChatComponent getDisplayName()
+  public ITextComponent getDisplayName()
   {
     return null;
   }
@@ -557,7 +553,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
         NBTTagCompound tag = new NBTTagCompound();
         super.writeToNBT(tag);
         tag.setInteger("rsmode", mode.id);
-        tag.setInteger("dim", worldObj.provider.getDimensionId());
+        tag.setInteger("dim", worldObj.provider.getDimension());
         ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
       }
     }

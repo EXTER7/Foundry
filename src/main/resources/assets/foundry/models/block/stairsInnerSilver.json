@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures":
-  {
-    "bottom": "foundry:blocks/blockSilver",
-    "top": "foundry:blocks/blockSilver",
-    "side": "foundry:blocks/blockSilver"
-  }
-}

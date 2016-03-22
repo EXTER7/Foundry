@@ -1,9 +1,0 @@
-{
-   "parent": "minecraft:block/upper_slab",
-   "textures":
-   {
-     "bottom": "foundry:blocks/blockSteel",
-     "top": "foundry:blocks/blockSteel",
-     "side": "foundry:blocks/blockSteel"
-  }
-}

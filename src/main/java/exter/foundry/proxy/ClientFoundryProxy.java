@@ -10,19 +10,12 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import exter.foundry.block.BlockFoundryMachine;
-import exter.foundry.block.BlockFoundryOre;
-import exter.foundry.block.BlockMetal;
-import exter.foundry.block.BlockMetalSlab;
 import exter.foundry.block.FoundryBlocks;
-import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemDust;
-import exter.foundry.item.ItemIngot;
 import exter.foundry.item.ItemMold;
-import exter.foundry.item.ItemNugget;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
@@ -31,15 +24,14 @@ import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -116,56 +108,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ModIntegrationManager.clientPreInit();
   }
 
-  @SuppressWarnings("deprecation")
-  private void registerOres()
-  {
-    for(BlockFoundryOre.EnumOre ore:BlockFoundryOre.EnumOre.values())
-    {
-      registerItemModel(FoundryBlocks.block_ore,ore.oredict_name, ore.id);
-    }
-  }
-  
-  @SuppressWarnings("deprecation")
-  private void registerLegacy()
-  {
-    for(BlockMetal block:FoundryBlocks.block_metal)
-    {
-      for(BlockMetal.Variant v:block.getVariants())
-      {
-        registerItemModel(block,"block" + v.metal, v.id);
-      }
-    }
-
-    for(BlockMetalSlab block:FoundryBlocks.block_slab)
-    {
-      for(BlockMetalSlab.Variant v:block.getVariants())
-      {
-        registerItemModel(block,"slab" + v.metal, block.getBottomVariantMeta(v));
-      }
-    }
-
-    for(Map.Entry<String, BlockStairs> e:FoundryBlocks.block_metal_stairs.entrySet())
-    {
-      registerItemModel(e.getValue(),"stairs" + e.getKey());
-    }
-    
-    int i;
-
-    for(i = 0; i < ItemIngot.OREDICT_NAMES.length; i++)
-    {
-      registerItemModel(FoundryItems.item_ingot,ItemIngot.OREDICT_NAMES[i], i);
-    }
-
-    for(i = 0; i < ItemDust.OREDICT_NAMES.length; i++)
-    {
-      registerItemModel(FoundryItems.item_dust,ItemDust.OREDICT_NAMES[i], i);
-    }
-
-    for(i = 0; i < ItemNugget.OREDICT_NAMES.length; i++)
-    {
-      registerItemModel(FoundryItems.item_nugget,ItemNugget.OREDICT_NAMES[i], i);
-    }
-  }
   
   @Override
   public void init()
@@ -177,13 +119,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       InfuserRecipeManager.instance.registerSubstanceTexture("dye." + dye.getName(), SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[dye.getDyeDamage()]);
     }   
     InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
-
-    registerOres();
-    
-    if(FoundryConfig.legacy_items_enable)
-    {
-      registerLegacy();
-    }
 
     for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
     {

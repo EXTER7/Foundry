@@ -1,39 +1,10 @@
 package exter.foundry.model;
 
-import java.util.Arrays;
-import java.util.Collection;
 
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Vector3f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-
-import exter.foundry.item.FoundryItems;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ICustomModelLoader;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.ItemLayerModel;
-import net.minecraftforge.client.model.SimpleModelState;
-import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
-import net.minecraftforge.fluids.FluidStack;
-
-@SuppressWarnings("deprecation")
-public class RFCModel implements IModel
+//TODO: Rewrite using 1.9 model APIs.
+public class RFCModel/* implements IModel */
 {
+  /*
   public static class BakedModel extends ItemLayerModel.BakedModel implements IFlexibleBakedModel, ISmartItemModel,IPerspectiveAwareModel
   {
     private ImmutableList<BakedQuad> bg_quads;
@@ -320,7 +291,6 @@ public class RFCModel implements IModel
       int color)
   {
       UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
-      builder.setQuadColored();
       builder.setQuadTint(tint);
       builder.setQuadOrientation(side);
       putVertex(builder, format, side, x0, y0, z0, u0, v0,color);
@@ -379,4 +349,5 @@ public class RFCModel implements IModel
         .of(ItemCameraTransforms.TransformType.THIRD_PERSON, tp,
             ItemCameraTransforms.TransformType.FIRST_PERSON, fp));
   }
+  */
 }

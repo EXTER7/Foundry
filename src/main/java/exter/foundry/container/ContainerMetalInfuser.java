@@ -32,11 +32,11 @@ public class ContainerMetalInfuser extends Container
     te_infuser.openInventory(player);
     int i,j;
 
-    addSlotToContainer(new Slot(te_infuser, TileEntityMetalInfuser.INVENTORY_SUBSTANCE_INPUT, 19, 59));
-    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_DRAIN, 85, 15));
-    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_FILL, 85, 102));
-    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_DRAIN, 134, 15));
-    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_FILL, 134, 102));
+    addSlotToContainer(new Slot(te_infuser, TileEntityMetalInfuser.INVENTORY_SUBSTANCE_INPUT, 30, 59));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_DRAIN, 74, 15));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_INPUT_FILL, 74, 102));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_DRAIN, 123, 15));
+    addSlotToContainer(new SlotFluidContainer(te_infuser, TileEntityMetalInfuser.INVENTORY_CONTAINER_OUTPUT_FILL, 123, 102));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

@@ -1,6 +1,6 @@
 package exter.foundry.api.recipe;
 
-import exter.foundry.api.substance.InfuserSubstance;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IInfuserRecipe
@@ -15,13 +15,16 @@ public interface IInfuserRecipe
    * Get the substance required.
    * @return The substance required.
    */
-  public InfuserSubstance getInputSubstance();
+  public Object getInput();
   
   /**
    * Get the produced fluid.
    * @return The fluid that the recipe produces.
    */
   public FluidStack getOutput();
+  
+  
+  public int getEnergyNeeded();
   
   /**
    * Check if a fluid stack and substance stack matches this recipe
@@ -30,5 +33,5 @@ public interface IInfuserRecipe
    * @param substance_amount Substance amount to check.
    * @return true if the fluid and substance matches, false otherwise.
    */
-  public boolean matchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance);
+  public boolean matchesRecipe(FluidStack in_fluid,ItemStack in_item);
 }

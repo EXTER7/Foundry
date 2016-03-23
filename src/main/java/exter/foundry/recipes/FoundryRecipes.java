@@ -8,8 +8,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
@@ -24,7 +22,6 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
@@ -109,7 +106,7 @@ public class FoundryRecipes
     
     if(FoundryConfig.recipe_glass)
     {
-      final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
+      //final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
 
       int temp = 1550;
       Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.glass));
@@ -117,7 +114,7 @@ public class FoundryRecipes
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
       CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.MOLD_BLOCK),null,400);
-      
+      /*
       for(EnumDyeColor dye:EnumDyeColor.values())
       {
         String name = dye.getName();
@@ -138,7 +135,7 @@ public class FoundryRecipes
         
         InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
         InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
-      }
+      }*/
     }
   }
 
@@ -456,13 +453,8 @@ public class FoundryRecipes
 
     if(FoundryConfig.recipe_steel_enable)
     {
-      InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",36), new ItemStack(Items.coal,1,0), 240000);
-      InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",12), new ItemStack(Items.coal,1,1), 480000);
-      InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",324), new ItemStack(Blocks.coal_block,1), 1920000);
-      InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",36), "dustCoal", 160000);
-      InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("carbon",12), "dustCharcoal", 320000);
-
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon", 2));
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,54), new FluidStack(liquid_iron,54), "dustCoal", 160000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,27), new FluidStack(liquid_iron,27), "dustCharcoal", 320000);
     }
     
     

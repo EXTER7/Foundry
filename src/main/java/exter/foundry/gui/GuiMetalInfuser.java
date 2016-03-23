@@ -7,16 +7,10 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.substance.ISubstanceGuiTexture;
-import exter.foundry.api.substance.InfuserSubstance;
 import exter.foundry.container.ContainerMetalInfuser;
-import exter.foundry.recipes.SubstanceGuiTexture;
-import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 @SideOnly(Side.CLIENT)
 public class GuiMetalInfuser extends GuiFoundry
@@ -25,17 +19,13 @@ public class GuiMetalInfuser extends GuiFoundry
   private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser.png");
 
   public static final int TANK_HEIGHT = 47;
-  private static final int INPUT_TANK_X = 85;
+  private static final int INPUT_TANK_X = 74;
   private static final int INPUT_TANK_Y = 43;
 
-  private static final int OUTPUT_TANK_X = 134;
+  private static final int OUTPUT_TANK_X = 123;
   private static final int OUTPUT_TANK_Y = 43;
 
-  private static final int SUBSTANCE_X = 71;
-  private static final int SUBSTANCE_Y = 43;
-  private static final int SUBSTANCE_HEIGHT = 47;
-
-  private static final int PROGRESS_X = 42;
+  private static final int PROGRESS_X = 49;
   private static final int PROGRESS_Y = 59;
   private static final int PROGRESS_WIDTH = 22;
   private static final int PROGRESS_HEIGHT = 15;
@@ -83,23 +73,6 @@ public class GuiMetalInfuser extends GuiFoundry
     
     displayTank(window_x, window_y, INPUT_TANK_X, INPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
     displayTank(window_x, window_y, OUTPUT_TANK_X, OUTPUT_TANK_Y, TANK_HEIGHT, TANK_OVERLAY_X, TANK_OVERLAY_Y, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
-    
-    //Draw substance bar.
-    InfuserSubstance sub = te_infuser.getSubstance();
-    if(sub != null && sub.amount > 0)
-    {
-      ISubstanceGuiTexture tex = InfuserRecipeManager.instance.GetSubstanceTexture(sub.type);
-      if(tex != null)
-      {
-        mc.renderEngine.bindTexture(tex.getLocation());
-        int height = sub.amount * TANK_HEIGHT / FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX;
-
-        setGLColor(tex.getColor());
-        drawTexturedModalRect(window_x + SUBSTANCE_X, window_y + SUBSTANCE_Y + SUBSTANCE_HEIGHT - height, tex.getX(), tex.getY() + SUBSTANCE_HEIGHT - height, SubstanceGuiTexture.TEXTURE_WIDTH, height);
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        mc.renderEngine.bindTexture(getGUITexture());
-      }
-    }
   }
 
   @Override
@@ -117,21 +90,6 @@ public class GuiMetalInfuser extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
-    }
-
-    if(isPointInRegion(SUBSTANCE_X, SUBSTANCE_Y, SubstanceGuiTexture.TEXTURE_WIDTH, SUBSTANCE_HEIGHT, mousex, mousey))
-    {
-      List<String> currenttip = new ArrayList<String>();
-      InfuserSubstance sub = te_infuser.getSubstance();
-      if(sub != null && sub.amount > 0)
-      {
-        currenttip.add(I18n.translateToLocal("substance." + sub.type));
-        currenttip.add(String.valueOf(sub.amount) + " / " + String.valueOf(FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
-      } else
-      {
-        currenttip.add("0 / " + String.valueOf(FoundryAPI.INFUSER_SUBSTANCE_AMOUNT_MAX) + " mL");
-      }
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }

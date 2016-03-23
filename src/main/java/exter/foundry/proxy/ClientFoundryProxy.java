@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -19,8 +18,6 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
-import exter.foundry.model.RFCModel;
-import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.block.Block;
@@ -33,9 +30,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
@@ -59,7 +54,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     
   }
  
-  static private ResourceLocation SUBSTANCES_TEXTURE = new ResourceLocation("foundry:textures/gui/infuser_substances.png");
   
   
   private void registerItemModel(Block block,String name)
@@ -90,9 +84,9 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void preInit()
   {
-    ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
+    //TODO
+    //ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
     MaterialRegistry.instance.initIcons();
-    InfuserRecipeManager.instance.InitTextures();
     for(Map.Entry<String,FluidLiquidMetal> e:LiquidMetalRegistry.instance.getFluids().entrySet())
     {
       Fluid fluid = e.getValue();
@@ -112,13 +106,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void init()
   {
-    InfuserRecipeManager.instance.registerSubstanceTexture("carbon", SUBSTANCES_TEXTURE, 0, 0);
     int i;
-    for(EnumDyeColor dye:EnumDyeColor.values())
-    {
-      InfuserRecipeManager.instance.registerSubstanceTexture("dye." + dye.getName(), SUBSTANCES_TEXTURE, 8, 0, ItemDye.dyeColors[dye.getDyeDamage()]);
-    }   
-    InfuserRecipeManager.instance.registerSubstanceTexture("silicon", SUBSTANCES_TEXTURE, 16, 0);
 
     for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
     {

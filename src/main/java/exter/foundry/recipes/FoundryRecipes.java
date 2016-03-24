@@ -453,8 +453,10 @@ public class FoundryRecipes
 
     if(FoundryConfig.recipe_steel_enable)
     {
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,54), new FluidStack(liquid_iron,54), "dustCoal", 160000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,27), new FluidStack(liquid_iron,27), "dustCharcoal", 320000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,36), new FluidStack(liquid_iron,36), "dustCoal", 160000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,12), new FluidStack(liquid_iron,12), "dustCharcoal", 160000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,9), new FluidStack(liquid_iron,9), "dustSmallCoal", 20000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), "dustSmallCharcoal", 20000);
     }
     
     

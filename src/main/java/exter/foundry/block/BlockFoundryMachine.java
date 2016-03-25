@@ -28,7 +28,8 @@ import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityInductionHeater;
+import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -40,12 +41,13 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
 
   static public enum EnumMachine implements IStringSerializable
   {
-    ICF(0, "icf", "machineICF"),
+    CRUCIBLE(0, "crucible", "machineCrucible"),
     CASTER(1, "caster", "machineCaster"),
     ALLOYMIXER(2, "alloymixer", "machineAlloyMixer"),
     INFUSER(3, "infuser", "machineInfuser"),
     MATERIALROUTER(4, "router", "machineMaterialRouter"),
-    ATOMIZER(5, "atomizer", "machineAtomizer");
+    ATOMIZER(5, "atomizer", "machineAtomizer"),
+    INDUCTIONHEATER(6, "heater_induction", "machineInductionHeater");
 
     public final int id;
     public final String name;
@@ -153,8 +155,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     {
       switch((EnumMachine)state.getValue(MACHINE))
       {
-        case ICF:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ICF, world, pos.getX(), pos.getY(), pos.getZ());
+        case CRUCIBLE:
+          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
           break;
         case CASTER:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_CASTER, world, pos.getX(), pos.getY(), pos.getZ());
@@ -171,6 +173,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         case ATOMIZER:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
           break;
+        default:
+          break;
       }
       return true;
     }
@@ -185,10 +189,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   @Override
   public TileEntity createTileEntity(World world, IBlockState state)
   {
-    switch((EnumMachine)state.getValue(MACHINE))
+    switch(state.getValue(MACHINE))
     {
-      case ICF:
-        return new TileEntityInductionCrucibleFurnace();
+      case CRUCIBLE:
+        return new TileEntityMeltingCrucible();
       case CASTER:
         return new TileEntityMetalCaster();
       case ALLOYMIXER:
@@ -199,6 +203,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         return new TileEntityMaterialRouter();
       case ATOMIZER:
         return new TileEntityMetalAtomizer();
+      case INDUCTIONHEATER:
+        return new TileEntityInductionHeater();
     }
     return null;
   }

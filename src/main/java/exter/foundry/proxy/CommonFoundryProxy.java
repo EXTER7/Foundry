@@ -10,7 +10,7 @@ import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMaterialRouter;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.container.ContainerRefractoryHopper;
 import exter.foundry.container.ContainerRevolver;
@@ -20,7 +20,7 @@ import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMaterialRouter;
 import exter.foundry.gui.GuiMetalAtomizer;
 import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.gui.GuiInductionCrucibleFurnace;
+import exter.foundry.gui.GuiMeltingCrucibleFurnace;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.gui.GuiRefractoryHopper;
 import exter.foundry.gui.GuiRevolver;
@@ -30,13 +30,13 @@ import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
-  static public final int GUI_ICF = 0;
+  static public final int GUI_CRUCIBLE = 0;
   static public final int GUI_CASTER = 1;
   static public final int GUI_ALLOYMIXER = 2;
   static public final int GUI_INFUSER = 3;
@@ -63,8 +63,8 @@ public class CommonFoundryProxy implements IGuiHandler
     BlockPos pos = new BlockPos(x,y,z);
     switch(ID)
     {
-      case GUI_ICF:
-        return new ContainerInductionCrucibleFurnace((TileEntityInductionCrucibleFurnace)world.getTileEntity(pos),player);
+      case GUI_CRUCIBLE:
+        return new ContainerMeltingCrucible((TileEntityMeltingCrucible)world.getTileEntity(pos),player);
       case GUI_CASTER:
         return new ContainerMetalCaster((TileEntityMetalCaster)world.getTileEntity(pos),player);
       case GUI_ALLOYMIXER:
@@ -93,10 +93,10 @@ public class CommonFoundryProxy implements IGuiHandler
     BlockPos pos = new BlockPos(x,y,z);
     switch(ID)
     {
-      case GUI_ICF:
+      case GUI_CRUCIBLE:
       {
-        TileEntityInductionCrucibleFurnace te = (TileEntityInductionCrucibleFurnace)world.getTileEntity(pos);
-        return new GuiInductionCrucibleFurnace(te,player);
+        TileEntityMeltingCrucible te = (TileEntityMeltingCrucible)world.getTileEntity(pos);
+        return new GuiMeltingCrucibleFurnace(te,player);
       }
       case GUI_CASTER:
       {

@@ -628,7 +628,7 @@ public class FoundryRecipes
         'B', refbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryBlocks.block_machine.asItemStack(EnumMachine.ICF),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE),
         "IFI",
         "HCH",
         "HRH",

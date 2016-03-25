@@ -1,8 +1,5 @@
 package exter.foundry.item;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import exter.foundry.item.ammo.ItemRoundNormal;
 import exter.foundry.item.ammo.ItemRoundJacketed;
 import exter.foundry.item.ammo.ItemRoundPoison;
@@ -35,13 +32,6 @@ public class FoundryItems
 
   
   static public ItemRefractoryFluidContainer item_container;
-  
-  @Deprecated
-  static public final Map<String,ItemStack> ingot_stacks = new HashMap<String,ItemStack>();
-  @Deprecated
-  static public final Map<String,ItemStack> dust_stacks = new HashMap<String,ItemStack>();
-  @Deprecated
-  static public final Map<String,ItemStack> nugget_stacks = new HashMap<String,ItemStack>();
 
   
   static public void registerItems(Configuration config)
@@ -59,22 +49,22 @@ public class FoundryItems
     item_shell = new ItemShellNormal();
     item_shell_ap = new ItemShellAP();
     
-    GameRegistry.registerItem(item_component, "foundryComponent");
-    GameRegistry.registerItem(item_mold, "foundryMold");
-    GameRegistry.registerItem(item_revolver, "foundryRevolver");
-    GameRegistry.registerItem(item_shotgun, "foundryShotgun");
-    GameRegistry.registerItem(item_round, "foundryRound");
-    GameRegistry.registerItem(item_round_jacketed, "foundryRoundJacketed");
-    GameRegistry.registerItem(item_round_hollow, "foundryRoundHollow");
-    GameRegistry.registerItem(item_round_fire, "foundryRoundFire");
-    GameRegistry.registerItem(item_round_poison, "foundryRoundPoison");
-    GameRegistry.registerItem(item_shell, "foundryShell");
-    GameRegistry.registerItem(item_round_ap, "foundryRoundAP");
-    GameRegistry.registerItem(item_shell_ap, "foundryShellAP");
+    GameRegistry.registerItem(item_component, "component");
+    GameRegistry.registerItem(item_mold, "mold");
+    GameRegistry.registerItem(item_revolver, "revolver");
+    GameRegistry.registerItem(item_shotgun, "shotgun");
+    GameRegistry.registerItem(item_round, "round");
+    GameRegistry.registerItem(item_round_jacketed, "roundJacketed");
+    GameRegistry.registerItem(item_round_hollow, "roundHollow");
+    GameRegistry.registerItem(item_round_fire, "roundFire");
+    GameRegistry.registerItem(item_round_poison, "roundPoison");
+    GameRegistry.registerItem(item_shell, "shell");
+    GameRegistry.registerItem(item_round_ap, "roundAP");
+    GameRegistry.registerItem(item_shell_ap, "shellAP");
     
 
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
-    GameRegistry.registerItem(item_container, "foundryContainer");
+    GameRegistry.registerItem(item_container, "fluidContainer");
   }
 
   static public ItemStack component(int dv)

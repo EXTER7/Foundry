@@ -43,10 +43,11 @@ import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
+import exter.foundry.tileentity.TileEntityInductionHeater;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 
@@ -54,7 +55,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1782,);required-after:substratum@[1.2.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1804,);required-after:substratum@[1.2.0.0,)"
 )
 public class ModFoundry
 {
@@ -126,7 +127,7 @@ public class ModFoundry
   {
     ModIntegrationManager.init();
     
-    GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");
+    GameRegistry.registerTileEntity(TileEntityMeltingCrucible.class, "Foundry_MeltingCrucible");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
     GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");
@@ -134,6 +135,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityMaterialRouter.class, "Foundry_MaterialRouter");
     GameRegistry.registerTileEntity(TileEntityRefractoryHopper.class, "Foundry_RefractoryHopper");
     GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, "Foundry_MetalAtomizer");
+    GameRegistry.registerTileEntity(TileEntityInductionHeater.class, "Foundry_InductionHeater");
 
 
     FoundryRecipes.init();

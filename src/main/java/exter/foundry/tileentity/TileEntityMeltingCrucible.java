@@ -1,6 +1,7 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
+import exter.foundry.api.heatable.IHeatable;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
@@ -13,13 +14,15 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
+
+public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IHeatable
 {
   static public final int HEAT_MAX = 500000;
   static public final int HEAT_MIN = 29000;
-  static public final int SMELT_TIME = 5000000;
+  static public final int HEAT_LOSS_RATE = 100;
   
-  static public final int ENERGY_USE = 6000;
+  static public final int SMELT_TIME = 5000000;
+
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
@@ -33,8 +36,9 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   private int melt_point;
   private IMeltingRecipe current_recipe;
   
+  private int tick_heat;
   
-  public TileEntityInductionCrucibleFurnace()
+  public TileEntityMeltingCrucible()
   {
     super();
     tank = new FluidTank(FoundryAPI.ICF_TANK_CAPACITY);
@@ -47,6 +51,8 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
     melt_point = 0;
     
     current_recipe = null;
+    
+    tick_heat = 0;
     
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
@@ -241,7 +247,6 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   @Override
   protected void updateServer()
   {
-    super.updateServer();
     int last_progress = progress;
     int last_melt_point = melt_point;
     checkCurrentRecipe();
@@ -262,46 +267,17 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
 
     int last_heat = heat;
 
-    //Heat loss
-    if(heat > HEAT_MIN)
+    
+    heat += tick_heat;
+    if(heat > HEAT_MAX)
     {
-      heat -= heat * 720 / HEAT_MAX + 6;
-      if(heat < HEAT_MIN)
-      {
-        heat = HEAT_MIN;
-      }
-    }
-
-    boolean use_energy = false;
-    switch(getRedstoneMode())
-    {
-      case RSMODE_IGNORE:
-        use_energy = true;
-        break;
-      case RSMODE_OFF:
-        use_energy = !redstone_signal;
-        break;
-      case RSMODE_ON:
-        use_energy = redstone_signal;
-        break;
-      default:
-        break;
+      heat = HEAT_MAX;
     }
     
-    if(use_energy)
-    {
-      if(getStoredFoundryEnergy() > 0)
-      {
-        //Convert energy to heat
-        int energy = useFoundryEnergy(ENERGY_USE, true);
-        heat += energy * 6 / 25;
-        if(heat > HEAT_MAX)
-        {
-          heat = HEAT_MAX;
-        }
-      }
-    }
+    tick_heat = 0;
     
+    heat -= (heat - HEAT_MIN) / HEAT_LOSS_RATE;
+ 
     doMeltingProgress();
     
     if(last_progress != progress)
@@ -337,10 +313,39 @@ public class TileEntityInductionCrucibleFurnace extends TileEntityFoundryPowered
   }
 
   @Override
-  public int getFoundryEnergyCapacity()
+  protected void onInitialize()
   {
-    return 18000;
-  }  
+    tick_heat = 0;
+  }
+  
+  @Override
+  public void receiveHeat(EnumFacing side, int heat)
+  {
+    if(side == EnumFacing.DOWN)
+    {
+      if(heat > 100)
+      {
+        heat = 100;
+      }
+      tick_heat += heat;
+    }
+  }
+  
+  static public int getMaxHeatRecieve(int max_heat)
+  {
+    return (max_heat - HEAT_MIN) / HEAT_LOSS_RATE;
+  }
+
+  @Override
+  public int getMaxHeatReceive(EnumFacing side)
+  {
+    if(side == EnumFacing.DOWN)
+    {
+      return getMaxHeatRecieve(HEAT_MAX);
+    }
+    return 0;
+  }
+
   
 //  @Optional.Method(modid = "IC2")
 //  @Override

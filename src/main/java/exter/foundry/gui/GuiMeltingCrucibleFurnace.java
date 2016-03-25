@@ -7,19 +7,19 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.gui.button.GuiButtonFoundry;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
-public class GuiInductionCrucibleFurnace extends GuiFoundry
+public class GuiMeltingCrucibleFurnace extends GuiFoundry
 {
 
-  public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/metalsmelter.png");
+  public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/crucible.png");
 
   public static final int TANK_WIDTH = 16;
   public static final int TANK_HEIGHT = 47;
@@ -56,12 +56,12 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   private static final int RSMODE_TEXTURE_X = 176;
   private static final int RSMODE_TEXTURE_Y = 100;
 
-  private TileEntityInductionCrucibleFurnace te_icf;
+  private TileEntityMeltingCrucible te_icf;
   private GuiButtonFoundry button_mode;
 
-  public GuiInductionCrucibleFurnace(TileEntityInductionCrucibleFurnace ms, EntityPlayer player)
+  public GuiMeltingCrucibleFurnace(TileEntityMeltingCrucible ms, EntityPlayer player)
   {
-    super(new ContainerInductionCrucibleFurnace(ms, player));
+    super(new ContainerMeltingCrucible(ms, player));
     allowUserInput = false;
     ySize = 166;
     te_icf = ms;
@@ -72,7 +72,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Induction Crucible Furnace", 5, 6, 0x404040);
+    fontRendererObj.drawString("Melting Crucible", 5, 6, 0x404040);
     fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
 
   }
@@ -88,8 +88,8 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
 
     
     //Draw heat bar.
-    int heat = (te_icf.getHeat() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
-    int melt_point = (te_icf.getMeltingPoint() - TileEntityInductionCrucibleFurnace.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN);
+    int heat = (te_icf.getHeat() - TileEntityMeltingCrucible.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN);
+    int melt_point = (te_icf.getMeltingPoint() - TileEntityMeltingCrucible.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN);
     if(heat > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
@@ -100,7 +100,7 @@ public class GuiInductionCrucibleFurnace extends GuiFoundry
     }
 
     //Draw progress bar.
-    int progress = te_icf.getProgress() * PROGRESS_WIDTH / TileEntityInductionCrucibleFurnace.SMELT_TIME;
+    int progress = te_icf.getProgress() * PROGRESS_WIDTH / TileEntityMeltingCrucible.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);

@@ -9,9 +9,9 @@ import javax.annotation.Nonnull;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.gui.GuiInductionCrucibleFurnace;
+import exter.foundry.gui.GuiMeltingCrucibleFurnace;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.tileentity.TileEntityInductionCrucibleFurnace;
+import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -52,7 +52,7 @@ public class MeltingJEI
       ResourceLocation background_location = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
 
       heat = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
-          (melting_point * 100 - TileEntityInductionCrucibleFurnace.HEAT_MIN) * 54 / (TileEntityInductionCrucibleFurnace.HEAT_MAX - TileEntityInductionCrucibleFurnace.HEAT_MIN), 12);
+          (melting_point * 100 - TileEntityMeltingCrucible.HEAT_MIN) * 54 / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN), 12);
 
     }
 
@@ -177,7 +177,7 @@ public class MeltingJEI
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
       guiItemStacks.init(0, true, 24, 6);
-      guiFluidStacks.init(1, false, 77, 6, 16, GuiInductionCrucibleFurnace.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucibleFurnace.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }

@@ -2,7 +2,7 @@ package exter.foundry.integration.jei;
 
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.container.ContainerAlloyMixer;
-import exter.foundry.container.ContainerInductionCrucibleFurnace;
+import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerMetalInfuser;
@@ -44,10 +44,10 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerAlloyFurnace.SLOTS_TE,
         ContainerAlloyFurnace.SLOTS_TE_SIZE, 
         ContainerAlloyFurnace.SLOTS_INVENTORY, 36);
-    transfer_registry.addRecipeTransferHandler(ContainerInductionCrucibleFurnace.class, "foundry.melting",
-        ContainerInductionCrucibleFurnace.SLOTS_TE,
-        ContainerInductionCrucibleFurnace.SLOTS_TE_SIZE, 
-        ContainerInductionCrucibleFurnace.SLOTS_INVENTORY, 36);
+    transfer_registry.addRecipeTransferHandler(ContainerMeltingCrucible.class, "foundry.melting",
+        ContainerMeltingCrucible.SLOTS_TE,
+        ContainerMeltingCrucible.SLOTS_TE_SIZE, 
+        ContainerMeltingCrucible.SLOTS_INVENTORY, 36);
     transfer_registry.addRecipeTransferHandler(ContainerMetalCaster.class, "foundry.casting",
         ContainerMetalCaster.SLOTS_TE,
         ContainerMetalCaster.SLOTS_TE_SIZE, 

@@ -69,7 +69,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     }
     if(worldObj != null && !worldObj.isRemote)
     {
-      ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+      ((BlockAlloyFurnace)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
     }
   }
 
@@ -266,7 +266,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockAlloyFurnace)getBlockType()).setFurnaceState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+        ((BlockAlloyFurnace)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
       }
       updateValue("BurnTime",burn_time);
     }

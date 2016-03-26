@@ -87,7 +87,7 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   @Override
   public ItemStack getCasing(ItemStack round)
   {
-    return FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING);
+    return FoundryItems.component(ItemComponent.SubItem.AMMO_CASING);
   }
   
   @Override

@@ -101,8 +101,8 @@ public class ModFoundry
     FoundryItems.registerItems(config);
     FoundryBlocks.registerBlocks(config);
 
-    OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
-    OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
+    OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL));
+    OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL));
     
     FoundryRecipes.preInit();
     

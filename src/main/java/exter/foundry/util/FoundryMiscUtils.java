@@ -30,26 +30,26 @@ public class FoundryMiscUtils
     return a / b + ((a % b == 0) ? 0 : 1);
   }
 
-  static public void registerMoldRecipe(int dv,ItemStack pattern)
+  static public void registerMoldRecipe(ItemMold.SubItem sub,ItemStack pattern)
   {
     if(pattern != null)
     {
-      GameRegistry.addShapelessRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
-          new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD), pattern);  
+      GameRegistry.addShapelessRecipe(FoundryItems.mold(sub),
+          FoundryItems.component(ItemComponent.SubItem.BLANKMOLD), pattern);  
     }
   }
 
-  static public void registerMoldRecipe(int dv,String oredict_pattern)
+  static public void registerMoldRecipe(ItemMold.SubItem sub,String oredict_pattern)
   {
-    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(FoundryItems.item_mold,1,dv),
-      new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_BLANKMOLD), oredict_pattern));  
+    GameRegistry.addRecipe(new ShapelessOreRecipe(FoundryItems.mold(sub),
+      FoundryItems.component(ItemComponent.SubItem.BLANKMOLD), oredict_pattern));  
   }
 
-  static public void registerMoldSmelting(int clay,int mold)
+  static public void registerMoldSmelting(ItemMold.SubItem clay,ItemMold.SubItem mold)
   {
     GameRegistry.addSmelting(
-        new ItemStack(FoundryItems.item_mold, 1, clay),
-        new ItemStack(FoundryItems.item_mold, 1, mold), 0.0f);
+        FoundryItems.mold(clay),
+        FoundryItems.mold(mold), 0.0f);
   }
 
   static public String getItemOreDictionaryName(ItemStack stack)
@@ -161,10 +161,10 @@ public class FoundryMiscUtils
   {
     if(FoundryUtils.isItemInOreDictionary(oredict_name, item))
     {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, oredict_name);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PLATE_SOFT, oredict_name);
     } else
     {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, item);
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PLATE_SOFT, item);
     }
   }
 }

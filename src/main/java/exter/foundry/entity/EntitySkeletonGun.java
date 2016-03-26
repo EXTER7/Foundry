@@ -24,20 +24,20 @@ public class EntitySkeletonGun extends EntitySkeleton
 
   static private final ItemStack[] LOOT_COMMON =
   {
-    FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET),
-    FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),
-    FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING),
-    FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),
-    FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET)
+    FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET),
+    FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW),
+    FoundryItems.component(ItemComponent.SubItem.AMMO_CASING),
+    FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL),
+    FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET)
   };
 
   static private final ItemStack[] LOOT_RARE =
   {
-    FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL),
-    FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_DRUM),
-    FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_FRAME),
-    FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP),
-    FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME)
+    FoundryItems.component(ItemComponent.SubItem.GUN_BARREL),
+    FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM),
+    FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME),
+    FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP),
+    FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME)
   };
 
   public EntitySkeletonGun(World p_i1741_1_)

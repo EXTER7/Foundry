@@ -106,8 +106,6 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void init()
   {
-    int i;
-
     for(BlockFoundryMachine.EnumMachine m:BlockFoundryMachine.EnumMachine.values())
     {
       registerItemModel(FoundryBlocks.block_machine,m.model,m.id);
@@ -118,14 +116,14 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
 
 
-    for(i = 0; i < ItemComponent.REGISTRY_NAMES.length; i++)
+    for(ItemComponent.SubItem c:ItemComponent.SubItem.values())
     {
-      registerItemModel(FoundryItems.item_component,ItemComponent.REGISTRY_NAMES[i], i);
+      registerItemModel(FoundryItems.item_component,c.name, c.id);
     }
 
-    for(i = 0; i < ItemMold.REGISTRY_NAMES.length; i++)
+    for(ItemMold.SubItem m:ItemMold.SubItem.values())
     {
-      registerItemModel(FoundryItems.item_mold,ItemMold.REGISTRY_NAMES[i], i);
+      registerItemModel(FoundryItems.item_mold,m.name, m.id);
     }
 
     registerItemModel(FoundryItems.item_revolver,"revolver",0);

@@ -18,7 +18,7 @@ public class FoundryTabMaterials extends CreativeTabs
   @Override
   public ItemStack getIconItemStack()
   {
-    return new ItemStack(FoundryItems.item_component,1,ItemComponent.COMPONENT_REFRACTORYBRICK);
+    return FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
   }
 
   @Override

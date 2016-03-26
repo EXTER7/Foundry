@@ -67,23 +67,23 @@ public class FoundryItems
     GameRegistry.registerItem(item_container, "fluidContainer");
   }
 
-  static public ItemStack component(int dv)
+  static public ItemStack component(ItemComponent.SubItem sub)
   {
-    return component(dv,1);
+    return component(sub,1);
   }
 
-  static public ItemStack component(int dv,int amount)
+  static public ItemStack component(ItemComponent.SubItem sub,int amount)
   {
-    return new ItemStack(item_component,amount,dv);
+    return new ItemStack(item_component,amount,sub.id);
   }
 
-  static public ItemStack mold(int dv)
+  static public ItemStack mold(ItemMold.SubItem sub)
   {
-    return mold(dv,1);
+    return mold(sub,1);
   }
 
-  static public ItemStack mold(int dv,int amount)
+  static public ItemStack mold(ItemMold.SubItem sub,int amount)
   {
-    return new ItemStack(item_mold,amount,dv);
+    return new ItemStack(item_mold,amount,sub.id);
   }
 }

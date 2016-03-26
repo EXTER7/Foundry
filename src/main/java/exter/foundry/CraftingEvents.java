@@ -25,7 +25,7 @@ public class CraftingEvents
         if(is == null)
         {
           empty++;
-        } else if(is.getItem() == FoundryItems.item_component && is.getItemDamage() == ItemComponent.COMPONENT_BLANKMOLD)
+        } else if(is.getItem() == FoundryItems.item_component && is.getItemDamage() == ItemComponent.SubItem.BLANKMOLD.id)
         {
           blanks++;
         } else

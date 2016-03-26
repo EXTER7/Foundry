@@ -11,151 +11,89 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMold extends Item
 {  
-  static public final int MOLD_INGOT = 0;
-  static public final int MOLD_INGOT_SOFT = 1;
-  static public final int MOLD_CHESTPLATE = 2;
-  static public final int MOLD_CHESTPLATE_SOFT = 3;
-  static public final int MOLD_PICKAXE = 4;
-  static public final int MOLD_PICKAXE_SOFT = 5;
-  static public final int MOLD_BLOCK = 6;
-  static public final int MOLD_BLOCK_SOFT = 7;
-  static public final int MOLD_AXE = 8;
-  static public final int MOLD_AXE_SOFT = 9;
-  static public final int MOLD_SWORD = 10;
-  static public final int MOLD_SWORD_SOFT = 11;
-  static public final int MOLD_SHOVEL = 12;
-  static public final int MOLD_SHOVEL_SOFT = 13;
-  static public final int MOLD_HOE = 14;
-  static public final int MOLD_HOE_SOFT = 15;
-  static public final int MOLD_LEGGINGS = 16;
-  static public final int MOLD_LEGGINGS_SOFT = 17;
-  static public final int MOLD_HELMET = 18;
-  static public final int MOLD_HELMET_SOFT = 19;
-  static public final int MOLD_BOOTS = 20;
-  static public final int MOLD_BOOTS_SOFT = 21;
-  static public final int MOLD_GEAR = 22;
-  static public final int MOLD_GEAR_SOFT = 23;
-  static public final int MOLD_CABLE_IC2 = 24;
-  static public final int MOLD_CABLE_IC2_SOFT = 25;
-  static public final int MOLD_CASING_IC2 = 26;
-  static public final int MOLD_CASING_IC2_SOFT = 27;
-  static public final int MOLD_SLAB = 28;
-  static public final int MOLD_SLAB_SOFT = 29;
-  static public final int MOLD_STAIRS = 30;
-  static public final int MOLD_STAIRS_SOFT = 31;
-  static public final int MOLD_PLATE = 32;
-  static public final int MOLD_PLATE_SOFT = 33;
-  static public final int MOLD_CAP_TC = 34;
-  static public final int MOLD_CAP_TC_SOFT = 35;
-  static public final int MOLD_INSULATED_CABLE_IC2 = 36;
-  static public final int MOLD_INSULATED_CABLE_IC2_SOFT = 37;
-  static public final int MOLD_SICKLE = 38;
-  static public final int MOLD_SICKLE_SOFT = 39;
-  static public final int MOLD_BOW = 40;
-  static public final int MOLD_BOW_SOFT = 41;
-  static public final int MOLD_FLUXPLATE = 42;
-  static public final int MOLD_FLUXPLATE_SOFT = 43;
-  static public final int MOLD_BULLET = 44;
-  static public final int MOLD_BULLET_SOFT = 45;
-  static public final int MOLD_BULLET_HOLLOW = 46;
-  static public final int MOLD_BULLET_HOLLOW_SOFT = 47;
-  static public final int MOLD_BULLET_CASING = 48;
-  static public final int MOLD_BULLET_CASING_SOFT = 49;
-  static public final int MOLD_GUN_BARREL = 50;
-  static public final int MOLD_GUN_BARREL_SOFT = 51;
-  static public final int MOLD_REVOLVER_DRUM = 52;
-  static public final int MOLD_REVOLVER_DRUM_SOFT = 53;
-  static public final int MOLD_REVOLVER_FRAME = 54;
-  static public final int MOLD_REVOLVER_FRAME_SOFT = 55;
-  static public final int MOLD_WIRE_PR = 56;
-  static public final int MOLD_WIRE_PR_SOFT = 57;
-  static public final int MOLD_PELLET = 58;
-  static public final int MOLD_PELLET_SOFT = 59;
-  static public final int MOLD_SHELL_CASING = 60;
-  static public final int MOLD_SHELL_CASING_SOFT = 61;
-  static public final int MOLD_SHOTGUN_PUMP = 62;
-  static public final int MOLD_SHOTGUN_PUMP_SOFT = 63;
-  static public final int MOLD_SHOTGUN_FRAME = 64;
-  static public final int MOLD_SHOTGUN_FRAME_SOFT = 65;
-  static public final int MOLD_SHARD_TC = 66;
-  static public final int MOLD_SHARD_TC_SOFT = 67;
-  static public final int MOLD_ROD = 68;
-  static public final int MOLD_ROD_SOFT = 69;
-  
-  static public final String[] REGISTRY_NAMES = 
+  static public enum SubItem
   {
-    "moldIngot",
-    "moldSoftIngot",
-    "moldChestplate",
-    "moldSoftChestplate",
-    "moldPickaxe",
-    "moldSoftPickaxe",
-    "moldBlock",
-    "moldSoftBlock",    
-    "moldAxe",
-    "moldSoftAxe",
-    "moldSword",
-    "moldSoftSword",
-    "moldShovel",
-    "moldSoftShovel",
-    "moldHoe",
-    "moldSoftHoe",
-    "moldLeggings",
-    "moldSoftLeggings",
-    "moldHelmet",
-    "moldSoftHelmet",
-    "moldBoots",
-    "moldSoftBoots",
-    "moldGear",
-    "moldSoftGear",
-    "moldCableIC2",
-    "moldSoftCableIC2",
-    "moldCasingIC2",
-    "moldSoftCasingIC2",
-    "moldSlab",
-    "moldSoftSlab",
-    "moldStairs",
-    "moldSoftStairs",
-    "moldPlate",
-    "moldSoftPlate",
-    "moldWandCapTC",
-    "moldSoftWandCapTC",
-    "moldCableInsulatedIC2",
-    "moldSoftCableInsulatedIC2",
-    "moldSickle",
-    "moldSoftSickle",
-    "moldBow",
-    "moldSoftBow",
-    "moldFluxplate",
-    "moldSoftFluxplate",
-    "moldBullet",
-    "moldSoftBullet",
-    "moldBulletHollow",
-    "moldSoftBulletHollow",
-    "moldRoundCasing",
-    "moldSoftRoundCasing",
-    "moldGunBarrel",
-    "moldSoftGunBarrel",
-    "moldRevolverDrum",
-    "moldSoftRevolverDrum",
-    "moldRevolverFrame",
-    "moldSoftRevolverFrame",
-    "moldWirePR",
-    "moldSoftWirePR",
-    "moldPellet",
-    "moldSoftPellet",
-    "moldShellCasing",
-    "moldSoftShellCasing",
-    "moldShotgunPump",
-    "moldSoftShotgunPump",
-    "moldShotgunFrame",
-    "moldSoftShotgunFrame",
-    "moldShardTC",
-    "moldSoftShardTC",
-    "moldRod",
-    "moldSoftRod"
-  };
-
+    INGOT(0,"moldIngot"),
+    INGOT_SOFT(1,"moldSoftIngot"),
+    CHESTPLATE(2,"moldChestplate"),
+    CHESTPLATE_SOFT(3,"moldSoftChestplate"),
+    PICKAXE(4,"moldPickaxe"),
+    PICKAXE_SOFT(5,"moldSoftPickaxe"),
+    BLOCK(6,"moldBlock"),
+    BLOCK_SOFT(7,"moldSoftBlock"),
+    AXE(8,"moldAxe"),
+    AXE_SOFT(9,"moldSoftAxe"),
+    SWORD(10,"moldSword"),
+    SWORD_SOFT(11,"moldSoftSword"),
+    SHOVEL(12,"moldShovel"),
+    SHOVEL_SOFT(13,"moldSoftShovel"),
+    HOE(14,"moldHoe"),
+    HOE_SOFT(15,"moldSoftHoe"),
+    LEGGINGS(16,"moldLeggings"),
+    LEGGINGS_SOFT(17,"moldSoftLeggings"),
+    HELMET(18,"moldHelmet"),
+    HELMET_SOFT(19,"moldSoftHelmet"),
+    BOOTS(20,"moldBoots"),
+    BOOTS_SOFT(21,"moldSoftBoots"),
+    GEAR(22,"moldGear"),
+    GEAR_SOFT(23,"moldSoftGear"),
+    CABLE_IC2(24,"moldCableIC2"),
+    CABLE_IC2_SOFT(25,"moldSoftCableIC2"),
+    CASING_IC2(26,"moldCasingIC2"),
+    CASING_IC2_SOFT(27,"moldSoftCasingIC2"),
+    SLAB(28,"moldSlab"),
+    SLAB_SOFT(29,"moldSoftSlab"),
+    STAIRS(30,"moldStairs"),
+    STAIRS_SOFT(31,"moldSoftStairs"),
+    PLATE(32,"moldPlate"),
+    PLATE_SOFT(33,"moldSoftPlate"),
+    CAP_TC(34,"moldWandCapTC"),
+    CAP_TC_SOFT(35,"moldSoftWandCapTC"),
+    INSULATED_CABLE_IC2(36,"moldCableInsulatedIC2"),
+    INSULATED_CABLE_IC2_SOFT(37,"moldSoftCableInsulatedIC2"),
+    SICKLE(38,"moldSickle"),
+    SICKLE_SOFT(39,"moldSoftSickle"),
+    BOW(40,"moldBow"),
+    BOW_SOFT(41,"moldSoftBow"),
+    FLUXPLATE(42,"moldFluxplate"),
+    FLUXPLATE_SOFT(43,"moldSoftFluxplate"),
+    BULLET(44,"moldBullet"),
+    BULLET_SOFT(45,"moldSoftBullet"),
+    BULLET_HOLLOW(46,"moldBulletHollow"),
+    BULLET_HOLLOW_SOFT(47,"moldSoftBulletHollow"),
+    BULLET_CASING(48,"moldRoundCasing"),
+    BULLET_CASING_SOFT(49,"moldSoftRoundCasing"),
+    GUN_BARREL(50,"moldGunBarrel"),
+    GUN_BARREL_SOFT(51,"moldSoftGunBarrel"),
+    REVOLVER_DRUM(52,"moldRevolverDrum"),
+    REVOLVER_DRUM_SOFT(53,"moldSoftRevolverDrum"),
+    REVOLVER_FRAME(54,"moldRevolverFrame"),
+    REVOLVER_FRAME_SOFT(55,"moldSoftRevolverFrame"),
+    WIRE_PR(56,"moldWirePR"),
+    WIRE_PR_SOFT(57,"moldSoftWirePR"),
+    PELLET(58,"moldPellet"),
+    PELLET_SOFT(59,"moldSoftPellet"),
+    SHELL_CASING(60,"moldShellCasing"),
+    SHELL_CASING_SOFT(61,"moldSoftShellCasing"),
+    SHOTGUN_PUMP(62,"moldShotgunPump"),
+    SHOTGUN_PUMP_SOFT(63,"moldSoftShotgunPump"),
+    SHOTGUN_FRAME(64,"moldShotgunFrame"),
+    SHOTGUN_FRAME_SOFT(65,"moldSoftShotgunFrame"),
+    SHARD_TC(66,"moldShardTC"),
+    SHARD_TC_SOFT(67,"moldSoftShardTC"),
+    ROD(68,"moldRod"),
+    ROD_SOFT(69,"moldSoftRod");
+    
+    public final int id;
+    public final String name;
+    
+    SubItem(int id,String name)
+    {
+      this.id = id;
+      this.name = name;
+    }
+  }
+  
   public ItemMold()
   {
     super();
@@ -175,10 +113,9 @@ public class ItemMold extends Item
   @SideOnly(Side.CLIENT)
   public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
   {
-    int i;
-    for (i = 0; i < REGISTRY_NAMES.length; i++)
+    for (SubItem m:SubItem.values())
     {
-      ItemStack itemstack = new ItemStack(this, 1, i);
+      ItemStack itemstack = new ItemStack(this, 1, m.id);
       list.add(itemstack);
     }
   }

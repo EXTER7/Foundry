@@ -113,7 +113,7 @@ public class FoundryRecipes
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
-      CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.MOLD_BLOCK),null,400);
+      CastingRecipeManager.instance.addRecipe(new ItemStack(Blocks.glass), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
       /*
       for(EnumDyeColor dye:EnumDyeColor.values())
       {
@@ -131,7 +131,7 @@ public class FoundryRecipes
 
         MeltingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(liquid_glass_colored,1000),temp,250);
         MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(liquid_glass_colored,375),temp,250);
-        CastingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(liquid_glass_colored,1000),FoundryItems.mold(ItemMold.MOLD_BLOCK),null,400);
+        CastingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(liquid_glass_colored,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
         
         InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
         InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,40),new FluidStack(liquid_glass,40),new InfuserSubstance("dye." + name,1));
@@ -266,30 +266,30 @@ public class FoundryRecipes
           });
 
 
-    ItemStack mold_ingot = FoundryItems.mold(ItemMold.MOLD_INGOT);
-    ItemStack mold_cable_ic2 = FoundryItems.mold(ItemMold.MOLD_CABLE_IC2);
-    ItemStack mold_insulated_cable_ic2 = FoundryItems.mold(ItemMold.MOLD_INSULATED_CABLE_IC2);
-    ItemStack mold_casing_ic2 = FoundryItems.mold(ItemMold.MOLD_CASING_IC2);
-    ItemStack mold_slab = FoundryItems.mold(ItemMold.MOLD_SLAB);
-    ItemStack mold_stairs = FoundryItems.mold(ItemMold.MOLD_STAIRS);
-    ItemStack mold_plate = FoundryItems.mold(ItemMold.MOLD_PLATE);
-    ItemStack mold_wire_pr = FoundryItems.mold(ItemMold.MOLD_WIRE_PR);
-    ItemStack mold_block = FoundryItems.mold(ItemMold.MOLD_BLOCK);
-    ItemStack mold_gear = FoundryItems.mold(ItemMold.MOLD_GEAR);
-    ItemStack mold_rod = FoundryItems.mold(ItemMold.MOLD_ROD);
+    ItemStack mold_ingot = FoundryItems.mold(ItemMold.SubItem.INGOT);
+    ItemStack mold_cable_ic2 = FoundryItems.mold(ItemMold.SubItem.CABLE_IC2);
+    ItemStack mold_insulated_cable_ic2 = FoundryItems.mold(ItemMold.SubItem.INSULATED_CABLE_IC2);
+    ItemStack mold_casing_ic2 = FoundryItems.mold(ItemMold.SubItem.CASING_IC2);
+    ItemStack mold_slab = FoundryItems.mold(ItemMold.SubItem.SLAB);
+    ItemStack mold_stairs = FoundryItems.mold(ItemMold.SubItem.STAIRS);
+    ItemStack mold_plate = FoundryItems.mold(ItemMold.SubItem.PLATE);
+    ItemStack mold_wire_pr = FoundryItems.mold(ItemMold.SubItem.WIRE_PR);
+    ItemStack mold_block = FoundryItems.mold(ItemMold.SubItem.BLOCK);
+    ItemStack mold_gear = FoundryItems.mold(ItemMold.SubItem.GEAR);
+    ItemStack mold_rod = FoundryItems.mold(ItemMold.SubItem.ROD);
     ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
 
-    ItemStack mold_bullet = FoundryItems.mold(ItemMold.MOLD_BULLET);
-    ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.MOLD_BULLET_HOLLOW);
-    ItemStack mold_bullet_casing = FoundryItems.mold(ItemMold.MOLD_BULLET_CASING);
-    ItemStack mold_pellet = FoundryItems.mold(ItemMold.MOLD_PELLET);
-    ItemStack mold_shell_casing = FoundryItems.mold(ItemMold.MOLD_SHELL_CASING);
-    ItemStack mold_gun_barrel = FoundryItems.mold(ItemMold.MOLD_GUN_BARREL);
-    ItemStack mold_revolver_drum = FoundryItems.mold(ItemMold.MOLD_REVOLVER_DRUM);
-    ItemStack mold_revolver_frame = FoundryItems.mold(ItemMold.MOLD_REVOLVER_FRAME);
-    ItemStack mold_shotgun_pump = FoundryItems.mold(ItemMold.MOLD_SHOTGUN_PUMP);
-    ItemStack mold_shotgun_frame = FoundryItems.mold(ItemMold.MOLD_SHOTGUN_FRAME);
+    ItemStack mold_bullet = FoundryItems.mold(ItemMold.SubItem.BULLET);
+    ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW);
+    ItemStack mold_bullet_casing = FoundryItems.mold(ItemMold.SubItem.BULLET_CASING);
+    ItemStack mold_pellet = FoundryItems.mold(ItemMold.SubItem.PELLET);
+    ItemStack mold_shell_casing = FoundryItems.mold(ItemMold.SubItem.SHELL_CASING);
+    ItemStack mold_gun_barrel = FoundryItems.mold(ItemMold.SubItem.GUN_BARREL);
+    ItemStack mold_revolver_drum = FoundryItems.mold(ItemMold.SubItem.REVOLVER_DRUM);
+    ItemStack mold_revolver_frame = FoundryItems.mold(ItemMold.SubItem.REVOLVER_FRAME);
+    ItemStack mold_shotgun_pump = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_PUMP);
+    ItemStack mold_shotgun_frame = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_FRAME);
 
     
     CastingRecipeManager.instance.addMold(mold_ingot);
@@ -316,15 +316,15 @@ public class FoundryRecipes
 
     if(FoundryConfig.recipe_tools_armor)
     {
-      ItemStack mold_chestplate = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_CHESTPLATE);
-      ItemStack mold_pickaxe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_PICKAXE);
-      ItemStack mold_axe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_AXE);
-      ItemStack mold_shovel = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SHOVEL);
-      ItemStack mold_hoe = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HOE);
-      ItemStack mold_sword = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_SWORD);
-      ItemStack mold_leggings = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_LEGGINGS);
-      ItemStack mold_helmet = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_HELMET);
-      ItemStack mold_boots = new ItemStack(FoundryItems.item_mold, 1, ItemMold.MOLD_BOOTS);
+      ItemStack mold_chestplate = FoundryItems.mold(ItemMold.SubItem.CHESTPLATE);
+      ItemStack mold_pickaxe = FoundryItems.mold(ItemMold.SubItem.PICKAXE);
+      ItemStack mold_axe = FoundryItems.mold(ItemMold.SubItem.AXE);
+      ItemStack mold_shovel = FoundryItems.mold(ItemMold.SubItem.SHOVEL);
+      ItemStack mold_hoe = FoundryItems.mold(ItemMold.SubItem.HOE);
+      ItemStack mold_sword = FoundryItems.mold(ItemMold.SubItem.SWORD);
+      ItemStack mold_leggings = FoundryItems.mold(ItemMold.SubItem.LEGGINGS);
+      ItemStack mold_helmet = FoundryItems.mold(ItemMold.SubItem.HELMET);
+      ItemStack mold_boots = FoundryItems.mold(ItemMold.SubItem.BOOTS);
 
       CastingRecipeManager.instance.addMold(mold_chestplate);
       CastingRecipeManager.instance.addMold(mold_pickaxe);
@@ -420,7 +420,7 @@ public class FoundryRecipes
       if(gear != null)
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT * 4);
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gear" + name);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GEAR_SOFT, "gear" + name);
         CastingRecipeManager.instance.addRecipe(gear, fluid_stack, mold_gear, null);
         MeltingRecipeManager.instance.addRecipe(gear, fluid_stack);
       }
@@ -431,7 +431,7 @@ public class FoundryRecipes
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
 
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PLATE_SOFT, "plate" + name);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PLATE_SOFT, "plate" + name);
         CastingRecipeManager.instance.addRecipe(plate, fluid_stack, mold_plate, null);
         MeltingRecipeManager.instance.addRecipe(plate, fluid_stack);
       }
@@ -442,14 +442,14 @@ public class FoundryRecipes
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 2);
 
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_ROD_SOFT, "rod" + name);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.ROD_SOFT, "rod" + name);
         CastingRecipeManager.instance.addRecipe(rod, fluid_stack, mold_rod, null);
         MeltingRecipeManager.instance.addRecipe(rod, fluid_stack);
       }
     }
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearWood");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearDiamond");
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GEAR_SOFT, "gearStone");
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GEAR_SOFT, "gearWood");
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GEAR_SOFT, "gearDiamond");
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GEAR_SOFT, "gearStone");
 
     if(FoundryConfig.recipe_steel_enable)
     {
@@ -460,19 +460,19 @@ public class FoundryRecipes
     }
     
     
-    ItemStack bullet = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET);
-    ItemStack bullet_hollow = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW);
-    ItemStack bullet_jacketed = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_JACKETED);
-    ItemStack bullet_casing = FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING);
-    ItemStack pellet = FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET);
-    ItemStack shell_casing = FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
-    ItemStack gun_barrel = FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL);
-    ItemStack revolver_drum = FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_DRUM);
-    ItemStack revolver_frame = FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_FRAME);
-    ItemStack shotgun_pump = FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP);
-    ItemStack shotgun_frame = FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME);
-    ItemStack bullet_steel = FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_STEEL);
-    ItemStack pellet_steel = FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET_STEEL);
+    ItemStack bullet = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET);
+    ItemStack bullet_hollow = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW);
+    ItemStack bullet_jacketed = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_JACKETED);
+    ItemStack bullet_casing = FoundryItems.component(ItemComponent.SubItem.AMMO_CASING);
+    ItemStack pellet = FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET);
+    ItemStack shell_casing = FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL);
+    ItemStack gun_barrel = FoundryItems.component(ItemComponent.SubItem.GUN_BARREL);
+    ItemStack revolver_drum = FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM);
+    ItemStack revolver_frame = FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME);
+    ItemStack shotgun_pump = FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP);
+    ItemStack shotgun_frame = FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME);
+    ItemStack bullet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_STEEL);
+    ItemStack pellet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL);
     
        
     MeltingRecipeManager.instance.addRecipe(
@@ -572,11 +572,11 @@ public class FoundryRecipes
     ItemStack cauldron_stack = new ItemStack(Items.cauldron);
     ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack paper_stack = new ItemStack(Items.paper);
-    ItemStack refclay_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY);
-    ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY,8);
-    ItemStack refbrick_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYBRICK);
-    ItemStack blankmold_stack = FoundryItems.component(ItemComponent.COMPONENT_BLANKMOLD);
-    ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.COMPONENT_HEATINGCOIL);
+    ItemStack refclay_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
+    ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY,8);
+    ItemStack refbrick_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK);
+    ItemStack blankmold_stack = FoundryItems.component(ItemComponent.SubItem.BLANKMOLD);
+    ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL);
     ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.empty(2);
     ItemStack comparator_stack = new ItemStack(Items.comparator);
@@ -593,7 +593,7 @@ public class FoundryRecipes
     GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
     GameRegistry.addSmelting(
-        FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY),
+        FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY),
         refbrick_stack, 0.0f);
 
     GameRegistry.addRecipe(blankmold_stack,
@@ -612,7 +612,7 @@ public class FoundryRecipes
         'G', glasspane_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryItems.component(ItemComponent.COMPONENT_HEATINGCOIL,2),
+        FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL,2),
         "CCC",
         "CRC",
         "CCC",
@@ -723,20 +723,20 @@ public class FoundryRecipes
         FoundryItems.item_revolver.empty(),
         "BD",
         " F",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL), 
-        'D', FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_DRUM),
-        'F', FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_FRAME));
+        'B', FoundryItems.component(ItemComponent.SubItem.GUN_BARREL), 
+        'D', FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM),
+        'F', FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME));
 
     GameRegistry.addRecipe(
         FoundryItems.item_shotgun.empty(),
         "BB ",
         " PF",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL), 
-        'P', FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP),
-        'F', FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME));
+        'B', FoundryItems.component(ItemComponent.SubItem.GUN_BARREL), 
+        'P', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP),
+        'F', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME));
 
     GameRegistry.addRecipe(
-        new ItemStack(FoundryItems.item_component,4,ItemComponent.COMPONENT_GUNPOWDER_SMALL),
+        FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL,4),
         "  ",
         " G",
         'G', Items.gunpowder);
@@ -745,10 +745,10 @@ public class FoundryRecipes
         new ItemStack(Items.gunpowder),
         "GG",
         "GG",
-        'G', FoundryItems.component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
+        'G', FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL));
 
     GameRegistry.addRecipe(
-        new ItemStack(FoundryItems.item_component,4,ItemComponent.COMPONENT_BLAZEPOWDER_SMALL),
+        FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL,4),
         "  ",
         " B",
         'B', Items.blaze_powder);
@@ -757,34 +757,34 @@ public class FoundryRecipes
         new ItemStack(Items.blaze_powder),
         "BB",
         "BB",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
+        'B', FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round,
         "B",
         "G",
         "C",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET), 
+        'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET), 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round_hollow,
         "B",
         "G",
         "C",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW), 
+        'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW), 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round_jacketed,
         "B",
         "G",
         "C",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_JACKETED), 
+        'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_JACKETED), 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round_fire,
@@ -798,29 +798,29 @@ public class FoundryRecipes
         "PAP",
         "PGP",
         "PCP",
-        'P', FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET), 
+        'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET), 
         'A', paper_stack, 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round_ap,
         "B",
         "G",
         "C",
-        'B', FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_STEEL), 
+        'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_STEEL), 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_shell_ap,
         "PAP",
         "PGP",
         "PCP",
-        'P', FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET_STEEL), 
+        'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL), 
         'A', paper_stack, 
         'G', "dustSmallGunpowder",
-        'C', FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL)));
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL)));
 
     GameRegistry.addShapelessRecipe(
         new ItemStack(FoundryItems.item_round_poison,2),
@@ -830,72 +830,72 @@ public class FoundryRecipes
 
     
     //Mold crafting with vanilla items
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.brick));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, new ItemStack(Items.netherbrick));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, refbrick_stack);
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BLOCK_SOFT, new ItemStack(Blocks.planks,1,-1));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BLOCK_SOFT, new ItemStack(Blocks.stone,1,-1));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.INGOT_SOFT, new ItemStack(Items.brick));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.INGOT_SOFT, new ItemStack(Items.netherbrick));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.INGOT_SOFT, refbrick_stack);
     if(FoundryConfig.recipe_tools_armor)
     {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.iron_chestplate,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.golden_chestplate,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_CHESTPLATE_SOFT, new ItemStack(Items.diamond_chestplate,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.iron_leggings,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.golden_leggings,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_LEGGINGS_SOFT, new ItemStack(Items.diamond_leggings,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.iron_helmet,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.golden_helmet,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HELMET_SOFT, new ItemStack(Items.diamond_helmet,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.iron_boots,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.golden_boots,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BOOTS_SOFT, new ItemStack(Items.diamond_boots,1,-1));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.wooden_pickaxe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.stone_pickaxe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.iron_pickaxe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.golden_pickaxe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PICKAXE_SOFT, new ItemStack(Items.diamond_pickaxe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.wooden_axe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.stone_axe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.iron_axe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.golden_axe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_AXE_SOFT, new ItemStack(Items.diamond_axe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.wooden_shovel));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.stone_shovel));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.iron_shovel));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.golden_shovel));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOVEL_SOFT, new ItemStack(Items.diamond_shovel));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.wooden_hoe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.stone_hoe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.iron_hoe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.golden_hoe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_HOE_SOFT, new ItemStack(Items.diamond_hoe));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.wooden_sword));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.stone_sword));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.iron_sword));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.golden_sword));
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SWORD_SOFT, new ItemStack(Items.diamond_sword));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.CHESTPLATE_SOFT, new ItemStack(Items.iron_chestplate,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.CHESTPLATE_SOFT, new ItemStack(Items.golden_chestplate,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.CHESTPLATE_SOFT, new ItemStack(Items.diamond_chestplate,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.LEGGINGS_SOFT, new ItemStack(Items.iron_leggings,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.LEGGINGS_SOFT, new ItemStack(Items.golden_leggings,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.LEGGINGS_SOFT, new ItemStack(Items.diamond_leggings,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HELMET_SOFT, new ItemStack(Items.iron_helmet,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HELMET_SOFT, new ItemStack(Items.golden_helmet,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HELMET_SOFT, new ItemStack(Items.diamond_helmet,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BOOTS_SOFT, new ItemStack(Items.iron_boots,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BOOTS_SOFT, new ItemStack(Items.golden_boots,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BOOTS_SOFT, new ItemStack(Items.diamond_boots,1,-1));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PICKAXE_SOFT, new ItemStack(Items.wooden_pickaxe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PICKAXE_SOFT, new ItemStack(Items.stone_pickaxe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PICKAXE_SOFT, new ItemStack(Items.iron_pickaxe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PICKAXE_SOFT, new ItemStack(Items.golden_pickaxe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PICKAXE_SOFT, new ItemStack(Items.diamond_pickaxe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.AXE_SOFT, new ItemStack(Items.wooden_axe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.AXE_SOFT, new ItemStack(Items.stone_axe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.AXE_SOFT, new ItemStack(Items.iron_axe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.AXE_SOFT, new ItemStack(Items.golden_axe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.AXE_SOFT, new ItemStack(Items.diamond_axe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOVEL_SOFT, new ItemStack(Items.wooden_shovel));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOVEL_SOFT, new ItemStack(Items.stone_shovel));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOVEL_SOFT, new ItemStack(Items.iron_shovel));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOVEL_SOFT, new ItemStack(Items.golden_shovel));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOVEL_SOFT, new ItemStack(Items.diamond_shovel));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HOE_SOFT, new ItemStack(Items.wooden_hoe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HOE_SOFT, new ItemStack(Items.stone_hoe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HOE_SOFT, new ItemStack(Items.iron_hoe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HOE_SOFT, new ItemStack(Items.golden_hoe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.HOE_SOFT, new ItemStack(Items.diamond_hoe));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SWORD_SOFT, new ItemStack(Items.wooden_sword));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SWORD_SOFT, new ItemStack(Items.stone_sword));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SWORD_SOFT, new ItemStack(Items.iron_sword));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SWORD_SOFT, new ItemStack(Items.golden_sword));
+      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SWORD_SOFT, new ItemStack(Items.diamond_sword));
     }
 
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BULLET_SOFT, FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BULLET_HOLLOW_SOFT, FoundryItems.component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BULLET_CASING_SOFT, FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_GUN_BARREL_SOFT, FoundryItems.component(ItemComponent.COMPONENT_GUN_BARREL));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_REVOLVER_DRUM_SOFT, FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_DRUM));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_REVOLVER_FRAME_SOFT, FoundryItems.component(ItemComponent.COMPONENT_REVOLVER_FRAME));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_PELLET_SOFT, FoundryItems.component(ItemComponent.COMPONENT_AMMO_PELLET));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHELL_CASING_SOFT, FoundryItems.component(ItemComponent.COMPONENT_AMMO_CASING_SHELL));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOTGUN_PUMP_SOFT, FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_PUMP));
-    FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SHOTGUN_FRAME_SOFT, FoundryItems.component(ItemComponent.COMPONENT_SHOTGUN_FRAME));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_HOLLOW_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_CASING_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GUN_BARREL_SOFT, FoundryItems.component(ItemComponent.SubItem.GUN_BARREL));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.REVOLVER_DRUM_SOFT, FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.REVOLVER_FRAME_SOFT, FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PELLET_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHELL_CASING_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOTGUN_PUMP_SOFT, FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP));
+    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOTGUN_FRAME_SOFT, FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME));
 
     FMLControlledNamespacedRegistry<Block> reg = GameData.getBlockRegistry();
     for(Block block:reg)
     {
       if(block instanceof BlockStairs)
       {
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_STAIRS_SOFT, new ItemStack(block, 1, -1));
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.STAIRS_SOFT, new ItemStack(block, 1, -1));
       } else if(block instanceof BlockSlab && !((BlockSlab)block).isDouble())
       {
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_SLAB_SOFT, new ItemStack(block, 1, -1));
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SLAB_SOFT, new ItemStack(block, 1, -1));
       }
     }
 
@@ -904,51 +904,51 @@ public class FoundryRecipes
     {
       if(name.startsWith("ingot"))
       {
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_INGOT_SOFT, name);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.INGOT_SOFT, name);
       } else if(name.startsWith("block"))
       {
-        FoundryMiscUtils.registerMoldRecipe(ItemMold.MOLD_BLOCK_SOFT, name);
+        FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BLOCK_SOFT, name);
       }
     }
 
     
     //Clay mold furnace recipes
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BLOCK_SOFT,ItemMold.MOLD_BLOCK);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_INGOT_SOFT,ItemMold.MOLD_INGOT);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_CABLE_IC2_SOFT,ItemMold.MOLD_CABLE_IC2);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_CASING_IC2_SOFT,ItemMold.MOLD_CASING_IC2);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SLAB_SOFT,ItemMold.MOLD_SLAB);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_STAIRS_SOFT,ItemMold.MOLD_STAIRS);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_PLATE_SOFT,ItemMold.MOLD_PLATE);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_ROD_SOFT, ItemMold.MOLD_ROD);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_GEAR_SOFT,ItemMold.MOLD_GEAR);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_INSULATED_CABLE_IC2_SOFT,ItemMold.MOLD_INSULATED_CABLE_IC2);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_WIRE_PR_SOFT,ItemMold.MOLD_WIRE_PR);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BLOCK_SOFT,ItemMold.SubItem.BLOCK);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.INGOT_SOFT,ItemMold.SubItem.INGOT);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.CABLE_IC2_SOFT,ItemMold.SubItem.CABLE_IC2);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.CASING_IC2_SOFT,ItemMold.SubItem.CASING_IC2);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SLAB_SOFT,ItemMold.SubItem.SLAB);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.STAIRS_SOFT,ItemMold.SubItem.STAIRS);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.PLATE_SOFT,ItemMold.SubItem.PLATE);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.ROD_SOFT, ItemMold.SubItem.ROD);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.GEAR_SOFT,ItemMold.SubItem.GEAR);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.INSULATED_CABLE_IC2_SOFT,ItemMold.SubItem.INSULATED_CABLE_IC2);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.WIRE_PR_SOFT,ItemMold.SubItem.WIRE_PR);
 
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BULLET_SOFT,ItemMold.MOLD_BULLET);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BULLET_HOLLOW_SOFT,ItemMold.MOLD_BULLET_HOLLOW);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BULLET_CASING_SOFT,ItemMold.MOLD_BULLET_CASING);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_GUN_BARREL_SOFT,ItemMold.MOLD_GUN_BARREL);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_REVOLVER_DRUM_SOFT,ItemMold.MOLD_REVOLVER_DRUM);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_REVOLVER_FRAME_SOFT,ItemMold.MOLD_REVOLVER_FRAME);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_PELLET_SOFT,ItemMold.MOLD_PELLET);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SHELL_CASING_SOFT,ItemMold.MOLD_SHELL_CASING);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SHOTGUN_PUMP_SOFT,ItemMold.MOLD_SHOTGUN_PUMP);
-    FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SHOTGUN_FRAME_SOFT,ItemMold.MOLD_SHOTGUN_FRAME);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BULLET_SOFT,ItemMold.SubItem.BULLET);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BULLET_HOLLOW_SOFT,ItemMold.SubItem.BULLET_HOLLOW);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BULLET_CASING_SOFT,ItemMold.SubItem.BULLET_CASING);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.GUN_BARREL_SOFT,ItemMold.SubItem.GUN_BARREL);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.REVOLVER_DRUM_SOFT,ItemMold.SubItem.REVOLVER_DRUM);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.REVOLVER_FRAME_SOFT,ItemMold.SubItem.REVOLVER_FRAME);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.PELLET_SOFT,ItemMold.SubItem.PELLET);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SHELL_CASING_SOFT,ItemMold.SubItem.SHELL_CASING);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SHOTGUN_PUMP_SOFT,ItemMold.SubItem.SHOTGUN_PUMP);
+    FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SHOTGUN_FRAME_SOFT,ItemMold.SubItem.SHOTGUN_FRAME);
 
     if(FoundryConfig.recipe_tools_armor)
     {
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_CHESTPLATE_SOFT,ItemMold.MOLD_CHESTPLATE);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_PICKAXE_SOFT,ItemMold.MOLD_PICKAXE);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_AXE_SOFT,ItemMold.MOLD_AXE);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SHOVEL_SOFT,ItemMold.MOLD_SHOVEL);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SWORD_SOFT,ItemMold.MOLD_SWORD);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_HOE_SOFT,ItemMold.MOLD_HOE);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_LEGGINGS_SOFT,ItemMold.MOLD_LEGGINGS);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_HELMET_SOFT,ItemMold.MOLD_HELMET);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BOOTS_SOFT,ItemMold.MOLD_BOOTS);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_SICKLE_SOFT,ItemMold.MOLD_SICKLE);
-      FoundryMiscUtils.registerMoldSmelting(ItemMold.MOLD_BOW_SOFT,ItemMold.MOLD_BOW);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.CHESTPLATE_SOFT,ItemMold.SubItem.CHESTPLATE);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.PICKAXE_SOFT,ItemMold.SubItem.PICKAXE);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.AXE_SOFT,ItemMold.SubItem.AXE);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SHOVEL_SOFT,ItemMold.SubItem.SHOVEL);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SWORD_SOFT,ItemMold.SubItem.SWORD);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.HOE_SOFT,ItemMold.SubItem.HOE);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.LEGGINGS_SOFT,ItemMold.SubItem.LEGGINGS);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.HELMET_SOFT,ItemMold.SubItem.HELMET);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BOOTS_SOFT,ItemMold.SubItem.BOOTS);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.SICKLE_SOFT,ItemMold.SubItem.SICKLE);
+      FoundryMiscUtils.registerMoldSmelting(ItemMold.SubItem.BOW_SOFT,ItemMold.SubItem.BOW);
     }
   }
 
@@ -993,8 +993,8 @@ public class FoundryRecipes
       }
     }
     
-    ItemStack ingot_mold = FoundryItems.mold(ItemMold.MOLD_INGOT);
-    ItemStack block_mold = FoundryItems.mold(ItemMold.MOLD_BLOCK);
+    ItemStack ingot_mold = FoundryItems.mold(ItemMold.SubItem.INGOT);
+    ItemStack block_mold = FoundryItems.mold(ItemMold.SubItem.BLOCK);
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
     {
       FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(name);

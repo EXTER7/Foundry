@@ -18,7 +18,7 @@ public class FoundryTabMolds extends CreativeTabs
   @Override
   public ItemStack getIconItemStack()
   {
-    return new ItemStack(FoundryItems.item_mold,1,ItemMold.MOLD_INGOT);
+    return FoundryItems.mold(ItemMold.SubItem.INGOT);
   }
 
   @Override

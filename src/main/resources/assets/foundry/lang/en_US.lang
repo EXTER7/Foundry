@@ -225,25 +225,6 @@ router.type.NativeCluster=Native Cluster
 router.type.PoorOre=Poor Ore
 router.type.Shard=Shard
 
-substance.carbon=Carbon
-substance.dye.black=Black Dye
-substance.dye.red=Red Dye
-substance.dye.green=Green Dye
-substance.dye.brown=Brown Dye
-substance.dye.blue=Blue Dye
-substance.dye.purple=Purple Dye
-substance.dye.cyan=Cyan Dye
-substance.dye.silver=Light Gray Dye
-substance.dye.gray=Gray Dye
-substance.dye.pink=Pink Dye
-substance.dye.lime=Lime Dye
-substance.dye.yellow=Yellow Dye
-substance.dye.light_blue=Light Blue Dye
-substance.dye.magenta=Magenta Dye
-substance.dye.orange=Orange Dye
-substance.dye.white=White Dye
-    
-
 itemGroup.foundryMaterials=Foundry - Materials
 itemGroup.foundryFluids=Foundry - Fluids
 itemGroup.foundryMachines=Foundry - Machines
@@ -253,12 +234,13 @@ itemGroup.foundryFirearms=Foundry - Firearms
 tile.refractoryCasing.name=Refractory Casing
 
 
-tile.machine.icf.name=Induction Crucible Furnace
+tile.machine.crucible.name=Melting Crucible
 tile.machine.caster.name=Metal Caster
 tile.machine.alloymixer.name=Alloy Mixer
 tile.machine.infuser.name=Metal Infuser
 tile.machine.router.name=Material Router
 tile.machine.atomizer.name=Metal Atomizer
+tile.machine.heater_induction.name=Induction Heater
 tile.alloyFurnace.name=Alloy Furnace
 tile.refractoryHopper.name=Refractory Hopper
 

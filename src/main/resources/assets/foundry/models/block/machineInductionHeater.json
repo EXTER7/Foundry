@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/inductionheater_sides",
+        "up": "foundry:blocks/inductionheater_top",
+        "down": "foundry:blocks/inductionheater_bottom",
+        "east": "foundry:blocks/inductionheater_sides",
+        "west": "foundry:blocks/inductionheater_sides",
+        "north": "foundry:blocks/inductionheater_sides",
+        "south": "foundry:blocks/inductionheater_sides"
+    }
+}
+

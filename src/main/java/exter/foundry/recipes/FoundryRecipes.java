@@ -569,9 +569,10 @@ public class FoundryRecipes
     ItemStack casing_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
     ItemStack piston_stack = new ItemStack(Blocks.piston);
     ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
+    ItemStack cauldron_stack = new ItemStack(Items.cauldron);
     ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack paper_stack = new ItemStack(Items.paper);
-    ItemStack foundryclay_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY);
+    ItemStack refclay_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY);
     ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYCLAY,8);
     ItemStack refbrick_stack = FoundryItems.component(ItemComponent.COMPONENT_REFRACTORYBRICK);
     ItemStack blankmold_stack = FoundryItems.component(ItemComponent.COMPONENT_BLANKMOLD);
@@ -597,7 +598,7 @@ public class FoundryRecipes
 
     GameRegistry.addRecipe(blankmold_stack,
         "CC",
-        'C', foundryclay_stack);
+        'C', refclay_stack);
 
 
 
@@ -628,15 +629,24 @@ public class FoundryRecipes
         'B', refbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE),
-        "IFI",
-        "HCH",
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),
+        "HIH",
+        "RCR",
         "HRH",
-        'F', furnace_stack,
+        'H', heatingcoil_stack,
+        'R', redstone_stack,
+        'I', "plateCopper",
+        'C', casing_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE),
+        "BAB",
+        "BCB",
+        "BIB",
+        'B', refbrick_stack,
         'I', "plateCopper",
         'C', casing_stack,
-        'R', redstone_stack,
-        'H', heatingcoil_stack));
+        'A', cauldron_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INFUSER),

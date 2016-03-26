@@ -176,7 +176,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         default:
           break;
       }
-      return true;
+      return false;
     }
   }
 

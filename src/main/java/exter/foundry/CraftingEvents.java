@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 
+@Deprecated
 public class CraftingEvents
 {
   @SubscribeEvent

@@ -23,6 +23,7 @@ import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.orestack.OreStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockComponent;
 import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
@@ -566,7 +567,7 @@ public class FoundryRecipes
     ItemStack clay_stack = new ItemStack(Items.clay_ball);
     ItemStack sand_stack = new ItemStack(Blocks.sand,1,-1);
     ItemStack clayblock_stack = new ItemStack(Blocks.clay, 1, -1);
-    ItemStack casing_stack = new ItemStack(FoundryBlocks.block_refractory_casing);
+    ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING);
     ItemStack piston_stack = new ItemStack(Blocks.piston);
     ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
     ItemStack cauldron_stack = new ItemStack(Items.cauldron);

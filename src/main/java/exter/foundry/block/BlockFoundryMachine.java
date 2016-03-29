@@ -254,7 +254,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   @Override
   public String getUnlocalizedName(int meta)
   {
-    return getUnlocalizedName() + "." + ((EnumMachine)getStateFromMeta(meta).getValue(MACHINE)).name;
+    return getUnlocalizedName() + "." + getStateFromMeta(meta).getValue(MACHINE).name;
   }
   
   public ItemStack asItemStack(EnumMachine machine)

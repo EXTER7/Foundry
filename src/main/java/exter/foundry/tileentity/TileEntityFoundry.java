@@ -413,6 +413,20 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     update_packet.setInteger(name, value);
   }
 
+  protected final void updateValue(String name,boolean value)
+  {
+    if(worldObj.isRemote)
+    {
+      return;
+    }
+    if(update_packet == null)
+    {
+      update_packet = new NBTTagCompound();
+      super.writeToNBT(update_packet);
+    }
+    update_packet.setBoolean(name, value);
+  }
+
   protected final void updateNBTTag(String name,NBTTagCompound compound)
   {
     if(worldObj.isRemote)
@@ -551,11 +565,19 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       if(worldObj.isRemote)
       {
         NBTTagCompound tag = new NBTTagCompound();
-        super.writeToNBT(tag);
         tag.setInteger("rsmode", mode.id);
-        tag.setInteger("dim", worldObj.provider.getDimension());
-        ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
+        sendToServer(tag);
       }
+    }
+  }
+  
+  protected void sendToServer(NBTTagCompound tag)
+  {
+    if(worldObj.isRemote)
+    {
+      super.writeToNBT(tag);
+      tag.setInteger("dim", worldObj.provider.getDimension());
+      ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
     }
   }
 

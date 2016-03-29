@@ -112,7 +112,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     }
 
     registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
-    registerItemModel(FoundryBlocks.block_refractory_casing,"casing");
+    registerItemModel(FoundryBlocks.block_component,"casing");
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
 
 

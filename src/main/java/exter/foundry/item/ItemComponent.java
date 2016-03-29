@@ -16,7 +16,7 @@ public class ItemComponent extends Item
     HEATINGCOIL(0,"componentHeatingCoil"),
     REFRACTORYCLAY(1,"componentRefractoryClay"),
     REFRACTORYBRICK(2,"componentRefractoryBrick"),
-    BLANKMOLD(3,"componentBlankMold"),
+    @Deprecated BLANKMOLD(3,"componentBlankMold"),
     GUN_BARREL(4,"componentGunBarrel"),
     REVOLVER_DRUM(5,"componentRevolverDrum"),
     REVOLVER_FRAME(6,"componentRevolverFrame"),
@@ -34,7 +34,8 @@ public class ItemComponent extends Item
     SHARD_LIFE_TC(18,"componentShardLifeTC"),
     SHARD_VOID_TC(19,"componentShardVoidTC"),
     AMMO_BULLET_STEEL(20,"componentBulletSteel"),
-    AMMO_PELLET_STEEL(21,"componentPelletSteel");
+    AMMO_PELLET_STEEL(21,"componentPelletSteel"),
+    REFRACTORYCLAY_SMALL(22,"componentSmallRefractoryClay");
     
     public final int id;
     public final String name;

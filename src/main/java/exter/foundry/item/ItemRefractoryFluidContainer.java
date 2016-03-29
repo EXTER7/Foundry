@@ -151,6 +151,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return false;
   }
   
+  @SuppressWarnings("deprecation")
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
   {
@@ -346,6 +347,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return capacity;
   }
 
+  @SuppressWarnings("deprecation")
   private int fill(ItemStack stack, FluidStack fluid, boolean do_fill,boolean ignore_stacksize)
   {
     if(!ignore_stacksize && stack.stackSize > 1)

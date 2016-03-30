@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.gui.GuiMeltingCrucibleFurnace;
+import exter.foundry.gui.GuiMeltingCrucible;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import mezz.jei.api.IGuiHelper;
@@ -177,7 +177,7 @@ public class MeltingJEI
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
       guiItemStacks.init(0, true, 24, 6);
-      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucibleFurnace.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }

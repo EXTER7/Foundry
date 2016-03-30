@@ -1,5 +1,6 @@
 package exter.foundry.gui;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -10,7 +11,9 @@ import java.io.IOException;
 import org.lwjgl.opengl.GL11;
 
 import exter.foundry.container.ContainerMoldStation;
+import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMoldStation;
+
 
 @SideOnly(Side.CLIENT)
 public class GuiMoldStation extends GuiFoundry
@@ -18,13 +21,13 @@ public class GuiMoldStation extends GuiFoundry
 
   public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/moldstation.png");
 
-  public static final int BURN_X = 49;
-  public static final int BURN_Y = 37;
+  public static final int BURN_X = 119;
+  public static final int BURN_Y = 59;
   public static final int BURN_WIDTH = 14;
   public static final int BURN_HEIGHT = 14;
 
-  public static final int PROGRESS_X = 79;
-  public static final int PROGRESS_Y = 35;
+  public static final int PROGRESS_X = 116;
+  public static final int PROGRESS_Y = 39;
   public static final int PROGRESS_WIDTH = 22;
   public static final int PROGRESS_HEIGHT = 15;
 
@@ -52,6 +55,7 @@ public class GuiMoldStation extends GuiFoundry
   public static final int GRID_OVERLAY_Y = 107;
 
   private TileEntityMoldStation te_ms;
+  private GuiButtonFoundry button_fire;
 
   public GuiMoldStation(TileEntityMoldStation af, EntityPlayer player)
   {
@@ -59,6 +63,20 @@ public class GuiMoldStation extends GuiFoundry
     allowUserInput = false;
     ySize = 190;
     te_ms = af;
+  }
+
+  public void initGui()
+  {
+    super.initGui();
+    int window_x = (width - xSize) / 2;
+    int window_y = (height - ySize) / 2;
+    button_fire = new GuiButtonFoundry(
+        1,
+        117 + window_x, 15 + window_y,
+        17, 17,
+        GUI_TEXTURE,187,107,
+        204,107);
+    buttonList.add(button_fire);
   }
 
   @Override
@@ -139,5 +157,14 @@ public class GuiMoldStation extends GuiFoundry
   protected ResourceLocation getGUITexture()
   {
     return GUI_TEXTURE;
+  }
+  
+  @Override
+  protected void actionPerformed(GuiButton button)
+  {
+    if(button.id == button_fire.id)
+    {
+      te_ms.fire();
+    }
   }
 }

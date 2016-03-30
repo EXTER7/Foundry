@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -76,13 +77,12 @@ public class FoundryMiscUtils
     return getModItemFromOreDictionary(modid, orename, 1);
   }
 
-  @SuppressWarnings("deprecation")
   static public ItemStack getModItemFromOreDictionary(String modid,String orename, int amount)
   {
     modid = modid.toLowerCase();
     for(ItemStack is:OreDictionary.getOres(orename))
     {
-      if(GameRegistry.findUniqueIdentifierFor(is.getItem()).modId.equals(modid))
+      if(GameData.getItemRegistry().getNameForObject(is.getItem()).getResourceDomain().equals(modid))
       {
         is = is.copy();
         is.stackSize = amount;

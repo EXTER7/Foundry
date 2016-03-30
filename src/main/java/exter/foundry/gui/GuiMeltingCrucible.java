@@ -16,7 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
-public class GuiMeltingCrucibleFurnace extends GuiFoundry
+public class GuiMeltingCrucible extends GuiFoundry
 {
 
   public static final ResourceLocation GUI_TEXTURE = new ResourceLocation("foundry:textures/gui/crucible.png");
@@ -59,7 +59,7 @@ public class GuiMeltingCrucibleFurnace extends GuiFoundry
   private TileEntityMeltingCrucible te_icf;
   private GuiButtonFoundry button_mode;
 
-  public GuiMeltingCrucibleFurnace(TileEntityMeltingCrucible ms, EntityPlayer player)
+  public GuiMeltingCrucible(TileEntityMeltingCrucible ms, EntityPlayer player)
   {
     super(new ContainerMeltingCrucible(ms, player));
     allowUserInput = false;

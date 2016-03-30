@@ -6,6 +6,7 @@ import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
+import exter.foundry.api.recipe.manager.IMoldRecipeManager;
 import exter.foundry.api.registry.IFluidRegistry;
 
 /**
@@ -41,6 +42,7 @@ public class FoundryAPI
   static public IInfuserRecipeManager recipes_infuser;
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   static public IAtomizerRecipeManager recipes_atomizer;
+  static public IMoldRecipeManager recipes_mold;
   
   static public IFluidRegistry fluids;
 }

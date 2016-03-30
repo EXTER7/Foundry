@@ -38,6 +38,7 @@ import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
@@ -154,6 +155,41 @@ public class FoundryRecipes
 
     MeltingRecipeManager.instance.addRecipe("blockRedstone", new FluidStack(liquid_redstone,900));
     MeltingRecipeManager.instance.addRecipe("blockGlowstone", new FluidStack(liquid_glowstone,1000),liquid_glowstone.getTemperature(),90);
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.INGOT), 2, 4, new int[]
+        {
+            2, 2,
+            2, 2,
+            2, 2,
+            2, 2
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.PLATE), 4, 4, new int[]
+        {
+            1, 1, 1, 1,
+            1, 1, 1, 1,
+            1, 1, 1, 1,
+            1, 1, 1, 1
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.ROD), 1, 6, new int[]
+        {
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.GEAR), 5, 5, new int[]
+        {
+            1, 0, 1, 0, 1,
+            0, 1, 1, 1, 0,
+            0, 1, 1, 1, 1,
+            0, 1, 1, 1, 0,
+            1, 0, 1, 0, 1
+        });
 
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),

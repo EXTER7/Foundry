@@ -1,11 +1,10 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.recipe.IMoldRecipe;
-import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.block.BlockMoldStation;
-import exter.foundry.block.FoundryBlocks;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
+import exter.foundry.recipes.manager.MoldRecipeManager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -73,11 +72,13 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
       item_burn_time = tag.getInteger("ItemBurnTime");
     }
     
-    for(int i = 0; i < 25; i++)
+    boolean grid_changed = false;
+    for(int i = 0; i < 36; i++)
     {
       if(tag.hasKey("RecipeGrid_" + i))
       {
         grid[i] = tag.getInteger("RecipeGrid_" + i);
+        grid_changed = true;
       }
     }
     
@@ -88,6 +89,14 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
     
     if(worldObj != null && !worldObj.isRemote)
     {
+      if(grid_changed)
+      {
+        current_recipe = null;
+      }
+      if(tag.hasKey("command_fire"))
+      {
+        current_recipe = MoldRecipeManager.instance.findRecipe(grid);
+      }
       ((BlockMoldStation)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
     }
   }
@@ -130,7 +139,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
     tag.setInteger("BurnTime", burn_time);
     tag.setInteger("CookTime", progress);
     tag.setInteger("ItemBurnTime", item_burn_time);
-    for(int i = 0; i < 25; i++)
+    for(int i = 0; i < 36; i++)
     {
       tag.setInteger("RecipeGrid_" + i,grid[i]);
     }
@@ -200,7 +209,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
     return output == null || inv_output == null || (inv_output.isItemEqual(output) && inv_output.stackSize - output.stackSize <= inv_output.getMaxStackSize());
   }
 
-  private ItemStack getCarvedClay()
+  private int getCarvedClayAmount()
   {
     int amount = 0;
     for(int g:grid)
@@ -208,32 +217,41 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
       amount += g;
     }
     amount /= 10;
-    
-    if(amount == 0)
-    {
-      return null;
-    }
-    return FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL,amount);
+    return amount;
   }
-  private boolean canRecipeOutput(IMoldRecipe recipe)
+  private boolean canRecipeOutput()
   {
-    ItemStack output = recipe.getOutput();
-    ItemStack clay = getCarvedClay();
+    ItemStack output = current_recipe.getOutput();
+    int clay_amount = getCarvedClayAmount();
+    ItemStack slot_clay = inventory[SLOT_CLAY];
     
-    return canOutput(output,SLOT_OUTPUT) && canOutput(clay,SLOT_CLAY);
+    return canOutput(output,SLOT_OUTPUT) && (slot_clay == null || slot_clay.stackSize + clay_amount <= slot_clay.getMaxStackSize());
+  }
+  
+  private void clearGrid()
+  {
+    for(int i = 0; i < 36; i++)
+    {
+      if(grid[i] > 0)
+      {
+        grid[i] = 0;
+        updateValue("RecipeGrid_" + i,grid[i]);
+      }
+    }
+    current_recipe = null;
   }
 
-  private void doSmelt(IMoldRecipe recipe)
+  private void doSmelt()
   {
-    ItemStack output = recipe.getOutput();
-    ItemStack clay = getCarvedClay();
     
-    if(!canOutput(output,SLOT_OUTPUT) || !canOutput(clay,SLOT_CLAY))
+    if(!canRecipeOutput())
     {
       progress = 0;
       return;
     }
 
+    ItemStack output = current_recipe.getOutput();
+    int clay = getCarvedClayAmount();
     if(++progress == 200)
     {
       progress = 0;
@@ -244,9 +262,18 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
       {
         inventory[SLOT_OUTPUT].stackSize += output.stackSize;
       }
+      if(inventory[SLOT_CLAY] == null)
+      {
+        inventory[SLOT_CLAY] = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL,clay);
+      } else
+      {
+        inventory[SLOT_CLAY].stackSize += clay;
+      }
       updateInventoryItem(SLOT_OUTPUT);
+      updateInventoryItem(SLOT_CLAY);
       has_block = false;
       updateValue("HasBlock", has_block);
+      clearGrid();
     }
   }
   
@@ -275,7 +302,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
     }
     if(has_block && progress >= 0)
     {
-      if(burn_time == 0 && current_recipe != null && canRecipeOutput(current_recipe))
+      if(burn_time == 0 && current_recipe != null && canRecipeOutput())
       {
         item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(inventory[SLOT_FUEL]);
         if(burn_time > 0)
@@ -293,13 +320,9 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
 
       if(burn_time > 0)
       {
-        if(!current_recipe.matches(grid))
-        {
-          current_recipe = null;
-        }
         if(current_recipe != null)
         {
-          doSmelt(current_recipe);
+          doSmelt();
         } else
         {
           progress = 0;
@@ -314,7 +337,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockAlloyFurnace)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+        ((BlockMoldStation)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
       }
       updateValue("BurnTime",burn_time);
     }
@@ -387,6 +410,16 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
           }
         }
       }
+      sendToServer(tag);
+    }
+  }
+
+  public void fire()
+  {
+    if(worldObj.isRemote)
+    {
+      NBTTagCompound tag = new NBTTagCompound();
+      tag.setBoolean("command_fire",true);
       sendToServer(tag);
     }
   }

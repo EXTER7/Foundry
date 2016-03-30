@@ -40,6 +40,7 @@ import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
+import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -56,7 +57,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1804,);required-after:substratum@[1.2.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1813,);required-after:substratum@[1.2.0.0,)"
 )
 public class ModFoundry
 {
@@ -97,6 +98,7 @@ public class ModFoundry
     FoundryAPI.recipes_infuser = InfuserRecipeManager.instance;
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
+    FoundryAPI.recipes_mold = MoldRecipeManager.instance;
 
     FoundryConfig.load(config);
     FoundryItems.registerItems(config);

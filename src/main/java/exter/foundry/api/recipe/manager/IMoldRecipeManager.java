@@ -11,7 +11,7 @@ public interface IMoldRecipeManager
 
   public List<IMoldRecipe> getRecipes();
  
-  public IMoldRecipe findRecipe(int[] recipe);
+  public IMoldRecipe findRecipe(int[] grid);
 
   /**
    * Removes a recipe.

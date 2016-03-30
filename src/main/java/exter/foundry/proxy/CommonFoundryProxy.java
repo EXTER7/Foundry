@@ -21,7 +21,7 @@ import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMaterialRouter;
 import exter.foundry.gui.GuiMetalAtomizer;
 import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.gui.GuiMeltingCrucibleFurnace;
+import exter.foundry.gui.GuiMeltingCrucible;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.gui.GuiMoldStation;
 import exter.foundry.gui.GuiRefractoryHopper;
@@ -102,7 +102,7 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_CRUCIBLE:
       {
         TileEntityMeltingCrucible te = (TileEntityMeltingCrucible)world.getTileEntity(pos);
-        return new GuiMeltingCrucibleFurnace(te,player);
+        return new GuiMeltingCrucible(te,player);
       }
       case GUI_CASTER:
       {

@@ -6,11 +6,11 @@ public interface IMoldRecipe
 {
   public ItemStack getOutput();
   
-  public int[] getRecipe();
+  public int[] getRecipeGrid();
 
   public int getWidth();
 
   public int getHeight();
   
-  public boolean matches(int[] grid);
+  public boolean matchesRecipe(int[] grid);
 }

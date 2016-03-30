@@ -77,8 +77,6 @@ public class ModFoundry
 
   
   public static Logger log = LogManager.getLogger(MODNAME);
-
-  public CraftingEvents crafting_events;
   
   public static SimpleNetworkWrapper network_channel;
   
@@ -114,7 +112,6 @@ public class ModFoundry
     
     config.save();
 
-    crafting_events = new CraftingEvents();
     
     network_channel = NetworkRegistry.INSTANCE.newSimpleChannel("EXTER.FOUNDRY");
     network_channel.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.SERVER);

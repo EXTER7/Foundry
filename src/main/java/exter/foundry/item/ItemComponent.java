@@ -16,7 +16,6 @@ public class ItemComponent extends Item
     HEATINGCOIL(0,"componentHeatingCoil"),
     REFRACTORYCLAY(1,"componentRefractoryClay"),
     REFRACTORYBRICK(2,"componentRefractoryBrick"),
-    @Deprecated BLANKMOLD(3,"componentBlankMold"),
     GUN_BARREL(4,"componentGunBarrel"),
     REVOLVER_DRUM(5,"componentRevolverDrum"),
     REVOLVER_FRAME(6,"componentRevolverFrame"),

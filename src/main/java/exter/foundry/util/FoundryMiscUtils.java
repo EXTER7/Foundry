@@ -31,31 +31,6 @@ public class FoundryMiscUtils
     return a / b + ((a % b == 0) ? 0 : 1);
   }
 
-  @Deprecated
-  static public void registerMoldRecipe(ItemMold.SubItem sub,ItemStack pattern)
-  {
-    if(pattern != null)
-    {
-      GameRegistry.addShapelessRecipe(FoundryItems.mold(sub),
-          FoundryItems.component(ItemComponent.SubItem.BLANKMOLD), pattern);  
-    }
-  }
-
-  @Deprecated
-  static public void registerMoldRecipe(ItemMold.SubItem sub,String oredict_pattern)
-  {
-    GameRegistry.addRecipe(new ShapelessOreRecipe(FoundryItems.mold(sub),
-      FoundryItems.component(ItemComponent.SubItem.BLANKMOLD), oredict_pattern));  
-  }
-
-  @Deprecated
-  static public void registerMoldSmelting(ItemMold.SubItem clay,ItemMold.SubItem mold)
-  {
-    GameRegistry.addSmelting(
-        FoundryItems.mold(clay),
-        FoundryItems.mold(mold), 0.0f);
-  }
-
   static public String getItemOreDictionaryName(ItemStack stack)
   {
     for(String name:OreDictionary.getOreNames())
@@ -158,17 +133,5 @@ public class FoundryMiscUtils
         CastingRecipeManager.instance.addRecipe(item, fluid, mold, extra);
       }
     }
-  }
-  
-  @Deprecated
-  static public void registerPlateMoldRecipe(ItemStack item,String oredict_name)
-  {
-    if(FoundryUtils.isItemInOreDictionary(oredict_name, item))
-    {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PLATE_SOFT, oredict_name);
-    } else
-    {
-      FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PLATE_SOFT, item);
-    }
-  }
+  }  
 }

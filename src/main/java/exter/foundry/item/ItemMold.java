@@ -1,6 +1,8 @@
 package exter.foundry.item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import exter.foundry.creativetab.FoundryTabMolds;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,83 +16,54 @@ public class ItemMold extends Item
   static public enum SubItem
   {
     INGOT(0,"moldIngot"),
-    @Deprecated INGOT_SOFT(1,"moldSoftIngot"),
-    CHESTPLATE(2,"moldChestplate"),
-    @Deprecated CHESTPLATE_SOFT(3,"moldSoftChestplate"),
-    PICKAXE(4,"moldPickaxe"),
-    @Deprecated PICKAXE_SOFT(5,"moldSoftPickaxe"),
-    BLOCK(6,"moldBlock"),
-    @Deprecated BLOCK_SOFT(7,"moldSoftBlock"),
+    PLATE(1,"moldPlate"),
+    GEAR(2,"moldGear"),
+    ROD(3,"moldRod"),
+    BLOCK(4,"moldBlock"),
+    SLAB(5,"moldSlab"),
+    STAIRS(6,"moldStairs"),
+    PICKAXE(7,"moldPickaxe"),
     AXE(8,"moldAxe"),
-    @Deprecated AXE_SOFT(9,"moldSoftAxe"),
-    SWORD(10,"moldSword"),
-    @Deprecated SWORD_SOFT(11,"moldSoftSword"),
-    SHOVEL(12,"moldShovel"),
-    @Deprecated SHOVEL_SOFT(13,"moldSoftShovel"),
-    HOE(14,"moldHoe"),
-    @Deprecated HOE_SOFT(15,"moldSoftHoe"),
-    LEGGINGS(16,"moldLeggings"),
-    @Deprecated LEGGINGS_SOFT(17,"moldSoftLeggings"),
-    HELMET(18,"moldHelmet"),
-    @Deprecated HELMET_SOFT(19,"moldSoftHelmet"),
-    BOOTS(20,"moldBoots"),
-    @Deprecated BOOTS_SOFT(21,"moldSoftBoots"),
-    GEAR(22,"moldGear"),
-    @Deprecated GEAR_SOFT(23,"moldSoftGear"),
-    CABLE_IC2(24,"moldCableIC2"),
-    @Deprecated CABLE_IC2_SOFT(25,"moldSoftCableIC2"),
-    CASING_IC2(26,"moldCasingIC2"),
-    @Deprecated CASING_IC2_SOFT(27,"moldSoftCasingIC2"),
-    SLAB(28,"moldSlab"),
-    @Deprecated SLAB_SOFT(29,"moldSoftSlab"),
-    STAIRS(30,"moldStairs"),
-    @Deprecated STAIRS_SOFT(31,"moldSoftStairs"),
-    PLATE(32,"moldPlate"),
-    @Deprecated PLATE_SOFT(33,"moldSoftPlate"),
-    CAP_TC(34,"moldWandCapTC"),
-    @Deprecated CAP_TC_SOFT(35,"moldSoftWandCapTC"),
-    INSULATED_CABLE_IC2(36,"moldCableInsulatedIC2"),
-    @Deprecated INSULATED_CABLE_IC2_SOFT(37,"moldSoftCableInsulatedIC2"),
-    SICKLE(38,"moldSickle"),
-    @Deprecated SICKLE_SOFT(39,"moldSoftSickle"),
-    BOW(40,"moldBow"),
-    @Deprecated BOW_SOFT(41,"moldSoftBow"),
-    FLUXPLATE(42,"moldFluxplate"),
-    @Deprecated FLUXPLATE_SOFT(43,"moldSoftFluxplate"),
-    BULLET(44,"moldBullet"),
-    @Deprecated BULLET_SOFT(45,"moldSoftBullet"),
-    BULLET_HOLLOW(46,"moldBulletHollow"),
-    @Deprecated BULLET_HOLLOW_SOFT(47,"moldSoftBulletHollow"),
-    BULLET_CASING(48,"moldRoundCasing"),
-    @Deprecated BULLET_CASING_SOFT(49,"moldSoftRoundCasing"),
-    GUN_BARREL(50,"moldGunBarrel"),
-    @Deprecated GUN_BARREL_SOFT(51,"moldSoftGunBarrel"),
-    REVOLVER_DRUM(52,"moldRevolverDrum"),
-    @Deprecated REVOLVER_DRUM_SOFT(53,"moldSoftRevolverDrum"),
-    REVOLVER_FRAME(54,"moldRevolverFrame"),
-    @Deprecated REVOLVER_FRAME_SOFT(55,"moldSoftRevolverFrame"),
-    WIRE_PR(56,"moldWirePR"),
-    @Deprecated WIRE_PR_SOFT(57,"moldSoftWirePR"),
-    PELLET(58,"moldPellet"),
-    @Deprecated PELLET_SOFT(59,"moldSoftPellet"),
-    SHELL_CASING(60,"moldShellCasing"),
-    @Deprecated SHELL_CASING_SOFT(61,"moldSoftShellCasing"),
-    SHOTGUN_PUMP(62,"moldShotgunPump"),
-    @Deprecated SHOTGUN_PUMP_SOFT(63,"moldSoftShotgunPump"),
-    SHOTGUN_FRAME(64,"moldShotgunFrame"),
-    @Deprecated SHOTGUN_FRAME_SOFT(65,"moldSoftShotgunFrame"),
-    SHARD_TC(66,"moldShardTC"),
-    @Deprecated SHARD_TC_SOFT(67,"moldSoftShardTC"),
-    ROD(68,"moldRod"),
-    @Deprecated ROD_SOFT(69,"moldSoftRod");
+    SWORD(9,"moldSword"),
+    SHOVEL(10,"moldShovel"),
+    HOE(11,"moldHoe"),
+    HELMET(12,"moldHelmet"),
+    CHESTPLATE(13,"moldChestplate"),
+    LEGGINGS(14,"moldLeggings"),
+    BOOTS(15,"moldBoots"),
+    BULLET(16,"moldBullet"),
+    BULLET_HOLLOW(17,"moldBulletHollow"),
+    ROUND_CASING(18,"moldRoundCasing"),
+    GUN_BARREL(19,"moldGunBarrel"),
+    REVOLVER_DRUM(20,"moldRevolverDrum"),
+    REVOLVER_FRAME(21,"moldRevolverFrame"),
+    PELLET(22,"moldPellet"),
+    SHELL_CASING(23,"moldShellCasing"),
+    SHOTGUN_PUMP(24,"moldShotgunPump"),
+    SHOTGUN_FRAME(25,"moldShotgunFrame");
     
     public final int id;
     public final String name;
+    
+    static private final Map<Integer,SubItem> value_map = new HashMap<Integer,SubItem>();
     
     SubItem(int id,String name)
     {
       this.id = id;
       this.name = name;
+    }
+    
+    static public SubItem fromId(int id)
+    {
+      return value_map.get(id);
+    }
+        
+    static
+    {
+      for(SubItem sub:values())
+      {
+        value_map.put(sub.id, sub);
+      }
     }
   }
   
@@ -106,7 +79,7 @@ public class ItemMold extends Item
   @Override
   public String getUnlocalizedName(ItemStack itemstack)
   {
-    return getUnlocalizedName() + itemstack.getItemDamage();
+    return "item." + SubItem.fromId(itemstack.getItemDamage()).name;
   }
   
   @Override

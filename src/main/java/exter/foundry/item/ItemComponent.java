@@ -1,6 +1,8 @@
 package exter.foundry.item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -29,20 +31,32 @@ public class ItemComponent extends Item
     AMMO_CASING_SHELL(14,"componentShellCasing"),
     SHOTGUN_PUMP(15,"componentShotgunPump"),
     SHOTGUN_FRAME(16,"componentShotgunFrame"),
-    SHARD_ENERGY_TC(17,"componentShardEnergyTC"),
-    SHARD_LIFE_TC(18,"componentShardLifeTC"),
-    SHARD_VOID_TC(19,"componentShardVoidTC"),
-    AMMO_BULLET_STEEL(20,"componentBulletSteel"),
-    AMMO_PELLET_STEEL(21,"componentPelletSteel"),
-    REFRACTORYCLAY_SMALL(22,"componentSmallRefractoryClay");
+    AMMO_BULLET_STEEL(17,"componentBulletSteel"),
+    AMMO_PELLET_STEEL(18,"componentPelletSteel"),
+    REFRACTORYCLAY_SMALL(19,"componentSmallRefractoryClay");
     
     public final int id;
     public final String name;
+    
+    static private final Map<Integer,SubItem> value_map = new HashMap<Integer,SubItem>();
     
     SubItem(int id,String name)
     {
       this.id = id;
       this.name = name;
+    }
+    
+    static public SubItem fromId(int id)
+    {
+      return value_map.get(id);
+    }
+        
+    static
+    {
+      for(SubItem sub:values())
+      {
+        value_map.put(sub.id, sub);
+      }
     }
   }
 
@@ -58,7 +72,7 @@ public class ItemComponent extends Item
   @Override
   public String getUnlocalizedName(ItemStack itemstack)
   {
-    return getUnlocalizedName() + itemstack.getItemDamage();
+    return "item.foundry." + SubItem.fromId(itemstack.getItemDamage()).name;
   }
 
   @Override

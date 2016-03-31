@@ -14,9 +14,6 @@ componentRevolverDrum
 componentRevolverFrame
 componentRoundAP
 componentRoundCasing
-componentShardEnergyTC
-componentShardLifeTC
-componentShardVoidTC
 componentShellCasing
 componentShotgunFrame
 componentShotgunPump

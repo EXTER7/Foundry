@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=north,state=off": { "model": "foundry:moldStationOff" },
+        "facing=south,state=off": { "model": "foundry:moldStationOff", "y": 180 },
+        "facing=west,state=off":  { "model": "foundry:moldStationOff", "y": 270 },
+        "facing=east,state=off":  { "model": "foundry:moldStationOff", "y": 90 },
+        "facing=north,state=on": { "model": "foundry:moldStationOn" },
+        "facing=south,state=on": { "model": "foundry:moldStationOn", "y": 180 },
+        "facing=west,state=on":  { "model": "foundry:moldStationOn", "y": 270 },
+        "facing=east,state=on":  { "model": "foundry:moldStationOn", "y": 90 }
+    }
+}

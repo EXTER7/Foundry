@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "foundry:blocks/moldstation_top",
+        "bottom": "foundry:blocks/moldstation_botom",
+        "front": "foundry:blocks/moldstation_front_on",
+        "side": "foundry:blocks/moldstation_side"
+    }
+}

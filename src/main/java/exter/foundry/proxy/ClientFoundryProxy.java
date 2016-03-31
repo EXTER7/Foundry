@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import exter.foundry.block.BlockComponent;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.entity.EntitySkeletonGun;
@@ -112,8 +113,13 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     }
 
     registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
-    registerItemModel(FoundryBlocks.block_component,"casing");
+    registerItemModel(FoundryBlocks.block_mold_station,"moldStation");
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
+
+    for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
+    {
+      registerItemModel(FoundryBlocks.block_component,v.model, v.id);
+    }
 
 
     for(ItemComponent.SubItem c:ItemComponent.SubItem.values())

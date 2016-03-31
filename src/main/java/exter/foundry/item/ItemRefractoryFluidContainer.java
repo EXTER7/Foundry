@@ -47,7 +47,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     capacity = container_capacity;
     setCreativeTab(FoundryTabFluids.tab);
     setMaxStackSize(1);
-    setUnlocalizedName("foundryContainer");
+    setUnlocalizedName("foundry.fluidContainer");
     setHasSubtypes(true);
 
     MinecraftForge.EVENT_BUS.register(this);

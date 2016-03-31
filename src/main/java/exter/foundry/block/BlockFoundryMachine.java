@@ -93,7 +93,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setUnlocalizedName("machine");
+    setUnlocalizedName("foundry.machine");
     setCreativeTab(FoundryTabMachines.tab);
   }
 

@@ -79,7 +79,7 @@ public class ItemMold extends Item
   @Override
   public String getUnlocalizedName(ItemStack itemstack)
   {
-    return "item." + SubItem.fromId(itemstack.getItemDamage()).name;
+    return "item.foundry." + SubItem.fromId(itemstack.getItemDamage()).name;
   }
   
   @Override

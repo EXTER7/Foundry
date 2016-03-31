@@ -23,8 +23,8 @@ public class BlockComponent extends Block implements IBlockVariants
 
   static public enum EnumVariant implements IStringSerializable
   {
-    CASING(0, "casing_refractory", "casingRefractory"),
-    CLAYBLOCK(1, "block_refractoryclay", "blockRefractoryClay");
+    CASING(0, "casing_refractory", "componentBlockCasingRefractory"),
+    CLAYBLOCK(1, "block_refractoryclay", "componentBlockRefractoryClay");
 
     public final int id;
     public final String name;
@@ -118,6 +118,6 @@ public class BlockComponent extends Block implements IBlockVariants
   @Override
   public String getUnlocalizedName(int meta)
   {
-    return getUnlocalizedName() + "." + getStateFromMeta(meta).getValue(VARIANT).model;
+    return "tile.foundry." + getStateFromMeta(meta).getValue(VARIANT).model;
   }
 }

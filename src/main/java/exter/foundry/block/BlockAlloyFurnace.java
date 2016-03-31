@@ -19,7 +19,7 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine
   public BlockAlloyFurnace()
   {
     super(Material.rock);
-    setUnlocalizedName("alloyFurnace");
+    setUnlocalizedName("foundry.alloyFurnace");
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);

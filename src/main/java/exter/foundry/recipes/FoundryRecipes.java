@@ -709,6 +709,11 @@ public class FoundryRecipes
         'C', clay_stack,
         'S', sand_stack);
 
+    GameRegistry.addRecipe(FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CLAYBLOCK),
+        "CC",
+        "CC",
+        'C', refclay_stack);
+
     GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
     GameRegistry.addSmelting(
@@ -834,6 +839,16 @@ public class FoundryRecipes
         'G', "gearBrass"));
 
     GameRegistry.addRecipe(
+        new ItemStack(FoundryBlocks.block_mold_station),
+        "BWB",
+        "BSB",
+        "BFB",
+        'B', refbrick_stack,
+        'W', new ItemStack(Blocks.crafting_table),
+        'S', new ItemStack(Blocks.stone_slab),
+        'F', furnace_stack);
+
+    GameRegistry.addRecipe(
         FoundryItems.item_revolver.empty(),
         "BD",
         " F",
@@ -849,29 +864,7 @@ public class FoundryRecipes
         'P', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP),
         'F', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME));
 
-    GameRegistry.addRecipe(
-        FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL,4),
-        "  ",
-        " G",
-        'G', Items.gunpowder);
 
-    GameRegistry.addRecipe(
-        new ItemStack(Items.gunpowder),
-        "GG",
-        "GG",
-        'G', FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL));
-
-    GameRegistry.addRecipe(
-        FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL,4),
-        "  ",
-        " B",
-        'B', Items.blaze_powder);
-
-    GameRegistry.addRecipe(
-        new ItemStack(Items.blaze_powder),
-        "BB",
-        "BB",
-        'B', FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_round,

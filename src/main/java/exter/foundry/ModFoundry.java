@@ -11,7 +11,6 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -30,7 +29,6 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.FoundryRecipes;
@@ -57,7 +55,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1813,);required-after:substratum@[1.2.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1813,);required-after:substratum@[1.3.0.0,)"
 )
 public class ModFoundry
 {
@@ -102,9 +100,6 @@ public class ModFoundry
     FoundryItems.registerItems(config);
     FoundryBlocks.registerBlocks(config);
 
-    OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.SubItem.GUNPOWDER_SMALL));
-    OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.SubItem.BLAZEPOWDER_SMALL));
-    
     FoundryRecipes.preInit();
     
     ModIntegrationManager.preInit(config);

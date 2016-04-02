@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.vecmath.Matrix4f;
+import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -35,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.SimpleModelState;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.model.IModelPart;
 import net.minecraftforge.common.model.IModelState;
@@ -79,7 +81,7 @@ public class RFCModel implements IModel
             fluid.getFluid().getColor(),
             transform));
         
-        return new SimpleBakedModel(builder.build(),particle);
+        return new SimpleBakedModel(builder.build(),particle,transforms);
       }
     }
     
@@ -177,15 +179,17 @@ public class RFCModel implements IModel
     }
   }
 
-  static private final class SimpleBakedModel implements IBakedModel
+  static private final class SimpleBakedModel implements IPerspectiveAwareModel
   {
     private final ImmutableList<BakedQuad> quads;
     private final TextureAtlasSprite particle;
+    private final ImmutableMap<TransformType, TRSRTransformation> transforms;
     
-    public SimpleBakedModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle)
+    public SimpleBakedModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle,ImmutableMap<TransformType, TRSRTransformation> transforms)
     {
       this.quads = quads;
       this.particle = particle;
+      this.transforms = transforms;
     }
 
     @Override
@@ -232,6 +236,12 @@ public class RFCModel implements IModel
       }
       return ImmutableList.of();
     }
+    
+    @Override
+    public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType type)
+    {
+      return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, type);
+    }
   }
 
 
@@ -262,7 +272,7 @@ public class RFCModel implements IModel
   @Override
   public IModelState getDefaultState()
   {
-    return TRSRTransformation.identity();
+    return DEFAULT_STATE;
   }
 
   public static ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
@@ -565,4 +575,46 @@ public class RFCModel implements IModel
     texture_fg = new ResourceLocation("foundry", "items/container_foreground");
     texture_bg = new ResourceLocation("foundry", "items/container_background");
   }
+  
+  static private final IModelState DEFAULT_STATE;
+  
+  static {
+    TRSRTransformation tprh = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(0f, 4.0f / 16, 0.5f / 16),
+        TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, -55)),
+        new Vector3f(0.65f, 0.65f, 0.65f),
+        null));
+
+    TRSRTransformation tplh = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(0f, 4.0f / 16, 0.5f / 16),
+        TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 90, 55)),
+        new Vector3f(0.65f, 0.65f, 0.65f),
+        null));
+
+    TRSRTransformation fprh = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(1.13f / 16, 3.2f / 16, 1.13f / 16),
+        TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, 25)),
+        new Vector3f(0.58f, 0.58f, 0.58f),
+        null));
+    
+    TRSRTransformation fplh = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(1.13f / 16, 3.2f / 16, 1.13f / 16),
+        TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 90, -25)),
+        new Vector3f(0.58f, 0.58f, 0.58f),
+        null));
+
+    TRSRTransformation gnd = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+        new Vector3f(1f / 16, 1f / 16, 0),
+        TRSRTransformation.quatFromXYZ(0, 0, 0),
+        new Vector3f(0.58f, 0.58f, 0.58f),
+        null));
+
+    DEFAULT_STATE = new SimpleModelState(ImmutableMap
+        .of(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, tplh,
+            ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, tprh,
+            ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, fplh,
+            ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, fprh,
+            ItemCameraTransforms.TransformType.GROUND, gnd));
+  }
+
 }

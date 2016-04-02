@@ -53,10 +53,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     public ModelResourceLocation getModelLocation(ItemStack stack)
     {
       return model;
-    }
-    
-  }
- 
+    }    
+  } 
   
   
   private void registerItemModel(Block block,String name)

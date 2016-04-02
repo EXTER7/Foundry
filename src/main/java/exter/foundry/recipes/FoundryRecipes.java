@@ -216,6 +216,84 @@ public class FoundryRecipes
             4, 4, 4, 4, 4, 4
         });
 
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.BULLET), 3, 3, new int[]
+        {
+            0, 1, 0,
+            1, 2, 1,
+            0, 1, 0,
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW), 3, 3, new int[]
+        {
+            0, 2, 0,
+            2, 1, 2,
+            0, 2, 0,
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.ROUND_CASING), 4, 4, new int[]
+        {
+            0, 2, 2, 0,
+            2, 1, 1, 2,
+            2, 1, 1, 2,
+            0, 1, 2, 0
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.PELLET), 1, 1, new int[]
+        {
+            1
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.SHELL_CASING), 5, 5, new int[]
+        {
+            0, 0, 3, 0, 0,
+            0, 3, 1, 3, 0,
+            3, 1, 1, 1, 3,
+            0, 3, 1, 3, 0,
+            0, 0, 3, 0, 0
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.GUN_BARREL), 3, 3, new int[]
+        {
+            0, 4, 0,
+            4, 0, 4,
+            0, 4, 0,
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.REVOLVER_DRUM), 5, 5, new int[]
+        {
+            0, 3, 3, 3, 0,
+            3, 0, 3, 0, 3,
+            3, 3, 3, 3, 3,
+            3, 0, 3, 0, 3,
+            0, 3, 3, 3, 0
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.REVOLVER_FRAME), 5, 6, new int[]
+        {
+            0, 2, 2, 0, 0,
+            0, 2, 2, 2, 0,
+            2, 2, 2, 2, 0,
+            0, 2, 2, 2, 2,
+            0, 0, 2, 2, 2,
+            0, 0, 2, 2, 2
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.SHOTGUN_PUMP), 3, 3, new int[]
+        {
+            4, 0, 4,
+            4, 4, 4,
+        });
+
+    MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.SHOTGUN_FRAME), 6, 5, new int[]
+        {
+            0, 2, 2, 0, 0, 0,
+            0, 2, 2, 2, 2, 0,
+            0, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2,
+            0, 0, 0, 2, 2, 2,
+        });
+
+
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),
         new Object[] {
@@ -338,35 +416,11 @@ public class FoundryRecipes
     ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
     ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
 
-    ItemStack mold_bullet = FoundryItems.mold(ItemMold.SubItem.BULLET);
-    ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW);
-    ItemStack mold_bullet_casing = FoundryItems.mold(ItemMold.SubItem.ROUND_CASING);
-    ItemStack mold_pellet = FoundryItems.mold(ItemMold.SubItem.PELLET);
-    ItemStack mold_shell_casing = FoundryItems.mold(ItemMold.SubItem.SHELL_CASING);
-    ItemStack mold_gun_barrel = FoundryItems.mold(ItemMold.SubItem.GUN_BARREL);
-    ItemStack mold_revolver_drum = FoundryItems.mold(ItemMold.SubItem.REVOLVER_DRUM);
-    ItemStack mold_revolver_frame = FoundryItems.mold(ItemMold.SubItem.REVOLVER_FRAME);
-    ItemStack mold_shotgun_pump = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_PUMP);
-    ItemStack mold_shotgun_frame = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_FRAME);
 
-    
-    CastingRecipeManager.instance.addMold(mold_ingot);
-    CastingRecipeManager.instance.addMold(mold_slab);
-    CastingRecipeManager.instance.addMold(mold_stairs);
-    CastingRecipeManager.instance.addMold(mold_plate);
-    CastingRecipeManager.instance.addMold(mold_block);
-    CastingRecipeManager.instance.addMold(mold_gear);
-    CastingRecipeManager.instance.addMold(mold_bullet);
-    CastingRecipeManager.instance.addMold(mold_bullet_hollow);
-    CastingRecipeManager.instance.addMold(mold_bullet_casing);
-    CastingRecipeManager.instance.addMold(mold_gun_barrel);
-    CastingRecipeManager.instance.addMold(mold_revolver_drum);
-    CastingRecipeManager.instance.addMold(mold_revolver_frame);
-    CastingRecipeManager.instance.addMold(mold_pellet);
-    CastingRecipeManager.instance.addMold(mold_shell_casing);
-    CastingRecipeManager.instance.addMold(mold_shotgun_pump);
-    CastingRecipeManager.instance.addMold(mold_shotgun_frame);
-    CastingRecipeManager.instance.addMold(mold_rod);
+    for(ItemMold.SubItem sub:ItemMold.SubItem.values())
+    {
+      CastingRecipeManager.instance.addMold(FoundryItems.mold(sub));
+    }
 
     if(FoundryConfig.recipe_tools_armor)
     {
@@ -452,15 +506,6 @@ public class FoundryRecipes
               0, 1, 0,
           });
 
-      CastingRecipeManager.instance.addMold(mold_chestplate);
-      CastingRecipeManager.instance.addMold(mold_pickaxe);
-      CastingRecipeManager.instance.addMold(mold_axe);
-      CastingRecipeManager.instance.addMold(mold_shovel);
-      CastingRecipeManager.instance.addMold(mold_hoe);
-      CastingRecipeManager.instance.addMold(mold_sword);
-      CastingRecipeManager.instance.addMold(mold_leggings);
-      CastingRecipeManager.instance.addMold(mold_helmet);
-      CastingRecipeManager.instance.addMold(mold_boots);
 
       CastingRecipeManager.instance.addRecipe(new ItemStack(Items.iron_chestplate, 1, 0), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.addRecipe(new ItemStack(Items.golden_chestplate, 1, 0), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
@@ -593,7 +638,17 @@ public class FoundryRecipes
     ItemStack shotgun_frame = FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME);
     ItemStack bullet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_STEEL);
     ItemStack pellet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL);
-    
+    ItemStack mold_bullet = FoundryItems.mold(ItemMold.SubItem.BULLET);
+    ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW);
+    ItemStack mold_bullet_casing = FoundryItems.mold(ItemMold.SubItem.ROUND_CASING);
+    ItemStack mold_pellet = FoundryItems.mold(ItemMold.SubItem.PELLET);
+    ItemStack mold_shell_casing = FoundryItems.mold(ItemMold.SubItem.SHELL_CASING);
+    ItemStack mold_gun_barrel = FoundryItems.mold(ItemMold.SubItem.GUN_BARREL);
+    ItemStack mold_revolver_drum = FoundryItems.mold(ItemMold.SubItem.REVOLVER_DRUM);
+    ItemStack mold_revolver_frame = FoundryItems.mold(ItemMold.SubItem.REVOLVER_FRAME);
+    ItemStack mold_shotgun_pump = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_PUMP);
+    ItemStack mold_shotgun_frame = FoundryItems.mold(ItemMold.SubItem.SHOTGUN_FRAME);
+
        
     MeltingRecipeManager.instance.addRecipe(
         bullet,
@@ -938,17 +993,6 @@ public class FoundryRecipes
     
 
 
-    // TODO: Add these using the new mold crafting system
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_HOLLOW_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.BULLET_CASING_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.GUN_BARREL_SOFT, FoundryItems.component(ItemComponent.SubItem.GUN_BARREL));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.REVOLVER_DRUM_SOFT, FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.REVOLVER_FRAME_SOFT, FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.PELLET_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHELL_CASING_SOFT, FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOTGUN_PUMP_SOFT, FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP));
-//    FoundryMiscUtils.registerMoldRecipe(ItemMold.SubItem.SHOTGUN_FRAME_SOFT, FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME));
   }
 
   static public void postInit()

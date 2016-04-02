@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -19,6 +20,7 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
+import exter.foundry.model.RFCModel;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import net.minecraft.block.Block;
@@ -85,8 +87,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
   @Override
   public void preInit()
   {
-    //TODO
-    //ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
+    ModelLoaderRegistry.registerLoader(RFCModel.Loader.instance);
     MaterialRegistry.instance.initIcons();
     for(Map.Entry<String,FluidLiquidMetal> e:LiquidMetalRegistry.instance.getFluids().entrySet())
     {

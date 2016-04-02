@@ -281,6 +281,7 @@ public class FoundryRecipes
     MoldRecipeManager.instance.addRecipe(FoundryItems.mold(ItemMold.SubItem.SHOTGUN_PUMP), 3, 3, new int[]
         {
             4, 0, 4,
+            4, 0, 4,
             4, 4, 4,
         });
 

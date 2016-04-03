@@ -2,7 +2,7 @@
     "parent": "block/orientable",
     "textures": {
         "top": "foundry:blocks/moldstation_top",
-        "bottom": "foundry:blocks/moldstation_botom",
+        "bottom": "foundry:blocks/moldstation_bottom",
         "front": "foundry:blocks/moldstation_front_off",
         "side": "foundry:blocks/moldstation_side"
     }

@@ -8,10 +8,10 @@ do
   ( # Item model
   cat <<- EOF
 	{
-	  "parent": "builtin/generated",
+	  "parent": "item/generated",
 	  "textures":
 	  {
-	      "layer0": "foundry:items/@@TEXTURE@@"
+	    "layer0": "foundry:items/@@TEXTURE@@"
 	  }
 	}
 	EOF

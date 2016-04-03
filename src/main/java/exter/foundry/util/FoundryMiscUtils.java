@@ -5,8 +5,6 @@ import java.util.List;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -15,10 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.registry.GameData;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 
 /**
@@ -57,7 +52,7 @@ public class FoundryMiscUtils
     modid = modid.toLowerCase();
     for(ItemStack is:OreDictionary.getOres(orename))
     {
-      if(GameData.getItemRegistry().getNameForObject(is.getItem()).getResourceDomain().equals(modid))
+      if(is.getItem().getRegistryName().getResourceDomain().equals(modid))
       {
         is = is.copy();
         is.stackSize = amount;

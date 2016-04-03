@@ -65,6 +65,7 @@ public class ItemComponent extends Item
     setCreativeTab(FoundryTabMaterials.tab);
     setHasSubtypes(true);
     setUnlocalizedName("component");
+    setRegistryName("component");
   }
   
   @Override

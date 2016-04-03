@@ -37,6 +37,7 @@ public class ItemShotgun extends ItemFirearm
   public ItemShotgun()
   {
     setUnlocalizedName("shotgun");
+    setRegistryName("shotgun");
     sound_fire = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_fire"));
     sound_cock = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_cock"));
   }

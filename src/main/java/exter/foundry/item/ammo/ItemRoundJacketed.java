@@ -10,6 +10,7 @@ public class ItemRoundJacketed extends ItemRoundBase
   {
     super(7, 100, 40);
     setUnlocalizedName("roundJacketed");
+    setRegistryName("roundJacketed");
   }
   
   @Override

@@ -16,6 +16,7 @@ public class ItemRoundAP extends ItemRoundBase
   {
     super(7,50,25);
     setUnlocalizedName("roundAP");
+    setRegistryName("roundAP");
   }
 
   @Override

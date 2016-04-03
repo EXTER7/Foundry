@@ -100,6 +100,7 @@ public class BlockRefractoryHopper extends BlockContainer
     setResistance(8.0F);
     setUnlocalizedName("refractoryHopper");
     setDefaultState(blockState.getBaseState().withProperty(FACING, EnumHopperFacing.DOWN));
+    setRegistryName("refractoryHopper");
   }
   
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)

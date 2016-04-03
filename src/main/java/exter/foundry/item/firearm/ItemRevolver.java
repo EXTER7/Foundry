@@ -35,6 +35,7 @@ public class ItemRevolver extends ItemFirearm
   public ItemRevolver()
   {
     setUnlocalizedName("revolver");
+    setRegistryName("revolver");
     sound_fire = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:revolver_fire"));
   }
 

@@ -11,6 +11,7 @@ public class ItemRoundHollow extends ItemRoundBase
   {
     super(16,30,25);
     setUnlocalizedName("roundHollow");
+    setRegistryName("roundHollow");
   }
 
   @Override

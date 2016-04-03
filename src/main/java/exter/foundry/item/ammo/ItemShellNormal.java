@@ -11,6 +11,7 @@ public class ItemShellNormal extends ItemRoundBase
   {
     super(5,50,20);
     setUnlocalizedName("shellNormal");
+    setRegistryName("shellNormal");
   }
 
   @Override

@@ -55,7 +55,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1826,);required-after:substratum@[1.3.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1832,);required-after:substratum@[1.3.0.0,)"
 )
 public class ModFoundry
 {

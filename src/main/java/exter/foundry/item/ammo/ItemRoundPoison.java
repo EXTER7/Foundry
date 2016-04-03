@@ -20,6 +20,7 @@ public class ItemRoundPoison extends ItemRoundBase
   {
     super(8, 50, 25);
     setUnlocalizedName("roundPoison");
+    setRegistryName("roundPoison");
   }
 
   @SuppressWarnings("unchecked")

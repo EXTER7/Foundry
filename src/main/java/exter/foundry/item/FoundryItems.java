@@ -48,23 +48,21 @@ public class FoundryItems
     item_round_ap = new ItemRoundAP();
     item_shell = new ItemShellNormal();
     item_shell_ap = new ItemShellAP();
-    
-    GameRegistry.registerItem(item_component, "component");
-    GameRegistry.registerItem(item_mold, "mold");
-    GameRegistry.registerItem(item_revolver, "revolver");
-    GameRegistry.registerItem(item_shotgun, "shotgun");
-    GameRegistry.registerItem(item_round, "round");
-    GameRegistry.registerItem(item_round_jacketed, "roundJacketed");
-    GameRegistry.registerItem(item_round_hollow, "roundHollow");
-    GameRegistry.registerItem(item_round_fire, "roundFire");
-    GameRegistry.registerItem(item_round_poison, "roundPoison");
-    GameRegistry.registerItem(item_shell, "shell");
-    GameRegistry.registerItem(item_round_ap, "roundAP");
-    GameRegistry.registerItem(item_shell_ap, "shellAP");
-    
-
     item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
-    GameRegistry.registerItem(item_container, "fluidContainer");
+    
+    GameRegistry.register(item_component);
+    GameRegistry.register(item_mold);
+    GameRegistry.register(item_revolver);
+    GameRegistry.register(item_shotgun);
+    GameRegistry.register(item_round);
+    GameRegistry.register(item_round_jacketed);
+    GameRegistry.register(item_round_hollow);
+    GameRegistry.register(item_round_fire);
+    GameRegistry.register(item_round_poison);
+    GameRegistry.register(item_shell);
+    GameRegistry.register(item_round_ap);
+    GameRegistry.register(item_shell_ap);
+    GameRegistry.register(item_container);
   }
 
   static public ItemStack component(ItemComponent.SubItem sub)

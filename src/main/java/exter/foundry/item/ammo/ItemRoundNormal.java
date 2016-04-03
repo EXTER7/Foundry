@@ -9,6 +9,7 @@ public class ItemRoundNormal extends ItemRoundBase
   public ItemRoundNormal()
   {
     super(10,60,30);
+    setRegistryName("roundNormal");
     setUnlocalizedName("roundNormal");
   }
   

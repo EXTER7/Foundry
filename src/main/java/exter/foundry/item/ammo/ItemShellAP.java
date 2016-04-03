@@ -18,6 +18,7 @@ public class ItemShellAP extends ItemRoundBase
   {
     super(4,40,15);
     setUnlocalizedName("shellAP");
+    setRegistryName("shellAP");
   }
   
   @Override

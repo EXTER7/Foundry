@@ -23,6 +23,7 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
+    setRegistryName("alloyFurnace");
   }
 
 

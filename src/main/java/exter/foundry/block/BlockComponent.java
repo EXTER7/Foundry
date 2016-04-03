@@ -112,6 +112,7 @@ public class BlockComponent extends Block implements IBlockVariants
     setSoundType(SoundType.STONE);
     setUnlocalizedName("foundry.componentBlock");
     setCreativeTab(FoundryTabMaterials.tab);
+    setRegistryName("componentBlock");
   }
 
 

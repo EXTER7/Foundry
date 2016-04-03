@@ -25,6 +25,7 @@ public class ItemRoundFire extends ItemRoundBase
     super(8, 50, 25);
     setCreativeTab(FoundryTabFirearms.tab);
     setUnlocalizedName("roundFire");
+    setRegistryName("roundFire");
   }
 
 

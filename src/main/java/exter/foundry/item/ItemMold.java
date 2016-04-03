@@ -74,6 +74,7 @@ public class ItemMold extends Item
     setCreativeTab(FoundryTabMolds.tab);
     setHasSubtypes(true);
     setUnlocalizedName("mold");
+    setRegistryName("mold");
   }
   
   @Override

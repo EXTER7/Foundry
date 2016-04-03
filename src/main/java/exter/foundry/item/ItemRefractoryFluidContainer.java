@@ -48,6 +48,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     setCreativeTab(FoundryTabFluids.tab);
     setMaxStackSize(1);
     setUnlocalizedName("foundry.fluidContainer");
+    setRegistryName("fluidContainer");
     setHasSubtypes(true);
     
 

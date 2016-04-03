@@ -6,6 +6,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.sound.FoundrySounds;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
@@ -29,14 +31,12 @@ public class ItemRevolver extends ItemFirearm
 {
   static public final String AMMO_TYPE = "revolver";
   
-  private SoundEvent sound_fire;
   
   
   public ItemRevolver()
   {
     setUnlocalizedName("revolver");
     setRegistryName("revolver");
-    sound_fire = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:revolver_fire"));
   }
 
   @Override
@@ -94,7 +94,7 @@ public class ItemRevolver extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          player.playSound(sound_fire, 1F, 1F);
+          world.playSound(null, player.posX, player.posY, player.posZ, FoundrySounds.sound_revolver_fire, SoundCategory.PLAYERS, 1, 1);
         }
         shoot(round,world,player,null,1,0.01f,1.0f);
         setAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
@@ -113,7 +113,7 @@ public class ItemRevolver extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          player.playSound(SoundEvents.ui_button_click, 0.3F, 1.5F);
+          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ui_button_click, SoundCategory.PLAYERS, 0.3F, 1.5F);
         }        
       }
       setPosition(stack,(position + 1) % 8);

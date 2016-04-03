@@ -40,6 +40,7 @@ import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityInductionHeater;
@@ -121,6 +122,7 @@ public class ModFoundry
   public void load(FMLInitializationEvent event)
   {
     ModIntegrationManager.init();
+    FoundrySounds.init();
     
     GameRegistry.registerTileEntity(TileEntityMeltingCrucible.class, "Foundry_MeltingCrucible");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");

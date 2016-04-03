@@ -6,6 +6,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.sound.FoundrySounds;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,8 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -30,16 +30,12 @@ public class ItemShotgun extends ItemFirearm
 {
   static public final String AMMO_TYPE = "shotgun";
   
-  private SoundEvent sound_fire;
-  private SoundEvent sound_cock;
   
 
   public ItemShotgun()
   {
     setUnlocalizedName("shotgun");
     setRegistryName("shotgun");
-    sound_fire = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_fire"));
-    sound_cock = SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_cock"));
   }
 
   @Override
@@ -70,7 +66,7 @@ public class ItemShotgun extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          player.playSound( sound_fire, 1F, 1F);
+          world.playSound(null, player.posX, player.posY, player.posZ, FoundrySounds.sound_shotgun_fire, SoundCategory.PLAYERS, 1, 1);
         }
         shoot(round,world,player,null,6,0.35f,1.0f);
         float pitch = -player.rotationPitch;
@@ -106,7 +102,7 @@ public class ItemShotgun extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          player.playSound(SoundEvents.ui_button_click, 0.4F, 1.5F);
+          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ui_button_click, SoundCategory.PLAYERS, 0.4F, 1.5F);
         }        
       }
     }    
@@ -127,7 +123,7 @@ public class ItemShotgun extends ItemFirearm
        player.setActiveHand(hand);
        if(!world.isRemote)
        {
-         player.playSound(sound_cock, 0.8F, 1F);
+         world.playSound(null, player.posX, player.posY, player.posZ, FoundrySounds.sound_shotgun_cock, SoundCategory.PLAYERS, 0.8f, 1);
        }
     }
     return ActionResult.newResult(EnumActionResult.SUCCESS, stack);

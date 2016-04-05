@@ -5,13 +5,10 @@ import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
-import exter.foundry.container.ContainerMetalInfuser;
-import mezz.jei.api.IItemRegistry;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
-import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 

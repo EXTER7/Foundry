@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import exter.foundry.api.registry.IFluidRegistry;
 import exter.foundry.block.BlockLiquidMetal;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -59,7 +59,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     }
 
     Block liquid_block = new BlockLiquidMetal(fluid, "liquid" + metal_name, solid);
-    GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
+    FoundryBlocks.register(liquid_block);
 
     fluid.setBlock(liquid_block);
     
@@ -81,7 +81,7 @@ public class LiquidMetalRegistry implements IFluidRegistry
     FluidRegistry.registerFluid(fluid);
 
     Block liquid_block = new BlockLiquidMetal(fluid, "liquid" + metal_name, solid);
-    GameRegistry.registerBlock(liquid_block, "liquid" + metal_name);
+    FoundryBlocks.register(liquid_block);
 
     fluid.setBlock(liquid_block);
     

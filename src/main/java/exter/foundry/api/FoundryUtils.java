@@ -3,9 +3,6 @@ package exter.foundry.api;
 import java.util.List;
 
 import exter.foundry.api.recipe.matcher.OreMatcher;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;

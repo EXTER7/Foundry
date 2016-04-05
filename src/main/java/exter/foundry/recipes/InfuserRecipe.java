@@ -1,10 +1,7 @@
 package exter.foundry.recipes;
 
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.matcher.IItemMatcher;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 

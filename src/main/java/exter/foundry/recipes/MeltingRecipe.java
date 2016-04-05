@@ -1,6 +1,5 @@
 package exter.foundry.recipes;
 
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;

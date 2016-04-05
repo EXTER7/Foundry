@@ -14,12 +14,6 @@ public interface IAtomizerRecipe
   public FluidStack getInput();
 
   /**
-   * Get the item produced by atomizing.
-   * @return the produced item can be an ItemStack or a String with an Ore Dictionary name.
-   */
-  public Object getOutput();
-
-  /**
    * Check if a fluid stack and mold matches this recipe.
    * @param fluid_stack fluid to check (must contain the fluid in the recipe).
    * @return true if the fluid matches, false otherwise.
@@ -30,6 +24,6 @@ public interface IAtomizerRecipe
    * Get the actual item produced by atomizing.
    * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
    */
-  public ItemStack getOutputItem();
+  public ItemStack getOutput();
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 
 public interface IAlloyFurnaceRecipeManager
 {
@@ -13,14 +14,14 @@ public interface IAlloyFurnaceRecipeManager
    * @param in_a Input A, can be an {@link ItemStack} or an {@link OreStack}.
    * @param in_b Input B, can be an {@link ItemStack} or an {@link OreStack}.
    */
-  public void addRecipe(ItemStack out,Object in_a, Object in_b);
+  public void addRecipe(ItemStack out,IItemMatcher in_a, IItemMatcher in_b);
 
   /**
    * Register an Alloy Mixer recipe using combination of items.
    * @param in_a Inputs A, elements can be an {@link ItemStack} or an {@link OreStack}.
    * @param in_b Inputs B, elements can be an {@link ItemStack} or an {@link OreStack}.
    */
-  public void addRecipe(ItemStack out,Object[] in_a, Object[] in_b);
+  public void addRecipe(ItemStack out,IItemMatcher[] in_a, IItemMatcher[] in_b);
 
   /**
    * Get a list of all the recipes

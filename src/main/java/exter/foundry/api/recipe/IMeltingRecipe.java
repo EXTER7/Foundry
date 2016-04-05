@@ -1,5 +1,6 @@
 package exter.foundry.api.recipe;
 
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -9,7 +10,7 @@ public interface IMeltingRecipe
    * Get the required item.
    * @return If the recipe used the Ore Dictionary, a {@link String} of it's name, an {@link ItemStack} of the required item otherwise.
    */
-  public Object getInput();
+  public IItemMatcher getInput();
 
   /**
    * Get the produced fluid.

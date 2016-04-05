@@ -1,5 +1,6 @@
 package exter.foundry.api.recipe;
 
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -15,7 +16,7 @@ public interface IInfuserRecipe
    * Get the substance required.
    * @return The substance required.
    */
-  public Object getInput();
+  public IItemMatcher getInput();
   
   /**
    * Get the produced fluid.

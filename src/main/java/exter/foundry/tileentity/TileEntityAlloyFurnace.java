@@ -1,6 +1,5 @@
 package exter.foundry.tileentity;
 
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
@@ -186,12 +185,12 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
       progress = 0;
       if(reversed)
       {
-        decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputA()));
-        decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputB()));
+        decrStackSize(SLOT_INPUT_B, recipe.getInputA().getAmount());
+        decrStackSize(SLOT_INPUT_A, recipe.getInputB().getAmount());
       } else
       {
-        decrStackSize(SLOT_INPUT_A, FoundryUtils.getStackSize(recipe.getInputA()));
-        decrStackSize(SLOT_INPUT_B, FoundryUtils.getStackSize(recipe.getInputB()));
+        decrStackSize(SLOT_INPUT_A, recipe.getInputA().getAmount());
+        decrStackSize(SLOT_INPUT_B, recipe.getInputB().getAmount());
       }
       if(inventory[SLOT_OUTPUT] == null)
       {

@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.recipes.InfuserRecipe;
 
 
@@ -26,7 +27,7 @@ public class InfuserRecipeManager implements IInfuserRecipeManager
   
   
   @Override
-  public void addRecipe(FluidStack result,FluidStack in_fluid,Object item, int energy)
+  public void addRecipe(FluidStack result,FluidStack in_fluid,IItemMatcher item, int energy)
   {
     recipes.add(new InfuserRecipe(result,in_fluid,item,energy));
   }

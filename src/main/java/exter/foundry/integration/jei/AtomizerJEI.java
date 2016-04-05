@@ -214,7 +214,7 @@ public class AtomizerJEI
 
     for(IAtomizerRecipe recipe : AtomizerRecipeManager.instance.getRecipes())
     {
-      ItemStack output = recipe.getOutputItem();
+      ItemStack output = recipe.getOutput();
 
       if(output != null)
       {

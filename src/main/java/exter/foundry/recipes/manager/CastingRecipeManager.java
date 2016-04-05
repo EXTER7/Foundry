@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.recipes.CastingRecipe;
 
 public class CastingRecipeManager implements ICastingRecipeManager
@@ -24,7 +25,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int cast_speed)
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid,ItemStack in_mold,IItemMatcher in_extra,int cast_speed)
   {
     ICastingRecipe recipe = new CastingRecipe(result,in_fluid,in_mold,in_extra,cast_speed);
     if(recipe.requiresExtra())
@@ -37,7 +38,7 @@ public class CastingRecipeManager implements ICastingRecipeManager
   }
 
   @Override
-  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra)
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid,ItemStack in_mold,IItemMatcher in_extra)
   {
     addRecipe(result,in_fluid,in_mold,in_extra,100);
   }

@@ -1,5 +1,6 @@
 package exter.foundry.api.recipe;
 
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 
 public interface IAlloyFurnaceRecipe
@@ -8,13 +9,13 @@ public interface IAlloyFurnaceRecipe
    * Get the recipe's input A by index.
    * @return Recipe's input A.
    */
-  public Object getInputA();
+  public IItemMatcher getInputA();
 
   /**
    * Get the recipe's input B by index.
    * @return Recipe's input B.
    */
-  public Object getInputB();
+  public IItemMatcher getInputB();
 
   /**
    * Get the recipe's output.

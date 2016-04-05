@@ -219,7 +219,7 @@ public class MeltingJEI
 
     for(IMeltingRecipe recipe : MeltingRecipeManager.instance.getRecipes())
     {
-      List<ItemStack> input = JEIHelper.toItemStackList(recipe.getInput());
+      List<ItemStack> input = recipe.getInput().getItems();
 
       if(!input.isEmpty())
       {

@@ -1,6 +1,7 @@
 package exter.foundry.api.recipe;
 
 
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -24,13 +25,7 @@ public interface ICastingRecipe
    * Get the extra item required for casting.
    * @return Can be an {@link ItemStack} containing the required extra item, a {@link OreStack}, or null if no extra item is required.
    */
-  public Object getInputExtra();
-
-  /**
-   * Get the item produced by casting.
-   * @return the produced item can be an ItemStack or a String with an Ore Dictionary name.
-   */
-  public Object getOutput();
+  public IItemMatcher getInputExtra();
 
   /**
    * Get the casting speed.
@@ -62,6 +57,6 @@ public interface ICastingRecipe
    * Get the actual item produced by casting.
    * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
    */
-  public ItemStack getOutputItem();
+  public ItemStack getOutput();
 
 }

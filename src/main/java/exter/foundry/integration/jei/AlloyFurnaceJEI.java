@@ -218,8 +218,8 @@ public class AlloyFurnaceJEI
 
     for(IAlloyFurnaceRecipe recipe : AlloyFurnaceRecipeManager.instance.getRecipes())
     {
-      List<ItemStack> input_a = JEIHelper.toItemStackList(recipe.getInputA());
-      List<ItemStack> input_b = JEIHelper.toItemStackList(recipe.getInputB());
+      List<ItemStack> input_a = recipe.getInputA().getItems();
+      List<ItemStack> input_b = recipe.getInputB().getItems();
 
       if(!(input_a.isEmpty() || input_b.isEmpty()))
       {
@@ -227,7 +227,6 @@ public class AlloyFurnaceJEI
             Lists.newArrayList(input_a, input_b),
             Collections.singletonList(recipe.getOutput())));
       }
-
     }
 
     return recipes;

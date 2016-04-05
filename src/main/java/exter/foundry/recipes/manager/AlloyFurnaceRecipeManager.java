@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.recipes.AlloyFurnaceRecipe;
 
 public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
@@ -21,7 +22,7 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
   }
   
   @Override
-  public void addRecipe(ItemStack out, Object in_a,Object in_b)
+  public void addRecipe(ItemStack out, IItemMatcher in_a,IItemMatcher in_b)
   {
     recipes.add(new AlloyFurnaceRecipe(out,in_a,in_b));
   }
@@ -46,11 +47,11 @@ public class AlloyFurnaceRecipeManager implements IAlloyFurnaceRecipeManager
   }
 
   @Override
-  public void addRecipe(ItemStack out, Object[] in_a, Object[] in_b)
+  public void addRecipe(ItemStack out, IItemMatcher[] in_a, IItemMatcher[] in_b)
   {
-    for(Object a:in_a)
+    for(IItemMatcher a:in_a)
     {
-      for(Object b:in_b)
+      for(IItemMatcher b:in_b)
       {
         addRecipe(out, a, b);
       }

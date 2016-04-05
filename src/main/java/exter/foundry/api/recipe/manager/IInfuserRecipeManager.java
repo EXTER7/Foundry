@@ -3,6 +3,7 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -16,7 +17,7 @@ public interface IInfuserRecipeManager
    * @param item Item required.
    * @param energy Energy required (100 Energy = 1 MJ, 10 Energy = 1 RF, 40 Energy = 1 EU).
    */
-  public void addRecipe(FluidStack result,FluidStack fluid,Object item,int energy);
+  public void addRecipe(FluidStack result,FluidStack fluid,IItemMatcher item,int energy);
 
   public IInfuserRecipe findRecipe(FluidStack fluid,ItemStack item);
 

@@ -189,10 +189,10 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     }
     
     
-    ItemStack recipe_output = current_recipe.getOutputItem();
+    ItemStack recipe_output = current_recipe.getOutput();
 
     ItemStack inv_output = inventory[INVENTORY_OUTPUT];
-    if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize >= inv_output.getMaxStackSize()))
+    if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize + recipe_output.stackSize > inv_output.getMaxStackSize()))
     {
       return false;
     }
@@ -262,16 +262,16 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           tank.drain(input_fluid.amount, true);
           if(current_recipe.requiresExtra())
           {
-            decrStackSize(INVENTORY_EXTRA, FoundryUtils.getStackSize(current_recipe.getInputExtra()));
+            decrStackSize(INVENTORY_EXTRA, current_recipe.getInputExtra().getAmount());
             updateInventoryItem(INVENTORY_EXTRA);
           }
           if(inventory[INVENTORY_OUTPUT] == null)
           {
-            inventory[INVENTORY_OUTPUT] = current_recipe.getOutputItem();
+            inventory[INVENTORY_OUTPUT] = current_recipe.getOutput();
             inventory[INVENTORY_OUTPUT].stackSize = 1;
           } else
           {
-            inventory[INVENTORY_OUTPUT].stackSize++;
+            inventory[INVENTORY_OUTPUT].stackSize += current_recipe.getOutput().stackSize;
           }
           updateInventoryItem(INVENTORY_OUTPUT);
           updateTank(0);

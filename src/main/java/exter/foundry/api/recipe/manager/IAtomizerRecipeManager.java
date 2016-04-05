@@ -3,6 +3,7 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.IAtomizerRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IAtomizerRecipeManager
@@ -10,10 +11,10 @@ public interface IAtomizerRecipeManager
 
   /**
    * Register a Metal Atomizer recipe.
-   * @param result Item produced. Can be an ItemStack, or a String.
+   * @param result Item produced.
    * @param in_fluid Fluid required (fluid type and amount).
    */
-  public void addRecipe(Object result,FluidStack in_fluid);
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid);
   
   /**
    * Get a list of all the recipes.

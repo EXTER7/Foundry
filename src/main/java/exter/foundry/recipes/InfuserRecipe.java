@@ -2,6 +2,7 @@ package exter.foundry.recipes;
 
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public class InfuserRecipe implements IInfuserRecipe
   /**
    * Item required.
    */
-  public final Object item;
+  public final IItemMatcher item;
 
   /**
    * Amount of energy needed to extract.
@@ -43,12 +44,8 @@ public class InfuserRecipe implements IInfuserRecipe
 
   
   @Override
-  public Object getInput()
+  public IItemMatcher getInput()
   {
-    if(item instanceof ItemStack)
-    {
-      return ((ItemStack)item).copy();
-    }
     return item;
   }
   
@@ -58,12 +55,8 @@ public class InfuserRecipe implements IInfuserRecipe
     return output.copy();
   }
 
-  public InfuserRecipe(FluidStack result,FluidStack in_fluid,Object in_item,int energy)
+  public InfuserRecipe(FluidStack result,FluidStack in_fluid,IItemMatcher in_item,int energy)
   {
-    if(!(in_item instanceof ItemStack) && !(in_item instanceof String) && !(in_item instanceof Item) && !(in_item instanceof Block))
-    {
-      throw new IllegalArgumentException("Infuser substance recipe item is not of a valid class.");
-    }
     if(energy < 1)
     {
       throw new IllegalArgumentException("Infuser substance recipe energy nust be > 0.");
@@ -76,13 +69,7 @@ public class InfuserRecipe implements IInfuserRecipe
     {
       throw new IllegalArgumentException("Infuser recipe output cannot be null");
     }
-    if(in_item instanceof ItemStack)
-    {
-      item = ((ItemStack) in_item).copy();
-    } else
-    {
-      item = in_item;
-    }
+    item = in_item;
     fluid = in_fluid.copy();
     extract_energy = energy;
     output = result.copy();
@@ -91,7 +78,7 @@ public class InfuserRecipe implements IInfuserRecipe
   @Override
   public boolean matchesRecipe(FluidStack in_fluid,ItemStack item_stack)
   {
-    return FoundryUtils.isItemMatch(item_stack, item) && in_fluid.containsFluid(fluid);
+    return item.apply(item_stack) && in_fluid.containsFluid(fluid);
   }
   
   @Override

@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.recipes.MeltingRecipe;
 
 public class MeltingRecipeManager implements IMeltingRecipeManager
@@ -39,19 +40,19 @@ public class MeltingRecipeManager implements IMeltingRecipeManager
   }
   
   @Override
-  public void addRecipe(Object solid,FluidStack fluid_stack)
+  public void addRecipe(IItemMatcher solid,FluidStack fluid_stack)
   {
     addRecipe(solid,fluid_stack,fluid_stack.getFluid().getTemperature(),100);
   }
   
   @Override
-  public void addRecipe(Object solid,FluidStack fluid_stack,int melting_point)
+  public void addRecipe(IItemMatcher solid,FluidStack fluid_stack,int melting_point)
   {
     addRecipe(solid,fluid_stack,melting_point,100);
   }
 
   @Override
-  public void addRecipe(Object solid, FluidStack fluid_stack, int melting_point, int melting_speed)
+  public void addRecipe(IItemMatcher solid, FluidStack fluid_stack, int melting_point, int melting_speed)
   {
     recipes.add(new MeltingRecipe(solid,fluid_stack,melting_point,melting_speed));
   }

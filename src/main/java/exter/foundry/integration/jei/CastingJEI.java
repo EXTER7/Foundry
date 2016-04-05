@@ -220,14 +220,14 @@ public class CastingJEI
 
     for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
     {
-      ItemStack output = recipe.getOutputItem();
+      ItemStack output = recipe.getOutput();
 
       if(output != null)
       {
         recipes.add(new Wrapper(
             output,recipe.getInput(),
             recipe.getMold(),
-            JEIHelper.toItemStackList(recipe.getInputExtra())));
+            recipe.getInputExtra().getItems()));
       }
     }
 

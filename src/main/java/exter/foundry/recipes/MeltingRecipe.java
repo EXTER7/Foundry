@@ -2,8 +2,7 @@ package exter.foundry.recipes;
 
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -21,7 +20,7 @@ public class MeltingRecipe implements IMeltingRecipe
    * Item required.
    * It can be an {@link ItemStack} of the item or a @{link String} of it's Ore Dictionary name.
    */
-  private final Object solid;
+  private final IItemMatcher solid;
   
   /**
    * Melting point of the item in K.
@@ -32,19 +31,9 @@ public class MeltingRecipe implements IMeltingRecipe
   private final int melting_speed;
   
   
-  public MeltingRecipe(Object item,FluidStack fluid_stack, int melt, int speed)
+  public MeltingRecipe(IItemMatcher item,FluidStack fluid_stack, int melt, int speed)
   {
-    if(!(item instanceof ItemStack) && !(item instanceof String) && !(item instanceof Item) && !(item instanceof Block))
-    {
-      throw new IllegalArgumentException("Melting recipe item is not of a valid class.");
-    }
-    if(item instanceof ItemStack)
-    {
-      solid = ((ItemStack)item).copy();
-    } else
-    {
-      solid = item;
-    }
+    solid = item;
     if(fluid_stack == null)
     {
       throw new IllegalArgumentException("Melting recipe fluid cannot be null.");
@@ -62,12 +51,8 @@ public class MeltingRecipe implements IMeltingRecipe
     melting_speed = speed;
   }
   
-  public Object getInput()
+  public IItemMatcher getInput()
   {
-    if(solid instanceof ItemStack)
-    {
-      return ((ItemStack)solid).copy();
-    }
     return solid;
   }
   
@@ -85,7 +70,7 @@ public class MeltingRecipe implements IMeltingRecipe
   @Override
   public boolean matchesRecipe(ItemStack item)
   {
-    return FoundryUtils.isItemMatch(item, solid);
+    return solid.apply(item);
   }
 
   @Override

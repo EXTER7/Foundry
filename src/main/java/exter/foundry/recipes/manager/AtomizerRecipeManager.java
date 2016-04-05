@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraftforge.fluids.FluidStack;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.recipes.AtomizerRecipe;
 
 public class AtomizerRecipeManager implements IAtomizerRecipeManager
@@ -21,7 +22,7 @@ public class AtomizerRecipeManager implements IAtomizerRecipeManager
   }
 
   @Override
-  public void addRecipe(Object result,FluidStack in_fluid)
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid)
   {
     IAtomizerRecipe recipe = new AtomizerRecipe(result,in_fluid);
     recipes.add(recipe);

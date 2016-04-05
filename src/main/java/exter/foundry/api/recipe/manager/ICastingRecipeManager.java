@@ -3,6 +3,7 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.ICastingRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -15,9 +16,9 @@ public interface ICastingRecipeManager
    * @param result Item produced.
    * @param in_fluid Fluid required (fluid type and amount).
    * @param in_mold Mold required.
-   * @param in_extra Extra item required (null, if no extra item is required), can be an {@link ItemStack}, or {@link OreStack}.
+   * @param in_extra Extra item required (null, if no extra item is required).
    */
-  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra);
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid,ItemStack in_mold,IItemMatcher in_extra);
 
   /**
    * Register a Metal Caster recipe.
@@ -25,9 +26,9 @@ public interface ICastingRecipeManager
    * @param result Item produced.
    * @param in_fluid Fluid required (fluid type and amount).
    * @param in_mold Mold required.
-   * @param in_extra Extra item required (null, if no extra item is required), can be an {@link ItemStack}, or {@link OreStack}.
+   * @param in_extra Extra item required (null, if no extra item is required).
    */
-  public void addRecipe(Object result,FluidStack in_fluid,ItemStack in_mold,Object in_extra,int speed);
+  public void addRecipe(IItemMatcher result,FluidStack in_fluid,ItemStack in_mold,IItemMatcher in_extra,int speed);
 
   /**
    * Register an item as a mold. Only registered items are accepted in the Metal Caster's mold slot.

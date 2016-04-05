@@ -1,11 +1,9 @@
 package exter.foundry.recipes;
 
-import java.util.List;
-
 import exter.foundry.api.recipe.IAtomizerRecipe;
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Metal Caster recipe manager
@@ -14,7 +12,7 @@ public class AtomizerRecipe implements IAtomizerRecipe
 {
   private final FluidStack fluid;
   
-  private final Object output;
+  private final IItemMatcher output;
   
   
   @Override
@@ -24,48 +22,15 @@ public class AtomizerRecipe implements IAtomizerRecipe
   }
 
   @Override
-  public Object getOutput()
+  public ItemStack getOutput()
   {
-    if(output instanceof ItemStack)
-    {
-      return ((ItemStack)output).copy();
-    }
-    return output;
+    return output.getItem();
   }
 
-  @Override
-  public ItemStack getOutputItem()
+  public AtomizerRecipe(IItemMatcher result,FluidStack in_fluid)
   {
-    if(output instanceof String)
-    {
-      List<ItemStack> ores = OreDictionary.getOres((String)output);
-      if(ores != null && ores.size() > 0)
-      {
-        ItemStack out = ores.get(0).copy();
-        out.stackSize = 1;
-        return out;
-      } else
-      {
-        return null;
-      }
-    } else // output instance of ItemStack
-    {
-      return ((ItemStack)output).copy();
-    }
-  }
+    output = result;
 
-  public AtomizerRecipe(Object result,FluidStack in_fluid)
-  {
-    if(result instanceof ItemStack)
-    {
-      output = ((ItemStack)result).copy();
-    } else if(result instanceof String)
-    {
-      output = result;
-    } else
-    {
-      throw new IllegalArgumentException("Atomizer recipe output is not of a valid class.");
-    }
     if(in_fluid == null)
     {
       throw new IllegalArgumentException("Atomizer recipe input cannot be null");
@@ -76,7 +41,7 @@ public class AtomizerRecipe implements IAtomizerRecipe
   @Override
   public boolean matchesRecipe(FluidStack fluid_stack)
   {
-    if(getOutputItem() == null)
+    if(getOutput() == null)
     {
       return false;
     }

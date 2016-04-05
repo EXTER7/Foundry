@@ -233,9 +233,8 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     {
       progress = 0;
       tank.fill(fs, true);
-      decrStackSize(INVENTORY_INPUT,1);
+      decrStackSize(INVENTORY_INPUT,current_recipe.getInput().getAmount());
       updateTank(0);
-      updateInventoryItem(INVENTORY_INPUT);
     }
   }
 

@@ -268,7 +268,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
           if(inventory[INVENTORY_OUTPUT] == null)
           {
             inventory[INVENTORY_OUTPUT] = current_recipe.getOutput();
-            inventory[INVENTORY_OUTPUT].stackSize = 1;
           } else
           {
             inventory[INVENTORY_OUTPUT].stackSize += current_recipe.getOutput().stackSize;

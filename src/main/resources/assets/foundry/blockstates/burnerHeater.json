@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=north,state=off": { "model": "foundry:burnerHeaterOff" },
+        "facing=south,state=off": { "model": "foundry:burnerHeaterOff", "y": 180 },
+        "facing=west,state=off":  { "model": "foundry:burnerHeaterOff", "y": 270 },
+        "facing=east,state=off":  { "model": "foundry:burnerHeaterOff", "y": 90 },
+        "facing=north,state=on": { "model": "foundry:burnerHeaterOn" },
+        "facing=south,state=on": { "model": "foundry:burnerHeaterOn", "y": 180 },
+        "facing=west,state=on":  { "model": "foundry:burnerHeaterOn", "y": 270 },
+        "facing=east,state=on":  { "model": "foundry:burnerHeaterOn", "y": 90 }
+    }
+}

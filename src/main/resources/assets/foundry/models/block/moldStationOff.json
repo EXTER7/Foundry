@@ -1,5 +1,5 @@
 {
-    "parent": "block/orientable",
+    "parent": "foundry:block/orientable",
     "textures": {
         "top": "foundry:blocks/moldstation_top",
         "bottom": "foundry:blocks/moldstation_bottom",

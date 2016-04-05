@@ -749,6 +749,7 @@ public class FoundryRecipes
     ItemStack chest_stack = new ItemStack(Blocks.chest);
     ItemStack paper_stack = new ItemStack(Items.paper);
     ItemStack refclay_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
+    ItemStack refclay_small_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL);
     ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY,8);
     ItemStack refbrick_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK);
     ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL);
@@ -769,6 +770,11 @@ public class FoundryRecipes
         "CC",
         "CC",
         'C', refclay_stack);
+
+    GameRegistry.addRecipe(refclay_stack,
+        "CC",
+        "CC",
+        'C', refclay_small_stack);
 
     GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
@@ -802,6 +808,16 @@ public class FoundryRecipes
         "IBI",
         'I', "plateIron",
         'B', refbrick_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_burner_heater),
+        "I",
+        "C",
+        "R",
+        'F', furnace_stack,
+        'R', redstone_stack,
+        'I', "plateCopper",
+        'C', casing_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),
@@ -990,10 +1006,6 @@ public class FoundryRecipes
         Items.spider_eye, 
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
-
-    
-
-
   }
 
   static public void postInit()

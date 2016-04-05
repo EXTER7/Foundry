@@ -244,6 +244,7 @@ tile.foundry.machine.heater_induction.name=Induction Heater
 tile.foundry.alloyFurnace.name=Alloy Furnace
 tile.foundry.refractoryHopper.name=Refractory Hopper
 tile.foundry.moldStation.name=Mold Crafting Station
+tile.foundry.burnerHeater.name=Burner Heater
 
 item.foundry.componentHeatingCoil.name=Heating Coil
 item.foundry.componentRefractoryClay.name=Refractory Clay

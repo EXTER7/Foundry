@@ -14,14 +14,14 @@ public class FoundryBlocks
   
   static public BlockAlloyFurnace block_alloy_furnace;
   static public BlockMoldStation block_mold_station;
+  static public BlockBurnerHeater block_burner_heater;
   
   static public BlockRefractoryHopper block_refractory_hopper;
 
   static private void register(Block block)
   {
     GameRegistry.register(block);
-    GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-   
+    GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));   
   }
 
   static private <T extends Block & IBlockVariants>void registerMulti(T block)
@@ -38,11 +38,13 @@ public class FoundryBlocks
     block_alloy_furnace = new BlockAlloyFurnace();
     block_mold_station = new BlockMoldStation();
     block_refractory_hopper = new BlockRefractoryHopper();
+    block_burner_heater = new BlockBurnerHeater();
     
     registerMulti(block_component);
     registerMulti(block_machine);
     register(block_alloy_furnace);
     register(block_mold_station);
     register(block_refractory_hopper);
+    register(block_burner_heater);
   }
 }

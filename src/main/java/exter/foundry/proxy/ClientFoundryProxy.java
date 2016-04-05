@@ -114,6 +114,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
     registerItemModel(FoundryBlocks.block_mold_station,"moldStation");
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
+    registerItemModel(FoundryBlocks.block_burner_heater,"burnerHeater");
 
     for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
     {

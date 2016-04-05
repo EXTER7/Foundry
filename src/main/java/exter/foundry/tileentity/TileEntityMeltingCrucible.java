@@ -1,12 +1,13 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.heatable.IHeatable;
+import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -15,11 +16,11 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 
-public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,IFluidHandler,IHeatable
+public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
   static public final int HEAT_MAX = 500000;
   static public final int HEAT_MIN = 29000;
-  static public final int HEAT_LOSS_RATE = 100;
+  static public final int HEAT_LOSS_RATE = 500;
   
   static public final int SMELT_TIME = 5000000;
 
@@ -28,6 +29,8 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
   static public final int INVENTORY_CONTAINER_FILL = 2;
   
+  static private final int MAX_HEAT_RECEIVE = getMaxHeatRecieve(HEAT_MAX);
+
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
 
@@ -36,7 +39,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   private int melt_point;
   private IMeltingRecipe current_recipe;
   
-  private int tick_heat;
   
   public TileEntityMeltingCrucible()
   {
@@ -51,8 +53,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     melt_point = 0;
     
     current_recipe = null;
-    
-    tick_heat = 0;
     
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
@@ -243,40 +243,50 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   {
     return heat * 3000 / HEAT_MAX + 25;
   }
+  
+  private IHeatProvider getHeatProvider()
+  {
+    TileEntity te = worldObj.getTileEntity(getPos().down());
+    if(te instanceof IHeatProvider)
+    {
+      return (IHeatProvider)te;
+    }
+    return null;
+  }
 
   @Override
   protected void updateServer()
   {
     int last_progress = progress;
     int last_melt_point = melt_point;
+    int last_heat = heat;
+    
     checkCurrentRecipe();
     if(current_recipe == null)
     {
       current_recipe = MeltingRecipeManager.instance.findRecipe(inventory[INVENTORY_INPUT]);
     }
-    
-    if(last_progress != progress)
+
+    IHeatProvider heater = getHeatProvider();
+
+    if(heater != null)
     {
-      updateValue("progress",progress);
+      heat += heater.provideHeat(EnumFacing.UP, MAX_HEAT_RECEIVE);
     }
-
-    if(last_melt_point != melt_point)
-    {
-      updateValue("melt_point",melt_point);
-    }
-
-    int last_heat = heat;
-
-    
-    heat += tick_heat;
+    heat -= (heat - HEAT_MIN) / HEAT_LOSS_RATE;
     if(heat > HEAT_MAX)
     {
       heat = HEAT_MAX;
     }
+    if(heat < HEAT_MIN)
+    {
+      heat = HEAT_MIN;
+    }
+    if(last_heat / 100 != heat / 100)
+    {
+      updateValue("heat",heat);
+    }
     
-    tick_heat = 0;
-    
-    heat -= (heat - HEAT_MIN) / HEAT_LOSS_RATE;
  
     doMeltingProgress();
     
@@ -290,10 +300,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
       updateValue("melt_point",melt_point);
     }
 
-    if(last_heat / 100 != heat / 100)
-    {
-      updateValue("heat",heat);
-    }
   }
 
   @Override
@@ -315,37 +321,13 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   @Override
   protected void onInitialize()
   {
-    tick_heat = 0;
-  }
-  
-  @Override
-  public void receiveHeat(EnumFacing side, int heat)
-  {
-    if(side == EnumFacing.DOWN)
-    {
-      if(heat > 100)
-      {
-        heat = 100;
-      }
-      tick_heat += heat;
-    }
+
   }
   
   static public int getMaxHeatRecieve(int max_heat)
   {
     return (max_heat - HEAT_MIN) / HEAT_LOSS_RATE;
   }
-
-  @Override
-  public int getMaxHeatReceive(EnumFacing side)
-  {
-    if(side == EnumFacing.DOWN)
-    {
-      return getMaxHeatRecieve(HEAT_MAX);
-    }
-    return 0;
-  }
-
   
 //  @Optional.Method(modid = "IC2")
 //  @Override

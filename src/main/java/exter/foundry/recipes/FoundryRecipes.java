@@ -20,6 +20,7 @@ import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.block.BlockCastingTable.EnumTable;
 import exter.foundry.block.BlockComponent;
 import exter.foundry.block.BlockFoundryMachine.EnumMachine;
 import exter.foundry.config.FoundryConfig;
@@ -820,6 +821,14 @@ public class FoundryRecipes
         'R', redstone_stack,
         'I', "plateCopper",
         'C', casing_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_casting_table.asItemStack(EnumTable.INGOT),
+        "BMB",
+        " S ",
+        'S', new ItemStack(Blocks.stone_slab),
+        'B', refbrick_stack,
+        'M', mold_ingot));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),

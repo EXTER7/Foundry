@@ -11,6 +11,7 @@ public class FoundryBlocks
 {  
   static public BlockComponent block_component;
   static public BlockFoundryMachine block_machine;
+  static public BlockCastingTable block_casting_table;
   
   static public BlockAlloyFurnace block_alloy_furnace;
   static public BlockMoldStation block_mold_station;
@@ -34,6 +35,7 @@ public class FoundryBlocks
   {
     block_component = new BlockComponent();
     block_machine = new BlockFoundryMachine();
+    block_casting_table = new BlockCastingTable();
 
     block_alloy_furnace = new BlockAlloyFurnace();
     block_mold_station = new BlockMoldStation();
@@ -42,6 +44,7 @@ public class FoundryBlocks
     
     registerMulti(block_component);
     registerMulti(block_machine);
+    registerMulti(block_casting_table);
     register(block_alloy_furnace);
     register(block_mold_station);
     register(block_refractory_hopper);

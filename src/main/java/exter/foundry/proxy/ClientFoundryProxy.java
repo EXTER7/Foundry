@@ -7,8 +7,10 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import exter.foundry.block.BlockCastingTable;
 import exter.foundry.block.BlockComponent;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
@@ -23,6 +25,8 @@ import exter.foundry.material.OreDictType;
 import exter.foundry.model.RFCModel;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
+import exter.foundry.tileentity.TileEntityCastingTableIngot;
+import exter.foundry.tileentity.renderer.CastingTableRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -110,6 +114,10 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     {
       registerItemModel(FoundryBlocks.block_machine,m.model,m.id);
     }
+    for(BlockCastingTable.EnumTable m:BlockCastingTable.EnumTable.values())
+    {
+      registerItemModel(FoundryBlocks.block_casting_table,m.model,m.id);
+    }
 
     registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
     registerItemModel(FoundryBlocks.block_mold_station,"moldStation");
@@ -144,6 +152,8 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
     registerItemModel(FoundryItems.item_container,"container",0);
 
+    ClientRegistry.registerTileEntity(TileEntityCastingTableIngot.class, "Foundry_CastingTable_Ingot", new CastingTableRenderer(6,10,4,12,9,12,"foundry:blocks/castingtable_top_ingot"));
+    
     ModIntegrationManager.clientInit();
   }
   

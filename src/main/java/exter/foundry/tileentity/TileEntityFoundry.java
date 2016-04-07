@@ -233,7 +233,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
 
   @Override
-  public final ItemStack removeStackFromSlot(int slot)
+  public ItemStack removeStackFromSlot(int slot)
   {
     if(inventory[slot] != null)
     {

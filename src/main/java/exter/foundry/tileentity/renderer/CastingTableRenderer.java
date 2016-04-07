@@ -1,0 +1,163 @@
+package exter.foundry.tileentity.renderer;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.opengl.GL11;
+
+import exter.foundry.tileentity.TileEntityCastingTableBase;
+import exter.foundry.util.hashstack.HashableItem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCastingTableBase>
+{
+  private final double left;
+  private final double right;
+  private final double top;
+  private final double bottom;
+  private final double low;
+  private final double high;
+  private final String item_texture;
+  
+  public CastingTableRenderer(int left,int right, int top,int bottom,int low,int high,String item_texture)
+  {
+    this.left = (double)left / 16 - 0.005;
+    this.right = (double)right / 16 + 0.005;
+    this.top = (double)top / 16 - 0.005;
+    this.bottom = (double)bottom / 16 + 0.005;
+    this.low = (double)low / 16 + 0.01;
+    this.high = (double)(high - 0.75) / 16;
+    this.item_texture = item_texture;
+    colors = new HashMap<HashableItem,Integer>();
+  }
+  
+  private Map<HashableItem,Integer> colors;
+  
+  private int getItemColor(ItemStack stack)
+  {
+    Integer color = HashableItem.getFromMap(colors, stack);
+    if(color == null)
+    {
+      List<BakedQuad> quads = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack).getQuads(null, null, 0);
+      int r = 0;
+      int g = 0;
+      int b = 0;
+      int count = 0;
+      for(BakedQuad q:quads)
+      {
+        TextureAtlasSprite texture = q.getSprite();
+        for(int i = 0; i < texture.getFrameCount(); i++)
+        {
+          for(int[] row:texture.getFrameTextureData(i))
+          {
+            for(int pixel:row)
+            {
+              int a = (pixel >>> 24) & 0xFF;
+              if(a > 127)
+              {
+                r += (pixel) & 0xFF;
+                g += (pixel >>> 8) & 0xFF;
+                b += (pixel >>> 16) & 0xFF;
+                count++;
+              }
+            }
+          }
+        }
+      }
+      r /= count;
+      g /= count;
+      b /= count;
+      color = 0xFF000000 | (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16);
+      colors.put(new HashableItem(stack), color);
+    }
+    return color;
+  }
+  
+  @Override
+  public void renderTileEntityAt(TileEntityCastingTableBase te, double x, double y, double z, float partialTicks, int destroyStage)
+  {
+    FluidStack fluid = te.getTank(0).getFluid();
+    GL11.glPushMatrix();
+    GlStateManager.disableLighting();
+    GlStateManager.enableBlend();
+    GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    GlStateManager.disableAlpha();
+    bindTexture(TextureMap.locationBlocksTexture);
+    GL11.glTranslatef((float) x, (float) y, (float) z);
+    if(te.getStackInSlot(0) != null)
+    {
+      TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(item_texture);
+      int color =  getItemColor(te.getStackInSlot(0));
+      float alpha = ((color >> 24 & 255) / 255.0F);
+      float red = (color >> 16 & 255) / 255.0F;
+      float green = (color >> 8 & 255) / 255.0F;
+      float blue = (color & 255) / 255.0F;
+      double min_u = texture.getInterpolatedU(left * 16);
+      double min_v = texture.getInterpolatedV(top * 16);
+      double max_u = texture.getInterpolatedU(right * 16);
+      double max_v = texture.getInterpolatedV(bottom * 16);
+      if(fluid != null)
+      {
+        GlStateManager.depthMask(false);
+      }
+      VertexBuffer tessellator = Tessellator.getInstance().getBuffer();
+      tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+      tessellator.pos(left, high, bottom).tex(min_u, max_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(right, high, bottom).tex(max_u, max_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(right, high, top).tex(max_u, min_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(left, high, top).tex(min_u, min_v).color(red, green, blue, alpha).endVertex();
+      Tessellator.getInstance().draw();
+      if(fluid != null)
+      {
+        GlStateManager.depthMask(true);
+      }
+    }
+    if(fluid != null)
+    {
+      TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+
+      int color = fluid.getFluid().getColor();
+      float progress = (float) te.getProgress() / TileEntityCastingTableBase.CAST_TIME;
+      progress *= progress;
+      if(te.getStackInSlot(0) == null)
+      {
+        progress = 1.0f;
+      }
+      float alpha = ((color >> 24 & 255) / 255.0F) * progress;
+      float red = (color >> 16 & 255) / 255.0F;
+      float green = (color >> 8 & 255) / 255.0F;
+      float blue = (color & 255) / 255.0F;
+
+      double min_u = texture.getInterpolatedU(left * 16);
+      double min_v = texture.getInterpolatedV(top * 16);
+      double max_u = texture.getInterpolatedU(right * 16);
+      double max_v = texture.getInterpolatedV(bottom * 16);
+      double fluid_z = (double) fluid.amount / te.getTank(0).getCapacity() * (high - low) + low;
+      VertexBuffer tessellator = Tessellator.getInstance().getBuffer();
+      tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+      tessellator.pos(left, fluid_z, bottom).tex(min_u, max_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(right, fluid_z, bottom).tex(max_u, max_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(right, fluid_z, top).tex(max_u, min_v).color(red, green, blue, alpha).endVertex();
+      tessellator.pos(left, fluid_z, top).tex(min_u, min_v).color(red, green, blue, alpha).endVertex();
+      Tessellator.getInstance().draw();
+    }
+    GlStateManager.enableAlpha();
+    GlStateManager.enableLighting();
+    GlStateManager.disableBlend();
+    GL11.glPopMatrix();
+  }
+}

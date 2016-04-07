@@ -48,6 +48,6 @@ public class ItemStackMatcher implements IItemMatcher
   @Override
   public ItemStack getItem()
   {
-    return match;
+    return match.copy();
   }
 }

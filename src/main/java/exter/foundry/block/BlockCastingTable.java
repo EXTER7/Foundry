@@ -19,41 +19,33 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.proxy.CommonFoundryProxy;
-import exter.foundry.tileentity.TileEntityAlloyMixer;
+import exter.foundry.tileentity.TileEntityCastingTableBase;
+import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityFoundry;
-import exter.foundry.tileentity.TileEntityInductionHeater;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
-import exter.foundry.tileentity.TileEntityMaterialRouter;
-import exter.foundry.tileentity.TileEntityMetalAtomizer;
-import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMetalInfuser;
 
-public class BlockFoundryMachine extends Block implements ITileEntityProvider,IBlockVariants
+
+public class BlockCastingTable extends Block implements ITileEntityProvider,IBlockVariants
 {
   private Random rand = new Random();
 
-  static public enum EnumMachine implements IStringSerializable
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
+
+  static public enum EnumTable implements IStringSerializable
   {
-    CRUCIBLE(0, "crucible", "machineCrucible"),
-    CASTER(1, "caster", "machineCaster"),
-    ALLOYMIXER(2, "alloymixer", "machineAlloyMixer"),
-    INFUSER(3, "infuser", "machineInfuser"),
-    MATERIALROUTER(4, "router", "machineMaterialRouter"),
-    ATOMIZER(5, "atomizer", "machineAtomizer"),
-    INDUCTIONHEATER(6, "heater_induction", "machineInductionHeater");
+    INGOT(0, "ingot", "castingTableIngot");
 
     public final int id;
     public final String name;
     public final String model;
 
-    private EnumMachine(int id, String name,String model)
+    private EnumTable(int id, String name,String model)
     {
       this.id = id;
       this.name = name;
@@ -72,9 +64,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
       return getName();
     }
 
-    static public EnumMachine fromID(int num)
+    static public EnumTable fromID(int num)
     {
-      for(EnumMachine m : values())
+      for(EnumTable m : values())
       {
         if(m.id == num)
         {
@@ -85,36 +77,66 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     }
   }
 
-  public static final PropertyEnum<EnumMachine> MACHINE = PropertyEnum.create("machine", EnumMachine.class);
+  public static final PropertyEnum<EnumTable> TABLE = PropertyEnum.create("type", EnumTable.class);
 
-  public BlockFoundryMachine()
+  public BlockCastingTable()
   {
     super(Material.iron);
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setUnlocalizedName("foundry.machine");
+    setUnlocalizedName("foundry.castingTable");
     setCreativeTab(FoundryTabMachines.tab);
-    setRegistryName("machine");
+    setRegistryName("castingTable");
   }
 
   @Override
   protected BlockStateContainer createBlockState()
   {
-    return new BlockStateContainer(this, MACHINE);
+    return new BlockStateContainer(this, TABLE);
   }
 
 
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    return getDefaultState().withProperty(MACHINE, EnumMachine.fromID(meta));
+    return getDefaultState().withProperty(TABLE, EnumTable.fromID(meta));
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return ((EnumMachine)state.getValue(MACHINE)).id;
+    return ((EnumTable)state.getValue(TABLE)).id;
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+  {
+    return AABB;
+  }
+
+  @Override
+  public boolean isFullyOpaque(IBlockState state)
+  {
+    return false;
+  }
+  
+  @Override
+  public boolean isFullCube(IBlockState state)
+  {
+    return false;
+  }
+
+  @Override
+  public boolean isOpaqueCube(IBlockState state)
+  {
+    return false;
+  }
+
+  @Override
+  public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+  {
+    return face == EnumFacing.DOWN;
   }
 
   @Override
@@ -146,6 +168,29 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     super.breakBlock(world, pos, state);
   }
   
+  private void dropCastingTableOutput(World world, BlockPos pos, IBlockState state)
+  {
+    TileEntity te = world.getTileEntity(pos);
+
+    if(te != null && (te instanceof TileEntityCastingTableBase) && !world.isRemote)
+    {
+      TileEntityCastingTableBase te_ct = (TileEntityCastingTableBase) te;
+      if(te_ct.getProgress() == 0)
+      {
+        ItemStack is = te_ct.getStackInSlot(0);
+
+        if(is != null && is.stackSize > 0)
+        {
+          EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, is);
+          entityitem.setPickupDelay(1);
+  
+          world.spawnEntityInWorld(entityitem);
+          te_ct.setInventorySlotContents(0, null);
+        }
+      }
+    }
+  }
+
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack item,EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
@@ -154,25 +199,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
       return true;
     } else
     {
-      switch((EnumMachine)state.getValue(MACHINE))
+      switch((EnumTable)state.getValue(TABLE))
       {
-        case CRUCIBLE:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
-          break;
-        case CASTER:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_CASTER, world, pos.getX(), pos.getY(), pos.getZ());
-          break;
-        case ALLOYMIXER:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ALLOYMIXER, world, pos.getX(), pos.getY(), pos.getZ());
-          break;
-        case INFUSER:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_INFUSER, world, pos.getX(), pos.getY(), pos.getZ());
-          break;
-        case MATERIALROUTER:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_MATERIALROUTER, world, pos.getX(), pos.getY(), pos.getZ());
-          break;
-        case ATOMIZER:
-          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
+        case INGOT:
+          dropCastingTableOutput(world, pos, state);
           break;
         default:
           break;
@@ -190,22 +220,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   @Override
   public TileEntity createTileEntity(World world, IBlockState state)
   {
-    switch(state.getValue(MACHINE))
+    switch(state.getValue(TABLE))
     {
-      case CRUCIBLE:
-        return new TileEntityMeltingCrucible();
-      case CASTER:
-        return new TileEntityMetalCaster();
-      case ALLOYMIXER:
-        return new TileEntityAlloyMixer();
-      case INFUSER:
-        return new TileEntityMetalInfuser();
-      case MATERIALROUTER:
-        return new TileEntityMaterialRouter();
-      case ATOMIZER:
-        return new TileEntityMetalAtomizer();
-      case INDUCTIONHEATER:
-        return new TileEntityInductionHeater();
+      case INGOT:
+        return new TileEntityCastingTableIngot();
     }
     return null;
   }
@@ -229,7 +247,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   @SideOnly(Side.CLIENT)
   public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
   {
-    for(EnumMachine m:EnumMachine.values())
+    for(EnumTable m:EnumTable.values())
     {
       list.add(new ItemStack(item, 1, m.id));
     }
@@ -255,11 +273,11 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   @Override
   public String getUnlocalizedName(int meta)
   {
-    return getUnlocalizedName() + "." + getStateFromMeta(meta).getValue(MACHINE).name;
+    return getUnlocalizedName() + "." + getStateFromMeta(meta).getValue(TABLE).name;
   }
   
-  public ItemStack asItemStack(EnumMachine machine)
+  public ItemStack asItemStack(EnumTable machine)
   {
-    return new ItemStack(this,1,getMetaFromState(getDefaultState().withProperty(MACHINE, machine)));
+    return new ItemStack(this,1,getMetaFromState(getDefaultState().withProperty(TABLE, machine)));
   }
 }

@@ -98,7 +98,7 @@ public class BlockRefractoryHopper extends BlockContainer
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);
-    setUnlocalizedName("refractoryHopper");
+    setUnlocalizedName("foundry.refractoryHopper");
     setDefaultState(blockState.getBaseState().withProperty(FACING, EnumHopperFacing.DOWN));
     setRegistryName("refractoryHopper");
   }

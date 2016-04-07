@@ -1,7 +1,6 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import net.minecraft.inventory.ISidedInventory;

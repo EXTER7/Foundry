@@ -1,7 +1,9 @@
 {
   "variants":
   { 
-    "type=ingot": { "model": "foundry:castingTableIngot" }
+    "type=ingot": { "model": "foundry:castingTableIngot" },
+    "type=plate": { "model": "foundry:castingTablePlate" },
+    "type=rod": { "model": "foundry:castingTableRod" }
   }
 }
 

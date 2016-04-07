@@ -1,7 +1,7 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "blocks/foundry:blocks/castingtable_inside",
+        "particle": "foundry:blocks/castingtable_inside",
         "sides": "foundry:blocks/castingtable_sides",
         "inside": "foundry:blocks/castingtable_inside",
         "bottom": "foundry:blocks/castingtable_bottom",

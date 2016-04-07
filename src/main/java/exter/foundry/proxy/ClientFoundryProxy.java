@@ -26,6 +26,8 @@ import exter.foundry.model.RFCModel;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
+import exter.foundry.tileentity.TileEntityCastingTablePlate;
+import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.renderer.CastingTableRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -152,7 +154,9 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
     registerItemModel(FoundryItems.item_container,"container",0);
 
-    ClientRegistry.registerTileEntity(TileEntityCastingTableIngot.class, "Foundry_CastingTable_Ingot", new CastingTableRenderer(6,10,4,12,9,12,"foundry:blocks/castingtable_top_ingot"));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableIngot.class, new CastingTableRenderer(6,10,4,12,9,12,"foundry:blocks/castingtable_top_ingot"));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTablePlate.class, new CastingTableRenderer(3,13,3,13,11,12,"foundry:blocks/castingtable_top_plate"));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableRod.class, new CastingTableRenderer(7,9,2,14,10,12,"foundry:blocks/castingtable_top_rod"));
     
     ModIntegrationManager.clientInit();
   }

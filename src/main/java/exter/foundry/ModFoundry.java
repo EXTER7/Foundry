@@ -45,6 +45,8 @@ import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
+import exter.foundry.tileentity.TileEntityCastingTablePlate;
+import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityInductionHeater;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
@@ -137,7 +139,9 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, "Foundry_MetalAtomizer");
     GameRegistry.registerTileEntity(TileEntityInductionHeater.class, "Foundry_InductionHeater");
     GameRegistry.registerTileEntity(TileEntityBurnerHeater.class, "Foundry_BurnerHeater");
-    GameRegistry.registerTileEntity(TileEntityCastingTableIngot.class, "Foundry_CastingTable_ingot");
+    GameRegistry.registerTileEntity(TileEntityCastingTableIngot.class, "Foundry_CastingTable_Ingot");
+    GameRegistry.registerTileEntity(TileEntityCastingTablePlate.class, "Foundry_CastingTable_Plate");
+    GameRegistry.registerTileEntity(TileEntityCastingTableRod.class, "Foundry_CastingTable_Rod");
 
 
     FoundryRecipes.init();

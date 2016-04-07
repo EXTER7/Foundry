@@ -40,7 +40,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
     this.top = (double)top / 16 - 0.005;
     this.bottom = (double)bottom / 16 + 0.005;
     this.low = (double)low / 16 + 0.01;
-    this.high = (double)(high - 0.75) / 16;
+    this.high = (double)(high - 0.1) / 16;
     this.item_texture = item_texture;
     colors = new HashMap<HashableItem,Integer>();
   }

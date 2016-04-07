@@ -28,6 +28,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.tileentity.TileEntityCastingTableBase;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
+import exter.foundry.tileentity.TileEntityCastingTablePlate;
+import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityFoundry;
 
 
@@ -39,7 +41,9 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
   static public enum EnumTable implements IStringSerializable
   {
-    INGOT(0, "ingot", "castingTableIngot");
+    INGOT(0, "ingot", "castingTableIngot"),
+    PLATE(1, "plate", "castingTablePlate"),
+    ROD(2, "rod", "castingTableRod");
 
     public final int id;
     public final String name;
@@ -199,14 +203,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
       return true;
     } else
     {
-      switch((EnumTable)state.getValue(TABLE))
-      {
-        case INGOT:
-          dropCastingTableOutput(world, pos, state);
-          break;
-        default:
-          break;
-      }
+      dropCastingTableOutput(world, pos, state);
       return false;
     }
   }
@@ -224,6 +221,10 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
     {
       case INGOT:
         return new TileEntityCastingTableIngot();
+      case PLATE:
+        return new TileEntityCastingTablePlate();
+      case ROD:
+        return new TileEntityCastingTableRod();
     }
     return null;
   }

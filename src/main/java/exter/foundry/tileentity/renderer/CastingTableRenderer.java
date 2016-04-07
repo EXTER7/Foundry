@@ -62,17 +62,29 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
         TextureAtlasSprite texture = q.getSprite();
         for(int i = 0; i < texture.getFrameCount(); i++)
         {
-          for(int[] row:texture.getFrameTextureData(i))
+          int[] pixels = texture.getFrameTextureData(i)[0];
+          int w = texture.getIconWidth();
+          int h = texture.getIconHeight();
+          for(int y = 1; y < h - 1; y++)
           {
-            for(int pixel:row)
+            for(int x = 1; x < w - 1; x++)
             {
-              int a = (pixel >>> 24) & 0xFF;
+              int j = y * w + x;
+              int p = pixels[j];
+              int a = (p >>> 24) & 0xFF;
               if(a > 127)
               {
-                r += (pixel) & 0xFF;
-                g += (pixel >>> 8) & 0xFF;
-                b += (pixel >>> 16) & 0xFF;
-                count++;
+                int a1 = (pixels[j - 1] >>> 24) & 0xFF;
+                int a2 = (pixels[j + 1] >>> 24) & 0xFF;
+                int a3 = (pixels[j - w] >>> 24) & 0xFF;
+                int a4 = (pixels[j + w] >>> 24) & 0xFF;
+                if(a1 > 127 && a2 > 127 && a3 > 127 && a4 > 127)
+                {
+                  r += (p) & 0xFF;
+                  g += (p >>> 8) & 0xFF;
+                  b += (p >>> 16) & 0xFF;
+                  count++;
+                }
               }
             }
           }

@@ -148,13 +148,12 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   {
     TileEntity te = world.getTileEntity(pos);
 
-    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
+    if(te != null && (te instanceof TileEntityCastingTableBase) && !world.isRemote)
     {
-      TileEntityFoundry tef = (TileEntityFoundry) te;
-      int i;
-      for(i = 0; i < tef.getSizeInventory(); i++)
+      TileEntityCastingTableBase tef = (TileEntityCastingTableBase) te;
+      if(tef.getProgress() == 0)
       {
-        ItemStack is = tef.getStackInSlot(i);
+        ItemStack is = tef.getStackInSlot(0);
 
         if(is != null && is.stackSize > 0)
         {

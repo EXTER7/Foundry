@@ -144,13 +144,13 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
       TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
 
       int color = fluid.getFluid().getColor();
-      float progress = (float) te.getProgress() / TileEntityCastingTableBase.CAST_TIME;
-      progress *= progress;
+      double progress = (double) te.getProgress() / TileEntityCastingTableBase.CAST_TIME;
+      progress = Math.sqrt(progress);
       if(te.getStackInSlot(0) == null)
       {
         progress = 1.0f;
       }
-      float alpha = ((color >> 24 & 255) / 255.0F) * progress;
+      float alpha = ((color >> 24 & 255) / 255.0F) * (float)progress;
       float red = (color >> 16 & 255) / 255.0F;
       float green = (color >> 8 & 255) / 255.0F;
       float blue = (color & 255) / 255.0F;

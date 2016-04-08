@@ -822,13 +822,37 @@ public class FoundryRecipes
         'I', "plateCopper",
         'C', casing_stack));
 
-    GameRegistry.addRecipe(new ShapedOreRecipe(
+    GameRegistry.addRecipe(
         FoundryBlocks.block_casting_table.asItemStack(EnumTable.INGOT),
         "BMB",
         " S ",
         'S', new ItemStack(Blocks.stone_slab),
         'B', refbrick_stack,
-        'M', mold_ingot));
+        'M', mold_ingot);
+
+    GameRegistry.addRecipe(
+        FoundryBlocks.block_casting_table.asItemStack(EnumTable.PLATE),
+        "BMB",
+        " S ",
+        'S', new ItemStack(Blocks.stone_slab),
+        'B', refbrick_stack,
+        'M', mold_plate);
+
+    GameRegistry.addRecipe(
+        FoundryBlocks.block_casting_table.asItemStack(EnumTable.ROD),
+        "BMB",
+        " S ",
+        'S', new ItemStack(Blocks.stone_slab),
+        'B', refbrick_stack,
+        'M', mold_rod);
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_refractory_spout,
+        "R R",
+        "B B",
+        "RBR",
+        'R', "rodIron",
+        'B', refbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),

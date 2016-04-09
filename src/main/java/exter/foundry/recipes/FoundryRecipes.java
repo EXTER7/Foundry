@@ -488,7 +488,17 @@ public class FoundryRecipes
               1, 2, 1,
               1, 0, 1,
               0, 0, 1,
-              0, 0, 1,
+              0, 0, 1
+          });
+
+      MoldRecipeManager.instance.addRecipe(mold_shovel, 3, 6, new int[]
+          {
+              0, 1, 0,
+              1, 1, 1,
+              1, 1, 1,
+              0, 1, 0,
+              0, 1, 0,
+              0, 1, 0
           });
 
       MoldRecipeManager.instance.addRecipe(mold_hoe, 3, 5, new int[]

@@ -329,5 +329,5 @@ gui.jei.melting=Melting Crucible
 gui.jei.casting=Metal Caster
 gui.jei.alloymixer=Alloy Mixer
 gui.jei.infuser=Metal Infuser
-gui.jei.infuser.substance=Metal Infuser
 gui.jei.atomizer=Metal Atomizer
+gui.jei.mold=Mold Station

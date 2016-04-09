@@ -6,19 +6,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
-
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.api.recipe.IMoldRecipe;
+import exter.foundry.recipes.manager.MoldRecipeManager;
+import exter.foundry.util.FoundryMiscUtils;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
-import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
@@ -32,31 +27,32 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 
-public class CastingJEI
+public class MoldStationJEI
 {
-
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<FluidStack> input_fluid;
-    @Nonnull
     private final List<ItemStack> output;
-    @Nonnull
-    private final List<List<ItemStack>> input;
+    
+    private final int width;
+    private final int height;
+    private final int[] recipe;
 
-    @SuppressWarnings("unchecked")
-    public Wrapper(@Nonnull ItemStack output, FluidStack input, ItemStack mold, List<ItemStack> extra)
+    private final IDrawable[] carve_drawables;
+    
+    public Wrapper(IDrawable[] carve_drawables,@Nonnull ItemStack output, int width,int height,int[] recipe)
     {
-      this.input_fluid = Collections.singletonList(input);
-      this.input = Lists.newArrayList(Collections.singletonList(mold),extra);
-          Collections.singletonList(input);
+      this.carve_drawables = carve_drawables;
       this.output = Collections.singletonList(output);
+      this.width = width;
+      this.height = height;
+      this.recipe = recipe;
     }
 
     @Nonnull
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return Collections.emptyList();
     }
 
     @Nonnull
@@ -68,7 +64,7 @@ public class CastingJEI
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input_fluid;
+      return Collections.emptyList();
     }
 
     @Override
@@ -92,7 +88,19 @@ public class CastingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      
+      int left = (3 - FoundryMiscUtils.divCeil(width,2));
+      int top = (3 - FoundryMiscUtils.divCeil(height,2));
+      for(int y = 0; y < height; y++)
+      {
+        for(int x = 0; x < width; x++)
+        {
+          int i = recipe[y*width + x];
+          if(i > 0)
+          {
+            carve_drawables[i - 1].draw(minecraft, 7 + (x + left) * 11, 7 + (y + top) * 11);
+          }
+        }
+      }
     }
 
     @Override
@@ -105,15 +113,17 @@ public class CastingJEI
   static public class Category implements IRecipeCategory
   {
 
-    protected final ResourceLocation backgroundLocation;
+    protected final ResourceLocation background_location;
     @Nonnull
     protected final IDrawableAnimated arrow;
     @Nonnull
     private final IDrawable background;
     @Nonnull
     private final String localizedName;
+
     @Nonnull
-    private final IDrawable tank_overlay;
+    private final IDrawable grid_drawable;
+
     
     private IJeiHelpers helpers;
 
@@ -121,17 +131,16 @@ public class CastingJEI
     {
       this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
-      backgroundLocation = new ResourceLocation("foundry", "textures/gui/caster.png");
+      background_location = new ResourceLocation("foundry", "textures/gui/moldstation.png");
 
-
-      IDrawableStatic arrowDrawable = guiHelper.createDrawable(backgroundLocation, 176, 53, 24, 17);
+      grid_drawable = guiHelper.createDrawable(background_location, 176, 31, 76, 76);
+      
+      IDrawableStatic arrowDrawable = guiHelper.createDrawable(background_location, 176, 14, 24, 17);
       arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
-      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/caster.png");
-      background = guiHelper.createDrawable(location, 38, 16, 68, 54);
-      tank_overlay = guiHelper.createDrawable(location, 176, 0, 16, 47);
-      localizedName = Translator.translateToLocal("gui.jei.casting");
-
+      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/moldstation.png");
+      background = guiHelper.createDrawable(location, 36, 14, 133, 81);
+      localizedName = Translator.translateToLocal("gui.jei.mold");
     }
 
     @Override
@@ -144,13 +153,13 @@ public class CastingJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-
+      grid_drawable.draw(minecraft, 2, 2);
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft)
     {
-      arrow.draw(minecraft, 22, 35);
+      arrow.draw(minecraft, 81, 25);
     }
 
     @Nonnull
@@ -164,29 +173,23 @@ public class CastingJEI
     @Override
     public String getUid()
     {
-      return "foundry.casting";
+      return "foundry.mold";
     }
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
       IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
       IStackHelper stack_helper = helpers.getStackHelper();
 
-      gui_items.init(0, false, 47, 34);
-      gui_items.init(1, true, 27, 4);
-      gui_items.init(2, true, 47, 4);
-      gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
+      gui_items.init(0, false, 110, 23);
       gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
-      gui_items.setFromRecipe(2, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
-      gui_fluids.set(3, recipeWrapper.getFluidInputs().get(0));
     }
   }
 
   static public class Handler implements IRecipeHandler<Wrapper>
   {
+    
     @Override
     @Nonnull
     public Class<Wrapper> getRecipeClass()
@@ -198,7 +201,7 @@ public class CastingJEI
     @Override
     public String getRecipeCategoryUid()
     {
-      return "foundry.casting";
+      return "foundry.mold";
     }
 
     @Override
@@ -215,22 +218,21 @@ public class CastingJEI
     }
   }
 
-  static public List<Wrapper> getRecipes()
+  static public List<Wrapper> getRecipes(IJeiHelpers helpers)
   {
+    IGuiHelper guiHelper = helpers.getGuiHelper();
+    IDrawable[] carve_drawables = new IDrawable[4];
+    ResourceLocation location = new ResourceLocation("foundry", "textures/gui/moldstation.png");
+    for(int i = 0; i < 4; i++)
+    {
+      carve_drawables[i] = guiHelper.createDrawable(location, 176, 107 + i * 11, 11, 11);
+    }
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
-    for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
+    for(IMoldRecipe recipe : MoldRecipeManager.instance.getRecipes())
     {
-      ItemStack output = recipe.getOutput();
-
-      if(output != null)
-      {
-        IItemMatcher extra = recipe.getInputExtra();
-        recipes.add(new Wrapper(
-            output,recipe.getInput(),
-            recipe.getMold(),
-            extra == null?Collections.<ItemStack>emptyList():extra.getItems()));
-      }
+      recipes.add(new Wrapper(carve_drawables,
+          recipe.getOutput(),recipe.getWidth(),recipe.getHeight(),recipe.getRecipeGrid()));
     }
 
     return recipes;

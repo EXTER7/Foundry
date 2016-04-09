@@ -6,13 +6,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
-
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import exter.foundry.gui.GuiMetalCaster;
-import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.gui.GuiMetalInfuser;
+import exter.foundry.recipes.manager.InfuserRecipeManager;
+import exter.foundry.tileentity.TileEntityFoundryPowered;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
@@ -24,7 +22,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -32,7 +29,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 
-public class CastingJEI
+public class InfuserJEI
 {
 
   static public class Wrapper implements IRecipeWrapper
@@ -40,17 +37,18 @@ public class CastingJEI
     @Nonnull
     private final List<FluidStack> input_fluid;
     @Nonnull
-    private final List<ItemStack> output;
+    private final List<FluidStack> output;
     @Nonnull
     private final List<List<ItemStack>> input;
 
-    @SuppressWarnings("unchecked")
-    public Wrapper(@Nonnull ItemStack output, FluidStack input, ItemStack mold, List<ItemStack> extra)
+    private final int energy;
+
+    public Wrapper(@Nonnull FluidStack output, @Nonnull FluidStack input_fluid, @Nonnull List<ItemStack> input, int energy)
     {
-      this.input_fluid = Collections.singletonList(input);
-      this.input = Lists.newArrayList(Collections.singletonList(mold),extra);
-          Collections.singletonList(input);
+      this.input_fluid = Collections.singletonList(input_fluid);
       this.output = Collections.singletonList(output);
+      this.input = Collections.singletonList(input);
+      this.energy = energy;
     }
 
     @Nonnull
@@ -62,7 +60,7 @@ public class CastingJEI
     @Nonnull
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return Collections.emptyList();
     }
 
     @Override
@@ -74,8 +72,9 @@ public class CastingJEI
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return output;
     }
+
 
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
@@ -84,7 +83,7 @@ public class CastingJEI
     }
 
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    public List<String> getTooltipStrings(int x, int y)
     {
       return null;
     }
@@ -92,7 +91,7 @@ public class CastingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      
+      minecraft.fontRendererObj.drawString(energy / TileEntityFoundryPowered.RATIO_RF + " RF", 0, 38, 0);
     }
 
     @Override
@@ -105,32 +104,33 @@ public class CastingJEI
   static public class Category implements IRecipeCategory
   {
 
-    protected final ResourceLocation backgroundLocation;
-    @Nonnull
-    protected final IDrawableAnimated arrow;
+    protected final ResourceLocation background_location;
     @Nonnull
     private final IDrawable background;
     @Nonnull
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
-    
-    private IJeiHelpers helpers;
 
+    private final IJeiHelpers helpers;
+    
+    @Nonnull
+    protected final IDrawableAnimated arrow;
+    
     public Category(IJeiHelpers helpers)
     {
       this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
-      backgroundLocation = new ResourceLocation("foundry", "textures/gui/caster.png");
-
-
-      IDrawableStatic arrowDrawable = guiHelper.createDrawable(backgroundLocation, 176, 53, 24, 17);
+      background_location = new ResourceLocation("foundry", "textures/gui/infuser.png");
+      
+      
+      IDrawableStatic arrowDrawable = guiHelper.createDrawable(background_location, 176, 53, 24, 17);
       arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
-      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/caster.png");
-      background = guiHelper.createDrawable(location, 38, 16, 68, 54);
+      ResourceLocation location = new ResourceLocation("foundry", "textures/gui/infuser.png");
+      background = guiHelper.createDrawable(location, 15, 41, 137, 51);
       tank_overlay = guiHelper.createDrawable(location, 176, 0, 16, 47);
-      localizedName = Translator.translateToLocal("gui.jei.casting");
+      localizedName = Translator.translateToLocal("gui.jei.infuser");
 
     }
 
@@ -144,13 +144,12 @@ public class CastingJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft)
     {
-      arrow.draw(minecraft, 22, 35);
+      arrow.draw(minecraft, 34, 18);
     }
 
     @Nonnull
@@ -164,24 +163,23 @@ public class CastingJEI
     @Override
     public String getUid()
     {
-      return "foundry.casting";
+      return "foundry.infuser";
     }
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
-      IStackHelper stack_helper = helpers.getStackHelper();
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      gui_items.init(0, false, 47, 34);
-      gui_items.init(1, true, 27, 4);
-      gui_items.init(2, true, 47, 4);
-      gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
-      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
-      gui_items.setFromRecipe(2, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
-      gui_fluids.set(3, recipeWrapper.getFluidInputs().get(0));
+      guiFluidStacks.init(0, true, 59, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 108, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
+      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
+
+      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+      guiItemStacks.init(0, true, 14, 17);
+      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
     }
   }
 
@@ -198,7 +196,7 @@ public class CastingJEI
     @Override
     public String getRecipeCategoryUid()
     {
-      return "foundry.casting";
+      return "foundry.infuser";
     }
 
     @Override
@@ -219,17 +217,16 @@ public class CastingJEI
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
 
-    for(ICastingRecipe recipe : CastingRecipeManager.instance.getRecipes())
+    for(IInfuserRecipe recipe : InfuserRecipeManager.instance.getRecipes())
     {
-      ItemStack output = recipe.getOutput();
-
-      if(output != null)
+      List<ItemStack> input = recipe.getInput().getItems();
+      if(!input.isEmpty())
       {
-        IItemMatcher extra = recipe.getInputExtra();
         recipes.add(new Wrapper(
-            output,recipe.getInput(),
-            recipe.getMold(),
-            extra == null?Collections.<ItemStack>emptyList():extra.getItems()));
+            recipe.getOutput(),
+            recipe.getInputFluid(),
+            input,
+            recipe.getEnergyNeeded()));
       }
     }
 

@@ -56,11 +56,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   }
 
   @SubscribeEvent
-  public void playerInteract(PlayerInteractEvent event)
+  public void playerInteract(PlayerInteractEvent.RightClickBlock event)
   {
     //Prevent Blocks from activating when right clicking with a container in hand.
-    ItemStack stack = event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND);
-    if(stack != null && stack.getItem() == this && event.getAction() == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+    ItemStack stack = event.getEntityPlayer().getHeldItem(event.getHand());
+    if(stack != null && stack.getItem() == this)
     {
       event.setCanceled(true);
     }

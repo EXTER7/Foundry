@@ -1,0 +1,57 @@
+{
+    "textures": {
+        "particle": "foundry:blocks/spout",
+        "panel": "foundry:blocks/spout_panel_on",
+        "spout": "foundry:blocks/spout"
+    },
+    "elements": [
+        {
+            "from": [ 2, 2, 0 ], 
+            "to": [ 14, 14, 3 ], 
+            "faces": {
+                "north": { "texture": "#panel", "uv": [ 2, 2, 14, 14 ] },
+                "east": { "texture": "#panel", "uv": [ 1, 2, 4, 14 ] },
+                "south": { "texture": "#panel", "uv": [ 2, 2, 14, 14 ] },
+                "west": { "texture": "#panel", "uv": [ 12, 2, 15, 14 ] },
+                "up": { "texture": "#panel", "uv": [ 2, 1, 14, 4 ] },
+                "down": { "texture": "#panel", "uv": [ 2, 12, 14, 15 ] }
+            }
+        },
+        {
+            "from": [ 5, 5, 3 ], 
+            "to": [ 11, 7, 7 ], 
+            "faces": {
+                "north": { "texture": "#spout", "uv": [ 0, 0, 16, 16 ] },
+                "east": { "texture": "#spout", "uv": [ 8, 5, 12, 7 ] },
+                "south": { "texture": "#spout", "uv": [ 4, 10, 10, 12 ] },
+                "west": { "texture": "#spout", "uv": [ 0, 0, 4, 2 ] },
+                "up": { "texture": "#spout", "uv": [ 3, 0, 9, 4 ] },
+                "down": { "texture": "#spout", "uv": [ 6, 0, 12, 4 ] }
+            }
+        },
+        {
+            "from": [ 5, 7, 3 ], 
+            "to": [ 7, 9, 7 ], 
+            "faces": {
+                "north": { "texture": "#spout", "uv": [ 0, 0, 16, 16 ] },
+                "east": { "texture": "#spout", "uv": [ 12, 4, 16, 6 ] },
+                "south": { "texture": "#spout", "uv": [ 3, 3, 5, 5 ] },
+                "west": { "texture": "#spout", "uv": [ 12, 0, 16, 2 ] },
+                "up": { "texture": "#spout", "uv": [ 14, 0, 16, 4 ] },
+                "down": { "texture": "#spout", "uv": [ 0, 0, 16, 16 ] }
+            }
+        },
+        {
+            "from": [ 9, 7, 3 ], 
+            "to": [ 11, 9, 7 ], 
+            "faces": {
+                "north": { "texture": "#spout", "uv": [ 0, 0, 16, 16 ] },
+                "east": { "texture": "#spout", "uv": [ 11, 9, 16, 11 ] },
+                "south": { "texture": "#spout", "uv": [ 7, 6, 9, 8 ] },
+                "west": { "texture": "#spout", "uv": [ 8, 5, 13, 7 ] },
+                "up": { "texture": "#spout", "uv": [ 7, 0, 9, 4 ] },
+                "down": { "texture": "#spout", "uv": [ 0, 0, 16, 16 ] }
+            }
+        }
+    ]
+}

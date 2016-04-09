@@ -1,85 +1,25 @@
 package exter.foundry.block;
 
-import java.util.Random;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockRefractorySpout extends BlockContainer
+public class BlockRefractorySpout extends BlockFoundrySidedMachine
 {
-
-  public enum EnumSpoutFacing implements IStringSerializable
-  {
-    NORTH(0, "north", EnumFacing.NORTH),
-    SOUTH(1, "south", EnumFacing.SOUTH),
-    EAST(2, "east", EnumFacing.EAST),
-    WEST(3, "west", EnumFacing.WEST);
-
-    public final int id;
-    public final String name;
-    public final EnumFacing facing;
-
-    private EnumSpoutFacing(int id, String name, EnumFacing target)
-    {
-      this.id = id;
-      this.name = name;
-      this.facing = target;
-    }
-
-    @Override
-    public String getName()
-    {
-      return name;
-    }
-
-    @Override
-    public String toString()
-    {
-      return getName();
-    }
-
-    static public EnumSpoutFacing fromID(int num)
-    {
-      for(EnumSpoutFacing m : values())
-      {
-        if(m.id == num)
-        {
-          return m;
-        }
-      }
-      return null;
-    }
-  }
-
-  public static final PropertyEnum<EnumSpoutFacing> FACING = PropertyEnum.create("facing", EnumSpoutFacing.class);
-
-
-  private Random rand = new Random();
-
-
-
-  
-
   protected static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(0.125, 0.125, 0, 0.875, 0.875, 0.4375);
   protected static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(0, 0.125, 0.125, 0.4375, 0.875, 0.875);
   protected static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(0.125, 0.125, 0.5625, 0.875, 0.875,1);
@@ -88,12 +28,11 @@ public class BlockRefractorySpout extends BlockContainer
   
   public BlockRefractorySpout()
   {
-    super(Material.iron);
+    super(Material.rock);
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);
     setUnlocalizedName("foundry.refractorySpout");
-    setDefaultState(blockState.getBaseState().withProperty(FACING, EnumSpoutFacing.NORTH));
     setRegistryName("refractorySpout");
   }
   
@@ -112,26 +51,18 @@ public class BlockRefractorySpout extends BlockContainer
     }
     return null;
   }
-
-
+  
   @Override
-  protected BlockStateContainer createBlockState()
+  public void onBlockAdded(World world, BlockPos pos, IBlockState state)
   {
-    return new BlockStateContainer(this, FACING);
+    
   }
 
   @Override
-  public IBlockState getStateFromMeta(int meta)
+  public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack item)
   {
-    return getDefaultState().withProperty(FACING, EnumSpoutFacing.fromID(meta));
+    
   }
-
-  @Override
-  public int getMetaFromState(IBlockState state)
-  {
-    return ((EnumSpoutFacing) state.getValue(FACING)).id;
-  }
-
 
   @Override
   public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
@@ -139,13 +70,13 @@ public class BlockRefractorySpout extends BlockContainer
     switch(facing)
     {
       case EAST:
-        return getDefaultState().withProperty(FACING, EnumSpoutFacing.WEST);
-      case NORTH:
-        return getDefaultState().withProperty(FACING, EnumSpoutFacing.SOUTH);
+        return getDefaultState().withProperty(FACING, EnumMachineFacing.WEST).withProperty(STATE, EnumMachineState.ON);
       case SOUTH:
-        return getDefaultState().withProperty(FACING, EnumSpoutFacing.NORTH);
+        return getDefaultState().withProperty(FACING, EnumMachineFacing.NORTH).withProperty(STATE, EnumMachineState.ON);
+      case NORTH:
+        return getDefaultState().withProperty(FACING, EnumMachineFacing.SOUTH).withProperty(STATE, EnumMachineState.ON);
       case WEST:
-        return getDefaultState().withProperty(FACING, EnumSpoutFacing.EAST);
+        return getDefaultState().withProperty(FACING, EnumMachineFacing.EAST).withProperty(STATE, EnumMachineState.ON);
       default:
         return null;
     }
@@ -154,13 +85,18 @@ public class BlockRefractorySpout extends BlockContainer
   @Override
   public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side)
   {
-    return side != EnumFacing.UP && side != EnumFacing.DOWN && canPlaceBlockAt(worldIn, pos);
+    if(side == EnumFacing.UP || side == EnumFacing.DOWN)
+    {
+      return false;
+    }
+    BlockPos blockpos = pos.offset(side.getOpposite());
+    return worldIn.isSideSolid(blockpos, side, true);
   }
   
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
   {
-    for(EnumSpoutFacing state : FACING.getAllowedValues())
+    for(EnumMachineFacing state : FACING.getAllowedValues())
     {
       BlockPos blockpos = pos.offset(state.facing.getOpposite());
       if(worldIn.isSideSolid(blockpos, state.facing, true))
@@ -178,48 +114,6 @@ public class BlockRefractorySpout extends BlockContainer
     return new TileEntityRefractorySpout();
   }
 
-  @Override
-  public boolean onBlockEventReceived(World world, BlockPos pos, IBlockState state, int par5, int par6)
-  {
-    super.onBlockEventReceived(world, pos, state, par5, par6);
-    TileEntity tileentity = world.getTileEntity(pos);
-    return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
-  }
-
-  @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state)
-  {
-    TileEntity te = world.getTileEntity(pos);
-
-    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
-    {
-      TileEntityFoundry tef = (TileEntityFoundry) te;
-      int i;
-      for(i = 0; i < tef.getSizeInventory(); i++)
-      {
-        ItemStack is = tef.getStackInSlot(i);
-
-        if(is != null && is.stackSize > 0)
-        {
-          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
-          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
-          entityitem.setPickupDelay(10);
-
-          world.spawnEntityInWorld(entityitem);
-        }
-      }
-    }
-    world.removeTileEntity(pos);
-    super.breakBlock(world, pos, state);
-  }
-
-  @Override
-  public EnumBlockRenderType getRenderType(IBlockState state)
-  {
-    return EnumBlockRenderType.MODEL;
-  }
 
   @Override
   public boolean isFullCube(IBlockState state)
@@ -260,6 +154,27 @@ public class BlockRefractorySpout extends BlockContainer
     {
       dropBlockAsItem(world, pos, state, 0);
       world.setBlockToAir(pos);
+    }
+  }
+  
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hit_x, float hit_y, float hit_z)
+  {
+    if(world.isRemote)
+    {
+      return true;
+    } else
+    {
+      switch(state.getValue(STATE))
+      {
+        case OFF:
+          setMachineState(world, pos, state, true);
+          break;
+        case ON:
+          setMachineState(world, pos, state, false);
+          break;
+      }
+      return true;
     }
   }
 }

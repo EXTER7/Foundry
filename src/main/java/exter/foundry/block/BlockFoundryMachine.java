@@ -175,9 +175,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
           break;
         default:
-          break;
+          return false;
       }
-      return false;
+      return true;
     }
   }
 

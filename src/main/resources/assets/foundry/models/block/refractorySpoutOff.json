@@ -1,7 +1,7 @@
 {
     "textures": {
         "particle": "foundry:blocks/spout",
-        "panel": "foundry:blocks/spout_panel",
+        "panel": "foundry:blocks/spout_panel_off",
         "spout": "foundry:blocks/spout"
     },
     "elements": [

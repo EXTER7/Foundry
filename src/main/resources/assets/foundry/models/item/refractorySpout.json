@@ -1,5 +1,5 @@
 {
-    "parent": "foundry:block/refractorySpout",
+    "parent": "foundry:block/refractorySpoutOff",
     "display": {
         "gui": {
             "rotation": [ 30, 45, 0 ],

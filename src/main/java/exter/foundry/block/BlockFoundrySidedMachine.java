@@ -16,13 +16,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
 
 public abstract class BlockFoundrySidedMachine extends BlockContainer
 {
@@ -69,18 +68,20 @@ public abstract class BlockFoundrySidedMachine extends BlockContainer
 
   public enum EnumMachineFacing implements IStringSerializable
   {
-    NORTH(0, "north"),
-    SOUTH(1, "south"),
-    EAST(2, "east"),
-    WEST(3, "west");
+    NORTH(0, "north", EnumFacing.NORTH),
+    SOUTH(1, "south", EnumFacing.SOUTH),
+    EAST(2, "east", EnumFacing.EAST),
+    WEST(3, "west", EnumFacing.WEST);
 
     public final int id;
     public final String name;
+    public final EnumFacing facing;
 
-    private EnumMachineFacing(int id, String name)
+    private EnumMachineFacing(int id, String name,EnumFacing facing)
     {
       this.id = id;
       this.name = name;
+      this.facing = facing;
     }
 
     @Override
@@ -234,40 +235,6 @@ public abstract class BlockFoundrySidedMachine extends BlockContainer
     super.breakBlock(world, pos, state);
   }
 
-  @SideOnly(Side.CLIENT)
-  @Override
-  public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
-  {
-    if(state.getValue(STATE) == EnumMachineState.ON)
-    {
-      EnumMachineFacing facing = (EnumMachineFacing) state.getValue(FACING);
-      float f = (float) pos.getX() + 0.5F;
-      float f1 = (float) pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-      float f2 = (float) pos.getZ() + 0.5F;
-      float f3 = 0.52F;
-      float f4 = random.nextFloat() * 0.6F - 0.3F;
-
-      switch(facing)
-      {
-        case NORTH:
-          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
-          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
-          break;
-        case EAST:
-          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-          break;
-        case WEST:
-          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
-          break;
-        case SOUTH:
-          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
-          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
-          break;
-      }
-    }
-  }
 
   @Override
   public boolean hasComparatorInputOverride(IBlockState state)

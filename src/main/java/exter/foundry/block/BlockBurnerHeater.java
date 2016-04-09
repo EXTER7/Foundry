@@ -8,8 +8,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
+
 import exter.foundry.ModFoundry;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
@@ -45,5 +51,40 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
   public TileEntity createNewTileEntity(World world, int meta)
   {
     return new TileEntityBurnerHeater();
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
+  {
+    if(state.getValue(STATE) == EnumMachineState.ON)
+    {
+      EnumMachineFacing facing = (EnumMachineFacing) state.getValue(FACING);
+      float f = (float) pos.getX() + 0.5F;
+      float f1 = (float) pos.getY() + 0.125F + random.nextFloat() * 5.0F / 16.0F;
+      float f2 = (float) pos.getZ() + 0.5F;
+      float f3 = 0.52F;
+      float f4 = random.nextFloat() * 0.6F - 0.3F;
+
+      switch(facing)
+      {
+        case NORTH:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+          break;
+        case EAST:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          break;
+        case WEST:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+          break;
+        case SOUTH:
+          world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+          world.spawnParticle(EnumParticleTypes.FLAME, (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+          break;
+      }
+    }
   }
 }

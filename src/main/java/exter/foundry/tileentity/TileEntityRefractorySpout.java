@@ -1,10 +1,14 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.block.BlockFoundrySidedMachine;
 import exter.foundry.block.BlockRefractorySpout;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -70,7 +74,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   @Override
   public int fill(EnumFacing from, FluidStack resource, boolean doFill)
   {
-    if(from != EnumFacing.UP)
+    if(from != worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing)
     {
       return 0;
     }
@@ -96,7 +100,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   @Override
   public boolean canFill(EnumFacing from, Fluid fluid)
   {
-    return from == EnumFacing.UP;
+    return from == worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
   }
 
   @Override
@@ -115,6 +119,12 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   protected void updateClient()
   {
 
+  }
+
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+  {
+    return oldState.getBlock() != newSate.getBlock();
   }
 
   static private boolean areFluidStacksEqual(FluidStack a,FluidStack b)
@@ -154,7 +164,6 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
             hsource.drain(side, drained, true);
             tank.fill(drained, true);
             updateTank(0);
-            markDirty();
           }
         }
       }
@@ -163,35 +172,36 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
     if(--next_fill == 0)
     {
       next_fill = 3;
-      
       FluidStack last_moved = fluid_moved.getFluid();
       fluid_moved.setFluid(null);
-
-      // Fill to the /bottom
-      if(tank.getFluid() != null && tank.getFluid().amount > 0)
+      if(worldObj.getBlockState(getPos()).getValue(BlockFoundrySidedMachine.STATE) == BlockFoundrySidedMachine.EnumMachineState.ON)
       {
-        TileEntity dest = worldObj.getTileEntity(getPos().add(0, -1, 0));
-        if(dest instanceof IFluidHandler)
+        // Fill to the bottom
+        if(tank.getFluid() != null && tank.getFluid().amount > 0)
         {
-          IFluidHandler hdest = (IFluidHandler) dest;
-          if(hdest.canFill(EnumFacing.UP, tank.getFluid().getFluid()))
+          TileEntity dest = worldObj.getTileEntity(getPos().add(0, -1, 0));
+          if(dest instanceof IFluidHandler)
           {
-            FluidStack drained = tank.drain(10, false);
-            if(drained != null)
+            IFluidHandler hdest = (IFluidHandler) dest;
+            if(hdest.canFill(EnumFacing.UP, tank.getFluid().getFluid()))
             {
-              drained.amount = hdest.fill(EnumFacing.UP, drained, false);
-              if(drained.amount > 0)
+              FluidStack drained = tank.drain(10, false);
+              if(drained != null)
               {
-                tank.drain(drained.amount, true);
-                hdest.fill(EnumFacing.UP, drained, true);
-                updateTank(0);
-                fluid_moved.setFluid(drained.copy());
+                drained.amount = hdest.fill(EnumFacing.UP, drained, false);
+                if(drained.amount > 0)
+                {
+                  tank.drain(drained.amount, true);
+                  hdest.fill(EnumFacing.UP, drained, true);
+                  updateTank(0);
+                  fluid_moved.setFluid(drained.copy());
+                }
               }
             }
           }
         }
       }
-      if(!areFluidStacksEqual(fluid_moved.getFluid(),last_moved))
+      if(!areFluidStacksEqual(fluid_moved.getFluid(), last_moved))
       {
         updateTank(1);
       }

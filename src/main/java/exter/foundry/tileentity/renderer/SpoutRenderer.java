@@ -24,12 +24,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractorySpout>
 {
-  private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z,int color)
+  private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z,int color,int light)
   {
-    drawQuad(facing,texture,x1,y1,x2,y2,z, 0, 0, color);
+    drawQuad(facing,texture,x1,y1,x2,y2,z, 0, 0, color, light);
   }
   
-  private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z, double u, double v,int color)
+  private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z, double u, double v,int color,int light)
   {
     color = 0xFFFFFFFF;
     float alpha = (color >> 24 & 255) / 255.0F;
@@ -41,6 +41,9 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
     double v1 = texture.getInterpolatedV(y1 + v);
     double u2 = texture.getInterpolatedU(x2 + u);
     double v2 = texture.getInterpolatedV(y2 + v);
+
+    int l1 = light >> 0x10 & 0xFFFF;
+    int l2 = light & 0xFFFF;
     
     x1 /= 16;
     y1 /= 16;
@@ -49,29 +52,29 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
     z /= 16;
 
     VertexBuffer tessellator = Tessellator.getInstance().getBuffer();
-    tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+    tessellator.begin(7, DefaultVertexFormats.BLOCK);
     switch(facing)
     {
       case EAST:
       case WEST:
-        tessellator.pos(z, y2, x1).tex(u1, v1).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(z, y2, x2).tex(u2, v1).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(z, y1, x2).tex(u2, v2).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(z, y1, x1).tex(u1, v2).color(red, green, blue, alpha).endVertex();
+        tessellator.pos(z, y2, x1).color(red, green, blue, alpha).tex(u1, v1).lightmap(l1, l2).endVertex();
+        tessellator.pos(z, y2, x2).color(red, green, blue, alpha).tex(u2, v1).lightmap(l1, l2).endVertex();
+        tessellator.pos(z, y1, x2).color(red, green, blue, alpha).tex(u2, v2).lightmap(l1, l2).endVertex();
+        tessellator.pos(z, y1, x1).color(red, green, blue, alpha).tex(u1, v2).lightmap(l1, l2).endVertex();
         break;
       case SOUTH:
       case NORTH:
-        tessellator.pos(x2, y2, z).tex(u1, v1).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x1, y2, z).tex(u2, v1).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x1, y1, z).tex(u2, v2).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x2, y1, z).tex(u1, v2).color(red, green, blue, alpha).endVertex();
+        tessellator.pos(x2, y2, z).color(red, green, blue, alpha).tex(u1, v1).lightmap(l1, l2).endVertex();
+        tessellator.pos(x1, y2, z).color(red, green, blue, alpha).tex(u2, v1).lightmap(l1, l2).endVertex();
+        tessellator.pos(x1, y1, z).color(red, green, blue, alpha).tex(u2, v2).lightmap(l1, l2).endVertex();
+        tessellator.pos(x2, y1, z).color(red, green, blue, alpha).tex(u1, v2).lightmap(l1, l2).endVertex();
         break;
       case UP:
       case DOWN:
-        tessellator.pos(x2, z, y2).tex(u1, v2).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x1, z, y2).tex(u2, v2).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x1, z, y1).tex(u2, v1).color(red, green, blue, alpha).endVertex();
-        tessellator.pos(x2, z, y1).tex(u1, v1).color(red, green, blue, alpha).endVertex();
+        tessellator.pos(x2, z, y2).color(red, green, blue, alpha).tex(u1, v2).lightmap(l1, l2).endVertex();
+        tessellator.pos(x1, z, y2).color(red, green, blue, alpha).tex(u2, v2).lightmap(l1, l2).endVertex();
+        tessellator.pos(x1, z, y1).color(red, green, blue, alpha).tex(u2, v1).lightmap(l1, l2).endVertex();
+        tessellator.pos(x2, z, y1).color(red, green, blue, alpha).tex(u1, v1).lightmap(l1, l2).endVertex();
         break;
     }    
     Tessellator.getInstance().draw();
@@ -116,7 +119,7 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       {
         pos = pos.down();
         World world = te.getWorld();
-        IBlockState state = world.getBlockState(pos.down());
+        IBlockState state = world.getBlockState(pos);
         AxisAlignedBB bounds = state.getCollisionBoundingBox(world, pos);
         if(bounds != null)
         {
@@ -133,17 +136,18 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       }
 
       int color = fluid.getFluid().getColor();
-      drawQuad(EnumFacing.UP, texture, 7, 3, 9, 9, 8.75, color);
-      drawQuad(EnumFacing.EAST, texture, 7, 0, 9, 8.75, 7, color);
-      drawQuad(EnumFacing.WEST, texture, 7, 0, 9, 8.75, 9, color);
-      drawQuad(EnumFacing.SOUTH, texture, 7, 0, 9, 8.75, 9, color);
-      drawQuad(EnumFacing.NORTH, texture, 7, 0, 9, 5, 7, color);
+      int light = te.getWorld().getCombinedLight(te.getPos(), fluid.getFluid().getLuminosity());
+      drawQuad(EnumFacing.UP, texture, 7, 3, 9, 9, 8.75, color, light);
+      drawQuad(EnumFacing.EAST, texture, 7, 0, 9, 8.75, 7, color, light);
+      drawQuad(EnumFacing.WEST, texture, 7, 0, 9, 8.75, 9, color, light);
+      drawQuad(EnumFacing.SOUTH, texture, 7, 0, 9, 8.75, 9, color, light);
+      drawQuad(EnumFacing.NORTH, texture, 7, 0, 9, 5, 7, color, light);
       if(low < 0)
       {
-        drawQuad(EnumFacing.EAST, texture, 7, low, 9, 0, 7, 0, 16, color);
-        drawQuad(EnumFacing.WEST, texture, 7, low, 9, 0, 9, 0, 16, color);
-        drawQuad(EnumFacing.SOUTH, texture, 7, low, 9, 0, 9, 0, 16, color);
-        drawQuad(EnumFacing.NORTH, texture, 7, low, 9, 0, 7, 0, 16, color);
+        drawQuad(EnumFacing.EAST, texture, 7, low, 9, 0, 7, 0, 16, color, light);
+        drawQuad(EnumFacing.WEST, texture, 7, low, 9, 0, 9, 0, 16, color, light);
+        drawQuad(EnumFacing.SOUTH, texture, 7, low, 9, 0, 9, 0, 16, color, light);
+        drawQuad(EnumFacing.NORTH, texture, 7, low, 9, 0, 7, 0, 16, color, light);
       }
       GlStateManager.enableCull();
       GlStateManager.enableAlpha();

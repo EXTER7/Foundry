@@ -80,6 +80,7 @@ public class BlockRefractoryHopper extends BlockContainer
 
   public static final PropertyEnum<EnumHopperFacing> FACING = PropertyEnum.create("facing", EnumHopperFacing.class);
 
+  protected static final AxisAlignedBB AABB_SIDES = new AxisAlignedBB(0.0, 0.25, 0.0, 1.0, 1.0, 1.0);
 
   private Random rand = new Random();
   
@@ -105,7 +106,7 @@ public class BlockRefractoryHopper extends BlockContainer
   
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
   {
-      return FULL_BLOCK_AABB;
+      return state.getValue(FACING) == EnumHopperFacing.DOWN ? FULL_BLOCK_AABB : AABB_SIDES;
   }
 
   public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn)
@@ -228,12 +229,14 @@ public class BlockRefractoryHopper extends BlockContainer
     return EnumBlockRenderType.MODEL;
   }
 
-  public boolean isFullCube()
+  @Override
+  public boolean isFullCube(IBlockState state)
   {
     return false;
   }
 
-  public boolean isOpaqueCube()
+  @Override
+  public boolean isOpaqueCube(IBlockState state)
   {
     return false;
   }

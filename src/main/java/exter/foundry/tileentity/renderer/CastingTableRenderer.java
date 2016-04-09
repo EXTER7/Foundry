@@ -144,6 +144,8 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
       TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
 
       int color = fluid.getFluid().getColor();
+      int light = te.getWorld().getCombinedLight(te.getPos(), fluid.getFluid().getLuminosity());
+
       double progress = (double) te.getProgress() / TileEntityCastingTableBase.CAST_TIME;
       progress = Math.sqrt(progress);
       if(te.getStackInSlot(0) == null)
@@ -154,18 +156,20 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
       float red = (color >> 16 & 255) / 255.0F;
       float green = (color >> 8 & 255) / 255.0F;
       float blue = (color & 255) / 255.0F;
-
+      int l1 = light >> 0x10 & 0xFFFF;
+      int l2 = light & 0xFFFF;
+      
       double min_u = texture.getInterpolatedU(left * 16);
       double min_v = texture.getInterpolatedV(top * 16);
       double max_u = texture.getInterpolatedU(right * 16);
       double max_v = texture.getInterpolatedV(bottom * 16);
       double fluid_z = (double) fluid.amount / te.getTank(0).getCapacity() * (high - low) + low;
       VertexBuffer tessellator = Tessellator.getInstance().getBuffer();
-      tessellator.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-      tessellator.pos(left, fluid_z, bottom).tex(min_u, max_v).color(red, green, blue, alpha).endVertex();
-      tessellator.pos(right, fluid_z, bottom).tex(max_u, max_v).color(red, green, blue, alpha).endVertex();
-      tessellator.pos(right, fluid_z, top).tex(max_u, min_v).color(red, green, blue, alpha).endVertex();
-      tessellator.pos(left, fluid_z, top).tex(min_u, min_v).color(red, green, blue, alpha).endVertex();
+      tessellator.begin(7, DefaultVertexFormats.BLOCK);
+      tessellator.pos(left, fluid_z, bottom).color(red, green, blue, alpha).tex(min_u, max_v).lightmap(l1, l2).endVertex();
+      tessellator.pos(right, fluid_z, bottom).color(red, green, blue, alpha).tex(max_u, max_v).lightmap(l1, l2).endVertex();
+      tessellator.pos(right, fluid_z, top).color(red, green, blue, alpha).tex(max_u, min_v).lightmap(l1, l2).endVertex();
+      tessellator.pos(left, fluid_z, top).color(red, green, blue, alpha).tex(min_u, min_v).lightmap(l1, l2).endVertex();
       Tessellator.getInstance().draw();
     }
     GlStateManager.enableAlpha();

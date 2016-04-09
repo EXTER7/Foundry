@@ -858,11 +858,12 @@ public class FoundryRecipes
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_refractory_spout,
-        "R R",
-        "B B",
-        "RBR",
+        "RL",
+        "BB",
+        "R ",
         'R', "rodIron",
-        'B', refbrick_stack));
+        'B', refbrick_stack,
+        'L', new ItemStack(Blocks.lever)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),

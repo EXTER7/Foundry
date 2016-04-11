@@ -28,8 +28,10 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
+import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
 import exter.foundry.tileentity.renderer.CastingTableRenderer;
+import exter.foundry.tileentity.renderer.HopperRenderer;
 import exter.foundry.tileentity.renderer.SpoutRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -161,6 +163,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTablePlate.class, new CastingTableRenderer(3,13,3,13,11,12,"foundry:blocks/castingtable_top_plate"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableRod.class, new CastingTableRenderer(7,9,2,14,10,12,"foundry:blocks/castingtable_top_rod"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractorySpout.class, new SpoutRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryHopper.class, new HopperRenderer());
     
     
     ModIntegrationManager.clientInit();

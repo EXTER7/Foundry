@@ -10,6 +10,7 @@ import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
+import exter.foundry.tileentity.renderer.ISpoutPourDepth;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,7 +32,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockRefractoryHopper extends BlockContainer
+public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourDepth
 {
 
   public enum EnumHopperFacing implements IStringSerializable
@@ -245,5 +246,12 @@ public class BlockRefractoryHopper extends BlockContainer
   public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
   {
     return true;
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public int getSpoutPourDepth(World world, BlockPos pos, IBlockState state)
+  {
+    return 11;
   }
 }

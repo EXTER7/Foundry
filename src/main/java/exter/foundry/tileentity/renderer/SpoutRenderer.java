@@ -1,5 +1,6 @@
 package exter.foundry.tileentity.renderer;
 
+
 import org.lwjgl.opengl.GL11;
 
 import exter.foundry.block.BlockRefractorySpout;
@@ -80,7 +81,6 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
     Tessellator.getInstance().draw();
   }
 
-  
   @Override
   public void renderTileEntityAt(TileEntityRefractorySpout te, double x, double y, double z, float partialTicks, int destroyStage)
   {
@@ -120,10 +120,16 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
         pos = pos.down();
         World world = te.getWorld();
         IBlockState state = world.getBlockState(pos);
-        AxisAlignedBB bounds = state.getCollisionBoundingBox(world, pos);
-        if(bounds != null)
+        if(state.getBlock() instanceof ISpoutPourDepth)
         {
-          low = bounds.minY * 16 - 15.75;
+          low = ((ISpoutPourDepth)state.getBlock()).getSpoutPourDepth(world, pos, state) - 16;
+        } else
+        {
+          AxisAlignedBB bounds = state.getCollisionBoundingBox(world, pos);
+          if(bounds != null)
+          {
+            low = bounds.maxY * 16 - 15.75;
+          }
         }
         if(low > 0)
         {
@@ -142,7 +148,7 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       drawQuad(EnumFacing.WEST, texture, 7, 0, 9, 8.75, 9, color, light);
       drawQuad(EnumFacing.SOUTH, texture, 7, 0, 9, 8.75, 9, color, light);
       drawQuad(EnumFacing.NORTH, texture, 7, 0, 9, 5, 7, color, light);
-      if(low < 0)
+      if(low < 0.0001)
       {
         drawQuad(EnumFacing.EAST, texture, 7, low, 9, 0, 7, 0, 16, color, light);
         drawQuad(EnumFacing.WEST, texture, 7, low, 9, 0, 9, 0, 16, color, light);

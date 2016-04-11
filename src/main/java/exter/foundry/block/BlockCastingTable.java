@@ -31,9 +31,10 @@ import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityFoundry;
+import exter.foundry.tileentity.renderer.ISpoutPourDepth;
 
 
-public class BlockCastingTable extends Block implements ITileEntityProvider,IBlockVariants
+public class BlockCastingTable extends Block implements ITileEntityProvider,IBlockVariants,ISpoutPourDepth
 {
   private Random rand = new Random();
 
@@ -41,19 +42,21 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
   static public enum EnumTable implements IStringSerializable
   {
-    INGOT(0, "ingot", "castingTableIngot"),
-    PLATE(1, "plate", "castingTablePlate"),
-    ROD(2, "rod", "castingTableRod");
+    INGOT(0, "ingot", "castingTableIngot", 9),
+    PLATE(1, "plate", "castingTablePlate", 11),
+    ROD(2, "rod", "castingTableRod", 10);
 
     public final int id;
     public final String name;
     public final String model;
+    public final int depth;
 
-    private EnumTable(int id, String name,String model)
+    private EnumTable(int id, String name,String model,int depth)
     {
       this.id = id;
       this.name = name;
       this.model = model;
+      this.depth = depth;
     }
 
     @Override
@@ -279,5 +282,12 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   public ItemStack asItemStack(EnumTable machine)
   {
     return new ItemStack(this,1,getMetaFromState(getDefaultState().withProperty(TABLE, machine)));
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public int getSpoutPourDepth(World world, BlockPos pos, IBlockState state)
+  {
+    return state.getValue(TABLE).depth;
   }
 }

@@ -146,7 +146,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatPr
       {
         if(inventory[i] != null)
         {
-          int burn = TileEntityFurnace.getItemBurnTime(inventory[i]) * 20;
+          int burn = TileEntityFurnace.getItemBurnTime(inventory[i]) * 10;
           if(burn > 0)
           {
             burn_time += burn;

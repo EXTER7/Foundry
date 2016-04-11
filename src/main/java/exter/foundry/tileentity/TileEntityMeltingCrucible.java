@@ -265,12 +265,34 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     {
       current_recipe = MeltingRecipeManager.instance.findRecipe(inventory[INVENTORY_INPUT]);
     }
+    
+    boolean active = true;
 
-    IHeatProvider heater = getHeatProvider();
-
-    if(heater != null)
+    switch(getRedstoneMode())
     {
-      heat += heater.provideHeat(EnumFacing.UP, MAX_HEAT_RECEIVE);
+      case RSMODE_OFF:
+        if(redstone_signal)
+        {
+          active = false;
+        }
+        break;
+      case RSMODE_ON:
+        if(!redstone_signal)
+        {
+          active = false;
+        }
+        break;
+      default:
+    }
+    
+    if(active)
+    {
+      IHeatProvider heater = getHeatProvider();
+
+      if(heater != null)
+      {
+        heat += heater.provideHeat(EnumFacing.UP, MAX_HEAT_RECEIVE);
+      }
     }
     heat -= (heat - HEAT_MIN) / HEAT_LOSS_RATE;
     if(heat > HEAT_MAX)

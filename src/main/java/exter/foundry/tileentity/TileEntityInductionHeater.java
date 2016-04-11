@@ -47,7 +47,7 @@ public class TileEntityInductionHeater extends TileEntityFoundryPowered implemen
   @Override
   public int getFoundryEnergyCapacity()
   {
-    return 18000;
+    return 25000;
   }
 
   @Override
@@ -65,7 +65,7 @@ public class TileEntityInductionHeater extends TileEntityFoundryPowered implemen
       {
         max_heat = MAX_PROVIDE;
       }
-      return useFoundryEnergy(max_heat * 6, true) / 6;
+      return useFoundryEnergy(max_heat * 3, true) / 3;
     }
     return 0;
   }

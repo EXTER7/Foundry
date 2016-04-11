@@ -826,9 +826,8 @@ public class FoundryRecipes
         new ItemStack(FoundryBlocks.block_burner_heater),
         "I",
         "C",
-        "R",
+        "F",
         'F', furnace_stack,
-        'R', redstone_stack,
         'I', "plateCopper",
         'C', casing_stack));
 

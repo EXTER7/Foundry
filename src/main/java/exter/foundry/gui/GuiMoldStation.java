@@ -7,6 +7,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
@@ -150,6 +152,30 @@ public class GuiMoldStation extends GuiFoundry
               GRID_SLOT_SIZE, GRID_SLOT_SIZE);
         }
       }
+    }
+  }
+
+  @Override
+  public void drawScreen(int mousex, int mousey, float par3)
+  {
+    super.drawScreen(mousex, mousey, par3);
+
+    //Draw tool tips.
+    if(isPointInRegion(GRID_X, GRID_Y, GRID_SIZE, GRID_SIZE, mousex, mousey))
+    {
+      int x = (mousex - GRID_X - guiLeft) / GRID_SLOT_SIZE;
+      int y = (mousey - GRID_Y - guiTop) / GRID_SLOT_SIZE;
+
+      List<String> currenttip = new ArrayList<String>();
+      currenttip.add("Depth: " + te_ms.getGridSlot(y * 6 + x));
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+    }
+
+    if(isPointInRegion(117,15,button_fire.getWidth(),button_fire.getHeight(),mousex,mousey))
+    {
+      List<String> currenttip = new ArrayList<String>();
+      currenttip.add("Fire mold");
+      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
 

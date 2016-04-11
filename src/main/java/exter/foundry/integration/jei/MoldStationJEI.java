@@ -80,8 +80,20 @@ public class MoldStationJEI
     }
 
     @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    public List<String> getTooltipStrings(int mx, int my)
     {
+      if(mx >= 7 && mx < 73 && my >= 7 && my < 73)
+      {
+        int x = (mx - 7) / 11 - (3 - FoundryMiscUtils.divCeil(width,2));
+        int y = (my - 7) / 11 - (3 - FoundryMiscUtils.divCeil(height,2));
+
+        int depth = 0;
+        if(x >= 0 && x < width && y >= 0 && y < height)
+        {
+          depth = recipe[y * width + x];
+        }
+        return Collections.singletonList("Depth: " + depth);
+      }
       return null;
     }
 

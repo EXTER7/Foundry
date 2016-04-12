@@ -87,7 +87,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
       has_block = tag.getBoolean("HasBlock");
     }
     
-    if(worldObj != null && !worldObj.isRemote)
+    if(worldObj != null && !worldObj.isRemote && has_block)
     {
       if(grid_changed)
       {
@@ -242,8 +242,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
   }
 
   private void doSmelt()
-  {
-    
+  {    
     if(!canRecipeOutput())
     {
       progress = 0;
@@ -289,10 +288,10 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
       ItemStack block = getStackInSlot(SLOT_BLOCK);
       if(block != null)
       {
-        
         decrStackSize(SLOT_BLOCK, 1);
         has_block = true;
         updateValue("HasBlock",has_block);
+        clearGrid();
       }
     }
     
@@ -374,7 +373,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
 
   public void carve(int x1,int y1, int x2, int y2)
   {
-    if(worldObj.isRemote)
+    if(worldObj.isRemote && has_block)
     {
       NBTTagCompound tag = new NBTTagCompound();
       for(int j = y1; j <= y2; j++)
@@ -395,7 +394,7 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
 
   public void mend(int x1,int y1, int x2, int y2)
   {
-    if(worldObj.isRemote)
+    if(worldObj.isRemote && has_block)
     {
       NBTTagCompound tag = new NBTTagCompound();
       for(int j = y1; j <= y2; j++)

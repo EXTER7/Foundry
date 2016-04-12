@@ -94,7 +94,7 @@ public class GuiMoldStation extends GuiFoundry
   protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
   {
     super.mouseClicked(mouseX, mouseY, mouseButton);
-    if(isPointInRegion(GRID_X, GRID_Y, GRID_SIZE, GRID_SIZE, mouseX, mouseY))
+    if(te_ms.hasBlock() && isPointInRegion(GRID_X, GRID_Y, GRID_SIZE - 1, GRID_SIZE - 1, mouseX, mouseY))
     {
       int x = (mouseX - GRID_X - guiLeft) / GRID_SLOT_SIZE;
       int y = (mouseY - GRID_Y - guiTop) / GRID_SLOT_SIZE;
@@ -161,7 +161,7 @@ public class GuiMoldStation extends GuiFoundry
     super.drawScreen(mousex, mousey, par3);
 
     //Draw tool tips.
-    if(isPointInRegion(GRID_X, GRID_Y, GRID_SIZE, GRID_SIZE, mousex, mousey))
+    if(te_ms.hasBlock() && isPointInRegion(GRID_X, GRID_Y, GRID_SIZE - 1, GRID_SIZE - 1, mousex, mousey))
     {
       int x = (mousex - GRID_X - guiLeft) / GRID_SLOT_SIZE;
       int y = (mousey - GRID_Y - guiTop) / GRID_SLOT_SIZE;

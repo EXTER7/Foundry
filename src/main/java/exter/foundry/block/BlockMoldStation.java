@@ -1,10 +1,12 @@
 package exter.foundry.block;
 
+import java.util.List;
 import java.util.Random;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityMoldStation;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +17,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -84,5 +88,12 @@ public class BlockMoldStation extends BlockFoundrySidedMachine
           break;
       }
     }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.moldStation", tooltip);
   }
 }

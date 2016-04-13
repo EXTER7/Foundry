@@ -2,8 +2,12 @@ package exter.foundry.block;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
+
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +19,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -176,5 +182,12 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
       }
       return true;
     }
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractorySpout", tooltip);
   }
 }

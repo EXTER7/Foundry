@@ -21,6 +21,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,6 +34,7 @@ import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.renderer.ISpoutPourDepth;
+import exter.foundry.util.FoundryMiscUtils;
 
 
 public class BlockCastingTable extends Block implements ITileEntityProvider,IBlockVariants,ISpoutPourDepth
@@ -289,5 +292,12 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   public int getSpoutPourDepth(World world, BlockPos pos, IBlockState state)
   {
     return state.getValue(TABLE).depth;
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.castingTable." + getStateFromMeta(stack.getMetadata()).getValue(TABLE).name, tooltip);
   }
 }

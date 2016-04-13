@@ -11,6 +11,7 @@ import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.renderer.ISpoutPourDepth;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -29,6 +30,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -253,5 +256,12 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
   public int getSpoutPourDepth(World world, BlockPos pos, IBlockState state)
   {
     return 11;
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractoryHopper", tooltip);
   }
 }

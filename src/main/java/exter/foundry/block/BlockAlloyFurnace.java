@@ -10,15 +10,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Random;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
+import exter.foundry.util.FoundryMiscUtils;
 
 public class BlockAlloyFurnace extends BlockFoundrySidedMachine
 {
@@ -85,5 +89,12 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine
           break;
       }
     }
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.alloyFurnace", tooltip);
   }
 }

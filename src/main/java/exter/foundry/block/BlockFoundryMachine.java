@@ -20,6 +20,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,6 +36,7 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
+import exter.foundry.util.FoundryMiscUtils;
 
 public class BlockFoundryMachine extends Block implements ITileEntityProvider,IBlockVariants
 {
@@ -261,5 +264,12 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   public ItemStack asItemStack(EnumMachine machine)
   {
     return new ItemStack(this,1,getMetaFromState(getDefaultState().withProperty(MACHINE, machine)));
+  }
+  
+  @SideOnly(Side.CLIENT)
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+  {
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.machine." + getStateFromMeta(stack.getMetadata()).getValue(MACHINE).name, tooltip);
   }
 }

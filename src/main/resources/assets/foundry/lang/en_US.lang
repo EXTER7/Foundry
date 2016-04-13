@@ -250,6 +250,24 @@ tile.foundry.refractorySpout.name=Refractory Spout
 tile.foundry.moldStation.name=Mold Crafting Station
 tile.foundry.burnerHeater.name=Burner Heater
 
+
+tooltip.foundry.machine.crucible=Melts ore and metals. Must be placed above a heater block.
+tooltip.foundry.machine.caster=Casts items from liquid metal using mold.//Requires RF to operate.
+tooltip.foundry.machine.alloymixer=Mixes liquid metals to make alloys.//Requires RF to operate.
+tooltip.foundry.machine.infuser=Infuses items into liquid metals.//Requires RF to operate.
+tooltip.foundry.machine.router=Sorts items by material and type.
+tooltip.foundry.machine.atomizer=Makes dust from liquid metal.//Requires RF to operate.
+tooltip.foundry.machine.heater_induction=Uses energy to generate heat for a Melting Crucible.//Requires RF to operate.
+tooltip.foundry.castingTable.ingot=Used to cast ingots from liquid metal.//Right click to remove the ingot after it's solidified.
+tooltip.foundry.castingTable.plate=Used to cast plates from liquid metal.//Right click to remove the plate after it's solidified.
+tooltip.foundry.castingTable.rod=Used to cast rods from liquid metal.//Right click to remove the rod after it's solidified.
+tooltip.foundry.alloyFurnace=Smelts 2 metals into alloy ingots.
+tooltip.foundry.refractoryHopper=Transfers liquids from block on the top to the block on side it points at.//Cannot transfer gasses.
+tooltip.foundry.refractorySpout=Transfers liquids from the the side it's placed on to the block below.//Cannot transfer gasses.
+tooltip.foundry.moldStation=Used to craft molds.//Requires Refractory Clay Blocks and fuel to make molds.
+tooltip.foundry.burnerHeater=Uses solid fuel to generate heat for a Melting Crucible.
+
+
 item.foundry.componentHeatingCoil.name=Heating Coil
 item.foundry.componentRefractoryClay.name=Refractory Clay
 item.foundry.componentRefractoryBrick.name=Refractory Brick

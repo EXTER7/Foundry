@@ -95,7 +95,7 @@ public class FoundryMiscUtils
       return fluid_block.drain(world, pos, do_drain);
     }
 
-    if(state.getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+    if(state.getMaterial() == Material.WATER && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {
@@ -104,7 +104,7 @@ public class FoundryMiscUtils
       return new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
     }
 
-    if(state.getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+    if(state.getMaterial() == Material.LAVA && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
     {
       if(do_drain)
       {

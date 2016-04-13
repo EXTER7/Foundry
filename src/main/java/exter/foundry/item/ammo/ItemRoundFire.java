@@ -35,7 +35,7 @@ public class ItemRoundFire extends ItemRoundBase
     BlockPos front = pos.add(side.getDirectionVec());
     if(world.isAirBlock(front) && !world.isAirBlock(pos))
     {
-      world.setBlockState(front, Blocks.fire.getDefaultState());
+      world.setBlockState(front, Blocks.FIRE.getDefaultState());
     }
   }
   

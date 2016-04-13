@@ -108,7 +108,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
     GlStateManager.enableBlend();
     GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     GlStateManager.disableAlpha();
-    bindTexture(TextureMap.locationBlocksTexture);
+    bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     GlStateManager.resetColor();
     GL11.glTranslatef((float) x, (float) y, (float) z);
     if(te.getStackInSlot(0) != null)

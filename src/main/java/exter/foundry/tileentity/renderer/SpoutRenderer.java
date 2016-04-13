@@ -93,7 +93,7 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.disableAlpha();
       GlStateManager.disableCull();
-      bindTexture(TextureMap.locationBlocksTexture);
+      bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       GlStateManager.resetColor();
       GlStateManager.translate((float) (x + 0.5), (float) y, (float) (z + 0.5));
       switch(te.getWorld().getBlockState(te.getPos()).getValue(BlockRefractorySpout.FACING))

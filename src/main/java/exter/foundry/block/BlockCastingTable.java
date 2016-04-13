@@ -91,7 +91,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
   public BlockCastingTable()
   {
-    super(Material.iron);
+    super(Material.IRON);
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);

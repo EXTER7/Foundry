@@ -155,7 +155,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   @Override
   public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
   {
-    return side != EnumFacing.UP || slot != SLOT_INPUT_A || slot != SLOT_INPUT_B || stack.getItem() == Items.bucket;
+    return side != EnumFacing.UP || slot != SLOT_INPUT_A || slot != SLOT_INPUT_B || stack.getItem() == Items.BUCKET;
   }
 
   @Override

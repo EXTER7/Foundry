@@ -3,6 +3,7 @@ package exter.foundry.entity;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.item.firearm.ItemFirearm;
+import exter.foundry.sound.FoundrySounds;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -69,14 +70,14 @@ public class EntitySkeletonGun extends EntitySkeleton
     {
       if(!worldObj.isRemote)
       {
-        playSound(SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:shotgun_fire")), 0.9F, 1F);
+        playSound(FoundrySounds.sound_shotgun_fire, 0.9F, 1F);
       }
       ItemFirearm.shoot(new ItemStack(FoundryItems.item_shell), worldObj, this, target, 6, 0.4f,damage);
     } else
     {
       if(!worldObj.isRemote)
       {
-        playSound(SoundEvent.soundEventRegistry.getObject(new ResourceLocation("foundry:revolver_fire")), 0.9F, 1F);
+        playSound(FoundrySounds.sound_shotgun_fire, 0.9F, 1F);
       }
       ItemFirearm.shoot(new ItemStack(FoundryItems.item_round), worldObj, this, target, 1, 0.015f,damage);
     }
@@ -123,7 +124,7 @@ public class EntitySkeletonGun extends EntitySkeleton
 
     for(i = 0; i < r; ++i)
     {
-      dropItem(Items.bone, 1);
+      dropItem(Items.BONE, 1);
     }
 
     r = rand.nextInt(100);

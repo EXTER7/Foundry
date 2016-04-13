@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 public abstract class GuiFoundry extends GuiContainer
 {
-  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
+  private static final ResourceLocation BLOCK_TEXTURE = TextureMap.LOCATION_BLOCKS_TEXTURE;
 
   public GuiFoundry(Container container)
   {

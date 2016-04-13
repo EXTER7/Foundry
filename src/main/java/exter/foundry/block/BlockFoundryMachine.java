@@ -92,7 +92,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
 
   public BlockFoundryMachine()
   {
-    super(Material.iron);
+    super(Material.IRON);
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);

@@ -111,7 +111,7 @@ public class ItemRevolver extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ui_button_click, SoundCategory.PLAYERS, 0.3F, 1.5F);
+          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 0.3F, 1.5F);
         }        
       }
       setPosition(stack,(position + 1) % 8);

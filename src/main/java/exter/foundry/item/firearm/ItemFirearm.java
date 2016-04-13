@@ -121,7 +121,7 @@ public abstract class ItemFirearm extends Item
         {
           case BLOCK:
             IBlockState b = world.getBlockState(obj.getBlockPos());
-            if(round.breaksGlass(round_item) && b.getMaterial() == Material.glass && b.getBlockHardness(world, obj.getBlockPos()) < 0.4)
+            if(round.breaksGlass(round_item) && b.getMaterial() == Material.GLASS && b.getBlockHardness(world, obj.getBlockPos()) < 0.4)
             {
               world.playAuxSFXAtEntity(null, 2001, obj.getBlockPos(), Block.getIdFromBlock(b.getBlock())+(b.getBlock().getMetaFromState(b)<<12));
               if(!world.isRemote)

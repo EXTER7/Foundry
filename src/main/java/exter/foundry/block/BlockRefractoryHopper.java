@@ -99,7 +99,7 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
 
   public BlockRefractoryHopper()
   {
-    super(Material.iron);
+    super(Material.IRON);
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);

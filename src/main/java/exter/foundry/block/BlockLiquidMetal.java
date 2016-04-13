@@ -33,7 +33,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
 
   public BlockLiquidMetal(Fluid fluid, String name, Object solid_block)
   {
-    super(fluid, Material.lava);
+    super(fluid, Material.LAVA);
     setLightOpacity(0);
     setLightLevel(1.0f);
     solid = solid_block;
@@ -78,7 +78,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
     double dy;
     double dz;
 
-    if(world.getBlockState(pos.add(0,1,0)).getMaterial() == Material.air && !world.getBlockState(pos.add(0,1,0)).isOpaqueCube())
+    if(world.getBlockState(pos.add(0,1,0)).getMaterial() == Material.AIR && !world.getBlockState(pos.add(0,1,0)).isOpaqueCube())
     {
       if(rand.nextInt(100) == 0)
       {
@@ -86,12 +86,12 @@ public class BlockLiquidMetal extends BlockFluidClassic
         dy = (double) pos.getY() +  state.getBoundingBox(world, pos).maxY;
         dz = (double) ((float) pos.getZ() + rand.nextFloat());
         world.spawnParticle(EnumParticleTypes.LAVA, dx, dy, dz, 0.0D, 0.0D, 0.0D);
-        world.playSound(dx, dy, dz, SoundEvents.block_lava_pop, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+        world.playSound(dx, dy, dz, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
 
       if(rand.nextInt(200) == 0)
       {
-        world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.block_lava_ambient, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+        world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
       }
     }
 
@@ -219,11 +219,11 @@ public class BlockLiquidMetal extends BlockFluidClassic
   private boolean tryToHarden(World world, BlockPos pos, BlockPos npos)
   {
     //Check if block is in contact with water.
-    if(world.getBlockState(npos).getMaterial() == Material.water)
+    if(world.getBlockState(npos).getMaterial() == Material.WATER)
     {
       int i;
       world.setBlockState(pos, solid_state);
-      world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.block_lava_extinguish, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f, false);
+      world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f, false);
       for (i = 0; i < 8; i++)
       {
         world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)pos.getX() + Math.random(), (double)pos.getY() + 1.2D, (double)pos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);

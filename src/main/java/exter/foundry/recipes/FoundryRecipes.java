@@ -109,11 +109,11 @@ public class FoundryRecipes
       //final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
 
       int temp = 1550;
-      Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.glass));
-      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.sand), new FluidStack(liquid_glass,1000),temp,250);
-      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.glass), new FluidStack(liquid_glass,1000),temp,250);
-      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.glass_pane), new FluidStack(liquid_glass,375),temp,250);
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.glass), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
+      Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.GLASS));
+      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.SAND), new FluidStack(liquid_glass,1000),temp,250);
+      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),temp,250);
+      MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS_PANE), new FluidStack(liquid_glass,375),temp,250);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
       /*
       for(EnumDyeColor dye:EnumDyeColor.values())
       {
@@ -149,7 +149,7 @@ public class FoundryRecipes
     MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustRedstone"), new FluidStack(liquid_redstone,100));
     MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustGlowstone"), new FluidStack(liquid_glowstone,250),liquid_glowstone.getTemperature(),90);
     MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustEnderpearl"), new FluidStack(liquid_enderpearl,250),liquid_enderpearl.getTemperature(),75);
-    MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.ender_pearl), new FluidStack(liquid_enderpearl,250),liquid_enderpearl.getTemperature(),75);
+    MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.ENDER_PEARL), new FluidStack(liquid_enderpearl,250),liquid_enderpearl.getTemperature(),75);
 
     MeltingRecipeManager.instance.addRecipe(new OreMatcher("blockRedstone"), new FluidStack(liquid_redstone,900));
     MeltingRecipeManager.instance.addRecipe(new OreMatcher("blockGlowstone"), new FluidStack(liquid_glowstone,1000),liquid_glowstone.getTemperature(),90);
@@ -417,8 +417,8 @@ public class FoundryRecipes
     ItemStack mold_block = FoundryItems.mold(ItemMold.SubItem.BLOCK);
     ItemStack mold_gear = FoundryItems.mold(ItemMold.SubItem.GEAR);
     ItemStack mold_rod = FoundryItems.mold(ItemMold.SubItem.ROD);
-    ItemStack extra_sticks1 = new ItemStack(Items.stick,1);
-    ItemStack extra_sticks2 = new ItemStack(Items.stick,2);
+    ItemStack extra_sticks1 = new ItemStack(Items.STICK,1);
+    ItemStack extra_sticks2 = new ItemStack(Items.STICK,2);
 
 
     for(ItemMold.SubItem sub:ItemMold.SubItem.values())
@@ -521,32 +521,32 @@ public class FoundryRecipes
           });
 
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_chestplate), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_chestplate), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_CHESTPLATE), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_CHESTPLATE), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_pickaxe), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_pickaxe), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_PICKAXE), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_PICKAXE), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_axe), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_axe), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_AXE), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_AXE), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_shovel), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_shovel), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_SHOVEL), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_SHOVEL), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_sword), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_sword), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_SWORD), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_SWORD), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_hoe), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_hoe), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_HOE), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_HOE), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_leggings), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_leggings), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_LEGGINGS), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_LEGGINGS), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_helmet), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_helmet), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_HELMET), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_HELMET), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
 
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.iron_boots), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.golden_boots), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_BOOTS), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+      CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_BOOTS), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
 
     }
     
@@ -750,27 +750,27 @@ public class FoundryRecipes
         new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2), mold_shotgun_frame, null);
 
 
-    ItemStack redstone_stack = new ItemStack(Items.redstone);
-    ItemStack furnace_stack = new ItemStack(Blocks.furnace);
-    ItemStack clay_stack = new ItemStack(Items.clay_ball);
-    ItemStack sand_stack = new ItemStack(Blocks.sand,1,-1);
-    ItemStack clayblock_stack = new ItemStack(Blocks.clay, 1, -1);
+    ItemStack redstone_stack = new ItemStack(Items.REDSTONE);
+    ItemStack furnace_stack = new ItemStack(Blocks.FURNACE);
+    ItemStack clay_stack = new ItemStack(Items.CLAY_BALL);
+    ItemStack sand_stack = new ItemStack(Blocks.SAND,1,-1);
+    ItemStack clayblock_stack = new ItemStack(Blocks.CLAY, 1, -1);
     ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING);
-    ItemStack piston_stack = new ItemStack(Blocks.piston);
-    ItemStack goldnugget_stack = new ItemStack(Items.gold_nugget);
-    ItemStack cauldron_stack = new ItemStack(Items.cauldron);
-    ItemStack chest_stack = new ItemStack(Blocks.chest);
-    ItemStack paper_stack = new ItemStack(Items.paper);
+    ItemStack piston_stack = new ItemStack(Blocks.PISTON);
+    ItemStack goldnugget_stack = new ItemStack(Items.GOLD_NUGGET);
+    ItemStack cauldron_stack = new ItemStack(Items.CAULDRON);
+    ItemStack chest_stack = new ItemStack(Blocks.CHEST);
+    ItemStack paper_stack = new ItemStack(Items.PAPER);
     ItemStack refclay_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
     ItemStack refclay_small_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL);
     ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY,8);
     ItemStack refbrick_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK);
     ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL);
-    ItemStack glasspane_stack = new ItemStack(Blocks.glass_pane);
+    ItemStack glasspane_stack = new ItemStack(Blocks.GLASS_PANE);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.empty(2);
-    ItemStack comparator_stack = new ItemStack(Items.comparator);
-    ItemStack repeater_stack = new ItemStack(Items.repeater);
-    ItemStack bucket_stack = new ItemStack(Items.bucket);
+    ItemStack comparator_stack = new ItemStack(Items.COMPARATOR);
+    ItemStack repeater_stack = new ItemStack(Items.REPEATER);
+    ItemStack bucket_stack = new ItemStack(Items.BUCKET);
 
     GameRegistry.addRecipe(refractoryclay8_stack,
         "CCC",
@@ -835,7 +835,7 @@ public class FoundryRecipes
         FoundryBlocks.block_casting_table.asItemStack(EnumTable.INGOT),
         "BMB",
         " S ",
-        'S', new ItemStack(Blocks.stone_slab),
+        'S', new ItemStack(Blocks.STONE_SLAB),
         'B', refbrick_stack,
         'M', mold_ingot);
 
@@ -843,7 +843,7 @@ public class FoundryRecipes
         FoundryBlocks.block_casting_table.asItemStack(EnumTable.PLATE),
         "BMB",
         " S ",
-        'S', new ItemStack(Blocks.stone_slab),
+        'S', new ItemStack(Blocks.STONE_SLAB),
         'B', refbrick_stack,
         'M', mold_plate);
 
@@ -851,7 +851,7 @@ public class FoundryRecipes
         FoundryBlocks.block_casting_table.asItemStack(EnumTable.ROD),
         "BMB",
         " S ",
-        'S', new ItemStack(Blocks.stone_slab),
+        'S', new ItemStack(Blocks.STONE_SLAB),
         'B', refbrick_stack,
         'M', mold_rod);
 
@@ -862,7 +862,7 @@ public class FoundryRecipes
         "R ",
         'R', "rodIron",
         'B', refbrick_stack,
-        'L', new ItemStack(Blocks.lever)));
+        'L', new ItemStack(Blocks.LEVER)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER),
@@ -917,8 +917,8 @@ public class FoundryRecipes
         "RCR",
         " B ",
         'H', new ItemStack(FoundryBlocks.block_refractory_hopper), 
-        'B', Items.bucket, 
-        'R', Items.redstone,
+        'B', Items.BUCKET, 
+        'R', Items.REDSTONE,
         'C', casing_stack,
         'G', "gearBronze"));
 
@@ -961,8 +961,8 @@ public class FoundryRecipes
         "BSB",
         "BFB",
         'B', refbrick_stack,
-        'W', new ItemStack(Blocks.crafting_table),
-        'S', new ItemStack(Blocks.stone_slab),
+        'W', new ItemStack(Blocks.CRAFTING_TABLE),
+        'S', new ItemStack(Blocks.STONE_SLAB),
         'F', furnace_stack);
 
     GameRegistry.addRecipe(
@@ -1048,7 +1048,7 @@ public class FoundryRecipes
 
     GameRegistry.addShapelessRecipe(
         new ItemStack(FoundryItems.item_round_poison,2),
-        Items.spider_eye, 
+        Items.SPIDER_EYE, 
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
   }

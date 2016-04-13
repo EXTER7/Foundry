@@ -102,7 +102,7 @@ public class ItemShotgun extends ItemFirearm
       {
         if(!world.isRemote)
         {
-          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ui_button_click, SoundCategory.PLAYERS, 0.4F, 1.5F);
+          world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 0.4F, 1.5F);
         }        
       }
     }    

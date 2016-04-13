@@ -27,7 +27,7 @@ public class BlockMoldStation extends BlockFoundrySidedMachine
 {
   public BlockMoldStation()
   {
-    super(Material.rock);
+    super(Material.ROCK);
     setUnlocalizedName("foundry.moldStation");
     setHardness(1.0F);
     setResistance(8.0F);

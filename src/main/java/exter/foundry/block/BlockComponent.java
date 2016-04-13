@@ -106,7 +106,7 @@ public class BlockComponent extends Block implements IBlockVariants
   
   public BlockComponent()
   {
-    super(Material.rock);
+    super(Material.ROCK);
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);

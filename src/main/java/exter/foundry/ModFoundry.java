@@ -61,7 +61,7 @@ import exter.foundry.tileentity.TileEntityRefractorySpout;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1858,);required-after:substratum@[1.3.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1863,);required-after:substratum@[1.3.0.0,)"
 )
 public class ModFoundry
 {

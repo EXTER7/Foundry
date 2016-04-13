@@ -158,7 +158,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
   {
     FluidStack fluid = getFluid(stack);
-    RayTraceResult obj = getMovingObjectPositionFromPlayer(world, player, fluid == null || fluid.amount == 0);
+    RayTraceResult obj = rayTrace(world, player, fluid == null || fluid.amount == 0);
 
     
     if(obj == null)
@@ -245,13 +245,13 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
               world.destroyBlock(pos, true);
             }
             Block block = drained.getFluid().getBlock();
-            if(block == Blocks.water)
+            if(block == Blocks.WATER)
             {
-              block = Blocks.flowing_water;
+              block = Blocks.FLOWING_WATER;
             }
-            if(block == Blocks.lava)
+            if(block == Blocks.LAVA)
             {
-              block = Blocks.flowing_lava;
+              block = Blocks.FLOWING_LAVA;
             }
             world.setBlockState(pos, block.getDefaultState());
           }
@@ -297,7 +297,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
-        if(state.getMaterial() == Material.water && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+        if(state.getMaterial() == Material.WATER && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
@@ -313,7 +313,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         }
 
-        if(state.getMaterial() == Material.lava && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
+        if(state.getMaterial() == Material.LAVA && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
           FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
           if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)

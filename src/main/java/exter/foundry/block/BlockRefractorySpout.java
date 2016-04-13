@@ -34,7 +34,7 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   
   public BlockRefractorySpout()
   {
-    super(Material.rock);
+    super(Material.ROCK);
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);

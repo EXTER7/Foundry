@@ -39,7 +39,7 @@ public class ItemRoundPoison extends ItemRoundBase
   @Override
   public void onBulletDamagedLivingEntity(ItemStack round, EntityLivingBase entity,int count)
   {
-    entity.addPotionEffect(new PotionEffect(Potion.potionRegistry.getObject(new ResourceLocation("poison")), 400));
+    entity.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("poison")), 400));
   }
   
   @Override

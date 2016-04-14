@@ -6,6 +6,7 @@ import exter.foundry.integration.minetweaker.MTAtomizerHandler;
 import exter.foundry.integration.minetweaker.MTCastingHandler;
 import exter.foundry.integration.minetweaker.MTInfuserHandler;
 import exter.foundry.integration.minetweaker.MTMeltingHandler;
+import exter.foundry.integration.minetweaker.MTMoldStationHandler;
 import exter.foundry.integration.minetweaker.orestack.OreStackBracketHandler;
 import minetweaker.MineTweakerAPI;
 import net.minecraftforge.common.config.Configuration;
@@ -35,6 +36,7 @@ public class ModIntegrationMinetweaker implements IModIntegration
     MineTweakerAPI.registerClass(MTAlloyFurnaceHandler.class);
     MineTweakerAPI.registerClass(MTAtomizerHandler.class);
     MineTweakerAPI.registerClass(MTInfuserHandler.class);
+    MineTweakerAPI.registerClass(MTMoldStationHandler.class);
   }
 
   @Optional.Method(modid = "MineTweaker3")

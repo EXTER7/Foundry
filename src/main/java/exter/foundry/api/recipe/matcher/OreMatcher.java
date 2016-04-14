@@ -38,6 +38,11 @@ public class OreMatcher implements IItemMatcher
   {
     return amount;
   }
+  
+  public String getOreName()
+  {
+    return match;
+  }
 
   @Override
   public List<ItemStack> getItems()

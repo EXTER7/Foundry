@@ -28,6 +28,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
+import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -90,7 +91,8 @@ public class ModFoundry
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
+
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;
     

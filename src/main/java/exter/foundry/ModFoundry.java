@@ -29,6 +29,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.integration.ModIntegrationMinetweaker;
+import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -62,7 +63,7 @@ import exter.foundry.tileentity.TileEntityRefractorySpout;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1863,);required-after:substratum@[1.3.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1864,);required-after:substratum@[1.3.0.0,)"
 )
 public class ModFoundry
 {
@@ -92,6 +93,7 @@ public class ModFoundry
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
 
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;

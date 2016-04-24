@@ -37,7 +37,7 @@ public class ContainerMoldStation extends Container
     int i,j;
 
     
-    addSlotToContainer(new SlotFiltered(te_station,TileEntityMoldStation.SLOT_BLOCK,8,16,FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CLAYBLOCK)));
+    addSlotToContainer(new SlotFiltered(te_station,TileEntityMoldStation.SLOT_BLOCK,8,16,FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.REFCLAYBLOCK)));
     addSlotToContainer(new SlotOutput(te_station,TileEntityMoldStation.SLOT_CLAY,8,76));
     addSlotToContainer(new SlotOutput(te_station,TileEntityMoldStation.SLOT_OUTPUT,147,38));
     addSlotToContainer(new Slot(te_station,TileEntityMoldStation.SLOT_FUEL,119,76));

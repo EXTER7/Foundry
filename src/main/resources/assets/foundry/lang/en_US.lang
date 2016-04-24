@@ -233,6 +233,7 @@ itemGroup.foundryFirearms=Foundry - Firearms
 
 tile.foundry.componentBlockCasingRefractory.name=Refractory Casing
 tile.foundry.componentBlockRefractoryClay.name=Refractory Clay Block
+tile.foundry.componentBlockCasingInferno.name=Inferno Casing
 
 tile.foundry.machine.crucible.name=Melting Crucible
 tile.foundry.machine.caster.name=Metal Caster
@@ -285,6 +286,8 @@ item.foundry.componentShotgunFrame.name=Shotgun Frame
 item.foundry.componentBulletSteel.name=Steel Bullet
 item.foundry.componentPelletSteel.name=Steel Pellet
 item.foundry.componentSmallRefractoryClay.name=Small Piece of Refractory Clay
+item.foundry.componentInfernoClay.name=Inferno Clay
+item.foundry.componentInfernoBrick.name=Inferno Brick
 
 item.foundry.moldIngot.name=Ingot Mold
 item.foundry.moldPlate.name=Plate Mold

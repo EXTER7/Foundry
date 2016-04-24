@@ -754,8 +754,10 @@ public class FoundryRecipes
     ItemStack furnace_stack = new ItemStack(Blocks.FURNACE);
     ItemStack clay_stack = new ItemStack(Items.CLAY_BALL);
     ItemStack sand_stack = new ItemStack(Blocks.SAND,1,-1);
+    ItemStack soulsand_stack = new ItemStack(Blocks.SOUL_SAND);
     ItemStack clayblock_stack = new ItemStack(Blocks.CLAY, 1, -1);
-    ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING);
+    ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.REFCASING);
+    ItemStack casing_inferno_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.INFCASING);
     ItemStack piston_stack = new ItemStack(Blocks.PISTON);
     ItemStack goldnugget_stack = new ItemStack(Items.GOLD_NUGGET);
     ItemStack cauldron_stack = new ItemStack(Items.CAULDRON);
@@ -771,6 +773,8 @@ public class FoundryRecipes
     ItemStack comparator_stack = new ItemStack(Items.COMPARATOR);
     ItemStack repeater_stack = new ItemStack(Items.REPEATER);
     ItemStack bucket_stack = new ItemStack(Items.BUCKET);
+    ItemStack infernoclay8_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY,8);
+    ItemStack infbrick_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOBRICK);
 
     GameRegistry.addRecipe(refractoryclay8_stack,
         "CCC",
@@ -779,7 +783,7 @@ public class FoundryRecipes
         'C', clay_stack,
         'S', sand_stack);
 
-    GameRegistry.addRecipe(FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CLAYBLOCK),
+    GameRegistry.addRecipe(FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.REFCLAYBLOCK),
         "CC",
         "CC",
         'C', refclay_stack);
@@ -789,12 +793,23 @@ public class FoundryRecipes
         "CC",
         'C', refclay_small_stack);
 
+    GameRegistry.addRecipe(new ShapedOreRecipe(infernoclay8_stack,
+        "COC",
+        "CSC",
+        "COC",
+        'C', refclay_stack,
+        'S', soulsand_stack,
+        'O', "dustObsidian"));
+
     GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
 
     GameRegistry.addSmelting(
         FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY),
         refbrick_stack, 0.0f);
 
+    GameRegistry.addSmelting(
+        FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY),
+        infbrick_stack, 0.0f);
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         emptycontainer2_stack,
@@ -821,6 +836,14 @@ public class FoundryRecipes
         "IBI",
         'I', "plateIron",
         'B', refbrick_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        casing_inferno_stack,
+        "IBI",
+        "B B",
+        "IBI",
+        'I', "plateSteel",
+        'B', infbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_burner_heater),

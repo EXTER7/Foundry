@@ -23,8 +23,9 @@ public class BlockComponent extends Block implements IBlockVariants
 
   static public enum EnumVariant implements IStringSerializable
   {
-    CASING(0, "casing_refractory", "componentBlockCasingRefractory"),
-    CLAYBLOCK(1, "block_refractoryclay", "componentBlockRefractoryClay");
+    REFCASING(0, "casing_refractory", "componentBlockCasingRefractory"),
+    REFCLAYBLOCK(1, "block_refractoryclay", "componentBlockRefractoryClay"),
+    INFCASING(2, "casing_inferno", "componentBlockCasingInferno");
 
     public final int id;
     public final String name;

@@ -31,7 +31,9 @@ public class ItemComponent extends Item
     SHOTGUN_FRAME(13,"componentShotgunFrame"),
     AMMO_BULLET_STEEL(14,"componentBulletSteel"),
     AMMO_PELLET_STEEL(15,"componentPelletSteel"),
-    REFRACTORYCLAY_SMALL(16,"componentSmallRefractoryClay");
+    REFRACTORYCLAY_SMALL(16,"componentSmallRefractoryClay"),
+    INFERNOCLAY(17,"componentInfernoClay"),
+    INFERNOBRICK(18,"componentInfernoBrick");
     
     public final int id;
     public final String name;

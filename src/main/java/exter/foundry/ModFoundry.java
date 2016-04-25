@@ -54,6 +54,7 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMeltingCrucible;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleAdvanced;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
@@ -63,7 +64,7 @@ import exter.foundry.tileentity.TileEntityRefractorySpout;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.0.1864,);required-after:substratum@[1.3.0.0,)"
+  dependencies = "required-after:Forge@[12.16.0.1865,);required-after:substratum@[1.3.0.0,)"
 )
 public class ModFoundry
 {
@@ -148,6 +149,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityCastingTablePlate.class, "Foundry_CastingTable_Plate");
     GameRegistry.registerTileEntity(TileEntityCastingTableRod.class, "Foundry_CastingTable_Rod");
     GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, "Foundry_RefractorySpout");
+    GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
 
 
     FoundryRecipes.init();

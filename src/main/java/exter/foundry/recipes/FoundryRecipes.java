@@ -78,9 +78,9 @@ public class FoundryRecipes
     liquid_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "Steel", 1850, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Cupronickel", 1750, 15);
     liquid_lead = LiquidMetalRegistry.instance.registerLiquidMetal( "Lead", 650, 1);  
-    liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2050, 15);
+    liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2100, 15);
     liquid_signalum = LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
-    liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 2500, 15);
+    liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 1250, 15);
     liquid_enderium = LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
 
     LiquidMetalRegistry.instance.registerLiquidMetal( "Aluminum", 1100, 15);  
@@ -905,6 +905,16 @@ public class FoundryRecipes
         'B', refbrick_stack,
         'I', "plateCopper",
         'C', casing_stack,
+        'A', cauldron_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.ADVCRUCIBLE),
+        "BAB",
+        "BCB",
+        "BIB",
+        'B', infbrick_stack,
+        'I', "plateSilver",
+        'C', casing_inferno_stack,
         'A', cauldron_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(

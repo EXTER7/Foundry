@@ -18,9 +18,8 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,IFluidHandler
 {
-  static public final int HEAT_MAX = 500000;
-  static public final int HEAT_MIN = 29000;
-  static public final int HEAT_LOSS_RATE = 500;
+  static public final int TEMP_MIN = 29000;
+  static public final int TEMP_LOSS_RATE = 750;
   
   static public final int SMELT_TIME = 5000000;
 
@@ -28,8 +27,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
   static public final int INVENTORY_CONTAINER_FILL = 2;
-  
-  static private final int MAX_HEAT_RECEIVE = getMaxHeatRecieve(HEAT_MAX);
 
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
@@ -43,12 +40,12 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   public TileEntityMeltingCrucible()
   {
     super();
-    tank = new FluidTank(FoundryAPI.ICF_TANK_CAPACITY);
+    tank = new FluidTank(FoundryAPI.CRUCIBLE_TANK_CAPACITY);
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = 0;
-    heat = HEAT_MIN;
+    heat = TEMP_MIN;
     
     melt_point = 0;
     
@@ -77,13 +74,14 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     if(compund.hasKey("heat"))
     {
       heat = compund.getInteger("heat");
-      if(heat < HEAT_MIN)
+      if(heat < TEMP_MIN)
       {
-        heat = HEAT_MIN;
+        heat = TEMP_MIN;
       }
-      if(heat > HEAT_MAX)
+      int temp_max = getMaxTemperature();
+      if(heat > temp_max)
       {
-        heat = HEAT_MAX;
+        heat = temp_max;
       }
     }
   }
@@ -238,11 +236,7 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     }
   }
 
-  static public int getEnergyPerTickNeeded(int heat)
-  {
-    return heat * 3000 / HEAT_MAX + 25;
-  }
-  
+ 
   private IHeatProvider getHeatProvider()
   {
     TileEntity te = worldObj.getTileEntity(getPos().down());
@@ -259,6 +253,8 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     int last_progress = progress;
     int last_melt_point = melt_point;
     int last_heat = heat;
+    
+    int temp_max = getMaxTemperature();
     
     checkCurrentRecipe();
     if(current_recipe == null)
@@ -291,17 +287,17 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
 
       if(heater != null)
       {
-        heat += heater.provideHeat(EnumFacing.UP, MAX_HEAT_RECEIVE);
+        heat += heater.provideHeat(EnumFacing.UP, getMaxHeatRecieve(temp_max));
       }
     }
-    heat -= (heat - HEAT_MIN) / HEAT_LOSS_RATE;
-    if(heat > HEAT_MAX)
+    heat -= (heat - TEMP_MIN) / getTemperatureLossRate();
+    if(heat > temp_max)
     {
-      heat = HEAT_MAX;
+      heat = temp_max;
     }
-    if(heat < HEAT_MIN)
+    if(heat < TEMP_MIN)
     {
-      heat = HEAT_MIN;
+      heat = TEMP_MIN;
     }
     if(last_heat / 100 != heat / 100)
     {
@@ -347,8 +343,19 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   
   static public int getMaxHeatRecieve(int max_heat)
   {
-    return (max_heat - HEAT_MIN) / HEAT_LOSS_RATE;
+    return (max_heat - TEMP_MIN) / TEMP_LOSS_RATE;
   }
+  
+  public int getMaxTemperature()
+  {
+    return 200000;
+  }
+  
+  protected int getTemperatureLossRate()
+  {
+    return TEMP_LOSS_RATE;
+  }
+  
   
 //  @Optional.Method(modid = "IC2")
 //  @Override

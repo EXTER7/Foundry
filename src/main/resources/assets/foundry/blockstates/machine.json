@@ -7,7 +7,8 @@
     "machine=infuser": { "model": "foundry:machineInfuser" },
     "machine=router": { "model": "foundry:machineMaterialRouter" },
     "machine=atomizer": { "model": "foundry:machineAtomizer" },
-    "machine=heater_induction": { "model": "foundry:machineInductionHeater" }
+    "machine=heater_induction": { "model": "foundry:machineInductionHeater" },
+    "machine=crucible_advanced": { "model": "foundry:machineCrucibleAdvanced" }
   }
 }
 

@@ -29,7 +29,7 @@ public class FoundryAPI
   /**
    * Tank capacity for machines.
    */
-  static public final int ICF_TANK_CAPACITY = 6000;
+  static public final int CRUCIBLE_TANK_CAPACITY = 6000;
   static public final int CASTER_TANK_CAPACITY = 6000;
   static public final int INFUSER_TANK_CAPACITY = 5000;
   static public final int ALLOYMIXER_TANK_CAPACITY = 2000;

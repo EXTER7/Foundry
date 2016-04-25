@@ -56,7 +56,7 @@ public class GuiMeltingCrucible extends GuiFoundry
   private static final int RSMODE_TEXTURE_X = 176;
   private static final int RSMODE_TEXTURE_Y = 100;
 
-  private TileEntityMeltingCrucible te_icf;
+  private TileEntityMeltingCrucible te_crucible;
   private GuiButtonFoundry button_mode;
 
   public GuiMeltingCrucible(TileEntityMeltingCrucible ms, EntityPlayer player)
@@ -64,7 +64,7 @@ public class GuiMeltingCrucible extends GuiFoundry
     super(new ContainerMeltingCrucible(ms, player));
     allowUserInput = false;
     ySize = 166;
-    te_icf = ms;
+    te_crucible = ms;
   }
 
   @Override
@@ -88,8 +88,8 @@ public class GuiMeltingCrucible extends GuiFoundry
 
     
     //Draw heat bar.
-    int heat = (te_icf.getHeat() - TileEntityMeltingCrucible.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN);
-    int melt_point = (te_icf.getMeltingPoint() - TileEntityMeltingCrucible.HEAT_MIN) * HEAT_BAR_WIDTH / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN);
+    int heat = (te_crucible.getHeat() - TileEntityMeltingCrucible.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityMeltingCrucible.TEMP_MIN);
+    int melt_point = (te_crucible.getMeltingPoint() - TileEntityMeltingCrucible.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityMeltingCrucible.TEMP_MIN);
     if(heat > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
@@ -100,13 +100,13 @@ public class GuiMeltingCrucible extends GuiFoundry
     }
 
     //Draw progress bar.
-    int progress = te_icf.getProgress() * PROGRESS_WIDTH / TileEntityMeltingCrucible.SMELT_TIME;
+    int progress = te_crucible.getProgress() * PROGRESS_WIDTH / TileEntityMeltingCrucible.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
     }
     
-    displayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_icf.getTank(0));
+    displayTank(window_x, window_y, TANK_X, TANK_Y, TANK_HEIGHT,TANK_OVERLAY_X, TANK_OVERLAY_Y, te_crucible.getTank(0));
   }
 
   @Override
@@ -119,26 +119,26 @@ public class GuiMeltingCrucible extends GuiFoundry
     if(isPointInRegion(TANK_X,TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      addTankTooltip(currenttip, mousex, mousey, te_icf.getTank(0));
+      addTankTooltip(currenttip, mousex, mousey, te_crucible.getTank(0));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
 
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      int heat = te_icf.getHeat() / 100;
-      int melt_point = te_icf.getMeltingPoint() / 100;
-      currenttip.add("Heat: " + String.valueOf(heat) + " K");
+      int heat = te_crucible.getHeat() / 100;
+      int melt_point = te_crucible.getMeltingPoint() / 100;
+      currenttip.add("Temperature: " + String.valueOf(heat) + " °K");
       if(melt_point > 0)
       {
-        currenttip.add("Melt: " + String.valueOf(melt_point) + " K");
+        currenttip.add("Melt: " + String.valueOf(melt_point) + " °K");
       }
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      currenttip.add(getRedstoenModeText(te_icf.getRedstoneMode()));
+      currenttip.add(getRedstoenModeText(te_crucible.getRedstoneMode()));
       drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
     }
   }
@@ -169,19 +169,19 @@ public class GuiMeltingCrucible extends GuiFoundry
   {
     if(button.id == button_mode.id)
     {
-      switch(te_icf.getRedstoneMode())
+      switch(te_crucible.getRedstoneMode())
       {
         case RSMODE_IGNORE:
-          te_icf.setRedstoneMode(RedstoneMode.RSMODE_OFF);
+          te_crucible.setRedstoneMode(RedstoneMode.RSMODE_OFF);
           break;
         case RSMODE_OFF:
-          te_icf.setRedstoneMode(RedstoneMode.RSMODE_ON);
+          te_crucible.setRedstoneMode(RedstoneMode.RSMODE_ON);
           break;
         case RSMODE_ON:
-          te_icf.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          te_crucible.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
           break;
         case RSMODE_PULSE:
-          te_icf.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
+          te_crucible.setRedstoneMode(RedstoneMode.RSMODE_IGNORE);
           break;
       }
     }

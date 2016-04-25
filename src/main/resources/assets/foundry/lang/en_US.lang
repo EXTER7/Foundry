@@ -236,6 +236,7 @@ tile.foundry.componentBlockRefractoryClay.name=Refractory Clay Block
 tile.foundry.componentBlockCasingInferno.name=Inferno Casing
 
 tile.foundry.machine.crucible.name=Melting Crucible
+tile.foundry.machine.crucible_advanced.name=Advanced Melting Crucible
 tile.foundry.machine.caster.name=Metal Caster
 tile.foundry.machine.alloymixer.name=Alloy Mixer
 tile.foundry.machine.infuser.name=Metal Infuser
@@ -252,7 +253,8 @@ tile.foundry.moldStation.name=Mold Crafting Station
 tile.foundry.burnerHeater.name=Burner Heater
 
 
-tooltip.foundry.machine.crucible=Melts ore and metals. Must be placed above a heater block.
+tooltip.foundry.machine.crucible=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 2000 °K.
+tooltip.foundry.machine.crucible_advanced=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 4000 °K.
 tooltip.foundry.machine.caster=Casts items from liquid metal using mold.//Requires RF to operate.
 tooltip.foundry.machine.alloymixer=Mixes liquid metals to make alloys.//Requires RF to operate.
 tooltip.foundry.machine.infuser=Infuses items into liquid metals.//Requires RF to operate.

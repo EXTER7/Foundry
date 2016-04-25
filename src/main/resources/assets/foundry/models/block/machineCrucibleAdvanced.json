@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/crucible_advanced_sides",
+        "up": "foundry:blocks/crucible_advanced_top",
+        "down": "foundry:blocks/crucible_advanced_bottom",
+        "east": "foundry:blocks/crucible_advanced_sides",
+        "west": "foundry:blocks/crucible_advanced_sides",
+        "north": "foundry:blocks/crucible_advanced_sides",
+        "south": "foundry:blocks/crucible_advanced_sides"
+    }
+}
+

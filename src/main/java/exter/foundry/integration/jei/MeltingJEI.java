@@ -52,7 +52,7 @@ public class MeltingJEI
       ResourceLocation background_location = new ResourceLocation("foundry", "textures/gui/metalsmelter.png");
 
       heat = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
-          (melting_point * 100 - TileEntityMeltingCrucible.HEAT_MIN) * 54 / (TileEntityMeltingCrucible.HEAT_MAX - TileEntityMeltingCrucible.HEAT_MIN), 12);
+          (melting_point * 100 - TileEntityMeltingCrucible.TEMP_MIN) * 54 / (500000 - TileEntityMeltingCrucible.TEMP_MIN), 12);
 
     }
 
@@ -95,7 +95,7 @@ public class MeltingJEI
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
       heat.draw(minecraft,11,41);
-      minecraft.fontRendererObj.drawString(melting_point + " K", 14, 28, 0);
+      minecraft.fontRendererObj.drawString(melting_point + " °K", 14, 28, 0);
     }
 
     @Override
@@ -177,7 +177,7 @@ public class MeltingJEI
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
       guiItemStacks.init(0, true, 24, 6);
-      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.ICF_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }

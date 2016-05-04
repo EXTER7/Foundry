@@ -1,5 +1,7 @@
 package exter.foundry.integration.jei;
 
+import exter.foundry.block.BlockFoundryMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMeltingCrucible;
@@ -13,6 +15,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
+import net.minecraft.item.ItemStack;
 
 @JEIPlugin
 public class JEIFoundryPlugin implements IModPlugin
@@ -72,6 +75,15 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerMoldStation.SLOTS_TE_SIZE, 
         ContainerMoldStation.SLOTS_INVENTORY, 36);
 
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CRUCIBLE), "foundry.melting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ADVCRUCIBLE), "foundry.melting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CASTER), "foundry.casting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ALLOYMIXER), "foundry.alloymixer");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.INFUSER), "foundry.infuser");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ATOMIZER), "foundry.atomizer");
+    registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_mold_station), "foundry.mold");
+    registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_alloy_furnace), "foundry.alloyfurnace");
+    
     registry.addRecipes(AlloyFurnaceJEI.getRecipes(helpers));
     registry.addRecipes(MeltingJEI.getRecipes(helpers));
     registry.addRecipes(CastingJEI.getRecipes());

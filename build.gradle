@@ -29,7 +29,7 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.9-12.16.0.1865-1.9"
+    version = "1.9-12.16.1.1887"
     runDir = "eclipse"
     mappings = "snapshot_20160419"
 }
@@ -47,7 +47,7 @@ repositories {
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
-    deobfCompile "mezz.jei:jei_1.9:3.2.11.186"
+    deobfCompile "mezz.jei:jei_1.9:3.3.3.197"
 }
 
 

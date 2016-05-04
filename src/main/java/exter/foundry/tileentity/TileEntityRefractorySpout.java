@@ -19,6 +19,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
 {
   private FluidTank tank;
   private FluidTank fluid_moved;
+  private int pour_length;
   private FluidTankInfo[] tank_info;
   private int next_drain;
   private int next_fill;
@@ -31,11 +32,17 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
 
     tank = new FluidTank(250);
     fluid_moved = new FluidTank(10);
+    pour_length = 0;
     tank_info = new FluidTankInfo[2];
     tank_info[0] = new FluidTankInfo(tank);
     tank_info[1] = new FluidTankInfo(fluid_moved);
   }
 
+  public int getPourLength()
+  {
+    return pour_length;
+  }
+  
   @Override
   public void readFromNBT(NBTTagCompound compund)
   {
@@ -49,6 +56,10 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
     {
       next_fill = compund.getInteger("next_fill");
     }
+    if(compund.hasKey("pour_length"))
+    {
+      pour_length = compund.getInteger("pour_length");
+    }
   }
 
   @Override
@@ -57,6 +68,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
     super.writeToNBT(compound);
     compound.setInteger("next_drain", next_drain);
     compound.setInteger("next_fill", next_fill);
+    compound.setInteger("pour_length", pour_length);
   }
 
   @Override
@@ -179,25 +191,42 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
         // Fill to the bottom
         if(tank.getFluid() != null && tank.getFluid().amount > 0)
         {
-          TileEntity dest = worldObj.getTileEntity(getPos().add(0, -1, 0));
-          if(dest instanceof IFluidHandler)
+          int down = 0;
+          while(true)
           {
-            IFluidHandler hdest = (IFluidHandler) dest;
-            if(hdest.canFill(EnumFacing.UP, tank.getFluid().getFluid()))
+            BlockPos pos = getPos().down(++down);
+            if(pos.getY() < 0)
             {
-              FluidStack drained = tank.drain(10, false);
-              if(drained != null)
+              break;
+            }
+            IBlockState state = worldObj.getBlockState(pos);
+            if(state.getBlock().isAir(state, worldObj, pos))
+            {
+              continue;
+            }
+            TileEntity dest = worldObj.getTileEntity(pos);
+            if(dest instanceof IFluidHandler)
+            {
+              IFluidHandler hdest = (IFluidHandler) dest;
+              if(hdest.canFill(EnumFacing.UP, tank.getFluid().getFluid()))
               {
-                drained.amount = hdest.fill(EnumFacing.UP, drained, false);
-                if(drained.amount > 0)
+                FluidStack drained = tank.drain(10, false);
+                if(drained != null)
                 {
-                  tank.drain(drained.amount, true);
-                  hdest.fill(EnumFacing.UP, drained, true);
-                  updateTank(0);
-                  fluid_moved.setFluid(drained.copy());
+                  drained.amount = hdest.fill(EnumFacing.UP, drained, false);
+                  if(drained.amount > 0)
+                  {
+                    tank.drain(drained.amount, true);
+                    hdest.fill(EnumFacing.UP, drained, true);
+                    updateTank(0);
+                    fluid_moved.setFluid(drained.copy());
+                    pour_length = down - 1;
+                    updateValue("pour_length",pour_length);
+                  }
                 }
               }
             }
+            break;
           }
         }
       }

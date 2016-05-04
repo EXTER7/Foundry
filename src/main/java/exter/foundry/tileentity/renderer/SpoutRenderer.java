@@ -117,7 +117,7 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       BlockPos pos = te.getPos();
       if(pos.getY() > 0)
       {
-        pos = pos.down();
+        pos = pos.down(te.getPourLength() + 1);
         World world = te.getWorld();
         IBlockState state = world.getBlockState(pos);
         if(state.getBlock() instanceof ISpoutPourDepth)
@@ -148,12 +148,21 @@ public class SpoutRenderer extends TileEntitySpecialRenderer<TileEntityRefractor
       drawQuad(EnumFacing.WEST, texture, 7, 0, 9, 8.75, 9, color, light);
       drawQuad(EnumFacing.SOUTH, texture, 7, 0, 9, 8.75, 9, color, light);
       drawQuad(EnumFacing.NORTH, texture, 7, 0, 9, 5, 7, color, light);
+      for(int i = 0; i < te.getPourLength(); i++)
+      {
+        int py = -16 * i;
+        drawQuad(EnumFacing.EAST, texture, 7, py - 16, 9, py, 7, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.WEST, texture, 7, py - 16, 9, py, 9, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.SOUTH, texture, 7, py - 16, 9, py, 9, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.NORTH, texture, 7, py - 16, 9, py, 7, 0, 16 - py, color, light);
+      }
       if(low < 0.0001)
       {
-        drawQuad(EnumFacing.EAST, texture, 7, low, 9, 0, 7, 0, 16, color, light);
-        drawQuad(EnumFacing.WEST, texture, 7, low, 9, 0, 9, 0, 16, color, light);
-        drawQuad(EnumFacing.SOUTH, texture, 7, low, 9, 0, 9, 0, 16, color, light);
-        drawQuad(EnumFacing.NORTH, texture, 7, low, 9, 0, 7, 0, 16, color, light);
+        int py = -16 * te.getPourLength();
+        drawQuad(EnumFacing.EAST, texture, 7, low + py, 9, py, 7, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.WEST, texture, 7, low + py, 9, py, 9, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.SOUTH, texture, 7, low + py, 9, py, 9, 0, 16 - py, color, light);
+        drawQuad(EnumFacing.NORTH, texture, 7, low + py, 9,  py, 7, 0, 16 - py, color, light);
       }
       GlStateManager.enableCull();
       GlStateManager.enableAlpha();

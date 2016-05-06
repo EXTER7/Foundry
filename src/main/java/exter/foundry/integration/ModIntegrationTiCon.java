@@ -343,6 +343,11 @@ public class ModIntegrationTiCon implements IModIntegration
       {
         continue;
       }
+      if(casting.getResult() == null)
+      {
+        continue;
+      }
+
       String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
       if(mapped == null)
       {
@@ -371,9 +376,10 @@ public class ModIntegrationTiCon implements IModIntegration
     for(Map.Entry<String, String> entry:liquid_map.entrySet())
     {
       String name = entry.getKey();
-      if(!name.equals("molten_glass"))
+      Fluid fluid = FluidRegistry.getFluid(name);
+      if(fluid != null && !name.equals("molten_glass"))
       {
-        AtomizerRecipeManager.instance.addRecipe("dust" + entry.getValue(), new FluidStack(FluidRegistry.getFluid(name),TICON_INGOT_AMOUNT));
+        AtomizerRecipeManager.instance.addRecipe("dust" + entry.getValue(), new FluidStack(fluid,TICON_INGOT_AMOUNT));
       }
     }
   }

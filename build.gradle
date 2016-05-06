@@ -18,7 +18,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-def mod_version = "1.4.1.1"
+def mod_version = "1.4.1.2"
 
 def mc_version = "1.8.9"
 

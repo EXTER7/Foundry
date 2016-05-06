@@ -283,9 +283,14 @@ public class ModIntegrationTiCon implements IModIntegration
     ItemStack block_mold = FoundryItems.mold(ItemMold.MOLD_BLOCK);
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting:TinkerRegistry.getAllBasinCastingRecipes())
     {
-      if(casting.getFluid().amount <= 6000 && casting.cast == null)
+      if(casting.getFluid().amount <= 6000 && casting.cast == null && !casting.consumesCast())
       {
-        CastingRecipeManager.instance.addRecipe(casting.getResult(), casting.getFluid(), block_mold, null);
+        ItemStack result = casting.getResult();
+        FluidStack fluid = casting.getFluid();
+        if(result != null && fluid != null)
+        {
+          CastingRecipeManager.instance.addRecipe(result, fluid, block_mold, null);
+        }
       }
     }
     

@@ -125,6 +125,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       registerItemModel(FoundryBlocks.block_casting_table,m.model,m.id);
     }
 
+    registerItemModel(FoundryBlocks.block_refractory_glass,"refractoryGlass");
     registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
     registerItemModel(FoundryBlocks.block_mold_station,"moldStation");
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");

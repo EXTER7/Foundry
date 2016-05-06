@@ -297,6 +297,10 @@ public class FoundryRecipes
             0, 0, 0, 2, 2, 2,
         });
 
+    AlloyFurnaceRecipeManager.instance.addRecipe(
+        new ItemStack(FoundryBlocks.block_refractory_glass),
+        new ItemStackMatcher(Blocks.SAND),
+        new ItemStackMatcher(Items.CLAY_BALL));
 
     AlloyFurnaceRecipeManager.instance.addRecipe(
         FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),

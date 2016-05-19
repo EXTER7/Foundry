@@ -59,6 +59,7 @@ import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
+import exter.foundry.tileentity.TileEntityRefractoryTank;
 
 @Mod(
   modid = ModFoundry.MODID,
@@ -150,6 +151,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityCastingTableRod.class, "Foundry_CastingTable_Rod");
     GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, "Foundry_RefractorySpout");
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
+    GameRegistry.registerTileEntity(TileEntityRefractoryTank.class, "Foundry_RefractoryTank");
 
 
     FoundryRecipes.init();

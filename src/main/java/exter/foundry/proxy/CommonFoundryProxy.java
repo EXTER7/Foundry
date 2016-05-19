@@ -15,6 +15,7 @@ import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.container.ContainerMoldStation;
 import exter.foundry.container.ContainerRefractoryHopper;
+import exter.foundry.container.ContainerRefractoryTank;
 import exter.foundry.container.ContainerRevolver;
 import exter.foundry.container.ContainerShotgun;
 import exter.foundry.gui.GuiBurnerHeater;
@@ -27,6 +28,7 @@ import exter.foundry.gui.GuiMeltingCrucible;
 import exter.foundry.gui.GuiMetalInfuser;
 import exter.foundry.gui.GuiMoldStation;
 import exter.foundry.gui.GuiRefractoryHopper;
+import exter.foundry.gui.GuiRefractoryTank;
 import exter.foundry.gui.GuiRevolver;
 import exter.foundry.gui.GuiShotgun;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
@@ -39,6 +41,7 @@ import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
+import exter.foundry.tileentity.TileEntityRefractoryTank;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
@@ -54,6 +57,7 @@ public class CommonFoundryProxy implements IGuiHandler
   static public final int GUI_ATOMIZER = 9;
   static public final int GUI_MOLDSTATION = 10;
   static public final int GUI_BURNERHEATER = 11;
+  static public final int GUI_REFRACTORYTANK = 12;
   
   public void preInit()
   {
@@ -95,6 +99,8 @@ public class CommonFoundryProxy implements IGuiHandler
         return new ContainerMoldStation((TileEntityMoldStation)world.getTileEntity(pos),player);
       case GUI_BURNERHEATER:
         return new ContainerBurnerHeater((TileEntityBurnerHeater)world.getTileEntity(pos),player);
+      case GUI_REFRACTORYTANK:
+        return new ContainerRefractoryTank((TileEntityRefractoryTank)world.getTileEntity(pos),player);
     }
     return null;
   }
@@ -162,6 +168,11 @@ public class CommonFoundryProxy implements IGuiHandler
       {
         TileEntityBurnerHeater te = (TileEntityBurnerHeater)world.getTileEntity(pos);
         return new GuiBurnerHeater(te,player);
+      }
+      case GUI_REFRACTORYTANK:
+      {
+        TileEntityRefractoryTank te = (TileEntityRefractoryTank)world.getTileEntity(pos);
+        return new GuiRefractoryTank(te,player);
       }
     } 
     return null;

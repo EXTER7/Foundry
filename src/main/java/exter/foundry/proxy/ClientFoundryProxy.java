@@ -30,9 +30,11 @@ import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
+import exter.foundry.tileentity.TileEntityRefractoryTank;
 import exter.foundry.tileentity.renderer.CastingTableRenderer;
 import exter.foundry.tileentity.renderer.HopperRenderer;
 import exter.foundry.tileentity.renderer.SpoutRenderer;
+import exter.foundry.tileentity.renderer.TankRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -131,6 +133,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
     registerItemModel(FoundryBlocks.block_burner_heater,"burnerHeater");
     registerItemModel(FoundryBlocks.block_refractory_spout,"refractorySpout");
+    registerItemModel(FoundryBlocks.block_refractory_tank,"refractoryTank");
 
     for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
     {
@@ -165,6 +168,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableRod.class, new CastingTableRenderer(7,9,2,14,10,12,"foundry:blocks/castingtable_top_rod"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractorySpout.class, new SpoutRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryHopper.class, new HopperRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryTank.class, new TankRenderer());
     
     
     ModIntegrationManager.clientInit();

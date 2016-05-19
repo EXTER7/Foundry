@@ -850,6 +850,15 @@ public class FoundryRecipes
         'B', infbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_refractory_tank),
+        "BPB",
+        "G G",
+        "BPB",
+        'G', new ItemStack(FoundryBlocks.block_refractory_glass),
+        'P', "plateIron",
+        'B', refbrick_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         new ItemStack(FoundryBlocks.block_burner_heater),
         "I",
         "C",

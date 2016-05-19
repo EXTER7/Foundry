@@ -234,7 +234,7 @@ itemGroup.foundryFirearms=Foundry - Firearms
 tile.foundry.componentBlockCasingRefractory.name=Refractory Casing
 tile.foundry.componentBlockRefractoryClay.name=Refractory Clay Block
 tile.foundry.componentBlockCasingInferno.name=Inferno Casing
-tile.foundry.refractoryGlass=Refractory Glass
+tile.foundry.refractoryGlass.name=Refractory Glass
 
 tile.foundry.machine.crucible.name=Melting Crucible
 tile.foundry.machine.crucible_advanced.name=Advanced Melting Crucible
@@ -250,6 +250,7 @@ tile.foundry.castingTable.rod.name=Rod Casting Table
 tile.foundry.alloyFurnace.name=Alloy Furnace
 tile.foundry.refractoryHopper.name=Refractory Hopper
 tile.foundry.refractorySpout.name=Refractory Spout
+tile.foundry.refractoryTank.name=Refractory Tank
 tile.foundry.moldStation.name=Mold Crafting Station
 tile.foundry.burnerHeater.name=Burner Heater
 
@@ -268,6 +269,7 @@ tooltip.foundry.castingTable.rod=Used to cast rods from liquid metal.//Right cli
 tooltip.foundry.alloyFurnace=Smelts items into alloys.
 tooltip.foundry.refractoryHopper=Transfers liquids from block on the top to the block on side it points at.//Cannot transfer gasses.
 tooltip.foundry.refractorySpout=Transfers liquids from the the side it's placed on to the block below.//Cannot transfer gasses.
+tooltip.foundry.refractoryTank=Stores up to 16 buckets of fluid.
 tooltip.foundry.moldStation=Used to craft molds.//Requires Refractory Clay Blocks and fuel to make molds.
 tooltip.foundry.burnerHeater=Uses solid fuel to generate heat for a Melting Crucible.
 

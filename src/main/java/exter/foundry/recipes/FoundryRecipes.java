@@ -771,12 +771,13 @@ public class FoundryRecipes
     ItemStack refclay_small_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL);
     ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY,8);
     ItemStack refbrick_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK);
+    ItemStack refglass_stack = new ItemStack(FoundryBlocks.block_refractory_glass);
     ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL);
-    ItemStack glasspane_stack = new ItemStack(Blocks.GLASS_PANE);
     ItemStack emptycontainer2_stack = FoundryItems.item_container.empty(2);
     ItemStack comparator_stack = new ItemStack(Items.COMPARATOR);
     ItemStack repeater_stack = new ItemStack(Items.REPEATER);
     ItemStack bucket_stack = new ItemStack(Items.BUCKET);
+    ItemStack magmacream_stack = new ItemStack(Items.MAGMA_CREAM);
     ItemStack infernoclay8_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY,8);
     ItemStack infbrick_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOBRICK);
 
@@ -800,9 +801,10 @@ public class FoundryRecipes
     GameRegistry.addRecipe(new ShapedOreRecipe(infernoclay8_stack,
         "COC",
         "CSC",
-        "COC",
+        "CMC",
         'C', refclay_stack,
         'S', soulsand_stack,
+        'M', magmacream_stack,
         'O', "dustObsidian"));
 
     GameRegistry.addShapelessRecipe(refractoryclay8_stack,clayblock_stack, clayblock_stack, sand_stack);
@@ -822,7 +824,7 @@ public class FoundryRecipes
         " T ",
         'T', "plateTin",
         'B', refbrick_stack,
-        'G', glasspane_stack));
+        'G', refglass_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL,2),
@@ -854,7 +856,7 @@ public class FoundryRecipes
         "BPB",
         "G G",
         "BPB",
-        'G', new ItemStack(FoundryBlocks.block_refractory_glass),
+        'G', refglass_stack,
         'P', "plateIron",
         'B', refbrick_stack));
 

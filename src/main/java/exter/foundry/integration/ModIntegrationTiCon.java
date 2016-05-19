@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
-import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
@@ -21,7 +18,6 @@ import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Optional;
@@ -30,7 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import slimeknights.mantle.util.RecipeMatch.Match;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
-import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 @Optional.Interface(iface = "exter.foundry.integration.IModIntegration", modid = "tconstruct")
 public class ModIntegrationTiCon implements IModIntegration
@@ -129,9 +124,6 @@ public class ModIntegrationTiCon implements IModIntegration
   @Override
   public void onAfterPostInit()
   {
-
-    ItemStack ingot_cast = ItemStack.copyItemStack(TinkerSmeltery.castIngot);
-    
     liquid_map = new HashMap<String,String>();
     for(String name:LiquidMetalRegistry.instance.getFluidNames())
     {
@@ -161,27 +153,6 @@ public class ModIntegrationTiCon implements IModIntegration
           LiquidMetalRegistry.instance.getFluid(e.getValue()).getName(),
           e.getKey());
     }
-
-    //Add support for TiCon's fluids to the Metal Caster recipes.
-    for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.getRecipes()))
-    {
-      String mapped = reverse_liquid_map.get(casting.getInput().getFluid().getName());
-      if(mapped != null)
-      {
-        Fluid mapped_fluid = FluidRegistry.getFluid(mapped);
-        if(mapped_fluid != null)
-        {
-          CastingRecipeManager.instance.addRecipe(
-              new ItemStackMatcher(casting.getOutput()),
-              new FluidStack(
-                  mapped_fluid,
-                  FoundryMiscUtils.divCeil(casting.getInput().amount * TICON_INGOT_AMOUNT, FoundryAPI.FLUID_AMOUNT_INGOT)),
-              casting.getMold(),
-              casting.getInputExtra());
-        }
-      }
-    }
-
     
     //Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
     for(slimeknights.tconstruct.library.smeltery.MeltingRecipe recipe : TinkerRegistry.getAllMeltingRecipies())
@@ -261,14 +232,7 @@ public class ModIntegrationTiCon implements IModIntegration
           }
         
 
-          if(cast.isItemEqual(ingot_cast))
-          {
-            ItemStack ingot_mold = FoundryItems.mold(ItemMold.SubItem.INGOT);
-            if(casting.getFluid().amount <= 6000)
-            {
-              CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), casting.getFluid(), ingot_mold, null);
-            }
-          } else if(mapped_liquid != null)
+          if(mapped_liquid != null)
           {
             if(mapped_liquid.amount <= 6000)
            {
@@ -282,6 +246,7 @@ public class ModIntegrationTiCon implements IModIntegration
         }
       }
     }
+    
     ItemStack block_mold = FoundryItems.mold(ItemMold.SubItem.BLOCK);
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting:TinkerRegistry.getAllBasinCastingRecipes())
     {
@@ -289,9 +254,11 @@ public class ModIntegrationTiCon implements IModIntegration
       {
         return;
       }
-      if(casting.getFluid().amount <= 6000 && casting.cast == null)
+      FluidStack fluid = casting.getFluid();
+      if(casting.getFluid().amount <= 6000 && casting.cast == null
+          && CastingRecipeManager.instance.findRecipe(fluid, block_mold, null) == null)
       {
-        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), casting.getFluid(), block_mold, null);
+        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), fluid, block_mold, null);
       }
     }
     
@@ -370,24 +337,6 @@ public class ModIntegrationTiCon implements IModIntegration
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe r : recipes)
     {
       TinkerRegistry.registerBasinCasting(r);
-    }
-    
-    //Add TiCon molten metal support to the Atomizer.
-    for(Map.Entry<String, String> entry:liquid_map.entrySet())
-    {
-      String name = entry.getKey();
-      if(!name.equals("molten_glass"))
-      {
-        String output_name = "dust" + entry.getValue();
-        ItemStack output = FoundryMiscUtils.getModItemFromOreDictionary("substratum", output_name);
-        if(output != null)
-        {
-          AtomizerRecipeManager.instance.addRecipe(new ItemStackMatcher(output), new FluidStack(FluidRegistry.getFluid(name),TICON_INGOT_AMOUNT));
-        } else
-        {
-          AtomizerRecipeManager.instance.addRecipe(new OreMatcher(output_name), new FluidStack(FluidRegistry.getFluid(name),TICON_INGOT_AMOUNT));
-        }
-      }
     }
   }
 

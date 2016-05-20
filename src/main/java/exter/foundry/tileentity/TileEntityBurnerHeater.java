@@ -64,11 +64,16 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatPr
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound tag)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
-    super.writeToNBT(tag);
-    tag.setInteger("BurnTime", burn_time);
-    tag.setInteger("ItemBurnTime", item_burn_time);
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
+    super.writeToNBT(compound);
+    compound.setInteger("BurnTime", burn_time);
+    compound.setInteger("ItemBurnTime", item_burn_time);
+    return compound;
   }
 
   @Override

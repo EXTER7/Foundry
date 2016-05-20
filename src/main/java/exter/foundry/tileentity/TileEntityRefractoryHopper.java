@@ -69,12 +69,17 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("next_drain", next_drain);
     compound.setInteger("next_world_drain", next_world_drain);
     compound.setInteger("next_fill", next_fill);
+    return compound;
   }
 
   @Override

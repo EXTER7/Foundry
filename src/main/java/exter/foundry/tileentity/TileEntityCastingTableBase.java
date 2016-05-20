@@ -52,10 +52,15 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
 
 
   @Override
-  public final void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
+    return compound;
   }
 
 

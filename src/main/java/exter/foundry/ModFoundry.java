@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -28,9 +28,7 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.ModIntegrationManager;
-import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationMolten;
-import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -66,7 +64,7 @@ import exter.foundry.tileentity.TileEntityRefractoryTank;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.16.1.1887,);required-after:substratum@[1.3.0.0,)"
+  dependencies = "required-after:Forge@[12.17.0.1909,);required-after:substratum@[1.3.1.0,)"
 )
 public class ModFoundry
 {
@@ -95,8 +93,8 @@ public class ModFoundry
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
+    //ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
+    //ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationMolten());
 
 
@@ -199,10 +197,10 @@ public class ModFoundry
 */
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
 
-    List<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
+    List<Biome> biomes = new ArrayList<Biome>();
     for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
     {
-      for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(type))
+      for(Biome bio : BiomeDictionary.getBiomesForType(type))
       {
         if(!biomes.contains(bio))
         {
@@ -210,14 +208,14 @@ public class ModFoundry
         }
       }
     }
-    for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END))
+    for(Biome bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END))
     {
       if(biomes.contains(bio))
       {
         biomes.remove(bio);
       }
     }
-    for(BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER))
+    for(Biome bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER))
     {
       if(biomes.contains(bio))
       {
@@ -225,11 +223,11 @@ public class ModFoundry
       }
     }
 
-    List<BiomeGenBase> toremove = new ArrayList<BiomeGenBase>();
-    for(BiomeGenBase bio : biomes)
+    List<Biome> toremove = new ArrayList<Biome>();
+    for(Biome bio : biomes)
     {
       boolean remove = true;
-      for(BiomeGenBase.SpawnListEntry e : (List<BiomeGenBase.SpawnListEntry>)bio.getSpawnableList(EnumCreatureType.MONSTER))
+      for(Biome.SpawnListEntry e : (List<Biome.SpawnListEntry>)bio.getSpawnableList(EnumCreatureType.MONSTER))
       {
         if(e.entityClass == EntitySkeleton.class)
         {
@@ -244,7 +242,7 @@ public class ModFoundry
     }
     biomes.removeAll(toremove);
 
-    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, biomes.toArray(new BiomeGenBase[0]));
+    EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, biomes.toArray(new Biome[0]));
     
     proxy.init();
   }

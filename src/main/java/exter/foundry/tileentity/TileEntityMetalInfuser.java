@@ -81,14 +81,19 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
 
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     NBTTagCompound substance_tag = new NBTTagCompound();
     WriteSubstanceToNBT(substance_tag);
     compound.setTag("Substance", substance_tag);
     compound.setInteger("progress", progress);
     compound.setInteger("extract_time", extract_energy);
+    return compound;
   }
 
   @Override

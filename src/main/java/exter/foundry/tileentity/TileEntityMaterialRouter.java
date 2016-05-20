@@ -225,8 +225,12 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
   
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     writeRoutesToNBT(compound);
     
@@ -235,7 +239,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     compound.setInteger("gui_route_scroll",gui_route_scroll);
     compound.setInteger("gui_material_selected",gui_material_selected);
     compound.setInteger("gui_type_selected",gui_type_selected);
-
+    return compound;
   }
 
   private void routeItem(int in_slot, int out_slot)

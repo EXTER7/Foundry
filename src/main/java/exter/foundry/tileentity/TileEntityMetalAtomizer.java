@@ -75,10 +75,15 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
 
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
+    return compound;
   }
 
   @Override

@@ -106,10 +106,15 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   
   
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("energy", energy_stored);
+    return compound;
   }
 
   protected void onInitialize()

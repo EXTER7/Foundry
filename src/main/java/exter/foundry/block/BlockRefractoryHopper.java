@@ -164,16 +164,9 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
     return new TileEntityRefractoryHopper();
   }
 
-  @Override
-  public boolean onBlockEventReceived(World world, BlockPos pos, IBlockState state, int par5, int par6)
-  {
-    super.onBlockEventReceived(world, pos, state, par5, par6);
-    TileEntity tileentity = world.getTileEntity(pos);
-    return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
-  }
 
   @Override
-  public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block block)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
   {
     TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(pos);
 

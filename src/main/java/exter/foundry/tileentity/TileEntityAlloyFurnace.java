@@ -79,12 +79,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound tag)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
-    super.writeToNBT(tag);
-    tag.setInteger("BurnTime", burn_time);
-    tag.setInteger("CookTime", progress);
-    tag.setInteger("ItemBurnTime", item_burn_time);
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
+    super.writeToNBT(compound);
+    compound.setInteger("BurnTime", burn_time);
+    compound.setInteger("CookTime", progress);
+    compound.setInteger("ItemBurnTime", item_burn_time);
+    return compound;
   }
 
   @Override

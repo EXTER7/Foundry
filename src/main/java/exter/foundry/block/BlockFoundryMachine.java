@@ -217,14 +217,6 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   }
 
   @Override
-  public boolean onBlockEventReceived(World world, BlockPos pos, IBlockState state, int par5, int par6)
-  {
-    super.onBlockEventReceived(world, pos, state, par5, par6);
-    TileEntity tileentity = world.getTileEntity(pos);
-    return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
-  }
-
-  @Override
   public int damageDropped(IBlockState state)
   {
     return getMetaFromState(state);
@@ -242,7 +234,7 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   }
   
   @Override
-  public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neigbor_block)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
   {
     TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(pos);
 

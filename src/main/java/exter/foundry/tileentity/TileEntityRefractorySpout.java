@@ -63,12 +63,17 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("next_drain", next_drain);
     compound.setInteger("next_fill", next_fill);
     compound.setInteger("pour_length", pour_length);
+    return compound;
   }
 
   @Override

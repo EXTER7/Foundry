@@ -87,13 +87,17 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("heat", heat);
     compound.setInteger("melt_point", melt_point);
     compound.setInteger("progress", progress);
-
+    return compound;
   }
 
   @Override

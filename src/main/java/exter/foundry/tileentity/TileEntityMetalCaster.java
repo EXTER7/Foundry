@@ -65,10 +65,15 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
 
 
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     super.writeToNBT(compound);
     compound.setInteger("progress", progress);
+    return compound;
   }
 
 

@@ -277,7 +277,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
 
 
   @Override
-  public final Packet<?> getDescriptionPacket()
+  public final SPacketUpdateTileEntity getUpdatePacket()
   {
     NBTTagCompound nbt = new NBTTagCompound();
     writeToNBT(nbt);    
@@ -383,8 +383,12 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
 
   
   @Override
-  public void writeToNBT(NBTTagCompound compound)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
     int i;
     super.writeToNBT(compound);
     for(i = 0; i < getTankCount(); i++)
@@ -397,6 +401,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     }
     compound.setInteger("rsmode", mode.id);
     compound.setInteger("bucket_timer", bucket_timer);
+    return compound;
   }
 
   protected final void updateValue(String name,int value)

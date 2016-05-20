@@ -150,7 +150,7 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   }
   
   @Override
-  public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighbor)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
   {
     EnumFacing facing = state.getValue(FACING).facing;
 

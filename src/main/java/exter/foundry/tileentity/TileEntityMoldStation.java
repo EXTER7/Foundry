@@ -133,17 +133,22 @@ public class TileEntityMoldStation extends TileEntityFoundry/*,IExoflameHeatable
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound tag)
+  public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
-    super.writeToNBT(tag);
-    tag.setInteger("BurnTime", burn_time);
-    tag.setInteger("CookTime", progress);
-    tag.setInteger("ItemBurnTime", item_burn_time);
+    if(compound == null)
+    {
+      compound = new NBTTagCompound();
+    }
+    super.writeToNBT(compound);
+    compound.setInteger("BurnTime", burn_time);
+    compound.setInteger("CookTime", progress);
+    compound.setInteger("ItemBurnTime", item_burn_time);
     for(int i = 0; i < 36; i++)
     {
-      tag.setInteger("RecipeGrid_" + i,grid[i]);
+      compound.setInteger("RecipeGrid_" + i,grid[i]);
     }
-    tag.setBoolean("HasBlock", has_block);
+    compound.setBoolean("HasBlock", has_block);
+    return compound;
   }
 
   @Override

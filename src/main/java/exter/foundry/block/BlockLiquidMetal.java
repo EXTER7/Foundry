@@ -134,9 +134,9 @@ public class BlockLiquidMetal extends BlockFluidClassic
   }
 
   @Override
-  public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighbor)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
   {
-    super.onNeighborBlockChange(world, pos, state, neighbor);
+    super.neighborChanged(state, world, pos, block);
     checkForHarden(world, pos, state);
   }
  

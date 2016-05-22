@@ -140,7 +140,7 @@ public abstract class ItemFirearm extends Item
               double distance = end.distanceTo((Vec3d)obj.hitInfo);
               double base_range = round.getBaseRange(round_item);
               double falloff_range = round.getFalloffRange(round_item);
-              double base_damage = round.getBaseDamage(round_item);
+              double base_damage = round.getBaseDamage(round_item,(EntityLivingBase)obj.entityHit);
               double damage;
               if(distance < base_range)
               {

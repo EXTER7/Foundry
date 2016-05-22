@@ -67,10 +67,11 @@ public interface IFirearmRound
    * Get the base damage of the round.
    * Note: The base damage is applied per bullet/pellet (revolvers shoot 1 bullet, shotguns shoot 6 pellets).
    * @param round The Round item.
+   * @param entity_hit The entity the hit by the bullet/pellet.
    * @return The base damage of the round.
    */
-  public double getBaseDamage(ItemStack round);
-  
+  public double getBaseDamage(ItemStack round,EntityLivingBase entity_hit);
+
   /**
    * Get the casing that the round uses.
    * @param round The Round item.

@@ -67,7 +67,7 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
   }
 
   @Override
-  public double getBaseDamage(ItemStack round)
+  public double getBaseDamage(ItemStack round,EntityLivingBase entity_hit)
   {
     return base_damage;
   }

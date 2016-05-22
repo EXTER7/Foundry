@@ -35,10 +35,9 @@ public abstract class ItemRoundBase extends Item implements IFirearmRound
     setCreativeTab(FoundryTabFirearms.tab);
   }
   
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List list, boolean par4)
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean par4)
   {
     if(GuiScreen.isShiftKeyDown())
     {

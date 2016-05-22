@@ -656,6 +656,8 @@ public class FoundryRecipes
     ItemStack shotgun_frame = FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME);
     ItemStack bullet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_STEEL);
     ItemStack pellet_steel = FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL);
+    ItemStack bullet_lumium = FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_LUMIUM);
+    ItemStack pellet_lumium = FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_LUMIUM);
     ItemStack mold_bullet = FoundryItems.mold(ItemMold.SubItem.BULLET);
     ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW);
     ItemStack mold_bullet_casing = FoundryItems.mold(ItemMold.SubItem.ROUND_CASING);
@@ -692,6 +694,12 @@ public class FoundryRecipes
     MeltingRecipeManager.instance.addRecipe(
         new ItemStackMatcher(pellet_steel),
         new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET));
+    MeltingRecipeManager.instance.addRecipe(
+        new ItemStackMatcher(bullet_lumium),
+        new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_NUGGET * 3));
+    MeltingRecipeManager.instance.addRecipe(
+        new ItemStackMatcher(pellet_lumium),
+        new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_NUGGET));
 
 
     MeltingRecipeManager.instance.addRecipe(
@@ -735,6 +743,12 @@ public class FoundryRecipes
     CastingRecipeManager.instance.addRecipe(
         new ItemStackMatcher(pellet_steel),
         new FluidStack(liquid_steel, FoundryAPI.FLUID_AMOUNT_NUGGET), mold_pellet, null);
+    CastingRecipeManager.instance.addRecipe(
+        new ItemStackMatcher(bullet_lumium),
+        new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_NUGGET * 3), mold_bullet, null);
+    CastingRecipeManager.instance.addRecipe(
+        new ItemStackMatcher(pellet_lumium),
+        new FluidStack(liquid_lumium, FoundryAPI.FLUID_AMOUNT_NUGGET), mold_pellet, null);
 
     
     CastingRecipeManager.instance.addRecipe(
@@ -1085,11 +1099,30 @@ public class FoundryRecipes
         'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_round_lumium,
+        "B",
+        "G",
+        "C",
+        'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_LUMIUM), 
+        'G', "dustSmallGunpowder",
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryItems.item_shell_ap,
         "PAP",
         "PGP",
         "PCP",
         'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL), 
+        'A', paper_stack, 
+        'G', "dustSmallGunpowder",
+        'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL)));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryItems.item_shell_lumium,
+        "PAP",
+        "PGP",
+        "PCP",
+        'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_LUMIUM), 
         'A', paper_stack, 
         'G', "dustSmallGunpowder",
         'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL)));

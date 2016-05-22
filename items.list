@@ -2,15 +2,16 @@ componentBullet
 componentBulletHollow
 componentBulletJacketed
 componentBulletSteel
+componentBulletLumium
 componentGunBarrel
 componentHeatingCoil
 componentPellet
 componentPelletSteel
+componentPelletLumium
 componentRefractoryBrick
 componentRefractoryClay
 componentRevolverDrum
 componentRevolverFrame
-componentRoundAP
 componentRoundCasing
 componentShellCasing
 componentShotgunFrame
@@ -58,7 +59,9 @@ roundHollow
 roundJacketed
 roundNormal
 roundPoison
+roundLumium
 roundAP
 shellAP
 shellNormal
+shellLumium
 

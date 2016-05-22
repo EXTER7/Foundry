@@ -293,6 +293,8 @@ item.foundry.componentPelletSteel.name=Steel Pellet
 item.foundry.componentSmallRefractoryClay.name=Small Piece of Refractory Clay
 item.foundry.componentInfernoClay.name=Inferno Clay
 item.foundry.componentInfernoBrick.name=Inferno Brick
+item.foundry.componentBulletLumium.name=Lumium Bullet
+item.foundry.componentPelletLumium.name=Lumium Pellet
 
 item.foundry.moldIngot.name=Ingot Mold
 item.foundry.moldPlate.name=Plate Mold
@@ -333,6 +335,8 @@ item.roundPoison.name=Poison Round
 item.roundAP.name=Armor Piercing Round
 item.shellNormal.name=Standard Shell
 item.shellAP.name=Armor Piercing Shell
+item.roundLumium.name=Lumium Round
+item.shellLumium.name=Lumium Shell
 
 
 tc.research_category.FOUNDRY=Foundry

@@ -28,6 +28,7 @@ import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
+import exter.foundry.tileentity.TileEntityInfernoTank;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
 import exter.foundry.tileentity.TileEntityRefractoryTank;
@@ -134,6 +135,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_burner_heater,"burnerHeater");
     registerItemModel(FoundryBlocks.block_refractory_spout,"refractorySpout");
     registerItemModel(FoundryBlocks.block_refractory_tank,"refractoryTank");
+    registerItemModel(FoundryBlocks.block_inferno_tank,"infernoTank");
 
     for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
     {
@@ -171,6 +173,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractorySpout.class, new SpoutRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryHopper.class, new HopperRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryTank.class, new TankRenderer());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfernoTank.class, new TankRenderer());
     
     
     ModIntegrationManager.clientInit();

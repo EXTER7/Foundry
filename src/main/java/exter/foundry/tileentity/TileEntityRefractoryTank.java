@@ -21,11 +21,16 @@ public class TileEntityRefractoryTank extends TileEntityFoundry implements ISide
   public TileEntityRefractoryTank()
   {
 
-    tank = new FluidTank(16000);
+    tank = new FluidTank(getTankCapacity());
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_DRAIN, false));
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_FILL, true));
+  }
+  
+  protected int getTankCapacity()
+  {
+    return 16000;
   }
 
   @Override

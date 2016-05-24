@@ -251,6 +251,7 @@ tile.foundry.alloyFurnace.name=Alloy Furnace
 tile.foundry.refractoryHopper.name=Refractory Hopper
 tile.foundry.refractorySpout.name=Refractory Spout
 tile.foundry.refractoryTank.name=Refractory Tank
+tile.foundry.infernoTank.name=Inferno Tank
 tile.foundry.moldStation.name=Mold Crafting Station
 tile.foundry.burnerHeater.name=Burner Heater
 
@@ -270,6 +271,7 @@ tooltip.foundry.alloyFurnace=Smelts items into alloys.
 tooltip.foundry.refractoryHopper=Transfers liquids from block on the top to the block on side it points at.//Cannot transfer gasses.
 tooltip.foundry.refractorySpout=Transfers liquids from the the side it's placed on to the block below.//Cannot transfer gasses.
 tooltip.foundry.refractoryTank=Stores up to 16 buckets of fluid.
+tooltip.foundry.infernoTank=Stores up to 32 buckets of fluid.
 tooltip.foundry.moldStation=Used to craft molds.//Requires Refractory Clay Blocks and fuel to make molds.
 tooltip.foundry.burnerHeater=Uses solid fuel to generate heat for a Melting Crucible.
 
@@ -277,7 +279,7 @@ tooltip.foundry.burnerHeater=Uses solid fuel to generate heat for a Melting Cruc
 item.foundry.componentHeatingCoil.name=Heating Coil
 item.foundry.componentRefractoryClay.name=Refractory Clay
 item.foundry.componentRefractoryBrick.name=Refractory Brick
-item.foundry.componentGunBarrel.name=GunBarrel
+item.foundry.componentGunBarrel.name=Gun Barrel
 item.foundry.componentRevolverDrum.name=Revolver Drum
 item.foundry.componentRevolverFrame.name=Revolver Frame
 item.foundry.componentRoundCasing.name=Round Casing

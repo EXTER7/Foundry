@@ -1,9 +1,9 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "foundry:blocks/tank_topbottom",
-        "sides": "foundry:blocks/tank_sides",
-        "topbottom": "foundry:blocks/tank_topbottom"
+        "particle": "foundry:blocks/tank_inferno_topbottom",
+        "sides": "foundry:blocks/tank_inferno_sides",
+        "topbottom": "foundry:blocks/tank_inferno_topbottom"
     },
     "elements": [
         {

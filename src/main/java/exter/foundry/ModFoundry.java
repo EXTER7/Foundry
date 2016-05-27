@@ -67,13 +67,13 @@ import exter.foundry.tileentity.TileEntityRefractoryTank;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.17.0.1909,);required-after:substratum@[1.3.1.0,)"
+  dependencies = "required-after:Forge@[12.17.0.1922,);required-after:substratum@[1.3.1.0,)"
 )
 public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "2.0.0.0-alpha2";
+  public static final String MODVERSION = "2.0.0.0-alpha4";
 
   @Instance(MODID)
   public static ModFoundry instance;

@@ -18,7 +18,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-def mod_version = "2.0.0.0-alpha2"
+def mod_version = "2.0.0.0-alpha4"
 
 def mc_version = "1.9.4"
 
@@ -29,7 +29,7 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.9.4-12.17.0.1909-1.9.4"
+    version = "1.9.4-12.17.0.1922-1.9.4"
     runDir = "eclipse"
     mappings = "snapshot_20160519"
 }

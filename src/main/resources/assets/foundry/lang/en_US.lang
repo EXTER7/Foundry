@@ -99,6 +99,13 @@ fluid.liquidPotentia=Energy Infused Liquid
 fluid.liquidVictus=Life Infused Liquid
 fluid.liquidVacous=Void Infused Liquid
 fluid.liquidPrimal=Primal Liquid
+fluid.liquidRedstoneAlloy=Liquid Redstone Alloy
+fluid.liquidEnergeticAlloy=Liquid Energetic Alloy
+fluid.liquidVibrantAlloy=Liquid Vibrant Alloy
+fluid.liquidDarkSteel=Liquid Dark Steel
+fluid.liquidPulsatingIron=Liquid Pulsating Iron
+fluid.liquidElectricalSteel=Liquid Electrical Steel
+fluid.liquidSoularium=Liquid Soularium
 
 
 router.material._Any=All

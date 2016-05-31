@@ -59,24 +59,24 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
     public Route(NBTTagCompound tag)
     {
-      ReadFromNBT(tag);
+      readFromNBT(tag);
     }
 
-    public void ReadFromNBT(NBTTagCompound tag)
+    public void readFromNBT(NBTTagCompound tag)
     {
       material = tag.getString("material");
       type = tag.getString("type");
       side = RouteSide.values()[tag.getByte("side")];
     }
 
-    public void WriteToNBT(NBTTagCompound tag)
+    public void writeToNBT(NBTTagCompound tag)
     {
       tag.setString("material", material);
       tag.setString("type", type);
       tag.setByte("side", (byte) side.index);
     }
 
-    public boolean MatchesItem(ItemStack stack)
+    public boolean matchesItem(ItemStack stack)
     {
       ModFoundry.log.info("Item: " + stack.getUnlocalizedName());
       ModFoundry.log.info("Material: " + MaterialRegistry.instance.getMaterial(stack));
@@ -102,7 +102,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
       return true;
     }
 
-    public void WriteToPacket(ByteBuf data)
+    public void writeToPacket(ByteBuf data)
     {
       ByteBufUtils.writeUTF8String(data, material);
       ByteBufUtils.writeUTF8String(data, type);
@@ -218,7 +218,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     for(i = 0; i < routes.size(); i++)
     {
       NBTTagCompound route_entry_tag = new NBTTagCompound();
-      routes.get(i).WriteToNBT(route_entry_tag);
+      routes.get(i).writeToNBT(route_entry_tag);
       routes_tag.setTag("Route_" + String.valueOf(i), route_entry_tag);
     }
     compound.setTag("Routes", routes_tag);
@@ -287,7 +287,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
       {
         for(Route r : routes)
         {
-          if(r.MatchesItem(input))
+          if(r.matchesItem(input))
           {
             routeItem(i, SLOT_OUTPUT + r.side.index);
             break;

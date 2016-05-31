@@ -1168,7 +1168,7 @@ public class FoundryRecipes
     {
       ItemStack stack = entry.getKey();
       
-      if(stack != null && MeltingRecipeManager.instance.findRecipe(stack) == null)
+      if(stack != null && stack.getItem() != null && MeltingRecipeManager.instance.findRecipe(stack) == null)
       {
         ItemStack result = entry.getValue();
         IMeltingRecipe recipe = MeltingRecipeManager.instance.findRecipe(result);

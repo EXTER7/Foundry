@@ -58,5 +58,9 @@ public interface ICastingRecipe
    * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
    */
   public ItemStack getOutput();
-
+  
+  /**
+   * Get the output's matcher.
+   */
+  public IItemMatcher getOutputMatcher();
 }

@@ -9,7 +9,6 @@ import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
-import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
@@ -167,7 +166,7 @@ public class ModIntegrationMolten implements IModIntegration
       if(input != null)
       {
         CastingRecipeManager.instance.addRecipe(
-            new ItemStackMatcher(casting.getOutput()),
+            casting.getOutputMatcher(),
             input,
             casting.getMold(),
             casting.getInputExtra(),
@@ -182,7 +181,7 @@ public class ModIntegrationMolten implements IModIntegration
       if(input != null)
       {
         CastingTableRecipeManager.instance.addRecipe(
-            new ItemStackMatcher(casting.getOutput()),
+            casting.getOutputMatcher(),
             input,
             casting.getTableType());
       }
@@ -195,7 +194,7 @@ public class ModIntegrationMolten implements IModIntegration
       if(input != null)
       {
         AtomizerRecipeManager.instance.addRecipe(
-            new ItemStackMatcher(atomize.getOutput()),
+            atomize.getOutputMatcher(),
             input);
       }
     }

@@ -1,5 +1,6 @@
 package exter.foundry.api.recipe;
 
+import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -22,7 +23,6 @@ public interface ICastingTableRecipe
    * Get the Casting Table type.
    */
   public TableType getTableType();
-
   
   /**
    * Get the actual item produced by casting.
@@ -30,4 +30,8 @@ public interface ICastingTableRecipe
    */
   public ItemStack getOutput();
 
+  /**
+   * Get the output's matcher.
+   */
+  public IItemMatcher getOutputMatcher();
 }

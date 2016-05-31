@@ -52,5 +52,11 @@ public class CastingTableRecipe implements ICastingTableRecipe
   public TableType getTableType()
   {
     return type;
-  }  
+  }
+  
+  @Override
+  public IItemMatcher getOutputMatcher()
+  {
+    return output;
+  }
 }

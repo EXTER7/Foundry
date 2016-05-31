@@ -98,5 +98,11 @@ public class CastingRecipe implements ICastingRecipe
   public int getCastingSpeed()
   {
     return speed;
+  }  
+  
+  @Override
+  public IItemMatcher getOutputMatcher()
+  {
+    return output;
   }
 }

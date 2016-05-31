@@ -47,4 +47,10 @@ public class AtomizerRecipe implements IAtomizerRecipe
     }
     return fluid_stack != null && fluid_stack.containsFluid(fluid);
   }
+
+  @Override
+  public IItemMatcher getOutputMatcher()
+  {
+    return output;
+  }
 }

@@ -35,6 +35,7 @@ import exter.foundry.init.InitRecipes;
 import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.integration.ModIntegrationMolten;
+import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -69,7 +70,7 @@ import exter.foundry.tileentity.TileEntityRefractoryTank;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.17.0.1936,);required-after:substratum@[1.3.1.0,)"
+  dependencies = "required-after:Forge@[12.17.0.1937,);required-after:substratum@[1.3.1.0,)"
 )
 public class ModFoundry
 {
@@ -99,7 +100,7 @@ public class ModFoundry
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     //ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
-    //ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationMolten());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationEnderIO());
 

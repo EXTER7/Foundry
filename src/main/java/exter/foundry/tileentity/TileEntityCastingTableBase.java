@@ -196,6 +196,12 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     recipe = CastingTableRecipeManager.instance.findRecipe(fluid, getTableType());
     if(recipe != null)
     {
+      if(recipe.getOutput() == null)
+      {
+        recipe = null;
+        tank.setCapacity(getDefaultCapacity());
+        return;
+      }
       tank.setCapacity(recipe.getInput().amount);
     }
   }

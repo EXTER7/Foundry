@@ -352,7 +352,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
       ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
     } else
     {
-      sendPacketToPlayers(tag);
+      sendPacketToNearbyPlayers(tag);
     }
   }
 }

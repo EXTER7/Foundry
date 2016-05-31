@@ -6,6 +6,7 @@ import java.util.List;
 import exter.foundry.ModFoundry;
 import exter.foundry.network.MessageTileEntitySync;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -283,6 +284,11 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     return new SPacketUpdateTileEntity(getPos(), 0, nbt);
   }
   
+  @Override
+  public NBTTagCompound getUpdateTag()
+  {
+    return writeToNBT(null);
+  }
   
   protected final void updateTank(int slot)
   {
@@ -445,13 +451,19 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     update_packet.setTag(name, compound);
   }
 
-  protected void sendPacketToPlayers(NBTTagCompound data)
+  protected void sendPacketToNearbyPlayers(NBTTagCompound data)
   {
     data.setInteger("dim", worldObj.provider.getDimension());
     ModFoundry.network_channel.sendToAllAround(new MessageTileEntitySync(data),
         new TargetPoint(worldObj.provider.getDimension(),pos.getX(),pos.getY(),pos.getZ(),192));
   }
    
+  protected void sendPacketToPlayer(NBTTagCompound data,EntityPlayerMP player)
+  {
+    data.setInteger("dim", worldObj.provider.getDimension());
+    ModFoundry.network_channel.sendTo(new MessageTileEntitySync(data),player);
+  }
+  
 
   @Override
   public void update()
@@ -482,7 +494,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       
       if(update_packet != null)
       {
-        sendPacketToPlayers(update_packet);
+        sendPacketToNearbyPlayers(update_packet);
       }
       update_packet = null;
     } else
@@ -588,24 +600,22 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   @Override
   public void openInventory(EntityPlayer player)
   {
-    if(!worldObj.isRemote)
+    if(!worldObj.isRemote && player instanceof EntityPlayerMP)
     {
-      NBTTagCompound tag = new NBTTagCompound();
-      super.writeToNBT(tag);
-      tag.setInteger("rsmode", mode.id);
-      sendPacketToPlayers(tag);
+      NBTTagCompound tag = writeToNBT(null);
+      sendPacketToPlayer(tag,(EntityPlayerMP)player);
     }
   }
 
   @Override
   public void closeInventory(EntityPlayer player)
   {
-    if(!worldObj.isRemote)
+    if(!worldObj.isRemote && player instanceof EntityPlayerMP)
     {
       NBTTagCompound tag = new NBTTagCompound();
       super.writeToNBT(tag);
       tag.setInteger("rsmode", mode.id);
-      sendPacketToPlayers(tag);
+      sendPacketToPlayer(tag,(EntityPlayerMP)player);
     }
   }
   

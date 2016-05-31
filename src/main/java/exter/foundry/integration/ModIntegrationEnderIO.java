@@ -3,11 +3,11 @@ package exter.foundry.integration;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.config.FoundryConfig;
+import exter.foundry.fluid.FoundryFluids;
+import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -127,7 +127,7 @@ public class ModIntegrationEnderIO implements IModIntegration
 
       InfuserRecipeManager.instance.addRecipe(
           new FluidStack(liquid_electrical_steel,108),
-          new FluidStack(FoundryRecipes.liquid_steel,108),
+          new FluidStack(FoundryFluids.liquid_steel,108),
           new ItemStackMatcher(silicon),
           30000);
     }
@@ -136,7 +136,7 @@ public class ModIntegrationEnderIO implements IModIntegration
     AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(liquid_energetic_alloy, 54),
         new FluidStack[] {
-          new FluidStack(FoundryRecipes.liquid_gold, 54),
+          new FluidStack(FoundryFluids.liquid_gold, 54),
           new FluidStack(liquid_redstone, 50),
           new FluidStack(liquid_glowstone, 125)
         });
@@ -151,20 +151,20 @@ public class ModIntegrationEnderIO implements IModIntegration
     AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(liquid_phased_iron, 54),
         new FluidStack[] {
-          new FluidStack(FoundryRecipes.liquid_iron, 54),
+          new FluidStack(FoundryFluids.liquid_iron, 54),
           new FluidStack(liquid_enderpearl, 125)
         });
 
     AlloyMixerRecipeManager.instance.addRecipe(
         new FluidStack(liquid_dark_steel, 27),
         new FluidStack[] {
-          new FluidStack(FoundryRecipes.liquid_steel, 27),
+          new FluidStack(FoundryFluids.liquid_steel, 27),
           new FluidStack(FluidRegistry.LAVA, 250),
         });  
 
     InfuserRecipeManager.instance.addRecipe(
         new FluidStack(liquid_soularium,108),
-        new FluidStack(FoundryRecipes.liquid_gold,108),
+        new FluidStack(FoundryFluids.liquid_gold,108),
         new ItemStackMatcher(new ItemStack(Blocks.SOUL_SAND)),
         50000);
   }

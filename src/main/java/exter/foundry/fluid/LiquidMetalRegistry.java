@@ -1,4 +1,4 @@
-package exter.foundry.registry;
+package exter.foundry.fluid;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -29,13 +29,15 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
+import exter.foundry.fluid.FoundryFluids;
+import exter.foundry.fluid.LiquidMetalRegistry;
+import exter.foundry.init.InitRecipes;
 import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.integration.ModIntegrationMolten;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
-import exter.foundry.recipes.FoundryRecipes;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
@@ -43,7 +45,6 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
-import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -117,7 +118,8 @@ public class ModFoundry
     FoundryItems.registerItems(config);
     FoundryBlocks.registerBlocks(config);
 
-    FoundryRecipes.preInit();
+    FoundryFluids.init();
+    InitRecipes.preInit();
     
     ModIntegrationManager.preInit(config);
 
@@ -160,7 +162,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityInfernoTank.class, "Foundry_InfernoTank");
 
 
-    FoundryRecipes.init();
+    InitRecipes.init();
 
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
     LootTableList.register(new ResourceLocation("foundry","gun_skeleton"));
@@ -219,7 +221,7 @@ public class ModFoundry
   public void postInit(FMLPostInitializationEvent event)
   {
     ModIntegrationManager.postInit();
-    FoundryRecipes.postInit();
+    InitRecipes.postInit();
     proxy.postInit();
     ModIntegrationManager.afterPostInit();
   }

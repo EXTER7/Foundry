@@ -27,8 +27,8 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   public TileEntityRefractorySpout()
   {
 
-    next_drain = 12;
-    next_fill = 3;
+    next_drain = 8;
+    next_fill = 2;
 
     tank = new FluidTank(250);
     fluid_moved = new FluidTank(10);
@@ -97,7 +97,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
     }
     if(doFill && resource != null && doFill)
     {
-      next_drain = 12;
+      next_drain = 8;
     }
     return fillTank(0, resource, doFill);
   }
@@ -163,7 +163,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
   {
     if(--next_drain == 0)
     {
-      next_drain = 12;
+      next_drain = 8;
 
       // Drain from the top TileEntity
       EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
@@ -188,7 +188,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements IFlu
 
     if(--next_fill == 0)
     {
-      next_fill = 3;
+      next_fill = 2;
       FluidStack last_moved = fluid_moved.getFluid();
       fluid_moved.setFluid(null);
       if(worldObj.getBlockState(getPos()).getValue(BlockFoundrySidedMachine.STATE) == BlockFoundrySidedMachine.EnumMachineState.ON)

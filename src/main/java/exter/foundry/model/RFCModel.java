@@ -516,10 +516,10 @@ public class RFCModel implements IModel
           break;
         case COLOR:
         {
-          float r = (float) (color & 0xFF) / 255;
-          float g = (float) ((color >>> 8) & 0xFF) / 255;
-          float b = (float) ((color >>> 16) & 0xFF) / 255;
           float a = (float) ((color >>> 24) & 0xFF) / 255;
+          float r = (float) ((color >>> 16) & 0xFF) / 255;
+          float g = (float) ((color >>> 8) & 0xFF) / 255;
+          float b = (float) (color & 0xFF) / 255;
           builder.put(e, r, g, b, a);
         }
           break;

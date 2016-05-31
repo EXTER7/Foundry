@@ -21,7 +21,6 @@ public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractory
 {
   private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z,int color,int light)
   {
-    color = 0xFFFFFFFF;
     float alpha = (color >> 24 & 255) / 255.0F;
     float red = (color >> 16 & 255) / 255.0F;
     float green = (color >> 8 & 255) / 255.0F;

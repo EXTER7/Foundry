@@ -8,11 +8,13 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.api.recipe.ICastingRecipe;
+import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import exter.foundry.registry.FluidLiquidMetal;
 import exter.foundry.registry.LiquidMetalRegistry;
 import exter.foundry.util.FoundryMiscUtils;
@@ -158,7 +160,7 @@ public class ModIntegrationMolten implements IModIntegration
       }
     }
 
-    //Add support for "molten" fluids to the Metal Caster recipes.
+    //Add support for "molten" fluids to the Metal Caster.
     for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.getRecipes()))
     {
       FluidStack input = toMolten(casting.getInput());
@@ -170,6 +172,19 @@ public class ModIntegrationMolten implements IModIntegration
             casting.getMold(),
             casting.getInputExtra(),
             casting.getCastingSpeed());
+      }
+    }
+
+    //Add support for "molten" fluids to the Casting Tables.
+    for(ICastingTableRecipe casting:CastingTableRecipeManager.instance.getRecipes())
+    {
+      FluidStack input = toMolten(casting.getInput());
+      if(input != null)
+      {
+        CastingTableRecipeManager.instance.addRecipe(
+            new ItemStackMatcher(casting.getOutput()),
+            input,
+            casting.getTableType());
       }
     }
 
@@ -185,7 +200,7 @@ public class ModIntegrationMolten implements IModIntegration
       }
     }
     
-    //Convert TiCon Alloy recipes Foundry Alloy Mixer recipes.
+    //Add support for "molten" fluid inputs to Alloy Mixer recipes.
     for(IAlloyMixerRecipe mix:new ArrayList<IAlloyMixerRecipe>(AlloyMixerRecipeManager.instance.getRecipes()))
     {
       convertAlloyRecipe(mix);

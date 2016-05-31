@@ -1,28 +1,26 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemMold;
-import net.minecraft.item.ItemStack;
+import exter.foundry.api.recipe.ICastingTableRecipe;
+import exter.foundry.api.recipe.ICastingTableRecipe.TableType;
 
 public class TileEntityCastingTableIngot extends TileEntityCastingTableBase
 {
-  private final ItemStack mold;
   public TileEntityCastingTableIngot()
   {
     super();    
-    mold = FoundryItems.mold(ItemMold.SubItem.INGOT);
   }
-  
+ 
+
   @Override
-  public ItemStack getMold()
+  public int getDefaultCapacity()
   {
-    return mold;
+    return FoundryAPI.FLUID_AMOUNT_INGOT;
   }
 
   @Override
-  public int getFluidNeeded()
+  public TableType getTableType()
   {
-    return FoundryAPI.FLUID_AMOUNT_INGOT;
+    return ICastingTableRecipe.TableType.INGOT;
   }
 }

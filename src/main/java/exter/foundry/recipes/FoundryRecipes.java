@@ -3,6 +3,7 @@ package exter.foundry.recipes;
 import java.util.List;
 import java.util.Map;
 
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
@@ -34,6 +36,7 @@ import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
@@ -568,7 +571,9 @@ public class FoundryRecipes
       ItemStack ingot = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingot" + name);
       if(ingot != null)
       {
-        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(ingot), new FluidStack( fluid, FoundryAPI.FLUID_AMOUNT_INGOT), mold_ingot, null);
+        FluidStack fluid_stack = new FluidStack( fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
+        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(ingot), fluid_stack, mold_ingot, null);
+        CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(ingot), fluid_stack, ICastingTableRecipe.TableType.INGOT);
       }
 
       // Block
@@ -620,16 +625,18 @@ public class FoundryRecipes
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
 
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(plate), fluid_stack, mold_plate, null);
+        CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(plate), fluid_stack, ICastingTableRecipe.TableType.PLATE);
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(plate), fluid_stack);
       }
 
-      // Plate
+      // Rod
       ItemStack rod = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "rod" + name);
       if(rod != null)
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 2);
 
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(rod), fluid_stack, mold_rod, null);
+        CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(rod), fluid_stack, ICastingTableRecipe.TableType.ROD);
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(rod), fluid_stack);
       }
     }
@@ -1199,6 +1206,7 @@ public class FoundryRecipes
           {
             CastingRecipeManager.instance.addRecipe(new OreMatcher("ingot" + name), fluidstack, ingot_mold, null);
           }
+          CastingTableRecipeManager.instance.addRecipe(new OreMatcher("ingot" + name), fluidstack, ICastingTableRecipe.TableType.INGOT);
         }
         ores = OreDictionary.getOres("dust" + name);
         if(ores != null && ores.size() > 0)

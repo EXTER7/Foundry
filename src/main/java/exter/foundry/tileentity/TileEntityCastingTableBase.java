@@ -1,7 +1,7 @@
 package exter.foundry.tileentity;
 
-import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.api.recipe.ICastingTableRecipe;
+import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,7 +18,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
   
   private FluidTank tank;
   private FluidTankInfo[] tank_info;
-  
+  private ICastingTableRecipe recipe;
   
   private int progress;
 
@@ -26,11 +26,12 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
   {
     super();
 
-    tank = new FluidTank(getFluidNeeded());
+    tank = new FluidTank(getDefaultCapacity());
     
     tank_info = new FluidTankInfo[1];
     tank_info[0] = new FluidTankInfo(tank);
     progress = 0;
+    recipe = null;
   }
   
   @Override
@@ -40,13 +41,17 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
   }
   
   @Override
-  public final void readFromNBT(NBTTagCompound compund)
+  public final void readFromNBT(NBTTagCompound compound)
   {
-    super.readFromNBT(compund);
+    super.readFromNBT(compound);
     
-    if(compund.hasKey("progress"))
+    if(compound.hasKey("Tank_0"))
     {
-      progress = compund.getInteger("progress");
+      setRecipe(tank.getFluid());
+    }
+    if(compound.hasKey("progress"))
+    {
+      progress = compound.getInteger("progress");
     }
   }
 
@@ -118,6 +123,10 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     {
       return 0;
     }
+    if(doFill && ( tank.getFluid() == null || tank.getFluid().amount == 0))
+    {
+      setRecipe(resource);
+    }
     return fillTank(0, resource, doFill);
   }
 
@@ -128,7 +137,12 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     {
       return null;
     }
-    return drainTank(0, resource, doDrain);
+    FluidStack result = drainTank(0, resource, doDrain);
+    if(doDrain)
+    {
+      setRecipe(tank.getFluid());      
+    }
+    return result;
   }
 
   @Override
@@ -138,7 +152,12 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     {
       return null;
     }
-    return drainTank(0, maxDrain, doDrain);
+    FluidStack result = drainTank(0, maxDrain, doDrain);
+    if(doDrain)
+    {
+      setRecipe(tank.getFluid());      
+    }
+    return result;
   }
 
   @Override
@@ -165,6 +184,22 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     
   }
   
+  private void setRecipe(FluidStack fluid)
+  {
+    if(fluid == null || fluid.amount == 0)
+    {
+      recipe = null;
+      tank.setCapacity(getDefaultCapacity());
+      return;
+    }
+    
+    recipe = CastingTableRecipeManager.instance.findRecipe(fluid, getTableType());
+    if(recipe != null)
+    {
+      tank.setCapacity(recipe.getInput().amount);
+    }
+  }
+  
   @Override
   protected final void updateServer()
   {
@@ -174,17 +209,14 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     {
       if(--progress == 0)
       {
-        tank.drain(tank.getFluidAmount(), true);
+        tank.setFluid(null);
         updateTank(0);
+        setRecipe(null);
       }
-    } else if(inventory[0] == null && tank.getFluid() != null && tank.getFluid().amount == getFluidNeeded())
+    } else if(inventory[0] == null && recipe != null && tank.getFluid().amount == tank.getCapacity())
     {
-      ICastingRecipe recipe = CastingRecipeManager.instance.findRecipe(tank.getFluid(), getMold(),null);
-      if(recipe != null && !recipe.requiresExtra() && recipe.getOutput().stackSize == 1 && recipe.getInput().amount == getFluidNeeded())
-      {
-        setInventorySlotContents(0, recipe.getOutput());
-        progress = CAST_TIME;
-      }
+      setInventorySlotContents(0, recipe.getOutput());
+      progress = CAST_TIME;
     }
     
     if(last_progress != progress)
@@ -205,7 +237,8 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     return 1;
   }
   
-  abstract public ItemStack getMold();
   
-  abstract public int getFluidNeeded();
+  abstract public int getDefaultCapacity();
+
+  abstract public ICastingTableRecipe.TableType getTableType();
 }

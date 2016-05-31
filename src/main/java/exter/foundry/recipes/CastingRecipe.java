@@ -60,6 +60,10 @@ public class CastingRecipe implements ICastingRecipe
 
   public CastingRecipe(IItemMatcher result,FluidStack in_fluid,ItemStack in_mold,IItemMatcher in_extra,int cast_speed)
   {
+    if(result == null)
+    {
+      throw new IllegalArgumentException("Casting recipe result cannot be null.");
+    }
     output = result;
     if(in_fluid == null)
     {

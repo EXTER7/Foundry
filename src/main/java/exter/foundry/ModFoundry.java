@@ -43,6 +43,7 @@ import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
@@ -109,6 +110,7 @@ public class ModFoundry
     
     FoundryAPI.recipes_melting = MeltingRecipeManager.instance;
     FoundryAPI.recipes_casting = CastingRecipeManager.instance;
+    FoundryAPI.recipes_casting_table = CastingTableRecipeManager.instance;
     FoundryAPI.recipes_alloymixer = AlloyMixerRecipeManager.instance;
     FoundryAPI.recipes_infuser = InfuserRecipeManager.instance;
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;

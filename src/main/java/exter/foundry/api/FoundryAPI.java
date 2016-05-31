@@ -4,6 +4,7 @@ import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
 import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
+import exter.foundry.api.recipe.manager.ICastingTableRecipeManager;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
 import exter.foundry.api.recipe.manager.IMoldRecipeManager;
@@ -40,6 +41,7 @@ public class FoundryAPI
   //If foundry is not installed they become null.
   static public IMeltingRecipeManager recipes_melting;
   static public ICastingRecipeManager recipes_casting;
+  static public ICastingTableRecipeManager recipes_casting_table;
   static public IAlloyMixerRecipeManager recipes_alloymixer;
   static public IInfuserRecipeManager recipes_infuser;
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;

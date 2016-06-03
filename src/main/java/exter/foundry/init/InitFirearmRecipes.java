@@ -329,5 +329,11 @@ public class InitFirearmRecipes
         Items.SPIDER_EYE, 
         FoundryItems.item_round_hollow,
         FoundryItems.item_round_hollow);
+
+    GameRegistry.addShapelessRecipe(
+        new ItemStack(FoundryItems.item_round_snow,2),
+        Items.SNOWBALL, 
+        FoundryItems.item_round_hollow,
+        FoundryItems.item_round_hollow);
   }
 }

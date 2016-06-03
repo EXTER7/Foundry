@@ -4,6 +4,7 @@ import exter.foundry.item.ammo.ItemRoundNormal;
 import exter.foundry.item.ammo.ItemRoundJacketed;
 import exter.foundry.item.ammo.ItemRoundLumium;
 import exter.foundry.item.ammo.ItemRoundPoison;
+import exter.foundry.item.ammo.ItemRoundSnow;
 import exter.foundry.item.ammo.ItemShellAP;
 import exter.foundry.item.ammo.ItemShellLumium;
 import exter.foundry.item.ammo.ItemShellNormal;
@@ -30,6 +31,7 @@ public class FoundryItems
   static public ItemRoundPoison item_round_poison;
   static public ItemRoundAP item_round_ap;
   static public ItemRoundLumium item_round_lumium;
+  static public ItemRoundSnow item_round_snow;
   static public ItemShellNormal item_shell;
   static public ItemShellAP item_shell_ap;
   static public ItemShellLumium item_shell_lumium;
@@ -51,6 +53,7 @@ public class FoundryItems
     item_round_poison = new ItemRoundPoison();
     item_round_ap = new ItemRoundAP();
     item_round_lumium = new ItemRoundLumium();
+    item_round_snow = new ItemRoundSnow();
     item_shell = new ItemShellNormal();
     item_shell_ap = new ItemShellAP();
     item_shell_lumium = new ItemShellLumium();
@@ -67,6 +70,7 @@ public class FoundryItems
     GameRegistry.register(item_round_poison);
     GameRegistry.register(item_round_ap);
     GameRegistry.register(item_round_lumium);
+    GameRegistry.register(item_round_snow);
     GameRegistry.register(item_shell);
     GameRegistry.register(item_shell_ap);
     GameRegistry.register(item_shell_lumium);

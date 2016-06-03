@@ -162,6 +162,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryItems.item_round_poison,"roundPoison",0);
     registerItemModel(FoundryItems.item_round_ap,"roundAP",0);
     registerItemModel(FoundryItems.item_round_lumium,"roundLumium",0);
+    registerItemModel(FoundryItems.item_round_snow,"roundSnow",0);
     registerItemModel(FoundryItems.item_shell,"shellNormal",0);
     registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
     registerItemModel(FoundryItems.item_shell_lumium,"shellLumium",0);

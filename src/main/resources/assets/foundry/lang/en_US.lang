@@ -346,6 +346,7 @@ item.shellNormal.name=Standard Shell
 item.shellAP.name=Armor Piercing Shell
 item.roundLumium.name=Lumium Round
 item.shellLumium.name=Lumium Shell
+item.roundSnow.name=Snow Round
 
 
 tc.research_category.FOUNDRY=Foundry

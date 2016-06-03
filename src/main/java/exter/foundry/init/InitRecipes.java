@@ -6,6 +6,8 @@ import java.util.Map;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.Fluid;
@@ -62,7 +64,7 @@ public class InitRecipes
     
     if(FoundryConfig.recipe_glass)
     {
-      //final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
+      final String[] oredict_names = { "dyeSmallBlack", "dyeSmallRed", "dyeSmallGreen", "dyeSmallBrown", "dyeSmallBlue", "dyeSmallPurple", "dyeSmallCyan", "dyeSmallLightGray", "dyeSmallGray", "dyeSmallPink", "dyeSmallLime", "dyeSmallYellow", "dyeSmallLightBlue", "dyeSmallMagenta", "dyeSmallOrange", "dyeSmallWhite" };
 
       int temp = 1550;
       Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.GLASS));
@@ -70,28 +72,27 @@ public class InitRecipes
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS_PANE), new FluidStack(liquid_glass,375),temp,250);
       CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
-      /*
       for(EnumDyeColor dye:EnumDyeColor.values())
       {
         String name = dye.getName();
-        int color = ItemDye.dyeColors[dye.getDyeDamage()];
+
+        int color = ItemDye.DYE_COLORS[dye.getDyeDamage()];
         int c1 = 63 + (color & 0xFF) * 3 / 4;
         int c2 = 63 + ((color >> 8 ) & 0xFF) * 3 / 4;
         int c3 = 63 + ((color >> 16) & 0xFF) * 3 / 4;
         int fluid_color = c1 | (c2 << 8) | (c3 << 16);
         
         int meta = dye.getMetadata();
-        ItemStack stained_glass = new ItemStack(Blocks.stained_glass,1,meta);
+        ItemStack stained_glass = new ItemStack(Blocks.STAINED_GLASS,1,meta);
 
         Fluid liquid_glass_colored = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass." + name, temp, 12, "liquidGlass", fluid_color, stained_glass);
 
-        MeltingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(FoundryFluids.liquid_glass_colored,1000),temp,250);
-        MeltingRecipeManager.instance.addRecipe(new ItemStack(Blocks.stained_glass_pane,1,meta), new FluidStack(FoundryFluids.liquid_glass_colored,375),temp,250);
-        CastingRecipeManager.instance.addRecipe(stained_glass, new FluidStack(FoundryFluids.liquid_glass_colored,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
+        MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),temp,250);
+        MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(new ItemStack(Blocks.STAINED_GLASS_PANE,1,meta)), new FluidStack(liquid_glass_colored,375),temp,250);
+        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
         
-        InfuserRecipeManager.instance.addSubstanceRecipe(new InfuserSubstance("dye." + name,200), oredict_names[dye.getDyeDamage()], 25000);
-        InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_glass_colored,40),new FluidStack(FoundryFluids.liquid_glass,40),new InfuserSubstance("dye." + name,1));
-      }*/
+        InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,2000),new FluidStack(liquid_glass,2000),new OreMatcher(oredict_names[dye.getDyeDamage()]),5000);
+      }
     }
   }
 

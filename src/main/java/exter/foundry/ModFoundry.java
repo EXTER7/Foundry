@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.capability.CapabilityHeatProvider;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.fluid.FoundryFluids;
@@ -116,6 +117,8 @@ public class ModFoundry
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
     FoundryAPI.recipes_mold = MoldRecipeManager.instance;
+    
+    CapabilityHeatProvider.init();
 
     FoundryConfig.load(config);
     FoundryItems.registerItems(config);

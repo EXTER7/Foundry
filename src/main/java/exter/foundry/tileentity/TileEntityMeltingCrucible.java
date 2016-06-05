@@ -211,9 +211,9 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   private IHeatProvider getHeatProvider()
   {
     TileEntity te = worldObj.getTileEntity(getPos().down());
-    if(te instanceof IHeatProvider)
+    if(te.hasCapability(FoundryAPI.capability_heatprovider, EnumFacing.UP))
     {
-      return (IHeatProvider)te;
+      return te.getCapability(FoundryAPI.capability_heatprovider, EnumFacing.UP);
     }
     return null;
   }
@@ -258,7 +258,7 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
 
       if(heater != null)
       {
-        heat += heater.provideHeat(EnumFacing.UP, getMaxHeatRecieve(temp_max));
+        heat += heater.provideHeat(getMaxHeatRecieve(temp_max));
       }
     }
     heat -= (heat - TEMP_MIN) / getTemperatureLossRate();

@@ -1,8 +1,6 @@
 package exter.foundry.api.heatable;
 
-import net.minecraft.util.EnumFacing;
-
 public interface IHeatProvider
 {
-  public int provideHeat(EnumFacing side, int max_heat);
+  public int provideHeat(int max_heat);
 }

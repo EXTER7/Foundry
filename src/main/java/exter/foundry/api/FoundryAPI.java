@@ -1,5 +1,6 @@
 package exter.foundry.api;
 
+import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
 import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
@@ -9,6 +10,8 @@ import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
 import exter.foundry.api.recipe.manager.IMoldRecipeManager;
 import exter.foundry.api.registry.IFluidRegistry;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 
 /**
  * API for recipes of Foundry machines.
@@ -38,7 +41,6 @@ public class FoundryAPI
   static public final int ATOMIZER_WATER_TANK_CAPACITY = 6000;
 
   //These fields are set by Foundry during it's preInit phase.
-  //If foundry is not installed they become null.
   static public IMeltingRecipeManager recipes_melting;
   static public ICastingRecipeManager recipes_casting;
   static public ICastingTableRecipeManager recipes_casting_table;
@@ -49,4 +51,7 @@ public class FoundryAPI
   static public IMoldRecipeManager recipes_mold;
   
   static public IFluidRegistry fluids;
+  
+  @CapabilityInject(IHeatProvider.class)
+  static public Capability<IHeatProvider> capability_heatprovider;
 }

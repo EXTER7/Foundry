@@ -1,5 +1,6 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.block.BlockBurnerHeater;
 import exter.foundry.util.FoundryMiscUtils;
@@ -12,17 +13,56 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
 
 //@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
-public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatProvider,ISidedInventory/*,IExoflameHeatable*/
+public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedInventory/*,IExoflameHeatable*/
 {
+  private class HeatProvider implements IHeatProvider
+  {
+    @Override
+    public int provideHeat(int max_heat)
+    {
+      if(burn_time > 0 && max_heat > 0)
+      {
+        if(max_heat > 0)
+        {
+          if(max_heat > MAX_PROVIDE)
+          {
+            max_heat = MAX_PROVIDE;
+          }
+          int last_burn_time = burn_time;
+          burn_time -= FoundryMiscUtils.divCeil(max_heat * 10,MAX_PROVIDE);
+          if(burn_time < 0)
+          {
+            burn_time = 0;
+          }
+          
+          if(last_burn_time != burn_time || update_burn_times)
+          {
+            if(last_burn_time*burn_time == 0)
+            {
+              ((BlockBurnerHeater)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+            }
+            updateValue("BurnTime",burn_time);
+          }
+        }
+        return max_heat;
+      }
+
+      return 0;
+    }
+  }
+  
 
   private int burn_time;
   private int item_burn_time;
   private boolean update_burn_times;
 
   private static int MAX_PROVIDE = TileEntityMeltingCrucible.getMaxHeatRecieve(170000);
+
+  private HeatProvider heat_provider;
 
   private static final int[] SLOTS = new int[] { 0, 1, 2, 3 };
 
@@ -31,6 +71,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatPr
     burn_time = 0;
     item_burn_time = 0;
     update_burn_times = false;
+    heat_provider = new HeatProvider();
   }
 
   @Override
@@ -201,40 +242,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatPr
 
   }
 
-  
-  @Override
-  public int provideHeat(EnumFacing side, int max_heat)
-  {
-    if(side == EnumFacing.UP && burn_time > 0 && max_heat > 0)
-    {
-      if(max_heat > 0)
-      {
-        if(max_heat > MAX_PROVIDE)
-        {
-          max_heat = MAX_PROVIDE;
-        }
-        int last_burn_time = burn_time;
-        burn_time -= FoundryMiscUtils.divCeil(max_heat * 10,MAX_PROVIDE);
-        if(burn_time < 0)
-        {
-          burn_time = 0;
-        }
-        
-        if(last_burn_time != burn_time || update_burn_times)
-        {
-          if(last_burn_time*burn_time == 0)
-          {
-            ((BlockBurnerHeater)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
-          }
-          updateValue("BurnTime",burn_time);
-        }
-      }
-      return max_heat;
-    }
-
-    return 0;
-  }
-
   public int getBurnTime()
   {
     return burn_time;
@@ -245,6 +252,23 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IHeatPr
     return item_burn_time;
   }
 
+  @Override
+  public boolean hasCapability(Capability<?> cap,EnumFacing facing)
+  {
+    return super.hasCapability(cap, facing) || (cap == FoundryAPI.capability_heatprovider && facing == EnumFacing.UP);
+  }
+  
+  @Override
+  public <T> T getCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(cap == FoundryAPI.capability_heatprovider && facing == EnumFacing.UP)
+    {
+      return FoundryAPI.capability_heatprovider.cast(heat_provider);
+    }
+    return super.getCapability(cap, facing);
+  }
+
+  
 //  @Optional.Method(modid = "Botania")
 //  @Override
 //  public boolean canSmelt()

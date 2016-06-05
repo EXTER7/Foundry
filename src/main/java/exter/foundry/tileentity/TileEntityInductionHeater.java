@@ -1,17 +1,35 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.heatable.IHeatProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
 
-public class TileEntityInductionHeater extends TileEntityFoundryPowered implements IHeatProvider
+public class TileEntityInductionHeater extends TileEntityFoundryPowered
 {
+  private class HeatProvider implements IHeatProvider
+  {
+    @Override
+    public int provideHeat(int max_heat)
+    {
+      if(max_heat > MAX_PROVIDE)
+      {
+        max_heat = MAX_PROVIDE;
+      }
+      return useFoundryEnergy(max_heat * 3, true) / 3;
+    }
+  }
+  
   private static int MAX_PROVIDE = TileEntityMeltingCrucible.getMaxHeatRecieve(350000);
+
+  private HeatProvider heat_provider;
   
   public TileEntityInductionHeater()
   {
     super();    
+    heat_provider = new HeatProvider();
   }
 
   @Override
@@ -56,21 +74,24 @@ public class TileEntityInductionHeater extends TileEntityFoundryPowered implemen
     return false;
   }  
   
+
+
   @Override
-  public int provideHeat(EnumFacing side, int max_heat)
+  public boolean hasCapability(Capability<?> cap,EnumFacing facing)
   {
-    if(side == EnumFacing.UP)
+    return super.hasCapability(cap, facing) || (cap == FoundryAPI.capability_heatprovider && facing == EnumFacing.UP);
+  }
+  
+  @Override
+  public <T> T getCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(cap == FoundryAPI.capability_heatprovider && facing == EnumFacing.UP)
     {
-      if(max_heat > MAX_PROVIDE)
-      {
-        max_heat = MAX_PROVIDE;
-      }
-      return useFoundryEnergy(max_heat * 3, true) / 3;
+      return FoundryAPI.capability_heatprovider.cast(heat_provider);
     }
-    return 0;
+    return super.getCapability(cap, facing);
   }
 
-  
 //  @Optional.Method(modid = "IC2")
 //  @Override
 //  public int getSinkTier()

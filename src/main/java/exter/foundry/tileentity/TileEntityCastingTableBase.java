@@ -6,18 +6,83 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public abstract class TileEntityCastingTableBase extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public abstract class TileEntityCastingTableBase extends TileEntityFoundry implements ISidedInventory
 {
+  protected class FluidHandler implements IFluidHandler
+  {
+    private IFluidTankProperties[] props;
+    
+    public FluidHandler()
+    {
+      props = new IFluidTankProperties[getTankCount()];
+      for(int i = 0; i < props.length; i++)
+      {
+        props[i] = new FluidTankPropertiesWrapper(getTank(i));
+      }
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      if(inventory[0] != null)
+      {
+        return 0;
+      }
+      if(doFill && ( tank.getFluid() == null || tank.getFluid().amount == 0))
+      {
+        setRecipe(resource);
+      }
+      return fillTank(0, resource, doFill);
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      if(progress > 0)
+      {
+        return null;
+      }
+      FluidStack result = drainTank(0, resource, doDrain);
+      if(doDrain)
+      {
+        setRecipe(tank.getFluid());      
+      }
+      return result;
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+      if(progress > 0)
+      {
+        return null;
+      }
+      FluidStack result = drainTank(0, maxDrain, doDrain);
+      if(doDrain)
+      {
+        setRecipe(tank.getFluid());      
+      }
+      return result;
+    }    
+  }
+  
   static public final int CAST_TIME = 300;
   
   private FluidTank tank;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
+  
   private ICastingTableRecipe recipe;
   
   private int progress;
@@ -26,14 +91,19 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
   {
     super();
 
-    tank = new FluidTank(getDefaultCapacity());
+    tank = new FluidTank(getDefaultCapacity());    
+    fluid_handler = new FluidHandler();
     
-    tank_info = new FluidTankInfo[1];
-    tank_info[0] = new FluidTankInfo(tank);
     progress = 0;
     recipe = null;
   }
   
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
+  }
+
   @Override
   protected final void onInitialize()
   {
@@ -116,67 +186,6 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     return super.removeStackFromSlot(slot);
   }
   
-  @Override
-  public final int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    if(inventory[0] != null)
-    {
-      return 0;
-    }
-    if(doFill && ( tank.getFluid() == null || tank.getFluid().amount == 0))
-    {
-      setRecipe(resource);
-    }
-    return fillTank(0, resource, doFill);
-  }
-
-  @Override
-  public final FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    if(progress > 0)
-    {
-      return null;
-    }
-    FluidStack result = drainTank(0, resource, doDrain);
-    if(doDrain)
-    {
-      setRecipe(tank.getFluid());      
-    }
-    return result;
-  }
-
-  @Override
-  public final FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    if(progress > 0)
-    {
-      return null;
-    }
-    FluidStack result = drainTank(0, maxDrain, doDrain);
-    if(doDrain)
-    {
-      setRecipe(tank.getFluid());      
-    }
-    return result;
-  }
-
-  @Override
-  public final boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return inventory[0] == null;
-  }
-
-  @Override
-  public final boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return progress == 0;
-  }
-
-  @Override
-  public final FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
-  }
 
   @Override
   protected void updateClient()

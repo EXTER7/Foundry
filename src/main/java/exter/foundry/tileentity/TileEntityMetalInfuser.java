@@ -1,6 +1,5 @@
 package exter.foundry.tileentity;
 
-import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,13 +7,11 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
+public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory
 {
 
   
@@ -27,7 +24,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   static public final int TANK_INPUT = 0;
   static public final int TANK_OUTPUT = 1;
   private FluidTank[] tanks;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
   
   private int progress;
   private int extract_energy;
@@ -38,14 +35,9 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   {
     super();
 
-    int i;
     tanks = new FluidTank[2];
-    tank_info = new FluidTankInfo[2];
-    for(i = 0; i < 2; i++)
-    {
-      tanks[i] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
-      tank_info[i] = new FluidTankInfo(tanks[i]);
-    }
+    fluid_handler = new FluidHandler(TANK_INPUT,TANK_OUTPUT);
+
     progress = 0;
     extract_energy = 1;
     
@@ -55,7 +47,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     addContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_FILL,true));
     addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
     addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
-
+  }
+  
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
   }
   
   @Override
@@ -144,42 +141,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == 0;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    return fillTank(TANK_INPUT, resource, doFill);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(TANK_OUTPUT, resource, doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(TANK_OUTPUT, maxDrain, doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override

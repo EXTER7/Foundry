@@ -41,6 +41,7 @@ import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.model.IModelPart;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class RFCModel implements IModel
@@ -62,7 +63,7 @@ public class RFCModel implements IModel
         {
           return originalModel;
         }
-        int y = fluid.amount * 10 / FoundryItems.item_container.getCapacity(stack);
+        int y = fluid.amount * 10 / Fluid.BUCKET_VOLUME;
         if(y <= 0)
         {
           return originalModel;

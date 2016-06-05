@@ -9,14 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 
-public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,IFluidHandler
+public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory
 {
   static public final int TEMP_MIN = 29000;
   static public final int TEMP_LOSS_RATE = 750;
@@ -29,21 +27,20 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   static public final int INVENTORY_CONTAINER_FILL = 2;
 
   private FluidTank tank;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
 
   private int progress;
   private int heat;
   private int melt_point;
   private IMeltingRecipe current_recipe;
+
   
   
   public TileEntityMeltingCrucible()
   {
     super();
     tank = new FluidTank(FoundryAPI.CRUCIBLE_TANK_CAPACITY);
-    
-    tank_info = new FluidTankInfo[1];
-    tank_info[0] = new FluidTankInfo(tank);
+    fluid_handler = new FluidHandler(-1,0);
     progress = 0;
     heat = TEMP_MIN;
     
@@ -53,6 +50,12 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
     
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
+  }
+
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
   }
 
   @Override
@@ -145,42 +148,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISid
   public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    return 0;
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(0, resource, doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(0, maxDrain, doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return false;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override

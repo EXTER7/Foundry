@@ -17,15 +17,62 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISidedInventory, IFluidHandler
+public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISidedInventory
 {
+  protected class FluidHandler implements IFluidHandler
+  {
+    private IFluidTankProperties[] props;
+    
+    public FluidHandler()
+    {
+      props = new IFluidTankProperties[getTankCount()];
+      for(int i = 0; i < props.length; i++)
+      {
+        props[i] = new FluidTankPropertiesWrapper(getTank(i));
+      }
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      int result =  fillTank(0, resource, doFill);
+      if(doFill && resource != null && result > 0)
+      {
+        next_drain = 12;
+      }
+      return result;
+
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      return null;
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+      return null;
+    }    
+  }
+
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
+  
   private FluidTank tank;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
 
   private int next_drain;
   private int next_world_drain;
@@ -43,12 +90,19 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
     next_fill = 3;
 
     tank = new FluidTank(2000);
-    tank_info = new FluidTankInfo[1];
-    tank_info[0] = new FluidTankInfo(tank);
+    fluid_handler = new FluidHandler();
+    
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_DRAIN, false));
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_FILL, true));
   }
-
+  
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING).facing;
+    return (facing == EnumFacing.UP || facing == side)?fluid_handler:null;
+  }
+  
   @Override
   public void readFromNBT(NBTTagCompound compund)
   {
@@ -125,50 +179,6 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    if(from != EnumFacing.UP)
-    {
-      return 0;
-    }
-    if(doFill && resource != null && doFill)
-    {
-      next_drain = 12;
-    }
-    return fillTank(0, resource, doFill);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return null;
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return null;
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return from == EnumFacing.UP;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return false;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override
@@ -275,16 +285,16 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
       // Drain from the top TileEntity
       TileEntity source = worldObj.getTileEntity(getPos().add(0, 1, 0));
-      if(source instanceof IFluidHandler)
+      if(source != null && source.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
       {
-        IFluidHandler hsource = (IFluidHandler) source;
-        FluidStack drained = hsource.drain(EnumFacing.DOWN, 40, false);
+        IFluidHandler hsource = source.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+        FluidStack drained = hsource.drain(40, false);
         if(drained != null && !drained.getFluid().isGaseous(drained) && drained.getFluid().getDensity(drained) > 0)
         {
           drained.amount = tank.fill(drained, false);
           if(drained.amount > 0)
           {
-            hsource.drain(EnumFacing.DOWN, drained, true);
+            hsource.drain(drained, true);
             tank.fill(drained, true);
             updateTank(0);
             markDirty();
@@ -302,23 +312,20 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       {
         EnumFacing side = ((EnumHopperFacing)worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING)).facing;
         TileEntity dest = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
-        if(dest instanceof IFluidHandler)
+        if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
         {
           side = side.getOpposite();
-          IFluidHandler hdest = (IFluidHandler) dest;
-          if(hdest.canFill(side, tank.getFluid().getFluid()))
+          IFluidHandler hdest = dest.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+          FluidStack drained = tank.drain(10, false);
+          if(drained != null)
           {
-            FluidStack drained = tank.drain(10, false);
-            if(drained != null)
+            drained.amount = hdest.fill(drained, false);
+            if(drained.amount > 0)
             {
-              drained.amount = hdest.fill(side, drained, false);
-              if(drained.amount > 0)
-              {
-                tank.drain(drained.amount, true);
-                hdest.fill(side, drained, true);
-                updateTank(0);
-                markDirty();
-              }
+              tank.drain(drained.amount, true);
+              hdest.fill(drained, true);
+              updateTank(0);
+              markDirty();
             }
           }
         }

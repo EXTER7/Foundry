@@ -8,15 +8,57 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
+public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory
 {
+  protected class FluidHandler implements IFluidHandler
+  {
+    private IFluidTankProperties[] props;
+    
+    public FluidHandler()
+    {
+      props = new IFluidTankProperties[getTankCount()];
+      for(int i = 0; i < props.length; i++)
+      {
+        props[i] = new FluidTankPropertiesWrapper(getTank(i));
+      }
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      if(resource != null && resource.getFluid() == FluidRegistry.WATER)
+      {
+        return fillTank(TANK_WATER, resource, doFill);
+      }
+      return fillTank(TANK_INPUT, resource, doFill);
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      return drainTank(TANK_INPUT, resource.amount, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+      return drainTank(TANK_INPUT, maxDrain, doDrain);
+    }    
+  }
+
   static public final int ATOMIZE_TIME = 500000;
   
   static public final int ENERGY_REQUIRED = 15000;
@@ -31,7 +73,8 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   static public final int TANK_WATER = 1;
   
   private FluidTank[] tanks;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
+  
   IAtomizerRecipe current_recipe;
   
   private int progress;
@@ -45,10 +88,8 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     tanks = new FluidTank[2];
     tanks[TANK_INPUT] = new FluidTank(FoundryAPI.ATOMIZER_TANK_CAPACITY);
     tanks[TANK_WATER] = new FluidTank(FoundryAPI.ATOMIZER_WATER_TANK_CAPACITY);
+    fluid_handler = new FluidHandler();
     
-    tank_info = new FluidTankInfo[2];
-    tank_info[TANK_INPUT] = new FluidTankInfo(tanks[TANK_INPUT]);
-    tank_info[TANK_WATER] = new FluidTankInfo(tanks[TANK_WATER]);
     progress = -1;
     
     current_recipe = null;
@@ -61,7 +102,12 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     update_energy = true;
   }
   
-  
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
+  }
+
   @Override
   public void readFromNBT(NBTTagCompound compund)
   {
@@ -121,46 +167,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == INVENTORY_OUTPUT;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    if(resource != null && resource.getFluid() == FluidRegistry.WATER)
-    {
-      return fillTank(TANK_WATER, resource, doFill);
-    }
-    return fillTank(TANK_INPUT, resource, doFill);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(TANK_INPUT, resource.amount, doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(TANK_INPUT, maxDrain, doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override

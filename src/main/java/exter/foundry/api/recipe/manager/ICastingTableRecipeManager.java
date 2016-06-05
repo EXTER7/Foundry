@@ -2,10 +2,8 @@ package exter.foundry.api.recipe.manager;
 
 import java.util.List;
 
-import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.matcher.IItemMatcher;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface ICastingTableRecipeManager

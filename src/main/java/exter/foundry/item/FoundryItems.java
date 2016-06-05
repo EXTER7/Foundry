@@ -15,7 +15,6 @@ import exter.foundry.item.ammo.ItemRoundFire;
 import exter.foundry.item.ammo.ItemRoundHollow;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class FoundryItems
@@ -57,7 +56,7 @@ public class FoundryItems
     item_shell = new ItemShellNormal();
     item_shell_ap = new ItemShellAP();
     item_shell_lumium = new ItemShellLumium();
-    item_container = new ItemRefractoryFluidContainer(FluidContainerRegistry.BUCKET_VOLUME);
+    item_container = new ItemRefractoryFluidContainer();
     
     GameRegistry.register(item_component);
     GameRegistry.register(item_mold);

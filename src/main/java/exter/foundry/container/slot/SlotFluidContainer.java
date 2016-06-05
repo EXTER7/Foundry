@@ -3,8 +3,8 @@ package exter.foundry.container.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.IFluidContainerItem;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+
 
 public class SlotFluidContainer extends Slot
 {
@@ -17,7 +17,7 @@ public class SlotFluidContainer extends Slot
   public boolean isItemValid(ItemStack stack)
   {
     ItemStack slot_stack = getStack();
-    return (stack.getItem() instanceof IFluidContainerItem || FluidContainerRegistry.isContainer(stack))
+    return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)
         && (slot_stack == null || slot_stack.stackSize == 0);
   }
 

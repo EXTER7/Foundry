@@ -13,9 +13,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 /**
@@ -49,9 +57,62 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       return RSMODE_IGNORE;
     }
   }
+  
+  protected class FluidHandler implements IFluidHandler
+  {
+    private int fill_tank;
+    private int drain_tank;
+    private IFluidTankProperties[] props;
+    
+    public FluidHandler(int fill_tank,int drain_tank)
+    {
+      this.fill_tank = fill_tank;
+      this.drain_tank = drain_tank;
+      props = new IFluidTankProperties[getTankCount()];
+      for(int i = 0; i < props.length; i++)
+      {
+        props[i] = new FluidTankPropertiesWrapper(getTank(i));
+      }
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      if(fill_tank < 0)
+      {
+        return 0;
+      }
+      return fillTank(fill_tank,resource,doFill);
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      if(drain_tank < 0)
+      {
+        return null;
+      }
+      return drainTank(drain_tank,resource,doDrain);
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+      if(drain_tank < 0)
+      {
+        return null;
+      }
+      return drainTank(drain_tank,maxDrain,doDrain);
+    }    
+  }
 
   private RedstoneMode mode;
-  private int bucket_timer;
   
   /**
    * Links an item slot to a tank for filling/draining containers.
@@ -88,42 +149,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       FluidTank tank = getTank(tank_slot);
       if(fill)
       {
-        if(stack.getItem() instanceof IFluidContainerItem)
+        if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
         {
-          IFluidContainerItem fluid_cont = (IFluidContainerItem)stack.getItem();
-          FluidStack drained = tank.drain(25, false);
-          if(drained == null || drained.amount == 0)
-          {
-            return;
-          }
-          int filled = fluid_cont.fill(stack, drained, false);
-          if(filled == 0)
-          {
-            return;
-          }
-          drained = tank.drain(filled, true);
-          fluid_cont.fill(stack, drained, true);
-          updateTank(tank_slot);
-          updateInventoryItem(slot);
-        } else if(bucket_timer == 0)
-        {
-          ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(),stack);
-          if(filled != null)
-          {
-            setInventorySlotContents(slot,filled);
-            int drain = FluidContainerRegistry.getContainerCapacity(filled);
-            tank.drain(drain, true);
-            bucket_timer = drain / 25;
-            updateTank(tank_slot);
-            updateInventoryItem(slot);
-          }
-        }
-      } else
-      {
-        if(stack.getItem() instanceof IFluidContainerItem)
-        {
-          IFluidContainerItem fluid_cont = (IFluidContainerItem) stack.getItem();
-          FluidStack drained = fluid_cont.drain(stack, 25, false);
+          IFluidHandler handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+          FluidStack drained = handler.drain(25, false);
           if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
           {
             return;
@@ -134,26 +163,31 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
           {
             return;
           }
-          drained = fluid_cont.drain(stack, filled, true);
+          drained = handler.drain(filled, true);
           tank.fill(drained, true);
           updateTank(tank_slot);
           updateInventoryItem(slot);
-        } else if(bucket_timer == 0)
+        }
+      } else
+      {
+        if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
         {
-          FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-          ItemStack empty = FluidContainerRegistry.drainFluidContainer(stack);
-          if(fluid != null && empty != null)
+          IFluidHandler handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+          FluidStack drained = handler.drain( 25, false);
+          if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
           {
-            int filled = tank.fill(fluid, false);
-            if(filled == fluid.amount)
-            {
-              setInventorySlotContents(slot,empty);
-              tank.fill(fluid, true);
-              bucket_timer = fluid.amount / 25;
-              updateTank(tank_slot);
-              updateInventoryItem(slot);
-            }
+            return;
           }
+
+          int filled = tank.fill(drained, false);
+          if(filled == 0)
+          {
+            return;
+          }
+          drained = handler.drain(filled, true);
+          tank.fill(drained, true);
+          updateTank(tank_slot);
+          updateInventoryItem(slot);
         }
       }
     }
@@ -190,7 +224,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     initialized = false;
     mode = RedstoneMode.RSMODE_IGNORE;
     inventory = new ItemStack[getSizeInventory()];
-    bucket_timer = 0;
   }
   
 
@@ -375,10 +408,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     {
       mode = RedstoneMode.fromID(compound.getInteger("rsmode"));
     }
-    if(compound.hasKey("bucket_timer"))
-    {
-      bucket_timer = compound.getInteger("bucket_timer");
-    }
   }
   
   protected void writeTileToNBT(NBTTagCompound compound)
@@ -405,7 +434,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       writeInventoryItemToNBT(compound,i);
     }
     compound.setInteger("rsmode", mode.id);
-    compound.setInteger("bucket_timer", bucket_timer);
     return compound;
   }
 
@@ -481,10 +509,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       {
         update_packet = new NBTTagCompound();
         super.writeToNBT(update_packet);
-      }
-      if(bucket_timer > 0)
-      {
-        bucket_timer = 0;
       }
       for(ContainerSlot cs:conatiner_slots)
       {
@@ -658,5 +682,34 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     }
     return filled;
   }
-
+  
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return null;
+  }
+  
+  @Override
+  public boolean hasCapability(Capability<?> cap,EnumFacing facing)
+  {
+    return super.hasCapability(cap, facing) || (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+  }
+  
+  @Override
+  public <T> T getCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+    {
+      IFluidHandler fluid_hnalder = getFluidHandler(facing);
+      if(fluid_hnalder != null)
+      {
+        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(getFluidHandler(facing));
+      } else
+      {
+        return super.getCapability(cap, facing);
+      }
+    } else
+    {
+      return super.getCapability(cap, facing);
+    }
+  }
 }

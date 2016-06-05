@@ -5,27 +5,31 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityRefractoryTank extends TileEntityFoundry implements ISidedInventory, IFluidHandler
+public class TileEntityRefractoryTank extends TileEntityFoundry implements ISidedInventory
 {
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
+  
   private FluidTank tank;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
 
   public TileEntityRefractoryTank()
   {
 
     tank = new FluidTank(getTankCapacity());
-    tank_info = new FluidTankInfo[1];
-    tank_info[0] = new FluidTankInfo(tank);
+    fluid_handler = new FluidHandler(0,0);
+    
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_DRAIN, false));
     addContainerSlot(new ContainerSlot(0, INVENTORY_CONTAINER_FILL, true));
+  }
+  
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
   }
   
   protected int getTankCapacity()
@@ -76,42 +80,6 @@ public class TileEntityRefractoryTank extends TileEntityFoundry implements ISide
   public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(0,resource,doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(0,maxDrain,doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    return fillTank(0,resource,doFill);
-  }
-  
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override

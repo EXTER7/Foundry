@@ -86,7 +86,6 @@ public class FoundryMiscUtils
     }
   }
     
-  @SuppressWarnings("deprecation")
   static public FluidStack drainFluidFromWorld(World world,BlockPos pos,boolean do_drain)
   {
     IBlockState state = world.getBlockState(pos);
@@ -106,7 +105,7 @@ public class FoundryMiscUtils
       {
         world.setBlockToAir(pos);
       }
-      return new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
+      return new FluidStack(FluidRegistry.WATER,Fluid.BUCKET_VOLUME);
     }
 
     if(state.getMaterial() == Material.LAVA && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
@@ -115,7 +114,7 @@ public class FoundryMiscUtils
       {
         world.setBlockToAir(pos);
       }
-      return new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
+      return new FluidStack(FluidRegistry.LAVA,Fluid.BUCKET_VOLUME);
     }
     return null;
   }

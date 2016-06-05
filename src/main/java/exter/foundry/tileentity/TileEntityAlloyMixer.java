@@ -2,20 +2,90 @@ package exter.foundry.tileentity;
 
 import java.util.List;
 
-import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
+public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory
 {
+  protected class FluidHandler implements IFluidHandler
+  {
+    private IFluidTankProperties[] props;
+    
+    public FluidHandler()
+    {
+      props = new IFluidTankProperties[getTankCount()];
+      for(int i = 0; i < props.length; i++)
+      {
+        props[i] = new FluidTankPropertiesWrapper(getTank(i));
+      }
+    }
+
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      int i;
+      int empty = -1;
+      int partial = -1;
+      for(i = 0; i < 4; i++)
+      {
+        FluidTank ft = tanks[i];
+        if(ft.getFluidAmount() > 0)
+        { 
+          if(ft.getFluid().isFluidEqual(resource))
+          {
+            if(ft.getFluidAmount() < ft.getCapacity())
+            {
+              partial = i;
+            } else
+            {
+              return 0;
+            }
+          }
+        } else
+        {
+          empty = i;
+        }
+      }
+
+      if(partial != -1)
+      {
+        return fillTank(partial, resource, doFill);
+      }
+      if(empty != -1)
+      {
+        return fillTank(empty, resource, doFill);
+      }
+      return 0;
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      return drainTank(TANK_OUTPUT, resource, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+      return drainTank(TANK_OUTPUT, maxDrain, doDrain);
+    }    
+  }
+
+  
   static public final int INVENTORY_CONTAINER_INPUT_0_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_INPUT_0_FILL = 1;
   static public final int INVENTORY_CONTAINER_INPUT_1_DRAIN = 2;
@@ -34,22 +104,17 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
   static public final int TANK_INPUT_3 = 3;
   static public final int TANK_OUTPUT = 4;
   private FluidTank[] tanks;
-  private FluidTankInfo[] tank_info;
+  private IFluidHandler fluid_handler;
 
    
  
   public TileEntityAlloyMixer()
   {
     super();
-    int i;
     
     tanks = new FluidTank[5];
-    tank_info = new FluidTankInfo[5];
-    for(i = 0; i < 5; i++)
-    {
-      tanks[i] = new FluidTank(FoundryAPI.ALLOYMIXER_TANK_CAPACITY);
-      tank_info[i] = new FluidTankInfo(tanks[i]);
-    }
+    fluid_handler = new FluidHandler();
+    
     addContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));
     addContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_FILL,true));
     addContainerSlot(new ContainerSlot(TANK_INPUT_1,INVENTORY_CONTAINER_INPUT_1_DRAIN,false));
@@ -62,6 +127,12 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
   }
   
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
+  }
+
   @Override
   public int getSizeInventory()
   {
@@ -94,74 +165,6 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     return false;
   }
   
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    int i;
-    int empty = -1;
-    int partial = -1;
-    for(i = 0; i < 4; i++)
-    {
-      FluidTank ft = tanks[i];
-      if(ft.getFluidAmount() > 0)
-      { 
-        if(ft.getFluid().isFluidEqual(resource))
-        {
-          if(ft.getFluidAmount() < ft.getCapacity())
-          {
-            partial = i;
-          } else
-          {
-            return 0;
-          }
-        }
-      } else
-      {
-        empty = i;
-      }
-    }
-
-    if(partial != -1)
-    {
-      return fillTank(partial, resource, doFill);
-    }
-    if(empty != -1)
-    {
-      return fillTank(empty, resource, doFill);
-    }
-    return 0;
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(TANK_OUTPUT, resource, doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(TANK_OUTPUT, maxDrain, doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
-  }
-
   @Override
   protected void updateClient()
   {

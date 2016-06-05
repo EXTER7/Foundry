@@ -16,35 +16,131 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.IFluidContainerItem;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabFluids;
 
-public class ItemRefractoryFluidContainer extends Item implements IFluidContainerItem
+public class ItemRefractoryFluidContainer extends Item
 {
+  private class FluidHandler implements IFluidHandler,IFluidTankProperties,ICapabilityProvider
+  {
+    private IFluidTankProperties[] props;
+    private ItemStack stack;
+    
+    public FluidHandler(ItemStack stack)
+    {
+      this.stack = stack;
+      props = new IFluidTankProperties[] { this };
+    }
 
- 
-  public final int capacity;
+    @Override
+    public IFluidTankProperties[] getTankProperties()
+    {
+      return props;
+    }
+
+    @Override
+    public int fill(FluidStack resource, boolean doFill)
+    {
+      return ItemRefractoryFluidContainer.this.fill(stack, resource, doFill, false);
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain)
+    {
+      FluidStack fluid = getFluid(stack);
+      if(resource == null || (fluid != null && !fluid.isFluidEqual(resource)))
+      {
+        return null;
+      }
+      return drain(resource.amount,doDrain);
+    }
+
+    @Override
+    public FluidStack drain(int amount, boolean doDrain)
+    {
+      return ItemRefractoryFluidContainer.this.drain(stack, amount, doDrain);
+    }
+
+    @Override
+    public FluidStack getContents()
+    {
+      if(stack.getTagCompound() == null)
+      {
+        return null;
+      }
+      return FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
+    }
+
+    @Override
+    public int getCapacity()
+    {
+      return Fluid.BUCKET_VOLUME;
+    }
+
+    @Override
+    public boolean canFill()
+    {
+      return true;
+    }
+
+    @Override
+    public boolean canDrain()
+    {
+      return true;
+    }
+
+    @Override
+    public boolean canFillFluidType(FluidStack fluidStack)
+    {
+      return true;
+    }
+
+    @Override
+    public boolean canDrainFluidType(FluidStack fluidStack)
+    {
+      return true;
+    }    
+    @Override
+    public boolean hasCapability(Capability<?> cap,EnumFacing facing)
+    {
+      return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+    }
+    
+    @Override
+    public <T> T getCapability(Capability<T> cap, EnumFacing facing)
+    {
+      if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+      {
+        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+      } else
+      {
+        return null;
+      }
+    }
+  }
   
-  public ItemRefractoryFluidContainer(int container_capacity)
+  public ItemRefractoryFluidContainer()
   {
     super();
-    capacity = container_capacity;
     setCreativeTab(FoundryTabFluids.tab);
     setMaxStackSize(1);
     setUnlocalizedName("foundry.fluidContainer");
@@ -90,12 +186,21 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       return stack;
     }
-    if(fluid.amount > capacity)
+    if(fluid.amount > Fluid.BUCKET_VOLUME)
     {
-      fluid = new FluidStack(fluid, capacity);
+      fluid = new FluidStack(fluid, Fluid.BUCKET_VOLUME);
     }
-    fill(stack, fluid, true);
+    setFluid(stack, fluid);
     return stack;
+  }
+  
+  public FluidStack getFluid(ItemStack stack)
+  {
+    if(stack.getTagCompound() == null)
+    {
+      return null;
+    }
+    return FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
   }
 
   @SuppressWarnings("unchecked")
@@ -109,7 +214,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     {
       if(f != null)
       {
-        list.add(fromFluidStack(new FluidStack(f, capacity)));
+        list.add(fromFluidStack(new FluidStack(f, Fluid.BUCKET_VOLUME)));
       }
     }
   }
@@ -125,7 +230,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     } else
     {
       list.add(TextFormatting.BLUE + fluid.getLocalizedName());
-      list.add(TextFormatting.BLUE + String.valueOf(fluid.amount) + " / " + String.valueOf(capacity) + " mB");
+      list.add(TextFormatting.BLUE + String.valueOf(fluid.amount) + " / " + String.valueOf(Fluid.BUCKET_VOLUME) + " mB");
     }
   }
 
@@ -153,7 +258,6 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return false;
   }
   
-  @SuppressWarnings("deprecation")
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
   {
@@ -167,11 +271,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
     if(obj.typeOfHit == RayTraceResult.Type.BLOCK)
     {
-      TileEntity entity = world.getTileEntity(obj.getBlockPos());
+      TileEntity tile = world.getTileEntity(obj.getBlockPos());
       
-      if(entity instanceof IFluidHandler)
+      if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,obj.sideHit))
       {
-        IFluidHandler handler = (IFluidHandler)entity;
+        IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, obj.sideHit);
         if(player.isSneaking())
         {
           //Drain from container to the Tile Entity.
@@ -181,7 +285,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           {
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
-          int filled = handler.fill(obj.sideHit, drained, false);
+          int filled = handler.fill(drained, false);
           if(filled == 0)
           {
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -189,12 +293,12 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
           drained.amount = filled;
           
           drain(stack, filled, true);
-          handler.fill(obj.sideHit, drained, true);
+          handler.fill(drained, true);
         } else
         {
           //Fill container from the Tile Entity.
 
-          FluidStack drained = handler.drain(obj.sideHit, 50, false);
+          FluidStack drained = handler.drain(50, false);
           if(drained == null || drained.amount == 0)
           {
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -209,7 +313,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
           }
           drained.amount = filled;
-          handler.drain(obj.sideHit, filled, true);
+          handler.drain(filled, true);
           fill(stack, drained, true, false);
         }
         
@@ -236,10 +340,10 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
         {
           //Place fluid in the world.
           
-          FluidStack drained = drain(stack, FluidContainerRegistry.BUCKET_VOLUME, false);
-          if(drained != null && drained.getFluid().canBePlacedInWorld() && drained.amount == FluidContainerRegistry.BUCKET_VOLUME)
+          FluidStack drained = drain(stack, Fluid.BUCKET_VOLUME, false);
+          if(drained != null && drained.getFluid().canBePlacedInWorld() && drained.amount == Fluid.BUCKET_VOLUME)
           {
-            drain(stack, FluidContainerRegistry.BUCKET_VOLUME, true);
+            drain(stack, Fluid.BUCKET_VOLUME, true);
             if(!world.isRemote && !material.isLiquid())
             {
               world.destroyBlock(pos, true);
@@ -299,8 +403,8 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
 
         if(state.getMaterial() == Material.WATER && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
-          FluidStack fill = new FluidStack(FluidRegistry.WATER,FluidContainerRegistry.BUCKET_VOLUME);
-          if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
+          FluidStack fill = new FluidStack(FluidRegistry.WATER,Fluid.BUCKET_VOLUME);
+          if(fill(stack, fill, false, true) == Fluid.BUCKET_VOLUME)
           {
             if(!splitStack(stack,player))
             {
@@ -315,8 +419,8 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
 
         if(state.getMaterial() == Material.LAVA && Integer.valueOf(0).equals(state.getValue(BlockLiquid.LEVEL)))
         {
-          FluidStack fill = new FluidStack(FluidRegistry.LAVA,FluidContainerRegistry.BUCKET_VOLUME);
-          if(fill(stack, fill, false, true) == FluidContainerRegistry.BUCKET_VOLUME)
+          FluidStack fill = new FluidStack(FluidRegistry.LAVA,Fluid.BUCKET_VOLUME);
+          if(fill(stack, fill, false, true) == Fluid.BUCKET_VOLUME)
           {
             if(!splitStack(stack,player))
             {
@@ -333,80 +437,8 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
   }
   
-  @Override
-  public FluidStack getFluid(ItemStack stack)
-  {
-    if(stack.getTagCompound() == null)
-    {
-      return null;
-    }
-    return FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
-  }
 
-  @Override
-  public int getCapacity(ItemStack container)
-  {
-    return capacity;
-  }
-
-  @SuppressWarnings("deprecation")
-  private int fill(ItemStack stack, FluidStack fluid, boolean do_fill,boolean ignore_stacksize)
-  {
-    if(!ignore_stacksize && stack.stackSize > 1)
-    {
-      return 0;
-    }
-    FluidStack container_fluid = getFluid(stack);
-
-    if(!do_fill)
-    {
-      if(container_fluid == null)
-      {
-        return Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount);
-      }
-
-      if(!container_fluid.isFluidEqual(fluid))
-      {
-        return 0;
-      }
-
-      return Math.min(FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount, fluid.amount);
-    }
-
-    if(container_fluid == null)
-    {
-      container_fluid = new FluidStack(fluid, Math.min(FluidContainerRegistry.BUCKET_VOLUME, fluid.amount));
-
-      setFluid(stack, container_fluid);
-      return container_fluid.amount;
-    }
-
-    if(!container_fluid.isFluidEqual(fluid))
-    {
-      return 0;
-    }
-    int filled = FluidContainerRegistry.BUCKET_VOLUME - container_fluid.amount;
-
-    if(fluid.amount < filled)
-    {
-      container_fluid.amount += fluid.amount;
-      filled = fluid.amount;
-    } else
-    {
-      container_fluid.amount = FluidContainerRegistry.BUCKET_VOLUME;
-    }
-    setFluid(stack, container_fluid);
-    return filled;
-  }
-
-  @Override
-  public int fill(ItemStack container, FluidStack resource, boolean doFill)
-  {
-    return fill(container, resource, doFill, false);
-  }
-  
-  @Override
-  public FluidStack drain(ItemStack stack, int amount, boolean do_drain)
+  public FluidStack drain(ItemStack stack,int amount, boolean doDrain)
   {
     if(stack.stackSize > 1)
     {
@@ -426,7 +458,7 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
 
     FluidStack drain_fluid = new FluidStack(fluid, drained);
-    if(do_drain)
+    if(doDrain)
     {
       fluid.amount -= drained;
       if(fluid.amount <= 0)
@@ -438,6 +470,56 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     }
     return drain_fluid;
   }
+
+  private int fill(ItemStack stack, FluidStack fluid, boolean do_fill,boolean ignore_stacksize)
+  {
+    if(!ignore_stacksize && stack.stackSize > 1)
+    {
+      return 0;
+    }
+    FluidStack container_fluid = getFluid(stack);
+
+    if(!do_fill)
+    {
+      if(container_fluid == null)
+      {
+        return Math.min(Fluid.BUCKET_VOLUME, fluid.amount);
+      }
+
+      if(!container_fluid.isFluidEqual(fluid))
+      {
+        return 0;
+      }
+
+      return Math.min(Fluid.BUCKET_VOLUME - container_fluid.amount, fluid.amount);
+    }
+
+    if(container_fluid == null)
+    {
+      container_fluid = new FluidStack(fluid, Math.min(Fluid.BUCKET_VOLUME, fluid.amount));
+
+      setFluid(stack, container_fluid);
+      return container_fluid.amount;
+    }
+
+    if(!container_fluid.isFluidEqual(fluid))
+    {
+      return 0;
+    }
+    int filled = Fluid.BUCKET_VOLUME - container_fluid.amount;
+
+    if(fluid.amount < filled)
+    {
+      container_fluid.amount += fluid.amount;
+      filled = fluid.amount;
+    } else
+    {
+      container_fluid.amount = Fluid.BUCKET_VOLUME;
+    }
+    setFluid(stack, container_fluid);
+    return filled;
+  }
+
   
   @Override
   public int getItemStackLimit(ItemStack stack)
@@ -455,5 +537,11 @@ public class ItemRefractoryFluidContainer extends Item implements IFluidContaine
     ItemStack stack = new ItemStack(this,stack_size,0);
     setFluid(stack, null);
     return stack;
+  }
+  
+  @Override
+  public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
+  {
+    return new FluidHandler(stack);
   }
 }

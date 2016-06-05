@@ -7,13 +7,11 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,IFluidHandler
+public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory
 {
   static public final int CAST_TIME = 400000;
   
@@ -27,8 +25,9 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   static public final int INVENTORY_MOLD_STORAGE = 5;
   static public final int INVENTORY_MOLD_STORAGE_SIZE = 9;
   private FluidTank tank;
-  private FluidTankInfo[] tank_info;
-  ICastingRecipe current_recipe;
+  private IFluidHandler fluid_handler;
+  
+  private ICastingRecipe current_recipe;
   
   
   private int progress;
@@ -38,10 +37,7 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
     super();
 
     tank = new FluidTank(FoundryAPI.CASTER_TANK_CAPACITY);
-    
-    tank_info = new FluidTankInfo[1];
-    tank_info[0] = new FluidTankInfo(tank);
-    progress = -1;
+    fluid_handler = new FluidHandler(0,0);
     
     current_recipe = null;
     
@@ -50,7 +46,14 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
    
     update_energy = true;
   }
+
   
+  @Override
+  protected IFluidHandler getFluidHandler(EnumFacing facing)
+  {
+    return fluid_handler;
+  }
+
   
   @Override
   public void readFromNBT(NBTTagCompound compund)
@@ -113,42 +116,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return slot == INVENTORY_OUTPUT;
-  }
-
-  @Override
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    return fillTank(0, resource, doFill);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    return drainTank(0, resource, doDrain);
-  }
-
-  @Override
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    return drainTank(0, maxDrain, doDrain);
-  }
-
-  @Override
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return true;
-  }
-
-  @Override
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    return tank_info;
   }
 
   @Override

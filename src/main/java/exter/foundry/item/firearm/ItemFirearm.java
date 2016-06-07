@@ -174,7 +174,7 @@ public abstract class ItemFirearm extends Item
     for(Map.Entry<EntityLivingBase, MutablePair<Float,Integer>> hit : entities_hit.entrySet())
     {
       EntityLivingBase en = hit.getKey();
-      DamageSource damage = (new EntityDamageSource("bullet", shooter)).setProjectile();
+      DamageSource damage = (new EntityDamageSource("foundry.bullet", shooter)).setProjectile();
       if(round.ignoresArmor(round_item))
       {
         damage.setDamageBypassesArmor();

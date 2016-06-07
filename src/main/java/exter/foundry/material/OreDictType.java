@@ -25,6 +25,7 @@ public class OreDictType
     new OreDictType("plate","Iron", "Plate"),
     new OreDictType("plateDense","Iron", "DensePlate"),
     new OreDictType("gear","Stone", "Gear"),
+    new OreDictType("rod","Iron", "Rod"),
     new OreDictType("gem","Diamond", "Gem"),
     new OreDictType("planks","Wood", "Planks"),
     new OreDictType("crushed","Iron", "CrushedOre"),

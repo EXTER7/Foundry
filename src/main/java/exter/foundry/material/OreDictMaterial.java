@@ -4,18 +4,25 @@ public class OreDictMaterial
 {
   
   public final String suffix;
+  public final String suffix_alias;
   public final String default_prefix;
-  
-  private OreDictMaterial(String mat_suffix,String mat_default_prefix)
+
+  private OreDictMaterial(String suffix,String default_prefix)
   {
-    suffix = mat_suffix;
-    default_prefix = mat_default_prefix;
+    this(suffix,default_prefix,null);
+  }
+
+  private OreDictMaterial(String suffix,String default_prefix,String suffix_alias)
+  {
+    this.suffix = suffix;
+    this.default_prefix = default_prefix;
+    this.suffix_alias = suffix_alias;
   }
   
   static public final OreDictMaterial[] MATERIALS = new OreDictMaterial[] {
-    new OreDictMaterial("Aluminum","ingot"),
+    new OreDictMaterial("Aluminium","ingot", "Aluminum"),
     new OreDictMaterial("Carbon","dust"),
-    new OreDictMaterial("Chromium","ingot"),
+    new OreDictMaterial("Chrome","ingot","Chrome"),
     new OreDictMaterial("Cobalt","ingot"),
     new OreDictMaterial("Copper","ingot"),
     new OreDictMaterial("Gold","ingot"),
@@ -97,6 +104,13 @@ public class OreDictMaterial
     new OreDictMaterial("Prometheum", "ingot"),
     new OreDictMaterial("Ironwood", "ingot"),
     new OreDictMaterial("Steeleaf", "ingot"),
-    new OreDictMaterial("Knightmetal", "ingot")
+    new OreDictMaterial("Knightmetal", "ingot"),
+    new OreDictMaterial("RedstoneAlloy", "ingot"),
+    new OreDictMaterial("EnergeticAlloy", "ingot"),
+    new OreDictMaterial("VibrantAlloy", "ingot"),
+    new OreDictMaterial("DarkSteel", "ingot"),
+    new OreDictMaterial("PulsatingIron", "ingot"),
+    new OreDictMaterial("ElectricalSteel", "ingot"),
+    new OreDictMaterial("Soularium", "ingot")
   };
 }

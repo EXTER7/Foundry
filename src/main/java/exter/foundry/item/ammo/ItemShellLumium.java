@@ -29,7 +29,7 @@ public class ItemShellLumium extends Item
       double damage = super.getBaseDamage(entity_hit);
       if(entity_hit.isEntityUndead())
       {
-        damage += 6;
+        damage += 9;
       }
       return damage;
     }

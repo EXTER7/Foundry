@@ -63,11 +63,12 @@ public class GuiMaterialRouter extends GuiFoundry
       drawMaterialIcon(x,y,name);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(I18n.translateToLocal("router.material." + name));
+      tooltip.add(I18n.translateToLocal("foundry.router.material." + name));
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -93,11 +94,12 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTypeIcon(x,y,name);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(I18n.translateToLocal("router.type." + name));
+      tooltip.add(I18n.translateToLocal("foundry.router.type." + name));
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -184,6 +186,7 @@ public class GuiMaterialRouter extends GuiFoundry
     return GUI_TEXTURE;
   }
   
+  @SuppressWarnings("deprecation")
   @Override
   public void drawScreen(int mousex, int mousey, float par3)
   {
@@ -233,13 +236,13 @@ public class GuiMaterialRouter extends GuiFoundry
       if(isPointInRegion(29,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(I18n.translateToLocal("router.material." + r.material));
+        tooltip.add(I18n.translateToLocal("foundry.router.material." + r.material));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(46,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(I18n.translateToLocal("router.type." + r.type));
+        tooltip.add(I18n.translateToLocal("foundry.router.type." + r.type));
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(81,y + 4,8,8,mousex,mousey))

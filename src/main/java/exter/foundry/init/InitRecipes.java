@@ -59,9 +59,14 @@ public class InitRecipes
         FoundryUtils.registerBasicMeltingRecipes(name,fluid);
       }
     }
-    FoundryUtils.registerBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.getFluid("Chromium"));
-    FoundryUtils.registerBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.getFluid("Aluminum"));
+    FoundryUtils.registerBasicMeltingRecipes("Chromium",LiquidMetalRegistry.instance.getFluid("Chrome"));
+    FoundryUtils.registerBasicMeltingRecipes("Aluminum",LiquidMetalRegistry.instance.getFluid("Aluminium"));
     
+    MeltingRecipeManager.instance.addRecipe(new OreMatcher("ingotAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2200);
+    MeltingRecipeManager.instance.addRecipe(new OreMatcher("nuggetAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_NUGGET),2200);
+    MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2200);
+    MeltingRecipeManager.instance.addRecipe(new OreMatcher("oreAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_ORE),2200);
+
     if(FoundryConfig.recipe_glass)
     {
       final String[] oredict_names = { "dyeSmallBlack", "dyeSmallRed", "dyeSmallGreen", "dyeSmallBrown", "dyeSmallBlue", "dyeSmallPurple", "dyeSmallCyan", "dyeSmallLightGray", "dyeSmallGray", "dyeSmallPink", "dyeSmallLime", "dyeSmallYellow", "dyeSmallLightBlue", "dyeSmallMagenta", "dyeSmallOrange", "dyeSmallWhite" };
@@ -687,6 +692,14 @@ public class InitRecipes
         for(ItemStack item:OreDictionary.getOres(od_name))
         {
           MaterialRegistry.instance.registerItem(item, material.suffix, type.name);
+        }
+        if(material.suffix_alias != null)
+        {
+          od_name = type.prefix + material.suffix_alias;
+          for(ItemStack item:OreDictionary.getOres(od_name))
+          {
+            MaterialRegistry.instance.registerItem(item, material.suffix, type.name);
+          }
         }
       }
     }

@@ -19,6 +19,8 @@ public class FoundryFluids
   static public Fluid liquid_cupronickel;
   static public Fluid liquid_lead;
   static public Fluid liquid_platinum;
+  static public Fluid liquid_aluminium;
+  static public Fluid liquid_chromium;
   static public Fluid liquid_signalum;
   static public Fluid liquid_lumium;
   static public Fluid liquid_enderium;
@@ -40,12 +42,12 @@ public class FoundryFluids
     liquid_cupronickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Cupronickel", 1750, 15);
     liquid_lead = LiquidMetalRegistry.instance.registerLiquidMetal( "Lead", 650, 1);  
     liquid_platinum = LiquidMetalRegistry.instance.registerLiquidMetal( "Platinum", 2100, 15);
+    liquid_aluminium = LiquidMetalRegistry.instance.registerLiquidMetal( "Aluminium", 1100, 15);  
+    liquid_chromium = LiquidMetalRegistry.instance.registerLiquidMetal( "Chrome", 2200, 8);   
     liquid_signalum = LiquidMetalRegistry.instance.registerLiquidMetal( "Signalum", 1400, 12);
     liquid_lumium = LiquidMetalRegistry.instance.registerLiquidMetal( "Lumium", 1250, 15);
     liquid_enderium = LiquidMetalRegistry.instance.registerLiquidMetal( "Enderium", 1900, 12);
 
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Aluminum", 1100, 15);  
-    LiquidMetalRegistry.instance.registerLiquidMetal( "Chromium", 2200, 8);   
     LiquidMetalRegistry.instance.registerLiquidMetal( "Manganese", 1550, 15);   
     LiquidMetalRegistry.instance.registerLiquidMetal( "Titanium", 2000, 15);
     LiquidMetalRegistry.instance.registerLiquidMetal( "Rubber", 460, 0);

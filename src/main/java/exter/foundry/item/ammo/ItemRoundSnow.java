@@ -22,7 +22,7 @@ public class ItemRoundSnow extends Item
   {
     public FirearmRound()
     {
-      super(3, 50, 25);
+      super(4, 40, 20);
     }
     
     @Override
@@ -31,7 +31,7 @@ public class ItemRoundSnow extends Item
       double damage = super.getBaseDamage(entity_hit);
       if(entity_hit instanceof EntityEnderman || entity_hit instanceof EntityBlaze)
       {
-        damage += 7;
+        damage += 16;
       }
       return damage;
     }
@@ -53,10 +53,10 @@ public class ItemRoundSnow extends Item
     super.addInformation(stack, player, list, par4);
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(TextFormatting.BLUE + "Base Damage: 3");
-      list.add(TextFormatting.BLUE + "Base Range: 50");
-      list.add(TextFormatting.BLUE + "Falloff Range: 25");
-      list.add(TextFormatting.YELLOW + "+7.0 damage to Enderman and Blaze.");
+      list.add(TextFormatting.BLUE + "Base Damage: 4");
+      list.add(TextFormatting.BLUE + "Base Range: 40");
+      list.add(TextFormatting.BLUE + "Falloff Range: 20");
+      list.add(TextFormatting.YELLOW + "+16 damage to Enderman and Blaze.");
     }
   }
 

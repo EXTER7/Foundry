@@ -20,7 +20,7 @@ public class ItemRoundLumium extends Item
   {
     public FirearmRound()
     {
-      super(6,60,30);
+      super(5,60,30);
     }
     
     @Override
@@ -29,7 +29,7 @@ public class ItemRoundLumium extends Item
       double damage = super.getBaseDamage(entity_hit);
       if(entity_hit.isEntityUndead())
       {
-        damage += 12;
+        damage += 15;
       }
       return damage;
     }
@@ -49,10 +49,10 @@ public class ItemRoundLumium extends Item
   {
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(TextFormatting.BLUE + "Base Damage: 6");
+      list.add(TextFormatting.BLUE + "Base Damage: 5");
       list.add(TextFormatting.BLUE + "Base Range: 60");
       list.add(TextFormatting.BLUE + "Falloff Range: 30");
-      list.add(TextFormatting.YELLOW + "+12 damage to undead creatures.");
+      list.add(TextFormatting.YELLOW + "+15 damage to undead creatures.");
     }
   }
   

@@ -1,6 +1,6 @@
 package exter.foundry.container.slot;
 
-import exter.foundry.api.firearms.IFirearmRound;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.inventory.InventoryFirearm;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,8 @@ public class SlotFirearmAmmo extends Slot
   @Override
   public boolean isItemValid(ItemStack stack)
   {
-    return (stack.getItem() instanceof IFirearmRound) && ((IFirearmRound)stack.getItem()).getRoundType(stack).equals(type);
+    return stack.hasCapability(FoundryAPI.capability_firearmround, null)
+        && stack.getCapability(FoundryAPI.capability_firearmround, null).getRoundType().equals(type);
   }
 
   @Override

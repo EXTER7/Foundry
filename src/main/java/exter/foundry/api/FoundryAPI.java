@@ -1,5 +1,6 @@
 package exter.foundry.api;
 
+import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
@@ -54,4 +55,7 @@ public class FoundryAPI
   
   @CapabilityInject(IHeatProvider.class)
   static public Capability<IHeatProvider> capability_heatprovider;
+  
+  @CapabilityInject(IFirearmRound.class)
+  static public Capability<IFirearmRound> capability_firearmround;
 }

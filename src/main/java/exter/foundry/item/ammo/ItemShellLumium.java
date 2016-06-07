@@ -2,59 +2,62 @@ package exter.foundry.item.ammo;
 
 import java.util.List;
 
-import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
-import exter.foundry.item.firearm.ItemShotgun;
+import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemShellLumium extends ItemRoundBase
+public class ItemShellLumium extends Item
 {
+  static private class FirearmRound extends FirearmRoundShell
+  {
+    public FirearmRound()
+    {
+      super(3,50,20);
+    }
+
+    @Override
+    public double getBaseDamage(EntityLivingBase entity_hit)
+    {
+      double damage = super.getBaseDamage(entity_hit);
+      if(entity_hit.isEntityUndead())
+      {
+        damage += 6;
+      }
+      return damage;
+    }
+  }
+  
   public ItemShellLumium()
   {
-    super(3,50,20);
+    setCreativeTab(FoundryTabFirearms.tab);
     setUnlocalizedName("shellLumium");
     setRegistryName("shellLumium");
   }
-
-  @Override
-  public String getRoundType(ItemStack round)
-  {
-    return ItemShotgun.AMMO_TYPE;
-  }
-
-  @Override
-  public ItemStack getCasing(ItemStack round)
-  {
-    return FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL);
-  }
   
-
-  @Override
-  public double getBaseDamage(ItemStack round,EntityLivingBase entity_hit)
-  {
-    double damage = super.getBaseDamage(round, entity_hit);
-    if(entity_hit.isEntityUndead())
-    {
-      damage += 6;
-    }
-    return damage;
-  }
-  
-  @Override
   @SideOnly(Side.CLIENT)
+  @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean par4)
   {
     if(GuiScreen.isShiftKeyDown())
     {
-      list.add(TextFormatting.BLUE + "Base Damage: " + base_damage + " (+6.0 to undead creatures)");
-      list.add(TextFormatting.BLUE + "Base Range: " + base_range);
-      list.add(TextFormatting.BLUE + "Fallof Range: " + falloff_range);
+      list.add(TextFormatting.BLUE + "Base Damage: 3/pellet");
+      list.add(TextFormatting.BLUE + "Base Range: 50");
+      list.add(TextFormatting.BLUE + "Falloff Range: 20");
+      list.add(TextFormatting.YELLOW + "+6 damage to undead creatures.");
     }
+  }
+  
+  @Override
+  public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
+  {
+    return new FirearmRound();
   }
 }

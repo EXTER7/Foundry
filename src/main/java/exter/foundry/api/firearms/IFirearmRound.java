@@ -17,7 +17,7 @@ public interface IFirearmRound
    * Possible values are "revolver" for the Revolver, or "shotgun" for the shotgun.
    * @return The type of gun this ammo is used for.
    */
-  public String getRoundType(ItemStack round);
+  public String getRoundType();
   
   /**
    * Called when a bullet hits a block.
@@ -28,7 +28,7 @@ public interface IFirearmRound
    * @param pos coordinates of the block hit.
    * @param side Side of the block hit.
    */
-  public void onBulletHitBlock(ItemStack round, EntityLivingBase shooter, Vec3d from, World world, BlockPos pos, EnumFacing side);
+  public void onBulletHitBlock(EntityLivingBase shooter, Vec3d from, World world, BlockPos pos, EnumFacing side);
 
   /**
    * Called after a shot hit and damaged an entity
@@ -37,14 +37,14 @@ public interface IFirearmRound
    * @param entity Entity that the shot hit.
    * @param count How many bullets/pellets the shot hit the entity.
    */
-  public void onBulletDamagedLivingEntity(ItemStack round,EntityLivingBase entity, int count);
+  public void onBulletDamagedLivingEntity(EntityLivingBase entity, int count);
 
   /**
    * Should the round break glass.
    * @param round The Round item.
    * @return Should the round break glass
    */
-  public boolean breaksGlass(ItemStack round);
+  public boolean breaksGlass();
   
   /**
    * Get the base range of the round.
@@ -52,7 +52,7 @@ public interface IFirearmRound
    * @param round The Round item.
    * @return The base range of the round.
    */
-  public double getBaseRange(ItemStack round);
+  public double getBaseRange();
   
   /**
    * Get the damage fall-off range of the round.
@@ -61,7 +61,7 @@ public interface IFirearmRound
    * @param round The Round item.
    * @return The base range of the round.
    */
-  public double getFalloffRange(ItemStack round);
+  public double getFalloffRange();
   
   /**
    * Get the base damage of the round.
@@ -70,19 +70,19 @@ public interface IFirearmRound
    * @param entity_hit The entity the hit by the bullet/pellet.
    * @return The base damage of the round.
    */
-  public double getBaseDamage(ItemStack round,EntityLivingBase entity_hit);
+  public double getBaseDamage(EntityLivingBase entity_hit);
 
   /**
    * Get the casing that the round uses.
    * @param round The Round item.
    * @return ItemStack of the casing.
    */
-  public ItemStack getCasing(ItemStack round);
+  public ItemStack getCasing();
   
   /**
    * Check if the round ignores armor.
    * @param round The Round item.
    * @return true if the round ignores armor.
    */
-  public boolean ignoresArmor(ItemStack round);
+  public boolean ignoresArmor();
 }

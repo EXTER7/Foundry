@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.capability.CapabilityFirearmRound;
 import exter.foundry.capability.CapabilityHeatProvider;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
@@ -119,6 +120,7 @@ public class ModFoundry
     FoundryAPI.recipes_mold = MoldRecipeManager.instance;
     
     CapabilityHeatProvider.init();
+    CapabilityFirearmRound.init();
 
     FoundryConfig.load(config);
     FoundryItems.registerItems(config);

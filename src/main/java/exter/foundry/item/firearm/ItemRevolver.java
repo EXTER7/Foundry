@@ -3,7 +3,7 @@ package exter.foundry.item.firearm;
 import java.util.List;
 
 import exter.foundry.ModFoundry;
-import exter.foundry.api.firearms.IFirearmRound;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.sound.FoundrySounds;
@@ -95,7 +95,7 @@ public class ItemRevolver extends ItemFirearm
           world.playSound(null, player.posX, player.posY, player.posZ, FoundrySounds.sound_revolver_fire, SoundCategory.PLAYERS, 1, 1);
         }
         shoot(round,world,player,null,1,0.01f,1.0f);
-        setAmmo(stack,position,((IFirearmRound)round.getItem()).getCasing(round).copy());
+        setAmmo(stack,position,round.getCapability(FoundryAPI.capability_firearmround, null).getCasing().copy());
         if(world.isRemote)
         {
           player.rotationPitch -= 3;

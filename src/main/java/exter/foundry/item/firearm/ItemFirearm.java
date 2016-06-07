@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.creativetab.FoundryTabFirearms;
 import net.minecraft.block.Block;
@@ -110,7 +111,7 @@ public abstract class ItemFirearm extends Item
   static public final void shoot(ItemStack round_item, World world, EntityLivingBase shooter,Entity target, int times, float spread, float damage_multiplier)
   {
     Map<EntityLivingBase,MutablePair<Float,Integer>> entities_hit = new HashMap<EntityLivingBase,MutablePair<Float,Integer>>();
-    IFirearmRound round = (IFirearmRound) round_item.getItem();
+    IFirearmRound round = round_item.getCapability(FoundryAPI.capability_firearmround, null);
     int i;
     for(i = 0; i < times; i++)
     {
@@ -121,7 +122,7 @@ public abstract class ItemFirearm extends Item
         {
           case BLOCK:
             IBlockState b = world.getBlockState(obj.getBlockPos());
-            if(round.breaksGlass(round_item) && b.getMaterial() == Material.GLASS && b.getBlockHardness(world, obj.getBlockPos()) < 0.4)
+            if(round.breaksGlass() && b.getMaterial() == Material.GLASS && b.getBlockHardness(world, obj.getBlockPos()) < 0.4)
             {
               world.playEvent(null, 2001, obj.getBlockPos(), Block.getIdFromBlock(b.getBlock())+(b.getBlock().getMetaFromState(b)<<12));
               if(!world.isRemote)
@@ -130,7 +131,7 @@ public abstract class ItemFirearm extends Item
               }
             } else
             {
-              round.onBulletHitBlock(round_item, shooter, (Vec3d)obj.hitInfo, world, obj.getBlockPos(), obj.sideHit);
+              round.onBulletHitBlock(shooter, (Vec3d)obj.hitInfo, world, obj.getBlockPos(), obj.sideHit);
             }
             break;
           case ENTITY:
@@ -138,9 +139,9 @@ public abstract class ItemFirearm extends Item
             {
               Vec3d end = new Vec3d(obj.entityHit.posX, obj.entityHit.posY, obj.entityHit.posZ);
               double distance = end.distanceTo((Vec3d)obj.hitInfo);
-              double base_range = round.getBaseRange(round_item);
-              double falloff_range = round.getFalloffRange(round_item);
-              double base_damage = round.getBaseDamage(round_item,(EntityLivingBase)obj.entityHit);
+              double base_range = round.getBaseRange();
+              double falloff_range = round.getFalloffRange();
+              double base_damage = round.getBaseDamage((EntityLivingBase)obj.entityHit);
               double damage;
               if(distance < base_range)
               {
@@ -175,13 +176,13 @@ public abstract class ItemFirearm extends Item
     {
       EntityLivingBase en = hit.getKey();
       DamageSource damage = (new EntityDamageSource("foundry.bullet", shooter)).setProjectile();
-      if(round.ignoresArmor(round_item))
+      if(round.ignoresArmor())
       {
         damage.setDamageBypassesArmor();
       }
       if(en.attackEntityFrom(damage, hit.getValue().left))
       {
-        round.onBulletDamagedLivingEntity(round_item, en,hit.getValue().right);
+        round.onBulletDamagedLivingEntity(en,hit.getValue().right);
       }
     }
   }
@@ -216,11 +217,10 @@ public abstract class ItemFirearm extends Item
     {
       return false;
     }
-    Item item = stack.getItem(); 
-    if(!(item instanceof IFirearmRound))
+    if(!stack.hasCapability(FoundryAPI.capability_firearmround,null))
     {
       return false;
     }
-    return ((IFirearmRound)item).getRoundType(stack).equals(type);
+    return stack.getCapability(FoundryAPI.capability_firearmround, null).getRoundType().equals(type);
   }
 }

@@ -3,7 +3,7 @@ package exter.foundry.item.firearm;
 import java.util.List;
 
 import exter.foundry.ModFoundry;
-import exter.foundry.api.firearms.IFirearmRound;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.sound.FoundrySounds;
@@ -89,7 +89,7 @@ public class ItemShotgun extends ItemFirearm
               player.posX,
               player.posY + player.getEyeHeight() - 0.1,
               player.posZ,
-              ((IFirearmRound)(round.getItem())).getCasing(round).copy());
+              round.getCapability(FoundryAPI.capability_firearmround, null).getCasing().copy());
           casing.setPickupDelay(10);
           casing.motionX = -look_z * 0.2;
           casing.motionY = look_y * 0.2;

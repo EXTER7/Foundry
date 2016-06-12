@@ -58,7 +58,7 @@ public class GuiBurnerHeater extends GuiFoundry
     
     if(te_bh.getItemBurnTime() > 0)
     {
-      int burn = te_bh.getBurnTime() * BURN_HEIGHT / te_bh.getItemBurnTime();
+      int burn = te_bh.getBurningTime() * BURN_HEIGHT / te_bh.getItemBurnTime();
 
       if(burn > 0)
       {

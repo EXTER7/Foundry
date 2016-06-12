@@ -15,9 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.Optional;
+import vazkii.botania.api.item.IExoflameHeatable;
 
-//@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
-public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedInventory/*,IExoflameHeatable*/
+@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
+public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedInventory,IExoflameHeatable
 {
   private class HeatProvider implements IHeatProvider
   {
@@ -242,7 +244,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
 
   }
 
-  public int getBurnTime()
+  public int getBurningTime()
   {
     return burn_time;
   }
@@ -269,56 +271,37 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
   }
 
   
-//  @Optional.Method(modid = "Botania")
-//  @Override
-//  public boolean canSmelt()
-//  {
-//    if(inventory[SLOT_INPUT_A] != null && inventory[SLOT_INPUT_B] != null)
-//    {
-//      IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_A], inventory[SLOT_INPUT_B]);
-//      if(recipe == null)
-//      {
-//        recipe = AlloyFurnaceRecipeManager.instance.findRecipe(inventory[SLOT_INPUT_B], inventory[SLOT_INPUT_A]);
-//      }
-//      if(recipe == null)
-//      {
-//        return false;
-//      }
-//      ItemStack output = recipe.getOutput();
-//      ItemStack inv_output = inventory[SLOT_OUTPUT];
-//      if(inv_output != null && (!inv_output.isItemEqual(output) || inv_output.stackSize - output.stackSize > inv_output.getMaxStackSize()))
-//      {
-//        return false;
-//      }
-//      return true;
-//    }
-//    return false;
-//  }
-//
-//  @Optional.Method(modid = "Botania")
-//  @Override
-//  public int getBurnTime()
-//  {
-//    return burn_time <= 1 ? 0 : burn_time - 1;
-//  }
-//
-//  @Optional.Method(modid = "Botania")
-//  @Override
-//  public void boostBurnTime()
-//  {
-//    if(!worldObj.isRemote)
-//    {
-//      burn_time = 200;
-//      item_burn_time = 199;
-//      update_burn_times = true;
-//      markDirty();
-//    }
-//  }
-//
-//  @Optional.Method(modid = "Botania")
-//  @Override
-//  public void boostCookTime()
-//  {
-//
-//  }
+  @Optional.Method(modid = "Botania")
+  @Override
+  public boolean canSmelt()
+  {
+    return true;
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public int getBurnTime()
+  {
+    return burn_time <= 1 ? 0 : burn_time - 1;
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public void boostBurnTime()
+  {
+    if(!worldObj.isRemote)
+    {
+      burn_time = 2000;
+      item_burn_time = 1999;
+      update_burn_times = true;
+      markDirty();
+    }
+  }
+
+  @Optional.Method(modid = "Botania")
+  @Override
+  public void boostCookTime()
+  {
+
+  }
 }

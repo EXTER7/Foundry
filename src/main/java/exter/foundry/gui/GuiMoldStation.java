@@ -121,7 +121,7 @@ public class GuiMoldStation extends GuiFoundry
     
     if(te_ms.getItemBurnTime() > 0)
     {
-      int burn = te_ms.getBurnTime() * PROGRESS_HEIGHT / te_ms.getItemBurnTime();
+      int burn = te_ms.getBurningTime() * PROGRESS_HEIGHT / te_ms.getItemBurnTime();
 
       if(burn > 0)
       {

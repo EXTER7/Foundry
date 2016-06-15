@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory
+public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
   static public final int CAST_TIME = 400000;
   

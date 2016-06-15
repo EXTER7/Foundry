@@ -20,6 +20,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -711,5 +712,73 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     {
       return super.getCapability(cap, facing);
     }
+  }
+
+  
+
+  
+  // Support for the old IFluidHandler
+  // TODO: Remove once the new FluidHandler Capability get adopted by most mods.
+  
+  @Deprecated
+  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
+  {
+    IFluidHandler handler = getFluidHandler(from);
+    if(handler == null)
+    {
+      return 0;
+    }
+    return handler.fill(resource, doFill);
+  }
+
+  @Deprecated
+  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
+  {
+    IFluidHandler handler = getFluidHandler(from);
+    if(handler == null)
+    {
+      return null;
+    }
+    return handler.drain(resource, doDrain);
+  }
+
+  @Deprecated
+  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+  {
+    IFluidHandler handler = getFluidHandler(from);
+    if(handler == null)
+    {
+      return null;
+    }
+    return handler.drain(maxDrain, doDrain);
+  }
+
+  @Deprecated
+  public boolean canFill(EnumFacing from, Fluid fluid)
+  {
+    return getFluidHandler(from) != null;
+  }
+
+  @Deprecated
+  public boolean canDrain(EnumFacing from, Fluid fluid)
+  {
+    return getFluidHandler(from) != null;
+  }
+
+  @Deprecated
+  public FluidTankInfo[] getTankInfo(EnumFacing from)
+  {
+    IFluidHandler handler = getFluidHandler(from);
+    if(handler == null)
+    {
+      return null;
+    }
+    IFluidTankProperties[] props = handler.getTankProperties();
+    FluidTankInfo[] info = new FluidTankInfo[props.length];
+    for(int i = 0; i < info.length; i++)
+    {
+      info[i] = new FluidTankInfo(props[i].getContents(),props[i].getCapacity());
+    }
+    return info;
   }
 }

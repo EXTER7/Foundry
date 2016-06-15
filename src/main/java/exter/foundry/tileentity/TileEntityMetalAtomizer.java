@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory
+public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
   protected class FluidHandler implements IFluidHandler
   {

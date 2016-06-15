@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 
-public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory
+public class TileEntityMeltingCrucible extends TileEntityFoundry implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
   static public final int TEMP_MIN = 29000;
   static public final int TEMP_LOSS_RATE = 750;

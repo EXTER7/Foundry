@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityRefractorySpout extends TileEntityFoundry
+public class TileEntityRefractorySpout extends TileEntityFoundry implements net.minecraftforge.fluids.IFluidHandler
 {
   protected class FluidHandler implements IFluidHandler
   {

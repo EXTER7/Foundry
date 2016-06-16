@@ -746,7 +746,10 @@ public class InitRecipes
           {
             CastingRecipeManager.instance.addRecipe(new OreMatcher("ingot" + name), fluidstack, ingot_mold, null);
           }
-          CastingTableRecipeManager.instance.addRecipe(new OreMatcher("ingot" + name), fluidstack, ICastingTableRecipe.TableType.INGOT);
+          if(CastingTableRecipeManager.instance.findRecipe(fluidstack,ICastingTableRecipe.TableType.INGOT) == null)
+          {
+            CastingTableRecipeManager.instance.addRecipe(new OreMatcher("ingot" + name), fluidstack, ICastingTableRecipe.TableType.INGOT);
+          }
         }
         ores = OreDictionary.getOres("dust" + name);
         if(ores != null && ores.size() > 0)

@@ -27,11 +27,6 @@ public class FoundryAPI
   static public final int FLUID_AMOUNT_ORE = 216;
 
   /**
-   * Maximum amount of substance a metal infuser can store.
-   */
-  static public final int INFUSER_SUBSTANCE_AMOUNT_MAX = 1000;
-
-  /**
    * Tank capacity for machines.
    */
   static public final int CRUCIBLE_TANK_CAPACITY = 6000;

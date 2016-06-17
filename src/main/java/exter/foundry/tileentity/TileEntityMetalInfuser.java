@@ -1,5 +1,6 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,8 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     super();
 
     tanks = new FluidTank[2];
+    tanks[0] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
+    tanks[1] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
     fluid_handler = new FluidHandler(TANK_INPUT,TANK_OUTPUT);
 
     progress = 0;
@@ -72,11 +75,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     
   }
 
-  private void WriteSubstanceToNBT(NBTTagCompound compound)
-  {
-  }
-
-
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound)
   {
@@ -85,9 +83,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       compound = new NBTTagCompound();
     }
     super.writeToNBT(compound);
-    NBTTagCompound substance_tag = new NBTTagCompound();
-    WriteSubstanceToNBT(substance_tag);
-    compound.setTag("Substance", substance_tag);
     compound.setInteger("progress", progress);
     compound.setInteger("extract_time", extract_energy);
     return compound;

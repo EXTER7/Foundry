@@ -2,6 +2,7 @@ package exter.foundry.tileentity;
 
 import java.util.List;
 
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
@@ -113,6 +114,10 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     super();
     
     tanks = new FluidTank[5];
+    for(int i = 0; i < tanks.length; i++)
+    {
+      tanks[i] = new FluidTank(FoundryAPI.ALLOYMIXER_TANK_CAPACITY);
+    }
     fluid_handler = new FluidHandler();
     
     addContainerSlot(new ContainerSlot(TANK_INPUT_0,INVENTORY_CONTAINER_INPUT_0_DRAIN,false));

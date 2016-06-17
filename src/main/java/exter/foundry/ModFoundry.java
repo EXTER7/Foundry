@@ -80,7 +80,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "2.0.0.0-beta1";
+  public static final String MODVERSION = "2.0.0.0-beta2";
 
   @Instance(MODID)
   public static ModFoundry instance;

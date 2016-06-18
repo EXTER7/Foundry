@@ -312,9 +312,9 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
       {
         EnumFacing side = ((EnumHopperFacing)worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING)).facing;
         TileEntity dest = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
-        if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
+        side = side.getOpposite();
+        if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {
-          side = side.getOpposite();
           IFluidHandler hdest = dest.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
           FluidStack drained = tank.drain(10, false);
           if(drained != null)

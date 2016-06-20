@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
@@ -24,7 +23,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
     
     public FluidHandler()
     {
-      props = new IFluidTankProperties[] { new FluidTankPropertiesWrapper(getTank(0)) };
+      props = new IFluidTankProperties[0];
     }
 
     @Override
@@ -36,12 +35,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
     @Override
     public int fill(FluidStack resource, boolean doFill)
     {
-      int result =  fillTank(0, resource, doFill);
-      if(doFill && resource != null && result > 0)
-      {
-        next_drain = 8;
-      }
-      return result;
+      return 0;
     }
 
     @Override
@@ -58,21 +52,17 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
   }
 
   
-  private FluidTank tank;
   private FluidTank fluid_moved;
   private IFluidHandler fluid_handler;
 
   private int pour_length;
-  private int next_drain;
-  private int next_fill;
+  private int next_move;
 
   public TileEntityRefractorySpout()
   {
 
-    next_drain = 8;
-    next_fill = 2;
+    next_move = 2;
 
-    tank = new FluidTank(250);
     fluid_moved = new FluidTank(10);
     pour_length = 0;
     fluid_handler = new FluidHandler();
@@ -95,13 +85,9 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
   {
     super.readFromNBT(compund);
 
-    if(compund.hasKey("next_drain"))
+    if(compund.hasKey("next_move"))
     {
-      next_drain = compund.getInteger("next_drain");
-    }
-    if(compund.hasKey("next_fill"))
-    {
-      next_fill = compund.getInteger("next_fill");
+      next_move = compund.getInteger("next_move");
     }
     if(compund.hasKey("pour_length"))
     {
@@ -117,8 +103,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
       compound = new NBTTagCompound();
     }
     super.writeToNBT(compound);
-    compound.setInteger("next_drain", next_drain);
-    compound.setInteger("next_fill", next_fill);
+    compound.setInteger("next_move", next_move);
     compound.setInteger("pour_length", pour_length);
     return compound;
   }
@@ -164,40 +149,30 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
   @Override
   protected void updateServer()
   {
-    if(--next_drain == 0)
-    {
-      next_drain = 8;
 
-      // Drain from the top TileEntity
-      EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
-      TileEntity source = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
-      side = side.getOpposite();
-      if(source != null && source.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-      {
-        IFluidHandler hsource = source.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-        FluidStack drained = hsource.drain(40, false);
-        if(drained != null && !drained.getFluid().isGaseous(drained) && drained.getFluid().getDensity(drained) > 0)
-        {
-          drained.amount = tank.fill(drained, false);
-          if(drained.amount > 0)
-          {
-            hsource.drain(drained, true);
-            tank.fill(drained, true);
-            updateTank(0);
-          }
-        }
-      }
-    }
-
-    if(--next_fill == 0)
+    if(--next_move == 0)
     {
-      next_fill = 2;
+      next_move = 2;
       FluidStack last_moved = fluid_moved.getFluid();
       fluid_moved.setFluid(null);
+
+      // Get fluid from the back.
       if(worldObj.getBlockState(getPos()).getValue(BlockFoundrySidedMachine.STATE) == BlockFoundrySidedMachine.EnumMachineState.ON)
       {
-        // Fill to the bottom
-        if(tank.getFluid() != null && tank.getFluid().amount > 0)
+
+        FluidStack drained = null;
+        EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
+        TileEntity source = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
+        IFluidHandler hsource = null;
+        side = side.getOpposite();
+        if(source != null && source.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+        {
+          hsource = source.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+          drained = hsource.drain(10, false);
+        }
+
+        // Fill to the bottom.
+        if(drained != null)
         {
           int down = 0;
           while(true)
@@ -216,15 +191,13 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
             if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,EnumFacing.UP))
             {
               IFluidHandler hdest = dest.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-              FluidStack drained = tank.drain(10, false);
               if(drained != null)
               {
                 drained.amount = hdest.fill(drained, false);
                 if(drained.amount > 0)
                 {
-                  tank.drain(drained.amount, true);
+                  hsource.drain(drained.amount, true);
                   hdest.fill(drained, true);
-                  updateTank(0);
                   fluid_moved.setFluid(drained.copy());
                   pour_length = down - 1;
                   updateValue("pour_length", pour_length);
@@ -237,7 +210,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
       }
       if(!areFluidStacksEqual(fluid_moved.getFluid(), last_moved))
       {
-        updateTank(1);
+        updateTank(0);
       }
     }
   }
@@ -245,20 +218,13 @@ public class TileEntityRefractorySpout extends TileEntityFoundry implements net.
   @Override
   public FluidTank getTank(int slot)
   {
-    switch(slot)
-    {
-      case 0:
-        return tank;
-      case 1:
-        return fluid_moved;
-    }
-    return null;
+    return fluid_moved;
   }
 
   @Override
   public int getTankCount()
   {
-    return 2;
+    return 1;
   }
 
   @Override

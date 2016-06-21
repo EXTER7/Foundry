@@ -7,11 +7,12 @@ import java.util.Map;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMaterials;
 
-public class ItemComponent extends Item
+public class ItemComponent extends Item implements IFuelHandler
 {
   static public enum SubItem
   {
@@ -35,7 +36,8 @@ public class ItemComponent extends Item
     INFERNOCLAY(17,"componentInfernoClay"),
     INFERNOBRICK(18,"componentInfernoBrick"),
     AMMO_BULLET_LUMIUM(19,"componentBulletLumium"),
-    AMMO_PELLET_LUMIUM(20,"componentPelletLumium");
+    AMMO_PELLET_LUMIUM(20,"componentPelletLumium"),
+    COAL_COKE(21,"componentCoalCoke");
     
     public final int id;
     public final String name;
@@ -86,5 +88,15 @@ public class ItemComponent extends Item
     {
       list.add(new ItemStack(this, 1, c.id));
     }
+  }
+
+  @Override
+  public int getBurnTime(ItemStack fuel)
+  {
+    if(fuel.getItem() == this && fuel.getMetadata() == SubItem.COAL_COKE.id)
+    {
+      return 3200;
+    }      
+    return 0;
   }
 }

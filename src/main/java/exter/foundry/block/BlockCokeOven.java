@@ -19,19 +19,19 @@ import java.util.Random;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.proxy.CommonFoundryProxy;
-import exter.foundry.tileentity.TileEntityBurnerHeater;
+import exter.foundry.tileentity.TileEntityCokeOven;
 import exter.foundry.util.FoundryMiscUtils;
 
-public class BlockBurnerHeater extends BlockFoundrySidedMachine
+public class BlockCokeOven extends BlockFoundrySidedMachine
 {
-  public BlockBurnerHeater()
+  public BlockCokeOven()
   {
     super(Material.ROCK);
-    setUnlocalizedName("foundry.burnerHeater");
+    setUnlocalizedName("foundry.cokeOven");
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setRegistryName("burnerHeater");
+    setRegistryName("cokeOven");
   }
 
 
@@ -43,7 +43,7 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
       return true;
     } else
     {
-      player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_BURNERHEATER, world, pos.getX(), pos.getY(), pos.getZ());
+      player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_COKEOVEN, world, pos.getX(), pos.getY(), pos.getZ());
       return true;
     }
   }
@@ -51,7 +51,7 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
   @Override
   public TileEntity createNewTileEntity(World world, int meta)
   {
-    return new TileEntityBurnerHeater();
+    return new TileEntityCokeOven();
   }
   
   @SideOnly(Side.CLIENT)
@@ -62,7 +62,7 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
     {
       EnumMachineFacing facing = (EnumMachineFacing) state.getValue(FACING);
       float f = (float) pos.getX() + 0.5F;
-      float f1 = (float) pos.getY() + 0.125F + random.nextFloat() * 5.0F / 16.0F;
+      float f1 = (float) pos.getY() + 0.25F + random.nextFloat() * 3.0F / 16.0F;
       float f2 = (float) pos.getZ() + 0.5F;
       float f3 = 0.52F;
       float f4 = random.nextFloat() * 0.6F - 0.3F;
@@ -93,6 +93,6 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.burnerHeater", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.cokeOven", tooltip);
   }
 }

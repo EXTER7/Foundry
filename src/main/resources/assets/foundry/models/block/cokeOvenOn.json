@@ -1,0 +1,9 @@
+{
+    "parent": "foundry:block/orientable",
+    "textures": {
+        "top": "foundry:blocks/cokeoven_top",
+        "bottom": "foundry:blocks/cokeoven_bottom",
+        "front": "foundry:blocks/cokeoven_front_on",
+        "side": "foundry:blocks/cokeoven_side"
+    }
+}

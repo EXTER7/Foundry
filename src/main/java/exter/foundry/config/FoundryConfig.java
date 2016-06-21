@@ -12,6 +12,7 @@ public class FoundryConfig
   public static boolean recipe_tools_armor;
   public static boolean recipe_glass;
   
+  public static boolean block_coke_oven_enable;
 
   static public void load(Configuration config)
   {
@@ -20,6 +21,8 @@ public class FoundryConfig
     recipe_tools_armor = config.get("recipe", "recipe.tools_armor.use", true).getBoolean(true);
     recipe_glass = config.get("recipe", "recipe.glass.use", true).getBoolean(true);
 
-    recipe_steel_enable = config.get("recipe", "recipe.enable_infuser_steel", true).getBoolean(true);    
+    recipe_steel_enable = config.get("recipe", "recipe.enable_infuser_steel", true).getBoolean(true);
+    
+    block_coke_oven_enable = config.get("block", "block.enable_coke_ovenl", true).getBoolean(true);
   }
 }

@@ -58,6 +58,7 @@ import exter.foundry.tileentity.TileEntityBurnerHeater;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
+import exter.foundry.tileentity.TileEntityCokeOven;
 import exter.foundry.tileentity.TileEntityInductionHeater;
 import exter.foundry.tileentity.TileEntityInfernoTank;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
@@ -172,6 +173,10 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
     GameRegistry.registerTileEntity(TileEntityRefractoryTank.class, "Foundry_RefractoryTank");
     GameRegistry.registerTileEntity(TileEntityInfernoTank.class, "Foundry_InfernoTank");
+    if(FoundryConfig.block_coke_oven_enable)
+    {
+      GameRegistry.registerTileEntity(TileEntityCokeOven.class, "Foundry_CokeOven");
+    }
 
 
     InitRecipes.init();

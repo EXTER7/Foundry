@@ -1,6 +1,7 @@
 package exter.foundry.block;
 
 
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.ItemBlockMulti;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -17,6 +18,7 @@ public class FoundryBlocks
   static public BlockAlloyFurnace block_alloy_furnace;
   static public BlockMoldStation block_mold_station;
   static public BlockBurnerHeater block_burner_heater;
+  static public BlockCokeOven block_coke_oven;
   
   static public BlockRefractoryHopper block_refractory_hopper;
   static public BlockRefractorySpout block_refractory_spout;
@@ -61,5 +63,11 @@ public class FoundryBlocks
     register(block_refractory_spout);
     register(block_refractory_tank);
     register(block_inferno_tank);
+
+    if(FoundryConfig.block_coke_oven_enable)
+    {
+      block_coke_oven = new BlockCokeOven();
+      register(block_coke_oven);
+    }
   }
 }

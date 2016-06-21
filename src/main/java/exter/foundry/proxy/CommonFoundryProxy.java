@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import exter.foundry.container.ContainerAlloyFurnace;
 import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerBurnerHeater;
+import exter.foundry.container.ContainerCokeOven;
 import exter.foundry.container.ContainerMaterialRouter;
 import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
@@ -19,6 +20,7 @@ import exter.foundry.container.ContainerRefractoryTank;
 import exter.foundry.container.ContainerRevolver;
 import exter.foundry.container.ContainerShotgun;
 import exter.foundry.gui.GuiBurnerHeater;
+import exter.foundry.gui.GuiCokeOven;
 import exter.foundry.gui.GuiAlloyFurnace;
 import exter.foundry.gui.GuiAlloyMixer;
 import exter.foundry.gui.GuiMaterialRouter;
@@ -34,6 +36,7 @@ import exter.foundry.gui.GuiShotgun;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
+import exter.foundry.tileentity.TileEntityCokeOven;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -58,6 +61,7 @@ public class CommonFoundryProxy implements IGuiHandler
   static public final int GUI_MOLDSTATION = 10;
   static public final int GUI_BURNERHEATER = 11;
   static public final int GUI_REFRACTORYTANK = 12;
+  static public final int GUI_COKEOVEN = 13;
   
   public void preInit()
   {
@@ -101,6 +105,8 @@ public class CommonFoundryProxy implements IGuiHandler
         return new ContainerBurnerHeater((TileEntityBurnerHeater)world.getTileEntity(pos),player);
       case GUI_REFRACTORYTANK:
         return new ContainerRefractoryTank((TileEntityRefractoryTank)world.getTileEntity(pos),player);
+      case GUI_COKEOVEN:
+        return new ContainerCokeOven((TileEntityCokeOven)world.getTileEntity(pos),player);
     }
     return null;
   }
@@ -173,6 +179,11 @@ public class CommonFoundryProxy implements IGuiHandler
       {
         TileEntityRefractoryTank te = (TileEntityRefractoryTank)world.getTileEntity(pos);
         return new GuiRefractoryTank(te,player);
+      }
+      case GUI_COKEOVEN:
+      {
+        TileEntityCokeOven te = (TileEntityCokeOven)world.getTileEntity(pos);
+        return new GuiCokeOven(te,player);
       }
     } 
     return null;

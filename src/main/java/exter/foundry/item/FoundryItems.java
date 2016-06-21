@@ -16,6 +16,7 @@ import exter.foundry.item.ammo.ItemRoundHollow;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class FoundryItems
 {
@@ -74,6 +75,10 @@ public class FoundryItems
     GameRegistry.register(item_shell_ap);
     GameRegistry.register(item_shell_lumium);
     GameRegistry.register(item_container);
+    
+    GameRegistry.registerFuelHandler(item_component);
+
+    OreDictionary.registerOre("itemCoalCoke", component(ItemComponent.SubItem.COAL_COKE));
   }
 
   static public ItemStack component(ItemComponent.SubItem sub)

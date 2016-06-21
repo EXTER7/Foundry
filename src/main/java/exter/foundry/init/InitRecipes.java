@@ -417,6 +417,11 @@ public class InitRecipes
         BurnerHeaterFuelManager.instance.getHeatNeeded(200000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
+        new OreMatcher("itemCoalCoke"),
+        3200,
+        BurnerHeaterFuelManager.instance.getHeatNeeded(200000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+
+    BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustCoal"),
         800,
         BurnerHeaterFuelManager.instance.getHeatNeeded(190000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
@@ -700,6 +705,19 @@ public class InitRecipes
         'S', new ItemStack(Blocks.STONE_SLAB),
         'F', furnace_stack);
 
+    if(FoundryConfig.block_coke_oven_enable)
+    {
+      GameRegistry.addRecipe(new ShapedOreRecipe(
+          new ItemStack(FoundryBlocks.block_coke_oven),
+          "BFB",
+          "BCB",
+          "BIB",
+          'B', refbrick_stack,
+          'F', furnace_stack,
+          'I', "plateCopper",
+          'C', casing_stack));
+    }
+    
     InitFirearmRecipes.init();
   }
 

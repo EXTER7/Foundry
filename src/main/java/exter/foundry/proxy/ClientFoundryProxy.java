@@ -14,6 +14,7 @@ import exter.foundry.block.BlockCastingTable;
 import exter.foundry.block.BlockComponent;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
+import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.LiquidMetalRegistry;
@@ -136,6 +137,10 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_refractory_spout,"refractorySpout");
     registerItemModel(FoundryBlocks.block_refractory_tank,"refractoryTank");
     registerItemModel(FoundryBlocks.block_inferno_tank,"infernoTank");
+    if(FoundryConfig.block_coke_oven_enable)
+    {
+      registerItemModel(FoundryBlocks.block_coke_oven,"cokeOven");
+    }
 
     for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
     {

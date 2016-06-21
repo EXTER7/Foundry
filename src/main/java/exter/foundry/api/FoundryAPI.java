@@ -5,6 +5,7 @@ import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
 import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
+import exter.foundry.api.recipe.manager.IBurnerHeaterFuelManager;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
 import exter.foundry.api.recipe.manager.ICastingTableRecipeManager;
 import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
@@ -36,6 +37,15 @@ public class FoundryAPI
   static public final int ATOMIZER_TANK_CAPACITY = 6000;
   static public final int ATOMIZER_WATER_TANK_CAPACITY = 6000;
 
+  //Heat loss rates for crucibles.
+  static public final int CRUCIBLE_TEMP_LOSS_RATE = 750;
+  static public final int CRUCIBLE_ADVANCED_TEMP_LOSS_RATE = 900;
+  
+  //Max temperatures for crucibles.
+  static public final int CRUCIBLE_MAX_TEMP = 200000;
+  static public final int CRUCIBLE_ADVANCED_MAX_TEMP = 400000;
+
+  
   //These fields are set by Foundry during it's preInit phase.
   static public IMeltingRecipeManager recipes_melting;
   static public ICastingRecipeManager recipes_casting;
@@ -45,6 +55,8 @@ public class FoundryAPI
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   static public IAtomizerRecipeManager recipes_atomizer;
   static public IMoldRecipeManager recipes_mold;
+  static public IBurnerHeaterFuelManager burnerheater_fuel;
+  
   
   static public IFluidRegistry fluids;
   

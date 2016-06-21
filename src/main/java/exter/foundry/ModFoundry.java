@@ -45,6 +45,7 @@ import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
+import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -120,6 +121,7 @@ public class ModFoundry
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
     FoundryAPI.recipes_mold = MoldRecipeManager.instance;
+    FoundryAPI.burnerheater_fuel = BurnerHeaterFuelManager.instance;
     
     CapabilityHeatProvider.init();
     CapabilityFirearmRound.init();

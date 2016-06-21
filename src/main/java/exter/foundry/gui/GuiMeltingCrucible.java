@@ -11,6 +11,7 @@ import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.gui.button.GuiButtonFoundry;
 import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
+import exter.foundry.tileentity.TileEntityFoundryHeatable;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -88,8 +89,8 @@ public class GuiMeltingCrucible extends GuiFoundry
 
     
     //Draw heat bar.
-    int heat = (te_crucible.getHeat() - TileEntityMeltingCrucible.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityMeltingCrucible.TEMP_MIN);
-    int melt_point = (te_crucible.getMeltingPoint() - TileEntityMeltingCrucible.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityMeltingCrucible.TEMP_MIN);
+    int heat = (te_crucible.getTemperature() - TileEntityFoundryHeatable.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityFoundryHeatable.TEMP_MIN);
+    int melt_point = (te_crucible.getMeltingPoint() - TileEntityFoundryHeatable.TEMP_MIN) * HEAT_BAR_WIDTH / (te_crucible.getMaxTemperature() - TileEntityFoundryHeatable.TEMP_MIN);
     if(heat > 0)
     {
       drawTexturedModalRect(window_x + HEAT_BAR_X, window_y + HEAT_BAR_Y, HEAT_BAR_OVERLAY_X, HEAT_BAR_OVERLAY_Y, heat, HEAT_BAR_HEIGHT);
@@ -126,7 +127,7 @@ public class GuiMeltingCrucible extends GuiFoundry
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
-      int heat = te_crucible.getHeat() / 100;
+      int heat = te_crucible.getTemperature() / 100;
       int melt_point = te_crucible.getMeltingPoint() / 100;
       currenttip.add("Temperature: " + String.valueOf(heat) + " °K");
       if(melt_point > 0)

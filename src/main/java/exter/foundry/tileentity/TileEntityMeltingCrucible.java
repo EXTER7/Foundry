@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
-  static public final int TEMP_LOSS_RATE = 750;
   
   static public final int SMELT_TIME = 5000000;
 
@@ -158,7 +157,7 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
     FluidStack fs = current_recipe.getOutput();
     melt_point = current_recipe.getMeltingPoint() * 100;
     
-    int heat = getHeat();
+    int heat = getTemperature();
         
     if(heat <= melt_point || tank.fill(fs, false) < fs.amount)
     {
@@ -236,13 +235,13 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
   @Override
   public int getMaxTemperature()
   {
-    return 200000;
+    return FoundryAPI.CRUCIBLE_MAX_TEMP;
   }
 
   @Override
   protected int getTemperatureLossRate()
   {
-    return TEMP_LOSS_RATE;
+    return FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE;
   }
 
   @Override

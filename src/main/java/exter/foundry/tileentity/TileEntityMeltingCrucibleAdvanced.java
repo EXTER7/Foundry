@@ -1,18 +1,18 @@
 package exter.foundry.tileentity;
 
+import exter.foundry.api.FoundryAPI;
+
 public class TileEntityMeltingCrucibleAdvanced extends TileEntityMeltingCrucible
 {
-  static public final int TEMP_LOSS_RATE = 900;
-
   @Override
   public int getMaxTemperature()
   {
-    return 400000;
+    return FoundryAPI.CRUCIBLE_ADVANCED_MAX_TEMP;
   }
   
   @Override
   protected int getTemperatureLossRate()
   {
-    return TEMP_LOSS_RATE;
+    return FoundryAPI.CRUCIBLE_ADVANCED_TEMP_LOSS_RATE;
   }
 }

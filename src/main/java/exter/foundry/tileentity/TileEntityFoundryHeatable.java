@@ -19,8 +19,6 @@ public abstract class TileEntityFoundryHeatable extends TileEntityFoundry
   static public final int TEMP_MIN = 29000;
   
   private int heat;
-
-  
   
   public TileEntityFoundryHeatable()
   {
@@ -61,18 +59,12 @@ public abstract class TileEntityFoundryHeatable extends TileEntityFoundry
     return compound;
   }
 
-  @Override
-  public int getSizeInventory()
-  {
-    return 3;
-  }
-
-  public int getHeat()
+  public final int getTemperature()
   {
     return heat;
   }
 
-  private IHeatProvider getHeatProvider()
+  private final IHeatProvider getHeatProvider()
   {
     TileEntity te = worldObj.getTileEntity(getPos().down());
     if(te != null && te.hasCapability(FoundryAPI.capability_heatprovider, EnumFacing.UP))
@@ -113,9 +105,9 @@ public abstract class TileEntityFoundryHeatable extends TileEntityFoundry
     }
   }
   
-  protected abstract boolean canReceiveHeat();
+  abstract protected boolean canReceiveHeat();
   
-  protected abstract int getMaxTemperature();
+  abstract protected int getMaxTemperature();
   
   abstract protected int getTemperatureLossRate();
   

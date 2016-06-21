@@ -62,7 +62,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
   private int item_burn_time;
   private boolean update_burn_times;
 
-  private static int MAX_PROVIDE = TileEntityMeltingCrucible.getMaxHeatRecieve(170000);
+  private static int MAX_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(TileEntityMeltingCrucible.TEMP_LOSS_RATE,170000);
 
   private HeatProvider heat_provider;
 

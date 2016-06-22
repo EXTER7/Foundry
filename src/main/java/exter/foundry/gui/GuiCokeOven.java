@@ -92,7 +92,7 @@ public class GuiCokeOven extends GuiFoundry
     drawTexturedModalRect(window_x + HEAT_BAR_X + bake - HEAT_BAR_BAKE_WIDTH / 2, window_y + HEAT_BAR_Y, HEAT_BAR_BAKE_X, HEAT_BAR_BAKE_Y, HEAT_BAR_BAKE_WIDTH, HEAT_BAR_HEIGHT);
 
     //Draw progress bar.
-    int progress = te_oven.getProgress() * PROGRESS_WIDTH / TileEntityCokeOven.BAKE_TIME;
+    int progress = (te_oven.getProgress() / 100) * PROGRESS_WIDTH / (TileEntityCokeOven.BAKE_TIME / 100);
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);

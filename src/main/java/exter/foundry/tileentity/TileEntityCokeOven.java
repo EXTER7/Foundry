@@ -18,9 +18,9 @@ import net.minecraftforge.fluids.FluidTank;
 public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISidedInventory
 {
   
-  static public final int BAKE_TIME = 100000000;
+  static public final int BAKE_TIME = 200000000;
   
-  static public final int BAKE_TEMP = 140000;
+  static public final int BAKE_TEMP = 160000;
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_OUTPUT = 1;
@@ -203,7 +203,7 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   @Override
   public int getMaxTemperature()
   {
-    return 200000;
+    return 220000;
   }
 
   @Override

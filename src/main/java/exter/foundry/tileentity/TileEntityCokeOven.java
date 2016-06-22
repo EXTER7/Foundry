@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISidedInventory
 {
   
-  static public final int BAKE_TIME = 200000000;
+  static public final int BAKE_TIME = 50000000;
   
   static public final int BAKE_TEMP = 160000;
   
@@ -115,16 +115,19 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   
   private boolean canBake()
   {
+    if(getTemperature() <= BAKE_TEMP)
+    {
+      return false;
+    }
     ItemStack input = inventory[INVENTORY_INPUT];
     ItemStack output = inventory[INVENTORY_OUTPUT];
     if(input == null || input.getItem() != Items.COAL || input.getMetadata() != 0)
     {
       return false;
     }
-    if(getTemperature() <= BAKE_TEMP
-        || (output != null && output.getItem() != FoundryItems.item_component
-        && output.getMetadata() != ItemComponent.SubItem.COAL_COKE.id
-        && output.stackSize == output.getMaxStackSize()))
+    if(output != null && output.getItem() != FoundryItems.item_component
+       && output.getMetadata() != ItemComponent.SubItem.COAL_COKE.id
+       && output.stackSize == output.getMaxStackSize())
     {
       return false;
     }
@@ -140,11 +143,7 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
     }
     int heat = getTemperature();
         
-    int increment = (heat - BAKE_TEMP) * 4;
-    if(increment < 1)
-    {
-      increment = 1;
-    }
+    int increment = heat - BAKE_TEMP;
     progress += increment;
     if(progress >= BAKE_TIME)
     {

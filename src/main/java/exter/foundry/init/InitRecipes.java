@@ -414,17 +414,17 @@ public class InitRecipes
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(new ItemStack(Items.COAL,1,0)),// Coal
         1600,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(186000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(new ItemStack(Items.COAL,1,1)),// Charcoal
         1200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(186000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("itemCoalCoke"),
         3200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(210000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(215000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustCoal"),
@@ -433,7 +433,7 @@ public class InitRecipes
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustCharcoal"),
         800,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(190000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustSmallCoal"),
         200,
@@ -441,7 +441,7 @@ public class InitRecipes
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustSmallCharcoal"),
         200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(190000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(Items.BLAZE_ROD),

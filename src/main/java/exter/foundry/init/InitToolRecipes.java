@@ -1,15 +1,16 @@
 package exter.foundry.init;
 
-import exter.foundry.api.FoundryAPI;
-import exter.foundry.api.recipe.matcher.ItemStackMatcher;
+import java.util.Map.Entry;
+
+import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.FoundryFluids;
+import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
-import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 public class InitToolRecipes
 {
@@ -114,31 +115,46 @@ public class InitToolRecipes
         });
 
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_CHESTPLATE), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_CHESTPLATE), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_PICKAXE), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_PICKAXE), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_pickaxe, new ItemStackMatcher(extra_sticks2));
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_PICKAXE), FoundryFluids.liquid_iron, 3, ItemMold.SubItem.PICKAXE, extra_sticks2);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_PICKAXE), FoundryFluids.liquid_gold, 3, ItemMold.SubItem.PICKAXE, extra_sticks2);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_AXE), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_AXE), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 3), mold_axe, new ItemStackMatcher(extra_sticks2));
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_AXE), FoundryFluids.liquid_iron, 3, ItemMold.SubItem.AXE, extra_sticks2);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_AXE), FoundryFluids.liquid_gold, 3, ItemMold.SubItem.AXE, extra_sticks2);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_SHOVEL), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_SHOVEL), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 1), mold_shovel, new ItemStackMatcher(extra_sticks2));
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_SHOVEL), FoundryFluids.liquid_iron, 1, ItemMold.SubItem.SHOVEL, extra_sticks2);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_SHOVEL), FoundryFluids.liquid_gold, 1, ItemMold.SubItem.SHOVEL, extra_sticks2);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_SWORD), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_SWORD), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_sword, new ItemStackMatcher(extra_sticks1));
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_HOE), FoundryFluids.liquid_iron, 2, ItemMold.SubItem.HOE, extra_sticks2);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_HOE), FoundryFluids.liquid_gold, 2, ItemMold.SubItem.HOE, extra_sticks2);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_HOE), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_HOE), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 2), mold_hoe, new ItemStackMatcher(extra_sticks2));
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_SWORD), FoundryFluids.liquid_iron, 2, ItemMold.SubItem.SWORD, extra_sticks1);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_SWORD), FoundryFluids.liquid_gold, 2, ItemMold.SubItem.SWORD, extra_sticks1);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_LEGGINGS), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_LEGGINGS), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 7), mold_leggings, null);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_HELMET), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_HELMET), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 5), mold_helmet, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_HELMET), FoundryFluids.liquid_iron, 5, ItemMold.SubItem.HELMET, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_HELMET), FoundryFluids.liquid_gold, 5, ItemMold.SubItem.HELMET, null);
 
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.IRON_BOOTS), new FluidStack(FoundryFluids.liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-    CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Items.GOLDEN_BOOTS), new FluidStack(FoundryFluids.liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_CHESTPLATE), FoundryFluids.liquid_iron, 8, ItemMold.SubItem.CHESTPLATE, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_CHESTPLATE), FoundryFluids.liquid_gold, 8, ItemMold.SubItem.CHESTPLATE, null);
+
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_LEGGINGS), FoundryFluids.liquid_iron, 7, ItemMold.SubItem.LEGGINGS, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_LEGGINGS), FoundryFluids.liquid_gold, 7, ItemMold.SubItem.LEGGINGS, null);
+
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_BOOTS), FoundryFluids.liquid_iron, 4, ItemMold.SubItem.BOOTS, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_BOOTS), FoundryFluids.liquid_gold, 4, ItemMold.SubItem.BOOTS, null);
+    
+    for(Entry<String, FluidLiquidMetal> metal:LiquidMetalRegistry.instance.getFluids().entrySet())
+    {
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "pickaxe" + metal.getKey()), metal.getValue(), 3, ItemMold.SubItem.PICKAXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "axe" + metal.getKey()), metal.getValue(), 3, ItemMold.SubItem.AXE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "shovel" + metal.getKey()), metal.getValue(), 1, ItemMold.SubItem.SHOVEL, extra_sticks2);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "hoe" + metal.getKey()), metal.getValue(), 2, ItemMold.SubItem.HOE, extra_sticks2);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "sword" + metal.getKey()), metal.getValue(), 2, ItemMold.SubItem.SWORD, extra_sticks1);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "helmet" + metal.getKey()), metal.getValue(), 5, ItemMold.SubItem.HELMET, null);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "chestplate" + metal.getKey()), metal.getValue(), 8, ItemMold.SubItem.CHESTPLATE, null);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "leggings" + metal.getKey()), metal.getValue(), 7, ItemMold.SubItem.LEGGINGS, null);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "boots" + metal.getKey()), metal.getValue(), 4, ItemMold.SubItem.BOOTS, null);
+    }
   }
 }

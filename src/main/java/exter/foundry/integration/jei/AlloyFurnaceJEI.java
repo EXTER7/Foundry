@@ -99,7 +99,7 @@ public class AlloyFurnaceJEI
     }
   }
 
-  static public class Category implements IRecipeCategory
+  static public class Category implements IRecipeCategory<Wrapper>
   {
 
     protected final ResourceLocation background_location;
@@ -166,7 +166,7 @@ public class AlloyFurnaceJEI
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
       IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
       IStackHelper stack_helper = helpers.getStackHelper();
@@ -208,6 +208,12 @@ public class AlloyFurnaceJEI
     public boolean isRecipeValid(@Nonnull Wrapper recipe)
     {
       return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(Wrapper recipe)
+    {
+      return "foundry.alloyfurnace";
     }
   }
 

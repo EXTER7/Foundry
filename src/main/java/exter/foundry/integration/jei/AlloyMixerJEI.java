@@ -90,7 +90,7 @@ public class AlloyMixerJEI
     }
   }
 
-  static public class Category implements IRecipeCategory
+  static public class Category implements IRecipeCategory<Wrapper>
   {
 
     protected final ResourceLocation backgroundLocation;
@@ -146,7 +146,7 @@ public class AlloyMixerJEI
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
@@ -188,6 +188,12 @@ public class AlloyMixerJEI
     public boolean isRecipeValid(@Nonnull Wrapper recipe)
     {
       return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(Wrapper recipe)
+    {
+      return "foundry.alloymixer";
     }
   }
 

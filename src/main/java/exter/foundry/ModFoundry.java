@@ -76,7 +76,7 @@ import exter.foundry.tileentity.TileEntityRefractoryTank;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.17.0.1963,);required-after:substratum@[1.5.0.1,)"
+  dependencies = "required-after:Forge@[12.18.0.2005,);required-after:substratum@[1.6.0.0,)"
 )
 public class ModFoundry
 {

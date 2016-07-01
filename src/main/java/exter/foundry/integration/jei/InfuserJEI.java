@@ -101,7 +101,7 @@ public class InfuserJEI
     }
   }
 
-  static public class Category implements IRecipeCategory
+  static public class Category implements IRecipeCategory<Wrapper>
   {
 
     protected final ResourceLocation background_location;
@@ -167,7 +167,7 @@ public class InfuserJEI
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
@@ -210,6 +210,12 @@ public class InfuserJEI
     public boolean isRecipeValid(@Nonnull Wrapper recipe)
     {
       return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(Wrapper recipe)
+    {
+      return "foundry.infuser";
     }
   }
 

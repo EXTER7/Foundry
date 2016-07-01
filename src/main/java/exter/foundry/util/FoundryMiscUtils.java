@@ -14,8 +14,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
@@ -122,7 +122,7 @@ public class FoundryMiscUtils
   @SideOnly(Side.CLIENT)
   static public void localizeTooltip(String key, List<String> tooltip)
   {
-    for(String str:I18n.translateToLocal(key).split("//"))
+    for(String str:(new TextComponentTranslation(key)).getUnformattedText().split("//"))
     {
       tooltip.add(TextFormatting.GRAY + str);
     }

@@ -102,7 +102,7 @@ public class CastingJEI
     }
   }
 
-  static public class Category implements IRecipeCategory
+  static public class Category implements IRecipeCategory<Wrapper>
   {
 
     protected final ResourceLocation backgroundLocation;
@@ -168,7 +168,7 @@ public class CastingJEI
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
       IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
       IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
@@ -212,6 +212,12 @@ public class CastingJEI
     public boolean isRecipeValid(@Nonnull Wrapper recipe)
     {
       return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(Wrapper recipe)
+    {
+      return "foundry.casting";
     }
   }
 

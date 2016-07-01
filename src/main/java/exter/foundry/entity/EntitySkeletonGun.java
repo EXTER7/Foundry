@@ -9,6 +9,7 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -88,9 +89,9 @@ public class EntitySkeletonGun extends EntitySkeleton
   }
 
   @Override
-  public void setSkeletonType(int type)
+  public void setSkeletonType(SkeletonType type)
   {
-    super.setSkeletonType(0);
+    super.setSkeletonType(SkeletonType.NORMAL);
   }
   
   @Override

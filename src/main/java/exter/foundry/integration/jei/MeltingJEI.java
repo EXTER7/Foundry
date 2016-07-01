@@ -105,7 +105,7 @@ public class MeltingJEI
     }
   }
 
-  static public class Category implements IRecipeCategory
+  static public class Category implements IRecipeCategory<Wrapper>
   {
 
     protected final ResourceLocation backgroundLocation;
@@ -171,7 +171,7 @@ public class MeltingJEI
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
@@ -210,6 +210,12 @@ public class MeltingJEI
     public boolean isRecipeValid(@Nonnull Wrapper recipe)
     {
       return true;
+    }
+
+    @Override
+    public String getRecipeCategoryUid(Wrapper recipe)
+    {
+      return "foundry.melting";
     }
   }
 

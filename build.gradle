@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 def mod_version = "2.0.0.0-beta5"
 
-def mc_version = "1.9.4"
+def mc_version = "1.10.2"
 
 def build_number = System.getenv("DRONE_BUILD_NUMBER")
 

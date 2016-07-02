@@ -38,16 +38,16 @@ repositories {
      maven {
         name "DVS1 Maven FS'"
         url 'http://dvs1.progwml6.com/files/maven'
-    }
-    ivy {
-        name "MineTweaker3"
-        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-([classifier]-)[revision].[ext]"
+    }    
+    maven {
+        url 'http://maven.epoxide.xyz'
     }
 }
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
     deobfCompile "mezz.jei:jei_1.10.2:3.7.3.221"
+    compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
 }
 
 

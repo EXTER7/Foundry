@@ -180,7 +180,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
       {
         needed = 200;
       }
-      int energy = useFoundryEnergy(needed, true);
+      long energy = useFoundryEnergy(needed, true);
       progress += energy;
       if(progress >= extract_energy)
       {
@@ -241,7 +241,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   }
 
   @Override
-  public int getFoundryEnergyCapacity()
+  public long getFoundryEnergyCapacity()
   {
     return 3000;
   }

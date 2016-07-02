@@ -452,6 +452,20 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     update_packet.setInteger(name, value);
   }
 
+  protected final void updateValue(String name,long value)
+  {
+    if(worldObj.isRemote)
+    {
+      return;
+    }
+    if(update_packet == null)
+    {
+      update_packet = new NBTTagCompound();
+      super.writeToNBT(update_packet);
+    }
+    update_packet.setLong(name, value);
+  }
+
   protected final void updateValue(String name,boolean value)
   {
     if(worldObj.isRemote)

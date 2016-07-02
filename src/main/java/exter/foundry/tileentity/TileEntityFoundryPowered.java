@@ -3,42 +3,69 @@ package exter.foundry.tileentity;
 
 
 import cofh.api.energy.IEnergyReceiver;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
 //import ic2.api.energy.event.EnergyTileLoadEvent;
 //import ic2.api.energy.event.EnergyTileUnloadEvent;
 //import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
+
 /**
  * Base class for all machines.
  */
 //@Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2")
 public abstract class TileEntityFoundryPowered extends TileEntityFoundry implements IEnergyReceiver/*,IEnergySink*/
 {
+  @Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "Tesla")
+  private class TeslaConsumer implements ITeslaConsumer
+  {
+    @Optional.Method(modid = "Tesla")
+    @Override
+    public long givePower(long power, boolean simulated)
+    {
+      return receiveFoundryEnergy(power * RATIO_TESLA,!simulated,false) / RATIO_TESLA;
+    }
+  }
+  
 //  private boolean added_enet;
   protected boolean update_energy;
   protected boolean update_energy_tick;
   
-  public abstract int getFoundryEnergyCapacity();
+  public abstract long getFoundryEnergyCapacity();
+
+  static public int RATIO_RF = 10;
+  static public int RATIO_TESLA = 10;
+  static public int RATIO_EU = 40;
   
+  private long energy_stored;
+  
+  private final TeslaConsumer tesla;
+
   public TileEntityFoundryPowered()
   {
-    super();    
-    
+    super();
+    if(Loader.isModLoaded("Tesla"))
+    {
+      tesla = new TeslaConsumer();
+    } else
+    {
+      tesla = null;
+    }
     update_energy = false;
     update_energy_tick = true;
 //    added_enet = false;
   }
 
-  static public int RATIO_RF = 10;
-  static public int RATIO_EU = 40;
   
-  private int energy_stored;
-  
-  private int receiveFoundryEnergy(int en,boolean do_receive, boolean allow_overflow)
+  private long receiveFoundryEnergy(long en,boolean do_receive, boolean allow_overflow)
   {
     if(!allow_overflow)
     {
-      int needed = getFoundryEnergyCapacity() - energy_stored;
+      long needed = getFoundryEnergyCapacity() - energy_stored;
       if(en > needed)
       {
         en = needed;
@@ -58,17 +85,12 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     return en;
   }
   
-  private int receiveRF(int rf,boolean do_receive)
-  {
-    return receiveFoundryEnergy(rf * RATIO_RF,do_receive,false) / RATIO_RF;
-  }
-  
 //  private double receiveEU(double eu,boolean do_receive)
 //  {
 //    return (double)receiveFoundryEnergy((int)(eu * RATIO_EU),do_receive,true) / RATIO_EU;
 //  }
   
-  public int useFoundryEnergy(int amount,boolean do_use)
+  public long useFoundryEnergy(long amount,boolean do_use)
   {
     if(amount > energy_stored)
     {
@@ -82,9 +104,9 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     return amount;
   }
   
-  public int getStoredFoundryEnergy()
+  public long getStoredFoundryEnergy()
   {
-    int capacity = getFoundryEnergyCapacity();
+    long capacity = getFoundryEnergyCapacity();
     if(energy_stored > capacity)
     {
       return capacity;
@@ -100,7 +122,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     super.readFromNBT(compound);
     if(compound.hasKey("energy"))
     {
-      energy_stored = compound.getInteger("energy");
+      energy_stored = compound.getLong("energy");
     }
   }
   
@@ -113,7 +135,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
       compound = new NBTTagCompound();
     }
     super.writeToNBT(compound);
-    compound.setInteger("energy", energy_stored);
+    compound.setLong("energy", energy_stored);
     return compound;
   }
 
@@ -179,7 +201,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Override
   public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
   {
-    return receiveRF(maxReceive, !simulate);
+    return (int)(receiveFoundryEnergy(maxReceive * RATIO_RF,!simulate,false) / RATIO_RF);
   }
 
   @Override
@@ -191,15 +213,63 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Override
   public int getEnergyStored(EnumFacing from)
   {
-    return getStoredFoundryEnergy() / RATIO_RF;
+    return (int)getStoredFoundryEnergy() / RATIO_RF;
   }
 
   @Override
   public int getMaxEnergyStored(EnumFacing from)
   {
-    return getFoundryEnergyCapacity() / RATIO_RF;
+    return (int)getFoundryEnergyCapacity() / RATIO_RF;
+  }
+
+  @Override
+  public boolean hasCapability(Capability<?> cap,EnumFacing facing)
+  {
+    if(tesla != null)
+    {
+      return hasTeslaCapability(cap,facing);
+    } else
+    {
+      return super.hasCapability(cap, facing);
+    }
   }
   
+  @Override
+  public <T> T getCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(tesla != null)
+    {
+      return getTeslaCapability(cap,facing);
+    } else
+    {
+      return super.getCapability(cap, facing);
+    }
+  }
+
+  @Optional.Method(modid = "Tesla")
+  private <T> boolean hasTeslaCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(cap == TeslaCapabilities.CAPABILITY_CONSUMER)
+    {
+      return true;
+    } else
+    {
+      return super.hasCapability(cap, facing);
+    }
+  }
+
+  @Optional.Method(modid = "Tesla")
+  private <T> T getTeslaCapability(Capability<T> cap, EnumFacing facing)
+  {
+    if(cap == TeslaCapabilities.CAPABILITY_CONSUMER)
+    {
+      return TeslaCapabilities.CAPABILITY_CONSUMER.cast(tesla);
+    } else
+    {
+      return super.getCapability(cap, facing);
+    }
+  }
+
 //  @Override
 //  public void onChunkUnload()
 //  {

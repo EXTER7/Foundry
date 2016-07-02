@@ -16,7 +16,7 @@ import exter.foundry.tileentity.TileEntityMaterialRouter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 
 @SideOnly(Side.CLIENT)
 public class GuiMaterialRouter extends GuiFoundry
@@ -63,12 +63,11 @@ public class GuiMaterialRouter extends GuiFoundry
       drawMaterialIcon(x,y,name);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(I18n.translateToLocal("foundry.router.material." + name));
+      tooltip.add((new TextComponentTranslation("foundry.router.material." + name)).getUnformattedText());
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -94,12 +93,11 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTypeIcon(x,y,name);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void drawTooltip(int x,int y)
     {
       List<String> tooltip = new ArrayList<String>();
-      tooltip.add(I18n.translateToLocal("foundry.router.type." + name));
+      tooltip.add((new TextComponentTranslation("foundry.router.type." + name)).getUnformattedText());
       drawHoveringText(tooltip, x, y, fontRendererObj);
     }
 
@@ -186,7 +184,6 @@ public class GuiMaterialRouter extends GuiFoundry
     return GUI_TEXTURE;
   }
   
-  @SuppressWarnings("deprecation")
   @Override
   public void drawScreen(int mousex, int mousey, float par3)
   {
@@ -236,13 +233,13 @@ public class GuiMaterialRouter extends GuiFoundry
       if(isPointInRegion(29,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(I18n.translateToLocal("foundry.router.material." + r.material));
+        tooltip.add((new TextComponentTranslation("foundry.router.material." + r.material)).getUnformattedText());
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(46,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(I18n.translateToLocal("foundry.router.type." + r.type));
+        tooltip.add((new TextComponentTranslation("foundry.router.type." + r.type)).getUnformattedText());
         drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
       }
       if(isPointInRegion(81,y + 4,8,8,mousex,mousey))

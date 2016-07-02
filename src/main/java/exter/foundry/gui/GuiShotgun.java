@@ -7,7 +7,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class GuiShotgun extends GuiContainer
 {
@@ -22,7 +22,7 @@ public class GuiShotgun extends GuiContainer
   protected void drawGuiContainerForegroundLayer(int par1, int par2)
   {
     fontRendererObj.drawString("Shotgun Ammo", 23, 6, 4210752);
-    fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+    fontRendererObj.drawString((new TextComponentTranslation("container.inventory")).getUnformattedText(), 8, ySize - 96 + 2, 4210752);
   }
 
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)

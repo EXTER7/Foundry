@@ -2,16 +2,9 @@ package exter.foundry.tileentity;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.heatable.IHeatProvider;
-import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.recipes.manager.MeltingRecipeManager;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 
 public abstract class TileEntityFoundryHeatable extends TileEntityFoundry

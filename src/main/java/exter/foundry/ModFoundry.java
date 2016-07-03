@@ -37,6 +37,7 @@ import exter.foundry.init.InitRecipes;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationManager;
+import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationMolten;
 import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
@@ -105,7 +106,7 @@ public class ModFoundry
   {
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    //ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
+    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationMolten());
     ModIntegrationManager.registerIntegration(config,new ModIntegrationEnderIO());

@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISidedInventory
 {
   
-  static public final int BAKE_TIME = 50000000;
+  static public final int BAKE_TIME = 60000000;
   
   static public final int BAKE_TEMP = 160000;
   

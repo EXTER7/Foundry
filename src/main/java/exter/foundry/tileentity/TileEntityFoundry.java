@@ -153,19 +153,20 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
         if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
         {
           IFluidHandler handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-          FluidStack drained = handler.drain(25, false);
+          FluidStack drained = tank.drain(25, false);
           if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
           {
             return;
           }
 
-          int filled = tank.fill(drained, false);
+          int filled = handler.fill(drained, false);
           if(filled == 0)
           {
             return;
           }
-          drained = handler.drain(filled, true);
-          tank.fill(drained, true);
+          drained.amount = filled;
+          drained = tank.drain(filled, true);
+          handler.fill(drained, true);
           updateTank(tank_slot);
           updateInventoryItem(slot);
         }
@@ -185,6 +186,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
           {
             return;
           }
+          drained.amount = filled;
           drained = handler.drain(filled, true);
           tank.fill(drained, true);
           updateTank(tank_slot);

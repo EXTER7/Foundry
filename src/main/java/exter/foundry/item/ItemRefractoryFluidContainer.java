@@ -273,7 +273,7 @@ public class ItemRefractoryFluidContainer extends Item
     {
       TileEntity tile = world.getTileEntity(obj.getBlockPos());
       
-      if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,obj.sideHit))
+      if(tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,obj.sideHit))
       {
         IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, obj.sideHit);
         if(player.isSneaking())

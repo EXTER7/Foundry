@@ -708,7 +708,13 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   @Override
   public boolean hasCapability(Capability<?> cap,EnumFacing facing)
   {
-    return super.hasCapability(cap, facing) || (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && getFluidHandler(facing) != null);
+    if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+    {
+      return getFluidHandler(facing) != null;
+    } else
+    {
+      return super.hasCapability(cap, facing);
+    }
   }
   
   @Override

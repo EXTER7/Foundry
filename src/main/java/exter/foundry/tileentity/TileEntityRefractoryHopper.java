@@ -8,12 +8,15 @@ import java.util.Set;
 import exter.foundry.block.BlockRefractoryHopper;
 import exter.foundry.block.BlockRefractoryHopper.EnumHopperFacing;
 import exter.foundry.util.FoundryMiscUtils;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -349,5 +352,11 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
   protected void onInitialize()
   {
 
+  }
+  
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+  {
+    return oldState.getBlock() != newSate.getBlock();
   }
 }

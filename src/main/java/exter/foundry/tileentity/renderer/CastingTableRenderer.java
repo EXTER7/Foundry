@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.opengl.GL11;
 
 import exter.foundry.tileentity.TileEntityCastingTableBase;
@@ -17,7 +19,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,44 +51,51 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
   }
   
   private Map<HashableItem,Integer> colors;
-  
+
+  static private final EnumFacing[] facings = new EnumFacing[] {null, EnumFacing.DOWN, EnumFacing.UP,EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.WEST};
   private int getItemColor(ItemStack stack)
   {
     Integer color = HashableItem.getFromMap(colors, stack);
     if(color == null)
     {
-      List<BakedQuad> quads = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack).getQuads(null, null, 0);
       int r = 0;
       int g = 0;
       int b = 0;
       int count = 0;
-      for(BakedQuad q:quads)
+      for(EnumFacing facing:facings)
       {
-        TextureAtlasSprite texture = q.getSprite();
-        for(int i = 0; i < texture.getFrameCount(); i++)
+        List<BakedQuad> quads = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, getWorld(), Minecraft.getMinecraft().thePlayer).getQuads(null, facing, 0);
+        if(quads != null)
         {
-          int[] pixels = texture.getFrameTextureData(i)[0];
-          int w = texture.getIconWidth();
-          int h = texture.getIconHeight();
-          for(int y = 1; y < h - 1; y++)
+          for(BakedQuad q : quads)
           {
-            for(int x = 1; x < w - 1; x++)
+            TextureAtlasSprite texture = q.getSprite();
+            for(int i = 0; i < texture.getFrameCount(); i++)
             {
-              int j = y * w + x;
-              int p = pixels[j];
-              int a = (p >>> 24) & 0xFF;
-              if(a > 127)
+              int[] pixels = texture.getFrameTextureData(i)[0];
+              int w = texture.getIconWidth();
+              int h = texture.getIconHeight();
+              for(int y = 1; y < h - 1; y++)
               {
-                int a1 = (pixels[j - 1] >>> 24) & 0xFF;
-                int a2 = (pixels[j + 1] >>> 24) & 0xFF;
-                int a3 = (pixels[j - w] >>> 24) & 0xFF;
-                int a4 = (pixels[j + w] >>> 24) & 0xFF;
-                if(a1 > 127 && a2 > 127 && a3 > 127 && a4 > 127)
+                for(int x = 1; x < w - 1; x++)
                 {
-                  r += (p) & 0xFF;
-                  g += (p >>> 8) & 0xFF;
-                  b += (p >>> 16) & 0xFF;
-                  count++;
+                  int j = y * w + x;
+                  int p = pixels[j];
+                  int a = (p >>> 24) & 0xFF;
+                  if(a > 127)
+                  {
+                    int a1 = (pixels[j - 1] >>> 24) & 0xFF;
+                    int a2 = (pixels[j + 1] >>> 24) & 0xFF;
+                    int a3 = (pixels[j - w] >>> 24) & 0xFF;
+                    int a4 = (pixels[j + w] >>> 24) & 0xFF;
+                    if(a1 > 127 && a2 > 127 && a3 > 127 && a4 > 127)
+                    {
+                      r += (p) & 0xFF;
+                      g += (p >>> 8) & 0xFF;
+                      b += (p >>> 16) & 0xFF;
+                      count++;
+                    }
+                  }
                 }
               }
             }

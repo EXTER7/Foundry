@@ -262,6 +262,7 @@ tile.foundry.machine.heater_induction.name=Induction Heater
 tile.foundry.castingTable.ingot.name=Ingot Casting Table
 tile.foundry.castingTable.plate.name=Plate Casting Table
 tile.foundry.castingTable.rod.name=Rod Casting Table
+tile.foundry.castingTable.block.name=Block Casting Table
 tile.foundry.alloyFurnace.name=Alloy Furnace
 tile.foundry.refractoryHopper.name=Refractory Hopper
 tile.foundry.refractorySpout.name=Refractory Spout

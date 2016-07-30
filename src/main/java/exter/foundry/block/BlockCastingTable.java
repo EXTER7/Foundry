@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.tileentity.TileEntityCastingTableBase;
+import exter.foundry.tileentity.TileEntityCastingTableBlock;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
@@ -40,12 +41,14 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   private Random rand = new Random();
 
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
+  protected static final AxisAlignedBB AABB_BLOCK = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
   static public enum EnumTable implements IStringSerializable
   {
     INGOT(0, "ingot", "castingTableIngot", 9),
     PLATE(1, "plate", "castingTablePlate", 11),
-    ROD(2, "rod", "castingTableRod", 10);
+    ROD(2, "rod", "castingTableRod", 10),
+    BLOCK(3, "block", "castingTableBlock", 2);
 
     public final int id;
     public final String name;
@@ -120,7 +123,13 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
   {
-    return AABB;
+    if(state.getValue(TABLE) == EnumTable.BLOCK)
+    {
+      return AABB_BLOCK;
+    } else
+    {
+      return AABB;
+    }
   }
 
   @Override
@@ -228,6 +237,8 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
         return new TileEntityCastingTablePlate();
       case ROD:
         return new TileEntityCastingTableRod();
+      case BLOCK:
+        return new TileEntityCastingTableBlock();
     }
     return null;
   }

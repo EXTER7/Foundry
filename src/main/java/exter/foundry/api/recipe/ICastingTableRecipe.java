@@ -10,7 +10,8 @@ public interface ICastingTableRecipe
   {
     INGOT,
     PLATE,
-    ROD
+    ROD,
+    BLOCK
   }
 
   /**

@@ -342,7 +342,9 @@ public class InitRecipes
       ItemStack block = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "block" + name);
       if(block != null)
       {
-        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(block), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
+        FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK);
+        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(block), fluid_stack, mold_block, null);
+        CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(block), fluid_stack, ICastingTableRecipe.TableType.BLOCK);
       }
 
       // Slab
@@ -595,6 +597,14 @@ public class InitRecipes
         'B', refbrick_stack,
         'M', mold_rod);
 
+    GameRegistry.addRecipe(
+        FoundryBlocks.block_casting_table.asItemStack(EnumTable.BLOCK),
+        "BMB",
+        " S ",
+        'S', new ItemStack(Blocks.STONE_SLAB),
+        'B', refbrick_stack,
+        'M', mold_block);
+
     GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_refractory_spout,
         "RL",
@@ -816,6 +826,10 @@ public class InitRecipes
           if(CastingRecipeManager.instance.findRecipe(fluidstack, block_mold, null) == null)
           {
             CastingRecipeManager.instance.addRecipe(new OreMatcher("block" + name), fluidstack, block_mold, null);
+          }
+          if(CastingTableRecipeManager.instance.findRecipe(fluidstack,ICastingTableRecipe.TableType.BLOCK) == null)
+          {
+            CastingTableRecipeManager.instance.addRecipe(new OreMatcher("block" + name), fluidstack, ICastingTableRecipe.TableType.BLOCK);
           }
         }
       }

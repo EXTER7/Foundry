@@ -56,6 +56,7 @@ import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
+import exter.foundry.tileentity.TileEntityCastingTableBlock;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
 import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
@@ -77,7 +78,7 @@ import exter.foundry.tileentity.TileEntityRefractoryTank;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.18.0.2005,);required-after:substratum@[1.6.0.0,)"
+  dependencies = "required-after:Forge@[12.18.0.2005,);required-after:substratum@[1.7.0.0,)"
 )
 public class ModFoundry
 {
@@ -170,6 +171,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityCastingTableIngot.class, "Foundry_CastingTable_Ingot");
     GameRegistry.registerTileEntity(TileEntityCastingTablePlate.class, "Foundry_CastingTable_Plate");
     GameRegistry.registerTileEntity(TileEntityCastingTableRod.class, "Foundry_CastingTable_Rod");
+    GameRegistry.registerTileEntity(TileEntityCastingTableBlock.class, "Foundry_CastingTable_Block");
     GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, "Foundry_RefractorySpout");
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
     GameRegistry.registerTileEntity(TileEntityRefractoryTank.class, "Foundry_RefractoryTank");

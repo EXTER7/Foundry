@@ -3,7 +3,8 @@
   { 
     "type=ingot": { "model": "foundry:castingTableIngot" },
     "type=plate": { "model": "foundry:castingTablePlate" },
-    "type=rod": { "model": "foundry:castingTableRod" }
+    "type=rod": { "model": "foundry:castingTableRod" },
+    "type=block": { "model": "foundry:castingTableBlock" }
   }
 }
 

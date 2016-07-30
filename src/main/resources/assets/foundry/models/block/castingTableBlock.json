@@ -1,0 +1,142 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "top": "foundry:blocks/castingtable_top_block",
+        "bottom": "foundry:blocks/castingtable_bottom",
+        "sides": "foundry:blocks/castingtable_sides_block",
+        "particle": "foundry:blocks/castingtable_inside",
+        "inside": "foundry:blocks/castingtable_inside"
+    },
+    "elements": [
+        {
+            "from": [0,0,0],
+            "to": [16,2,16],
+            "faces": {
+                "up": {
+                    "texture": "#inside"
+                },
+                "down": {
+                    "texture": "#bottom"
+                },
+                "west": {
+                    "texture": "#sides"
+                },
+                "east": {
+                    "texture": "#sides"
+                },
+                "north": {
+                    "texture": "#sides"
+                },
+                "south": {
+                    "texture": "#sides"
+                }
+            }
+        },
+        {
+            "from": [0,2,0],
+            "to": [2,14,16],
+            "faces": {
+                "up": {
+                    "texture": "#top"
+                },
+                "down": {
+                    "texture": "#bottom"
+                },
+                "west": {
+                    "texture": "#sides"
+                },
+                "east": {
+                    "texture": "#inside"
+                },
+                "north": {
+                    "uv": [14,2,16,14],
+                    "texture": "#sides"
+                },
+                "south": {
+                    "texture": "#sides"
+                }
+            }
+        },
+        {
+            "from": [14,2,0],
+            "to": [16,14,16],
+            "faces": {
+                "up": {
+                    "texture": "#top"
+                },
+                "down": {
+                    "uv": [14,0,16,16],
+                    "texture": "#bottom"
+                },
+                "west": {
+                    "texture": "#inside"
+                },
+                "east": {
+                    "texture": "#sides"
+                },
+                "north": {
+                    "uv": [16,2,14,14],
+                    "texture": "#sides"
+                },
+                "south": {
+                    "texture": "#sides"
+                }
+            }
+        },
+        {
+            "from": [2,2,0],
+            "to": [14,14,2],
+            "faces": {
+                "up": {
+                    "texture": "#top"
+                },
+                "down": {
+                    "uv": [0,0,16,16],
+                    "texture": "#bottom"
+                },
+                "west": {
+                    "uv": [0,0,16,16],
+                    "texture": "#sides"
+                },
+                "east": {
+                    "uv": [0,0,16,16],
+                    "texture": "#sides"
+                },
+                "north": {
+                    "texture": "#sides"
+                },
+                "south": {
+                    "texture": "#inside"
+                }
+            }
+        },
+        {
+            "from": [2,2,14],
+            "to": [14,14,16],
+            "faces": {
+                "up": {
+                    "texture": "#top"
+                },
+                "down": {
+                    "uv": [0,0,16,16],
+                    "texture": "#bottom"
+                },
+                "west": {
+                    "uv": [0,0,16,16],
+                    "texture": "#sides"
+                },
+                "east": {
+                    "uv": [0,0,16,16],
+                    "texture": "#sides"
+                },
+                "north": {
+                    "uv": [2,2,14,14],
+                    "texture": "#inside"
+                },
+                "south": {
+                    "texture": "#sides"
+                }
+            }
+        }
+    ]
+}

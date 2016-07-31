@@ -53,7 +53,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
   private Map<HashableItem,Integer> colors;
 
   static private final EnumFacing[] facings = new EnumFacing[] {null, EnumFacing.DOWN, EnumFacing.UP,EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.WEST};
-  private int getItemColor(ItemStack stack)
+  protected int getItemColor(ItemStack stack)
   {
     Integer color = HashableItem.getFromMap(colors, stack);
     if(color == null)
@@ -110,7 +110,17 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
     }
     return color;
   }
+
+  protected TextureAtlasSprite getItemTexture(ItemStack stack)
+  {
+    return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(item_texture);
+  }
   
+  protected boolean uvLockItem()
+  {
+    return true;
+  }
+
   @Override
   public void renderTileEntityAt(TileEntityCastingTableBase te, double x, double y, double z, float partialTicks, int destroyStage)
   {
@@ -125,16 +135,18 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
     GL11.glTranslatef((float) x, (float) y, (float) z);
     if(te.getStackInSlot(0) != null)
     {
-      TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(item_texture);
-      int color =  getItemColor(te.getStackInSlot(0));
+      ItemStack stack = te.getStackInSlot(0);
+      TextureAtlasSprite texture = getItemTexture(stack);
+      int color =  getItemColor(stack);
       float alpha = ((color >> 24 & 255) / 255.0F);
       float red = (color >> 16 & 255) / 255.0F;
       float green = (color >> 8 & 255) / 255.0F;
       float blue = (color & 255) / 255.0F;
-      double min_u = texture.getInterpolatedU(left * 16);
-      double min_v = texture.getInterpolatedV(top * 16);
-      double max_u = texture.getInterpolatedU(right * 16);
-      double max_v = texture.getInterpolatedV(bottom * 16);
+      boolean lock = uvLockItem();
+      double min_u = texture.getInterpolatedU((lock?left:0) * 16);
+      double min_v = texture.getInterpolatedV((lock?top:0) * 16);
+      double max_u = texture.getInterpolatedU((lock?right:1) * 16);
+      double max_v = texture.getInterpolatedV((lock?bottom:1) * 16);
       if(fluid != null)
       {
         GlStateManager.depthMask(false);

@@ -35,6 +35,7 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
 import exter.foundry.tileentity.TileEntityRefractoryTank;
 import exter.foundry.tileentity.renderer.CastingTableRenderer;
+import exter.foundry.tileentity.renderer.CastingTableRendererBlock;
 import exter.foundry.tileentity.renderer.HopperRenderer;
 import exter.foundry.tileentity.renderer.SpoutRenderer;
 import exter.foundry.tileentity.renderer.TankRenderer;
@@ -177,7 +178,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableIngot.class, new CastingTableRenderer(6,10,4,12,9,12,"foundry:blocks/castingtable_top_ingot"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTablePlate.class, new CastingTableRenderer(3,13,3,13,11,12,"foundry:blocks/castingtable_top_plate"));
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableRod.class, new CastingTableRenderer(7,9,2,14,10,12,"foundry:blocks/castingtable_top_rod"));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableBlock.class, new CastingTableRenderer(2,14,2,14,2,14,"foundry:blocks/castingtable_top_block"));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableBlock.class, new CastingTableRendererBlock());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractorySpout.class, new SpoutRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryHopper.class, new HopperRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRefractoryTank.class, new TankRenderer());

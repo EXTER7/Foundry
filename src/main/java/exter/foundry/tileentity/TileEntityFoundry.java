@@ -141,6 +141,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     
     public void update()
     {
+      if(container_timer > 0)
+      {
+        return;
+      }
       ItemStack stack = getStackInSlot(slot);
       if(stack == null || stack.stackSize > 1)
       {
@@ -153,7 +157,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
         if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
         {
           IFluidHandler handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-          FluidStack drained = tank.drain(25, false);
+          FluidStack drained = tank.drain(Fluid.BUCKET_VOLUME, false);
           if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
           {
             return;
@@ -169,13 +173,14 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
           handler.fill(drained, true);
           updateTank(tank_slot);
           updateInventoryItem(slot);
+          container_timer = filled / 25;
         }
       } else
       {
         if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
         {
           IFluidHandler handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-          FluidStack drained = handler.drain( 25, false);
+          FluidStack drained = handler.drain( Fluid.BUCKET_VOLUME, false);
           if(drained == null || drained.amount == 0 || (fluid != null && drained.getFluid() != fluid))
           {
             return;
@@ -189,6 +194,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
           drained.amount = filled;
           drained = handler.drain(filled, true);
           tank.fill(drained, true);
+          container_timer = filled / 25;
           updateTank(tank_slot);
           updateInventoryItem(slot);
         }
@@ -204,6 +210,8 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   protected boolean redstone_signal;
   protected final ItemStack[] inventory;
 
+  private int container_timer;
+  
   protected final void addContainerSlot(ContainerSlot cs)
   {
     conatiner_slots.add(cs);
@@ -227,6 +235,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     initialized = false;
     mode = RedstoneMode.RSMODE_IGNORE;
     inventory = new ItemStack[getSizeInventory()];
+    container_timer = 0;
   }
   
 
@@ -411,6 +420,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     {
       mode = RedstoneMode.fromID(compound.getInteger("rsmode"));
     }
+    if(compound.hasKey("bucket_timer"))
+    {
+      container_timer = compound.getInteger("container_timer");
+    }
   }
   
   protected void writeTileToNBT(NBTTagCompound compound)
@@ -437,6 +450,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       writeInventoryItemToNBT(compound,i);
     }
     compound.setInteger("rsmode", mode.id);
+    compound.setInteger("container_timer", container_timer);
     return compound;
   }
 
@@ -530,6 +544,10 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       for(ContainerSlot cs:conatiner_slots)
       {
         cs.update();
+      }
+      if(container_timer > 0)
+      {
+        container_timer--;
       }
       updateServer();
       

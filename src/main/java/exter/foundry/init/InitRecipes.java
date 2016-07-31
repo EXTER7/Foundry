@@ -78,6 +78,7 @@ public class InitRecipes
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS_PANE), new FluidStack(liquid_glass,375),temp,250);
       CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
+      CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),ICastingTableRecipe.TableType.BLOCK);
       for(EnumDyeColor dye:EnumDyeColor.values())
       {
         String name = dye.getName();
@@ -96,7 +97,8 @@ public class InitRecipes
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),temp,250);
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(new ItemStack(Blocks.STAINED_GLASS_PANE,1,meta)), new FluidStack(liquid_glass_colored,375),temp,250);
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),FoundryItems.mold(ItemMold.SubItem.BLOCK),null,400);
-        
+        CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),ICastingTableRecipe.TableType.BLOCK);
+
         InfuserRecipeManager.instance.addRecipe(new FluidStack(liquid_glass_colored,2000),new FluidStack(liquid_glass,2000),new OreMatcher(oredict_names[dye.getDyeDamage()]),5000);
       }
     }

@@ -197,7 +197,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
         if(is != null && is.stackSize > 0)
         {
-          EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, is);
+          EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.9375, pos.getZ() + 0.5, is);
           entityitem.setPickupDelay(1);
   
           world.spawnEntityInWorld(entityitem);

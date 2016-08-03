@@ -15,7 +15,6 @@ import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.util.FoundryMiscUtils;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -23,7 +22,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import slimeknights.mantle.util.RecipeMatch.Match;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 
@@ -211,91 +209,98 @@ public class ModIntegrationTiCon implements IModIntegration
     
     
     //Convert TiCon table casting recipes to Foundry Metal Caster recipes.
-    for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting:TinkerRegistry.getAllTableCastingRecipes())
+    for(slimeknights.tconstruct.library.smeltery.ICastingRecipe icasting:TinkerRegistry.getAllTableCastingRecipes())
     {
-      if(casting.cast != null && !casting.consumesCast() && casting.getResult() != null)
+      if(!icasting.consumesCast())
       {
-        String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
-        FluidStack mapped_liquid = null;
-        if(mapped != null)
+        if(icasting instanceof slimeknights.tconstruct.library.smeltery.CastingRecipe)
         {
-          mapped_liquid = new FluidStack(
-              LiquidMetalRegistry.instance.getFluid(mapped),
-              FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
-        }
-        for(ItemStack cast:casting.cast.getInputs())
-        {
-          if(!CastingRecipeManager.instance.isItemMold(cast))
-          {
-            //Register the cast as a mold
-            CastingRecipeManager.instance.addMold(cast);
-          }
+          slimeknights.tconstruct.library.smeltery.CastingRecipe casting = (slimeknights.tconstruct.library.smeltery.CastingRecipe)icasting;
         
-
-          if(mapped_liquid != null)
+          if(casting.cast != null && !casting.consumesCast() && casting.getResult() != null)
           {
-            if(mapped_liquid.amount <= 6000)
-           {
-              CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), mapped_liquid, cast, null);
+            String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+            FluidStack mapped_liquid = null;
+            if(mapped != null)
+            {
+              mapped_liquid = new FluidStack(
+                LiquidMetalRegistry.instance.getFluid(mapped),
+                FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
             }
-          }
-          if(casting.getFluid().amount <= 6000)
-          {
-            CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), casting.getFluid(), cast, null);
+            for(ItemStack cast:casting.cast.getInputs())
+            {
+              if(!CastingRecipeManager.instance.isItemMold(cast))
+              {
+                //Register the cast as a mold
+                CastingRecipeManager.instance.addMold(cast);
+              }
+
+              if(mapped_liquid != null)
+              {
+                if(mapped_liquid.amount <= 6000)
+                {
+                  CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), mapped_liquid, cast, null);
+                }
+              }
+              if(casting.getFluid().amount <= 6000)
+              {
+                CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), casting.getFluid(), cast, null);
+              }
+            }
           }
         }
       }
     }
     
     ItemStack block_mold = FoundryItems.mold(ItemMold.SubItem.BLOCK);
-    for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting:TinkerRegistry.getAllBasinCastingRecipes())
+    for(slimeknights.tconstruct.library.smeltery.ICastingRecipe icasting:TinkerRegistry.getAllBasinCastingRecipes())
     {
-      if(casting.getResult() == null)
+      if(icasting instanceof slimeknights.tconstruct.library.smeltery.CastingRecipe)
       {
-        return;
-      }
-      FluidStack fluid = casting.getFluid();
-      if(casting.getFluid().amount <= 6000 && casting.cast == null
-          && CastingRecipeManager.instance.findRecipe(fluid, block_mold, null) == null)
-      {
-        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), fluid, block_mold, null);
+        slimeknights.tconstruct.library.smeltery.CastingRecipe casting = (slimeknights.tconstruct.library.smeltery.CastingRecipe)icasting;
+        if(casting.getResult() == null || casting.cast != null)
+        {
+          continue;
+        }
+        FluidStack fluid = casting.getFluid();
+        if(casting.getFluid().amount <= 6000 && casting.cast == null
+            && CastingRecipeManager.instance.findRecipe(fluid, block_mold, null) == null)
+        {
+          CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(casting.getResult()), fluid, block_mold, null);
+        }
       }
     }
     
     //Add support for Foundry's fluid to the TiCon casting table.
     List<slimeknights.tconstruct.library.smeltery.CastingRecipe> recipes = new ArrayList<slimeknights.tconstruct.library.smeltery.CastingRecipe>();
-    for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting : TinkerRegistry.getAllTableCastingRecipes())
+    for(slimeknights.tconstruct.library.smeltery.ICastingRecipe icasting : TinkerRegistry.getAllTableCastingRecipes())
     {
-      if(casting.getResult() == null)
+      if(icasting instanceof slimeknights.tconstruct.library.smeltery.CastingRecipe)
       {
-        continue;
-      }
-      if(casting.cast != null)
-      {
-        Match bucket_match = casting.cast.matches(new ItemStack[] {new ItemStack(Items.BUCKET)});
-        if(bucket_match != null && bucket_match.stacks != null && bucket_match.stacks.size() > 0)
+        slimeknights.tconstruct.library.smeltery.CastingRecipe casting = (slimeknights.tconstruct.library.smeltery.CastingRecipe)icasting;
+        if(casting.getResult() == null)
         {
           continue;
         }
-      }
-      String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
-      if(mapped == null)
-      {
-        continue;
-      }
-      FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(mapped);
-      FluidStack mapped_liquid = new FluidStack(
-          fluid,
-          mapped.equals("Glass") ?
+        String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+        if(mapped == null)
+        {
+          continue;
+        }
+        FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(mapped);
+          FluidStack mapped_liquid = new FluidStack(
+            fluid,
+            mapped.equals("Glass") ?
               casting.getFluid().amount :
               FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
-      slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
+        slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
           casting.getResult(),
           casting.cast,
           mapped_liquid,
           casting.consumesCast(),
           casting.switchOutputs());
-      recipes.add(recipe);
+        recipes.add(recipe);
+      }
     }
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe r : recipes)
     {
@@ -305,34 +310,39 @@ public class ModIntegrationTiCon implements IModIntegration
     
     //Add support for Foundry's fluid to the TiCon casting basin.
     recipes.clear();
-    for(slimeknights.tconstruct.library.smeltery.CastingRecipe casting : TinkerRegistry.getAllBasinCastingRecipes())
+    for(slimeknights.tconstruct.library.smeltery.ICastingRecipe icasting : TinkerRegistry.getAllBasinCastingRecipes())
     {
-      if(casting.cast != null)
+      if(icasting instanceof slimeknights.tconstruct.library.smeltery.CastingRecipe)
       {
-        continue;
-      }
-      if(casting.getResult() == null)
-      {
-        return;
-      }
-      String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
-      if(mapped == null)
-      {
-        continue;
-      }
-      FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(mapped);
-      FluidStack mapped_liquid = new FluidStack(
-          fluid,
-        mapped.equals("Glass") ?
+        slimeknights.tconstruct.library.smeltery.CastingRecipe casting = (slimeknights.tconstruct.library.smeltery.CastingRecipe)icasting;
+
+        if(casting.cast != null)
+        {
+          continue;
+        }
+        if(casting.getResult() == null)
+        {
+          return;
+        }
+        String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+        if(mapped == null)
+        {
+          continue;
+        }
+        FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(mapped);
+        FluidStack mapped_liquid = new FluidStack(
+            fluid,
+          mapped.equals("Glass") ?
             casting.getFluid().amount :
             FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
-      slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
+        slimeknights.tconstruct.library.smeltery.CastingRecipe recipe = new slimeknights.tconstruct.library.smeltery.CastingRecipe(
           casting.getResult(),
           null,
           mapped_liquid,
           casting.consumesCast(),
           casting.switchOutputs());
-      recipes.add(recipe);
+        recipes.add(recipe);
+      }
     }
     for(slimeknights.tconstruct.library.smeltery.CastingRecipe r : recipes)
     {

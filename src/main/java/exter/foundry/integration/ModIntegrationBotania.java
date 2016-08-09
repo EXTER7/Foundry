@@ -80,7 +80,7 @@ public class ModIntegrationBotania implements IModIntegration
     CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(terrasteel_block), new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
     CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(elementium_block), new FluidStack(liquid_elementium, FoundryAPI.FLUID_AMOUNT_BLOCK), mold_block, null);
 
-    if(FoundryConfig.recipe_tools_armor)
+    if(FoundryConfig.recipe_equipment)
     {
       ItemStack manasteel_pickaxe = getItemStack("manasteelPick");
       ItemStack manasteel_axe = getItemStack("manasteelAxe");

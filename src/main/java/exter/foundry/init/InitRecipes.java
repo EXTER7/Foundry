@@ -316,7 +316,7 @@ public class InitRecipes
       CastingRecipeManager.instance.addMold(FoundryItems.mold(sub));
     }
 
-    if(FoundryConfig.recipe_tools_armor)
+    if(FoundryConfig.recipe_equipment)
     {
       InitToolRecipes.init();
     }
@@ -407,7 +407,7 @@ public class InitRecipes
       }
     }
 
-    if(FoundryConfig.recipe_steel_enable)
+    if(FoundryConfig.recipe_steel)
     {
       InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,36), new FluidStack(FoundryFluids.liquid_iron,36), new OreMatcher("dustCoal"), 160000);
       InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,12), new FluidStack(FoundryFluids.liquid_iron,12), new OreMatcher("dustCharcoal"), 160000);
@@ -727,7 +727,7 @@ public class InitRecipes
         'S', new ItemStack(Blocks.STONE_SLAB),
         'F', furnace_stack);
 
-    if(FoundryConfig.block_coke_oven_enable)
+    if(FoundryConfig.block_cokeoven)
     {
       GameRegistry.addRecipe(new ShapedOreRecipe(
           new ItemStack(FoundryBlocks.block_coke_oven),

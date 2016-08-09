@@ -83,7 +83,7 @@ public class ModIntegrationEnderIO implements IModIntegration
     
 
 
-    if(FoundryConfig.recipe_tools_armor)
+    if(FoundryConfig.recipe_equipment)
     {
       ItemStack extra_sticks1 = new ItemStack(Items.STICK, 1);
       ItemStack extra_sticks2 = new ItemStack(Items.STICK, 2);

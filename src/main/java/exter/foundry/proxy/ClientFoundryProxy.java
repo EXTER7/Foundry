@@ -139,7 +139,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_refractory_spout,"refractorySpout");
     registerItemModel(FoundryBlocks.block_refractory_tank,"refractoryTank");
     registerItemModel(FoundryBlocks.block_inferno_tank,"infernoTank");
-    if(FoundryConfig.block_coke_oven_enable)
+    if(FoundryConfig.block_cokeoven)
     {
       registerItemModel(FoundryBlocks.block_coke_oven,"cokeOven");
     }

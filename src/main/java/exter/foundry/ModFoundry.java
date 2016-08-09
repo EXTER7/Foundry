@@ -176,7 +176,7 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
     GameRegistry.registerTileEntity(TileEntityRefractoryTank.class, "Foundry_RefractoryTank");
     GameRegistry.registerTileEntity(TileEntityInfernoTank.class, "Foundry_InfernoTank");
-    if(FoundryConfig.block_coke_oven_enable)
+    if(FoundryConfig.block_cokeoven)
     {
       GameRegistry.registerTileEntity(TileEntityCokeOven.class, "Foundry_CokeOven");
     }

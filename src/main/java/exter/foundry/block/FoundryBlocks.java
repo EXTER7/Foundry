@@ -64,7 +64,7 @@ public class FoundryBlocks
     register(block_refractory_tank);
     register(block_inferno_tank);
 
-    if(FoundryConfig.block_coke_oven_enable)
+    if(FoundryConfig.block_cokeoven)
     {
       block_coke_oven = new BlockCokeOven();
       register(block_coke_oven);

@@ -1,6 +1,10 @@
 package exter.foundry.tileentity;
 
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
@@ -14,6 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
@@ -71,16 +76,24 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
 
   static public final int TANK_INPUT = 0;
   static public final int TANK_WATER = 1;
+
+  @Deprecated
+  static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of();
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
   
   private FluidTank[] tanks;
   private IFluidHandler fluid_handler;
+  private ItemHandler item_handler;
   
   IAtomizerRecipe current_recipe;
   
   private int progress;
 
   private final FluidStack water_required = new FluidStack(FluidRegistry.WATER,50);
-  
+
+
   public TileEntityMetalAtomizer()
   {
     super();
@@ -89,6 +102,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     tanks[TANK_INPUT] = new FluidTank(FoundryAPI.ATOMIZER_TANK_CAPACITY);
     tanks[TANK_WATER] = new FluidTank(FoundryAPI.ATOMIZER_WATER_TANK_CAPACITY);
     fluid_handler = new FluidHandler();
+    item_handler = new ItemHandler(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
     
     progress = -1;
     
@@ -100,6 +114,12 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     addContainerSlot(new ContainerSlot(TANK_WATER,INVENTORY_CONTAINER_WATER_FILL,true,FluidRegistry.WATER));
    
     update_energy = true;
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    return item_handler;
   }
   
   @Override
@@ -118,7 +138,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
       progress = compund.getInteger("progress");
     }
   }
-
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound)
@@ -143,26 +162,29 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
     return progress;
   }
 
-  static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
 
+  @Deprecated
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
     return false;
   }
 
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
     return EXTRACT_SLOTS;
   }
 
+  @Deprecated
   @Override
   public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(slot, itemstack);
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {

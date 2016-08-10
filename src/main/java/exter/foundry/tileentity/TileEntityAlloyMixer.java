@@ -5,7 +5,6 @@ import java.util.List;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,7 +13,7 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements net.minecraftforge.fluids.IFluidHandler
 {
   protected class FluidHandler implements IFluidHandler
   {
@@ -144,28 +143,8 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements IS
     return 10;
   }
 
-  static private final int[] SLOTS = { };
-
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
-  {
-    return false;
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SLOTS;
-  }
-
-  @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing direction)
-  {
-    return isItemValidForSlot(i, itemstack);
-  }
-
-  @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing direction)
   {
     return false;
   }

@@ -15,6 +15,7 @@ import exter.foundry.material.MaterialRegistry;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
@@ -319,7 +320,7 @@ public class GuiMaterialRouter extends GuiFoundry
       drawTypeIcon(window_x + 46,window_y + y,r.type);
       GL11.glEnable(GL11.GL_BLEND);
       
-      drawTexturedModalRect(window_x + 63, window_y + y, 200, r.side.index * 16, 16, 16);
+      drawTexturedModalRect(window_x + 63, window_y + y, 200, r.side.getIndex() * 16, 16, 16);
       drawTexturedModalRect(window_x + 81, window_y + y + 4, 234, 194, 8, 8);
     }
 
@@ -407,7 +408,7 @@ public class GuiMaterialRouter extends GuiFoundry
           new TileEntityMaterialRouter.Route(
               material_slots.get(te_router.gui_material_selected).getName(),
               type_slots.get(te_router.gui_type_selected).getName(),
-              TileEntityMaterialRouter.RouteSide.values()[button.id]));
+              EnumFacing.VALUES[button.id]));
       te_router.syncRoutes();
     } else if(button.id == material_scroll_left.id)
     {

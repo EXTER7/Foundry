@@ -1,5 +1,9 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
@@ -10,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 
 public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
@@ -22,9 +27,16 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
   static public final int INVENTORY_CONTAINER_FILL = 2;
 
+  @Deprecated
+  static private final int[] INSERT_SLOTS = { INVENTORY_INPUT };
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_INPUT);
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
+
   private FluidTank tank;
   private IFluidHandler fluid_handler;
-
+  private ItemHandler item_handler;
+  
   private int progress;
   private int melt_point;
   private IMeltingRecipe current_recipe;
@@ -36,14 +48,20 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
     super();
     tank = new FluidTank(FoundryAPI.CRUCIBLE_TANK_CAPACITY);
     fluid_handler = new FluidHandler(-1,0);
+    item_handler = new ItemHandler(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
+
     progress = 0;
-    
     melt_point = 0;
-    
     current_recipe = null;
     
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_DRAIN,false));
     addContainerSlot(new ContainerSlot(0,INVENTORY_CONTAINER_FILL,true));
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    return item_handler;
   }
 
   @Override
@@ -98,7 +116,6 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
     return melt_point;
   }
 
-  static private final int[] INSERT_SLOTS = { INVENTORY_INPUT };
 
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
@@ -106,18 +123,21 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
     return i == INVENTORY_INPUT;
   }
 
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
     return INSERT_SLOTS;
   }
 
+  @Deprecated
   @Override
   public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(i, itemstack);
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {

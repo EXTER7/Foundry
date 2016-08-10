@@ -1,5 +1,9 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import net.minecraft.inventory.ISidedInventory;
@@ -11,6 +15,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityCastingTableBase extends TileEntityFoundry implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
@@ -78,6 +83,20 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     }    
   }
   
+  private class ItemHandlerTable extends ItemHandler
+  {
+    public ItemHandlerTable(int slots, Set<Integer> insert_slots, Set<Integer> extract_slots)
+    {
+      super(slots, insert_slots, extract_slots);
+    }
+    
+    @Override
+    protected boolean canExtract(int slot)
+    {
+      return progress == 0;
+    }    
+  }
+  
   static public final int CAST_TIME = 300;
   
   private FluidTank tank;
@@ -86,7 +105,13 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
   private ICastingTableRecipe recipe;
   
   private int progress;
+  
+  private ItemHandlerTable item_handler;
 
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of();
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(0);
+  
   public TileEntityCastingTableBase()
   {
     super();
@@ -96,8 +121,15 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     
     progress = 0;
     recipe = null;
+    item_handler = new ItemHandlerTable(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
   }
-  
+
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing facing)
+  {
+    return item_handler;
+  }
+
   @Override
   protected IFluidHandler getFluidHandler(EnumFacing facing)
   {
@@ -156,30 +188,35 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
 
   static private final int[] EXTRACT_SLOTS = { 0 };
 
+  @Deprecated
   @Override
   public final boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
     return false;
   }
 
+  @Deprecated
   @Override
   public final int[] getSlotsForFace(EnumFacing side)
   {
     return EXTRACT_SLOTS;
   }
-
+  
+  @Deprecated
   @Override
   public final boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return false;
   }
-
+  
+  @Deprecated
   @Override
   public final boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return progress == 0;
   }
-
+  
+  @Deprecated
   @Override
   public final ItemStack removeStackFromSlot(int slot)
   {

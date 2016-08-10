@@ -3,7 +3,12 @@ package exter.foundry.tileentity;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.material.MaterialRegistry;
@@ -16,34 +21,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityMaterialRouter extends TileEntityFoundry implements ISidedInventory
 {
-
-  public enum RouteSide
-  {
-    RED(0),
-    GREEN(1),
-    BLUE(2),
-    CYAN(3),
-    MAGENTA(4),
-    YELLOW(5);
-
-    public final int index;
-
-    private RouteSide(int side_index)
-    {
-      index = side_index;
-    }
-  }
-
   static public class Route
   {
     public String material;
     public String type;
-    public RouteSide side;
+    public EnumFacing side;
 
-    public Route(String route_material, String route_type, RouteSide route_side)
+    public Route(String route_material, String route_type, EnumFacing route_side)
     {
       material = route_material;
       type = route_type;
@@ -54,7 +42,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     {
       material = ByteBufUtils.readUTF8String(data);
       type = ByteBufUtils.readUTF8String(data);
-      side = RouteSide.values()[data.readByte()];
+      side = EnumFacing.values()[data.readByte()];
     }
 
     public Route(NBTTagCompound tag)
@@ -66,14 +54,14 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     {
       material = tag.getString("material");
       type = tag.getString("type");
-      side = RouteSide.values()[tag.getByte("side")];
+      side = EnumFacing.VALUES[tag.getByte("side")];
     }
 
     public void writeToNBT(NBTTagCompound tag)
     {
       tag.setString("material", material);
       tag.setString("type", type);
-      tag.setByte("side", (byte) side.index);
+      tag.setByte("side", (byte) side.getIndex());
     }
 
     public boolean matchesItem(ItemStack stack)
@@ -106,12 +94,16 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     {
       ByteBufUtils.writeUTF8String(data, material);
       ByteBufUtils.writeUTF8String(data, type);
-      data.writeByte(side.index);
+      data.writeByte(side.getIndex());
     }
-
   }
 
   public static final int SLOT_OUTPUT = 3;
+
+  @Deprecated
+  static private int[][] SIDE_SLOTS = { { 0, 1, 2, SLOT_OUTPUT }, { 0, 1, 2, SLOT_OUTPUT + 1 }, { 0, 1, 2, SLOT_OUTPUT + 2 }, { 0, 1, 2, SLOT_OUTPUT + 3 }, { 0, 1, 2, SLOT_OUTPUT + 4 }, { 0, 1, 2, SLOT_OUTPUT + 5 } };
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(0, 1, 2);
 
   private List<Route> routes;
   private int input_index;
@@ -122,6 +114,9 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   public int gui_material_selected;
   public int gui_type_selected;
 
+
+  private Map<EnumFacing,ItemHandler> item_handlers;
+
   public TileEntityMaterialRouter()
   {
     routes = new ArrayList<Route>();
@@ -131,6 +126,21 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
     gui_route_scroll = 0;
     gui_material_selected = 0;
     gui_type_selected = 0;
+    item_handlers = new EnumMap<EnumFacing,ItemHandler>(EnumFacing.class);
+    for(EnumFacing facing:EnumFacing.VALUES)
+    {
+      item_handlers.put(facing, new ItemHandler(getSizeInventory(), IH_SLOTS_INPUT,ImmutableSet.of(SLOT_OUTPUT + facing.getIndex())));
+    }
+  }
+
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    if(side == null)
+    {
+      return null;
+    }
+    return item_handlers.get(side);
   }
 
   @Override
@@ -289,7 +299,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
         {
           if(r.matchesItem(input))
           {
-            routeItem(i, SLOT_OUTPUT + r.side.index);
+            routeItem(i, SLOT_OUTPUT + r.side.getIndex());
             break;
           }
         }
@@ -316,20 +326,21 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
 
   }
 
-  private static int[][] SIDE_SLOTS = { { 0, 1, 2, SLOT_OUTPUT }, { 0, 1, 2, SLOT_OUTPUT + 1 }, { 0, 1, 2, SLOT_OUTPUT + 2 }, { 0, 1, 2, SLOT_OUTPUT + 3 }, { 0, 1, 2, SLOT_OUTPUT + 4 }, { 0, 1, 2, SLOT_OUTPUT + 5 } };
-
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
     return SIDE_SLOTS[side.getIndex()];
   }
 
+  @Deprecated
   @Override
   public boolean canInsertItem(int slot, ItemStack item, EnumFacing side)
   {
     return slot < SLOT_OUTPUT;
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int slot, ItemStack item, EnumFacing side)
   {

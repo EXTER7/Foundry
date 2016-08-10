@@ -1,10 +1,16 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.IBurnerHeaterFuel;
 import exter.foundry.block.BlockBurnerHeater;
 import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
+import exter.foundry.tileentity.TileEntityFoundry.ItemHandler;
+import exter.foundry.tileentity.itemhandler.ItemHandlerFuel;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.api.item.IExoflameHeatable;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
@@ -65,11 +72,18 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
   private int heat_provide;
   private boolean update_burn_times;
 
+  private HeatProvider heat_provider;
+  private ItemHandlerFuel item_handler;
+
   private static int DEFAULT_HEAT_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(170000,FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE);
 
-  private HeatProvider heat_provider;
-
-  private static final int[] SLOTS = new int[] { 0, 1, 2, 3 };
+  @Deprecated private static final int[] SLOTS = new int[] { 0, 1, 2, 3 };
+  
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(0, 1, 2, 3);
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
+  static private final Set<Integer> IH_SLOTS_FUEL = ImmutableSet.of(0, 1, 2, 3);
+  
+  
 
   public TileEntityBurnerHeater()
   {
@@ -78,6 +92,13 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
     update_burn_times = false;
     heat_provide = DEFAULT_HEAT_PROVIDE;
     heat_provider = new HeatProvider();
+    item_handler = new ItemHandlerFuel(this,getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT,IH_SLOTS_FUEL);
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    return item_handler;
   }
 
   @Override

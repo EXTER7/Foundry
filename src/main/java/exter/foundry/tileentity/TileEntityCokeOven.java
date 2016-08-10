@@ -1,5 +1,9 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.block.BlockCokeOven;
 import exter.foundry.item.FoundryItems;
@@ -13,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.items.IItemHandler;
 
 
 public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISidedInventory
@@ -25,15 +30,28 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_OUTPUT = 1;
 
+  @Deprecated
+  static private final int[] SLOTS = { INVENTORY_INPUT, INVENTORY_OUTPUT };
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_INPUT);
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
+
+  private ItemHandler item_handler;
 
   private int progress;
-
   
   
   public TileEntityCokeOven()
   {
     super();
     progress = 0;
+    item_handler = new ItemHandler(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    return item_handler;
   }
 
   @Override
@@ -81,7 +99,6 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
     return progress;
   }
   
-  static private final int[] SLOTS = { INVENTORY_INPUT, INVENTORY_OUTPUT };
 
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
@@ -89,18 +106,21 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
     return i == INVENTORY_INPUT;
   }
 
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
     return SLOTS;
   }
 
+  @Deprecated
   @Override
   public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(i, itemstack);
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {

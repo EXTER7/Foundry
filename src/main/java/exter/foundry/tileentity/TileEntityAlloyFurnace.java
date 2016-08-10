@@ -1,8 +1,13 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
+import exter.foundry.tileentity.itemhandler.ItemHandlerFuel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -15,12 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.api.item.IExoflameHeatable;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
 public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory,IExoflameHeatable
 {
-
   public static final int SLOT_INPUT_A = 0;
   public static final int SLOT_INPUT_B = 1;
   public static final int SLOT_OUTPUT = 2;
@@ -34,16 +39,40 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 
   private boolean update_burn_times;
 
-  private static final int[] SLOTS_TOP = new int[] { SLOT_INPUT_A, SLOT_INPUT_B };
-  private static final int[] SLOTS_BOTTOM = new int[] { SLOT_OUTPUT, SLOT_FUEL };
-  private static final int[] SLOTS_SIDES = new int[] { SLOT_FUEL };
+  @Deprecated static private final int[] SLOTS_TOP = new int[] { SLOT_INPUT_A, SLOT_INPUT_B };
+  @Deprecated static private final int[] SLOTS_BOTTOM = new int[] { SLOT_OUTPUT, SLOT_FUEL };
+  @Deprecated static private final int[] SLOTS_SIDES = new int[] { SLOT_FUEL };
 
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(SLOT_INPUT_A, SLOT_INPUT_B);
+  static private final Set<Integer> IH_SLOTS_INPUT_FUEL = ImmutableSet.of(SLOT_INPUT_A, SLOT_INPUT_B, SLOT_FUEL);
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(SLOT_OUTPUT);
+  static private final Set<Integer> IH_SLOTS_OUTPUT_FUEL = ImmutableSet.of(SLOT_OUTPUT,SLOT_FUEL);
+  static private final Set<Integer> IH_SLOTS_FUEL = ImmutableSet.of(SLOT_FUEL);
+  
+  
+  private ItemHandler item_handler;
+  private ItemHandlerFuel item_handler_fuel;
+  
   public TileEntityAlloyFurnace()
   {
     burn_time = 0;
     item_burn_time = 0;
     progress = 0;
     update_burn_times = false;
+    item_handler = new ItemHandler(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
+    item_handler_fuel = new ItemHandlerFuel(this,getSizeInventory(),IH_SLOTS_INPUT_FUEL,IH_SLOTS_OUTPUT_FUEL,IH_SLOTS_FUEL);
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    switch(side)
+    {
+      case UP:
+        return item_handler;
+      default:
+        return item_handler_fuel;
+    }
   }
 
   @Override
@@ -136,6 +165,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     return true;
   }
 
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
@@ -150,20 +180,21 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
     }
   }
 
-  /**
-   * Returns true if automation can insert the given item in the given slot from
-   * the given side. Args: Slot, item, side
-   */
+  @Deprecated
+  @Override
   public boolean canInsertItem(int par1, ItemStack par2ItemStack, EnumFacing side)
   {
     return this.isItemValidForSlot(par1, par2ItemStack);
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
   {
     return side != EnumFacing.UP || slot != SLOT_INPUT_A || slot != SLOT_INPUT_B || stack.getItem() == Items.BUCKET;
   }
+  
+  
 
   @Override
   protected void updateClient()

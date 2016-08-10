@@ -2,6 +2,9 @@ package exter.foundry.tileentity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 
 import exter.foundry.ModFoundry;
 import exter.foundry.network.MessageTileEntitySync;
@@ -26,6 +29,8 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * Base class for all machines.
@@ -111,6 +116,108 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       }
       return drainTank(drain_tank,maxDrain,doDrain);
     }    
+  }
+  
+  public class ItemHandler implements IItemHandler
+  {
+    protected final int slots;
+    protected final ImmutableSet<Integer> insert_slots;
+    protected final ImmutableSet<Integer> extract_slots;
+
+    protected boolean canInsert(int slot,ItemStack stack)
+    {
+      return isItemValidForSlot(slot, stack);
+    }
+
+    protected boolean canExtract(int slot)
+    {
+      return true;
+    }
+
+    public ItemHandler(int slots,Set<Integer> insert_slots,Set<Integer> extract_slots)
+    {
+      this.slots = slots;
+      this.insert_slots = ImmutableSet.copyOf(insert_slots);
+      this.extract_slots = ImmutableSet.copyOf(extract_slots);
+    }
+    
+    @Override
+    public final int getSlots()
+    {
+      return slots;
+    }
+
+    @Override
+    public final ItemStack getStackInSlot(int slot)
+    {
+      return inventory[slot];
+    }
+
+    @Override
+    public final ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
+    {
+      if(!insert_slots.contains(slot) || !canInsert(slot,stack))
+      {
+        return stack;
+      }
+      ItemStack is = inventory[slot];
+      if(is == null)
+      {
+        inventory[slot] = stack;
+        updateInventoryItem(slot);
+        markDirty();
+        return null;
+      } else if(is.isItemEqual(stack) && ItemStack.areItemStacksEqual(is, stack))
+      {
+        if(stack.stackSize + is.stackSize > is.getMaxStackSize())
+        {
+          stack = stack.copy();
+          stack.stackSize = is.getMaxStackSize() - is.stackSize;
+          is.stackSize = is.getMaxStackSize();
+          updateInventoryItem(slot);
+          markDirty();
+          stack = null;
+        } else
+        {
+          is.stackSize += stack.stackSize;
+        }
+        updateInventoryItem(slot);
+        markDirty();
+        return stack;
+      }
+      return stack;
+    }
+
+    @Override
+    public final ItemStack extractItem(int slot, int amount, boolean simulate)
+    {
+      if(!extract_slots.contains(slot) || !canExtract(slot))
+      {
+        return null;
+      }
+      ItemStack is = inventory[slot];
+      if(is == null)
+      {
+        return null;
+      }
+      if(amount > is.stackSize)
+      {
+        amount = is.stackSize;
+      }
+      if(!simulate)
+      {
+        is.stackSize -= amount;
+        if(is.stackSize == 0)
+        {
+          inventory[slot] = null;
+        }
+        updateInventoryItem(slot);
+        markDirty();
+      }
+      is = is.copy();
+      is.stackSize = amount;
+      return is;
+    }
   }
 
   private RedstoneMode mode;
@@ -239,6 +346,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
   
 
+  @Deprecated
   @Override
   public final ItemStack getStackInSlot(int slot)
   {
@@ -277,6 +385,7 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     }
   }
 
+  @Deprecated
   @Override
   public ItemStack removeStackFromSlot(int slot)
   {
@@ -722,13 +831,21 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   {
     return null;
   }
-  
+
+  protected IItemHandler getItemHandler(EnumFacing facing)
+  {
+    return null;
+  }
+
   @Override
   public boolean hasCapability(Capability<?> cap,EnumFacing facing)
   {
     if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
     {
       return getFluidHandler(facing) != null;
+    } else if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    {
+      return getItemHandler(facing) != null;
     } else
     {
       return super.hasCapability(cap, facing);
@@ -740,10 +857,20 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   {
     if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
     {
-      IFluidHandler fluid_hnalder = getFluidHandler(facing);
-      if(fluid_hnalder != null)
+      IFluidHandler fluid_handler = getFluidHandler(facing);
+      if(fluid_handler != null)
       {
         return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(getFluidHandler(facing));
+      } else
+      {
+        return super.getCapability(cap, facing);
+      }
+    } else if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    {
+      IItemHandler item_handler = getItemHandler(facing);
+      if(item_handler != null)
+      {
+        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(getItemHandler(facing));
       } else
       {
         return super.getCapability(cap, facing);

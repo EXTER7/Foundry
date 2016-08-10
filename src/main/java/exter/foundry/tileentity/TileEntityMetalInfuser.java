@@ -1,5 +1,9 @@
 package exter.foundry.tileentity;
 
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
@@ -11,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
@@ -24,8 +29,17 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
 
   static public final int TANK_INPUT = 0;
   static public final int TANK_OUTPUT = 1;
+
+  @Deprecated static private final int[] INSERT_SLOTS = { 0 };
+  @Deprecated static private final int[] EXTRACT_SLOTS = { 0 };
+
+  static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_SUBSTANCE_INPUT);
+  static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
+
+
   private FluidTank[] tanks;
   private IFluidHandler fluid_handler;
+  private ItemHandler item_handler;
   
   private int progress;
   private int extract_energy;
@@ -40,6 +54,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     tanks[0] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
     tanks[1] = new FluidTank(FoundryAPI.INFUSER_TANK_CAPACITY);
     fluid_handler = new FluidHandler(TANK_INPUT,TANK_OUTPUT);
+    item_handler = new ItemHandler(getSizeInventory(),IH_SLOTS_INPUT,IH_SLOTS_OUTPUT);
 
     progress = 0;
     extract_energy = 1;
@@ -50,6 +65,12 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     addContainerSlot(new ContainerSlot(TANK_INPUT,INVENTORY_CONTAINER_INPUT_FILL,true));
     addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_DRAIN,false));
     addContainerSlot(new ContainerSlot(TANK_OUTPUT,INVENTORY_CONTAINER_OUTPUT_FILL,true));
+  }
+  
+  @Override
+  protected IItemHandler getItemHandler(EnumFacing side)
+  {
+    return item_handler;
   }
   
   @Override
@@ -111,27 +132,28 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
     return progress;
   }
 
-  static private final int[] INSERT_SLOTS = { 0 };
-  static private final int[] EXTRACT_SLOTS = { 0 };
 
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
-    return slot == 0;
+    return true;
   }
 
+  @Deprecated
   @Override
   public int[] getSlotsForFace(EnumFacing side)
   {
     return side == EnumFacing.UP?INSERT_SLOTS:EXTRACT_SLOTS;
   }
 
+  @Deprecated
   @Override
   public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
   {
     return isItemValidForSlot(slot, itemstack);
   }
 
+  @Deprecated
   @Override
   public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
   {

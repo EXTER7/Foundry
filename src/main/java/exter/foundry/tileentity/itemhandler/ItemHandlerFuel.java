@@ -26,7 +26,7 @@ public class ItemHandlerFuel extends TileEntityFoundry.ItemHandler
       return TileEntityFurnace.isItemFuel(stack);
     } else
     {
-      return true;
+      return !TileEntityFurnace.isItemFuel(stack);
     }
   }
 

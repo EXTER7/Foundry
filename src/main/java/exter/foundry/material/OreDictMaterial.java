@@ -111,6 +111,7 @@ public class OreDictMaterial
     new OreDictMaterial("DarkSteel", "ingot"),
     new OreDictMaterial("PulsatingIron", "ingot"),
     new OreDictMaterial("ElectricalSteel", "ingot"),
-    new OreDictMaterial("Soularium", "ingot")
+    new OreDictMaterial("Soularium", "ingot"),
+    new OreDictMaterial("Alumina", "ingot")
   };
 }

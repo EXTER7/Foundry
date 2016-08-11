@@ -217,6 +217,7 @@ foundry.router.material.DarkSteel=Dark Steel
 foundry.router.material.PulsatingIron=Pulsating Iron
 foundry.router.material.ElectricalSteel=Electrical Steel
 foundry.router.material.Soularium=Soularium
+foundry.router.material.Alumina=Alumina
 
 foundry.router.type._Any=All
 foundry.router.type.Ore=Ore

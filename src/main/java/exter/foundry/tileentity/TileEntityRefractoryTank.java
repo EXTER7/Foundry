@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityRefractoryTank extends TileEntityFoundry implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityRefractoryTank extends TileEntityFoundry implements net.minecraftforge.fluids.IFluidHandler
 {
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
@@ -55,29 +55,8 @@ public class TileEntityRefractoryTank extends TileEntityFoundry implements ISide
 
   }
 
-
-  static private final int[] SLOTS = {};
-
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
-  {
-    return false;
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SLOTS;
-  }
-
-  @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(i, itemstack);
-  }
-
-  @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
   }

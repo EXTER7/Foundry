@@ -252,7 +252,7 @@ public class ModIntegrationTiCon implements IModIntegration
     {
       if(casting.getResult() == null)
       {
-        return;
+        continue;
       }
       FluidStack fluid = casting.getFluid();
       if(casting.getFluid().amount <= 6000 && casting.cast == null
@@ -293,6 +293,7 @@ public class ModIntegrationTiCon implements IModIntegration
           casting.getResult(),
           casting.cast,
           mapped_liquid,
+          casting.getTime(),
           casting.consumesCast(),
           casting.switchOutputs());
       recipes.add(recipe);
@@ -313,7 +314,7 @@ public class ModIntegrationTiCon implements IModIntegration
       }
       if(casting.getResult() == null)
       {
-        return;
+        continue;
       }
       String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
       if(mapped == null)
@@ -330,6 +331,7 @@ public class ModIntegrationTiCon implements IModIntegration
           casting.getResult(),
           null,
           mapped_liquid,
+          casting.getTime(),
           casting.consumesCast(),
           casting.switchOutputs());
       recipes.add(recipe);

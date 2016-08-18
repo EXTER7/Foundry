@@ -11,6 +11,7 @@ import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,12 +25,35 @@ import net.minecraft.world.World;
 
 public class BlockRefractorySpout extends BlockFoundrySidedMachine
 {
-  protected static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(0.125, 0.125, 0, 0.875, 0.875, 0.4375);
-  protected static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(0, 0.125, 0.125, 0.4375, 0.875, 0.875);
-  protected static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(0.125, 0.125, 0.5625, 0.875, 0.875,1);
-  protected static final AxisAlignedBB AABB_EAST = new AxisAlignedBB(0.5625, 0.125, 0.125, 1, 0.875, 0.875);
+  private static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(0.125, 0.125, 0, 0.875, 0.875, 0.4375);
+  private static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(0, 0.125, 0.125, 0.4375, 0.875, 0.875);
+  private static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(0.125, 0.125, 0.5625, 0.875, 0.875,1);
+  private static final AxisAlignedBB AABB_EAST = new AxisAlignedBB(0.5625, 0.125, 0.125, 1, 0.875, 0.875);
 
+  private static final AxisAlignedBB[] COLLISION_NORTH = new AxisAlignedBB[]
+  {
+      new AxisAlignedBB(0.125,  0.125,  0,      0.875,  0.875, 0.1875),
+      new AxisAlignedBB(0.3125, 0.4375, 0.1875, 0.6875, 0.6875, 0.4375)
+  };
   
+  private static final AxisAlignedBB[] COLLISION_WEST = new AxisAlignedBB[]
+  {
+      new AxisAlignedBB(0,      0.125,  0.125,  0.1875, 0.875, 0.875),
+      new AxisAlignedBB(0.1875, 0.4375, 0.3125, 0.6875, 0.6875, 0.6875)
+  };
+  
+  private static final AxisAlignedBB[] COLLISION_SOUTH = new AxisAlignedBB[]
+  {
+      new AxisAlignedBB(0.3125, 0.4375, 0.5625, 0.6875, 0.6875, 0.8125),
+      new AxisAlignedBB(0.125,  0.125,  0.8125, 0.875,  0.875,  1)
+  };
+  
+  private static final AxisAlignedBB[] COLLISION_EAST = new AxisAlignedBB[]
+  {
+      new AxisAlignedBB(0.5625, 0.4375, 0.3125, 0.8125, 0.6875, 0.6875),
+      new AxisAlignedBB(0.6875, 0.125,  0.125,  1,      0.875, 0.875)
+  };
+
   public BlockRefractorySpout()
   {
     super(Material.ROCK);
@@ -56,6 +80,31 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
     return null;
   }
   
+  
+  public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn)
+  {
+    AxisAlignedBB[] bounds = null;
+    switch(state.getValue(FACING))
+    {
+      case EAST:
+        bounds = COLLISION_EAST;
+        break;
+      case NORTH:
+        bounds = COLLISION_NORTH;
+        break;
+      case SOUTH:
+        bounds = COLLISION_SOUTH;
+        break;
+      case WEST:
+        bounds = COLLISION_WEST;
+        break;
+    }
+    for(AxisAlignedBB box:bounds)
+    {
+      addCollisionBoxToList(pos, entityBox, collidingBoxes, box);
+    }
+  }
+
   @Override
   public void onBlockAdded(World world, BlockPos pos, IBlockState state)
   {

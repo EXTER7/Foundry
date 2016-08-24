@@ -25,7 +25,7 @@ public final class ModIntegrationManager
       IModIntegration imod = (IModIntegration)mod;
       String name = imod.getName();
       boolean enable = FoundryConfig.getAndRemove(config,"integration", "enable." + name, true);
-      enable = config.getBoolean("enable", "integration" + name, true, "Enable/disable mod integration.");
+      enable = config.getBoolean("enable", "integration." + name, true, "Enable/disable mod integration.");
       if(enable)
       {
         integrations.put(name, imod);

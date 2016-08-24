@@ -12,6 +12,7 @@ public class FoundryConfig
   
   public static boolean recipe_equipment;
   public static boolean recipe_glass;
+  public static boolean recipe_alumina_melts_to_aluminium;
   
   public static boolean block_cokeoven;
 
@@ -40,6 +41,7 @@ public class FoundryConfig
     recipe_equipment = config.getBoolean("equipment", "recipes", recipe_equipment, "Enable/disable casting recipes for equipment");
     recipe_glass = config.getBoolean("glass", "recipes", recipe_glass, "Enable/disable glass melting and casting recipes");
     recipe_steel = config.getBoolean("steel", "recipes", recipe_steel, "Enable/disable steel infuser recipes");
+    recipe_alumina_melts_to_aluminium = config.getBoolean("alumina_melts_to_aluminium", "recipes", false, "Enable/disable alumina melting directly into aluminium.");
     block_cokeoven = config.getBoolean("coke_oven", "block", block_cokeoven, "Enable/disable Coke Oven block");
   }
 }

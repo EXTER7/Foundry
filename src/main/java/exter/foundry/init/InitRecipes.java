@@ -62,11 +62,6 @@ public class InitRecipes
     }
     FoundryUtils.registerBasicMeltingRecipes("Chromium",LiquidMetalRegistry.instance.getFluid("Chrome"));
     FoundryUtils.registerBasicMeltingRecipes("Aluminum",LiquidMetalRegistry.instance.getFluid("Aluminium"));
-    
-    MeltingRecipeManager.instance.addRecipe(new OreMatcher("ingotAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2200);
-    MeltingRecipeManager.instance.addRecipe(new OreMatcher("nuggetAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_NUGGET),2200);
-    MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2200);
-    MeltingRecipeManager.instance.addRecipe(new OreMatcher("oreAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_ORE),2200);
 
     if(FoundryConfig.recipe_glass)
     {
@@ -411,10 +406,24 @@ public class InitRecipes
     {
       InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,36), new FluidStack(FoundryFluids.liquid_iron,36), new OreMatcher("dustCoal"), 160000);
       InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,12), new FluidStack(FoundryFluids.liquid_iron,12), new OreMatcher("dustCharcoal"), 160000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,9), new FluidStack(FoundryFluids.liquid_iron,9), new OreMatcher("dustSmallCoal"), 20000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,3), new FluidStack(FoundryFluids.liquid_iron,3), new OreMatcher("dustSmallCharcoal"), 20000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,9), new FluidStack(FoundryFluids.liquid_iron,9), new OreMatcher("dustSmallCoal"), 40000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,3), new FluidStack(FoundryFluids.liquid_iron,3), new OreMatcher("dustSmallCharcoal"), 40000);
     }
 
+    if(FoundryConfig.recipe_alumina_melts_to_aluminium)
+    {
+      MeltingRecipeManager.instance.addRecipe(new OreMatcher("ingotAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2100);
+      MeltingRecipeManager.instance.addRecipe(new OreMatcher("nuggetAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_NUGGET),2100);
+      MeltingRecipeManager.instance.addRecipe(new OreMatcher("dustAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_INGOT),2100);
+      MeltingRecipeManager.instance.addRecipe(new OreMatcher("oreAlumina"), new FluidStack(FoundryFluids.liquid_aluminium, FoundryAPI.FLUID_AMOUNT_ORE),2100);
+    } else
+    {
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_aluminium,216), new FluidStack(FoundryFluids.liquid_alumina,216), new OreMatcher("dustCoal"), 240000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_aluminium,216), new FluidStack(FoundryFluids.liquid_alumina,216), new OreMatcher("dustCharcoal"), 240000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_aluminium,54), new FluidStack(FoundryFluids.liquid_alumina,54), new OreMatcher("dustSmallCoal"), 60000);
+      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_aluminium,54), new FluidStack(FoundryFluids.liquid_iron,54), new OreMatcher("dustSmallCharcoal"), 60000);
+    }
+    
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(new ItemStack(Items.COAL,1,0)),// Coal
         1600,

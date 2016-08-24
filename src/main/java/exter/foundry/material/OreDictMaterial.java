@@ -22,7 +22,7 @@ public class OreDictMaterial
   static public final OreDictMaterial[] MATERIALS = new OreDictMaterial[] {
     new OreDictMaterial("Aluminium","ingot", "Aluminum"),
     new OreDictMaterial("Carbon","dust"),
-    new OreDictMaterial("Chrome","ingot","Chrome"),
+    new OreDictMaterial("Chrome","ingot","Chromium"),
     new OreDictMaterial("Cobalt","ingot"),
     new OreDictMaterial("Copper","ingot"),
     new OreDictMaterial("Gold","ingot"),
@@ -64,8 +64,6 @@ public class OreDictMaterial
     new OreDictMaterial("Topaz","gem"),
     new OreDictMaterial("Redstone","dust"),
     new OreDictMaterial("Glowstone","dust"),
-    new OreDictMaterial("Thaumium","ingot"),
-    new OreDictMaterial("Voidmetal","ingot"),
     new OreDictMaterial("RedAlloy","ingot"),
     new OreDictMaterial("Rubber","item"),
     new OreDictMaterial("Adamantine","ingot"),

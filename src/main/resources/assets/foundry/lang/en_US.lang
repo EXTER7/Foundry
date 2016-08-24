@@ -40,8 +40,6 @@ fluid.liquidGlass.light_blue=Liquid Glass (Light Blue)
 fluid.liquidGlass.magenta=Liquid Glass (Magenta)
 fluid.liquidGlass.orange=Liquid Glass (Orange)
 fluid.liquidGlass.white=Liquid Glass (White)
-fluid.liquidThaumium=Liquid Thaumium
-fluid.liquidVoid=Liquid Void Metal
 fluid.liquidManasteel=Liquid Manasteel
 fluid.liquidTerrasteel=Liquid Terrasteel
 fluid.liquidElvenElementium=Liquid Elementium
@@ -90,16 +88,6 @@ fluid.liquidPrometheum=Liquid Prometheum
 fluid.liquidIronwood=Liquid Ironwood
 fluid.liquidSteeleaf=Liquid Steeleaf
 fluid.liquidKnightmetal=Liquid Knightmetal
-fluid.liquidAer=Air Infused Liquid
-fluid.liquidIgnis=Fire Infused Liquid
-fluid.liquidTerra=Earth Infused Liquid
-fluid.liquidAqua=Water Infused Liquid
-fluid.liquidOrdo=Order Infused Liquid
-fluid.liquidPerditio=Entropy Infused Liquid
-fluid.liquidPotentia=Energy Infused Liquid
-fluid.liquidVictus=Life Infused Liquid
-fluid.liquidVacous=Void Infused Liquid
-fluid.liquidPrimal=Primal Liquid
 fluid.liquidRedstoneAlloy=Liquid Redstone Alloy
 fluid.liquidEnergeticAlloy=Liquid Energetic Alloy
 fluid.liquidVibrantAlloy=Liquid Vibrant Alloy
@@ -201,16 +189,6 @@ foundry.router.material.Prometheum=Prometheum
 foundry.router.material.Ironwood=Ironwood
 foundry.router.material.Steeleaf=Steeleaf
 foundry.router.material.Knightmetal=Knightmetal
-foundry.router.material.Aer=Aer
-foundry.router.material.Ignis=Ignis
-foundry.router.material.Terra=Terra
-foundry.router.material.Aqua=Aqua
-foundry.router.material.Ordo=Ordo
-foundry.router.material.Perditio=Perditio
-foundry.router.material.Potentia=Potentia
-foundry.router.material.Victus=Victus
-foundry.router.material.Vacous=Vacous
-foundry.router.material.Primal=Primal
 foundry.router.material.RedstoneAlloy=Redstone Alloy
 foundry.router.material.EnergeticAlloy=Energetic Alloy
 foundry.router.material.VibrantAlloy=Vibrant Alloy
@@ -240,7 +218,6 @@ foundry.router.type.Casing=Casing
 foundry.router.type.Cable=Cable
 foundry.router.type.NativeCluster=Native Cluster
 foundry.router.type.PoorOre=Poor Ore
-foundry.router.type.Shard=Shard
 
 itemGroup.foundryMaterials=Foundry - Materials
 itemGroup.foundryFluids=Foundry - Fluids
@@ -361,18 +338,6 @@ item.shellAP.name=Armor Piercing Shell
 item.roundLumium.name=Lumium Round
 item.shellLumium.name=Lumium Shell
 item.roundSnow.name=Snow Round
-
-
-tc.research_category.FOUNDRY=Foundry
-
-tc.research.shardmold.text1=Using an Induction Crucible Furnace, shards can be molten into liquid and cast in a Metal Caster with the Shard Mold, This mold allows creating wand caps from liquid metal. After crafting, this mold needs to be hardened in a furnace before using. Each shard melts into 108mB of Infused Liquid.
-tc.research.shardmold.text2=It's possible to combine certain infused liquids in an Alloy Mixer:<BR/><BR/>Fire Infused Liquid + Order Infused Liquid -> Energy Infused Liquid.<BR/>Air Infused Liquid + Entropy Infused Liquid -> Void Infused Liquid.<BR/>Earth Infused Liquid + Water Infused Liquid -> Life Infused Liquid.<BR/><BR/>Finally this three liquid can be mixed to create Primal Liquid which can be cast into Balanced Shards.<BR/><BR/>Energy, Void, and Life infused liquids can be cast into shards as well. However there is no known use for these shards.
-tc.research_name.FOUNDRY_shardmold=Shard casting.
-tc.research_text.FOUNDRY_shardmold=[Foundry] Melt, combine, cast shards.
-
-tc.research.capmold.text=The Wand Cap Mold allows creating wand caps from liquid metal in a Metal Caster. After crafting, this mold needs to be hardened in a furnace before using. 
-tc.research_name.FOUNDRY_capmold=Wand cap casting.
-tc.research_text.FOUNDRY_capmold=[Foundry] Wand caps out of liquid metal.
 
 entity.foundry.gunSkeleton.name=Gun Skeleton
 

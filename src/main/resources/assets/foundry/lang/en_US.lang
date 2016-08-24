@@ -250,6 +250,7 @@ tile.foundry.infernoTank.name=Inferno Tank
 tile.foundry.moldStation.name=Mold Crafting Station
 tile.foundry.burnerHeater.name=Burner Heater
 tile.foundry.cokeOven.name=Coke Oven
+tile.foundry.bronzeCauldron.name=Bronze Cauldron
 
 
 tooltip.foundry.machine.crucible=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 2000 °K.

@@ -24,6 +24,8 @@ public class FoundryBlocks
   static public BlockRefractorySpout block_refractory_spout;
   static public BlockRefractoryTank block_refractory_tank;
   static public BlockInfernoTank block_inferno_tank;
+  
+  static public BlockCauldronBronze block_cauldron_bronze;
 
   static public void register(Block block)
   {
@@ -51,6 +53,7 @@ public class FoundryBlocks
     block_refractory_spout = new BlockRefractorySpout();
     block_refractory_tank = new BlockRefractoryTank();
     block_inferno_tank = new BlockInfernoTank();
+    block_cauldron_bronze = new BlockCauldronBronze();
     
     registerMulti(block_component);
     registerMulti(block_machine);
@@ -63,6 +66,7 @@ public class FoundryBlocks
     register(block_refractory_spout);
     register(block_refractory_tank);
     register(block_inferno_tank);
+    register(block_cauldron_bronze);
 
     if(FoundryConfig.block_cokeoven)
     {

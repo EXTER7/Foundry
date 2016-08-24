@@ -736,6 +736,13 @@ public class InitRecipes
         'S', new ItemStack(Blocks.STONE_SLAB),
         'F', furnace_stack);
 
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_cauldron_bronze),
+        "I I",
+        "I I",
+        "III",
+        'I', "ingotBronze"));
+
     if(FoundryConfig.block_cokeoven)
     {
       GameRegistry.addRecipe(new ShapedOreRecipe(

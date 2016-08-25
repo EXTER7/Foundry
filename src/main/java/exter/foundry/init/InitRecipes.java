@@ -427,39 +427,39 @@ public class InitRecipes
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(new ItemStack(Items.COAL,1,0)),// Coal
         1600,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(new ItemStack(Items.COAL,1,1)),// Charcoal
         1200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("itemCoalCoke"),
         3200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(215000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(215000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustCoal"),
         800,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(195000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(195000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustCharcoal"),
         800,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustSmallCoal"),
         200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(195000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(195000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
     BurnerHeaterFuelManager.instance.addFuel(
         new OreMatcher("dustSmallCharcoal"),
         200,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(192000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
         new ItemStackMatcher(Items.BLAZE_ROD),
         2000,
-        BurnerHeaterFuelManager.instance.getHeatNeeded(220000, FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE));
+        BurnerHeaterFuelManager.instance.getHeatNeeded(220000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     ItemStack redstone_stack = new ItemStack(Items.REDSTONE);
     ItemStack furnace_stack = new ItemStack(Blocks.FURNACE);
@@ -467,10 +467,12 @@ public class InitRecipes
     ItemStack sand_stack = new ItemStack(Blocks.SAND,1,-1);
     ItemStack soulsand_stack = new ItemStack(Blocks.SOUL_SAND);
     ItemStack clayblock_stack = new ItemStack(Blocks.CLAY, 1, -1);
-    ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.REFCASING);
-    ItemStack casing_inferno_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.INFCASING);
+    ItemStack casing_basic_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_BASIC);
+    ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_STANDARD);
+    ItemStack casing_inferno_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_ADVANCED);
     ItemStack piston_stack = new ItemStack(Blocks.PISTON);
     ItemStack goldnugget_stack = new ItemStack(Items.GOLD_NUGGET);
+    ItemStack bronze_cauldron_stack = new ItemStack(FoundryBlocks.block_cauldron_bronze);
     ItemStack cauldron_stack = new ItemStack(Items.CAULDRON);
     ItemStack chest_stack = new ItemStack(Blocks.CHEST);
     ItemStack refclay_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
@@ -542,6 +544,14 @@ public class InitRecipes
         'R', redstone_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
+        casing_basic_stack,
+        "IBI",
+        "B B",
+        "IBI",
+        'I', "plateBronze",
+        'B', refbrick_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         casing_stack,
         "IBI",
         "B B",
@@ -582,7 +592,7 @@ public class InitRecipes
         "F",
         'F', furnace_stack,
         'I', "plateCopper",
-        'C', casing_stack));
+        'C', casing_basic_stack));
 
     GameRegistry.addRecipe(
         FoundryBlocks.block_casting_table.asItemStack(EnumTable.INGOT),
@@ -621,7 +631,7 @@ public class InitRecipes
         "RL",
         "BB",
         "R ",
-        'R', "rodIron",
+        'R', "rodBronze",
         'B', refbrick_stack,
         'L', new ItemStack(Blocks.LEVER)));
 
@@ -636,7 +646,17 @@ public class InitRecipes
         'C', casing_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_BASIC),
+        "BAB",
+        "BCB",
+        "BIB",
+        'B', refbrick_stack,
+        'I', "plateCopper",
+        'C', casing_basic_stack,
+        'A', bronze_cauldron_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_STANDARD),
         "BAB",
         "BCB",
         "BIB",
@@ -646,7 +666,7 @@ public class InitRecipes
         'A', cauldron_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        FoundryBlocks.block_machine.asItemStack(EnumMachine.ADVCRUCIBLE),
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_ADVANCED),
         "BAB",
         "BCB",
         "BIB",

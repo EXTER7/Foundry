@@ -1,7 +1,7 @@
 package exter.foundry.container;
 
 import exter.foundry.container.slot.SlotFluidContainer;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 public class ContainerMeltingCrucible extends Container
 {
 
-  private TileEntityMeltingCrucible te_icf;
+  private TileEntityMeltingCrucibleBasic te_icf;
   
   // Slot numbers
   public static final int SLOTS_TE = 0;
@@ -24,15 +24,15 @@ public class ContainerMeltingCrucible extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 142;
 
-  public ContainerMeltingCrucible(TileEntityMeltingCrucible icf, EntityPlayer player)
+  public ContainerMeltingCrucible(TileEntityMeltingCrucibleBasic icf, EntityPlayer player)
   {
     te_icf = icf;
     te_icf.openInventory(player);
     int i,j;
 
-    addSlotToContainer(new Slot(te_icf, TileEntityMeltingCrucible.INVENTORY_INPUT, 55, 23));
-    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityMeltingCrucible.INVENTORY_CONTAINER_DRAIN, 135, 22));
-    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityMeltingCrucible.INVENTORY_CONTAINER_FILL, 135, 53));
+    addSlotToContainer(new Slot(te_icf, TileEntityMeltingCrucibleBasic.INVENTORY_INPUT, 55, 23));
+    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityMeltingCrucibleBasic.INVENTORY_CONTAINER_DRAIN, 135, 22));
+    addSlotToContainer(new SlotFluidContainer(te_icf, TileEntityMeltingCrucibleBasic.INVENTORY_CONTAINER_FILL, 135, 53));
 
     //Player Inventory
     for(i = 0; i < 3; ++i)

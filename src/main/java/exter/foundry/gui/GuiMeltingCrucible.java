@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerMeltingCrucible;
 import exter.foundry.gui.button.GuiButtonFoundry;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
 import exter.foundry.tileentity.TileEntityFoundry.RedstoneMode;
 import exter.foundry.tileentity.TileEntityFoundryHeatable;
 import net.minecraft.client.gui.GuiButton;
@@ -57,10 +57,10 @@ public class GuiMeltingCrucible extends GuiFoundry
   private static final int RSMODE_TEXTURE_X = 176;
   private static final int RSMODE_TEXTURE_Y = 100;
 
-  private TileEntityMeltingCrucible te_crucible;
+  private TileEntityMeltingCrucibleBasic te_crucible;
   private GuiButtonFoundry button_mode;
 
-  public GuiMeltingCrucible(TileEntityMeltingCrucible ms, EntityPlayer player)
+  public GuiMeltingCrucible(TileEntityMeltingCrucibleBasic ms, EntityPlayer player)
   {
     super(new ContainerMeltingCrucible(ms, player));
     allowUserInput = false;
@@ -101,7 +101,7 @@ public class GuiMeltingCrucible extends GuiFoundry
     }
 
     //Draw progress bar.
-    int progress = te_crucible.getProgress() * PROGRESS_WIDTH / TileEntityMeltingCrucible.SMELT_TIME;
+    int progress = te_crucible.getProgress() * PROGRESS_WIDTH / TileEntityMeltingCrucibleBasic.SMELT_TIME;
     if(progress > 0)
     {
       drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);

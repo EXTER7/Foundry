@@ -66,7 +66,8 @@ import exter.foundry.tileentity.TileEntityInfernoTank;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleStandard;
 import exter.foundry.tileentity.TileEntityMeltingCrucibleAdvanced;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
@@ -157,7 +158,8 @@ public class ModFoundry
     ModIntegrationManager.init();
     FoundrySounds.init();
     
-    GameRegistry.registerTileEntity(TileEntityMeltingCrucible.class, "Foundry_MeltingCrucible");
+    GameRegistry.registerTileEntity(TileEntityMeltingCrucibleBasic.class, "Foundry_MeltingCrucible");
+    GameRegistry.registerTileEntity(TileEntityMeltingCrucibleStandard.class, "Foundry_MeltingCrucibleStandard");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
     GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, "Foundry_MetalInfuser");

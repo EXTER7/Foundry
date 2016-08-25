@@ -225,13 +225,15 @@ itemGroup.foundryMachines=Foundry - Machines
 itemGroup.foundryMolds=Foundry - Molds
 itemGroup.foundryFirearms=Foundry - Firearms
 
-tile.foundry.componentBlockCasingRefractory.name=Refractory Casing
+tile.foundry.componentBlockCasingRefractory.name=Refractory Casing (Standard)
 tile.foundry.componentBlockRefractoryClay.name=Refractory Clay Block
-tile.foundry.componentBlockCasingInferno.name=Inferno Casing
+tile.foundry.componentBlockCasingAdvanced.name=Refractory Casing (Advanced)
+tile.foundry.componentBlockCasingBasic.name=Refractory Casing (Basic)
 tile.foundry.refractoryGlass.name=Refractory Glass
 
-tile.foundry.machine.crucible.name=Melting Crucible
-tile.foundry.machine.crucible_advanced.name=Advanced Melting Crucible
+tile.foundry.machine.crucible_basic.name=Melting Crucible (Basic)
+tile.foundry.machine.crucible_standard.name=Melting Crucible (Standard)
+tile.foundry.machine.crucible_advanced.name=Melting Crucible (Advanced)
 tile.foundry.machine.caster.name=Metal Caster
 tile.foundry.machine.alloymixer.name=Alloy Mixer
 tile.foundry.machine.infuser.name=Metal Infuser
@@ -253,7 +255,8 @@ tile.foundry.cokeOven.name=Coke Oven
 tile.foundry.bronzeCauldron.name=Bronze Cauldron
 
 
-tooltip.foundry.machine.crucible=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 2000 °K.
+tooltip.foundry.machine.crucible_basic=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 2000 °K.
+tooltip.foundry.machine.crucible_standard=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 2500 °K.
 tooltip.foundry.machine.crucible_advanced=Melts ore and metals.//Must be placed above a heater block.//Can reach up to 4000 °K.
 tooltip.foundry.machine.caster=Casts items from liquid metal using mold.//Requires RF or Tesla to operate.
 tooltip.foundry.machine.alloymixer=Mixes liquid metals to make alloys.//Requires RF or Tesla to operate.

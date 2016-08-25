@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
 
-public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityMeltingCrucibleBasic extends TileEntityFoundryHeatable implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
 {
   
   static public final int SMELT_TIME = 5000000;
@@ -43,7 +43,7 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
 
   
   
-  public TileEntityMeltingCrucible()
+  public TileEntityMeltingCrucibleBasic()
   {
     super();
     tank = new FluidTank(FoundryAPI.CRUCIBLE_TANK_CAPACITY);
@@ -255,13 +255,13 @@ public class TileEntityMeltingCrucible extends TileEntityFoundryHeatable impleme
   @Override
   public int getMaxTemperature()
   {
-    return FoundryAPI.CRUCIBLE_MAX_TEMP;
+    return FoundryAPI.CRUCIBLE_BASIC_MAX_TEMP;
   }
 
   @Override
   protected int getTemperatureLossRate()
   {
-    return FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE;
+    return FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE;
   }
 
   @Override

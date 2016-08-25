@@ -75,8 +75,9 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerMoldStation.SLOTS_TE_SIZE, 
         ContainerMoldStation.SLOTS_INVENTORY, 36);
 
-    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CRUCIBLE), "foundry.melting");
-    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ADVCRUCIBLE), "foundry.melting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CRUCIBLE_BASIC), "foundry.melting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CRUCIBLE_STANDARD), "foundry.melting");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CRUCIBLE_ADVANCED), "foundry.melting");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.CASTER), "foundry.casting");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ALLOYMIXER), "foundry.alloymixer");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.INFUSER), "foundry.infuser");

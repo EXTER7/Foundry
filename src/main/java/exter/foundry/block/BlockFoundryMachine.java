@@ -3,6 +3,7 @@ package exter.foundry.block;
 import java.util.List;
 import java.util.Random;
 
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -29,8 +30,9 @@ import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionHeater;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
 import exter.foundry.tileentity.TileEntityMeltingCrucibleAdvanced;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleStandard;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -43,14 +45,15 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
 
   static public enum EnumMachine implements IStringSerializable
   {
-    CRUCIBLE(0, "crucible", "machineCrucible"),
+    CRUCIBLE_BASIC(0, "crucible_basic", "machineCrucibleBasic"),
     CASTER(1, "caster", "machineCaster"),
     ALLOYMIXER(2, "alloymixer", "machineAlloyMixer"),
     INFUSER(3, "infuser", "machineInfuser"),
     MATERIALROUTER(4, "router", "machineMaterialRouter"),
     ATOMIZER(5, "atomizer", "machineAtomizer"),
     INDUCTIONHEATER(6, "heater_induction", "machineInductionHeater"),
-    ADVCRUCIBLE(7, "crucible_advanced", "machineCrucibleAdvanced");
+    CRUCIBLE_ADVANCED(7, "crucible_advanced", "machineCrucibleAdvanced"),
+    CRUCIBLE_STANDARD(8, "crucible_standard", "machineCrucibleStandard");
 
     public final int id;
     public final String name;
@@ -159,8 +162,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     {
       switch((EnumMachine)state.getValue(MACHINE))
       {
-        case CRUCIBLE:
-        case ADVCRUCIBLE:
+        case CRUCIBLE_BASIC:
+        case CRUCIBLE_STANDARD:
+        case CRUCIBLE_ADVANCED:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
           break;
         case CASTER:
@@ -196,8 +200,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
   {
     switch(state.getValue(MACHINE))
     {
-      case CRUCIBLE:
-        return new TileEntityMeltingCrucible();
+      case CRUCIBLE_BASIC:
+        return new TileEntityMeltingCrucibleBasic();
       case CASTER:
         return new TileEntityMetalCaster();
       case ALLOYMIXER:
@@ -210,8 +214,10 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         return new TileEntityMetalAtomizer();
       case INDUCTIONHEATER:
         return new TileEntityInductionHeater();
-      case ADVCRUCIBLE:
+      case CRUCIBLE_ADVANCED:
         return new TileEntityMeltingCrucibleAdvanced();
+      case CRUCIBLE_STANDARD:
+        return new TileEntityMeltingCrucibleStandard();
     }
     return null;
   }

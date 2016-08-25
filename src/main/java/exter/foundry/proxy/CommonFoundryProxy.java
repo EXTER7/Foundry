@@ -40,7 +40,7 @@ import exter.foundry.tileentity.TileEntityCokeOven;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMeltingCrucible;
+import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
@@ -80,7 +80,7 @@ public class CommonFoundryProxy implements IGuiHandler
     switch(ID)
     {
       case GUI_CRUCIBLE:
-        return new ContainerMeltingCrucible((TileEntityMeltingCrucible)world.getTileEntity(pos),player);
+        return new ContainerMeltingCrucible((TileEntityMeltingCrucibleBasic)world.getTileEntity(pos),player);
       case GUI_CASTER:
         return new ContainerMetalCaster((TileEntityMetalCaster)world.getTileEntity(pos),player);
       case GUI_ALLOYMIXER:
@@ -119,7 +119,7 @@ public class CommonFoundryProxy implements IGuiHandler
     {
       case GUI_CRUCIBLE:
       {
-        TileEntityMeltingCrucible te = (TileEntityMeltingCrucible)world.getTileEntity(pos);
+        TileEntityMeltingCrucibleBasic te = (TileEntityMeltingCrucibleBasic)world.getTileEntity(pos);
         return new GuiMeltingCrucible(te,player);
       }
       case GUI_CASTER:

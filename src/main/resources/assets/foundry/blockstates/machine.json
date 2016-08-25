@@ -1,14 +1,15 @@
 {
   "variants":
   { 
-    "machine=crucible": { "model": "foundry:machineCrucible" },
+    "machine=crucible": { "model": "foundry:machineCrucibleBasic" },
     "machine=caster": { "model": "foundry:machineCaster" },
     "machine=alloymixer": { "model": "foundry:machineAlloyMixer" },
     "machine=infuser": { "model": "foundry:machineInfuser" },
     "machine=router": { "model": "foundry:machineMaterialRouter" },
     "machine=atomizer": { "model": "foundry:machineAtomizer" },
     "machine=heater_induction": { "model": "foundry:machineInductionHeater" },
-    "machine=crucible_advanced": { "model": "foundry:machineCrucibleAdvanced" }
+    "machine=crucible_advanced": { "model": "foundry:machineCrucibleAdvanced" },
+    "machine=crucible_standard": { "model": "foundry:machineCrucibleStandard" }
   }
 }
 

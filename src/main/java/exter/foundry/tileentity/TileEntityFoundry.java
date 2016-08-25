@@ -346,7 +346,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
   }
   
 
-  @Deprecated
   @Override
   public final ItemStack getStackInSlot(int slot)
   {
@@ -385,7 +384,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     }
   }
 
-  @Deprecated
   @Override
   public ItemStack removeStackFromSlot(int slot)
   {

@@ -25,8 +25,8 @@ public class BlockComponent extends Block implements IBlockVariants
   {
     CASING_STANDARD(0, "casing_standard", "componentBlockCasingStandard"),
     REFCLAYBLOCK(1, "block_refractoryclay", "componentBlockRefractoryClay"),
-    CASING_ADVANCED(2, "casing_refractory_advanced", "componentBlockCasingAdvanced"),
-    CASING_BASIC(3, "casing_refractory_basic", "componentBlockCasingBasic");
+    CASING_ADVANCED(2, "casing_advanced", "componentBlockCasingAdvanced"),
+    CASING_BASIC(3, "casing_basic", "componentBlockCasingBasic");
 
     public final int id;
     public final String name;

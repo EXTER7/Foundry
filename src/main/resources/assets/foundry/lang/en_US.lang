@@ -225,7 +225,7 @@ itemGroup.foundryMachines=Foundry - Machines
 itemGroup.foundryMolds=Foundry - Molds
 itemGroup.foundryFirearms=Foundry - Firearms
 
-tile.foundry.componentBlockCasingRefractory.name=Refractory Casing (Standard)
+tile.foundry.componentBlockCasingStandard.name=Refractory Casing (Standard)
 tile.foundry.componentBlockRefractoryClay.name=Refractory Clay Block
 tile.foundry.componentBlockCasingAdvanced.name=Refractory Casing (Advanced)
 tile.foundry.componentBlockCasingBasic.name=Refractory Casing (Basic)

@@ -97,7 +97,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     }    
   }
   
-  static public final int CAST_TIME = 300;
+  static public final int CAST_TIME = 200;
   
   private FluidTank tank;
   private IFluidHandler fluid_handler;

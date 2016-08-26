@@ -1,6 +1,8 @@
 package exter.foundry.util;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
@@ -47,6 +49,23 @@ public class FoundryMiscUtils
       }
     }
     return null;
+  }
+
+  static public Set<String> getAllItemOreDictionaryNames(ItemStack stack)
+  {
+    Set<String> result = new HashSet<String>();
+    for(String name:OreDictionary.getOreNames())
+    {
+      List<ItemStack> ores = OreDictionary.getOres(name);
+      for(ItemStack i : ores)
+      {
+        if(i.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(i, stack))
+        {
+          result.add(name);
+        }
+      }
+    }
+    return result;
   }
 
   static public ItemStack getModItemFromOreDictionary(String modid,String orename)

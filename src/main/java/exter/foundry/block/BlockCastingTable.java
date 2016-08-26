@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabMachines;
+import exter.foundry.api.recipe.ICastingTableRecipe.TableType;
 import exter.foundry.tileentity.TileEntityCastingTableBase;
 import exter.foundry.tileentity.TileEntityCastingTableBlock;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
@@ -45,22 +46,24 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
   static public enum EnumTable implements IStringSerializable
   {
-    INGOT(0, "ingot", "castingTableIngot", 9),
-    PLATE(1, "plate", "castingTablePlate", 11),
-    ROD(2, "rod", "castingTableRod", 10),
-    BLOCK(3, "block", "castingTableBlock", 2);
+    INGOT(0, "ingot", "castingTableIngot", 9, TableType.INGOT),
+    PLATE(1, "plate", "castingTablePlate", 11, TableType.PLATE),
+    ROD(2, "rod", "castingTableRod", 10, TableType.ROD),
+    BLOCK(3, "block", "castingTableBlock", 2, TableType.BLOCK);
 
     public final int id;
     public final String name;
     public final String model;
     public final int depth;
+    public final TableType type;
 
-    private EnumTable(int id, String name,String model,int depth)
+    private EnumTable(int id, String name,String model,int depth,TableType type)
     {
       this.id = id;
       this.name = name;
       this.model = model;
       this.depth = depth;
+      this.type = type;
     }
 
     @Override

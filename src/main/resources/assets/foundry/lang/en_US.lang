@@ -356,3 +356,7 @@ gui.jei.alloymixer=Alloy Mixer
 gui.jei.infuser=Metal Infuser
 gui.jei.atomizer=Metal Atomizer
 gui.jei.mold=Mold Station
+gui.jei.casting_table.ingot=Ingot Casting Table
+gui.jei.casting_table.plate=Plate Casting Table
+gui.jei.casting_table.rod=Rod Casting Table
+gui.jei.casting_table.block=Block Casting Table

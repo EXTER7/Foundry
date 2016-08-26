@@ -1,5 +1,6 @@
 package exter.foundry.integration.jei;
 
+import exter.foundry.block.BlockCastingTable;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.container.ContainerAlloyFurnace;
@@ -25,6 +26,13 @@ public class JEIFoundryPlugin implements IModPlugin
   public void register(IModRegistry registry)
   {
     IJeiHelpers helpers = registry.getJeiHelpers();
+    
+    
+    CastingTableJEI table_ingot = new CastingTableJEI(BlockCastingTable.EnumTable.INGOT);
+    CastingTableJEI table_plate = new CastingTableJEI(BlockCastingTable.EnumTable.PLATE);
+    CastingTableJEI table_rod = new CastingTableJEI(BlockCastingTable.EnumTable.ROD);
+    CastingTableJEI table_block = new CastingTableJEI(BlockCastingTable.EnumTable.BLOCK);
+    
     registry.addRecipeCategories(
         new AlloyFurnaceJEI.Category(helpers),
         new MeltingJEI.Category(helpers),
@@ -32,7 +40,11 @@ public class JEIFoundryPlugin implements IModPlugin
         new AlloyMixerJEI.Category(helpers),
         new InfuserJEI.Category(helpers),
         new AtomizerJEI.Category(helpers),
-        new MoldStationJEI.Category(helpers)
+        new MoldStationJEI.Category(helpers),
+        table_ingot.new Category(helpers),
+        table_plate.new Category(helpers),
+        table_rod.new Category(helpers),
+        table_block.new Category(helpers)
     );
 
     registry.addRecipeHandlers(
@@ -42,7 +54,8 @@ public class JEIFoundryPlugin implements IModPlugin
         new AlloyMixerJEI.Handler(),
         new InfuserJEI.Handler(),
         new AtomizerJEI.Handler(),
-        new MoldStationJEI.Handler()
+        new MoldStationJEI.Handler(),
+        new CastingTableJEI.Handler()
     );
     IRecipeTransferRegistry transfer_registry = registry.getRecipeTransferRegistry();
 
@@ -84,7 +97,11 @@ public class JEIFoundryPlugin implements IModPlugin
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ATOMIZER), "foundry.atomizer");
     registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_mold_station), "foundry.mold");
     registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_alloy_furnace), "foundry.alloyfurnace");
-    
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_casting_table.asItemStack(BlockCastingTable.EnumTable.INGOT), "foundry.casting_table.ingot");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_casting_table.asItemStack(BlockCastingTable.EnumTable.PLATE), "foundry.casting_table.plate");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_casting_table.asItemStack(BlockCastingTable.EnumTable.ROD), "foundry.casting_table.rod");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_casting_table.asItemStack(BlockCastingTable.EnumTable.BLOCK), "foundry.casting_table.block");
+
     registry.addRecipes(AlloyFurnaceJEI.getRecipes(helpers));
     registry.addRecipes(MeltingJEI.getRecipes(helpers));
     registry.addRecipes(CastingJEI.getRecipes());
@@ -92,6 +109,10 @@ public class JEIFoundryPlugin implements IModPlugin
     registry.addRecipes(InfuserJEI.getRecipes());
     registry.addRecipes(AtomizerJEI.getRecipes());
     registry.addRecipes(MoldStationJEI.getRecipes(helpers));
+    registry.addRecipes(table_ingot.getRecipes());
+    registry.addRecipes(table_plate.getRecipes());
+    registry.addRecipes(table_rod.getRecipes());
+    registry.addRecipes(table_block.getRecipes());
   }
 
   @Override

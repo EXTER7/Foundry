@@ -9,7 +9,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityFoundry;
-import exter.foundry.tileentity.TileEntityInfernoTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankStandard;
 import exter.foundry.tileentity.renderer.ISpoutPourDepth;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.Block;
@@ -29,28 +29,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockInfernoTank extends BlockContainer implements ISpoutPourDepth
+public class BlockRefractoryTankStandard extends BlockContainer implements ISpoutPourDepth
 {
 
   private Random rand = new Random();
   
 
-  public BlockInfernoTank()
+  public BlockRefractoryTankStandard()
   {
     super(Material.IRON);
     setSoundType(SoundType.STONE);
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);
-    setUnlocalizedName("foundry.infernoTank");
-    setRegistryName("infernoTank");
+    setUnlocalizedName("foundry.refractoryTankStandard");
+    setRegistryName("refractoryTankStandard");
   }
   
 
   @Override
   public TileEntity createNewTileEntity(World world, int meta)
   {
-    return new TileEntityInfernoTank();
+    return new TileEntityRefractoryTankStandard();
   }
 
   @Override
@@ -153,6 +153,6 @@ public class BlockInfernoTank extends BlockContainer implements ISpoutPourDepth
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.infernoTank", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractoryTankStandard", tooltip);
   }
 }

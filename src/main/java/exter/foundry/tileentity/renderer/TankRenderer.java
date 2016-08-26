@@ -2,7 +2,7 @@ package exter.foundry.tileentity.renderer;
 
 import org.lwjgl.opengl.GL11;
 
-import exter.foundry.tileentity.TileEntityRefractoryTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractoryTank>
+public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractoryTankBasic>
 {
   private void drawQuad(EnumFacing facing,TextureAtlasSprite texture,double x1,double y1,double x2,double y2,double z,int color,int light)
   {
@@ -85,7 +85,7 @@ public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractory
   }
   
   @Override
-  public void renderTileEntityAt(TileEntityRefractoryTank te, double x, double y, double z, float partialTicks, int destroyStage)
+  public void renderTileEntityAt(TileEntityRefractoryTankBasic te, double x, double y, double z, float partialTicks, int destroyStage)
   {
     FluidStack fluid = te.getTank(0).getFluid();
     if(fluid != null && fluid.amount > 50)

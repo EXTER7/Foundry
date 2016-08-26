@@ -1,5 +1,5 @@
 {
-    "parent": "foundry:block/refractoryTankBasic",
+    "parent": "foundry:block/refractoryTankStandard",
     "display": {
         "gui": {
             "rotation": [ 30, 225, 0 ],

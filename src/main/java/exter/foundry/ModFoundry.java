@@ -62,7 +62,7 @@ import exter.foundry.tileentity.TileEntityCastingTablePlate;
 import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityCokeOven;
 import exter.foundry.tileentity.TileEntityInductionHeater;
-import exter.foundry.tileentity.TileEntityInfernoTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankAdvanced;
 import exter.foundry.tileentity.TileEntityMaterialRouter;
 import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
@@ -73,7 +73,8 @@ import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.TileEntityRefractorySpout;
-import exter.foundry.tileentity.TileEntityRefractoryTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
+import exter.foundry.tileentity.TileEntityRefractoryTankStandard;
 
 @Mod(
   modid = ModFoundry.MODID,
@@ -176,8 +177,9 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityCastingTableBlock.class, "Foundry_CastingTable_Block");
     GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, "Foundry_RefractorySpout");
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
-    GameRegistry.registerTileEntity(TileEntityRefractoryTank.class, "Foundry_RefractoryTank");
-    GameRegistry.registerTileEntity(TileEntityInfernoTank.class, "Foundry_InfernoTank");
+    GameRegistry.registerTileEntity(TileEntityRefractoryTankBasic.class, "Foundry_RefractoryTank");
+    GameRegistry.registerTileEntity(TileEntityRefractoryTankStandard.class, "Foundry_InfernoTank_Standard");
+    GameRegistry.registerTileEntity(TileEntityRefractoryTankAdvanced.class, "Foundry_InfernoTank");
     if(FoundryConfig.block_cokeoven)
     {
       GameRegistry.registerTileEntity(TileEntityCokeOven.class, "Foundry_CokeOven");

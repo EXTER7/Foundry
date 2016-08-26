@@ -568,7 +568,16 @@ public class InitRecipes
         'B', infbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_refractory_tank),
+        new ItemStack(FoundryBlocks.block_refractory_tank_basic),
+        "BPB",
+        "G G",
+        "BPB",
+        'G', refglass_stack,
+        'P', "plateBronze",
+        'B', refbrick_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
+        new ItemStack(FoundryBlocks.block_refractory_tank_standard),
         "BPB",
         "G G",
         "BPB",
@@ -577,7 +586,7 @@ public class InitRecipes
         'B', refbrick_stack));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
-        new ItemStack(FoundryBlocks.block_inferno_tank),
+        new ItemStack(FoundryBlocks.block_refractory_tank_advanced),
         "BPB",
         "G G",
         "BPB",

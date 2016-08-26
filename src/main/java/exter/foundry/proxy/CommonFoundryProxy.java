@@ -44,7 +44,7 @@ import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityMoldStation;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.tileentity.TileEntityRefractoryTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
 
 public class CommonFoundryProxy implements IGuiHandler
 {
@@ -104,7 +104,7 @@ public class CommonFoundryProxy implements IGuiHandler
       case GUI_BURNERHEATER:
         return new ContainerBurnerHeater((TileEntityBurnerHeater)world.getTileEntity(pos),player);
       case GUI_REFRACTORYTANK:
-        return new ContainerRefractoryTank((TileEntityRefractoryTank)world.getTileEntity(pos),player);
+        return new ContainerRefractoryTank((TileEntityRefractoryTankBasic)world.getTileEntity(pos),player);
       case GUI_COKEOVEN:
         return new ContainerCokeOven((TileEntityCokeOven)world.getTileEntity(pos),player);
     }
@@ -177,7 +177,7 @@ public class CommonFoundryProxy implements IGuiHandler
       }
       case GUI_REFRACTORYTANK:
       {
-        TileEntityRefractoryTank te = (TileEntityRefractoryTank)world.getTileEntity(pos);
+        TileEntityRefractoryTankBasic te = (TileEntityRefractoryTankBasic)world.getTileEntity(pos);
         return new GuiRefractoryTank(te,player);
       }
       case GUI_COKEOVEN:

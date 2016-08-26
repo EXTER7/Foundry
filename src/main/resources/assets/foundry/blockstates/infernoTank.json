@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "foundry:infernoTank" }
+        "normal": { "model": "foundry:refractoryTankAdvanced" }
     }
 }

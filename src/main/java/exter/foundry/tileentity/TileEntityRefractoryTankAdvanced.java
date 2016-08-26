@@ -1,6 +1,6 @@
 package exter.foundry.tileentity;
 
-public class TileEntityInfernoTank extends TileEntityRefractoryTank
+public class TileEntityRefractoryTankAdvanced extends TileEntityRefractoryTankBasic
 {
   @Override
   protected int getTankCapacity()

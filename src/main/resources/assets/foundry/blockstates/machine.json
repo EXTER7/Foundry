@@ -1,7 +1,7 @@
 {
   "variants":
   { 
-    "machine=crucible": { "model": "foundry:machineCrucibleBasic" },
+    "machine=crucible_basic": { "model": "foundry:machineCrucibleBasic" },
     "machine=caster": { "model": "foundry:machineCaster" },
     "machine=alloymixer": { "model": "foundry:machineAlloyMixer" },
     "machine=infuser": { "model": "foundry:machineInfuser" },

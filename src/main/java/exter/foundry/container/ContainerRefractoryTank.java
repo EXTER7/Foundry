@@ -6,11 +6,11 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import exter.foundry.container.slot.SlotFluidContainer;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.tileentity.TileEntityRefractoryTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
 
 public class ContainerRefractoryTank extends Container
 {
-  private TileEntityRefractoryTank te_tank;
+  private TileEntityRefractoryTankBasic te_tank;
   
   // Slot numbers
   private static final int SLOTS_TE = 0;
@@ -25,7 +25,7 @@ public class ContainerRefractoryTank extends Container
   private static final int SLOT_HOTBAR_X = 8;
   private static final int SLOT_HOTBAR_Y = 141;
 
-  public ContainerRefractoryTank(TileEntityRefractoryTank tank, EntityPlayer player)
+  public ContainerRefractoryTank(TileEntityRefractoryTankBasic tank, EntityPlayer player)
   {
     te_tank = tank;
     te_tank.openInventory(player);

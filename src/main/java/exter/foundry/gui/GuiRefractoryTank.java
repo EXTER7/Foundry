@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import exter.foundry.container.ContainerRefractoryTank;
-import exter.foundry.tileentity.TileEntityRefractoryTank;
+import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -25,9 +25,9 @@ public class GuiRefractoryTank extends GuiFoundry
   private static final int TANK_OVERLAY_X = 176;
   private static final int TANK_OVERLAY_Y = 0;
 
-  private TileEntityRefractoryTank te_hopper;
+  private TileEntityRefractoryTankBasic te_hopper;
 
-  public GuiRefractoryTank(TileEntityRefractoryTank hopper, EntityPlayer player)
+  public GuiRefractoryTank(TileEntityRefractoryTankBasic hopper, EntityPlayer player)
   {
     super(new ContainerRefractoryTank(hopper, player));
     allowUserInput = false;

@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityRefractoryTank extends TileEntityFoundry implements net.minecraftforge.fluids.IFluidHandler
+public class TileEntityRefractoryTankBasic extends TileEntityFoundry implements net.minecraftforge.fluids.IFluidHandler
 {
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;
@@ -16,7 +16,7 @@ public class TileEntityRefractoryTank extends TileEntityFoundry implements net.m
   private FluidTank tank;
   private IFluidHandler fluid_handler;
 
-  public TileEntityRefractoryTank()
+  public TileEntityRefractoryTankBasic()
   {
 
     tank = new FluidTank(getTankCapacity());

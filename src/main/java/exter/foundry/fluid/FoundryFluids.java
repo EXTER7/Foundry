@@ -31,14 +31,14 @@ public class FoundryFluids
   {
     liquid_iron = LiquidMetalRegistry.instance.registerLiquidMetal( "Iron", 1800, 15);
     liquid_gold = LiquidMetalRegistry.instance.registerLiquidMetal( "Gold", 1350, 15);
-    liquid_copper = LiquidMetalRegistry.instance.registerLiquidMetal( "Copper", 1400, 15);
+    liquid_copper = LiquidMetalRegistry.instance.registerLiquidMetal( "Copper", 1300, 15);
     liquid_tin = LiquidMetalRegistry.instance.registerLiquidMetal( "Tin", 550, 0);
-    liquid_bronze = LiquidMetalRegistry.instance.registerLiquidMetal( "Bronze", 1400, 15);
+    liquid_bronze = LiquidMetalRegistry.instance.registerLiquidMetal( "Bronze", 1200, 15);
     liquid_electrum = LiquidMetalRegistry.instance.registerLiquidMetal( "Electrum", 1350, 15);
     liquid_invar = LiquidMetalRegistry.instance.registerLiquidMetal( "Invar", 1780, 15);
     liquid_nickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Nickel", 1750, 15);
     liquid_zinc = LiquidMetalRegistry.instance.registerLiquidMetal( "Zinc", 700, 0);
-    liquid_brass = LiquidMetalRegistry.instance.registerLiquidMetal( "Brass", 1400, 15);
+    liquid_brass = LiquidMetalRegistry.instance.registerLiquidMetal( "Brass", 1200, 15);
     liquid_silver = LiquidMetalRegistry.instance.registerLiquidMetal( "Silver", 1250, 15);
     liquid_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "Steel", 1800, 15);
     liquid_cupronickel = LiquidMetalRegistry.instance.registerLiquidMetal( "Cupronickel", 1750, 15);

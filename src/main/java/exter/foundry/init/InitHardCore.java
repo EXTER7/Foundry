@@ -19,38 +19,61 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class InitHardCore
 {
-  static public void init()
+  static private boolean hasOreDictionaryPrefix(ItemStack item,String prefix)
   {
-    if(FoundryConfig.hardcore_remove_ingot_nugget)
-    { // Remove 9 nuggets -> ingot recipes (only if they can be melted)
-      Set<IRecipe> remove = new HashSet<IRecipe>();
-      InventoryCrafting grid = new InventoryCrafting(new Container(){@Override public boolean canInteractWith(EntityPlayer playerIn){return false;}},3,3);
-      for(String ore_name:OreDictionary.getOreNames())
+    for(String name:FoundryMiscUtils.getAllItemOreDictionaryNames(item))
+    {
+      if(name.startsWith(prefix))
       {
-        if(ore_name.startsWith("nugget"))
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  static private void removeCompressionCrafting(String prefix,String result_prefix)
+  {
+    Set<IRecipe> remove = new HashSet<IRecipe>();
+    InventoryCrafting grid = new InventoryCrafting(new Container(){@Override public boolean canInteractWith(EntityPlayer playerIn){return false;}},3,3);
+    for(String ore_name:OreDictionary.getOreNames())
+    {
+      if(ore_name.startsWith(prefix))
+      {
+        for(ItemStack item:OreDictionary.getOres(ore_name))
         {
-          for(ItemStack item:OreDictionary.getOres(ore_name))
+          if(MeltingRecipeManager.instance.findRecipe(item) != null)
           {
-            if(MeltingRecipeManager.instance.findRecipe(item) != null)
+            for(int i = 0; i < 9; i++)
             {
-              for(int i = 0; i < 9; i++)
+              grid.setInventorySlotContents(i, item);
+            }
+            for(IRecipe recipe : CraftingManager.getInstance().getRecipeList())
+            {
+              if(recipe.matches(grid, null) && hasOreDictionaryPrefix(recipe.getCraftingResult(grid),result_prefix))
               {
-                grid.setInventorySlotContents(i, item);
-              }
-              for(IRecipe recipe : CraftingManager.getInstance().getRecipeList())
-              {
-                if(recipe.matches(grid, null))
-                {
-                  remove.add(recipe);
-                }
+                remove.add(recipe);
+                break;
               }
             }
           }
         }
       }
-      CraftingManager.getInstance().getRecipeList().removeAll(remove);
     }
-    
+    CraftingManager.getInstance().getRecipeList().removeAll(remove);
+  }
+  
+  static public void init()
+  {
+    if(FoundryConfig.hardcore_remove_ingot_nugget)
+    { // Remove 9 nuggets -> ingot recipes (only if they can be melted)
+      removeCompressionCrafting("nugget","ingot");
+    }
+
+    if(FoundryConfig.hardcore_remove_block_ingot)
+    { // Remove 9 ingots -> block recipes (only if they can be melted)
+      removeCompressionCrafting("ingot","block");
+    }
+
     if(FoundryConfig.hardcore_furnace_remove_ingots)
     { // Remove furnace recipes that outputs ingots (except the ones in the keep list or can't be melted).
       Iterator<Map.Entry<ItemStack,ItemStack>> iter = FurnaceRecipes.instance().getSmeltingList().entrySet().iterator();

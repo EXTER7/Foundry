@@ -1,22 +1,14 @@
 package exter.foundry.init;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,6 +17,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
+import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.api.recipe.matcher.IItemMatcher;
@@ -46,6 +39,7 @@ import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -730,6 +724,16 @@ public class InitRecipes
         'G', "gearBronze"));
 
     GameRegistry.addRecipe(new ShapedOreRecipe(
+        FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYING_CRUCIBLE),
+        "HRH",
+        "BCB",
+        "BBB",
+        'H', new ItemStack(FoundryBlocks.block_refractory_hopper), 
+        'B', Items.BUCKET, 
+        'R', cauldron_stack,
+        'C', casing_stack));
+
+    GameRegistry.addRecipe(new ShapedOreRecipe(
         FoundryBlocks.block_machine.asItemStack(EnumMachine.CASTER),
         " H ",
         "RCR",
@@ -886,6 +890,24 @@ public class InitRecipes
             CastingTableRecipeManager.instance.addRecipe(new OreMatcher("block" + name), fluidstack, ICastingTableRecipe.TableType.BLOCK);
           }
         }
+      }
+    }
+    
+    // Add Alloying Crucible recipes from Alloy mixer recipes.
+    for(IAlloyMixerRecipe mix:AlloyMixerRecipeManager.instance.getRecipes())
+    {
+      List<FluidStack> inputs = mix.getInputs();
+      if(inputs.size() < 3)
+      {
+        FluidStack in_a = inputs.get(0).copy();
+        FluidStack in_b = inputs.get(1).copy();
+        FluidStack out = mix.getOutput();
+        
+        in_a.amount *= 3;
+        in_b.amount *= 3;
+        out.amount *= 3;
+        
+        AlloyingCrucibleRecipeManager.instance.addRecipe(out, in_a, in_b);
       }
     }
     

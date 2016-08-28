@@ -96,6 +96,4 @@ public class AlloyMixerRecipe implements IAlloyMixerRecipe
     }
     return matches == inputs.size();
   }
-
-
 }

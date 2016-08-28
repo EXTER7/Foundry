@@ -4,6 +4,7 @@ import exter.foundry.api.firearms.IFirearmRound;
 import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.manager.IAlloyFurnaceRecipeManager;
 import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
+import exter.foundry.api.recipe.manager.IAlloyingCrucibleRecipeManager;
 import exter.foundry.api.recipe.manager.IAtomizerRecipeManager;
 import exter.foundry.api.recipe.manager.IBurnerHeaterFuelManager;
 import exter.foundry.api.recipe.manager.ICastingRecipeManager;
@@ -34,6 +35,7 @@ public class FoundryAPI
   static public final int CASTER_TANK_CAPACITY = 6000;
   static public final int INFUSER_TANK_CAPACITY = 5000;
   static public final int ALLOYMIXER_TANK_CAPACITY = 2000;
+  static public final int ALLOYING_CRUCIBLE_TANK_CAPACITY = 3000;
   static public final int ATOMIZER_TANK_CAPACITY = 6000;
   static public final int ATOMIZER_WATER_TANK_CAPACITY = 6000;
 
@@ -55,6 +57,7 @@ public class FoundryAPI
   static public ICastingRecipeManager recipes_casting;
   static public ICastingTableRecipeManager recipes_casting_table;
   static public IAlloyMixerRecipeManager recipes_alloymixer;
+  static public IAlloyingCrucibleRecipeManager recipes_alloyingcrucible;
   static public IInfuserRecipeManager recipes_infuser;
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   static public IAtomizerRecipeManager recipes_atomizer;

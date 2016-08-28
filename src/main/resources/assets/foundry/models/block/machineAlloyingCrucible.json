@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "foundry:blocks/alloying_crucible_sides",
+        "up": "foundry:blocks/alloying_crucible_top",
+        "down": "foundry:blocks/alloying_crucible_bottom",
+        "east": "foundry:blocks/alloying_crucible_sides",
+        "west": "foundry:blocks/alloying_crucible_sides",
+        "north": "foundry:blocks/alloying_crucible_sides",
+        "south": "foundry:blocks/alloying_crucible_sides"
+    }
+}
+

@@ -103,6 +103,7 @@ public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements ne
   static public final int TANK_INPUT_2 = 2;
   static public final int TANK_INPUT_3 = 3;
   static public final int TANK_OUTPUT = 4;
+
   private FluidTank[] tanks;
   private IFluidHandler fluid_handler;
 

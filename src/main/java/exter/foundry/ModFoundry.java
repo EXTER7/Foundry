@@ -45,6 +45,7 @@ import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -55,6 +56,7 @@ import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
+import exter.foundry.tileentity.TileEntityAlloyingCrucible;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
 import exter.foundry.tileentity.TileEntityCastingTableBlock;
 import exter.foundry.tileentity.TileEntityCastingTableIngot;
@@ -126,6 +128,7 @@ public class ModFoundry
     FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
     FoundryAPI.recipes_mold = MoldRecipeManager.instance;
+    FoundryAPI.recipes_alloyingcrucible = AlloyingCrucibleRecipeManager.instance;
     FoundryAPI.burnerheater_fuel = BurnerHeaterFuelManager.instance;
     
     CapabilityHeatProvider.init();
@@ -178,8 +181,9 @@ public class ModFoundry
     GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, "Foundry_RefractorySpout");
     GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, "Foundry_MeltingCrucibleAdvanced");
     GameRegistry.registerTileEntity(TileEntityRefractoryTankBasic.class, "Foundry_RefractoryTank");
-    GameRegistry.registerTileEntity(TileEntityRefractoryTankStandard.class, "Foundry_InfernoTank_Standard");
+    GameRegistry.registerTileEntity(TileEntityRefractoryTankStandard.class, "Foundry_RefractoryTank_Standard");
     GameRegistry.registerTileEntity(TileEntityRefractoryTankAdvanced.class, "Foundry_InfernoTank");
+    GameRegistry.registerTileEntity(TileEntityAlloyingCrucible.class, "Foundry_AlloyingCrucible");
     if(FoundryConfig.block_cokeoven)
     {
       GameRegistry.registerTileEntity(TileEntityCokeOven.class, "Foundry_CokeOven");

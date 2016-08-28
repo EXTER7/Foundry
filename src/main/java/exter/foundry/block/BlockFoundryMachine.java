@@ -28,6 +28,7 @@ import exter.foundry.ModFoundry;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
+import exter.foundry.tileentity.TileEntityAlloyingCrucible;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityInductionHeater;
 import exter.foundry.tileentity.TileEntityMeltingCrucibleAdvanced;
@@ -53,7 +54,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
     ATOMIZER(5, "atomizer", "machineAtomizer"),
     INDUCTIONHEATER(6, "heater_induction", "machineInductionHeater"),
     CRUCIBLE_ADVANCED(7, "crucible_advanced", "machineCrucibleAdvanced"),
-    CRUCIBLE_STANDARD(8, "crucible_standard", "machineCrucibleStandard");
+    CRUCIBLE_STANDARD(8, "crucible_standard", "machineCrucibleStandard"),
+    ALLOYING_CRUCIBLE(9, "alloying_crucible", "machineAlloyingCrucible");
 
     public final int id;
     public final String name;
@@ -182,6 +184,9 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         case ATOMIZER:
           player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
           break;
+        case ALLOYING_CRUCIBLE:
+          player.openGui(ModFoundry.instance, CommonFoundryProxy.GUI_ALLOYINGCRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
+          break;
         default:
           return false;
       }
@@ -218,6 +223,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider,IB
         return new TileEntityMeltingCrucibleAdvanced();
       case CRUCIBLE_STANDARD:
         return new TileEntityMeltingCrucibleStandard();
+      case ALLOYING_CRUCIBLE:
+        return new TileEntityAlloyingCrucible();
     }
     return null;
   }

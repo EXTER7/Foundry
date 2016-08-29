@@ -17,10 +17,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.block.FoundryBlocks;
@@ -37,9 +35,6 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
 import exter.foundry.material.OreDictType;
-import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -180,123 +175,7 @@ public class InitRecipes
             4, 4, 4, 4, 4, 4
         });
 
-
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        new ItemStack(FoundryBlocks.block_refractory_glass),
-        new ItemStackMatcher(Blocks.SAND),
-        new ItemStackMatcher(Items.CLAY_BALL));
-
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBronze", 4),
-        new IItemMatcher[] {
-            new OreMatcher("ingotCopper", 3),
-            new OreMatcher("dustCopper", 3) },
-        new IItemMatcher[] {
-            new OreMatcher("ingotTin", 1),
-            new OreMatcher("dustTin", 1) }
-        );
-    
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotBrass", 4),
-        new IItemMatcher[] {
-            new OreMatcher("ingotCopper", 3),
-            new OreMatcher("dustCopper", 3) },
-        new IItemMatcher[] {
-            new OreMatcher("ingotZinc", 1),
-            new OreMatcher("dustZinc", 1) }
-        );
-    
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotInvar", 3),
-        new IItemMatcher[] {
-            new OreMatcher("ingotIron", 2),
-            new OreMatcher("dustIron", 2) },
-        new IItemMatcher[] {
-            new OreMatcher("ingotNickel", 1),
-            new OreMatcher("dustNickel", 1) }
-        );
-
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotElectrum", 2),
-        new IItemMatcher[] {
-            new OreMatcher("ingotGold", 1),
-            new OreMatcher("dustGold", 1) },
-        new IItemMatcher[] {
-            new OreMatcher("ingotSilver", 1),
-            new OreMatcher("dustSilver", 1) }
-        );
-    
-    AlloyFurnaceRecipeManager.instance.addRecipe(
-        FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingotCupronickel", 2),
-        new IItemMatcher[] {
-            new OreMatcher("ingotCopper", 1),
-            new OreMatcher("dustCopper", 1) },
-        new IItemMatcher[] {
-            new OreMatcher("ingotNickel", 1),
-            new OreMatcher("dustNickel", 1) }
-        );
-    
-
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_bronze, 4),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_copper, 3),
-          new FluidStack(FoundryFluids.liquid_tin, 1)
-          });
-    
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_brass, 4),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_copper, 3),
-          new FluidStack(FoundryFluids.liquid_zinc, 1)
-        });
-    
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_invar, 3),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_iron, 2),
-          new FluidStack(FoundryFluids.liquid_nickel, 1)
-        });
-
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_electrum, 2),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_gold, 1),
-          new FluidStack(FoundryFluids.liquid_silver, 1)
-        });
-
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_cupronickel, 2),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_copper, 1),
-          new FluidStack(FoundryFluids.liquid_nickel, 1)
-        });
-
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_signalum, 108),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_copper, 81),
-          new FluidStack(FoundryFluids.liquid_silver, 27),
-          new FluidStack(liquid_redstone, 250)
-          });
-    
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_lumium, 108),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_tin, 81),
-          new FluidStack(FoundryFluids.liquid_silver, 27),
-          new FluidStack(liquid_glowstone, 250)
-          });
-    
-    AlloyMixerRecipeManager.instance.addRecipe(
-        new FluidStack(FoundryFluids.liquid_enderium, 108),
-        new FluidStack[] {
-          new FluidStack(FoundryFluids.liquid_tin, 54),
-          new FluidStack(FoundryFluids.liquid_silver, 27),
-          new FluidStack(FoundryFluids.liquid_platinum, 27),
-          new FluidStack(liquid_enderpearl, 250)
-          });
-
+    InitAlloyRecipes.init();
 
     ItemStack mold_ingot = FoundryItems.mold(ItemMold.SubItem.INGOT);
     ItemStack mold_slab = FoundryItems.mold(ItemMold.SubItem.SLAB);
@@ -401,14 +280,6 @@ public class InitRecipes
         CastingTableRecipeManager.instance.addRecipe(new ItemStackMatcher(rod), fluid_stack, ICastingTableRecipe.TableType.ROD);
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(rod), fluid_stack);
       }
-    }
-
-    if(FoundryConfig.recipe_steel)
-    {
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,36), new FluidStack(FoundryFluids.liquid_iron,36), new OreMatcher("dustCoal"), 160000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,12), new FluidStack(FoundryFluids.liquid_iron,12), new OreMatcher("dustCharcoal"), 160000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,9), new FluidStack(FoundryFluids.liquid_iron,9), new OreMatcher("dustSmallCoal"), 40000);
-      InfuserRecipeManager.instance.addRecipe(new FluidStack(FoundryFluids.liquid_steel,3), new FluidStack(FoundryFluids.liquid_iron,3), new OreMatcher("dustSmallCharcoal"), 40000);
     }
 
     if(FoundryConfig.recipe_alumina_melts_to_aluminium)
@@ -892,25 +763,7 @@ public class InitRecipes
         }
       }
     }
-    
-    // Add Alloying Crucible recipes from Alloy mixer recipes.
-    for(IAlloyMixerRecipe mix:AlloyMixerRecipeManager.instance.getRecipes())
-    {
-      List<FluidStack> inputs = mix.getInputs();
-      if(inputs.size() < 3)
-      {
-        FluidStack in_a = inputs.get(0).copy();
-        FluidStack in_b = inputs.get(1).copy();
-        FluidStack out = mix.getOutput();
-        
-        in_a.amount *= 3;
-        in_b.amount *= 3;
-        out.amount *= 3;
-        
-        AlloyingCrucibleRecipeManager.instance.addRecipe(out, in_a, in_b);
-      }
-    }
-    
+      
     InitHardCore.init();
   }
 }

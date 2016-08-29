@@ -115,7 +115,7 @@ public class CastingTableJEI
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/casting_table_jei.png");
 
       ResourceLocation location = new ResourceLocation("foundry", "textures/gui/casting_table_jei.png");
-      background = guiHelper.createDrawable(location, 0, 0, 71, 55);
+      background = guiHelper.createDrawable(location, 0, 0, 74, 59);
       localizedName = Translator.translateToLocal("gui.jei.casting_table." + name);
 
     }

@@ -599,8 +599,8 @@ public class InitRecipes
         "HRH",
         "BCB",
         "BBB",
-        'H', new ItemStack(FoundryBlocks.block_refractory_hopper), 
-        'B', Items.BUCKET, 
+        'H', new ItemStack(FoundryBlocks.block_refractory_spout), 
+        'B', refbrick_stack,
         'R', cauldron_stack,
         'C', casing_stack));
 

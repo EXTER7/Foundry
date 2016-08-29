@@ -355,6 +355,7 @@ gui.jei.alloyfurnace=Alloy Furnace
 gui.jei.melting=Melting Crucible
 gui.jei.casting=Metal Caster
 gui.jei.alloymixer=Alloy Mixer
+gui.jei.alloyingcrucible=Alloying Crucible
 gui.jei.infuser=Metal Infuser
 gui.jei.atomizer=Metal Atomizer
 gui.jei.mold=Mold Station

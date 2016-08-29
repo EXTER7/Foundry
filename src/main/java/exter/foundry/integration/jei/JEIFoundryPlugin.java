@@ -4,9 +4,7 @@ import exter.foundry.block.BlockCastingTable;
 import exter.foundry.block.BlockFoundryMachine;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.container.ContainerAlloyFurnace;
-import exter.foundry.container.ContainerAlloyMixer;
 import exter.foundry.container.ContainerMeltingCrucible;
-import exter.foundry.container.ContainerMetalAtomizer;
 import exter.foundry.container.ContainerMetalCaster;
 import exter.foundry.container.ContainerMetalInfuser;
 import exter.foundry.container.ContainerMoldStation;
@@ -38,6 +36,7 @@ public class JEIFoundryPlugin implements IModPlugin
         new MeltingJEI.Category(helpers),
         new CastingJEI.Category(helpers),
         new AlloyMixerJEI.Category(helpers),
+        new AlloyingCrucibleJEI.Category(helpers),
         new InfuserJEI.Category(helpers),
         new AtomizerJEI.Category(helpers),
         new MoldStationJEI.Category(helpers),
@@ -52,6 +51,7 @@ public class JEIFoundryPlugin implements IModPlugin
         new MeltingJEI.Handler(),
         new CastingJEI.Handler(),
         new AlloyMixerJEI.Handler(),
+        new AlloyingCrucibleJEI.Handler(),
         new InfuserJEI.Handler(),
         new AtomizerJEI.Handler(),
         new MoldStationJEI.Handler(),
@@ -71,18 +71,10 @@ public class JEIFoundryPlugin implements IModPlugin
         ContainerMetalCaster.SLOTS_TE,
         ContainerMetalCaster.SLOTS_TE_SIZE, 
         ContainerMetalCaster.SLOTS_INVENTORY, 36);
-    transfer_registry.addRecipeTransferHandler(ContainerAlloyMixer.class, "foundry.alloymixer",
-        ContainerAlloyMixer.SLOTS_TE,
-        ContainerAlloyMixer.SLOTS_TE_SIZE, 
-        ContainerAlloyMixer.SLOTS_INVENTORY, 36);
     transfer_registry.addRecipeTransferHandler(ContainerMetalInfuser.class, "foundry.infuser",
         ContainerMetalInfuser.SLOTS_TE,
         ContainerMetalInfuser.SLOTS_TE_SIZE, 
         ContainerMetalInfuser.SLOTS_INVENTORY, 36);
-    transfer_registry.addRecipeTransferHandler(ContainerMetalAtomizer.class, "foundry.atomizer",
-        ContainerMetalAtomizer.SLOTS_TE,
-        ContainerMetalAtomizer.SLOTS_TE_SIZE, 
-        ContainerMetalAtomizer.SLOTS_INVENTORY, 36);
     transfer_registry.addRecipeTransferHandler(ContainerMoldStation.class, "foundry.mold",
         ContainerMoldStation.SLOTS_TE,
         ContainerMoldStation.SLOTS_TE_SIZE, 
@@ -95,6 +87,7 @@ public class JEIFoundryPlugin implements IModPlugin
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ALLOYMIXER), "foundry.alloymixer");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.INFUSER), "foundry.infuser");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ATOMIZER), "foundry.atomizer");
+    registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_machine.asItemStack(BlockFoundryMachine.EnumMachine.ALLOYING_CRUCIBLE), "foundry.alloyingcrucible");
     registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_mold_station), "foundry.mold");
     registry.addRecipeCategoryCraftingItem(new ItemStack(FoundryBlocks.block_alloy_furnace), "foundry.alloyfurnace");
     registry.addRecipeCategoryCraftingItem(FoundryBlocks.block_casting_table.asItemStack(BlockCastingTable.EnumTable.INGOT), "foundry.casting_table.ingot");
@@ -106,6 +99,7 @@ public class JEIFoundryPlugin implements IModPlugin
     registry.addRecipes(MeltingJEI.getRecipes(helpers));
     registry.addRecipes(CastingJEI.getRecipes());
     registry.addRecipes(AlloyMixerJEI.getRecipes());
+    registry.addRecipes(AlloyingCrucibleJEI.getRecipes());
     registry.addRecipes(InfuserJEI.getRecipes());
     registry.addRecipes(AtomizerJEI.getRecipes());
     registry.addRecipes(MoldStationJEI.getRecipes(helpers));

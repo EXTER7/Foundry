@@ -12,6 +12,7 @@ import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.fluid.FluidLiquidMetal;
+import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
@@ -182,6 +183,7 @@ public class ModIntegrationMolten implements IModIntegration
         }
       }
     }
+    liquid_map.put(FoundryFluids.liquid_cupronickel.getName(), "constantan");
 
     //Add support for "molten" fluids to the Metal Caster.
     for(ICastingRecipe casting:new ArrayList<ICastingRecipe>(CastingRecipeManager.instance.getRecipes()))

@@ -8,6 +8,7 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.fluid.FluidLiquidMetal;
+import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
@@ -143,6 +144,8 @@ public class ModIntegrationTiCon implements IModIntegration
         }
       }
     }
+    liquid_map.put("constantan", "Cupronickel");
+
 
     reverse_liquid_map = new HashMap<String,String>();
     for(Map.Entry<String,String> e:liquid_map.entrySet())

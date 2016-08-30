@@ -47,7 +47,7 @@ public class OreDictMaterial
     new OreDictMaterial("Brass","ingot"),
     new OreDictMaterial("Bronze","ingot"),
     new OreDictMaterial("Cobaltite","dust"),
-    new OreDictMaterial("Cupronickel","ingot"),
+    new OreDictMaterial("Cupronickel","ingot", "Constantan"),
     new OreDictMaterial("Diamond","gem"),
     new OreDictMaterial("Electrum","ingot"),
     new OreDictMaterial("Emerald","gem"),

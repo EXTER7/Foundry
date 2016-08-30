@@ -58,6 +58,7 @@ public class InitRecipes
     }
     FoundryUtils.registerBasicMeltingRecipes("Chromium",LiquidMetalRegistry.instance.getFluid("Chrome"));
     FoundryUtils.registerBasicMeltingRecipes("Aluminum",LiquidMetalRegistry.instance.getFluid("Aluminium"));
+    FoundryUtils.registerBasicMeltingRecipes("Constantan",LiquidMetalRegistry.instance.getFluid("Cupronickel"));
 
     if(FoundryConfig.recipe_glass)
     {

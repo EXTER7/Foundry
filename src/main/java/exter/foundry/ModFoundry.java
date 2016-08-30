@@ -3,7 +3,6 @@ package exter.foundry;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EnumCreatureType;
@@ -101,7 +100,7 @@ public class ModFoundry
   public static CommonFoundryProxy proxy;
 
   
-  public static Logger log = LogManager.getLogger(MODNAME);
+  public static Logger log;
   
   public static SimpleNetworkWrapper network_channel;
   
@@ -109,6 +108,7 @@ public class ModFoundry
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
+    log = event.getModLog();
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
+import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.api.recipe.ICastingTableRecipe;
@@ -13,6 +14,7 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
+import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.CastingTableRecipeManager;
@@ -76,7 +78,7 @@ public class ModIntegrationMolten implements IModIntegration
     }
   }
 
-  private void convertAlloyRecipe(IAlloyMixerRecipe mix,int index,List<FluidStack> inputs,boolean has_mapped)
+  private void convertAlloyMixerRecipe(IAlloyMixerRecipe mix,int index,List<FluidStack> inputs,boolean has_mapped)
   {
     if(index == mix.getInputs().size())
     {
@@ -114,16 +116,38 @@ public class ModIntegrationMolten implements IModIntegration
     {
       List<FluidStack> in = new ArrayList<FluidStack>(inputs);
       in.add(molten);
-      convertAlloyRecipe(mix,index + 1,in,true);
+      convertAlloyMixerRecipe(mix,index + 1,in,true);
     }
     List<FluidStack> in = new ArrayList<FluidStack>(inputs);
     in.add(input.copy());
-    convertAlloyRecipe(mix,index + 1,in,has_mapped);
+    convertAlloyMixerRecipe(mix,index + 1,in,has_mapped);
   }
   
-  private void convertAlloyRecipe(IAlloyMixerRecipe mix)
+  private void convertAlloyMixerRecipe(IAlloyMixerRecipe mix)
   {
-    convertAlloyRecipe(mix,0,new ArrayList<FluidStack>(),false);
+    convertAlloyMixerRecipe(mix,0,new ArrayList<FluidStack>(),false);
+  }
+
+  private void convertAlloyingCrucibleRecipe(IAlloyingCrucibleRecipe mix)
+  {
+    FluidStack out = mix.getOutput();
+    
+    FluidStack in_a = mix.getInputA();
+    FluidStack in_b = mix.getInputB();
+    FluidStack mapped_a = toMolten(in_a);
+    FluidStack mapped_b = toMolten(in_b);
+    if(mapped_a != null)
+    {
+      AlloyingCrucibleRecipeManager.instance.addRecipe(out, mapped_a,in_b);
+    }
+    if(mapped_b != null)
+    {
+      AlloyingCrucibleRecipeManager.instance.addRecipe(out, in_a,mapped_b);
+    }
+    if(mapped_a != null && mapped_b != null)
+    {
+      AlloyingCrucibleRecipeManager.instance.addRecipe(out, mapped_a,mapped_b);
+    }
   }
 
   @Override
@@ -198,11 +222,17 @@ public class ModIntegrationMolten implements IModIntegration
             input);
       }
     }
-    
+
+    //Add support for "molten" fluid inputs to Alloying Crucible recipes.
+    for(IAlloyingCrucibleRecipe mix:new ArrayList<IAlloyingCrucibleRecipe>(AlloyingCrucibleRecipeManager.instance.getRecipes()))
+    {
+      convertAlloyingCrucibleRecipe(mix);
+    }
+
     //Add support for "molten" fluid inputs to Alloy Mixer recipes.
     for(IAlloyMixerRecipe mix:new ArrayList<IAlloyMixerRecipe>(AlloyMixerRecipeManager.instance.getRecipes()))
     {
-      convertAlloyRecipe(mix);
+      convertAlloyMixerRecipe(mix);
     }
   }
 

@@ -52,6 +52,7 @@ import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
+import exter.foundry.material.MaterialRegistry;
 import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -89,7 +90,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "2.1.0.1";
+  public static final String MODVERSION = "2.2.0.0";
 
   @Instance(MODID)
   public static ModFoundry instance;
@@ -131,6 +132,8 @@ public class ModFoundry
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
     FoundryAPI.recipes_mold = MoldRecipeManager.instance;
     FoundryAPI.recipes_alloyingcrucible = AlloyingCrucibleRecipeManager.instance;
+    
+    FoundryAPI.materials = MaterialRegistry.instance;
     FoundryAPI.burnerheater_fuel = BurnerHeaterFuelManager.instance;
     
     CapabilityHeatProvider.init();

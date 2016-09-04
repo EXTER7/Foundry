@@ -13,6 +13,7 @@ import exter.foundry.api.recipe.manager.IInfuserRecipeManager;
 import exter.foundry.api.recipe.manager.IMeltingRecipeManager;
 import exter.foundry.api.recipe.manager.IMoldRecipeManager;
 import exter.foundry.api.registry.IFluidRegistry;
+import exter.foundry.api.material.IMaterialRegistry;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
@@ -44,7 +45,7 @@ public class FoundryAPI
   static public final int CRUCIBLE_STANDARD_TEMP_LOSS_RATE = 750;
   static public final int CRUCIBLE_ADVANCED_TEMP_LOSS_RATE = 900;
   
-  //Max temperatures for crucibles.
+  //Max temperatures for crucibles (in 1/100 deg Ks).
   static public final int CRUCIBLE_BASIC_MAX_TEMP = 200000;
   static public final int CRUCIBLE_STANDARD_MAX_TEMP = 250000;
   static public final int CRUCIBLE_ADVANCED_MAX_TEMP = 400000;
@@ -62,10 +63,11 @@ public class FoundryAPI
   static public IAlloyFurnaceRecipeManager recipes_alloyfurnace;
   static public IAtomizerRecipeManager recipes_atomizer;
   static public IMoldRecipeManager recipes_mold;
+
   static public IBurnerHeaterFuelManager burnerheater_fuel;
-  
-  
+  static public IMaterialRegistry materials;
   static public IFluidRegistry fluids;
+  
   
   @CapabilityInject(IHeatProvider.class)
   static public Capability<IHeatProvider> capability_heatprovider;

@@ -1,5 +1,6 @@
 package exter.foundry.integration;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +14,35 @@ public final class ModIntegrationManager
 {
   static private Map<String,IModIntegration> integrations = new HashMap<String,IModIntegration>();
   
+  static public Object construct(Class<? extends IModIntegration> clazz)
+  {
+    try
+    {
+      return clazz.getConstructor().newInstance();
+    } catch(ReflectiveOperationException e)
+    {
+      ModFoundry.log.error("Error initializing mod integration:", e);
+    } catch(IllegalArgumentException e)
+    {
+      ModFoundry.log.error("Error initializing mod integration:", e);
+    } catch(SecurityException e)
+    {
+      ModFoundry.log.error("Error initializing mod integration:", e);
+    } catch(LinkageError e)
+    {
+      ModFoundry.log.error("Error initializing mod integration:", e);
+    }
+    return null;
+  }
+  
   static public IModIntegration getIntegration(String name)
   {
     return integrations.get(name);
   }
   
-  static public void registerIntegration(Configuration config,Object mod)
+  static public void registerIntegration(Configuration config,Class<? extends IModIntegration> mod_class)
   {
+    Object mod = construct(mod_class);
     if(mod instanceof IModIntegration)
     {
       IModIntegration imod = (IModIntegration)mod;

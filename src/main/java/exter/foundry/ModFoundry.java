@@ -81,7 +81,9 @@ import exter.foundry.tileentity.TileEntityRefractoryTankStandard;
   modid = ModFoundry.MODID,
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
-  dependencies = "required-after:Forge@[12.18.1.2073,);required-after:substratum@[1.8.1.0,)"
+  dependencies =
+      "required-after:Forge@[12.18.1.2073,);"
+    + "required-after:substratum@[1.8.1.0,);"
 )
 public class ModFoundry
 {
@@ -111,11 +113,11 @@ public class ModFoundry
     log = event.getModLog();
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationMinetweaker());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationTiCon());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationMolten());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationEnderIO());
-    ModIntegrationManager.registerIntegration(config,new ModIntegrationBotania());
+    ModIntegrationManager.registerIntegration(config,ModIntegrationMinetweaker.class);
+    ModIntegrationManager.registerIntegration(config,ModIntegrationTiCon.class);
+    ModIntegrationManager.registerIntegration(config,ModIntegrationMolten.class);
+    ModIntegrationManager.registerIntegration(config,ModIntegrationEnderIO.class);
+    ModIntegrationManager.registerIntegration(config,ModIntegrationBotania.class);
 
 
     FoundryAPI.fluids = LiquidMetalRegistry.instance;

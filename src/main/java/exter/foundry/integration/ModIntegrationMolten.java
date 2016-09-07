@@ -63,6 +63,10 @@ public class ModIntegrationMolten implements IModIntegration
     if(mapped != null)
     {
       Fluid mapped_fluid = FluidRegistry.getFluid(mapped);
+      if(mapped_fluid == null)
+      {
+        return null;
+      }
 
       if(mapped.equals("glass"))
       {

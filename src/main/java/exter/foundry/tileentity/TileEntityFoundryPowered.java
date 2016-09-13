@@ -11,6 +11,8 @@ import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 
@@ -31,6 +33,46 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     }
   }
   
+  private class ForgeEnergyConsumer implements IEnergyStorage
+  {
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate)
+    {
+      return (int)receiveFoundryEnergy(maxReceive * RATIO_FE,!simulate,false) / RATIO_FE;
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate)
+    {
+      return 0;
+    }
+
+    @Override
+    public int getEnergyStored()
+    {
+      return (int)(energy_stored / RATIO_FE);
+    }
+
+    @Override
+    public int getMaxEnergyStored()
+    {
+      return 0;
+    }
+
+    @Override
+    public boolean canExtract()
+    {
+      return false;
+    }
+
+    @Override
+    public boolean canReceive()
+    {
+      return true;
+    }    
+  }
+  
 //  private boolean added_enet;
   protected boolean update_energy;
   protected boolean update_energy_tick;
@@ -39,11 +81,13 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
 
   static public int RATIO_RF = 10;
   static public int RATIO_TESLA = 10;
+  static public int RATIO_FE = 10;
   static public int RATIO_EU = 40;
   
   private long energy_stored;
   
   private final TeslaConsumer tesla;
+  private final ForgeEnergyConsumer fe;
 
   public TileEntityFoundryPowered()
   {
@@ -55,6 +99,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
     {
       tesla = null;
     }
+    fe = new ForgeEnergyConsumer();
     update_energy = false;
     update_energy_tick = true;
 //    added_enet = false;
@@ -227,7 +272,14 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     if(tesla != null)
     {
-      return hasTeslaCapability(cap,facing);
+      if(hasTeslaCapability(cap,facing))
+      {
+        return true;
+      }
+    }
+    if(cap == CapabilityEnergy.ENERGY)
+    {
+      return true;
     } else
     {
       return super.hasCapability(cap, facing);
@@ -239,7 +291,15 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   {
     if(tesla != null)
     {
-      return getTeslaCapability(cap,facing);
+      T tcap = getTeslaCapability(cap,facing);
+      if(tcap != null)
+      {
+        return tcap;
+      }
+    }
+    if(cap == CapabilityEnergy.ENERGY)
+    {
+      return CapabilityEnergy.ENERGY.cast(fe);
     } else
     {
       return super.getCapability(cap, facing);
@@ -249,13 +309,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   @Optional.Method(modid = "Tesla")
   private <T> boolean hasTeslaCapability(Capability<T> cap, EnumFacing facing)
   {
-    if(cap == TeslaCapabilities.CAPABILITY_CONSUMER)
-    {
-      return true;
-    } else
-    {
-      return super.hasCapability(cap, facing);
-    }
+    return cap == TeslaCapabilities.CAPABILITY_CONSUMER;
   }
 
   @Optional.Method(modid = "Tesla")
@@ -266,7 +320,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
       return TeslaCapabilities.CAPABILITY_CONSUMER.cast(tesla);
     } else
     {
-      return super.getCapability(cap, facing);
+      return null;
     }
   }
 

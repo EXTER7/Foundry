@@ -8,7 +8,6 @@ import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +16,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityMetalInfuser extends TileEntityFoundryPowered
 {
 
   
@@ -30,8 +29,7 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   static public final int TANK_INPUT = 0;
   static public final int TANK_OUTPUT = 1;
 
-  @Deprecated static private final int[] INSERT_SLOTS = { 0 };
-  @Deprecated static private final int[] EXTRACT_SLOTS = { 0 };
+
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_SUBSTANCE_INPUT);
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
@@ -137,27 +135,6 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered implements 
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
     return true;
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return side == EnumFacing.UP?INSERT_SLOTS:EXTRACT_SLOTS;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(slot, itemstack);
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return slot == 0;
   }
 
   @Override

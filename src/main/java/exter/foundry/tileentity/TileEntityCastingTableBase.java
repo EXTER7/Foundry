@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.recipes.manager.CastingTableRecipeManager;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +16,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class TileEntityCastingTableBase extends TileEntityFoundry implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public abstract class TileEntityCastingTableBase extends TileEntityFoundry
 {
   protected class FluidHandler implements IFluidHandler
   {
@@ -186,8 +185,6 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     return progress;
   }
 
-  static private final int[] EXTRACT_SLOTS = { 0 };
-
   @Deprecated
   @Override
   public final boolean isItemValidForSlot(int slot, ItemStack itemstack)
@@ -195,27 +192,6 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry imple
     return false;
   }
 
-  @Deprecated
-  @Override
-  public final int[] getSlotsForFace(EnumFacing side)
-  {
-    return EXTRACT_SLOTS;
-  }
-  
-  @Deprecated
-  @Override
-  public final boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return false;
-  }
-  
-  @Deprecated
-  @Override
-  public final boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return progress == 0;
-  }
-  
   @Deprecated
   @Override
   public final ItemStack removeStackFromSlot(int slot)

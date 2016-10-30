@@ -10,7 +10,6 @@ import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -20,7 +19,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 
 
-public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISidedInventory
+public class TileEntityCokeOven extends TileEntityFoundryHeatable
 {
   
   static public final int BAKE_TIME = 60000000;
@@ -29,9 +28,6 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   
   static public final int INVENTORY_INPUT = 0;
   static public final int INVENTORY_OUTPUT = 1;
-
-  @Deprecated
-  static private final int[] SLOTS = { INVENTORY_INPUT, INVENTORY_OUTPUT };
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_INPUT);
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
@@ -104,27 +100,6 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
   {
     return i == INVENTORY_INPUT;
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SLOTS;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(i, itemstack);
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return i == INVENTORY_OUTPUT;
   }
 
   @Override
@@ -228,7 +203,7 @@ public class TileEntityCokeOven extends TileEntityFoundryHeatable implements ISi
   @Override
   protected int getTemperatureLossRate()
   {
-    return FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE;
+    return FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE;
   }
 
   @Override

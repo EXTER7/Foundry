@@ -23,7 +23,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -163,26 +162,36 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
       ItemStack is = inventory[slot];
       if(is == null)
       {
-        inventory[slot] = stack;
-        updateInventoryItem(slot);
-        markDirty();
+        if(!simulate)
+        {
+          inventory[slot] = stack.copy();
+          updateInventoryItem(slot);
+          markDirty();
+        }
         return null;
-      } else if(is.isItemEqual(stack) && ItemStack.areItemStacksEqual(is, stack))
+      } else if(is.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(is, stack))
       {
         if(stack.stackSize + is.stackSize > is.getMaxStackSize())
         {
           stack = stack.copy();
-          stack.stackSize = is.getMaxStackSize() - is.stackSize;
-          is.stackSize = is.getMaxStackSize();
-          updateInventoryItem(slot);
-          markDirty();
-          stack = null;
+          stack.stackSize = stack.stackSize - is.getMaxStackSize() + is.stackSize;
+          if(!simulate)
+          {
+            is.stackSize = is.getMaxStackSize();
+          }
         } else
         {
-          is.stackSize += stack.stackSize;
+          if(!simulate)
+          {
+            is.stackSize += stack.stackSize;
+          }
+          stack = null;
         }
-        updateInventoryItem(slot);
-        markDirty();
+        if(!simulate)
+        {
+          updateInventoryItem(slot);
+          markDirty();
+        }
         return stack;
       }
       return stack;
@@ -877,73 +886,5 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
     {
       return super.getCapability(cap, facing);
     }
-  }
-
-  
-
-  
-  // Support for the old IFluidHandler
-  // TODO: Remove once the new FluidHandler Capability get adopted by most mods.
-  
-  @Deprecated
-  public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-  {
-    IFluidHandler handler = getFluidHandler(from);
-    if(handler == null)
-    {
-      return 0;
-    }
-    return handler.fill(resource, doFill);
-  }
-
-  @Deprecated
-  public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-  {
-    IFluidHandler handler = getFluidHandler(from);
-    if(handler == null)
-    {
-      return null;
-    }
-    return handler.drain(resource, doDrain);
-  }
-
-  @Deprecated
-  public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-  {
-    IFluidHandler handler = getFluidHandler(from);
-    if(handler == null)
-    {
-      return null;
-    }
-    return handler.drain(maxDrain, doDrain);
-  }
-
-  @Deprecated
-  public boolean canFill(EnumFacing from, Fluid fluid)
-  {
-    return getFluidHandler(from) != null;
-  }
-
-  @Deprecated
-  public boolean canDrain(EnumFacing from, Fluid fluid)
-  {
-    return getFluidHandler(from) != null;
-  }
-
-  @Deprecated
-  public FluidTankInfo[] getTankInfo(EnumFacing from)
-  {
-    IFluidHandler handler = getFluidHandler(from);
-    if(handler == null)
-    {
-      return null;
-    }
-    IFluidTankProperties[] props = handler.getTankProperties();
-    FluidTankInfo[] info = new FluidTankInfo[props.length];
-    for(int i = 0; i < info.length; i++)
-    {
-      info[i] = new FluidTankInfo(props[i].getContents(),props[i].getCapacity());
-    }
-    return info;
   }
 }

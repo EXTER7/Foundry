@@ -14,7 +14,6 @@ import exter.foundry.ModFoundry;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.network.MessageTileEntitySync;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.IItemHandler;
 
-public class TileEntityMaterialRouter extends TileEntityFoundry implements ISidedInventory
+public class TileEntityMaterialRouter extends TileEntityFoundry
 {
   static public class Route
   {
@@ -99,9 +98,6 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   }
 
   public static final int SLOT_OUTPUT = 3;
-
-  @Deprecated
-  static private int[][] SIDE_SLOTS = { { 0, 1, 2, SLOT_OUTPUT }, { 0, 1, 2, SLOT_OUTPUT + 1 }, { 0, 1, 2, SLOT_OUTPUT + 2 }, { 0, 1, 2, SLOT_OUTPUT + 3 }, { 0, 1, 2, SLOT_OUTPUT + 4 }, { 0, 1, 2, SLOT_OUTPUT + 5 } };
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(0, 1, 2);
 
@@ -324,27 +320,6 @@ public class TileEntityMaterialRouter extends TileEntityFoundry implements ISide
   protected void onInitialize()
   {
 
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SIDE_SLOTS[side.getIndex()];
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int slot, ItemStack item, EnumFacing side)
-  {
-    return slot < SLOT_OUTPUT;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int slot, ItemStack item, EnumFacing side)
-  {
-    return slot == SLOT_OUTPUT + side.getIndex();
   }
 
   public List<Route> getRoutes()

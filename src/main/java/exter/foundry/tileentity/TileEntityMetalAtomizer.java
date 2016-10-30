@@ -8,7 +8,6 @@ import com.google.common.collect.ImmutableSet;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -20,7 +19,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.IItemHandler;
 
-public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityMetalAtomizer extends TileEntityFoundryPowered
 {
   protected class FluidHandler implements IFluidHandler
   {
@@ -77,8 +76,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   static public final int TANK_INPUT = 0;
   static public final int TANK_WATER = 1;
 
-  @Deprecated
-  static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of();
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
@@ -168,27 +165,6 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered implements
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
     return false;
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return EXTRACT_SLOTS;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(slot, itemstack);
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return slot == INVENTORY_OUTPUT;
   }
 
   @Override

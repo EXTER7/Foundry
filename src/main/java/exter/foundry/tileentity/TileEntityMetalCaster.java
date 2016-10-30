@@ -7,8 +7,6 @@ import com.google.common.collect.ImmutableSet;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.ICastingRecipe;
 import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.tileentity.TileEntityFoundry.ItemHandler;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +15,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class TileEntityMetalCaster extends TileEntityFoundryPowered implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityMetalCaster extends TileEntityFoundryPowered
 {
   static public final int CAST_TIME = 400000;
   
@@ -31,8 +29,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   static public final int INVENTORY_MOLD_STORAGE = 5;
   static public final int INVENTORY_MOLD_STORAGE_SIZE = 9;
 
-  @Deprecated static private final int[] INSERT_SLOTS = { INVENTORY_EXTRA };
-  @Deprecated static private final int[] EXTRACT_SLOTS = { INVENTORY_OUTPUT };
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_EXTRA);
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
@@ -116,27 +112,6 @@ public class TileEntityMetalCaster extends TileEntityFoundryPowered implements I
   public boolean isItemValidForSlot(int slot, ItemStack itemstack)
   {
     return slot == INVENTORY_EXTRA;
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return side == EnumFacing.UP?INSERT_SLOTS:EXTRACT_SLOTS;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(slot, itemstack);
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side)
-  {
-    return slot == INVENTORY_OUTPUT;
   }
 
   @Override

@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableSet;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +16,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
 
-public class TileEntityMeltingCrucibleBasic extends TileEntityFoundryHeatable implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityMeltingCrucibleBasic extends TileEntityFoundryHeatable
 {
   
   static public final int SMELT_TIME = 5000000;
@@ -27,8 +26,6 @@ public class TileEntityMeltingCrucibleBasic extends TileEntityFoundryHeatable im
   static public final int INVENTORY_CONTAINER_DRAIN = 1;
   static public final int INVENTORY_CONTAINER_FILL = 2;
 
-  @Deprecated
-  static private final int[] INSERT_SLOTS = { INVENTORY_INPUT };
 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(INVENTORY_INPUT);
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
@@ -121,27 +118,6 @@ public class TileEntityMeltingCrucibleBasic extends TileEntityFoundryHeatable im
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
   {
     return i == INVENTORY_INPUT;
-  }
-
-  @Deprecated
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return INSERT_SLOTS;
-  }
-
-  @Deprecated
-  @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(i, itemstack);
-  }
-
-  @Deprecated
-  @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return false;
   }
 
   @Override

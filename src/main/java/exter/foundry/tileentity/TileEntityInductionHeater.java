@@ -22,7 +22,7 @@ public class TileEntityInductionHeater extends TileEntityFoundryPowered
     }
   }
   
-  private static int MAX_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(350000,FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE);
+  private static int MAX_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(350000,FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE);
 
   private HeatProvider heat_provider;
   

@@ -9,12 +9,10 @@ import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.IBurnerHeaterFuel;
 import exter.foundry.block.BlockBurnerHeater;
 import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
-import exter.foundry.tileentity.TileEntityFoundry.ItemHandler;
 import exter.foundry.tileentity.itemhandler.ItemHandlerFuel;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -28,7 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.api.item.IExoflameHeatable;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
-public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedInventory,IExoflameHeatable
+public class TileEntityBurnerHeater extends TileEntityFoundry implements IExoflameHeatable
 {
   private class HeatProvider implements IHeatProvider
   {
@@ -75,10 +73,8 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
   private HeatProvider heat_provider;
   private ItemHandlerFuel item_handler;
 
-  private static int DEFAULT_HEAT_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(170000,FoundryAPI.CRUCIBLE_TEMP_LOSS_RATE);
-
-  @Deprecated private static final int[] SLOTS = new int[] { 0, 1, 2, 3 };
-  
+  private static int DEFAULT_HEAT_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(170000,FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE);
+ 
   static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(0, 1, 2, 3);
   static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
   static private final Set<Integer> IH_SLOTS_FUEL = ImmutableSet.of(0, 1, 2, 3);
@@ -182,27 +178,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements ISidedI
   public boolean isItemValidForSlot(int slot, ItemStack stack)
   {
     return TileEntityFurnace.isItemFuel(stack);
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SLOTS;
-  }
-
-  /**
-   * Returns true if automation can insert the given item in the given slot from
-   * the given side. Args: Slot, item, side
-   */
-  public boolean canInsertItem(int par1, ItemStack par2ItemStack, EnumFacing side)
-  {
-    return this.isItemValidForSlot(par1, par2ItemStack);
-  }
-
-  @Override
-  public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
-  {
-    return true;
   }
 
   @Override

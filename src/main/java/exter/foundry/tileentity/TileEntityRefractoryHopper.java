@@ -10,7 +10,6 @@ import exter.foundry.block.BlockRefractoryHopper.EnumHopperFacing;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +24,7 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISidedInventory,net.minecraftforge.fluids.IFluidHandler
+public class TileEntityRefractoryHopper extends TileEntityFoundry
 {
   protected class FluidHandler implements IFluidHandler
   {
@@ -157,29 +156,8 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry implements ISi
 
   }
 
-
-  static private final int[] SLOTS = {};
-
   @Override
   public boolean isItemValidForSlot(int i, ItemStack itemstack)
-  {
-    return false;
-  }
-
-  @Override
-  public int[] getSlotsForFace(EnumFacing side)
-  {
-    return SLOTS;
-  }
-
-  @Override
-  public boolean canInsertItem(int i, ItemStack itemstack, EnumFacing side)
-  {
-    return isItemValidForSlot(i, itemstack);
-  }
-
-  @Override
-  public boolean canExtractItem(int i, ItemStack itemstack, EnumFacing side)
   {
     return false;
   }

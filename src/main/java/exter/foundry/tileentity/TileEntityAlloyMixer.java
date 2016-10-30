@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileEntityAlloyMixer extends TileEntityFoundryPowered implements net.minecraftforge.fluids.IFluidHandler
+public class TileEntityAlloyMixer extends TileEntityFoundryPowered
 {
   protected class FluidHandler implements IFluidHandler
   {

@@ -2,13 +2,12 @@ package exter.foundry.tileentity;
 
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class TileEntityRefractoryTankBasic extends TileEntityFoundry implements net.minecraftforge.fluids.IFluidHandler
+public class TileEntityRefractoryTankBasic extends TileEntityFoundry
 {
   static public final int INVENTORY_CONTAINER_DRAIN = 0;
   static public final int INVENTORY_CONTAINER_FILL = 1;

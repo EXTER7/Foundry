@@ -124,4 +124,10 @@ public class MTOreStack implements IIngredient
   {
     return this;
   }
+
+  @Override
+  public boolean matchesExact(IItemStack iitem)
+  {
+    return matches(iitem);
+  }
 }

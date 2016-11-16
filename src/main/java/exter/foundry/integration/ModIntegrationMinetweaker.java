@@ -2,8 +2,10 @@ package exter.foundry.integration;
 
 import exter.foundry.integration.minetweaker.MTAlloyFurnaceHandler;
 import exter.foundry.integration.minetweaker.MTAlloyMixerHandler;
+import exter.foundry.integration.minetweaker.MTAlloyingCurcibleHandler;
 import exter.foundry.integration.minetweaker.MTAtomizerHandler;
 import exter.foundry.integration.minetweaker.MTCastingHandler;
+import exter.foundry.integration.minetweaker.MTCastingTableHandler;
 import exter.foundry.integration.minetweaker.MTInfuserHandler;
 import exter.foundry.integration.minetweaker.MTMeltingHandler;
 import exter.foundry.integration.minetweaker.MTMoldStationHandler;
@@ -32,8 +34,10 @@ public class ModIntegrationMinetweaker implements IModIntegration
     MineTweakerAPI.registerBracketHandler(new OreStackBracketHandler());
     MineTweakerAPI.registerClass(MTMeltingHandler.class);
     MineTweakerAPI.registerClass(MTCastingHandler.class);
+    MineTweakerAPI.registerClass(MTCastingTableHandler.class);
     MineTweakerAPI.registerClass(MTAlloyMixerHandler.class);
     MineTweakerAPI.registerClass(MTAlloyFurnaceHandler.class);
+    MineTweakerAPI.registerClass(MTAlloyingCurcibleHandler.class);
     MineTweakerAPI.registerClass(MTAtomizerHandler.class);
     MineTweakerAPI.registerClass(MTInfuserHandler.class);
     MineTweakerAPI.registerClass(MTMoldStationHandler.class);

@@ -17,6 +17,7 @@ import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -90,6 +91,13 @@ public class AlloyingCrucibleJEI
     {
       return false;
     }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>
@@ -159,6 +167,20 @@ public class AlloyingCrucibleJEI
       guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
       guiFluidStacks.set(1, recipeWrapper.getFluidInputs().get(1));
       guiFluidStacks.set(2, recipeWrapper.getFluidOutputs().get(0));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

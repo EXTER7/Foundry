@@ -16,6 +16,7 @@ import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -120,6 +121,12 @@ public class MoldStationJEI
     {
       return false;
     }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>
@@ -196,6 +203,20 @@ public class MoldStationJEI
 
       gui_items.init(0, false, 110, 23);
       gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

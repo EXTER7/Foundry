@@ -15,6 +15,7 @@ import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -88,6 +89,13 @@ public class AlloyMixerJEI
     {
       return false;
     }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>
@@ -158,6 +166,20 @@ public class AlloyMixerJEI
       }
       guiFluidStacks.init(5, false, 115, 1, 16, GuiAlloyMixer.TANK_HEIGHT, recipeWrapper.getFluidOutputs().get(0).amount,false,tank_overlay);
       guiFluidStacks.set(5, recipeWrapper.getFluidOutputs().get(0));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

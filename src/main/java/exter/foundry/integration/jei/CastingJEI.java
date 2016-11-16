@@ -21,6 +21,7 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -99,6 +100,13 @@ public class CastingJEI
     public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
     {
       return false;
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 
@@ -182,6 +190,20 @@ public class CastingJEI
       gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
       gui_items.setFromRecipe(2, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
       gui_fluids.set(3, recipeWrapper.getFluidInputs().get(0));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

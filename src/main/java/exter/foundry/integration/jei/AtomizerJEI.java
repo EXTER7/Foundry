@@ -20,6 +20,7 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -96,6 +97,13 @@ public class AtomizerJEI
     public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton)
     {
       return false;
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 
@@ -175,6 +183,20 @@ public class AtomizerJEI
       guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getOutputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidInputs().get(0));
       guiFluidStacks.set(2, recipeWrapper.getFluidInputs().get(1));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

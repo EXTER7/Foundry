@@ -20,6 +20,7 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -103,6 +104,13 @@ public class MeltingJEI
     {
       return false;
     }
+
+    @Override
+    public void getIngredients(IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>
@@ -180,6 +188,20 @@ public class MeltingJEI
       guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
       guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
+    {
+      // TODO Auto-generated method stub
+      
     }
   }
 

@@ -173,12 +173,22 @@ public class AlloyMixerJEI
 
       List<List<FluidStack>> in = ingredients.getInputs(FluidStack.class);
       FluidStack out = ingredients.getOutputs(FluidStack.class).get(0);
+      int out_amount = out.amount;
       for(int i = 0; i < in.size(); i++)
       {
-        guiFluidStacks.init(i, true, 8 + 21 * i, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out.amount,false,tank_overlay);
+        int amount = in.get(i).get(0).amount;
+        if(amount > out_amount)
+        {
+          out_amount = amount;
+        }
+      }
+
+      guiFluidStacks.init(5, false, 115, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out_amount,false,tank_overlay);
+      for(int i = 0; i < in.size(); i++)
+      {
+        guiFluidStacks.init(i, true, 8 + 21 * i, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out_amount,false,tank_overlay);
         guiFluidStacks.set(i, in.get(i));
       }
-      guiFluidStacks.init(5, false, 115, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out.amount,false,tank_overlay);
       guiFluidStacks.set(5, ingredients.getOutputs(FluidStack.class).get(0));
     }
   }

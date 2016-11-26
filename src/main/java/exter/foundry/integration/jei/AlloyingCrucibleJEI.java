@@ -177,9 +177,11 @@ public class AlloyingCrucibleJEI
       List<FluidStack> in_a = ingredients.getInputs(FluidStack.class).get(0);
       List<FluidStack> in_b = ingredients.getInputs(FluidStack.class).get(1);
       
-      guiFluidStacks.init(0, true, 35 - 33, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, out.amount,false,tank_overlay);
-      guiFluidStacks.init(1, true, 92, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, in_a.get(0).amount,false,tank_overlay);
-      guiFluidStacks.init(2, false, 47, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, in_b.get(0).amount,false,tank_overlay);
+      int amount = Integer.max(out.amount, Integer.max(in_a.get(0).amount,in_b.get(0).amount));
+      
+      guiFluidStacks.init(0, true, 35 - 33, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, amount,false,tank_overlay);
+      guiFluidStacks.init(1, true, 92, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, amount,false,tank_overlay);
+      guiFluidStacks.init(2, false, 47, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, amount,false,tank_overlay);
 
       guiFluidStacks.set(0, in_a);
       guiFluidStacks.set(1, in_b);

@@ -20,7 +20,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -32,48 +31,45 @@ public class MoldStationJEI
 {
   static public class Wrapper implements IRecipeWrapper
   {
-    @Nonnull
-    private final List<ItemStack> output;
-    
-    private final int width;
-    private final int height;
-    private final int[] recipe;
+    private final IMoldRecipe recipe;
 
     private final IDrawable[] carve_drawables;
     
-    public Wrapper(IDrawable[] carve_drawables,@Nonnull ItemStack output, int width,int height,int[] recipe)
+    public Wrapper(IDrawable[] carve_drawables,IMoldRecipe recipe)
     {
       this.carve_drawables = carve_drawables;
-      this.output = Collections.singletonList(output);
-      this.width = width;
-      this.height = height;
       this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -83,6 +79,8 @@ public class MoldStationJEI
     @Override
     public List<String> getTooltipStrings(int mx, int my)
     {
+      int width = recipe.getWidth();
+      int height = recipe.getHeight();
       if(mx >= 7 && mx < 73 && my >= 7 && my < 73)
       {
         int x = (mx - 7) / 11 - (3 - FoundryMiscUtils.divCeil(width,2));
@@ -91,7 +89,7 @@ public class MoldStationJEI
         int depth = 0;
         if(x >= 0 && x < width && y >= 0 && y < height)
         {
-          depth = recipe[y * width + x];
+          depth = recipe.getRecipeGrid()[y * width + x];
         }
         return Collections.singletonList("Depth: " + depth);
       }
@@ -101,13 +99,18 @@ public class MoldStationJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
+      int width = recipe.getWidth();
+      int height = recipe.getHeight();
+      int[] grid = recipe.getRecipeGrid();
+
       int left = (3 - FoundryMiscUtils.divCeil(width,2));
       int top = (3 - FoundryMiscUtils.divCeil(height,2));
+      
       for(int y = 0; y < height; y++)
       {
         for(int x = 0; x < width; x++)
         {
-          int i = recipe[y*width + x];
+          int i = grid[y*width + x];
           if(i > 0)
           {
             carve_drawables[i - 1].draw(minecraft, 7 + (x + left) * 11, 7 + (y + top) * 11);
@@ -125,7 +128,7 @@ public class MoldStationJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      
+      ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
   }
 
@@ -143,12 +146,8 @@ public class MoldStationJEI
     @Nonnull
     private final IDrawable grid_drawable;
 
-    
-    private IJeiHelpers helpers;
-
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       background_location = new ResourceLocation("foundry", "textures/gui/moldstation.png");
 
@@ -195,28 +194,26 @@ public class MoldStationJEI
       return "foundry.mold";
     }
 
+    @Deprecated
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IStackHelper stack_helper = helpers.getStackHelper();
 
-      gui_items.init(0, false, 110, 23);
-      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+
+      gui_items.init(0, false, 110, 23);
+      gui_items.set(0, ingredients.getOutputs(ItemStack.class).get(0));
     }
   }
 
@@ -270,8 +267,7 @@ public class MoldStationJEI
 
     for(IMoldRecipe recipe : MoldRecipeManager.instance.getRecipes())
     {
-      recipes.add(new Wrapper(carve_drawables,
-          recipe.getOutput(),recipe.getWidth(),recipe.getHeight(),recipe.getRecipeGrid()));
+      recipes.add(new Wrapper(carve_drawables,recipe));
     }
 
     return recipes;

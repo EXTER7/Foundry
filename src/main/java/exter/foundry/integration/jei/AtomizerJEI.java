@@ -1,12 +1,11 @@
 package exter.foundry.integration.jei;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
@@ -38,44 +37,46 @@ public class AtomizerJEI
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<FluidStack> input;
-    @Nonnull
-    private final List<ItemStack> output;
+    private final IAtomizerRecipe recipe;
 
     private static final FluidStack WATER = new FluidStack(FluidRegistry.WATER,50);
     
-    public Wrapper(@Nonnull ItemStack output, FluidStack input)
+    public Wrapper(@Nonnull IAtomizerRecipe recipe)
     {
-      this.input = Lists.newArrayList(input,WATER);
-      this.output = Collections.singletonList(output);
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<List<ItemStack>> getInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidInputs()
     {
-      return input;
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
 
     @Override
+    @Deprecated
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
 
@@ -102,8 +103,8 @@ public class AtomizerJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInputs(FluidStack.class, ImmutableList.of(recipe.getInput(), WATER));
+      ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
   }
 
@@ -119,12 +120,9 @@ public class AtomizerJEI
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
-    
-    private final IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/atomizer.png");
 
@@ -148,13 +146,14 @@ public class AtomizerJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-
+      arrow.draw(minecraft, 52, 18);
     }
 
     @Override
+    @Deprecated
     public void drawAnimations(Minecraft minecraft)
     {
-      arrow.draw(minecraft, 52, 18);
+
     }
 
     @Nonnull
@@ -172,7 +171,20 @@ public class AtomizerJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
+    {
+
+    }
+
+    @Override
+    public IDrawable getIcon()
+    {
+      return null;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
       IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
@@ -180,23 +192,9 @@ public class AtomizerJEI
       guiItemStacks.init(0, false, 77, 17);
       guiFluidStacks.init(1, true, 31, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY,false,tank_overlay);
       guiFluidStacks.init(2, true, 115, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getOutputs().get(0)));
-      guiFluidStacks.set(1, recipeWrapper.getFluidInputs().get(0));
-      guiFluidStacks.set(2, recipeWrapper.getFluidInputs().get(1));
-    }
-
-    @Override
-    public IDrawable getIcon()
-    {
-      // TODO Auto-generated method stub
-      return null;
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
-    {
-      // TODO Auto-generated method stub
-      
+      guiItemStacks.set(0, ingredients.getOutputs(ItemStack.class).get(0));
+      guiFluidStacks.set(1, ingredients.getInputs(FluidStack.class).get(0));
+      guiFluidStacks.set(2, ingredients.getInputs(FluidStack.class).get(1));
     }
   }
 
@@ -246,7 +244,7 @@ public class AtomizerJEI
 
       if(output != null)
       {
-        recipes.add(new Wrapper(output,recipe.getInput()));
+        recipes.add(new Wrapper(recipe));
       }
     }
 

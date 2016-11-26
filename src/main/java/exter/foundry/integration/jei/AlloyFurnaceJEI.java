@@ -1,12 +1,11 @@
 package exter.foundry.integration.jei;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
@@ -21,7 +20,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -36,46 +34,48 @@ public class AlloyFurnaceJEI
     @Nonnull
     protected final IDrawableStatic flame_drawable;
     @Nonnull
-    private final List<List<ItemStack>> input;
-    @Nonnull
-    private final List<ItemStack> output;
+    private final IAlloyFurnaceRecipe recipe;
 
-    public Wrapper(IJeiHelpers helpers,@Nonnull List<List<ItemStack>> input, List<ItemStack> output)
+    public Wrapper(IJeiHelpers helpers,@Nonnull IAlloyFurnaceRecipe recipe)
     {
       IGuiHelper guiHelper = helpers.getGuiHelper();
       ResourceLocation furnaceBackgroundLocation = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
 
       flame_drawable = guiHelper.createDrawable(furnaceBackgroundLocation, 176, 0, 14, 14);
-      this.input = input;
-      this.output = output;
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return null;
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
 
     @Override
+    @Deprecated
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
 
@@ -102,8 +102,10 @@ public class AlloyFurnaceJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInputLists(ItemStack.class, ImmutableList.of(
+          recipe.getInputA().getItems(),
+          recipe.getInputB().getItems()));
+      ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
   }
 
@@ -120,11 +122,9 @@ public class AlloyFurnaceJEI
     @Nonnull
     private final String localized_name;
     
-    private final IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       background_location = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
 
@@ -174,18 +174,10 @@ public class AlloyFurnaceJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IStackHelper stack_helper = helpers.getStackHelper();
 
-      gui_items.init(0, true, 7, 0);
-      gui_items.init(1, true, 25, 0);
-      gui_items.init(2, false, 85, 18);
-
-      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
-      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
-      gui_items.setFromRecipe(2, recipeWrapper.getOutputs());
     }
 
     @Override
@@ -197,8 +189,15 @@ public class AlloyFurnaceJEI
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+
+      gui_items.init(0, true, 7, 0);
+      gui_items.init(1, true, 25, 0);
+      gui_items.init(2, false, 85, 18);
+
+      gui_items.set(0, ingredients.getInputs(ItemStack.class).get(0));
+      gui_items.set(1, ingredients.getInputs(ItemStack.class).get(1));
+      gui_items.set(2, ingredients.getOutputs(ItemStack.class).get(0));
     }
   }
 
@@ -238,7 +237,6 @@ public class AlloyFurnaceJEI
     }
   }
 
-  @SuppressWarnings("unchecked")
   static public List<Wrapper> getRecipes(IJeiHelpers helpers)
   {
     List<Wrapper> recipes = new ArrayList<Wrapper>();
@@ -250,9 +248,7 @@ public class AlloyFurnaceJEI
 
       if(!(input_a.isEmpty() || input_b.isEmpty()))
       {
-        recipes.add(new Wrapper(helpers,
-            Lists.newArrayList(input_a, input_b),
-            Collections.singletonList(recipe.getOutput())));
+        recipes.add(new Wrapper(helpers,recipe));
       }
     }
 

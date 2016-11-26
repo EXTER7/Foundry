@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
 import exter.foundry.gui.GuiMeltingCrucible;
@@ -36,52 +35,50 @@ public class MeltingJEI
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<List<ItemStack>> input;
-    @Nonnull
-    private final List<FluidStack> output;
-    @Nonnull
-    private final IDrawable heat;
+    private final IDrawable temp;
     
-    private final int melting_point;
+    private final IMeltingRecipe recipe;
     
 
-    public Wrapper(IJeiHelpers helpers,@Nonnull List<ItemStack> input, FluidStack output, int melting_point)
+    public Wrapper(IJeiHelpers helpers,@Nonnull IMeltingRecipe recipe)
     {
-      this.input = Collections.singletonList(input);
-      this.output = Collections.singletonList(output);
-      this.melting_point = melting_point;
+      this.recipe = recipe;
       ResourceLocation background_location = new ResourceLocation("foundry", "textures/gui/crucible.png");
 
-      heat = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
-          (melting_point * 100 - TileEntityMeltingCrucibleBasic.TEMP_MIN) * 54 / (500000 - TileEntityMeltingCrucibleBasic.TEMP_MIN), 12);
-
+      temp = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
+          (recipe.getMeltingPoint() * 100 - TileEntityMeltingCrucibleBasic.TEMP_MIN) * 54 / (500000 - TileEntityMeltingCrucibleBasic.TEMP_MIN), 12);
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return null;
     }
 
-    @Nonnull
+    @Override
+    @Deprecated
     public List<ItemStack> getOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
     @Override
+    @Deprecated
     public List<FluidStack> getFluidOutputs()
     {
-      return output;
+      return Collections.singletonList(recipe.getOutput());
     }
 
     @Override
+    @Deprecated
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
     }
@@ -95,8 +92,8 @@ public class MeltingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      heat.draw(minecraft,11,41);
-      minecraft.fontRendererObj.drawString(melting_point + " °K", 14, 28, 0);
+      temp.draw(minecraft,11,41);
+      minecraft.fontRendererObj.drawString(recipe.getMeltingPoint() + " °K", 14, 28, 0);
     }
 
     @Override
@@ -108,8 +105,8 @@ public class MeltingJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInputLists(ItemStack.class, Collections.singletonList(recipe.getInput().getItems()));
+      ingredients.setOutput(FluidStack.class, recipe.getOutput());
     }
   }
 
@@ -126,11 +123,9 @@ public class MeltingJEI
     @Nonnull
     private final IDrawable tank_overlay;
 
-    private final IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/crucible.png");
 
@@ -164,7 +159,6 @@ public class MeltingJEI
       arrow.draw(minecraft, 49, 7);
     }
 
-    @Nonnull
     @Override
     public String getTitle()
     {
@@ -179,29 +173,28 @@ public class MeltingJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      guiItemStacks.init(0, true, 24, 6);
-      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY,false,tank_overlay);
-      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
-      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+
+      guiItemStacks.init(0, true, 24, 6);
+      guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY,false,tank_overlay);
+      guiItemStacks.set(0,ingredients.getInputs(ItemStack.class).get(0));
+      guiFluidStacks.set(1,ingredients.getOutputs(FluidStack.class).get(0));
     }
   }
 
@@ -251,7 +244,7 @@ public class MeltingJEI
 
       if(!input.isEmpty())
       {
-        recipes.add(new Wrapper(helpers,input, recipe.getOutput(), recipe.getMeltingPoint()));
+        recipes.add(new Wrapper(helpers, recipe));
       }
     }
 

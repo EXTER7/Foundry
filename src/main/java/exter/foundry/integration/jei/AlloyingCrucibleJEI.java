@@ -2,12 +2,11 @@ package exter.foundry.integration.jei;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 
 import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
 import exter.foundry.gui.GuiAlloyingCrucible;
@@ -32,42 +31,43 @@ public class AlloyingCrucibleJEI
 
   static public class Wrapper implements IRecipeWrapper
   {
-    @Nonnull
-    private final List<FluidStack> input;
-    @Nonnull
-    private final List<FluidStack> output;
+    private final IAlloyingCrucibleRecipe recipe;
 
-    public Wrapper(@Nonnull FluidStack output, FluidStack input_a,FluidStack input_b)
+    public Wrapper(IAlloyingCrucibleRecipe recipe)
     {
-      this.input = Lists.newArrayList(input_a, input_b);
-      this.output = Collections.singletonList(output);
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return output;
+      return null;
     }
 
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -95,8 +95,8 @@ public class AlloyingCrucibleJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setOutput(FluidStack.class, recipe.getOutput());
+      ingredients.setInputs(FluidStack.class, ImmutableList.of(recipe.getInputA(),recipe.getInputB()));
     }
   }
 
@@ -155,32 +155,35 @@ public class AlloyingCrucibleJEI
       return "foundry.alloyingcrucible";
     }
 
+    @Deprecated
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      guiFluidStacks.init(0, true, 35 - 33, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, recipeWrapper.getFluidInputs().get(0).amount,false,tank_overlay);
-      guiFluidStacks.init(1, true, 92, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, recipeWrapper.getFluidInputs().get(1).amount,false,tank_overlay);
-      guiFluidStacks.init(2, false, 47, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, recipeWrapper.getFluidOutputs().get(0).amount,false,tank_overlay);
-
-      guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
-      guiFluidStacks.set(1, recipeWrapper.getFluidInputs().get(1));
-      guiFluidStacks.set(2, recipeWrapper.getFluidOutputs().get(0));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+
+      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0);
+      List<FluidStack> in_a = ingredients.getInputs(FluidStack.class).get(0);
+      List<FluidStack> in_b = ingredients.getInputs(FluidStack.class).get(1);
       
+      guiFluidStacks.init(0, true, 35 - 33, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, out.amount,false,tank_overlay);
+      guiFluidStacks.init(1, true, 92, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, in_a.get(0).amount,false,tank_overlay);
+      guiFluidStacks.init(2, false, 47, 2, 16, GuiAlloyingCrucible.TANK_HEIGHT, in_b.get(0).amount,false,tank_overlay);
+
+      guiFluidStacks.set(0, in_a);
+      guiFluidStacks.set(1, in_b);
+      guiFluidStacks.set(2, out);
     }
   }
 
@@ -226,8 +229,7 @@ public class AlloyingCrucibleJEI
 
     for(IAlloyingCrucibleRecipe recipe : AlloyingCrucibleRecipeManager.instance.getRecipes())
     {
-      recipes.add(new Wrapper(
-          recipe.getOutput(),recipe.getInputA(),recipe.getInputB()));
+      recipes.add(new Wrapper(recipe));
     }
 
     return recipes;

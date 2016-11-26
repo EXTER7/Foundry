@@ -35,48 +35,43 @@ public class InfuserJEI
 
   static public class Wrapper implements IRecipeWrapper
   {
-    @Nonnull
-    private final List<FluidStack> input_fluid;
-    @Nonnull
-    private final List<FluidStack> output;
-    @Nonnull
-    private final List<List<ItemStack>> input;
+    private final IInfuserRecipe recipe;
 
-    private final int energy;
-
-    public Wrapper(@Nonnull FluidStack output, @Nonnull FluidStack input_fluid, @Nonnull List<ItemStack> input, int energy)
+    public Wrapper(IInfuserRecipe recipe)
     {
-      this.input_fluid = Collections.singletonList(input_fluid);
-      this.output = Collections.singletonList(output);
-      this.input = Collections.singletonList(input);
-      this.energy = energy;
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input_fluid;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return output;
+      return null;
     }
 
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -92,7 +87,7 @@ public class InfuserJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      minecraft.fontRendererObj.drawString(energy / TileEntityFoundryPowered.RATIO_RF + " RF", 0, 38, 0);
+      minecraft.fontRendererObj.drawString(recipe.getEnergyNeeded() / TileEntityFoundryPowered.RATIO_FE + " FE", 0, 38, 0);
     }
 
     @Override
@@ -104,8 +99,9 @@ public class InfuserJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInput(FluidStack.class, recipe.getInputFluid());
+      ingredients.setInputLists(ItemStack.class, Collections.singletonList(recipe.getInput().getItems()));
+      ingredients.setOutput(FluidStack.class, recipe.getOutput());
     }
   }
 
@@ -119,15 +115,12 @@ public class InfuserJEI
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
-
-    private final IJeiHelpers helpers;
     
     @Nonnull
     protected final IDrawableAnimated arrow;
     
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       background_location = new ResourceLocation("foundry", "textures/gui/infuser.png");
       
@@ -175,33 +168,32 @@ public class InfuserJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      guiFluidStacks.init(0, true, 59, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
-      guiFluidStacks.init(1, false, 108, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
-      guiFluidStacks.set(0, recipeWrapper.getFluidInputs().get(0));
-      guiFluidStacks.set(1, recipeWrapper.getFluidOutputs().get(0));
-
-      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-
-      guiItemStacks.init(0, true, 14, 17);
-      guiItemStacks.setFromRecipe(0, helpers.getStackHelper().toItemStackList(recipeWrapper.getInputs().get(0)));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+
+      guiFluidStacks.init(0, true, 59, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.init(1, false, 108, 2, 16, GuiMetalInfuser.TANK_HEIGHT, FoundryAPI.INFUSER_TANK_CAPACITY,false,tank_overlay);
+      guiFluidStacks.set(0, ingredients.getInputs(FluidStack.class).get(0));
+      guiFluidStacks.set(1, ingredients.getOutputs(FluidStack.class).get(0));
+
+      IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+      guiItemStacks.init(0, true, 14, 17);
+      guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
     }
   }
 
@@ -250,11 +242,7 @@ public class InfuserJEI
       List<ItemStack> input = recipe.getInput().getItems();
       if(!input.isEmpty())
       {
-        recipes.add(new Wrapper(
-            recipe.getOutput(),
-            recipe.getInputFluid(),
-            input,
-            recipe.getEnergyNeeded()));
+        recipes.add(new Wrapper(recipe));
       }
     }
 

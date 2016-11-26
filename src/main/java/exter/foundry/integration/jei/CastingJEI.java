@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.ICastingRecipe;
@@ -25,7 +25,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -39,45 +38,42 @@ public class CastingJEI
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    private final List<FluidStack> input_fluid;
-    @Nonnull
-    private final List<ItemStack> output;
-    @Nonnull
-    private final List<List<ItemStack>> input;
+    private final ICastingRecipe recipe;
 
-    @SuppressWarnings("unchecked")
-    public Wrapper(@Nonnull ItemStack output, FluidStack input, ItemStack mold, List<ItemStack> extra)
+    public Wrapper(ICastingRecipe recipe)
     {
-      this.input_fluid = Collections.singletonList(input);
-      this.input = Lists.newArrayList(Collections.singletonList(mold),extra);
-          Collections.singletonList(input);
-      this.output = Collections.singletonList(output);
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input_fluid;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -105,8 +101,13 @@ public class CastingJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IItemMatcher extra = recipe.getInputExtra();
+      List<ItemStack> extra_items = extra != null?extra.getItems():Collections.<ItemStack>emptyList();
+      ingredients.setInputs(FluidStack.class, Collections.singletonList(recipe.getInput()));
+      ingredients.setInputLists(ItemStack.class, ImmutableList.of(
+          Collections.singletonList(recipe.getMold()),
+          extra_items));
+      ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
   }
 
@@ -122,12 +123,9 @@ public class CastingJEI
     private final String localizedName;
     @Nonnull
     private final IDrawable tank_overlay;
-    
-    private IJeiHelpers helpers;
 
     public Category(IJeiHelpers helpers)
     {
-      this.helpers = helpers;
       IGuiHelper guiHelper = helpers.getGuiHelper();
       backgroundLocation = new ResourceLocation("foundry", "textures/gui/caster.png");
 
@@ -176,34 +174,32 @@ public class CastingJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
-      IStackHelper stack_helper = helpers.getStackHelper();
 
-      gui_items.init(0, false, 47, 34);
-      gui_items.init(1, true, 27, 4);
-      gui_items.init(2, true, 47, 4);
-      gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
-      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      gui_items.setFromRecipe(1, stack_helper.toItemStackList(recipeWrapper.getInputs().get(0)));
-      gui_items.setFromRecipe(2, stack_helper.toItemStackList(recipeWrapper.getInputs().get(1)));
-      gui_fluids.set(3, recipeWrapper.getFluidInputs().get(0));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
+
+      gui_items.init(0, false, 47, 34);
+      gui_items.init(1, true, 27, 4);
+      gui_items.init(2, true, 47, 4);
+      gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY,false,tank_overlay);
+      gui_items.set(0, ingredients.getOutputs(ItemStack.class).get(0));
+      gui_items.set(1, ingredients.getInputs(ItemStack.class).get(0));
+      gui_items.set(2, ingredients.getInputs(ItemStack.class).get(1));
+      gui_fluids.set(3, ingredients.getInputs(FluidStack.class).get(0));
     }
   }
 
@@ -253,11 +249,7 @@ public class CastingJEI
 
       if(output != null)
       {
-        IItemMatcher extra = recipe.getInputExtra();
-        recipes.add(new Wrapper(
-            output,recipe.getInput(),
-            recipe.getMold(),
-            extra == null?Collections.<ItemStack>emptyList():extra.getItems()));
+        recipes.add(new Wrapper(recipe));
       }
     }
 

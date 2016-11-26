@@ -34,45 +34,43 @@ public class CastingTableJEI
   public class Wrapper implements IRecipeWrapper
   {
     private final String name;
-    @Nonnull
-    private final List<FluidStack> input_fluid;
-    @Nonnull
-    private final List<ItemStack> output;
-    @Nonnull
-    private final List<List<ItemStack>> input;
+    private final ICastingTableRecipe recipe;
 
-    public Wrapper(String name,@Nonnull ItemStack output, FluidStack input)
+    public Wrapper(String name,ICastingTableRecipe recipe)
     {
       this.name = name;
-      this.input_fluid = Collections.singletonList(input);
-      this.input = Collections.singletonList(Collections.singletonList(table_item));
-      this.output = Collections.singletonList(output);
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return input;
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return output;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input_fluid;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
       return Collections.emptyList();
     }
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -100,8 +98,8 @@ public class CastingTableJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInput(FluidStack.class, recipe.getInput());
+      ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
   }
 
@@ -125,7 +123,6 @@ public class CastingTableJEI
       ResourceLocation location = new ResourceLocation("foundry", "textures/gui/casting_table_jei.png");
       background = guiHelper.createDrawable(location, 0, 0, 74, 59);
       localizedName = Translator.translateToLocal("gui.jei.casting_table." + name);
-
     }
 
     @Override
@@ -162,33 +159,34 @@ public class CastingTableJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
-      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
-      IStackHelper stack_helper = helpers.getStackHelper();
 
-      gui_items.init(0, false, 53, 20);
-      gui_items.init(1, true, 3, 39);
-      gui_fluids.init(2, true, 4, 4, 16, 24, recipeWrapper.input_fluid.get(0).amount,false,null);
-
-      gui_items.setFromRecipe(0, stack_helper.toItemStackList(recipeWrapper.getOutputs().get(0)));
-      gui_items.set(1, table_item);
-      gui_fluids.set(2, recipeWrapper.getFluidInputs().get(0));
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
+      IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
+      IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
+      IStackHelper stack_helper = helpers.getStackHelper();
       
+      List<FluidStack> input = ingredients.getInputs(FluidStack.class).get(0);
+
+      gui_items.init(0, false, 53, 20);
+      gui_items.init(1, true, 3, 39);
+      gui_fluids.init(2, true, 4, 4, 16, 24, input.get(0).amount,false,null);
+
+      gui_items.set(0, stack_helper.toItemStackList(ingredients.getOutputs(ItemStack.class).get(0)));
+      gui_items.set(1, table_item);
+      gui_fluids.set(2, input.get(0));
     }
   }
 
@@ -251,7 +249,7 @@ public class CastingTableJEI
 
         if(output != null)
         {
-          recipes.add(new Wrapper(name,output,recipe.getInput()));
+          recipes.add(new Wrapper(name,recipe));
         }
       }
     }

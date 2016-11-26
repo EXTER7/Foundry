@@ -2,7 +2,6 @@ package exter.foundry.integration.jei;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -30,42 +29,43 @@ public class AlloyMixerJEI
 
   static public class Wrapper implements IRecipeWrapper
   {
-    @Nonnull
-    private final List<FluidStack> input;
-    @Nonnull
-    private final List<FluidStack> output;
+    private final IAlloyMixerRecipe recipe;
 
-    public Wrapper(@Nonnull FluidStack output, List<FluidStack> input)
+    public Wrapper(IAlloyMixerRecipe recipe)
     {
-      this.input = input;
-      this.output = Collections.singletonList(output);
+      this.recipe = recipe;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<List<ItemStack>> getInputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
-    @Nonnull
+    @Deprecated
+    @Override
     public List<ItemStack> getOutputs()
     {
-      return Collections.emptyList();
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidInputs()
     {
-      return input;
+      return null;
     }
 
+    @Deprecated
     @Override
     public List<FluidStack> getFluidOutputs()
     {
-      return output;
+      return null;
     }
 
 
+    @Deprecated
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
     {
@@ -93,8 +93,8 @@ public class AlloyMixerJEI
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      ingredients.setInputs(FluidStack.class, recipe.getInputs());
+      ingredients.setOutput(FluidStack.class, recipe.getOutput());
     }
   }
 
@@ -154,32 +154,32 @@ public class AlloyMixerJEI
     }
 
     @Override
+    @Deprecated
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
     {
-      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
-
-      int i;
-      for(i = 0; i < recipeWrapper.getFluidInputs().size(); i++)
-      {
-        guiFluidStacks.init(i, true, 8 + 21 * i, 1, 16, GuiAlloyMixer.TANK_HEIGHT, recipeWrapper.getFluidInputs().get(i).amount,false,tank_overlay);
-        guiFluidStacks.set(i, recipeWrapper.getFluidInputs().get(i));
-      }
-      guiFluidStacks.init(5, false, 115, 1, 16, GuiAlloyMixer.TANK_HEIGHT, recipeWrapper.getFluidOutputs().get(0).amount,false,tank_overlay);
-      guiFluidStacks.set(5, recipeWrapper.getFluidOutputs().get(0));
+      
     }
 
     @Override
     public IDrawable getIcon()
     {
-      // TODO Auto-generated method stub
       return null;
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients)
     {
-      // TODO Auto-generated method stub
-      
+      IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+
+      List<List<FluidStack>> in = ingredients.getInputs(FluidStack.class);
+      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0);
+      for(int i = 0; i < in.size(); i++)
+      {
+        guiFluidStacks.init(i, true, 8 + 21 * i, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out.amount,false,tank_overlay);
+        guiFluidStacks.set(i, in.get(i));
+      }
+      guiFluidStacks.init(5, false, 115, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out.amount,false,tank_overlay);
+      guiFluidStacks.set(5, ingredients.getOutputs(FluidStack.class).get(0));
     }
   }
 
@@ -225,8 +225,7 @@ public class AlloyMixerJEI
 
     for(IAlloyMixerRecipe recipe : AlloyMixerRecipeManager.instance.getRecipes())
     {
-      recipes.add(new Wrapper(
-          recipe.getOutput(),recipe.getInputs()));
+      recipes.add(new Wrapper(recipe));
     }
 
     return recipes;

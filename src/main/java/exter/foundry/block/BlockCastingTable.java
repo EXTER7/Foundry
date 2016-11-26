@@ -13,8 +13,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -187,7 +189,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
     super.breakBlock(world, pos, state);
   }
   
-  private void dropCastingTableOutput(World world, BlockPos pos, IBlockState state)
+  private void dropCastingTableOutput(EntityPlayer player,World world, BlockPos pos, IBlockState state)
   {
     TileEntity te = world.getTileEntity(pos);
 
@@ -205,6 +207,11 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   
           world.spawnEntityInWorld(entityitem);
           te_ct.setInventorySlotContents(0, null);
+          
+          if (state.getValue(TABLE) == EnumTable.INGOT && is.getItem() == Items.IRON_INGOT)
+          {
+            player.addStat(AchievementList.ACQUIRE_IRON);
+          }
         }
       }
     }
@@ -218,7 +225,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
       return true;
     } else
     {
-      dropCastingTableOutput(world, pos, state);
+      dropCastingTableOutput(player, world, pos, state);
       return false;
     }
   }

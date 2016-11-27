@@ -49,7 +49,7 @@ public class InitFirearmRecipes
             0, 2, 2, 0,
             2, 1, 1, 2,
             2, 1, 1, 2,
-            0, 1, 2, 0
+            0, 2, 2, 0
         });
 
     MoldRecipeManager.instance.addRecipe(mold_pellet, 1, 1, new int[]

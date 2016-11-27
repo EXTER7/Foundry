@@ -73,30 +73,29 @@ public class MTCastingTableHandler
   }
 
   @ZenMethod
-  static public void addIngotRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
+  static public void addIngotRecipe(IItemStack output,ILiquidStack input)
   {
     addRecipe(output,input,ICastingTableRecipe.TableType.INGOT);
   }
 
   @ZenMethod
-  static public void addPlateRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
+  static public void addPlateRecipe(IItemStack output,ILiquidStack input)
   {
     addRecipe(output,input,ICastingTableRecipe.TableType.PLATE);
   }
 
   @ZenMethod
-  static public void addRodRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
+  static public void addRodRecipe(IItemStack output,ILiquidStack input)
   {
     addRecipe(output,input,ICastingTableRecipe.TableType.ROD);
   }
   
   @ZenMethod
-  static public void addBlockRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
+  static public void addBlockRecipe(IItemStack output,ILiquidStack input)
   {
     addRecipe(output,input,ICastingTableRecipe.TableType.BLOCK);
   }
 
-  @ZenMethod
   static public void removeRecipe(ILiquidStack input, ICastingTableRecipe.TableType table)
   {
     ICastingTableRecipe recipe = CastingTableRecipeManager.instance.findRecipe(

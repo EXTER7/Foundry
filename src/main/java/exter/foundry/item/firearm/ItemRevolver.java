@@ -151,18 +151,24 @@ public class ItemRevolver extends ItemFirearm
   {
     if(GuiScreen.isShiftKeyDown())
     {
-      int position = stack.getTagCompound().getInteger("position");
+      NBTTagCompound tag = stack.getTagCompound();
+      if(tag == null)
+      {
+        tag = new NBTTagCompound();
+        stack.setTagCompound(tag);
+      }
+      int position = tag.getInteger("position");
       int i;
       for(i = 0; i < 8; i++)
       {
         int j = (i + position) % 8;
-        NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Slot_" + j);
-        if(tag.getBoolean("Empty"))
+        NBTTagCompound ammo_tag = tag.getCompoundTag("Slot_" + j);
+        if(ammo_tag == null || ammo_tag.getBoolean("Empty"))
         {
           list.add(TextFormatting.BLUE + "< Empty >");
         } else
         {
-          ItemStack ammo = ItemStack.loadItemStackFromNBT(tag);
+          ItemStack ammo = ItemStack.loadItemStackFromNBT(ammo_tag);
           list.add(TextFormatting.BLUE + ammo.getDisplayName());
         }
       }

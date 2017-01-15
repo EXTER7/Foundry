@@ -40,7 +40,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry
     @Override
     public int fill(FluidStack resource, boolean doFill)
     {
-      if(inventory[0] != null)
+      if(!inventory[0].isEmpty())
       {
         return 0;
       }
@@ -154,7 +154,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry
     {
       progress = compound.getInteger("progress");
     }
-    if(worldObj.isRemote && compound.hasKey("tank_capacity"))
+    if(world.isRemote && compound.hasKey("tank_capacity"))
     {
       tank.setCapacity(compound.getInteger("tank_capacity"));
     }
@@ -192,13 +192,12 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry
     return false;
   }
 
-  @Deprecated
   @Override
   public final ItemStack removeStackFromSlot(int slot)
   {
     if(progress > 0)
     {
-      return null;
+      return ItemStack.EMPTY;
     }
     return super.removeStackFromSlot(slot);
   }
@@ -223,7 +222,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry
     recipe = CastingTableRecipeManager.instance.findRecipe(fluid, getTableType());
     if(recipe != null)
     {
-      if(recipe.getOutput() == null)
+      if(recipe.getOutput().isEmpty())
       {
         recipe = null;
         tank.setCapacity(getDefaultCapacity());
@@ -248,7 +247,7 @@ public abstract class TileEntityCastingTableBase extends TileEntityFoundry
         updateTank(0);
         setRecipe(null);
       }
-    } else if(inventory[0] == null && recipe != null && tank.getFluid().amount == recipe.getInput().amount)
+    } else if(inventory[0].isEmpty() && recipe != null && tank.getFluid().amount == recipe.getInput().amount)
     {
       setInventorySlotContents(0, recipe.getOutput());
       progress = CAST_TIME;

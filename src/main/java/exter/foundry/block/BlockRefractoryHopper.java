@@ -1,7 +1,6 @@
 package exter.foundry.block;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,7 +11,6 @@ import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.tileentity.renderer.ISpoutPourDepth;
 import exter.foundry.util.FoundryMiscUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -20,7 +18,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -83,8 +80,6 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
   public static final PropertyEnum<EnumHopperFacing> FACING = PropertyEnum.create("facing", EnumHopperFacing.class);
 
   protected static final AxisAlignedBB AABB_SIDES = new AxisAlignedBB(0.0, 0.25, 0.0, 1.0, 1.0, 1.0);
-
-  private Random rand = new Random();
   
   protected static final AxisAlignedBB[] BOUNDS = new AxisAlignedBB[]
   {
@@ -101,9 +96,9 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);
-    setUnlocalizedName("foundry.refractoryHopper");
+    setUnlocalizedName("foundry.refractory_hopper");
     setDefaultState(blockState.getBaseState().withProperty(FACING, EnumHopperFacing.DOWN));
-    setRegistryName("refractoryHopper");
+    setRegistryName("refractory_hopper");
   }
   
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -140,7 +135,7 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
 
 
   @Override
-  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
   {
     switch(facing)
     {
@@ -166,7 +161,7 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
 
 
   @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+  public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos from_block)
   {
     TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(pos);
 
@@ -177,7 +172,7 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack item, EnumFacing side, float hitx, float hity, float hitz)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitx, float hity, float hitz)
   {
     if(world.isRemote)
     {
@@ -192,29 +187,7 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
   @Override
   public void breakBlock(World world, BlockPos pos, IBlockState state)
   {
-    TileEntity te = world.getTileEntity(pos);
-
-    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
-    {
-      TileEntityFoundry tef = (TileEntityFoundry) te;
-      int i;
-      for(i = 0; i < tef.getSizeInventory(); i++)
-      {
-        ItemStack is = tef.getStackInSlot(i);
-
-        if(is != null && is.stackSize > 0)
-        {
-          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
-          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
-          entityitem.setPickupDelay(10);
-
-          world.spawnEntityInWorld(entityitem);
-        }
-      }
-    }
-    world.removeTileEntity(pos);
+    FoundryMiscUtils.breakTileEntityBlock(world, pos, state);
     super.breakBlock(world, pos, state);
   }
 

@@ -68,13 +68,13 @@ public class ContainerMetalCaster extends Container
 
   public boolean canInteractWith(EntityPlayer par1EntityPlayer)
   {
-    return te_caster.isUseableByPlayer(par1EntityPlayer);
+    return te_caster.isUsableByPlayer(par1EntityPlayer);
   }
 
 
   public ItemStack transferStackInSlot(EntityPlayer player, int slot_index)
   {
-    ItemStack slot_stack = null;
+    ItemStack slot_stack = ItemStack.EMPTY;
     Slot slot = (Slot) inventorySlots.get(slot_index);
 
     if (slot != null && slot.getHasStack())
@@ -91,14 +91,14 @@ public class ContainerMetalCaster extends Container
           {
             if(!mergeItemStack(stack, mold_slot, mold_slot + 1, false))
             {
-              return null;
+              return ItemStack.EMPTY;
             }
           } else
           {
             mold_slot = SLOTS_TE + TileEntityMetalCaster.INVENTORY_MOLD_STORAGE;
             if(!mergeItemStack(stack, mold_slot, mold_slot + SLOTS_TE_MOLD_STORAGE_SIZE, false))
             {
-              return null;
+              return ItemStack.EMPTY;
             }
           }
         } else
@@ -106,29 +106,29 @@ public class ContainerMetalCaster extends Container
           int merge_slot = SLOTS_TE + TileEntityMetalCaster.INVENTORY_EXTRA; 
           if(!mergeItemStack(stack, merge_slot, merge_slot + 1, false))
           {
-            return null;
+            return ItemStack.EMPTY;
           } 
         }
       } else if (slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
       {
         if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
         {
-          return null;
+          return ItemStack.EMPTY;
         }
       } else if (slot_index == SLOTS_TE + TileEntityMetalCaster.INVENTORY_MOLD)
       {
         if (!mergeItemStack(stack, SLOTS_TE_MOLD_STORAGE, SLOTS_TE_MOLD_STORAGE + SLOTS_TE_MOLD_STORAGE_SIZE, false))
         {
-          return null;
+          return ItemStack.EMPTY;
         }
       } else if(slot_index >= SLOTS_TE_MOLD_STORAGE && slot_index < SLOTS_TE_MOLD_STORAGE + SLOTS_TE_MOLD_STORAGE_SIZE)
       {
         SlotCasterMold storage_slot = (SlotCasterMold)inventorySlots.get(slot_index);
         SlotCasterMold output_slot = (SlotCasterMold)inventorySlots.get(SLOTS_TE + TileEntityMetalCaster.INVENTORY_MOLD);
         ItemStack tmp = storage_slot.getStack();
-        if(tmp == null)
+        if(tmp.isEmpty())
         {
-          return null;
+          return ItemStack.EMPTY;
         }
         slot_stack = tmp;
         storage_slot.putStack(output_slot.getStack());
@@ -137,23 +137,24 @@ public class ContainerMetalCaster extends Container
         output_slot.onSlotChanged();
       } else if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_HOTBAR + 9, false))
       {
-        return null;
+        return ItemStack.EMPTY;
       }
 
-      if (stack.stackSize == 0)
+      if (stack.isEmpty())
       {
-        slot.putStack((ItemStack) null);
+        slot.putStack(stack);
       } else
       {
         slot.onSlotChanged();
       }
 
-      if (stack.stackSize == slot_stack.stackSize)
+      if (stack.getCount() == slot_stack.getCount())
       {
-        return null;
+        return ItemStack.EMPTY;
       }
 
-      slot.onPickupFromSlot(player, stack);
+      slot.onTake(player, stack);
+
     }
 
     return slot_stack;

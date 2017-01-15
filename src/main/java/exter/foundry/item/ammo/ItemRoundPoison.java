@@ -38,8 +38,8 @@ public class ItemRoundPoison extends Item
   public ItemRoundPoison()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("roundPoison");
-    setRegistryName("roundPoison");
+    setUnlocalizedName("round_poison");
+    setRegistryName("round_poison");
   }
 
   @Override

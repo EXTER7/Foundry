@@ -42,42 +42,6 @@ public class InfuserJEI
       this.recipe = recipe;
     }
 
-    @Deprecated
-    @Override
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidOutputs()
-    {
-      return null;
-    }
-
-
-    @Deprecated
-    @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
-    }
-
     @Override
     public List<String> getTooltipStrings(int x, int y)
     {
@@ -145,11 +109,6 @@ public class InfuserJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
       arrow.draw(minecraft, 34, 18);
     }
 
@@ -165,13 +124,6 @@ public class InfuserJEI
     public String getUid()
     {
       return "foundry.infuser";
-    }
-
-    @Override
-    @Deprecated
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-
     }
 
     @Override
@@ -204,13 +156,6 @@ public class InfuserJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.infuser";
     }
 
     @Override

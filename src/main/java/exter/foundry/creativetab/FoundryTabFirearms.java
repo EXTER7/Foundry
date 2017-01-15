@@ -2,7 +2,6 @@ package exter.foundry.creativetab;
 
 import exter.foundry.item.FoundryItems;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class FoundryTabFirearms extends CreativeTabs
@@ -21,8 +20,8 @@ public class FoundryTabFirearms extends CreativeTabs
   }
 
   @Override
-  public Item getTabIconItem()
+  public ItemStack getTabIconItem()
   {
-    return null;
+    return FoundryItems.item_revolver.empty();
   }
 }

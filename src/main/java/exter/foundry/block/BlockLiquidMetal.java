@@ -134,9 +134,9 @@ public class BlockLiquidMetal extends BlockFluidClassic
   }
 
   @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos from)
   {
-    super.neighborChanged(state, world, pos, block);
+    super.neighborChanged(state, world, pos, block, from);
     checkForHarden(world, pos, state);
   }
  
@@ -245,7 +245,7 @@ public class BlockLiquidMetal extends BlockFluidClassic
     {
       if(!(entity instanceof EntityItem))
       {
-        entity.attackEntityFrom(DamageSource.lava, 4);
+        entity.attackEntityFrom(DamageSource.LAVA, 4);
       }
       entity.setFire(15);
     }

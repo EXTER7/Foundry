@@ -18,8 +18,8 @@ public class BlockCauldronBronze extends BlockCauldron
 {
   public BlockCauldronBronze()
   {
-    setRegistryName("bronzeCauldron");
-    setUnlocalizedName("foundry.bronzeCauldron");
+    setRegistryName("bronze_cauldron");
+    setUnlocalizedName("foundry.bronze_cauldron");
     setHardness(1.8F);
     setCreativeTab(CreativeTabs.BREWING);
   }

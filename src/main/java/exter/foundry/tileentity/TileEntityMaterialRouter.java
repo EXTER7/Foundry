@@ -252,10 +252,10 @@ public class TileEntityMaterialRouter extends TileEntityFoundry
   {
     ItemStack input = inventory[in_slot];
     ItemStack output = inventory[out_slot];
-    if(output == null)
+    if(output.isEmpty())
     {
       inventory[out_slot] = input;
-      inventory[in_slot] = null;
+      inventory[in_slot] = ItemStack.EMPTY;
       updateInventoryItem(in_slot);
       updateInventoryItem(out_slot);
     } else
@@ -264,13 +264,13 @@ public class TileEntityMaterialRouter extends TileEntityFoundry
       {
         return;
       }
-      int transfer = output.getMaxStackSize() - output.stackSize;
-      if(transfer > input.stackSize)
+      int transfer = output.getMaxStackSize() - output.getCount();
+      if(transfer > input.getCount())
       {
-        transfer = input.stackSize;
+        transfer = input.getCount();
       }
       decrStackSize(in_slot, transfer);
-      inventory[out_slot].stackSize += transfer;
+      inventory[out_slot].grow(transfer);
       updateInventoryItem(in_slot);
       updateInventoryItem(out_slot);
     }
@@ -289,7 +289,7 @@ public class TileEntityMaterialRouter extends TileEntityFoundry
     {
       int i = input_index / 4;
       ItemStack input = inventory[i];
-      if(input != null)
+      if(!input.isEmpty())
       {
         for(Route r : routes)
         {
@@ -332,9 +332,9 @@ public class TileEntityMaterialRouter extends TileEntityFoundry
     NBTTagCompound tag = new NBTTagCompound();
     writeTileToNBT(tag);   
     writeRoutesToNBT(tag);
-    if(worldObj.isRemote)
+    if(world.isRemote)
     {
-      tag.setInteger("dim", worldObj.provider.getDimension());
+      tag.setInteger("dim", world.provider.getDimension());
       ModFoundry.network_channel.sendToServer(new MessageTileEntitySync(tag));
     } else
     {

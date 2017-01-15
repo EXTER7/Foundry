@@ -3,7 +3,6 @@ package exter.foundry.creativetab;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class FoundryTabMolds extends CreativeTabs
@@ -22,8 +21,8 @@ public class FoundryTabMolds extends CreativeTabs
   }
 
   @Override
-  public Item getTabIconItem()
+  public ItemStack getTabIconItem()
   {
-    return null;
+    return FoundryItems.mold(ItemMold.SubItem.INGOT);
   }
 }

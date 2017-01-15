@@ -50,40 +50,6 @@ public class MeltingJEI
     }
 
     @Override
-    @Deprecated
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<FluidStack> getFluidOutputs()
-    {
-      return Collections.singletonList(recipe.getOutput());
-    }
-
-    @Override
-    @Deprecated
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-    }
-
-    @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY)
     {
       return null;
@@ -150,12 +116,6 @@ public class MeltingJEI
     @Override
     public void drawExtras(Minecraft minecraft)
     {
-
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
       arrow.draw(minecraft, 49, 7);
     }
 
@@ -170,13 +130,6 @@ public class MeltingJEI
     public String getUid()
     {
       return "foundry.melting";
-    }
-
-    @Override
-    @Deprecated
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-
     }
 
     @Override
@@ -205,13 +158,6 @@ public class MeltingJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.melting";
     }
 
     @Override

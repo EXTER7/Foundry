@@ -38,8 +38,8 @@ public class ItemRoundLumium extends Item
   public ItemRoundLumium()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("roundLumium");
-    setRegistryName("roundLumium");
+    setUnlocalizedName("round_lumium");
+    setRegistryName("round_lumium");
   }
   
   

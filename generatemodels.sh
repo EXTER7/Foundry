@@ -34,6 +34,6 @@ do
 	  }
 	}
 	EOF
-  ) | sed -e "s/@@FLUID@@/"$(echo $fluid | tr '[A-Z]' '[a-z]')"/g" > $blockstatedir"/"$fluid".json"
+  ) | sed -e "s/@@FLUID@@/"$(echo $fluid | sed 's/_//g')"/g" > $blockstatedir"/"$fluid".json"
 done
 

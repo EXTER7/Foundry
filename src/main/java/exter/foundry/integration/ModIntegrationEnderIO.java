@@ -76,7 +76,7 @@ public class ModIntegrationEnderIO implements IModIntegration
   @Override
   public void onPostInit()
   {
-    if(!Loader.isModLoaded("EnderIO"))
+    if(!Loader.isModLoaded("enderio"))
     {
       return;
     }

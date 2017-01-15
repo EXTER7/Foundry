@@ -1,20 +1,16 @@
 package exter.foundry.block;
 
-import java.util.Random;
-
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.tileentity.TileEntityFoundry;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -25,8 +21,6 @@ import net.minecraft.world.World;
 
 public abstract class BlockFoundrySidedMachine extends BlockContainer
 {
-  private final Random rand = new Random();
-
   public enum EnumMachineState implements IStringSerializable
   {
     OFF(0, "off"),
@@ -184,7 +178,7 @@ public abstract class BlockFoundrySidedMachine extends BlockContainer
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack item)
   {
-    int dir = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+    int dir = MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
     EnumMachineFacing facing = EnumMachineFacing.NORTH;
     if(dir == 0)
@@ -209,29 +203,7 @@ public abstract class BlockFoundrySidedMachine extends BlockContainer
   @Override
   public void breakBlock(World world, BlockPos pos, IBlockState state)
   {
-    TileEntity te = world.getTileEntity(pos);
-
-    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
-    {
-      TileEntityFoundry tef = (TileEntityFoundry) te;
-      int i;
-      for(i = 0; i < tef.getSizeInventory(); i++)
-      {
-        ItemStack is = tef.getStackInSlot(i);
-
-        if(is != null && is.stackSize > 0)
-        {
-          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
-          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
-          entityitem.setPickupDelay(10);
-
-          world.spawnEntityInWorld(entityitem);
-        }
-      }
-    }
-    world.removeTileEntity(pos);
+    FoundryMiscUtils.breakTileEntityBlock(world, pos, state);
     super.breakBlock(world, pos, state);
   }
 

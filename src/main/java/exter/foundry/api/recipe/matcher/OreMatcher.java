@@ -30,7 +30,7 @@ public class OreMatcher implements IItemMatcher
   @Override
   public boolean apply(ItemStack input)
   {
-    return FoundryUtils.isItemInOreDictionary(match,input) && input.stackSize >= amount;
+    return FoundryUtils.isItemInOreDictionary(match,input) && input.getCount() >= amount;
   }
 
   @Override
@@ -51,7 +51,7 @@ public class OreMatcher implements IItemMatcher
     for(ItemStack ore:OreDictionary.getOres(match))
     {
       ore = ore.copy();
-      ore.stackSize = amount;
+      ore.setCount(amount);
       list.add(ore);
     }
     return list;
@@ -63,10 +63,10 @@ public class OreMatcher implements IItemMatcher
     List<ItemStack> list = OreDictionary.getOres(match);
     if(list.isEmpty())
     {
-      return null;
+      return ItemStack.EMPTY;
     }
     ItemStack res = list.get(0).copy();
-    res.stackSize = amount;
+    res.setCount(amount);
     return res;
   }
 }

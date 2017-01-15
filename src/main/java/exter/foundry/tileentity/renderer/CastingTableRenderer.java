@@ -60,7 +60,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
       int count = 0;
       for(EnumFacing facing:facings)
       {
-        List<BakedQuad> quads = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, getWorld(), Minecraft.getMinecraft().thePlayer).getQuads(null, facing, 0);
+        List<BakedQuad> quads = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, getWorld(), Minecraft.getMinecraft().player).getQuads(null, facing, 0);
         if(quads != null)
         {
           for(BakedQuad q : quads)

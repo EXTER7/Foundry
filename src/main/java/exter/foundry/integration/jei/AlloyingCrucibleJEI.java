@@ -22,7 +22,6 @@ import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -36,42 +35,6 @@ public class AlloyingCrucibleJEI
     public Wrapper(IAlloyingCrucibleRecipe recipe)
     {
       this.recipe = recipe;
-    }
-
-    @Deprecated
-    @Override
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidOutputs()
-    {
-      return null;
-    }
-
-
-    @Deprecated
-    @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
     }
 
     @Override
@@ -135,12 +98,6 @@ public class AlloyingCrucibleJEI
 
     }
 
-    @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
-    }
-
     @Nonnull
     @Override
     public String getTitle()
@@ -155,13 +112,6 @@ public class AlloyingCrucibleJEI
       return "foundry.alloyingcrucible";
     }
 
-    @Deprecated
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-
-    }
-
     @Override
     public IDrawable getIcon()
     {
@@ -173,7 +123,7 @@ public class AlloyingCrucibleJEI
     {
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0);
+      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0).get(0);
       List<FluidStack> in_a = ingredients.getInputs(FluidStack.class).get(0);
       List<FluidStack> in_b = ingredients.getInputs(FluidStack.class).get(1);
       
@@ -196,13 +146,6 @@ public class AlloyingCrucibleJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.alloyingcrucible";
     }
 
     @Override

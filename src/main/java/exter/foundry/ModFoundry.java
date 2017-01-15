@@ -10,7 +10,6 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -36,9 +35,7 @@ import exter.foundry.init.InitRecipes;
 import exter.foundry.integration.ModIntegrationBotania;
 import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationManager;
-import exter.foundry.integration.ModIntegrationMinetweaker;
 import exter.foundry.integration.ModIntegrationMolten;
-import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.network.MessageTileEntitySync;
 import exter.foundry.proxy.CommonFoundryProxy;
@@ -83,15 +80,15 @@ import exter.foundry.tileentity.TileEntityRefractoryTankStandard;
   name = ModFoundry.MODNAME,
   version = ModFoundry.MODVERSION,
   dependencies =
-      "required-after:Forge@[12.18.2.2125,);"
-    + "required-after:substratum@[1.8.2.1,);"
-    + "after:JEI@[3.13.3.373,)"
+      "required-after:forge@[13.20.0.2206,);"
+    + "required-after:substratum@[1.9.1.0,);"
+    + "after:jei@[3.13.3.373,)"
 )
 public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "2.2.2.0";
+  public static final String MODVERSION = "2.3.0.0";
 
   @Instance(MODID)
   public static ModFoundry instance;
@@ -115,8 +112,8 @@ public class ModFoundry
     log = event.getModLog();
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
-    ModIntegrationManager.registerIntegration(config,ModIntegrationMinetweaker.class);
-    ModIntegrationManager.registerIntegration(config,ModIntegrationTiCon.class);
+    //ModIntegrationManager.registerIntegration(config,ModIntegrationMinetweaker.class);
+    //ModIntegrationManager.registerIntegration(config,ModIntegrationTiCon.class);
     ModIntegrationManager.registerIntegration(config,ModIntegrationMolten.class);
     ModIntegrationManager.registerIntegration(config,ModIntegrationEnderIO.class);
     ModIntegrationManager.registerIntegration(config,ModIntegrationBotania.class);
@@ -198,35 +195,14 @@ public class ModFoundry
 
     InitRecipes.init();
 
-    EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
+    EntityRegistry.registerModEntity(new ResourceLocation(MODID,"gun_skeleton"),EntitySkeletonGun.class, "gun_skeleton", 0, this, 80, 1, true);
     LootTableList.register(new ResourceLocation("foundry","gun_skeleton"));
 
     List<Biome> biomes = new ArrayList<Biome>();
-    for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
+    for(ResourceLocation name:Biome.REGISTRY.getKeys())
     {
-      for(Biome bio : BiomeDictionary.getBiomesForType(type))
-      {
-        if(!biomes.contains(bio))
-        {
-          biomes.add(bio);
-        }
-      }
+      biomes.add(Biome.REGISTRY.getObject(name));
     }
-    for(Biome bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END))
-    {
-      if(biomes.contains(bio))
-      {
-        biomes.remove(bio);
-      }
-    }
-    for(Biome bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER))
-    {
-      if(biomes.contains(bio))
-      {
-        biomes.remove(bio);
-      }
-    }
-
     List<Biome> toremove = new ArrayList<Biome>();
     for(Biome bio : biomes)
     {

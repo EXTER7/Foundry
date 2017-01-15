@@ -101,7 +101,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
   @Override
   protected IFluidHandler getFluidHandler(EnumFacing facing)
   {
-    EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING).facing;
+    EnumFacing side = world.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING).facing;
     return (facing == EnumFacing.UP || facing == side)?fluid_handler:null;
   }
   
@@ -178,7 +178,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
       next_world_drain = 300;
 
 
-      FluidStack todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add( 0, 1, 0), false);
+      FluidStack todrain = FoundryMiscUtils.drainFluidFromWorld(world, getPos().add( 0, 1, 0), false);
 
       if(todrain != null && tank.fill(todrain, false) == todrain.amount)
       {
@@ -212,7 +212,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
               int y = (p / 41) % 20;
               int z = p / (41 * 20);
               
-              todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add(x - 20, y + 1, z - 20), false);
+              todrain = FoundryMiscUtils.drainFluidFromWorld(world, getPos().add(x - 20, y + 1, z - 20), false);
               if(todrain != null && todrain.getFluid() == drainfluid && tank.fill(todrain, false) == todrain.amount)
               {
                 if(y > top_y)
@@ -252,7 +252,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
 
           int x = drainblock % 41;
           int z = drainblock / (41 * 20);
-          todrain = FoundryMiscUtils.drainFluidFromWorld(worldObj, getPos().add(x - 20, top_y + 1, z - 20), true);
+          todrain = FoundryMiscUtils.drainFluidFromWorld(world, getPos().add(x - 20, top_y + 1, z - 20), true);
           tank.fill(todrain, true);
           updateTank(0);
           markDirty();
@@ -265,7 +265,7 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
       next_drain = 12;
 
       // Drain from the top TileEntity
-      TileEntity source = worldObj.getTileEntity(getPos().add(0, 1, 0));
+      TileEntity source = world.getTileEntity(getPos().add(0, 1, 0));
       if(source != null && source.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN))
       {
         IFluidHandler hsource = source.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
@@ -291,8 +291,8 @@ public class TileEntityRefractoryHopper extends TileEntityFoundry
       // Fill to the sides/bottom
       if(tank.getFluid() != null && tank.getFluid().amount > 0)
       {
-        EnumFacing side = ((EnumHopperFacing)worldObj.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING)).facing;
-        TileEntity dest = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
+        EnumFacing side = ((EnumHopperFacing)world.getBlockState(getPos()).getValue(BlockRefractoryHopper.FACING)).facing;
+        TileEntity dest = world.getTileEntity(getPos().add(side.getDirectionVec()));
         side = side.getOpposite();
         if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
         {

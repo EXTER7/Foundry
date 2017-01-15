@@ -18,8 +18,8 @@ public class ItemShellNormal extends Item
   public ItemShellNormal()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shellNormal");
-    setRegistryName("shellNormal");
+    setUnlocalizedName("shell_normal");
+    setRegistryName("shell_normal");
   }
 
   @SideOnly(Side.CLIENT)

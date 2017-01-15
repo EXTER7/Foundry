@@ -1,12 +1,12 @@
 package exter.foundry.item;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,28 +16,28 @@ public class ItemComponent extends Item implements IFuelHandler
 {
   static public enum SubItem
   {
-    HEATINGCOIL(0,"componentHeatingCoil"),
-    REFRACTORYCLAY(1,"componentRefractoryClay"),
-    REFRACTORYBRICK(2,"componentRefractoryBrick"),
-    GUN_BARREL(3,"componentGunBarrel"),
-    REVOLVER_DRUM(4,"componentRevolverDrum"),
-    REVOLVER_FRAME(5,"componentRevolverFrame"),
-    AMMO_CASING(6,"componentRoundCasing"),
-    AMMO_BULLET(7,"componentBullet"),
-    AMMO_BULLET_HOLLOW(8,"componentBulletHollow"),
-    AMMO_BULLET_JACKETED(9,"componentBulletJacketed"),
-    AMMO_PELLET(10,"componentPellet"),
-    AMMO_CASING_SHELL(11,"componentShellCasing"),
-    SHOTGUN_PUMP(12,"componentShotgunPump"),
-    SHOTGUN_FRAME(13,"componentShotgunFrame"),
-    AMMO_BULLET_STEEL(14,"componentBulletSteel"),
-    AMMO_PELLET_STEEL(15,"componentPelletSteel"),
-    REFRACTORYCLAY_SMALL(16,"componentSmallRefractoryClay"),
-    INFERNOCLAY(17,"componentInfernoClay"),
-    INFERNOBRICK(18,"componentInfernoBrick"),
-    AMMO_BULLET_LUMIUM(19,"componentBulletLumium"),
-    AMMO_PELLET_LUMIUM(20,"componentPelletLumium"),
-    COAL_COKE(21,"componentCoalCoke");
+    HEATINGCOIL(0,"component_heating_coil"),
+    REFRACTORYCLAY(1,"component_refractory_clay"),
+    REFRACTORYBRICK(2,"component_refractory_brick"),
+    GUN_BARREL(3,"component_gun_barrel"),
+    REVOLVER_DRUM(4,"component_revolver_drum"),
+    REVOLVER_FRAME(5,"component_revolver_frame"),
+    AMMO_CASING(6,"component_round_casing"),
+    AMMO_BULLET(7,"component_bullet"),
+    AMMO_BULLET_HOLLOW(8,"component_bullet_hollow"),
+    AMMO_BULLET_JACKETED(9,"component_bullet_jacketed"),
+    AMMO_PELLET(10,"component_pellet"),
+    AMMO_CASING_SHELL(11,"component_shell_casing"),
+    SHOTGUN_PUMP(12,"component_shotgun_pump"),
+    SHOTGUN_FRAME(13,"component_shotgun_frame"),
+    AMMO_BULLET_STEEL(14,"component_bullet_steel"),
+    AMMO_PELLET_STEEL(15,"component_pellet_steel"),
+    REFRACTORYCLAY_SMALL(16,"component_small_refractory_clay"),
+    INFERNOCLAY(17,"component_inferno_clay"),
+    INFERNOBRICK(18,"component_inferno_brick"),
+    AMMO_BULLET_LUMIUM(19,"component_bullet_lumium"),
+    AMMO_PELLET_LUMIUM(20,"component_pellet_lumium"),
+    COAL_COKE(21,"component_coal_coke");
     
     public final int id;
     public final String name;
@@ -82,7 +82,7 @@ public class ItemComponent extends Item implements IFuelHandler
 
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list)
+  public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> list)
   {
     for(SubItem c:SubItem.values())
     {

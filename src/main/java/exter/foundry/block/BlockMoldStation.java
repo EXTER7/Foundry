@@ -26,16 +26,16 @@ public class BlockMoldStation extends BlockFoundrySidedMachine
   public BlockMoldStation()
   {
     super(Material.ROCK);
-    setUnlocalizedName("foundry.moldStation");
+    setUnlocalizedName("foundry.mold_station");
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setRegistryName("moldStation");
+    setRegistryName("mold_station");
   }
 
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hit_x, float hit_y, float hit_z)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {

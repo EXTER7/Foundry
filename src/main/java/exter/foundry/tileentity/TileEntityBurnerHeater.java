@@ -52,7 +52,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
           {
             if(last_burn_time*burn_time == 0)
             {
-              ((BlockBurnerHeater)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+              ((BlockBurnerHeater)getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
             }
             updateValue("BurnTime",burn_time);
           }
@@ -119,9 +119,9 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
     {
       heat_provide = tag.getInteger("HeatProvide");
     }
-    if(worldObj != null && !worldObj.isRemote)
+    if(world != null && !world.isRemote)
     {
-      ((BlockBurnerHeater)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+      ((BlockBurnerHeater)getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
     }
   }
 
@@ -157,9 +157,9 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer)
   {
-    return this.worldObj.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
+    return this.world.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
   }
 
   @Override
@@ -198,7 +198,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
       for(int i = 0; i < 4; i++)
       {
         ItemStack item = inventory[i];
-        if(item != null)
+        if(!item.isEmpty())
         {
           int burn = 0;
           IBurnerHeaterFuel fuel = BurnerHeaterFuelManager.instance.getFuel(item);
@@ -215,9 +215,11 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
           {
             burn_time += burn;
             item_burn_time = burn_time;
-            if(--item.stackSize == 0)
+            ItemStack container = item.getItem().getContainerItem(item);
+            item.shrink(1);
+            if(item.isEmpty())
             {
-              inventory[i] = item.getItem().getContainerItem(item);
+              inventory[i] = container;
             }
             updateInventoryItem(i);
             break;
@@ -230,7 +232,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockBurnerHeater)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+        ((BlockBurnerHeater)getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
       }
       updateValue("BurnTime",burn_time);
     }
@@ -305,7 +307,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
   @Override
   public void boostBurnTime()
   {
-    if(!worldObj.isRemote)
+    if(!world.isRemote)
     {
       heat_provide = DEFAULT_HEAT_PROVIDE;
       burn_time = 2000;

@@ -1,8 +1,5 @@
 package exter.foundry.block;
 
-
-import java.util.List;
-
 import exter.foundry.creativetab.FoundryTabMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -14,6 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,10 +21,10 @@ public class BlockComponent extends Block implements IBlockVariants
 
   static public enum EnumVariant implements IStringSerializable
   {
-    CASING_STANDARD(0, "casing_standard", "componentBlockCasingStandard"),
-    REFCLAYBLOCK(1, "block_refractoryclay", "componentBlockRefractoryClay"),
-    CASING_ADVANCED(2, "casing_advanced", "componentBlockCasingAdvanced"),
-    CASING_BASIC(3, "casing_basic", "componentBlockCasingBasic");
+    CASING_STANDARD(0, "casing_standard", "component_block_casing_standard"),
+    REFCLAYBLOCK(1, "block_refractoryclay", "component_block_refractory_clay"),
+    CASING_ADVANCED(2, "casing_advanced", "component_block_casing_advanced"),
+    CASING_BASIC(3, "casing_basic", "component_block_casing_basic");
 
     public final int id;
     public final String name;
@@ -93,7 +91,7 @@ public class BlockComponent extends Block implements IBlockVariants
   
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)
+  public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list)
   {
     for(EnumVariant m:EnumVariant.values())
     {
@@ -112,7 +110,7 @@ public class BlockComponent extends Block implements IBlockVariants
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setUnlocalizedName("foundry.componentBlock");
+    setUnlocalizedName("foundry.component_block");
     setCreativeTab(FoundryTabMaterials.tab);
     setRegistryName("componentBlock");
   }

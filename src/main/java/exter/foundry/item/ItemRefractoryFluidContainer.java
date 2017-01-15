@@ -18,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -32,6 +33,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,7 +42,7 @@ import exter.foundry.creativetab.FoundryTabFluids;
 
 public class ItemRefractoryFluidContainer extends Item
 {
-  private class FluidHandler implements IFluidHandler,IFluidTankProperties,ICapabilityProvider
+  private class FluidHandler implements IFluidHandlerItem,IFluidTankProperties,ICapabilityProvider
   {
     private IFluidTankProperties[] props;
     private ItemStack stack;
@@ -136,6 +138,12 @@ public class ItemRefractoryFluidContainer extends Item
         return null;
       }
     }
+
+    @Override
+    public ItemStack getContainer()
+    {
+      return stack;
+    }
   }
   
   public ItemRefractoryFluidContainer()
@@ -143,8 +151,8 @@ public class ItemRefractoryFluidContainer extends Item
     super();
     setCreativeTab(FoundryTabFluids.tab);
     setMaxStackSize(1);
-    setUnlocalizedName("foundry.fluidContainer");
-    setRegistryName("fluidContainer");
+    setUnlocalizedName("foundry.fluid_container");
+    setRegistryName("fluid_container");
     setHasSubtypes(true);
     
 
@@ -203,10 +211,9 @@ public class ItemRefractoryFluidContainer extends Item
     return FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(Item item,CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
+  public void getSubItems(Item item,CreativeTabs tabs, NonNullList<ItemStack> list)
   {
     list.add(fromFluidStack(null));
     Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
@@ -236,7 +243,7 @@ public class ItemRefractoryFluidContainer extends Item
 
   private boolean splitStack(ItemStack stack,EntityPlayer player)
   {
-    if(stack.stackSize == 1)
+    if(stack.getCount() == 1)
     {
       return true;
     }
@@ -246,21 +253,22 @@ public class ItemRefractoryFluidContainer extends Item
     }
     
     ItemStack rest_stack = stack.copy();
-    rest_stack.stackSize--;
+    rest_stack.shrink(1);
     int slot = player.inventory.getFirstEmptyStack();
     if(slot >= 0)
     {
       player.inventory.setInventorySlotContents(slot, rest_stack);
       player.inventory.markDirty();
-      stack.stackSize = 1;
+      stack.setCount(1);
       return true;
     }
     return false;
   }
   
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
   {
+    ItemStack stack = player.getHeldItem(hand);
     FluidStack fluid = getFluid(stack);
     RayTraceResult obj = rayTrace(world, player, fluid == null || fluid.amount == 0);
 
@@ -440,7 +448,7 @@ public class ItemRefractoryFluidContainer extends Item
 
   public FluidStack drain(ItemStack stack,int amount, boolean doDrain)
   {
-    if(stack.stackSize > 1)
+    if(stack.getCount() > 1)
     {
       return null;
     }
@@ -473,7 +481,7 @@ public class ItemRefractoryFluidContainer extends Item
 
   private int fill(ItemStack stack, FluidStack fluid, boolean do_fill,boolean ignore_stacksize)
   {
-    if(!ignore_stacksize && stack.stackSize > 1)
+    if(!ignore_stacksize && stack.getCount() > 1)
     {
       return 0;
     }

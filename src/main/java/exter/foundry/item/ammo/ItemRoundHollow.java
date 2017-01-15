@@ -19,8 +19,8 @@ public class ItemRoundHollow extends Item
   public ItemRoundHollow()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("roundHollow");
-    setRegistryName("roundHollow");
+    setUnlocalizedName("round_hollow");
+    setRegistryName("round_hollow");
   }
 
   @SideOnly(Side.CLIENT)

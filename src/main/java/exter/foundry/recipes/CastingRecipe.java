@@ -33,7 +33,7 @@ public class CastingRecipe implements ICastingRecipe
   @Override
   public boolean containsExtra(ItemStack stack)
   {
-    if(stack == null)
+    if(stack.isEmpty())
     {
       return extra == null;
     }

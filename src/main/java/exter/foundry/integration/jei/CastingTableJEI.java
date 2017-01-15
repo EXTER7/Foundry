@@ -1,7 +1,7 @@
 package exter.foundry.integration.jei;
 
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -40,41 +40,6 @@ public class CastingTableJEI
     {
       this.name = name;
       this.recipe = recipe;
-    }
-
-    @Deprecated
-    @Override
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidOutputs()
-    {
-      return Collections.emptyList();
-    }
-
-    @Deprecated
-    @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
     }
 
     @Override
@@ -138,12 +103,6 @@ public class CastingTableJEI
 
     }
 
-    @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
-    }
-
     @Nonnull
     @Override
     public String getTitle()
@@ -156,13 +115,6 @@ public class CastingTableJEI
     public String getUid()
     {
       return "foundry.casting_table." + name;
-    }
-
-    @Override
-    @Deprecated
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-
     }
 
     @Override
@@ -197,13 +149,6 @@ public class CastingTableJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.casting_table";
     }
 
     @Override

@@ -89,7 +89,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
       has_block = tag.getBoolean("HasBlock");
     }
     
-    if(worldObj != null && !worldObj.isRemote && has_block)
+    if(world != null && !world.isRemote && has_block)
     {
       if(grid_changed)
       {
@@ -99,7 +99,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
       {
         current_recipe = MoldRecipeManager.instance.findRecipe(grid);
       }
-      ((BlockMoldStation)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+      ((BlockMoldStation)getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
     }
   }
 
@@ -165,9 +165,9 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer)
   {
-    return this.worldObj.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
+    return this.world.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
   }
 
   @Override
@@ -213,7 +213,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
   private boolean canOutput(ItemStack output,int slot)
   {
     ItemStack inv_output = inventory[slot];
-    return output == null || inv_output == null || (inv_output.isItemEqual(output) && inv_output.stackSize - output.stackSize <= inv_output.getMaxStackSize());
+    return output.isEmpty() || inv_output.isEmpty() || (inv_output.isItemEqual(output) && inv_output.getCount() - output.getCount() <= inv_output.getMaxStackSize());
   }
 
   private int getCarvedClayAmount()
@@ -232,7 +232,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
     int clay_amount = getCarvedClayAmount();
     ItemStack slot_clay = inventory[SLOT_CLAY];
     
-    return canOutput(output,SLOT_OUTPUT) && (slot_clay == null || slot_clay.stackSize + clay_amount <= slot_clay.getMaxStackSize());
+    return canOutput(output,SLOT_OUTPUT) && (slot_clay.isEmpty() || slot_clay.getCount() + clay_amount <= slot_clay.getMaxStackSize());
   }
   
   private void clearGrid()
@@ -261,19 +261,19 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
     if(++progress == 200)
     {
       progress = 0;
-      if(inventory[SLOT_OUTPUT] == null)
+      if(inventory[SLOT_OUTPUT].isEmpty())
       {
         inventory[SLOT_OUTPUT] = output.copy();
       } else
       {
-        inventory[SLOT_OUTPUT].stackSize += output.stackSize;
+        inventory[SLOT_OUTPUT].grow(output.getCount());
       }
-      if(inventory[SLOT_CLAY] == null)
+      if(inventory[SLOT_CLAY].isEmpty())
       {
         inventory[SLOT_CLAY] = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL,clay);
       } else
       {
-        inventory[SLOT_CLAY].stackSize += clay;
+        inventory[SLOT_CLAY].grow(clay);
       }
       updateInventoryItem(SLOT_OUTPUT);
       updateInventoryItem(SLOT_CLAY);
@@ -310,14 +310,17 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
     {
       if(burn_time == 0 && current_recipe != null && canRecipeOutput())
       {
-        item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(inventory[SLOT_FUEL]);
-        if(burn_time > 0)
+        ItemStack fuel = inventory[SLOT_FUEL];
+        if(!fuel.isEmpty())
         {
-          if(inventory[SLOT_FUEL] != null)
+          item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(fuel);
+          if(burn_time > 0)
           {
-            if(--inventory[SLOT_FUEL].stackSize == 0)
+            ItemStack container = fuel.getItem().getContainerItem(fuel);
+            fuel.shrink(1);
+            if(fuel.isEmpty())
             {
-              inventory[SLOT_FUEL] = inventory[SLOT_FUEL].getItem().getContainerItem(inventory[SLOT_FUEL]);
+              inventory[SLOT_FUEL] = container;
             }
             updateInventoryItem(SLOT_FUEL);
           }
@@ -343,7 +346,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
     {
       if(last_burn_time*burn_time == 0)
       {
-        ((BlockMoldStation)getBlockType()).setMachineState(worldObj, getPos(), worldObj.getBlockState(getPos()), burn_time > 0);
+        ((BlockMoldStation)getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
       }
       updateValue("BurnTime",burn_time);
     }
@@ -380,7 +383,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
 
   public void carve(int x1,int y1, int x2, int y2)
   {
-    if(worldObj.isRemote && has_block)
+    if(world.isRemote && has_block)
     {
       NBTTagCompound tag = new NBTTagCompound();
       for(int j = y1; j <= y2; j++)
@@ -401,7 +404,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
 
   public void mend(int x1,int y1, int x2, int y2)
   {
-    if(worldObj.isRemote && has_block)
+    if(world.isRemote && has_block)
     {
       NBTTagCompound tag = new NBTTagCompound();
       for(int j = y1; j <= y2; j++)
@@ -422,7 +425,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
 
   public void fire()
   {
-    if(worldObj.isRemote)
+    if(world.isRemote)
     {
       NBTTagCompound tag = new NBTTagCompound();
       tag.setBoolean("command_fire",true);
@@ -448,7 +451,7 @@ public class TileEntityMoldStation extends TileEntityFoundry implements IExoflam
   @Override
   public void boostBurnTime()
   {
-    if(!worldObj.isRemote)
+    if(!world.isRemote)
     {
       burn_time = 200;
       item_burn_time = 199;

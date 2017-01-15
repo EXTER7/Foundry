@@ -60,8 +60,8 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
     setCreativeTab(FoundryTabMachines.tab);
     setHardness(1.0F);
     setResistance(8.0F);
-    setUnlocalizedName("foundry.refractorySpout");
-    setRegistryName("refractorySpout");
+    setUnlocalizedName("foundry.refractory_spout");
+    setRegistryName("refractory_spout");
   }
   
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -118,7 +118,7 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   }
 
   @Override
-  public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
   {
     switch(facing)
     {
@@ -199,7 +199,7 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   }
   
   @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block,BlockPos from)
   {
     EnumFacing facing = state.getValue(FACING).facing;
 
@@ -211,7 +211,7 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   }
   
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hit_x, float hit_y, float hit_z)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {

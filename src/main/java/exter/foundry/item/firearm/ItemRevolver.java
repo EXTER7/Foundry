@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
@@ -120,7 +121,7 @@ public class ItemRevolver extends ItemFirearm
 
   
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
   {
     if(player.isSneaking())
     {
@@ -132,13 +133,12 @@ public class ItemRevolver extends ItemFirearm
     {
        player.setActiveHand(hand);
     }
-    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+    return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubItems(Item item,CreativeTabs tabs, @SuppressWarnings("rawtypes") List list)
+  public void getSubItems(Item item,CreativeTabs tabs, NonNullList<ItemStack> list)
   {
     list.add(empty());
     list.add(loaded());
@@ -168,7 +168,7 @@ public class ItemRevolver extends ItemFirearm
           list.add(TextFormatting.BLUE + "< Empty >");
         } else
         {
-          ItemStack ammo = ItemStack.loadItemStackFromNBT(ammo_tag);
+          ItemStack ammo = new ItemStack(ammo_tag);
           list.add(TextFormatting.BLUE + ammo.getDisplayName());
         }
       }
@@ -232,7 +232,7 @@ public class ItemRevolver extends ItemFirearm
       return null;
     } else
     {
-      return ItemStack.loadItemStackFromNBT(ammo_tag);
+      return new ItemStack(ammo_tag);
     }
   }
 

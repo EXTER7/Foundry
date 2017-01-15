@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -48,10 +49,10 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
 
   static public enum EnumTable implements IStringSerializable
   {
-    INGOT(0, "ingot", "castingTableIngot", 9, TableType.INGOT),
-    PLATE(1, "plate", "castingTablePlate", 11, TableType.PLATE),
-    ROD(2, "rod", "castingTableRod", 10, TableType.ROD),
-    BLOCK(3, "block", "castingTableBlock", 2, TableType.BLOCK);
+    INGOT(0, "ingot", "casting_table_ingot", 9, TableType.INGOT),
+    PLATE(1, "plate", "casting_table_plate", 11, TableType.PLATE),
+    ROD(2, "rod", "casting_table_rod", 10, TableType.ROD),
+    BLOCK(3, "block", "casting_table_block", 2, TableType.BLOCK);
 
     public final int id;
     public final String name;
@@ -173,7 +174,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
       {
         ItemStack is = tef.getStackInSlot(0);
 
-        if(is != null && is.stackSize > 0)
+        if(!is.isEmpty())
         {
           double drop_x = (rand.nextFloat() * 0.3) + 0.35;
           double drop_y = (rand.nextFloat() * 0.3) + 0.35;
@@ -181,7 +182,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
           EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
           entityitem.setPickupDelay(10);
 
-          world.spawnEntityInWorld(entityitem);
+          world.spawnEntity(entityitem);
         }
       }
     }
@@ -200,12 +201,12 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
       {
         ItemStack is = te_ct.getStackInSlot(0);
 
-        if(is != null && is.stackSize > 0)
+        if(!is.isEmpty())
         {
           EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.9375, pos.getZ() + 0.5, is);
           entityitem.setPickupDelay(1);
   
-          world.spawnEntityInWorld(entityitem);
+          world.spawnEntity(entityitem);
           te_ct.setInventorySlotContents(0, null);
           
           if (state.getValue(TABLE) == EnumTable.INGOT && is.getItem() == Items.IRON_INGOT)
@@ -218,7 +219,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack item,EnumFacing side, float hit_x, float hit_y, float hit_z)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {
@@ -259,10 +260,9 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
     return getMetaFromState(state);
   }
   
-  @SuppressWarnings("unchecked")
   @Override
   @SideOnly(Side.CLIENT)
-  public void getSubBlocks(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List list)
+  public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list)
   {
     for(EnumTable m:EnumTable.values())
     {
@@ -271,7 +271,7 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   }
   
   @Override
-  public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+  public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos fromPos)
   {
     TileEntityFoundry te = (TileEntityFoundry) world.getTileEntity(pos);
 
@@ -309,6 +309,6 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.castingTable." + getStateFromMeta(stack.getMetadata()).getValue(TABLE).name, tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.casting_table." + getStateFromMeta(stack.getMetadata()).getValue(TABLE).name, tooltip);
   }
 }

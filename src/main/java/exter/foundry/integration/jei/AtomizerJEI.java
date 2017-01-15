@@ -47,42 +47,6 @@ public class AtomizerJEI
     }
 
     @Override
-    @Deprecated
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Override
-    @Deprecated
-    public List<FluidStack> getFluidOutputs()
-    {
-      return null;
-    }
-
-
-    @Override
-    @Deprecated
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
-    }
-
-    @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY)
     {
       return null;
@@ -149,13 +113,6 @@ public class AtomizerJEI
       arrow.draw(minecraft, 52, 18);
     }
 
-    @Override
-    @Deprecated
-    public void drawAnimations(Minecraft minecraft)
-    {
-
-    }
-
     @Nonnull
     @Override
     public String getTitle()
@@ -168,13 +125,6 @@ public class AtomizerJEI
     public String getUid()
     {
       return "foundry.atomizer";
-    }
-
-    @Override
-    @Deprecated
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-
     }
 
     @Override
@@ -205,13 +155,6 @@ public class AtomizerJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.atomizer";
     }
 
     @Override

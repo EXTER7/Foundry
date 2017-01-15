@@ -21,8 +21,8 @@ public class BlockRefractoryGlass extends BlockBreakable
       setCreativeTab(FoundryTabMaterials.tab);
       setHardness(0.4F);
       setSoundType(SoundType.GLASS);
-      setUnlocalizedName("foundry.refractoryGlass");
-      setRegistryName("refractoryGlass");
+      setUnlocalizedName("foundry.refractory_glass");
+      setRegistryName("refractory_glass");
   }
 
   @SideOnly(Side.CLIENT)

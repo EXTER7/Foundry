@@ -42,24 +42,19 @@ public class InventoryFirearm implements IInventory
   @Override
   public ItemStack decrStackSize(int slot, int amount)
   {
-    if(items[slot] != null)
+    if(!items[slot].isEmpty())
     {
       ItemStack is;
 
-      if(items[slot].stackSize <= amount)
+      if(items[slot].getCount() <= amount)
       {
         is = items[slot];
-        items[slot] = null;
+        items[slot] = ItemStack.EMPTY;
         markDirty();
         return is;
       } else
       {
         is = items[slot].splitStack(amount);
-
-        if(items[slot].stackSize == 0)
-        {
-          items[slot] = null;
-        }
 
         markDirty();
         return is;
@@ -74,13 +69,13 @@ public class InventoryFirearm implements IInventory
   public ItemStack removeStackFromSlot(int slot)
   {
     ItemStack ammo = items[slot];
-    if(ammo != null)
+    if(!ammo.isEmpty())
     {
-      items[slot] = null;
+      items[slot] = ItemStack.EMPTY;
       return ammo;
     } else
     {
-      return null;
+      return ItemStack.EMPTY;
     }
   }
 
@@ -88,9 +83,9 @@ public class InventoryFirearm implements IInventory
   {
     items[slot] = stack;
 
-    if(stack != null && stack.stackSize > this.getInventoryStackLimit())
+    if(!stack.isEmpty() && stack.getCount() > getInventoryStackLimit())
     {
-      stack.stackSize = this.getInventoryStackLimit();
+      stack.setCount(getInventoryStackLimit());
     }
     markDirty();
   }
@@ -108,7 +103,7 @@ public class InventoryFirearm implements IInventory
   }
 
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer)
   {
     return true;
   }
@@ -181,5 +176,18 @@ public class InventoryFirearm implements IInventory
   public void clear()
   {
 
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    for(ItemStack i:items)
+    {
+      if(!i.isEmpty())
+      {
+        return false;
+      }
+    }
+    return true;
   }
 }

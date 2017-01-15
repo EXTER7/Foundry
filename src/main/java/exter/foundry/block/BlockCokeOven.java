@@ -27,16 +27,16 @@ public class BlockCokeOven extends BlockFoundrySidedMachine
   public BlockCokeOven()
   {
     super(Material.ROCK);
-    setUnlocalizedName("foundry.cokeOven");
+    setUnlocalizedName("foundry.coke_oven");
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setRegistryName("cokeOven");
+    setRegistryName("coke_oven");
   }
 
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hit_x, float hit_y, float hit_z)
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hit_x, float hit_y, float hit_z)
   {
     if(world.isRemote)
     {

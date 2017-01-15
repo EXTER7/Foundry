@@ -34,9 +34,9 @@ public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe
   
   public AlloyFurnaceRecipe(ItemStack out,IItemMatcher in_a,IItemMatcher in_b)
   {
-    if(out == null)
+    if(out == null || out.isEmpty())
     {
-      throw new IllegalArgumentException("Alloy recipe output cannot be null");
+      throw new IllegalArgumentException("Alloy recipe output cannot be null or empty");
     }
     output = out.copy();
 

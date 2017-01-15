@@ -32,8 +32,8 @@ public class ItemShellAP extends Item
   public ItemShellAP()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shellAP");
-    setRegistryName("shellAP");
+    setUnlocalizedName("shell_ap");
+    setRegistryName("shell_ap");
   }
   
   @SideOnly(Side.CLIENT)

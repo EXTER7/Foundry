@@ -208,7 +208,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered
     ItemStack recipe_output = current_recipe.getOutput();
 
     ItemStack inv_output = inventory[INVENTORY_OUTPUT];
-    if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.stackSize + recipe_output.stackSize > inv_output.getMaxStackSize()))
+    if(inv_output != null && (!inv_output.isItemEqual(recipe_output) || inv_output.getCount() + recipe_output.getCount() > inv_output.getMaxStackSize()))
     {
       return false;
     }
@@ -282,7 +282,7 @@ public class TileEntityMetalAtomizer extends TileEntityFoundryPowered
             inventory[INVENTORY_OUTPUT] = current_recipe.getOutput();
           } else
           {
-            inventory[INVENTORY_OUTPUT].stackSize += current_recipe.getOutput().stackSize;
+            inventory[INVENTORY_OUTPUT].grow(current_recipe.getOutput().getCount());
           }
           updateInventoryItem(INVENTORY_OUTPUT);
           updateTank(0);

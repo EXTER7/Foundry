@@ -71,7 +71,7 @@ public class TileEntityRefractorySpout extends TileEntityFoundry
   @Override
   protected IFluidHandler getFluidHandler(EnumFacing facing)
   {
-    EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
+    EnumFacing side = world.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
     return (facing == EnumFacing.DOWN || facing == side)?fluid_handler:null;
   }
   
@@ -157,12 +157,12 @@ public class TileEntityRefractorySpout extends TileEntityFoundry
       fluid_moved.setFluid(null);
 
       // Get fluid from the back.
-      if(worldObj.getBlockState(getPos()).getValue(BlockFoundrySidedMachine.STATE) == BlockFoundrySidedMachine.EnumMachineState.ON)
+      if(world.getBlockState(getPos()).getValue(BlockFoundrySidedMachine.STATE) == BlockFoundrySidedMachine.EnumMachineState.ON)
       {
 
         FluidStack drained = null;
-        EnumFacing side = worldObj.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
-        TileEntity source = worldObj.getTileEntity(getPos().add(side.getDirectionVec()));
+        EnumFacing side = world.getBlockState(getPos()).getValue(BlockRefractorySpout.FACING).facing;
+        TileEntity source = world.getTileEntity(getPos().add(side.getDirectionVec()));
         IFluidHandler hsource = null;
         side = side.getOpposite();
         if(source != null && source.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
@@ -182,12 +182,12 @@ public class TileEntityRefractorySpout extends TileEntityFoundry
             {
               break;
             }
-            IBlockState state = worldObj.getBlockState(pos);
-            if(state.getBlock().isAir(state, worldObj, pos))
+            IBlockState state = world.getBlockState(pos);
+            if(state.getBlock().isAir(state, world, pos))
             {
               continue;
             }
-            TileEntity dest = worldObj.getTileEntity(pos);
+            TileEntity dest = world.getTileEntity(pos);
             if(dest != null && dest.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,EnumFacing.UP))
             {
               IFluidHandler hdest = dest.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);

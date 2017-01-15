@@ -2,6 +2,7 @@ package exter.foundry.util;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import exter.foundry.api.FoundryAPI;
@@ -11,10 +12,13 @@ import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
+import exter.foundry.tileentity.TileEntityFoundry;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -30,6 +34,8 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class FoundryMiscUtils
 {
+  static private Random rand = new Random();
+  
   static public int divCeil(int a,int b)
   {
     return a / b + ((a % b == 0) ? 0 : 1);
@@ -81,11 +87,11 @@ public class FoundryMiscUtils
       if(is.getItem().getRegistryName().getResourceDomain().equals(modid))
       {
         is = is.copy();
-        is.stackSize = amount;
+        is.setCount(amount);
         return is;
       }
     }
-    return null;
+    return ItemStack.EMPTY;
   }
   
   /**
@@ -95,7 +101,7 @@ public class FoundryMiscUtils
    */
   static public void registerInOreDictionary(String name,ItemStack stack)
   {
-    if(stack == null)
+    if(stack.isEmpty())
     {
       return;
     }
@@ -154,7 +160,7 @@ public class FoundryMiscUtils
 
   static public void registerCasting(ItemStack item,FluidStack fluid,ItemMold.SubItem mold_meta,ItemStack extra)
   {
-    if(item != null)
+    if(!item.isEmpty())
     {
       ItemStack mold = FoundryItems.mold(mold_meta);
       if(CastingRecipeManager.instance.findRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
@@ -169,4 +175,31 @@ public class FoundryMiscUtils
     }
   }
 
+  static public void breakTileEntityBlock(World world, BlockPos pos, IBlockState state)
+  {
+    TileEntity te = world.getTileEntity(pos);
+
+    if(te != null && (te instanceof TileEntityFoundry) && !world.isRemote)
+    {
+      TileEntityFoundry tef = (TileEntityFoundry) te;
+      int i;
+      for(i = 0; i < tef.getSizeInventory(); i++)
+      {
+        ItemStack is = tef.getStackInSlot(i);
+
+        if(!is.isEmpty())
+        {
+          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
+          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
+          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
+          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
+          entityitem.setPickupDelay(10);
+
+          world.spawnEntity(entityitem);
+        }
+      }
+    }
+    world.removeTileEntity(pos);
+  }
+  
 }

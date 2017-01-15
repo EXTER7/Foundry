@@ -49,6 +49,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
+import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -115,7 +116,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).ignore(BlockFluidBase.LEVEL).build());
     }
     RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonGun.class, 
-        new IRenderFactory<EntitySkeleton>() { @Override public Render<EntitySkeleton> createRenderFor(RenderManager manager) { return new RenderSkeleton(manager); }});
+        new IRenderFactory<EntitySkeleton>() { @Override public Render<AbstractSkeleton> createRenderFor(RenderManager manager) { return new RenderSkeleton(manager); }});
     ModIntegrationManager.clientPreInit();
   }
 
@@ -132,16 +133,16 @@ public class ClientFoundryProxy extends CommonFoundryProxy
       registerItemModel(FoundryBlocks.block_casting_table,m.model,m.id);
     }
 
-    registerItemModel(FoundryBlocks.block_refractory_glass,"refractoryGlass");
-    registerItemModel(FoundryBlocks.block_alloy_furnace,"alloyFurnace");
-    registerItemModel(FoundryBlocks.block_mold_station,"moldStation");
-    registerItemModel(FoundryBlocks.block_refractory_hopper,"refractoryHopper");
-    registerItemModel(FoundryBlocks.block_burner_heater,"burnerHeater");
-    registerItemModel(FoundryBlocks.block_refractory_spout,"refractorySpout");
-    registerItemModel(FoundryBlocks.block_refractory_tank_basic,"refractoryTank");
-    registerItemModel(FoundryBlocks.block_refractory_tank_standard,"refractoryTankStandard");
-    registerItemModel(FoundryBlocks.block_refractory_tank_advanced,"infernoTank");
-    registerItemModel(FoundryBlocks.block_cauldron_bronze,"bronzeCauldron");
+    registerItemModel(FoundryBlocks.block_refractory_glass,"refractory_glass");
+    registerItemModel(FoundryBlocks.block_alloy_furnace,"alloy_furnace");
+    registerItemModel(FoundryBlocks.block_mold_station,"mold_station");
+    registerItemModel(FoundryBlocks.block_refractory_hopper,"refractory_hopper");
+    registerItemModel(FoundryBlocks.block_burner_heater,"burner_heater");
+    registerItemModel(FoundryBlocks.block_refractory_spout,"refractory_spout");
+    registerItemModel(FoundryBlocks.block_refractory_tank_basic,"refractory_tank_basic");
+    registerItemModel(FoundryBlocks.block_refractory_tank_standard,"refractory_tank_standard");
+    registerItemModel(FoundryBlocks.block_refractory_tank_advanced,"refractory_tank_advanced");
+    registerItemModel(FoundryBlocks.block_cauldron_bronze,"bronze_cauldron");
     if(FoundryConfig.block_cokeoven)
     {
       registerItemModel(FoundryBlocks.block_coke_oven,"cokeOven");

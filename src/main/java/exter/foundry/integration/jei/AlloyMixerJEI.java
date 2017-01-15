@@ -20,7 +20,6 @@ import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,42 +33,6 @@ public class AlloyMixerJEI
     public Wrapper(IAlloyMixerRecipe recipe)
     {
       this.recipe = recipe;
-    }
-
-    @Deprecated
-    @Override
-    public List<List<ItemStack>> getInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<ItemStack> getOutputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidInputs()
-    {
-      return null;
-    }
-
-    @Deprecated
-    @Override
-    public List<FluidStack> getFluidOutputs()
-    {
-      return null;
-    }
-
-
-    @Deprecated
-    @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
     }
 
     @Override
@@ -133,12 +96,6 @@ public class AlloyMixerJEI
 
     }
 
-    @Override
-    public void drawAnimations(Minecraft minecraft)
-    {
-
-    }
-
     @Nonnull
     @Override
     public String getTitle()
@@ -154,13 +111,6 @@ public class AlloyMixerJEI
     }
 
     @Override
-    @Deprecated
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull Wrapper recipeWrapper)
-    {
-      
-    }
-
-    @Override
     public IDrawable getIcon()
     {
       return null;
@@ -172,7 +122,7 @@ public class AlloyMixerJEI
       IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
       List<List<FluidStack>> in = ingredients.getInputs(FluidStack.class);
-      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0);
+      FluidStack out = ingredients.getOutputs(FluidStack.class).get(0).get(0);
       int out_amount = out.amount;
       for(int i = 0; i < in.size(); i++)
       {
@@ -200,13 +150,6 @@ public class AlloyMixerJEI
     public Class<Wrapper> getRecipeClass()
     {
       return Wrapper.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid()
-    {
-      return "foundry.alloymixer";
     }
 
     @Override

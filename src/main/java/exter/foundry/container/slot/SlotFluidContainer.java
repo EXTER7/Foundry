@@ -18,7 +18,7 @@ public class SlotFluidContainer extends Slot
   {
     ItemStack slot_stack = getStack();
     return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)
-        && (slot_stack == null || slot_stack.stackSize == 0);
+        && (slot_stack.isEmpty());
   }
 
   @Override

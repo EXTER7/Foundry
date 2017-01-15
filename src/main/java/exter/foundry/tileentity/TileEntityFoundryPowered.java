@@ -121,7 +121,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
       energy_stored += en;
       if(en > 0)
       {
-        if(update_energy && !worldObj.isRemote)
+        if(update_energy && !world.isRemote)
         {
           update_energy_tick = true;
         }
@@ -240,7 +240,7 @@ public abstract class TileEntityFoundryPowered extends TileEntityFoundry impleme
   
   public void updateRedstone()
   {
-    redstone_signal = worldObj.isBlockIndirectlyGettingPowered(getPos()) > 0;
+    redstone_signal = world.isBlockIndirectlyGettingPowered(getPos()) > 0;
   }
   
   @Override

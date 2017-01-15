@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures":
+  {
+    "layer0": "foundry:items/component_small_refractory_clay"
+  }
+}

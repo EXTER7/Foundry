@@ -80,39 +80,39 @@ public class ContainerShotgun extends Container
       {
         if(!mergeItemStack(stack, SLOTS_HOTBAR, SLOTS_HOTBAR + 9, false))
         {
-          return null;
+          return ItemStack.EMPTY;
         }
       } else if(slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
       {
         if(!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
         {
-          return null;
+          return ItemStack.EMPTY;
         }
       } else if(slot_index < SLOTS_INVENTORY)
       {
         if(!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
         {
-          return null;
+          return ItemStack.EMPTY;
         }
       } else
       {
-        return null;
+        return ItemStack.EMPTY;
       }
 
-      if(stack.stackSize == 0)
+      if (stack.isEmpty())
       {
-        slot.putStack((ItemStack) null);
+        slot.putStack(stack);
       } else
       {
         slot.onSlotChanged();
       }
 
-      if(stack.stackSize == slot_stack.stackSize)
+      if (stack.getCount() == slot_stack.getCount())
       {
-        return null;
+        return ItemStack.EMPTY;
       }
 
-      slot.onPickupFromSlot(player, stack);
+      slot.onTake(player, stack);
     }
 
     return slot_stack;
@@ -129,7 +129,7 @@ public class ContainerShotgun extends Container
   {
     super.onContainerClosed(entityPlayer);
     shotgun_inv.closeInventory(entityPlayer);
-    if (!entityPlayer.worldObj.isRemote)
+    if (!entityPlayer.world.isRemote)
     {
       shotgun_inv.save();
     }

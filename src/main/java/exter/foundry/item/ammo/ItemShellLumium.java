@@ -38,8 +38,8 @@ public class ItemShellLumium extends Item
   public ItemShellLumium()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shellLumium");
-    setRegistryName("shellLumium");
+    setUnlocalizedName("shell_lumium");
+    setRegistryName("shell_lumium");
   }
   
   @SideOnly(Side.CLIENT)

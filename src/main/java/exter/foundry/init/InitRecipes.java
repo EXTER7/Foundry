@@ -697,7 +697,7 @@ public class InitRecipes
     {
       ItemStack stack = entry.getKey();
       
-      if(stack != null && stack.getItem() != null && MeltingRecipeManager.instance.findRecipe(stack) == null)
+      if(!stack.isEmpty() && MeltingRecipeManager.instance.findRecipe(stack) == null)
       {
         ItemStack result = entry.getValue();
         IMeltingRecipe recipe = MeltingRecipeManager.instance.findRecipe(result);
@@ -715,7 +715,7 @@ public class InitRecipes
               break;
             }
           }
-          MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(stack), new FluidStack(liquid_metal, base_amount * result.stackSize),recipe.getMeltingPoint(),recipe.getMeltingSpeed());
+          MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(stack), new FluidStack(liquid_metal, base_amount * result.getCount()),recipe.getMeltingPoint(),recipe.getMeltingSpeed());
         }
       }
     }

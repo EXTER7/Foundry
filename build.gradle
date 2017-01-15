@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 def mod_version = "2.2.2.0"
 
-def mc_version = "1.10.2"
+def mc_version = "1.11.2"
 
 def build_number = System.getenv("DRONE_BUILD_NUMBER")
 
@@ -29,9 +29,9 @@ group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conv
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.10.2-12.18.2.2125"
+    version = "1.11.2-13.20.0.2206"
     runDir = "eclipse"
-    mappings = "snapshot_20160803"
+    mappings = "snapshot_20170107"
 }
 
 repositories {
@@ -46,8 +46,8 @@ repositories {
 
 dependencies {
     //compile name: 'MineTweaker3', version: 'Dev-1.8-3.0.10', ext: 'jar'
-    deobfCompile "mezz.jei:jei_1.10.2:3.13.3.373"
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.49"
+    deobfCompile "mezz.jei:jei_1.11:4.0.5.202"
+    compile "net.darkhax.tesla:Tesla:1.11-1.3.0.51"
 }
 
 

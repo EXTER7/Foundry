@@ -1,6 +1,6 @@
 #!/bin/bash
 
-texturedir="src/main/resources/assets/foundry/textures/blocks"
+texturedir="src/main/resources/assets/foundry/textures/blocks/liquid_metal"
 
 rm -f $texturedir/liquid*_still.png.mcmeta
 rm -f $texturedir/liquid*_flow.png.mcmeta

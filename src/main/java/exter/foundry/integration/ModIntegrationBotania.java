@@ -62,7 +62,7 @@ public class ModIntegrationBotania implements IModIntegration
   @Override
   public void onPostInit()
   {
-    if(!Loader.isModLoaded("Botania"))
+    if(!Loader.isModLoaded("botania"))
     {
       return;
     }
@@ -109,11 +109,11 @@ public class ModIntegrationBotania implements IModIntegration
       
       ItemStack extra_sticks1 = livingwood_twig.copy();
       ItemStack extra_sticks2 = livingwood_twig.copy();
-      extra_sticks2.stackSize = 2;
+      extra_sticks2.setCount(2);
 
       ItemStack extra_dreamsticks1 = dreamwood_twig.copy();
       ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
-      extra_dreamsticks2.stackSize = 2;
+      extra_dreamsticks2.setCount(2);
 
 
       FoundryMiscUtils.registerCasting(manasteel_pickaxe, liquid_manasteel, 3, ItemMold.SubItem.PICKAXE, extra_sticks2);

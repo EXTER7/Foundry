@@ -50,7 +50,7 @@ public class ContainerRefractoryHopper extends Container
 
   public boolean canInteractWith(EntityPlayer par1EntityPlayer)
   {
-    return te_hopper.isUseableByPlayer(par1EntityPlayer);
+    return te_hopper.isUsableByPlayer(par1EntityPlayer);
   }
 
   public ItemStack transferStackInSlot(EntityPlayer player, int slot_index)
@@ -80,20 +80,20 @@ public class ContainerRefractoryHopper extends Container
         return null;
       }
 
-      if (stack.stackSize == 0)
+      if (stack.isEmpty())
       {
-        slot.putStack((ItemStack) null);
+        slot.putStack(stack);
       } else
       {
         slot.onSlotChanged();
       }
 
-      if (stack.stackSize == slot_stack.stackSize)
+      if (stack.getCount() == slot_stack.getCount())
       {
-        return null;
+        return ItemStack.EMPTY;
       }
 
-      slot.onPickupFromSlot(player, stack);
+      slot.onTake(player, stack);
     }
 
     return slot_stack;

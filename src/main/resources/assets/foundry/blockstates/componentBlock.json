@@ -1,9 +1,0 @@
-{
-    "variants": {
-        "variant=casing_standard": { "model": "foundry:componentBlockCasingStandard" },
-        "variant=block_refractoryclay": { "model": "foundry:componentBlockRefractoryClay" },
-        "variant=casing_advanced": { "model": "foundry:componentBlockCasingAdvanced" },
-        "variant=casing_basic": { "model": "foundry:componentBlockCasingBasic" }
-    }
-}
-

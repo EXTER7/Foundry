@@ -38,9 +38,9 @@ public class InitAlloyRecipes
           );
     }
     
-    Fluid fluid_out = LiquidMetalRegistry.instance.getFluid(output);
-    Fluid fluid_in_a = LiquidMetalRegistry.instance.getFluid(input_a);
-    Fluid fluid_in_b = LiquidMetalRegistry.instance.getFluid(input_b);
+    Fluid fluid_out = LiquidMetalRegistry.instance.getFluid(FoundryMiscUtils.convertToRegistryName(output));
+    Fluid fluid_in_a = LiquidMetalRegistry.instance.getFluid(FoundryMiscUtils.convertToRegistryName(input_a));
+    Fluid fluid_in_b = LiquidMetalRegistry.instance.getFluid(FoundryMiscUtils.convertToRegistryName(input_b));
 
     AlloyingCrucibleRecipeManager.instance.addRecipe(
         new FluidStack(fluid_out, (amount_a + amount_b) * 3),

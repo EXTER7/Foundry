@@ -92,6 +92,6 @@ public class BlockMoldStation extends BlockFoundrySidedMachine
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.moldStation", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.mold_station", tooltip);
   }
 }

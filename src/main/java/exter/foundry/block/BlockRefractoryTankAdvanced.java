@@ -124,6 +124,6 @@ public class BlockRefractoryTankAdvanced extends BlockContainer implements ISpou
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractoryTankAdvanced", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractory_tank_advanced", tooltip);
   }
 }

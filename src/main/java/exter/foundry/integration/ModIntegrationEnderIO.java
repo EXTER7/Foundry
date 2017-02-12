@@ -35,13 +35,13 @@ public class ModIntegrationEnderIO implements IModIntegration
   @Override
   public void onPreInit(Configuration config)
   {
-    liquid_redstone_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "RedstoneAlloy", 1000, 14);
-    liquid_energetic_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "EnergeticAlloy", 2500, 15);    
-    liquid_vibrant_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "VibrantAlloy", 2500, 15);    
-    liquid_dark_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "DarkSteel", 1850, 12);
-    liquid_electrical_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "ElectricalSteel", 1850, 15);    
-    liquid_phased_iron = LiquidMetalRegistry.instance.registerLiquidMetal( "PulsatingIron", 1850, 15);
-    liquid_soularium = LiquidMetalRegistry.instance.registerLiquidMetal( "Soularium", 1350, 12);
+    liquid_redstone_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "redstone_alloy", 1000, 14);
+    liquid_energetic_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "energetic_alloy", 2500, 15);    
+    liquid_vibrant_alloy = LiquidMetalRegistry.instance.registerLiquidMetal( "vibrant_alloy", 2500, 15);    
+    liquid_dark_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "dark_steel", 1850, 12);
+    liquid_electrical_steel = LiquidMetalRegistry.instance.registerLiquidMetal( "electrical_steel", 1850, 15);    
+    liquid_phased_iron = LiquidMetalRegistry.instance.registerLiquidMetal( "pulsating_iron", 1850, 15);
+    liquid_soularium = LiquidMetalRegistry.instance.registerLiquidMetal( "soularium", 1350, 12);
     
     FoundryUtils.registerBasicMeltingRecipes( "RedstoneAlloy", liquid_redstone_alloy);    
     FoundryUtils.registerBasicMeltingRecipes( "EnergeticAlloy", liquid_energetic_alloy);    
@@ -89,15 +89,15 @@ public class ModIntegrationEnderIO implements IModIntegration
       ItemStack extra_sticks2 = new ItemStack(Items.STICK, 2);
 
 
-      ItemStack dark_steel_pickaxe = getItemStack("darkSteel_pickaxe");
-      ItemStack dark_steel_axe = getItemStack("darkSteel_axe");
-      ItemStack dark_steel_shovel = getItemStack("darkSteel_shovel");
-      ItemStack dark_steel_sword = getItemStack("darkSteel_sword");
+      ItemStack dark_steel_pickaxe = getItemStack("darksteel_pickaxe");
+      ItemStack dark_steel_axe = getItemStack("darksteel_axe");
+      ItemStack dark_steel_shovel = getItemStack("darksteel_shovel");
+      ItemStack dark_steel_sword = getItemStack("darksteel_sword");
 
-      ItemStack dark_steel_helmet = getItemStack("darkSteel_helmet");
-      ItemStack dark_steel_chestplate = getItemStack("darkSteel_chestplate");
-      ItemStack dark_steel_leggings = getItemStack("darkSteel_leggings");
-      ItemStack dark_steel_boots = getItemStack("darkSteel_boots");
+      ItemStack dark_steel_helmet = getItemStack("darksteel_helmet");
+      ItemStack dark_steel_chestplate = getItemStack("darksteel_chestplate");
+      ItemStack dark_steel_leggings = getItemStack("darksteel_leggings");
+      ItemStack dark_steel_boots = getItemStack("darksteel_boots");
 
       
       FoundryMiscUtils.registerCasting(dark_steel_chestplate, liquid_dark_steel, 8, ItemMold.SubItem.CHESTPLATE, null);

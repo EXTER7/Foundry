@@ -102,9 +102,9 @@ public class BlockCastingTable extends Block implements ITileEntityProvider,IBlo
     setHardness(1.0F);
     setResistance(8.0F);
     setSoundType(SoundType.STONE);
-    setUnlocalizedName("foundry.castingTable");
+    setUnlocalizedName("foundry.casting_table");
     setCreativeTab(FoundryTabMachines.tab);
-    setRegistryName("castingTable");
+    setRegistryName("casting_table");
   }
 
   @Override

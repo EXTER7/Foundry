@@ -12,9 +12,10 @@ public class FluidLiquidMetal extends Fluid
 
   public FluidLiquidMetal(String fluidName,ResourceLocation still, ResourceLocation flowing, int color, boolean special, int temperature,int luminosity)
   {
-    super(fluidName,still, flowing);
+    super(fluidName.replaceAll("_",""),still, flowing);
     this.color = color | 0xFF000000;
     this.special = special;
+    setUnlocalizedName("foundry." + fluidName);
     setTemperature(temperature);
     setLuminosity(luminosity);
     setDensity(2000);

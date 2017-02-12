@@ -93,6 +93,6 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.burnerHeater", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.burner_heater", tooltip);
   }
 }

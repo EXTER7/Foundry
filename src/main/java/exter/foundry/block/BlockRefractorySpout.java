@@ -235,6 +235,6 @@ public class BlockRefractorySpout extends BlockFoundrySidedMachine
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractorySpout", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractory_spout", tooltip);
   }
 }

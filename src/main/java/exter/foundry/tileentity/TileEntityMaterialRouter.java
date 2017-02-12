@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableSet;
 import exter.foundry.ModFoundry;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.network.MessageTileEntitySync;
+import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,8 +52,8 @@ public class TileEntityMaterialRouter extends TileEntityFoundry
 
     public void readFromNBT(NBTTagCompound tag)
     {
-      material = tag.getString("material");
-      type = tag.getString("type");
+      material = FoundryMiscUtils.convertToRegistryName(tag.getString("material"));
+      type = FoundryMiscUtils.convertToRegistryName(tag.getString("type"));
       side = EnumFacing.VALUES[tag.getByte("side")];
     }
 

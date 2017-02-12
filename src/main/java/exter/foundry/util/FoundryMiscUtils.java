@@ -202,4 +202,53 @@ public class FoundryMiscUtils
     world.removeTileEntity(pos);
   }
   
+  static public String convertToRegistryName(String str)
+  {
+    if(str == null)
+    {
+      return null;
+    }
+    StringBuilder builder = new StringBuilder();
+    builder.append(Character.toLowerCase(str.charAt(0)));
+    for(int i = 1; i < str.length(); i++)
+    {
+      char c = str.charAt(i);
+      if(Character.isUpperCase(c))
+      {
+        if(i > 0)
+        {
+          builder.append('_');
+        }
+        builder.append(Character.toLowerCase(c));
+      } else
+      {
+        builder.append(c);
+      }
+    }
+    return builder.toString();
+  }
+  
+  static public String convertToOreDictionaryName(String str,boolean suffix)
+  {
+    if(str == null)
+    {
+      return null;
+    }
+    StringBuilder builder = new StringBuilder();
+    char c = str.charAt(0);
+    builder.append(suffix?Character.toLowerCase(c):c);
+    for(int i = 1; i < str.length(); i++)
+    {
+      c = str.charAt(i);
+      if(c == '_')
+      {
+        c = str.charAt(++i);
+        builder.append(Character.toUpperCase(c));
+      } else
+      {
+        builder.append(c);
+      }
+    }
+    return builder.toString();
+  }
 }

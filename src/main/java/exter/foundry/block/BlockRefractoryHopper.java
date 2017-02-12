@@ -226,6 +226,6 @@ public class BlockRefractoryHopper extends BlockContainer implements ISpoutPourD
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractoryHopper", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.refractory_hopper", tooltip);
   }
 }

@@ -56,16 +56,16 @@ public class InitRecipes
         FoundryUtils.registerBasicMeltingRecipes(name,fluid);
       }
     }
-    FoundryUtils.registerBasicMeltingRecipes("Chromium",LiquidMetalRegistry.instance.getFluid("Chrome"));
-    FoundryUtils.registerBasicMeltingRecipes("Aluminum",LiquidMetalRegistry.instance.getFluid("Aluminium"));
-    FoundryUtils.registerBasicMeltingRecipes("Constantan",LiquidMetalRegistry.instance.getFluid("Cupronickel"));
+    FoundryUtils.registerBasicMeltingRecipes("Chromium",LiquidMetalRegistry.instance.getFluid("chrome"));
+    FoundryUtils.registerBasicMeltingRecipes("Aluminum",LiquidMetalRegistry.instance.getFluid("aluminium"));
+    FoundryUtils.registerBasicMeltingRecipes("Constantan",LiquidMetalRegistry.instance.getFluid("cupronickel"));
 
     if(FoundryConfig.recipe_glass)
     {
       final String[] oredict_names = { "dyeSmallBlack", "dyeSmallRed", "dyeSmallGreen", "dyeSmallBrown", "dyeSmallBlue", "dyeSmallPurple", "dyeSmallCyan", "dyeSmallLightGray", "dyeSmallGray", "dyeSmallPink", "dyeSmallLime", "dyeSmallYellow", "dyeSmallLightBlue", "dyeSmallMagenta", "dyeSmallOrange", "dyeSmallWhite" };
 
       int temp = 1550;
-      Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass", temp, 12, new ItemStack(Blocks.GLASS));
+      Fluid liquid_glass = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("glass", temp, 12, new ItemStack(Blocks.GLASS));
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.SAND), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS), new FluidStack(liquid_glass,1000),temp,250);
       MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(Blocks.GLASS_PANE), new FluidStack(liquid_glass,375),temp,250);
@@ -84,7 +84,7 @@ public class InitRecipes
         int meta = dye.getMetadata();
         ItemStack stained_glass = new ItemStack(Blocks.STAINED_GLASS,1,meta);
 
-        Fluid liquid_glass_colored = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("Glass." + name, temp, 12, "liquidGlass", fluid_color, stained_glass);
+        Fluid liquid_glass_colored = LiquidMetalRegistry.instance.registerSpecialLiquidMetal("glass." + name, temp, 12, "liquid_glass", fluid_color, stained_glass);
 
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(stained_glass), new FluidStack(liquid_glass_colored,1000),temp,250);
         MeltingRecipeManager.instance.addRecipe(new ItemStackMatcher(new ItemStack(Blocks.STAINED_GLASS_PANE,1,meta)), new FluidStack(liquid_glass_colored,375),temp,250);
@@ -680,7 +680,9 @@ public class InitRecipes
         String od_name = type.prefix + material.suffix;
         for(ItemStack item:OreDictionary.getOres(od_name))
         {
-          MaterialRegistry.instance.registerItem(item, material.suffix, type.name);
+          MaterialRegistry.instance.registerItem(item,
+              FoundryMiscUtils.convertToRegistryName(material.suffix),
+              FoundryMiscUtils.convertToRegistryName(type.name));
         }
         if(material.suffix_alias != null)
         {

@@ -64,7 +64,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     
     LiquidMetalItemMeshDefinition(String name)
     {
-      model = new ModelResourceLocation("foundry:liquid" + name);
+      model = new ModelResourceLocation("foundry:liquid_" + name);
     }
     
     @Override
@@ -145,7 +145,7 @@ public class ClientFoundryProxy extends CommonFoundryProxy
     registerItemModel(FoundryBlocks.block_cauldron_bronze,"bronze_cauldron");
     if(FoundryConfig.block_cokeoven)
     {
-      registerItemModel(FoundryBlocks.block_coke_oven,"cokeOven");
+      registerItemModel(FoundryBlocks.block_coke_oven,"coke_oven");
     }
 
     for(BlockComponent.EnumVariant v:BlockComponent.EnumVariant.values())
@@ -166,17 +166,17 @@ public class ClientFoundryProxy extends CommonFoundryProxy
 
     registerItemModel(FoundryItems.item_revolver,"revolver",0);
     registerItemModel(FoundryItems.item_shotgun,"shotgun",0);
-    registerItemModel(FoundryItems.item_round,"roundNormal",0);
-    registerItemModel(FoundryItems.item_round_hollow,"roundHollow",0);
-    registerItemModel(FoundryItems.item_round_jacketed,"roundJacketed",0);
-    registerItemModel(FoundryItems.item_round_fire,"roundFire",0);
-    registerItemModel(FoundryItems.item_round_poison,"roundPoison",0);
-    registerItemModel(FoundryItems.item_round_ap,"roundAP",0);
-    registerItemModel(FoundryItems.item_round_lumium,"roundLumium",0);
-    registerItemModel(FoundryItems.item_round_snow,"roundSnow",0);
-    registerItemModel(FoundryItems.item_shell,"shellNormal",0);
-    registerItemModel(FoundryItems.item_shell_ap,"shellAP",0);
-    registerItemModel(FoundryItems.item_shell_lumium,"shellLumium",0);
+    registerItemModel(FoundryItems.item_round,"round_normal",0);
+    registerItemModel(FoundryItems.item_round_hollow,"round_hollow",0);
+    registerItemModel(FoundryItems.item_round_jacketed,"round_jacketed",0);
+    registerItemModel(FoundryItems.item_round_fire,"round_fire",0);
+    registerItemModel(FoundryItems.item_round_poison,"round_poison",0);
+    registerItemModel(FoundryItems.item_round_ap,"round_ap",0);
+    registerItemModel(FoundryItems.item_round_lumium,"round_lumium",0);
+    registerItemModel(FoundryItems.item_round_snow,"round_snow",0);
+    registerItemModel(FoundryItems.item_shell,"shell_normal",0);
+    registerItemModel(FoundryItems.item_shell_ap,"shell_ap",0);
+    registerItemModel(FoundryItems.item_shell_lumium,"shell_lumium",0);
     registerItemModel(FoundryItems.item_container,"container",0);
 
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCastingTableIngot.class, new CastingTableRenderer(6,10,4,12,9,12,"foundry:blocks/castingtable_top_ingot"));

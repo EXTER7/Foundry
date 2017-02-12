@@ -93,6 +93,6 @@ public class BlockCokeOven extends BlockFoundrySidedMachine
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
   {
-    FoundryMiscUtils.localizeTooltip("tooltip.foundry.cokeOven", tooltip);
+    FoundryMiscUtils.localizeTooltip("tooltip.foundry.coke_oven", tooltip);
   }
 }

@@ -1,5 +1,5 @@
 {
-    "parent": "foundry:block/refractoryHopperDown",
+    "parent": "foundry:block/refractory_hopper_down",
     "display": {
         "gui": {
             "rotation": [ 30, 225, 0 ],

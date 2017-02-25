@@ -69,7 +69,7 @@ public class GuiMaterialRouter extends GuiFoundry
     {
       List<String> tooltip = new ArrayList<String>();
       tooltip.add((new TextComponentTranslation("foundry.router.material." + name)).getUnformattedText());
-      drawHoveringText(tooltip, x, y, fontRendererObj);
+      drawHoveringText(tooltip, x, y, fontRenderer);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class GuiMaterialRouter extends GuiFoundry
     {
       List<String> tooltip = new ArrayList<String>();
       tooltip.add((new TextComponentTranslation("foundry.router.type." + name)).getUnformattedText());
-      drawHoveringText(tooltip, x, y, fontRendererObj);
+      drawHoveringText(tooltip, x, y, fontRenderer);
     }
 
     @Override
@@ -235,19 +235,19 @@ public class GuiMaterialRouter extends GuiFoundry
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add((new TextComponentTranslation("foundry.router.material." + r.material)).getUnformattedText());
-        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+        drawHoveringText(tooltip, mousex, mousey, fontRenderer);
       }
       if(isPointInRegion(46,y,16,16,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add((new TextComponentTranslation("foundry.router.type." + r.type)).getUnformattedText());
-        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+        drawHoveringText(tooltip, mousex, mousey, fontRenderer);
       }
       if(isPointInRegion(81,y + 4,8,8,mousex,mousey))
       {
         List<String> tooltip = new ArrayList<String>();
         tooltip.add("Remove");
-        drawHoveringText(tooltip, mousex, mousey, fontRendererObj);
+        drawHoveringText(tooltip, mousex, mousey, fontRenderer);
       }
     }
   }
@@ -331,14 +331,14 @@ public class GuiMaterialRouter extends GuiFoundry
   protected void drawGuiContainerForegroundLayer(int mouse_x, int mouse_y)
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
-    fontRendererObj.drawString("Material Router", 6, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 32, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Material Router", 6, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 32, (ySize - 96) + 2, 0x404040);
 
-    fontRendererObj.drawString(
+    fontRenderer.drawString(
         "Materials("+ (te_router.gui_material_scroll / 8 + 1) + "/" 
             + (int)Math.ceil((double)material_slots.size() / 8) + "):",
         111, 14, 0x404040);
-    fontRendererObj.drawString(
+    fontRenderer.drawString(
         "Types("+ (te_router.gui_type_scroll / 8 + 1) + "/"
             + (int)Math.ceil((double)type_slots.size() / 8) + "):",
         111, 60, 0x404040);

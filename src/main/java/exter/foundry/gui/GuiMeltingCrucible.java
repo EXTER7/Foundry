@@ -73,8 +73,8 @@ public class GuiMeltingCrucible extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Melting Crucible", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Melting Crucible", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
 
   }
 
@@ -121,7 +121,7 @@ public class GuiMeltingCrucible extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_crucible.getTank(0));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(HEAT_BAR_X,HEAT_BAR_Y,HEAT_BAR_WIDTH,HEAT_BAR_HEIGHT,mousex,mousey))
@@ -134,13 +134,13 @@ public class GuiMeltingCrucible extends GuiFoundry
       {
         currenttip.add("Melt: " + String.valueOf(melt_point) + " °K");
       }
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_crucible.getRedstoneMode()));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
   }
 

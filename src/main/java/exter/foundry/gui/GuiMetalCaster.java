@@ -68,8 +68,8 @@ public class GuiMetalCaster extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Metal Caster", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Metal Caster", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
 
   @Override
@@ -106,7 +106,7 @@ public class GuiMetalCaster extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_caster.getTank(0));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
     
     if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
@@ -115,14 +115,14 @@ public class GuiMetalCaster extends GuiFoundry
       long power = te_caster.getStoredFoundryEnergy();
       long max_power = te_caster.getFoundryEnergyCapacity();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_caster.getRedstoneMode()));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
   }
   

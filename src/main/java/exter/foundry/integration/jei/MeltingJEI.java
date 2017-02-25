@@ -59,7 +59,7 @@ public class MeltingJEI
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
       temp.draw(minecraft,11,41);
-      minecraft.fontRendererObj.drawString(recipe.getMeltingPoint() + " °K", 14, 28, 0);
+      minecraft.fontRenderer.drawString(recipe.getMeltingPoint() + " °K", 14, 28, 0);
     }
 
     @Override

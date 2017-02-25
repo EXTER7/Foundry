@@ -51,7 +51,7 @@ public class InfuserJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      minecraft.fontRendererObj.drawString(recipe.getEnergyNeeded() / TileEntityFoundryPowered.RATIO_FE + " FE", 0, 38, 0);
+      minecraft.fontRenderer.drawString(recipe.getEnergyNeeded() / TileEntityFoundryPowered.RATIO_FE + " FE", 0, 38, 0);
     }
 
     @Override

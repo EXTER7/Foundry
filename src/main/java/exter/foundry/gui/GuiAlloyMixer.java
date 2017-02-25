@@ -50,8 +50,8 @@ public class GuiAlloyMixer extends GuiFoundry
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
     
-    fontRendererObj.drawString("Alloy Mixer", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Alloy Mixer", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
     
   }
   
@@ -68,7 +68,7 @@ public class GuiAlloyMixer extends GuiFoundry
       {
         List<String> currenttip = new ArrayList<String>();
         addTankTooltip(currenttip,mousex, mousey, te_alloymixer.getTank(i));
-        drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+        drawHoveringText(currenttip, mousex, mousey, fontRenderer);
       }
     }
     
@@ -76,7 +76,7 @@ public class GuiAlloyMixer extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_alloymixer.getRedstoneMode()));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
   }
   @Override

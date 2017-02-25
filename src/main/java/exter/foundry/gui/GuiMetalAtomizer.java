@@ -71,8 +71,8 @@ public class GuiMetalAtomizer extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Metal Atomizer", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Metal Atomizer", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
 
   @Override
@@ -110,14 +110,14 @@ public class GuiMetalAtomizer extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_INPUT));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(TANK_WATER_X,TANK_WATER_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_atomizer.getTank(TileEntityMetalAtomizer.TANK_WATER));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(POWER_X,POWER_Y,POWER_WIDTH,POWER_HEIGHT,mousex,mousey))
@@ -126,14 +126,14 @@ public class GuiMetalAtomizer extends GuiFoundry
       long power = te_atomizer.getStoredFoundryEnergy();
       long max_power = te_atomizer.getFoundryEnergyCapacity();
       currenttip.add("Energy: " + String.valueOf(power) + "/" + String.valueOf(max_power));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(RSMODE_X,RSMODE_Y,button_mode.getWidth(),button_mode.getHeight(),mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       currenttip.add(getRedstoenModeText(te_atomizer.getRedstoneMode()));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
   }
   

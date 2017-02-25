@@ -51,8 +51,8 @@ public class GuiMetalInfuser extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Metal Infuser", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Metal Infuser", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
 
   @Override
@@ -83,14 +83,14 @@ public class GuiMetalInfuser extends GuiFoundry
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_INPUT));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
 
     if(isPointInRegion(OUTPUT_TANK_X,OUTPUT_TANK_Y,16,TANK_HEIGHT,mousex,mousey))
     {
       List<String> currenttip = new ArrayList<String>();
       addTankTooltip(currenttip, mousex, mousey, te_infuser.getTank(TileEntityMetalInfuser.TANK_OUTPUT));
-      drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+      drawHoveringText(currenttip, mousex, mousey, fontRenderer);
     }
   }
 

@@ -40,8 +40,8 @@ public class GuiRefractoryTank extends GuiFoundry
   {
     super.drawGuiContainerForegroundLayer(mouse_x, mouse_y);
 
-    fontRendererObj.drawString("Refractory Tank", 5, 6, 0x404040);
-    fontRendererObj.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
+    fontRenderer.drawString("Refractory Tank", 5, 6, 0x404040);
+    fontRenderer.drawString("Inventory", 8, (ySize - 96) + 2, 0x404040);
   }
   
   @Override
@@ -56,7 +56,7 @@ public class GuiRefractoryTank extends GuiFoundry
       {
         List<String> currenttip = new ArrayList<String>();
         addTankTooltip(currenttip,mousex, mousey, te_hopper.getTank(i));
-        drawHoveringText(currenttip, mousex, mousey, fontRendererObj);
+        drawHoveringText(currenttip, mousex, mousey, fontRenderer);
       }
     }
   }

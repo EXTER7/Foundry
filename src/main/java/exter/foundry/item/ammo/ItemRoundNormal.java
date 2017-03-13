@@ -19,7 +19,7 @@ public class ItemRoundNormal extends Item
   {
     setCreativeTab(FoundryTabFirearms.tab);
     setRegistryName("round_normal");
-    setUnlocalizedName("round_normal");
+    setUnlocalizedName("foundry.round_normal");
   }
   
   @SideOnly(Side.CLIENT)

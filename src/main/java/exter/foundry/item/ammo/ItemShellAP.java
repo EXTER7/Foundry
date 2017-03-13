@@ -32,7 +32,7 @@ public class ItemShellAP extends Item
   public ItemShellAP()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shell_ap");
+    setUnlocalizedName("foundry.shell_ap");
     setRegistryName("shell_ap");
   }
   

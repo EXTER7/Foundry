@@ -10,7 +10,7 @@ public class FoundryTabFluids extends CreativeTabs
 
   private FoundryTabFluids()
   {
-    super("foundryFluids");
+    super("foundry.fluids");
   }
   
   @Override

@@ -38,7 +38,7 @@ public class ItemShellLumium extends Item
   public ItemShellLumium()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shell_lumium");
+    setUnlocalizedName("foundry.shell_lumium");
     setRegistryName("shell_lumium");
   }
   

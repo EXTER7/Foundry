@@ -34,7 +34,7 @@ public class ItemRevolver extends ItemFirearm
   
   public ItemRevolver()
   {
-    setUnlocalizedName("revolver");
+    setUnlocalizedName("foundry.revolver");
     setRegistryName("revolver");
   }
 

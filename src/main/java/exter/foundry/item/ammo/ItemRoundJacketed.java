@@ -19,7 +19,7 @@ public class ItemRoundJacketed extends Item
   public ItemRoundJacketed()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("round_jacketed");
+    setUnlocalizedName("foundry.round_jacketed");
     setRegistryName("round_jacketed");
   }
   

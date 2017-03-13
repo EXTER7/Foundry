@@ -38,7 +38,7 @@ public class ItemRoundPoison extends Item
   public ItemRoundPoison()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("round_poison");
+    setUnlocalizedName("foundry.round_poison");
     setRegistryName("round_poison");
   }
 

@@ -11,7 +11,7 @@ public class FoundryTabMachines extends CreativeTabs
 
   private FoundryTabMachines()
   {
-    super("foundryMachines");
+    super("foundry.machines");
   }
   
   @Override

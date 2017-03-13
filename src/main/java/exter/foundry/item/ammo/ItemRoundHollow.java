@@ -19,7 +19,7 @@ public class ItemRoundHollow extends Item
   public ItemRoundHollow()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("round_hollow");
+    setUnlocalizedName("foundry.round_hollow");
     setRegistryName("round_hollow");
   }
 

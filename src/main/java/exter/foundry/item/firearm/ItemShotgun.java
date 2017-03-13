@@ -35,7 +35,7 @@ public class ItemShotgun extends ItemFirearm
 
   public ItemShotgun()
   {
-    setUnlocalizedName("shotgun");
+    setUnlocalizedName("foundry.shotgun");
     setRegistryName("shotgun");
   }
 

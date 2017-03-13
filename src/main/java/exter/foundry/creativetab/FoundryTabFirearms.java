@@ -10,7 +10,7 @@ public class FoundryTabFirearms extends CreativeTabs
 
   private FoundryTabFirearms()
   {
-    super("foundryFirearms");
+    super("foundry.firearms");
   }
   
   @Override

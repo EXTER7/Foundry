@@ -11,7 +11,7 @@ public class FoundryTabMolds extends CreativeTabs
 
   private FoundryTabMolds()
   {
-    super("foundryMolds");
+    super("foundry.molds");
   }
   
   @Override

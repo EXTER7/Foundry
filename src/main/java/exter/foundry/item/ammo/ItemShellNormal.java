@@ -18,7 +18,7 @@ public class ItemShellNormal extends Item
   public ItemShellNormal()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("shell_normal");
+    setUnlocalizedName("foundry.shell_normal");
     setRegistryName("shell_normal");
   }
 

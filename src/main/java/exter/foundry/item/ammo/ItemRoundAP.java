@@ -32,7 +32,7 @@ public class ItemRoundAP extends Item
   public ItemRoundAP()
   {
     setCreativeTab(FoundryTabFirearms.tab);
-    setUnlocalizedName("round_ap");
+    setUnlocalizedName("foundry.round_ap");
     setRegistryName("round_ap");
   }
 

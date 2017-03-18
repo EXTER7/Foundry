@@ -129,7 +129,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
     bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     GlStateManager.resetColor();
     GL11.glTranslatef((float) x, (float) y, (float) z);
-    if(te.getStackInSlot(0) != null)
+    if(!te.getStackInSlot(0).isEmpty())
     {
       ItemStack stack = te.getStackInSlot(0);
       TextureAtlasSprite texture = getItemTexture(stack);

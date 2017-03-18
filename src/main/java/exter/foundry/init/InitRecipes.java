@@ -53,6 +53,7 @@ public class InitRecipes
       FluidLiquidMetal fluid = LiquidMetalRegistry.instance.getFluid(name);
       if(!fluid.special)
       {
+        name = FoundryMiscUtils.convertToOreDictionaryName(name, true);
         FoundryUtils.registerBasicMeltingRecipes(name,fluid);
       }
     }
@@ -206,10 +207,11 @@ public class InitRecipes
       {
         continue;
       }
+      name = FoundryMiscUtils.convertToOreDictionaryName(name, true);
       
       // Ingot
       ItemStack ingot = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "ingot" + name);
-      if(ingot != null)
+      if(!ingot.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack( fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(ingot), fluid_stack, mold_ingot, null);
@@ -218,7 +220,7 @@ public class InitRecipes
 
       // Block
       ItemStack block = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "block" + name);
-      if(block != null)
+      if(!block.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK);
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(block), fluid_stack, mold_block, null);
@@ -227,7 +229,7 @@ public class InitRecipes
 
       // Slab
       ItemStack slab = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "slab" + name);
-      if(slab != null)
+      if(!slab.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK / 2);
 
@@ -237,7 +239,7 @@ public class InitRecipes
       
       // Stairs
       ItemStack stairs = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "stairs" + name);
-      if(stairs != null)
+      if(!stairs.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK * 3 / 4);
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(stairs), fluid_stack, mold_stairs, null);
@@ -246,14 +248,14 @@ public class InitRecipes
 
       // Dust
       ItemStack dust = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "dust" + name);
-      if(dust != null)
+      if(!dust.isEmpty())
       {
         AtomizerRecipeManager.instance.addRecipe(new ItemStackMatcher(dust), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
       }
       
       // Gear
       ItemStack gear = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "gear" + name);
-      if(gear != null)
+      if(!gear.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT * 4);
         CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(gear), fluid_stack, mold_gear, null);
@@ -262,7 +264,7 @@ public class InitRecipes
 
       // Plate
       ItemStack plate = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "plate" + name);
-      if(plate != null)
+      if(!plate.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
 
@@ -273,7 +275,7 @@ public class InitRecipes
 
       // Rod
       ItemStack rod = FoundryMiscUtils.getModItemFromOreDictionary("substratum", "rod" + name);
-      if(rod != null)
+      if(!rod.isEmpty())
       {
         FluidStack fluid_stack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 2);
 
@@ -730,6 +732,7 @@ public class InitRecipes
       if(!fluid.special)
       {
         FluidStack fluidstack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT);
+        name = FoundryMiscUtils.convertToOreDictionaryName(name, true);
         List<ItemStack> ores = OreDictionary.getOres("ingot" + name);
         if(ores != null && ores.size() > 0)
         {
@@ -752,7 +755,7 @@ public class InitRecipes
         }
 
         ores = OreDictionary.getOres("block" + name);
-        fluidstack = new FluidStack(LiquidMetalRegistry.instance.getFluid(name), FoundryAPI.FLUID_AMOUNT_BLOCK);
+        fluidstack = new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_BLOCK);
         if(ores != null && ores.size() > 0)
         {
           if(CastingRecipeManager.instance.findRecipe(fluidstack, block_mold, null) == null)

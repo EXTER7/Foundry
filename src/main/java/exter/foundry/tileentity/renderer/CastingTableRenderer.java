@@ -168,7 +168,7 @@ public class CastingTableRenderer extends TileEntitySpecialRenderer<TileEntityCa
 
       double progress = (double) te.getProgress() / TileEntityCastingTableBase.CAST_TIME;
       progress = Math.sqrt(progress);
-      if(te.getStackInSlot(0) == null)
+      if(te.getStackInSlot(0).isEmpty())
       {
         progress = 1.0f;
       }

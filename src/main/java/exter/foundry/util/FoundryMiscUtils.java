@@ -236,7 +236,7 @@ public class FoundryMiscUtils
     }
     StringBuilder builder = new StringBuilder();
     char c = str.charAt(0);
-    builder.append(suffix?Character.toLowerCase(c):c);
+    builder.append(suffix?Character.toUpperCase(c):c);
     for(int i = 1; i < str.length(); i++)
     {
       c = str.charAt(i);

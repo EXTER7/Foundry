@@ -106,6 +106,12 @@ public class CastingTableJEI
     {
       return name;
     }
+
+    @Override
+    public boolean equals(Object other)
+    {
+      return recipe == other;
+    }
   }
 
   public class Category implements IRecipeCategory<Wrapper>

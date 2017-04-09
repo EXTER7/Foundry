@@ -99,6 +99,12 @@ public class AlloyingCrucibleJEI
       ingredients.setOutput(FluidStack.class, recipe.getOutput());
       ingredients.setInputs(FluidStack.class, ImmutableList.of(recipe.getInputA(),recipe.getInputB()));
     }
+    
+    @Override
+    public boolean equals(Object other)
+    {
+      return recipe == other;
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>

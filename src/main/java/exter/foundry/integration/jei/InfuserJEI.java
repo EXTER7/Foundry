@@ -103,6 +103,12 @@ public class InfuserJEI
       ingredients.setInputLists(ItemStack.class, Collections.singletonList(recipe.getInput().getItems()));
       ingredients.setOutput(FluidStack.class, recipe.getOutput());
     }
+
+    @Override
+    public boolean equals(Object other)
+    {
+      return recipe == other;
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>

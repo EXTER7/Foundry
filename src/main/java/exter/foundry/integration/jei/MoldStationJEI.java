@@ -133,6 +133,12 @@ public class MoldStationJEI
     {
       ingredients.setOutput(ItemStack.class, recipe.getOutput());
     }
+
+    @Override
+    public boolean equals(Object other)
+    {
+      return recipe == other;
+    }
   }
 
   static public class Category implements IRecipeCategory<Wrapper>

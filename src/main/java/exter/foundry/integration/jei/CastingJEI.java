@@ -201,6 +201,12 @@ public class CastingJEI
       gui_items.set(2, ingredients.getInputs(ItemStack.class).get(1));
       gui_fluids.set(3, ingredients.getInputs(FluidStack.class).get(0));
     }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
+    }
   }
 
   static public class Handler implements IRecipeHandler<Wrapper>

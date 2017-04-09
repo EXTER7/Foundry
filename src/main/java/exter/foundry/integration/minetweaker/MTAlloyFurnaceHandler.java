@@ -1,6 +1,7 @@
 package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
+import exter.foundry.integration.jei.AlloyFurnaceJEI;
 import exter.foundry.recipes.AlloyFurnaceRecipe;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -27,12 +28,14 @@ public class MTAlloyFurnaceHandler
     protected void add()
     {
       AlloyFurnaceRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new AlloyFurnaceJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       AlloyFurnaceRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new AlloyFurnaceJEI.Wrapper(recipe));
     }
 
     @Override

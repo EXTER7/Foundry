@@ -45,8 +45,14 @@ public class MeltingJEI
       this.recipe = recipe;
       ResourceLocation background_location = new ResourceLocation("foundry", "textures/gui/crucible.png");
 
-      temp = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
-          (recipe.getMeltingPoint() * 100 - TileEntityMeltingCrucibleBasic.TEMP_MIN) * 54 / (500000 - TileEntityMeltingCrucibleBasic.TEMP_MIN), 12);
+      if(helpers != null)
+      {
+        temp = helpers.getGuiHelper().createDrawable(background_location, 176, 53,
+            (recipe.getMeltingPoint() * 100 - TileEntityMeltingCrucibleBasic.TEMP_MIN) * 54 / (500000 - TileEntityMeltingCrucibleBasic.TEMP_MIN), 12);
+      } else
+      {
+        temp = null;
+      }
     }
 
     @Override
@@ -92,7 +98,10 @@ public class MeltingJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      temp.draw(minecraft,11,41);
+      if(temp != null)
+      {
+        temp.draw(minecraft,11,41);
+      }
       minecraft.fontRendererObj.drawString(recipe.getMeltingPoint() + " °K", 14, 28, 0);
     }
 
@@ -195,6 +204,12 @@ public class MeltingJEI
       guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY,false,tank_overlay);
       guiItemStacks.set(0,ingredients.getInputs(ItemStack.class).get(0));
       guiFluidStacks.set(1,ingredients.getOutputs(FluidStack.class).get(0));
+    }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
     }
   }
 

@@ -31,15 +31,15 @@ import net.minecraftforge.fluids.FluidStack;
 public class CastingTableJEI
 {
 
-  public class Wrapper implements IRecipeWrapper
+  static public class Wrapper implements IRecipeWrapper
   {
-    private final String name;
     private final ICastingTableRecipe recipe;
+    private final String name;
 
-    public Wrapper(String name,ICastingTableRecipe recipe)
+    public Wrapper(ICastingTableRecipe recipe)
     {
-      this.name = name;
       this.recipe = recipe;
+      this.name = recipe.getTableType().name().toLowerCase();
     }
 
     @Deprecated
@@ -100,6 +100,11 @@ public class CastingTableJEI
     {
       ingredients.setInput(FluidStack.class, recipe.getInput());
       ingredients.setOutput(ItemStack.class, recipe.getOutput());
+    }
+    
+    public String getName()
+    {
+      return name;
     }
   }
 
@@ -188,6 +193,12 @@ public class CastingTableJEI
       gui_items.set(1, table_item);
       gui_fluids.set(2, input.get(0));
     }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
+    }
   }
 
   static public class Handler implements IRecipeHandler<Wrapper>
@@ -222,7 +233,7 @@ public class CastingTableJEI
     @Override
     public String getRecipeCategoryUid(Wrapper recipe)
     {
-      return "foundry.casting_table." + recipe.name;
+      return "foundry.casting_table." + recipe.getName();
     }
   }
   
@@ -249,7 +260,7 @@ public class CastingTableJEI
 
         if(output != null)
         {
-          recipes.add(new Wrapper(name,recipe));
+          recipes.add(new Wrapper(recipe));
         }
       }
     }

@@ -2,15 +2,14 @@ package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
+import exter.foundry.integration.jei.CastingTableJEI;
 import exter.foundry.recipes.CastingTableRecipe;
 import exter.foundry.recipes.manager.CastingTableRecipeManager;
 import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraftforge.fluids.FluidStack;
-import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -31,13 +30,14 @@ public class MTCastingTableHandler
     protected void add()
     {
       CastingTableRecipeManager.instance.recipes.get(recipe.getTableType()).put(recipe.getInput().getFluid().getName(), recipe);
-
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new CastingTableJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       CastingTableRecipeManager.instance.recipes.get(recipe.getTableType()).remove(recipe.getInput().getFluid().getName());
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new CastingTableJEI.Wrapper(recipe));
     }
 
     @Override

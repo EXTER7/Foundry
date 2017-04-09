@@ -2,6 +2,7 @@ package exter.foundry.integration.jei;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -186,6 +187,12 @@ public class AlloyingCrucibleJEI
       guiFluidStacks.set(0, in_a);
       guiFluidStacks.set(1, in_b);
       guiFluidStacks.set(2, out);
+    }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
     }
   }
 

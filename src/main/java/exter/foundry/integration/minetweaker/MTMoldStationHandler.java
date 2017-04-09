@@ -1,6 +1,7 @@
 package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.IMoldRecipe;
+import exter.foundry.integration.jei.MoldStationJEI;
 import exter.foundry.recipes.MoldRecipe;
 import exter.foundry.recipes.manager.MoldRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -26,12 +27,14 @@ public class MTMoldStationHandler
     protected void add()
     {
       MoldRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new MoldStationJEI.Wrapper(null, recipe));
     }
 
     @Override
     protected void remove()
     {
       MoldRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new MoldStationJEI.Wrapper(null, recipe));
     }
 
     @Override

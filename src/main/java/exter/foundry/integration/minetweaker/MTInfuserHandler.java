@@ -1,6 +1,7 @@
 package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.IInfuserRecipe;
+import exter.foundry.integration.jei.InfuserJEI;
 import exter.foundry.recipes.InfuserRecipe;
 import exter.foundry.recipes.manager.InfuserRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -28,12 +29,14 @@ public class MTInfuserHandler
     protected void add()
     {
       InfuserRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new InfuserJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       InfuserRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new InfuserJEI.Wrapper(recipe));
     }
 
     @Override

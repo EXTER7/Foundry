@@ -1,6 +1,7 @@
 package exter.foundry.integration.jei;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -195,6 +196,12 @@ public class AtomizerJEI
       guiItemStacks.set(0, ingredients.getOutputs(ItemStack.class).get(0));
       guiFluidStacks.set(1, ingredients.getInputs(FluidStack.class).get(0));
       guiFluidStacks.set(2, ingredients.getInputs(FluidStack.class).get(1));
+    }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
     }
   }
 

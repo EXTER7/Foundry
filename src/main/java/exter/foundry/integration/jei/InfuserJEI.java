@@ -195,6 +195,12 @@ public class InfuserJEI
       guiItemStacks.init(0, true, 14, 17);
       guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
     }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
+    }
   }
 
   static public class Handler implements IRecipeHandler<Wrapper>

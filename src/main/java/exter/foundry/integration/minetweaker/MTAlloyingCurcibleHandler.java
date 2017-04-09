@@ -2,6 +2,7 @@ package exter.foundry.integration.minetweaker;
 
 
 import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
+import exter.foundry.integration.jei.AlloyingCrucibleJEI;
 import exter.foundry.recipes.AlloyingCrucibleRecipe;
 import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -28,12 +29,14 @@ public class MTAlloyingCurcibleHandler
     protected void add()
     {
       AlloyingCrucibleRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new AlloyingCrucibleJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       AlloyingCrucibleRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new AlloyingCrucibleJEI.Wrapper(recipe));
     }
 
     @Override

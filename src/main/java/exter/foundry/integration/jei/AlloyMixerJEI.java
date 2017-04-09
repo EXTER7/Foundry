@@ -2,6 +2,7 @@ package exter.foundry.integration.jei;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -190,6 +191,12 @@ public class AlloyMixerJEI
         guiFluidStacks.set(i, in.get(i));
       }
       guiFluidStacks.set(5, ingredients.getOutputs(FluidStack.class).get(0));
+    }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
     }
   }
 

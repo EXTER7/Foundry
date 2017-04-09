@@ -99,21 +99,24 @@ public class MoldStationJEI
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-      int width = recipe.getWidth();
-      int height = recipe.getHeight();
-      int[] grid = recipe.getRecipeGrid();
-
-      int left = (3 - FoundryMiscUtils.divCeil(width,2));
-      int top = (3 - FoundryMiscUtils.divCeil(height,2));
-      
-      for(int y = 0; y < height; y++)
+      if(carve_drawables != null)
       {
-        for(int x = 0; x < width; x++)
+        int width = recipe.getWidth();
+        int height = recipe.getHeight();
+        int[] grid = recipe.getRecipeGrid();
+
+        int left = (3 - FoundryMiscUtils.divCeil(width,2));
+        int top = (3 - FoundryMiscUtils.divCeil(height,2));
+        
+        for(int y = 0; y < height; y++)
         {
-          int i = grid[y*width + x];
-          if(i > 0)
+          for(int x = 0; x < width; x++)
           {
-            carve_drawables[i - 1].draw(minecraft, 7 + (x + left) * 11, 7 + (y + top) * 11);
+            int i = grid[y*width + x];
+            if(i > 0)
+            {
+              carve_drawables[i - 1].draw(minecraft, 7 + (x + left) * 11, 7 + (y + top) * 11);
+            }
           }
         }
       }
@@ -214,6 +217,12 @@ public class MoldStationJEI
 
       gui_items.init(0, false, 110, 23);
       gui_items.set(0, ingredients.getOutputs(ItemStack.class).get(0));
+    }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
     }
   }
 

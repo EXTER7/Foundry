@@ -2,6 +2,7 @@ package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
+import exter.foundry.integration.jei.AtomizerJEI;
 import exter.foundry.recipes.AtomizerRecipe;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -27,12 +28,14 @@ public class MTAtomizerHandler
     protected void add()
     {
       AtomizerRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new AtomizerJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       AtomizerRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new AtomizerJEI.Wrapper(recipe));
     }
 
     @Override

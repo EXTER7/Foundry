@@ -2,6 +2,7 @@ package exter.foundry.integration.minetweaker;
 
 
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
+import exter.foundry.integration.jei.AlloyMixerJEI;
 import exter.foundry.recipes.AlloyMixerRecipe;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -28,12 +29,14 @@ public class MTAlloyMixerHandler
     protected void add()
     {
       AlloyMixerRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new AlloyMixerJEI.Wrapper(recipe));
     }
 
     @Override
     protected void remove()
     {
       AlloyMixerRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new AlloyMixerJEI.Wrapper(recipe));
     }
 
     @Override

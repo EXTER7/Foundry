@@ -1,6 +1,7 @@
 package exter.foundry.integration.jei;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -32,16 +33,10 @@ public class AlloyFurnaceJEI
   static public class Wrapper implements IRecipeWrapper
   {
     @Nonnull
-    protected final IDrawableStatic flame_drawable;
-    @Nonnull
     private final IAlloyFurnaceRecipe recipe;
 
-    public Wrapper(IJeiHelpers helpers,@Nonnull IAlloyFurnaceRecipe recipe)
+    public Wrapper(@Nonnull IAlloyFurnaceRecipe recipe)
     {
-      IGuiHelper guiHelper = helpers.getGuiHelper();
-      ResourceLocation furnaceBackgroundLocation = new ResourceLocation("foundry", "textures/gui/alloyfurnace.png");
-
-      flame_drawable = guiHelper.createDrawable(furnaceBackgroundLocation, 176, 0, 14, 14);
       this.recipe = recipe;
     }
 
@@ -131,6 +126,7 @@ public class AlloyFurnaceJEI
       IDrawableStatic flameDrawable = guiHelper.createDrawable(background_location, 176, 0, 14, 14);
       flame = guiHelper.createAnimatedDrawable(flameDrawable, 300, IDrawableAnimated.StartDirection.TOP, true);
 
+      
       IDrawableStatic arrowDrawable = guiHelper.createDrawable(background_location, 176, 14, 24, 17);
       arrow = guiHelper.createAnimatedDrawable(arrowDrawable, 200, IDrawableAnimated.StartDirection.LEFT, false);
 
@@ -199,6 +195,12 @@ public class AlloyFurnaceJEI
       gui_items.set(1, ingredients.getInputs(ItemStack.class).get(1));
       gui_items.set(2, ingredients.getOutputs(ItemStack.class).get(0));
     }
+
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
+    {
+      return Collections.emptyList();
+    }
   }
 
   static public class Handler implements IRecipeHandler<Wrapper>
@@ -248,7 +250,7 @@ public class AlloyFurnaceJEI
 
       if(!(input_a.isEmpty() || input_b.isEmpty()))
       {
-        recipes.add(new Wrapper(helpers,recipe));
+        recipes.add(new Wrapper(recipe));
       }
     }
 

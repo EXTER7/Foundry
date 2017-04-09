@@ -1,6 +1,7 @@
 package exter.foundry.integration.minetweaker;
 
 import exter.foundry.api.recipe.IMeltingRecipe;
+import exter.foundry.integration.jei.MeltingJEI;
 import exter.foundry.recipes.MeltingRecipe;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import minetweaker.MineTweakerAPI;
@@ -29,12 +30,14 @@ public class MTMeltingHandler
     protected void add()
     {
       MeltingRecipeManager.instance.recipes.add(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(new MeltingJEI.Wrapper(null,recipe));
     }
 
     @Override
     protected void remove()
     {
       MeltingRecipeManager.instance.recipes.remove(recipe);
+      MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(new MeltingJEI.Wrapper(null, recipe));
     }
 
     @Override

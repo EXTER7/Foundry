@@ -709,7 +709,7 @@ public class InitRecipes
           int[] ids = OreDictionary.getOreIDs(stack);
           for(int j : ids)
           {
-            if(OreDictionary.getOreName(j).startsWith("ore"))
+            if(OreDictionary.getOreName(j).startsWith("ore") && !OreDictionary.getOreName(j).startsWith("orePoor"))
             {
               base_amount = FoundryAPI.FLUID_AMOUNT_ORE;
               break;

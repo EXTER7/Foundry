@@ -26,6 +26,9 @@ public class FoundryUtils
       FoundryAPI.recipes_melting.addRecipe(new OreMatcher("nugget" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_NUGGET));
       FoundryAPI.recipes_melting.addRecipe(new OreMatcher("dust" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT));
       FoundryAPI.recipes_melting.addRecipe(new OreMatcher("ore" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_ORE));
+      FoundryAPI.recipes_melting.addRecipe(new OreMatcher("orePoor" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_NUGGET));
+      FoundryAPI.recipes_melting.addRecipe(new OreMatcher("dustSmall" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 4));
+      FoundryAPI.recipes_melting.addRecipe(new OreMatcher("dustTiny" + partial_name), new FluidStack(fluid, FoundryAPI.FLUID_AMOUNT_INGOT / 4));
     }
   }
 

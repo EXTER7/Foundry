@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.Optional;
 
 public class TileEntityInductionHeater extends TileEntityFoundryPowered
 {
@@ -92,10 +93,10 @@ public class TileEntityInductionHeater extends TileEntityFoundryPowered
     return super.getCapability(cap, facing);
   }
 
-//  @Optional.Method(modid = "IC2")
-//  @Override
-//  public int getSinkTier()
-//  {
-//    return 2;
-//  }
+  @Optional.Method(modid = "IC2")
+  @Override
+  public int getSinkTier()
+  {
+    return 2;
+  }
 }

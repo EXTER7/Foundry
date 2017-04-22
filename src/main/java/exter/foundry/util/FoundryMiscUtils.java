@@ -110,7 +110,7 @@ public class FoundryMiscUtils
     IBlockState state = world.getBlockState(pos);
     if(state.getBlock() instanceof IFluidBlock)
     {
-      IFluidBlock fluid_block = (IFluidBlock)state;
+      IFluidBlock fluid_block = (IFluidBlock)state.getBlock();
       if(!fluid_block.canDrain(world, pos))
       {
         return null;

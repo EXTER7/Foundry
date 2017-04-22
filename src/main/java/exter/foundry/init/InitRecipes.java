@@ -308,7 +308,7 @@ public class InitRecipes
         BurnerHeaterFuelManager.instance.getHeatNeeded(187000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 
     BurnerHeaterFuelManager.instance.addFuel(
-        new OreMatcher("itemCoalCoke"),
+        new OreMatcher("fuelCoke"),
         3200,
         BurnerHeaterFuelManager.instance.getHeatNeeded(215000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE));
 

@@ -78,7 +78,7 @@ public class FoundryItems
     
     GameRegistry.registerFuelHandler(item_component);
 
-    OreDictionary.registerOre("itemCoalCoke", component(ItemComponent.SubItem.COAL_COKE));
+    OreDictionary.registerOre("fuelCoke", component(ItemComponent.SubItem.COAL_COKE));
   }
 
   static public ItemStack component(ItemComponent.SubItem sub)

@@ -2,6 +2,7 @@ package exter.foundry.init;
 
 import java.util.Map.Entry;
 
+import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
@@ -16,8 +17,8 @@ public class InitToolRecipes
 {
   static public void init()
   {
-    ItemStack extra_sticks1 = new ItemStack(Items.STICK,1);
-    ItemStack extra_sticks2 = new ItemStack(Items.STICK,2);
+    OreMatcher extra_sticks1 = new OreMatcher("stickWood",1);
+    OreMatcher extra_sticks2 = new OreMatcher("stickWood",2);
 
 
     ItemStack mold_chestplate = FoundryItems.mold(ItemMold.SubItem.CHESTPLATE);
@@ -132,17 +133,17 @@ public class InitToolRecipes
     FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_SWORD), FoundryFluids.liquid_gold, 2, ItemMold.SubItem.SWORD, extra_sticks1);
 
 
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_HELMET), FoundryFluids.liquid_iron, 5, ItemMold.SubItem.HELMET, null);
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_HELMET), FoundryFluids.liquid_gold, 5, ItemMold.SubItem.HELMET, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_HELMET), FoundryFluids.liquid_iron, 5, ItemMold.SubItem.HELMET);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_HELMET), FoundryFluids.liquid_gold, 5, ItemMold.SubItem.HELMET);
 
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_CHESTPLATE), FoundryFluids.liquid_iron, 8, ItemMold.SubItem.CHESTPLATE, null);
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_CHESTPLATE), FoundryFluids.liquid_gold, 8, ItemMold.SubItem.CHESTPLATE, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_CHESTPLATE), FoundryFluids.liquid_iron, 8, ItemMold.SubItem.CHESTPLATE);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_CHESTPLATE), FoundryFluids.liquid_gold, 8, ItemMold.SubItem.CHESTPLATE);
 
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_LEGGINGS), FoundryFluids.liquid_iron, 7, ItemMold.SubItem.LEGGINGS, null);
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_LEGGINGS), FoundryFluids.liquid_gold, 7, ItemMold.SubItem.LEGGINGS, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_LEGGINGS), FoundryFluids.liquid_iron, 7, ItemMold.SubItem.LEGGINGS);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_LEGGINGS), FoundryFluids.liquid_gold, 7, ItemMold.SubItem.LEGGINGS);
 
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_BOOTS), FoundryFluids.liquid_iron, 4, ItemMold.SubItem.BOOTS, null);
-    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_BOOTS), FoundryFluids.liquid_gold, 4, ItemMold.SubItem.BOOTS, null);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.IRON_BOOTS), FoundryFluids.liquid_iron, 4, ItemMold.SubItem.BOOTS);
+    FoundryMiscUtils.registerCasting(new ItemStack(Items.GOLDEN_BOOTS), FoundryFluids.liquid_gold, 4, ItemMold.SubItem.BOOTS);
     
     for(Entry<String, FluidLiquidMetal> metal:LiquidMetalRegistry.instance.getFluids().entrySet())
     {
@@ -151,10 +152,10 @@ public class InitToolRecipes
       FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "shovel" + metal.getKey()), metal.getValue(), 1, ItemMold.SubItem.SHOVEL, extra_sticks2);
       FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "hoe" + metal.getKey()), metal.getValue(), 2, ItemMold.SubItem.HOE, extra_sticks2);
       FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "sword" + metal.getKey()), metal.getValue(), 2, ItemMold.SubItem.SWORD, extra_sticks1);
-      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "helmet" + metal.getKey()), metal.getValue(), 5, ItemMold.SubItem.HELMET, null);
-      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "chestplate" + metal.getKey()), metal.getValue(), 8, ItemMold.SubItem.CHESTPLATE, null);
-      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "leggings" + metal.getKey()), metal.getValue(), 7, ItemMold.SubItem.LEGGINGS, null);
-      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "boots" + metal.getKey()), metal.getValue(), 4, ItemMold.SubItem.BOOTS, null);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "helmet" + metal.getKey()), metal.getValue(), 5, ItemMold.SubItem.HELMET);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "chestplate" + metal.getKey()), metal.getValue(), 8, ItemMold.SubItem.CHESTPLATE);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "leggings" + metal.getKey()), metal.getValue(), 7, ItemMold.SubItem.LEGGINGS);
+      FoundryMiscUtils.registerCasting(FoundryMiscUtils.getModItemFromOreDictionary("substratum", "boots" + metal.getKey()), metal.getValue(), 4, ItemMold.SubItem.BOOTS);
     }
   }
 }

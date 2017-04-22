@@ -2,6 +2,7 @@ package exter.foundry.integration;
 
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
+import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
@@ -85,8 +86,8 @@ public class ModIntegrationEnderIO implements IModIntegration
 
     if(FoundryConfig.recipe_equipment)
     {
-      ItemStack extra_sticks1 = new ItemStack(Items.STICK, 1);
-      ItemStack extra_sticks2 = new ItemStack(Items.STICK, 2);
+      OreMatcher extra_sticks1 = new OreMatcher("stickWood",1);
+      OreMatcher extra_sticks2 = new OreMatcher("stickWood",2);
 
 
       ItemStack dark_steel_pickaxe = getItemStack("darkSteel_pickaxe");

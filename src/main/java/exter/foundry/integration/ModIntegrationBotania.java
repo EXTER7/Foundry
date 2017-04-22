@@ -107,25 +107,29 @@ public class ModIntegrationBotania implements IModIntegration
       ItemStack livingwood_twig = getItemStack("manaResource", 3);
       ItemStack dreamwood_twig = getItemStack("manaResource", 13);
       
-      ItemStack extra_sticks1 = livingwood_twig.copy();
-      ItemStack extra_sticks2 = livingwood_twig.copy();
-      extra_sticks2.setCount(2);
+      ItemStack livingsticks1 = livingwood_twig.copy();
+      ItemStack livingsticks2 = livingwood_twig.copy();
+      livingsticks2.setCount(2);
 
-      ItemStack extra_dreamsticks1 = dreamwood_twig.copy();
-      ItemStack extra_dreamsticks2 = dreamwood_twig.copy();
-      extra_dreamsticks2.setCount(2);
+      ItemStack dreamsticks1 = dreamwood_twig.copy();
+      ItemStack dreamsticks2 = dreamwood_twig.copy();
+      dreamsticks2.setCount(2);
 
+      ItemStackMatcher extra_livingsticks1 = new ItemStackMatcher(livingsticks1);
+      ItemStackMatcher extra_livingsticks2 = new ItemStackMatcher(livingsticks2);
+      ItemStackMatcher extra_dreamsticks1 = new ItemStackMatcher(dreamsticks1);
+      ItemStackMatcher extra_dreamsticks2 = new ItemStackMatcher(dreamsticks2);
 
-      FoundryMiscUtils.registerCasting(manasteel_pickaxe, liquid_manasteel, 3, ItemMold.SubItem.PICKAXE, extra_sticks2);
-      FoundryMiscUtils.registerCasting(manasteel_axe, liquid_manasteel, 3, ItemMold.SubItem.AXE, extra_sticks2);
-      FoundryMiscUtils.registerCasting(manasteel_shovel, liquid_manasteel, 1, ItemMold.SubItem.SHOVEL, extra_sticks2);
-      FoundryMiscUtils.registerCasting(manasteel_sword, liquid_manasteel, 2, ItemMold.SubItem.SWORD, extra_sticks1);
-      FoundryMiscUtils.registerCasting(manasteel_chestplate, liquid_manasteel, 8, ItemMold.SubItem.CHESTPLATE, null);
-      FoundryMiscUtils.registerCasting(manasteel_leggings, liquid_manasteel, 7, ItemMold.SubItem.LEGGINGS, null);
-      FoundryMiscUtils.registerCasting(manasteel_helmet, liquid_manasteel, 5, ItemMold.SubItem.HELMET, null);
-      FoundryMiscUtils.registerCasting(manasteel_boots, liquid_manasteel, 4, ItemMold.SubItem.BOOTS, null);
+      FoundryMiscUtils.registerCasting(manasteel_pickaxe, liquid_manasteel, 3, ItemMold.SubItem.PICKAXE, extra_livingsticks2);
+      FoundryMiscUtils.registerCasting(manasteel_axe, liquid_manasteel, 3, ItemMold.SubItem.AXE, extra_livingsticks2);
+      FoundryMiscUtils.registerCasting(manasteel_shovel, liquid_manasteel, 1, ItemMold.SubItem.SHOVEL, extra_livingsticks2);
+      FoundryMiscUtils.registerCasting(manasteel_sword, liquid_manasteel, 2, ItemMold.SubItem.SWORD, extra_livingsticks1);
+      FoundryMiscUtils.registerCasting(manasteel_chestplate, liquid_manasteel, 8, ItemMold.SubItem.CHESTPLATE);
+      FoundryMiscUtils.registerCasting(manasteel_leggings, liquid_manasteel, 7, ItemMold.SubItem.LEGGINGS);
+      FoundryMiscUtils.registerCasting(manasteel_helmet, liquid_manasteel, 5, ItemMold.SubItem.HELMET);
+      FoundryMiscUtils.registerCasting(manasteel_boots, liquid_manasteel, 4, ItemMold.SubItem.BOOTS);
 
-      FoundryMiscUtils.registerCasting(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), ItemMold.SubItem.SWORD, extra_sticks1);
+      FoundryMiscUtils.registerCasting(terrasteel_sword, new FluidStack(liquid_terrasteel, FoundryAPI.FLUID_AMOUNT_INGOT * 2), ItemMold.SubItem.SWORD, extra_livingsticks1);
 
       FoundryMiscUtils.registerCasting(elementium_pickaxe, liquid_elementium, 3, ItemMold.SubItem.PICKAXE, extra_dreamsticks2);
       FoundryMiscUtils.registerCasting(elementium_axe, liquid_elementium, 3, ItemMold.SubItem.AXE, extra_dreamsticks2);

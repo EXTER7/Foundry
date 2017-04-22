@@ -2,6 +2,7 @@ package exter.foundry.init;
 
 import java.util.Map.Entry;
 
+import exter.foundry.api.recipe.matcher.OreMatcher;
 import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
@@ -16,8 +17,8 @@ public class InitToolRecipes
 {
   static public void init()
   {
-    ItemStack extra_sticks1 = new ItemStack(Items.STICK,1);
-    ItemStack extra_sticks2 = new ItemStack(Items.STICK,2);
+    OreMatcher extra_sticks1 = new OreMatcher("stickWood",1);
+    OreMatcher extra_sticks2 = new OreMatcher("stickWood",2);
 
 
     ItemStack mold_chestplate = FoundryItems.mold(ItemMold.SubItem.CHESTPLATE);

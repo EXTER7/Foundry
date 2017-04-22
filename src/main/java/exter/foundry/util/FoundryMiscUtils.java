@@ -116,7 +116,7 @@ public class FoundryMiscUtils
     IBlockState state = world.getBlockState(pos);
     if(state.getBlock() instanceof IFluidBlock)
     {
-      IFluidBlock fluid_block = (IFluidBlock)state;
+      IFluidBlock fluid_block = (IFluidBlock)state.getBlock();
       if(!fluid_block.canDrain(world, pos))
       {
         return null;
@@ -153,24 +153,25 @@ public class FoundryMiscUtils
     }
   }
   
-  static public void registerCasting(ItemStack item,Fluid liquid_metal,int ingots,ItemMold.SubItem mold_meta,ItemStack extra)
+  static public void registerCasting(ItemStack item,Fluid liquid_metal,int ingots,ItemMold.SubItem mold_meta)
+  {
+    registerCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,null);
+  }
+
+  static public void registerCasting(ItemStack item,Fluid liquid_metal,int ingots,ItemMold.SubItem mold_meta,IItemMatcher extra)
   {
     registerCasting(item,new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots),mold_meta,extra);
   }
 
-  static public void registerCasting(ItemStack item,FluidStack fluid,ItemMold.SubItem mold_meta,ItemStack extra)
+  static public void registerCasting(ItemStack item,FluidStack fluid,ItemMold.SubItem mold_meta,IItemMatcher extra)
   {
     if(!item.isEmpty())
     {
       ItemStack mold = FoundryItems.mold(mold_meta);
-      if(CastingRecipeManager.instance.findRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra) == null)
+      ItemStack extra_item = extra != null?extra.getItem():ItemStack.EMPTY;
+      if(CastingRecipeManager.instance.findRecipe(new FluidStack(fluid.getFluid(),FoundryAPI.CASTER_TANK_CAPACITY), mold, extra_item) == null)
       {
-        IItemMatcher mextra = null;
-        if(extra != null)
-        {
-          mextra = new ItemStackMatcher(extra);
-        }
-        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(item), fluid, mold, mextra);
+        CastingRecipeManager.instance.addRecipe(new ItemStackMatcher(item), fluid, mold, extra);
       }
     }
   }
